@@ -97,7 +97,7 @@ class WelcomeController extends Controller
 
     public function welcome_get_homes($company_name=null)
     {  
-        $admin_id = Admin::where('company','like',$company_name)->value('id');
+        $admin_id = Admin::where('company','like',$company_name)->where('is_deleted','0')->value('id');
         
         $homes = Home::select('id','title')->where('admin_id',$admin_id)->where('is_deleted','0')->get()->toArray();
 

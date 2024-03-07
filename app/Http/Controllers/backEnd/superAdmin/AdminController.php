@@ -207,11 +207,11 @@ class AdminController extends Controller
 
             if($system_admin->save())
             {
-               return redirect('admin/system-admins')->with('success','Systedm Admin Updated successfully.'); 
+               return redirect('admin/system-admins')->with('success','System Admin Updated successfully.'); 
             } 
             else
             {
-               return redirect()->back()->with('error','Systedm Admin could not be Updated.'); 
+               return redirect()->back()->with('error','System Admin could not be Updated.'); 
             }  
         }
 
