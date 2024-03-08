@@ -1078,6 +1078,8 @@ Route::group(['prefix' => 'admin', 'middleware'=>'CheckAdminAuth'], function(){
 
 
 	Route::match(['get','post'], '/system-admin/check_user_username_exists', 'App\Http\Controllers\backEnd\superAdmin\AdminController@check_username_exist');
+	Route::match(['get','post'], '/system-admin/check_user_company_exists', 'App\Http\Controllers\backEnd\superAdmin\AdminController@check_company_exist');
+	
 	Route::match(['get','post'], '/agents/check_username_unique', 'App\Http\Controllers\backEnd\AgentController@check_username_exist');
 
 	// migrations 

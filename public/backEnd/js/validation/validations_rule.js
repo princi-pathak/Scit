@@ -3050,6 +3050,13 @@ $('#add_system_admins_form').formValidation({
                 {
                     regexp: /^[A-Z,a-z,0-9,_ ]+$/,
                     message: 'This field allows only alphanumeric characters'
+                },  
+                remote: 
+                {
+                   message: 'Company already exists',
+                   url: 'check_user_company_exists',
+                   type: 'GET',
+                   delay: 2000     // Send Ajax request every 2 seconds
                 }
             }
         }         

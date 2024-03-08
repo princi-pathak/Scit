@@ -354,7 +354,17 @@ class AdminController extends Controller
             // echo json_encode(true);      //  for jquery validations
         }    
     }
+    public function check_company_exist(Request $request){
+        $count = Admin::where('company',$request->company)->where('is_deleted', 0)->count();
 
+        if($count > 0){
+            echo '{"valid":false}'; die; // for bootstrap validations
+            // echo json_encode(false);      //  for jquery validations
+        }else{
+            echo '{"valid":true}'; die;  // for bootstrap validations
+            // echo json_encode(true);      //  for jquery validations
+        }    
+    }
 
     public function package_detail($system_admin_id, Request $request){
 
