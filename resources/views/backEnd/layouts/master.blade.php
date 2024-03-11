@@ -33,7 +33,7 @@
   <!-- Custom styles for this template -->
   <link href="{{ url('public/backEnd/css/style.css') }}" rel="stylesheet">
   <link href="{{ url('public/backEnd/css/style-responsive.css') }}" rel="stylesheet" />
-  <!-- <link href="{{ url('public/backEnd/js/bootstrap-datepicker/css/datepicker.css') }}" rel="stylesheet" type="text/css" /> -->
+  <link href="{{ url('public/backEnd/js/bootstrap-datepicker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script> -->
   <link rel="stylesheet" href="{{ url('public/backEnd/css/developer.css') }}" />
@@ -93,7 +93,7 @@
   <script type="text/javascript" src="{{ url('public/backEnd/js/validation/validations_rule.js') }}"></script>
 
 
-  <!-- <script type="text/javascript" src="{{ url('public/backEnd/js/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script> -->
+  <script type="text/javascript" src="{{ url('public/backEnd/js/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
 
   <!--clock init-->
   <script src="{{ url('public/backEnd/js/css3clock.js') }}"></script>

@@ -210,10 +210,35 @@ class LogBookController extends ServiceUserManagementController
         if($request->isMethod('post'))
         {
             //sourabh geo location
-            $ip = '49.35.41.195'; //For static IP address get
-            //$ip = request()->ip(); //Dynamic IP address get
-            $current_location = \Location::get($ip);
+            // $ip = '49.35.41.195'; //For static IP address get
+            // $ip = request()->ip(); //Dynamic IP address get
+          
+            $res = file_get_contents('https://api.ipify.org/?format=json');
+            $data_value = json_decode($res, true);
+            
+            if ($data_value !== null && isset($data_value['ip'])) {
+                $ip = $data_value['ip'];
+            } else {
+                $ip = "";
+            }
 
+            $response = file_get_contents('https://ipinfo.io/' . $ip . '/json?token=babd113378833b');
+
+            if ($response === false) {
+                $data = "";
+            } else {
+                $data = json_decode($response, true);
+                if ($data !== null) {
+                    $coordinates = explode(',', $data['loc']);
+                    $latitude = $coordinates[0];
+                    $longitude = $coordinates[1];
+                } else {
+                    $latitude = "";
+                    $longitude = "";
+                }
+            }
+
+            // $current_location = \Location::get($ip);
             //sourabh geo location
             $data = $request->all();
             //print_r($data['log_image']);
@@ -273,8 +298,8 @@ class LogBookController extends ServiceUserManagementController
             $log_book_record->home_id = $login_home_id;
             $log_book_record->user_id = Auth::user()->id;
             $log_book_record->image_name = $log_image;
-            $log_book_record->latitude = $current_location->latitude;
-            $log_book_record->longitude = $current_location->longitude;
+            $log_book_record->latitude = $latitude;
+            $log_book_record->longitude = $longitude;
             
             // Log::info($current_date_without_time);
             // Log::info($latest_date_without_time);
@@ -313,11 +338,11 @@ class LogBookController extends ServiceUserManagementController
                 else{
                     if($su_log_book_record->save()) {
                         $result['response'] = true;
-                        // echo "1";
+                        echo "1";
                     }
                     else {
                         $result['response'] = false;
-                        // echo "2";
+                        echo "2";
                     }
                 }
                 // if($su_log_book_record->save()) {
@@ -333,7 +358,7 @@ class LogBookController extends ServiceUserManagementController
             else {
                 
                 $result['response'] = false;
-                // echo "2";
+                echo "2";
             }
                 // if($log_book_record->save()){
 
@@ -359,7 +384,7 @@ class LogBookController extends ServiceUserManagementController
             else { 
                 return redirect()->back()->with('error',COMMON_ERROR);
             }*/
-            return $result;
+            // return $result;
         }
     }
 
