@@ -26,7 +26,7 @@ class CalendarController extends Controller
 	        }
 
 	        $page_title = trim($service_user->name)."'s Event Calendar";
-			
+			$event_type = "";
 			//Health Records
 			$health_records = ServiceUserHealthRecord::select('su_health_record.id as health_record_id','su_health_record.title')
 											->join('service_user as su', 'su.id','su_health_record.service_user_id')
@@ -221,7 +221,7 @@ class CalendarController extends Controller
 				$booking_response = Calendar::checkIsEventAddedtoCalendar($service_user_id,$event_id,$event_type);
 				$mandatory_leave_records[$key] = array_merge($mandatory_leave_records[$key],$booking_response);
 			}
-
+			
 			// End Mandatory Leave
 			// echo "<pre>"; print_r($mandatory_leave_records); die;
 													
