@@ -14,38 +14,27 @@ class DynamicForm extends Model //FormBuilder
     public static function showForm($form_builder_id = null, $service_user_id = null){ //show empty form 
         
         //here $service_user_id is used to get care team, staff and contacts of a yp, if its send to value is yes
-
         //search for the customized user dynamic form, if present
         $home_id   =  Auth::user()->home_id;
-        
         $home_idme = DB::table('service_user')->where('id',$service_user_id)->value('home_id');
         $admin_id = DB::table('home')->where('id', $home_idme)->value('admin_id');
         $image_id = DB::table('admin')->where('id', $admin_id)->value('image');
         $form      =  DynamicFormBuilder::where('id',$form_builder_id)
                                 ->where('home_id',$home_id)
                                 ->first();
-                                //->value('pattern');
-        
+                               
         $form_pattern = (isset($form->pattern)) ? $form->pattern : '';
-
         //echo '<pre>'; print_r($image_id); die;
 
         if(!empty($form_pattern)){
-
             //for showing selected date of dynamic form 
             $form_loc_ids   = explode(',',$form->location_ids);
             $form_type      = (in_array('5',$form_loc_ids)) ? 'MFC' : '';
             $mfc_today_date = ($form_type == 'MFC') ? date('d-m-Y') : '';
-            
             $form_pattern   = json_decode($form_pattern);
-            // echo "<pre>";
-            // print_r($form->pattern);
-            //  die;
+            // echo "<pre>";  print_r($form->pattern);   die;
             
             $formdata =' ';
-
-
-
             //static fields
             $static_fields    = ' <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="below-divider"></div>
@@ -103,153 +92,14 @@ class DynamicForm extends Model //FormBuilder
                                 </div>
                                 ';
             $formdata .= $static_fields;
-            //$total_fields = 0;
-            // echo"<pre>";
-            // echo $form_pattern;
-            // die();
-            // foreach($form_pattern as $key => $value){
-                
-            //     $total_fields++;
-            //     $field_label = $value->label;
-            //     $column_name = $value->column_name;
-            //     $field_type  = $value->column_type;  
-            //     $field_value = '';  
-
-                $label_col_val = '1';
-                $inp_col       = 10;
-
-            //     if($field_type == 'Textbox'){
-            //         $formdata .= '
-            //                     <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
-            //                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-            //                             <label class="col-md-2 col-sm-2 col-xs-12"> '.$field_label.': </label>
-            //                             <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0">
-            //                                 <div class="input-group popovr">
-            //                                     <input name="formdata['.$column_name.']" value="'.$field_value.'" type="text" class="form-control"  />
-            //                                 </div>
-            //                             </div>
-            //                         </div>
-            //                     </div>';
-                
-            //     } else if($field_type == 'Selectbox'){
-            //         // [{"label":"RakeshTestFields1","column_name":"rakeshtestfields1","column_type":"Textbox"}]
-            //         // [{"label":"Text Field  dd","tableView":true,"type":"textfield","input":true,"key":"textField"},{"label":"Emailddd","tableView":true,"key":"emailddd","type":"email","input":true},{"label":"tetgbfghsf","tableView":true,"key":"tetgbfghsf","type":"email","input":true}]
-            //         $options = '';
-            //         $option_name = '';
-            //         $option_value = '';
-            //         $opt = '';
-            //         $j = 0;
-            //         ///alert(option_count);
-            //         //for($i=1; $i <= $option_count; $i++){
-            //         foreach($value->select_options as $select_option){
-            //             //echo '<pre>'; print_r($select_option);
-            //             $select_option = (array)$select_option;
-            //             //print_r($se['option_name']); die;
-
-            //             $option_name    = $select_option['option_name'];
-            //             $option_value   = $select_option['option_value'];
-                        
-            //             //if( ($option_name !== '') && ($option_value !== '') ) {            
-            //                 $options .= '<option value="'.$option_value.'">'.$option_name.'</option>';
-
-            //                 $opt .= '<input type="hidden" name="formdata['.$key.'][select_options]['.$j.'][option_name]" value="'.$option_name.'"> <input type="hidden" name="formdata['.$key.'][select_options]['.$j.'][option_value]" value="'.$option_value.'">';
-            //                 $j++;
-            //             //}
-            //         }
-
-            //         $formdata .= '
-            //             <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
-            //                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 ">
-            //                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
-            //                     <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-10">
-            //                         <div class="select-style">
-            //                             <select name="formdata['.$column_name.']" >
-            //                                 '.$options.'
-            //                             </select>
-            //                         </div>
-            //                     </div>
-            //                 </div>
-            //             </div>'; 
-
-            //     } else if($field_type == 'Textarea'){
-            //         $formdata .='
-            //             <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
-            //                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 ">
-            //                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
-            //                     <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0">
-            //                         <div class="input-group popovr">
-            //                             <textarea name="formdata['.$column_name.']" class="form-control"></textarea>
-            //                         </div>
-            //                     </div>
-            //                 </div>
-            //             </div>';
-
-            //     } else if($field_type == 'Date'){
-            //         $formdata .='
-            //             <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
-            //                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-            //                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
-            //                     <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0">
-            //                         <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date=""  class="input-group date dpYears">
-            //                             <input name="formdata['.$column_name.']" type="text" value="" size="16" readonly class="form-control">
-            //                             <span class="input-group-btn add-on">
-            //                                 <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
-            //                             </span>
-            //                         </div>
-            //                     </div>
-            //                 </div>
-            //             </div>';
-
-            //    } else if($field_type == 'Checkbox') {
-
-            //         $checkbox       = '';
-            //         $checkbox_name  = '';
-            //         $checkbox_value = '';
-            //         $chk = '';
-            //         $j   = 0;
-
-            //         foreach ($value->select_checkboxs as $select_checkbox) {
-                        
-            //             $select_checkbox = (array)$select_checkbox;
-
-            //             $checkbox_name   = $select_checkbox['checkbox_name'];
-
-            //             $chk .= '<div class="col-md-6">
-            //                         <div class="checkbox ">
-            //                             <label>
-            //                                 <input name="formdata['.$column_name.'][]" value="'.$checkbox_name.'" type="checkbox">'.$checkbox_name.'
-            //                             </label>
-            //                         </div>
-            //                     </div>';
-
-            //             $j++;
-            //         }   
-
-            //         $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
-            //                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-            //                                 <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> '.$field_label.': </label>
-            //                                 <div class="col-md-'.$inp_col.' col-sm-'.$inp_col.' col-xs-12 r-p-0">
-            //                                     <div class="wrap_checks">
-            //                                         <div class="row">
-            //                                             '.$chk.'
-            //                                         </div>
-            //                                     </div>
-            //                                 </div>
-            //                             </div>
-            //                     </div>';
-
-            //     } else{
-            //         $formdata .='';
-            //     }
-            // }
+            $label_col_val = '1';
+            $inp_col       = 10;
+            $form_pattern = str_replace("'", "`", $form->pattern);
             //conditional fields
             $formdata .= "<input type='hidden' value='".$form_builder_id ."' id='formid'>";
             $formdata .= "<input type='hidden' value='".$home_id."' id='home_id'>";
-            $formdata .= "<input type='hidden' value='".$form->pattern."' id='getdatamodel'>";
-            
-            //  echo "<pre>";
-            //  print_r($form->alert_field);
-            //  echo "<pre>";
+            $formdata .= "<input type='hidden' value='.$form_pattern.' id='getdatamodel'>";
+            //  echo "<pre>";   print_r($form->alert_field);  echo "<pre>";
             if($form->alert_field == '1') {
                  $static_field = '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 ">
@@ -328,18 +178,10 @@ class DynamicForm extends Model //FormBuilder
                 $formdata .= $static_field;
             }
             $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12 cog-panel' id='formiotest'></div>";
-            
             $formdata .='';
-            
-            $result['response']     = true;
-            
-            $result['form_builder_id']      = $form_builder_id;
-            //$result['title']      = $form->title;
-            //$result['detail']     = $form->detail;
-            $result['pattern']     = $formdata;
-            // echo '<script type="text/JavaScript"> 
-            //      prompt("GeeksForGeeks");
-            //      </script>';
+            $result['response']         = true;
+            $result['form_builder_id']  = $form_builder_id;
+            $result['pattern']          = $formdata;
         } else{
             $result['response']     = false;
         }

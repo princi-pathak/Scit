@@ -138,7 +138,7 @@
     // alert(data);
 
     var datafrm = <?= (isset($form->pattern)) ? $form->pattern : "1" ?>;
-    //console.log(datafrm);
+    // console.log(datafrm);
     // if(datafrm== ""){
     //   const setdatapattern="{}";
     // }else{
@@ -154,6 +154,7 @@
     // JSON.parse(data);
     Formio.builder(document.getElementById('builder'), (datafrm == 1) ? {} : setdatapattern, {}).then(function(builder) {
       builder.on('saveComponent', function() {
+        // console.log(JSON.stringify(builder.schema.components));
         $('#setformdata').val(JSON.stringify(builder.schema.components));
         //console.log(data34);
       });

@@ -18,6 +18,9 @@
 
 
 <style>
+    .hidden {
+        display: none;
+    }
     .prient-btn input[type="button"] {
     background-color: #1fb5ad;
     border: none;
@@ -207,7 +210,10 @@ color:#a1a1a1;
 margin: 5px 0px 0px 0px;
 font-size: 14px;
 }
+
+
 </style>
+
 
 
 <section id="main-content" class="">
@@ -334,7 +340,8 @@ font-size: 14px;
                                     </div>
                                     
                                    
-
+                                        
+                                   
                                     <h4 class="text-center m-t-0 m-b-30">Select Field You want to Add</h4>
                                     <!-- <b>Select Field You want to Add</b> -->
                                     <div class="prient-btn">
@@ -402,12 +409,16 @@ font-size: 14px;
         </div>
     </section>
 </section>
-
-
+<!--  -->
+<!-- <script src='https://cdn.form.io/formiojs/formio.full.min.js'></script> -->
 <!-- <script>
     console.log(builder.schema.);
 </script> -->
 <script>
+      $(document).ready(function(){
+        var element = document.querySelector('[data-type="custom"]');
+        if (element) { element.classList.add('hidden'); }
+    });
     $('.toogle_alert_date_div').hide();
     $(document).on('change','.show_alert_date', function(){
 

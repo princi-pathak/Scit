@@ -1091,12 +1091,13 @@ var settings = {
 };
 $.ajax(settings).done(function (response) {
     if(isAuthenticated(response) == false) {
-                        return false;
-                    }
-                  //console.log(response);
-Formio.createForm(document.getElementById('formiotest'), { 
-    components:JSON.parse(response)   
-});
+            return false;
+        }
+        //console.log(response);
+        const formJson = JSON.parse(response);
+    Formio.createForm(document.getElementById('formiotest'), { 
+        components:formJson  
+    });
 });
 
 
