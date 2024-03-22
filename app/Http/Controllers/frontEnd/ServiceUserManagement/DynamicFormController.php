@@ -17,8 +17,9 @@ class DynamicFormController extends Controller
     public function view_form_pattern(Request $request) {
 		$form_builder_id = $request->form_builder_id; 
         $service_user_id = $request->service_user_id; 
-      	$form = DynamicForm::showForm($form_builder_id,$service_user_id);	
-        return $form;
+      	$form = DynamicForm::showForm($form_builder_id,$service_user_id);
+    //   	dd($form);
+		return $form;
 	}	  
 
 	public function save_form(Request $request) 
@@ -362,10 +363,19 @@ class DynamicFormController extends Controller
         $pagination = '';
         if(isset($_GET['search'])) {
             if(!empty($_GET['search'])) {
-                $dyn_forms = $dyn_record->where('title','like','%'.$_GET['search'].'%')->get();
+
+                if ($_GET['searchType'] ==  1) {
+                    $dyn_forms = $dyn_record->where('title','like','%'.$_GET['search'].'%')->get();
+                } if($_GET['searchType'] ==  2) {
+                    $search_date = date('Y-m-d', strtotime($_GET['search'])) . ' 00:00:00';
+                    $search_date_next = date('Y-m-d', strtotime('+1 day', strtotime($_GET['search']))) . ' 00:00:00';
+                    $dyn_forms = $dyn_record->where('created_at', '>', $search_date)->where('created_at', '<', $search_date_next)->get();
+                }
+
+
             }
         } else {
-            $dyn_forms = $dyn_record->paginate(10);
+            $dyn_forms = $dyn_record->paginate();
             if($dyn_forms->links() != '') {
                 $pagination .= '<div class="m-l-15 position-botm ">'; //bmp_paginate
                 $pagination .= $dyn_forms->links();
@@ -414,7 +424,7 @@ class DynamicFormController extends Controller
                         </div>
                     </div>  ';
         }
-        echo $pagination;
+        //echo $pagination;
     }
 
     public function su_daily_log_add(Request $request) {

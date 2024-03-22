@@ -28,7 +28,7 @@
                                 <div class="btn-group">
                                     <a href="agents/add">
                                         <button id="editable-sample_new" class="btn btn-primary">
-                                            Add Agent  <i class="fa fa-plus"></i>
+                                            Add Agent <i class="fa fa-plus"></i>
                                         </button>
                                     </a>    
                                 </div>
