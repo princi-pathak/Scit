@@ -52,9 +52,9 @@ if (!defined('DEL_CONFIRM'))define('DEL_CONFIRM', 	'Are you sure to delete this 
 
 //other constants
 if (!defined('PROJECT_NAME'))define('PROJECT_NAME', 'SCITS');
-if (!defined('LOCK_TIME'))define('LOCK_TIME', '3000'); //in seconds i.e. 60 sec = 1 min, 300 = 5 mint, 3600 sec = 1 hr
+if (!defined('LOCK_TIME'))define('LOCK_TIME', '6000'); //in seconds i.e. 60 sec = 1 min, 300 = 5 mint, 3600 sec = 1 hr
 if (!defined('DEFAULT_SU_EARN_TARGET'))define('DEFAULT_SU_EARN_TARGET','70'); //if no target will be defined for a su
-if (!defined('SESSION_TIMEOUT'))define('SESSION_TIMEOUT', '20'); //in minutes
+if (!defined('SESSION_TIMEOUT'))define('SESSION_TIMEOUT', '60'); //in minutes
 if (!defined('DEFAULT_LOCATION_RECALL_TIME'))define('DEFAULT_LOCATION_RECALL_TIME', '15'); //in minutes
 if (!defined('MIN_PETTY_CASH_BALANCE'))define('MIN_PETTY_CASH_BALANCE', '1000'); //in minutes
 
