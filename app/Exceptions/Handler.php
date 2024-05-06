@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -50,7 +51,7 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException){
-         
+                
                 return response(view('frontEnd.error_404'), 404);
             }
     
@@ -76,13 +77,22 @@ class Handler extends ExceptionHandler
     }
 
     protected function unauthenticated($request, AuthenticationException $exception)
-    {
+    {                                                                                           
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
         return redirect()->guest('login');
     }
+
+    public function render($request, Throwable $exception)
+        {
+            if ($exception instanceof NotFoundHttpException) {
+                return response()->view('frontEnd.error_404', [], 404);
+            }
+
+            return parent::render($request, $exception);
+        }
 
     
 }
