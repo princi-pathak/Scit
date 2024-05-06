@@ -152,7 +152,7 @@ span.ps10 {
 
         <div class="row">
             <div class="col-md-12">
-                <div class="backIcon"> <a href="{{ url('/service-user-management') }}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a> </div>
+                <div class="backIcon"> <a href="{{ url('/service-user-management') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> </div>
             </div>
         </div>
         <div class="row">
