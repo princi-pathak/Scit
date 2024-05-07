@@ -119,10 +119,10 @@
                                         {
                                             foreach($system_admins as $key => $value) 
                                             {  
-                                                $image = env('ASSETS_URL').home.'/default_home.png';
+                                                $image = env('APP_URL').home.'/default_home.png';
                                                 if(!empty($value->image))
                                                 {
-                                                    $image = env('ASSETS_URL').home.'/'.$value->image;
+                                                    $image = env('APP_URL').home.'/'.$value->image;
                                                 }
                                             ?>
                                         <tr class="">
