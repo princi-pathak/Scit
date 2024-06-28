@@ -110,6 +110,11 @@ float: right;
                             <li><a href="{{ url('/lock?path='.$current_path) }}"><i class="fa fa-lock"> </i> Lock</a></li>
                             <li><a href="#" class="hndovr_logbk"><i class="fa fa-address-book-o"></i> Hand Over </a></li>
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-key"></i> Log Out</a></li>
+                            <!-- Code given By Ethan start -->
+                            @if(Auth::user()->user_type == "A")  
+                                <li id = "switch_menu_itm"><a href="{{ url('/switch_home') }}"><i class="fa fa-house"></i> Switch Hom</a></li>
+                            @endif
+                            <!-- Code given By Ethan End -->
                         </ul>
                     </li>
                     <!-- user login dropdown end -->

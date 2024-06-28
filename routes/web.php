@@ -153,6 +153,12 @@ Route::match(['get','post'], '/delete/calendar/event/{event_id}', 'App\Http\Cont
 Route::match(['get','post'], '/select/social/work/send/mail/{srvc_usr_id}', 'App\Http\Controllers\frontEnd\ServiceUserManagement\ReportController@social_worker');
 Route::match(['get','post'], '/send/mail/social/worker', 'App\Http\Controllers\frontEnd\ServiceUserManagement\ReportController@send_mail_social_work');
 
+// code given by ethan start
+Route::get('/switch_home', 'App\Http\Controllers\frontEnd\UserController@switch_home');
+Route::match(['get','post'], '/switch_home_submit', 'App\Http\Controllers\frontEnd\UserController@switch_home_submit');
+// code given by ethan End
+
+
 Route::group(['middleware'=>['checkUserAuth','lock']],function(){
 
 	Route::get('/rota-dashboard','App\Http\Controllers\Rota\RotaController@index');

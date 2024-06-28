@@ -342,6 +342,24 @@ class UserController extends Controller
     	//echo $response; die;
     	   	
     }
+
+	// code given by Ethan start
+	public function switch_home(){
+		// return "Hello";
+		return view('frontEnd.switch_home'); 
+	}
+
+	public function switch_home_submit(Request $request){
+
+		$previouHome = User::where('id', Auth::user()->id)->value('home_id');
+		$array = [$request->home];
+		$string = implode(',', $array);
+		User::where('id', Auth::user()->id)->update(['home_id' => $string]);
+
+		return redirect()->route('dashboard');
+	}
+	// code given by Ethan End
+
     /*public function check_staff_username_exists(Request $request){
     	
     	$count = User::where('user_name',$request->staff_user_name)->count();
