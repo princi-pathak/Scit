@@ -212,7 +212,7 @@ Route::group(['middleware'=>['checkUserAuth','lock']],function(){
 	// Route::get('/overtime','App\Http\Controllers\Rota\RotaController@overtime');
 	// Route::get('/payroll_glossary','App\Http\Controllers\Rota\RotaController@payroll_glossary');
 	
-	Route::match(['get','post'], '/', 'App\Http\Controllers\frontEnd\DashboardController@dashboard');
+	Route::match(['get','post'], '/', 'App\Http\Controllers\frontEnd\DashboardController@dashboard')->name('dashboard');
 	Route::post('/add-incident-report', 'App\Http\Controllers\frontEnd\DashboardController@add_incident_report');
 
 	// ------------- Personal Management - My profile ---------------------// 

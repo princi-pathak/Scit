@@ -101,9 +101,6 @@ float: right;
                         </a>
                         <ul class="dropdown-menu extended logout">
                             <li><a href="{{ url('/my-profile/'.$user_id) }}"> <i class="fa fa-user-circle"></i> My Profile </a></li>
-                            @if(Auth::user()->user_type == 'A')
-                                <li><a href="{{ url('agent/welcome') }}"> <i class="fa fa-home"></i> Change Home </a></li>
-                            @endif
                             <li><a href="#" class="add_user"> <i class=" fa fa-user"></i> Add user </a></li>
                             <li><a href="#dynmicFormModal" data-toggle="modal" > <i class="fa fa-bolt"></i> Forms  </a></li>
                             <li><a href="{{ url('/general-admin') }}"><i class="fa fa-cogs"></i> General Admin </a></li>
@@ -112,7 +109,7 @@ float: right;
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-key"></i> Log Out</a></li>
                             <!-- Code given By Ethan start -->
                             @if(Auth::user()->user_type == "A")  
-                                <li id = "switch_menu_itm"><a href="{{ url('/switch_home') }}"><i class="fa fa-house"></i> Switch Hom</a></li>
+                                <li id = "switch_menu_itm"><a href="{{ url('/switch_home') }}"><i class="fa fa-house"></i> Switch Home</a></li>
                             @endif
                             <!-- Code given By Ethan End -->
                         </ul>
