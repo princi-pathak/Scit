@@ -181,6 +181,35 @@
                         </li>
                     </ul>
                 </li>                     
+                <li class="sub-menu">
+                    <a href="javascript:;" class="<?php if(($page == 'customers') || ($page == 'Leads   ') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders')){ echo 'active'; } ?>" >
+                        <i class="fa fa-cogs"></i>
+                        <span>Sales & Finance</span>
+                    </a>
+                    <ul class="sub">
+                        <!-- <li class="{{ ($page == 'customers') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/customers') }}">Customers </a>
+                        </li> -->
+                        <li class="{{ ($page == 'Leads') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/leads') }}">Leads </a>
+                        </li>
+                        <li class="{{ ($page == 'quotes') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/quotes') }}">Quotes </a>
+                        </li>
+                        <li class="{{ ($page == 'jobs') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/jobs') }}">Jobs </a>
+                        </li>
+                        <li class="{{ ($page == 'projects') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/projects') }}">Projects </a>
+                        </li>
+                        <li class="{{ ($page == 'invoices') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/invoices') }}">Invoices </a>
+                        </li>
+                        <li class="{{ ($page == 'purchase_orders') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/invoices') }}">Purchase Orders </a>
+                        </li>
+                    </ul>
+                </li>                     
 
                 <!-- <li>
                     <a href="login.html">

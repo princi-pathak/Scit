@@ -109,7 +109,7 @@ float: right;
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-key"></i> Log Out</a></li>
                             <!-- Code given By Ethan start -->
                             @if(Auth::user()->user_type == "A")  
-                                <li id = "switch_menu_itm"><a href="{{ url('/switch_home') }}"><i class="fa fa-house"></i> Switch Home</a></li>
+                                <li id = "switch_menu_itm"><a href="{{ url('/switch_home') }}"><i class="fa fa-home"></i> Switch Home</a></li>
                             @endif
                             <!-- Code given By Ethan End -->
                         </ul>
