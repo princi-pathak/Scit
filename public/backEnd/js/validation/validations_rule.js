@@ -3387,25 +3387,25 @@ $('#add_manager_form').formValidation({
                   regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
                   message: 'The value is not a valid email address'
                },
-               remote: 
-                {
-                   message: 'Email already exists.',
-                   url: host+'admin/manager/check-email-exists',
-                   type: "post",
-                   dataType: 'json',
-                   data:{
-                        email: function(){
-                            console.log(host)
-                            return $("#email").val();
-                        },
-                        manager_id: function(){
-                            return $("#manager_id").val();
-                        },
-                        _token: function(){
-                            return $("#token").val();
-                        },
-                    },
-                },
+            //    remote: 
+            //     {
+            //        message: 'Email already exists.',
+            //        url: host+'admin/manager/check-email-exists',
+            //        type: "post",
+            //        dataType: 'json',
+            //        data:{
+            //             email: function(){
+            //                 console.log(host)
+            //                 return $("#email").val();
+            //             },
+            //             manager_id: function(){
+            //                 return $("#manager_id").val();
+            //             },
+            //             _token: function(){
+            //                 return $("#token").val();
+            //             },
+            //         },
+            //     },
             }
         },
         "contact_no": 
@@ -3516,24 +3516,24 @@ $('#edit_manager_form').formValidation({
                   regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
                   message: 'The value is not a valid email address'
                },
-               remote: 
-                {
-                   message: 'Email already exists.',
-                   url: host+'admin/manager/check-email-exists',
-                   type: "post",
-                   dataType: 'json',
-                   data:{
-                        email: function(){
-                            return $("#email").val();
-                        },
-                        manager_id: function(){
-                            return $("#manager_id").val();
-                        },
-                        _token: function(){
-                            return $("#token").val();
-                        },
-                    },
-                },
+            //    remote: 
+            //     {
+            //        message: 'Email already exists.',
+            //        url: host+'admin/manager/check-email-exists',
+            //        type: "post",
+            //        dataType: 'json',
+            //        data:{
+            //             email: function(){
+            //                 return $("#email").val();
+            //             },
+            //             manager_id: function(){
+            //                 return $("#manager_id").val();
+            //             },
+            //             _token: function(){
+            //                 return $("#token").val();
+            //             },
+            //         },
+            //     },
             }
         },
         "contact_no": 

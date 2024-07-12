@@ -1223,6 +1223,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::get('sales-finance/leads', 'App\Http\Controllers\backEnd\salesfinance\LeadController@index')->name('leads.index');
 	Route::get('sales-finance/leads/add', 'App\Http\Controllers\backEnd\salesfinance\LeadController@create')->name('leads.create');
 	Route::post('sales-finance/leads/create', 'App\Http\Controllers\backEnd\salesfinance\LeadController@store')->name('leads.store');
+	Route::get('sales-finance/leads/edit/{id}', 'App\Http\Controllers\backEnd\salesfinance\LeadController@edit')->name('leads.edit');
+	// Route::post('sales-finance/leads/update', 'App\Http\Controllers\backEnd\salesfinance\LeadController@edit')->name('leads.update');
 });
 
 //super admin path

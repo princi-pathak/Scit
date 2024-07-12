@@ -17,6 +17,7 @@ class LeadController extends Controller
         $customers = DB::table('customers')
                 ->join('leads', 'customers.id', '=', 'leads.customer_id')
                 ->select('customers.*', 'leads.*')
+                ->orderBy('leads.created_at', 'desc')
                 ->get();
       
         return view('backEnd/salesFinance/leads', compact('page', 'customers'));
@@ -36,7 +37,7 @@ class LeadController extends Controller
                 $website = 'http://' . $website;
             }
 
-            $customer = Customer::create([
+            $customer = Customer::updateOrCreate(  ['id' => $request->customer_id],[
                 'home_id' => 1,
                 'name' => $request->company_name,
                 'contact_name' => $request->name,
@@ -53,7 +54,7 @@ class LeadController extends Controller
 
             if ($customer && $customer->id) {
                 // Create the lead using the customer ID
-                Lead::create([
+                $lead = Lead::updateOrCreate(['id' => $request->lead_id],[
                     'home_id' => 1,
                     'lead_ref' => Str::uuid(),
                     'customer_id' => $customer_id,
@@ -63,8 +64,17 @@ class LeadController extends Controller
                     'prefer_date' => $request->input('prefer_date'),
                     'prefer_time' => $request->input('prefer_time'),
                 ]);
+
+                if ($lead->wasRecentlyCreated) {
+                    // New record was created
+                    $message =  'Lead created successfully.';
+                } else {
+                    // Existing record was updated
+                    $message =  'Lead updated successfully.';
+                }
+
         
-                return redirect()->route('leads.index')->with('success', 'Lead created successfully.');
+                return redirect()->route('leads.index')->with('success', $message);
             } else {
                 // Handle the error case where the customer was not created successfully
                 return redirect()->route('leads.index')->with('error', 'Failed to create customer.');
@@ -74,6 +84,17 @@ class LeadController extends Controller
             \Log::error('Error saving lead: ' . $e->getMessage());
             return back()->withInput()->withErrors(['error' => 'Failed to save lead. Please try again.']);
         }
+    }
+
+    public function edit($id){
+        $page = 'Leads';
+        $lead = DB::table('customers')
+        ->join('leads', 'customers.id', '=', 'leads.customer_id')
+        ->select('customers.*', 'leads.*')
+        ->where('leads.id', $id)
+        ->first();
+        $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
+        return view('backEnd/salesFinance/leads_form', compact('lead', 'users', 'page'));   
     }
 
 }

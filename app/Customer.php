@@ -21,6 +21,7 @@ class Customer extends Model
         'telephone',
         'mobile',
         'fax',
+        'website',
         'catalogue_id',
         'region',
         'address',
