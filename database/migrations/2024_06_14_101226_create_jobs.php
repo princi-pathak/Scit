@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('jobs', function (Blueprint $table) {
+            $table->id();
+            $table->string('home_id')->nullable();
+            $table->string('customer_id')->nullable();
+            $table->string('job_ref')->nullable();
+            $table->string('project_id')->nullable();
+            $table->string('contact')->nullable();
+            $table->string('country')->nullable();
+            $table->string('customer_ref')->nullable();
+            $table->string('pay_amount')->nullable();
+            $table->string('purchase_order_ref')->nullable();
+            $table->string('job_type')->nullable();
+            $table->string('priorty')->nullable();
+            $table->string('alert_customer')->nullable();
+            $table->string('on_route_sms')->nullable();
+            $table->string('start_date')->nullable();
+            $table->string('complete_by')->nullable();
+            $table->string('tags')->nullable();
+            $table->string('product_id')->nullable();
+            $table->string('attachments')->nullable();
+            $table->boolean('status')->default(1);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('jobs');
+    }
+};
