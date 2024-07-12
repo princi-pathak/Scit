@@ -1219,7 +1219,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 	// Backend Route for construction customers
 	Route::get('sales-finance/customers', 'App\Http\Controllers\backEnd\salesfinance\CustomerController@index');
-	Route::get('sales-finance/leads', 'App\Http\Controllers\backEnd\salesfinance\LeadController@create');
+	// Admin leads
+	Route::get('sales-finance/leads', 'App\Http\Controllers\backEnd\salesfinance\LeadController@index')->name('leads.index');
+	Route::get('sales-finance/leads/add', 'App\Http\Controllers\backEnd\salesfinance\LeadController@create')->name('leads.create');
+	Route::post('sales-finance/leads/create', 'App\Http\Controllers\backEnd\salesfinance\LeadController@store')->name('leads.store');
 });
 
 //super admin path

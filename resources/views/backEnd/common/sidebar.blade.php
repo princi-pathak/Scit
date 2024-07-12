@@ -182,14 +182,14 @@
                     </ul>
                 </li>                     
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'customers') || ($page == 'Leads   ') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders')){ echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'customers') || ($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders')){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i>
                         <span>Sales & Finance</span>
                     </a>
                     <ul class="sub">
-                        <!-- <li class="{{ ($page == 'customers') ? 'active' : '' }}">
+                        <li class="{{ ($page == 'customers') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/customers') }}">Customers </a>
-                        </li> -->
+                        </li>
                         <li class="{{ ($page == 'Leads') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/leads') }}">Leads </a>
                         </li>

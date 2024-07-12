@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
-            $table->varchar('home_id');
+            $table->string('home_id');
+            $table->string('lead_ref')->unique();
             $table->string('assign_to');
             $table->string('source');
             $table->string('status');
-            $table->string('prefer_date');
-            $table->string('prefer_time');
+            $table->date('prefer_date');
+            $table->time('prefer_time');
             $table->timestamps();
         });
     }

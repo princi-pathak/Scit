@@ -12,15 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->id(); // Primary key
+            $table->id(); 
+            $table->integer('home_id'); 
             $table->string('name'); 
-            $table->string('customer_type_id'); 
+            $table->string('customer_type_id')->nullable(); 
             $table->string('contact_name'); 
-            $table->string('job_title'); 
+            $table->string('job_title')->nullable(); 
             $table->string('email')->unique(); 
             $table->string('telephone')->nullable(); 
             $table->string('mobile')->nullable(); 
             $table->string('fax')->nullable(); 
+            $table->string('website')->nullable(); 
             $table->string('catalogue_id')->nullable(); 
             $table->string('region')->nullable(); 
             $table->string('address');
@@ -28,7 +30,7 @@ return new class extends Migration
             $table->string('country')->nullable(); 
             $table->string('postal_code')->nullable(); 
             $table->string('country_code')->nullable(); 
-            $table->string('notes')->nullable(); 
+            $table->string('site_notes')->nullable(); 
             $table->string('currency')->nullable(); 
             $table->string('credit_limit')->nullable(); 
             $table->string('discount')->nullable(); 
@@ -38,10 +40,10 @@ return new class extends Migration
             $table->string('vat_tax_no')->nullable(); 
             $table->integer('payment_terms')->default(21); 
             $table->boolean('assigned_product')->nullable(); 
-            // $table->string('notes')->nullable(); 
+            $table->string('notes')->nullable(); 
             $table->string('product_tax')->nullable()->comment('VAT 20 or VAT 5'); 
             $table->string('service_tax')->nullable()->comment('VAT 20 or VAT 5'); 
-            $table->boolean('status')->default(1); 
+            $table->boolean('status')->default(1)->comment('1-lead, 2-quotes'); 
             $table->timestamps(); 
         });
     }
