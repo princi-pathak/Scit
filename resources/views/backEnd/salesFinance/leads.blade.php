@@ -6,7 +6,6 @@
 <section id="main-content">
     <section class="wrapper">
         <!-- page start-->
-
         <div class="row">
             <div class="col-sm-12">
                 <section class="panel">
@@ -111,5 +110,4 @@
     </section>
 </section>
 <!--main content end-->
-
 @endsection
