@@ -213,6 +213,19 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	Route::match(['get', 'post'], '/', 'App\Http\Controllers\frontEnd\DashboardController@dashboard')->name('dashboard');
 	Route::post('/add-incident-report', 'App\Http\Controllers\frontEnd\DashboardController@add_incident_report');
+	// Ram 14/06/2024 path for jobs create
+	Route::get('/jobs_list','App\Http\Controllers\jobs\JobController@job_list');
+	Route::post('/job_save_all','App\Http\Controllers\jobs\JobController@job_save_all');
+	Route::post('/status_change','App\Http\Controllers\jobs\JobController@status_change');
+	Route::post('/delete_job','App\Http\Controllers\jobs\JobController@delete_job');
+	Route::post('/edit_job','App\Http\Controllers\jobs\JobController@edit_job');
+	Route::post('/search_value','App\Http\Controllers\jobs\JobController@search_value');
+	Route::post('/save_get_ajax','App\Http\Controllers\jobs\JobController@save_get_ajax');
+	Route::get('/job_type','App\Http\Controllers\jobs\JobController@job_type');
+	Route::get('/jobs_index','App\Http\Controllers\jobs\JobController@index');
+	Route::get('/planner_day','App\Http\Controllers\jobs\JobController@planner_day');
+
+	// end here
 
 	// ------------- Personal Management - My profile ---------------------// 
 	Route::get('/my-profile/{user_id}', 'App\Http\Controllers\frontEnd\PersonalManagement\ProfileController@index');
@@ -858,6 +871,56 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::match(['get', 'post'], '/users/delete/{id}', 'App\Http\Controllers\backEnd\UserController@delete');
 	Route::get('/users/certificates/delete/{id}', 'App\Http\Controllers\backEnd\UserController@delete_certificates');
 	Route::match(['get', 'post'], '/users/send-set-pass-link/{user_id}', 'App\Http\Controllers\backEnd\UserController@send_user_set_pass_link_mail');
+
+	// Ram 04/07/2024 here paths for Job Manageent
+	Route::match(['get', 'post'],'jobs_list','App\Http\Controllers\backEnd\JobsController@jobs_list');
+	Route::post('/job_status_change','App\Http\Controllers\backEnd\JobsController@job_status_change');
+	Route::post('/job_delete','App\Http\Controllers\backEnd\JobsController@job_delete');
+	Route::get('/job_add','App\Http\Controllers\backEnd\JobsController@job_add');
+	Route::post('/job_save_data','App\Http\Controllers\backEnd\JobsController@job_save_data');
+	Route::match(['get','post'],'/jobs_type_list','App\Http\Controllers\backEnd\JobsController@jobs_type_list');
+	Route::post('/job_type_status_change','App\Http\Controllers\backEnd\JobsController@job_type_status_change');
+	Route::post('/job_type_delete','App\Http\Controllers\backEnd\JobsController@job_type_delete');
+	Route::get('/job_type_add','App\Http\Controllers\backEnd\JobsController@job_type_add');
+	Route::post('/job_type_save_data','App\Http\Controllers\backEnd\JobsController@job_type_save_data');
+	Route::match(['get','post'],'/work_flow_list','App\Http\Controllers\backEnd\JobsController@work_flow_list');
+	Route::post('/wrok_flow_status_change','App\Http\Controllers\backEnd\JobsController@wrok_flow_status_change');
+	Route::post('/wrok_flow_delete','App\Http\Controllers\backEnd\JobsController@wrok_flow_delete');
+	Route::get('/work_flow_add','App\Http\Controllers\backEnd\JobsController@work_flow_add');
+	Route::post('/workflow_save_data','App\Http\Controllers\backEnd\JobsController@workflow_save_data');
+	Route::post('/Workflow_notification_save','App\Http\Controllers\backEnd\JobsController@Workflow_notification_save');
+	Route::match(['get','post'],'/product_category','App\Http\Controllers\backEnd\JobsController@product_category');
+	Route::post('/product_cat_status_change','App\Http\Controllers\backEnd\JobsController@product_cat_status_change');
+	Route::post('/product_cat_delete','App\Http\Controllers\backEnd\JobsController@product_cat_delete');
+	Route::get('/product_category_add','App\Http\Controllers\backEnd\JobsController@product_category_add');
+	Route::post('/product_cat_save_data','App\Http\Controllers\backEnd\JobsController@product_cat_save_data');
+	Route::match(['get','post'],'/product_list','App\Http\Controllers\backEnd\JobsController@product_list');
+	Route::post('/product_status_change','App\Http\Controllers\backEnd\JobsController@product_status_change');
+	Route::post('/product_delete','App\Http\Controllers\backEnd\JobsController@product_delete');
+	Route::match(['get','post'],'/account_codes','App\Http\Controllers\backEnd\JobsController@account_codes');
+	Route::get('/account_code_add','App\Http\Controllers\backEnd\JobsController@account_code_add');
+	Route::post('/account_save_data','App\Http\Controllers\backEnd\JobsController@account_save_data');
+	Route::post('/account_status_change','App\Http\Controllers\backEnd\JobsController@account_status_change');
+	Route::post('/account_delete','App\Http\Controllers\backEnd\JobsController@account_delete');
+	Route::match(['get','post'],'/tax_rate','App\Http\Controllers\backEnd\JobsController@tax_rate');
+	Route::get('/tax_add','App\Http\Controllers\backEnd\JobsController@tax_add');
+	Route::post('/tax_save_data','App\Http\Controllers\backEnd\JobsController@tax_save_data');
+	Route::post('/tax_status_change','App\Http\Controllers\backEnd\JobsController@tax_status_change');
+	Route::post('/tax_delete','App\Http\Controllers\backEnd\JobsController@tax_delete');
+	Route::get('/product_add','App\Http\Controllers\backEnd\JobsController@product_add');
+	Route::post('/product_save_data','App\Http\Controllers\backEnd\JobsController@product_save_data');
+	Route::post('/supplier_result','App\Http\Controllers\backEnd\JobsController@supplier_result');
+	Route::match(['get','post'],'/customer_list','App\Http\Controllers\backEnd\JobsController@customer_list');
+	Route::match(['get','post'],'/project_list','App\Http\Controllers\backEnd\JobsController@project_list');
+	Route::get('/project_add','App\Http\Controllers\backEnd\JobsController@project_add');
+	Route::post('/project_save_data','App\Http\Controllers\backEnd\JobsController@project_save_data');
+	Route::post('/project_status_change','App\Http\Controllers\backEnd\JobsController@project_status_change');
+	Route::post('/project_delete','App\Http\Controllers\backEnd\JobsController@project_delete');
+	Route::post('/search_value','App\Http\Controllers\backEnd\JobsController@search_value');
+	// Job Recurring Start
+	Route::match(['get','post'],'/job_recurring_list','App\Http\Controllers\backEnd\JobsController@job_recurring_list');
+
+	// end here
 
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');

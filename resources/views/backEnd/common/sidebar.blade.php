@@ -196,12 +196,12 @@
                         <li class="{{ ($page == 'quotes') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/quotes') }}">Quotes </a>
                         </li>
-                        <li class="{{ ($page == 'jobs') ? 'active' : '' }}">
+                        <!-- <li class="{{ ($page == 'jobs') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/jobs') }}">Jobs </a>
                         </li>
                         <li class="{{ ($page == 'projects') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/projects') }}">Projects </a>
-                        </li>
+                        </li> -->
                         <li class="{{ ($page == 'invoices') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/invoices') }}">Invoices </a>
                         </li>
@@ -211,6 +211,52 @@
                     </ul>
                 </li>                     
 
+                <li class="sub-menu">
+                    <a href="javascript:;" class="<?php if(($page == 'jobs_list') || ($page == 'jobs_type_list') || ($page == 'work_flow_list') || ($page == 'product_list') || ($page == 'project_list') || ($page == 'product_category') || ($page == 'account_codes') || ($page == 'tax_rate') || ($page == 'customer_list') || ($page == 'supplier_list') || ($page == 'job_recurring_list') ) { echo 'active'; } ?>" >
+                        <i class="fa fa-briefcase"></i>
+                        <span>Jobs</span>
+                    </a>
+                    <ul class="sub">
+
+                        <li class="{{ ($page == 'jobs_list') ? 'active' : '' }}">
+                            <a href="{{ url('admin/jobs_list') }}">Jobs </a>
+                        </li>
+                        <li class="{{ ($page == 'jobs_type_list') ? 'active' : '' }}">
+                            <a href="{{ url('admin/jobs_type_list') }}">Job Type List </a>
+                        </li>
+                        <li class="{{ ($page == 'job_recurring_list') ? 'active' : '' }}">
+                            <a href="{{ url('admin/job_recurring_list') }}">Job Recurring </a>
+                        </li>
+                        <!-- <li class="{{ ($page == 'work_flow_list') ? 'active' : '' }}">
+                            <a href="{{ url('admin/work_flow_list') }}">Work Flow </a>
+                        </li> -->
+                        <li class="{{ ($page == 'work_flow_list') ? 'active' : '' }}">
+                            <a href="{{ url('admin/product_category') }}">Product Category </a>
+                        </li>
+                        
+                        <li class="{{ ($page == 'product_list') ? 'active' : '' }}">
+                            <a href="{{ url('admin/product_list') }}">Product </a>
+                        </li>
+                        <li class="{{ ($page == 'project_list') ? 'active' : '' }}">
+                            <a href="{{ url('admin/project_list') }}">Project </a>
+                        </li>
+                        <li class="{{ ($page == 'account_codes') ? 'active' : '' }}">
+                            <a href="{{ url('admin/account_codes') }}">Account Codes </a>
+                        </li>
+                        <li class="{{ ($page == 'tax_rate') ? 'active' : '' }}">
+                            <a href="{{ url('admin/tax_rate') }}">% Tax Rate </a>
+                        </li>
+                        <!-- <li class="{{ ($page == 'customer_list') ? 'active' : '' }}">
+                            <a href="{{ url('admin/customer_list') }}">Customer </a>
+                        </li>
+                        <li class="{{ ($page == 'supplier_list') ? 'active' : '' }}">
+                            <a href="{{ url('admin/supplier_list') }}">Supplier </a>
+                        </li> -->
+
+                        
+                        
+                    </ul>
+                </li>
                 <!-- <li>
                     <a href="login.html">
                         <i class="fa fa-user"></i>
