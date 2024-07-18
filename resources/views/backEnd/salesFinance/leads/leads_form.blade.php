@@ -9,15 +9,6 @@ if (isset($lead)) {
     $task     = "Edit";
     $form_id  = 'edit_leads_form';
     $readonly = '';
-
-    // if (isset($del_status)) {
-    //     if ($del_status == '1') {
-    //         $disabled = 'disabled';
-    //         $task = 'View';
-    //     } else {
-    //         $disabled = '';
-    //     }
-    // }
 } else {
     $action  = route('leads.store');
     $task    = "Add";
@@ -63,10 +54,13 @@ if (isset($lead)) {
                                     <div class="col-lg-9">
                                         <select name="source" class="form-control" id="">
                                             <option value="None">None</option>
-                                            <option value="Checkatrade" {{ isset($lead->source) && $lead->source == "Checkatrade" ? 'selected' : '' }}>Checkatrade</option>
+                                            @foreach($sources as $value)
+                                                <option value="{{ $value->id }}"  {{ isset($lead->source) && $lead->source == $value->id ? 'selected' : '' }} >{{ $value->title }}</option>
+                                            @endforeach
+                                            <!-- <option value="Checkatrade" {{ isset($lead->source) && $lead->source == "Checkatrade" ? 'selected' : '' }}>Checkatrade</option>
                                             <option value="Current Customer" {{ isset($lead->source) && $lead->source  == "Current Customer" ? 'selected' : '' }}>Current Customer</option>
                                             <option value="Telephone" {{ isset($lead->source) && $lead->source == "Telephone" ? 'selected' : '' }}>Telephone</option>
-                                            <option value="Website" {{ isset($lead->source) && $lead->source  == "Website" ? 'selected' : '' }}>Website</option>
+                                            <option value="Website" {{ isset($lead->source) && $lead->source  == "Website" ? 'selected' : '' }}>Website</option> -->
                                         </select>
                                     </div>
                                 </div>
