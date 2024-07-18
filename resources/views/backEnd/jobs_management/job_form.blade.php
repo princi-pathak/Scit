@@ -109,6 +109,9 @@ padding: 5px 0px 15px 0px;
   line-height: 31px;
   margin-left: 8px;
 }
+.displaynone {
+    display:none;
+}
 
 </style>
  <section id="main-content" class="">
@@ -128,10 +131,10 @@ padding: 5px 0px 15px 0px;
                                 <div class="col-lg-9">
                                     <select class="form-control" name="customer_id" id="customer_id">
 										<option disabled selected>select Customer</option>
-                                        <option value="1">Customer-1</option>
-                                        <option value="2">Customer-2</option>
-                                        <option value="3">Customer-3</option>
-                                        <option value="4">Customer-4</option>
+                                        <option value="1" <?php if(isset($job_details) && $job_details->customer_id == 1){echo 'selected';}?>>Customer-1</option>
+                                        <option value="2" <?php if(isset($job_details) && $job_details->customer_id == 2){echo 'selected';}?>>Customer-2</option>
+                                        <option value="3" <?php if(isset($job_details) && $job_details->customer_id == 3){echo 'selected';}?>>Customer-3</option>
+                                        <option value="4" <?php if(isset($job_details) && $job_details->customer_id == 4){echo 'selected';}?>>Customer-4</option>
                                         
 									</select>
                                     <p style="color:red;display:none" id="Customer_idError">* Customer is Required Field *</p>
@@ -144,7 +147,7 @@ padding: 5px 0px 15px 0px;
                                     <select class="form-control" name="project_id" id="project_id">
 										<option disabled selected>select Project</option>
                                         <?php foreach($projects as $val){?>
-                                        <option value="{{$val->id}}">{{$val->project_name}}</option>
+                                        <option value="{{$val->id}}" <?php if(isset($job_details) && $job_details->customer_id == $val->id){echo 'selected';}?>>{{$val->project_name}}</option>
                                         <?php }?>
 									</select>
                                     <p style="color:red;display:none" id="project_idError">* Project is Required Field *</p>
@@ -164,7 +167,7 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Name*</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="" maxlength="255">
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="<?php if(isset($job_details)){echo $job_details->name;}?>" maxlength="255">
                                     <p style="color:red;display:none" id="nameError">* Name is Required Field *</p>
                                 </div>
                             </div>                            
@@ -172,49 +175,49 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="email" id="email" class="form-control" placeholder="Email" value="">
+                                    <input type="text" name="email" id="email" class="form-control" placeholder="Email" value="<?php if(isset($job_details)){echo $job_details->email;}?>">
                                     <p style="color:red;display:none" id="emailError">* Email is Required Field *</p>
                                 </div>
                             </div> 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Telephone</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="telephone" id="telephone" class="form-control" placeholder="Telephone" value="" maxlength="255">
+                                    <input type="text" name="telephone" id="telephone" class="form-control" placeholder="Telephone" value="<?php if(isset($job_details)){echo $job_details->telephone;}?>" maxlength="255">
                                     <p style="color:red;display:none" id="telephoneError">* Telephone is Required Field *</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Mobile</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile" value="" maxlength="255">
+                                    <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile" value="<?php if(isset($job_details)){echo $job_details->contact;}?>" maxlength="255">
                                     <p style="color:red;display:none" id="mobileError">* Mobile is Required Field *</p>
                                 </div>
                             </div>  
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Address</label>
                                 <div class="col-lg-9">
-                                    <textarea name="address" id="address" class="form-control" rows="5" cols="10"></textarea>
+                                    <textarea name="address" id="address" class="form-control" rows="5" cols="10"><?php if(isset($job_details)){echo $job_details->address;}?></textarea>
                                     <p style="color:red;display:none" id="addressError">* Address is Required Field *</p>
                                 </div>
                             </div>  
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">City</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="city" id="city" class="form-control" placeholder="City" value="" maxlength="255">
+                                    <input type="text" name="city" id="city" class="form-control" placeholder="City" value="<?php if(isset($job_details)){echo $job_details->city;}?>">
                                     <p style="color:red;display:none" id="cityError">* City is Required Field *</p>
                                 </div>
                             </div>   
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Country</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="country" id="country" class="form-control" placeholder="Country" value="" maxlength="255">
+                                    <input type="text" name="country" id="country" class="form-control" placeholder="Country" value="<?php if(isset($job_details)){echo $job_details->country;}?>">
                                     <p style="color:red;display:none" id="countryError">* Country is Required Field *</p>
                                 </div>
                             </div> 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Pincode</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="pincode" id="pincode" class="form-control" placeholder="Pincode" value="" maxlength="255">
+                                    <input type="text" name="pincode" id="pincode" class="form-control" placeholder="Pincode" value="<?php if(isset($job_details)){echo $job_details->pincode;}?>" maxlength="255">
                                 </div>
                             </div>     
                             <label>Site Details</label>                      
@@ -223,10 +226,10 @@ padding: 5px 0px 15px 0px;
                                 <div class="col-lg-9">
                                     <select class="form-control" name="site_id" id="site_id">
 										<option desabled selected>select Site</option>
-                                        <option value="1">Site-1</option>
-                                        <option value="2">Site-2</option>
-                                        <option value="3">Site-3</option>
-                                        <option value="4">Site-4</option>
+                                        <option value="1" <?php if(isset($job_details) && $job_details->site_id == 1){echo 'selected';}?>>Site-1</option>
+                                        <option value="2" <?php if(isset($job_details) && $job_details->site_id == 2){echo 'selected';}?>>Site-2</option>
+                                        <option value="3" <?php if(isset($job_details) && $job_details->site_id == 3){echo 'selected';}?>>Site-3</option>
+                                        <option value="4" <?php if(isset($job_details) && $job_details->site_id == 4){echo 'selected';}?>>Site-4</option>
                                         
 									</select>
                                 </div>
@@ -234,7 +237,7 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Region</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="region" id="region" class="form-control" placeholder="Region" value="" maxlength="255">
+                                    <input type="text" name="region" id="region" class="form-control" placeholder="Region" value="<?php if(isset($job_details)){echo $job_details->region;}?>" maxlength="255">
                                 </div>
                             </div>  
                             <div class="form-group">
@@ -242,8 +245,8 @@ padding: 5px 0px 15px 0px;
                                 <div class="col-lg-9">
                                     <select class="form-control" name="company_id" id="company_id">
 										<option desabled selected>select Company</option>
-                                        <option value="1">Company-7</option>
-                                        <option value="2">Company-8</option>
+                                        <option value="1" <?php if(isset($job_details) && $job_details->company == 1){echo 'selected';}?>>Company-7</option>
+                                        <option value="2" <?php if(isset($job_details) && $job_details->company == 2){echo 'selected';}?>>Company-8</option>
                                         
 									</select>
                                 </div>
@@ -251,74 +254,74 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Contact Name</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="conatact_name" id="conatact_name" class="form-control" placeholder="Contact Name" value="" maxlength="255">
+                                    <input type="text" name="conatact_name" id="conatact_name" class="form-control" placeholder="Contact Name" value="<?php if(isset($job_details)){echo $job_details->conatact_name;}?>" maxlength="255">
                                 </div>
                             </div> 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_email" id="site_email" class="form-control" placeholder="Siet Email" value="" maxlength="255">
+                                    <input type="text" name="site_email" id="site_email" class="form-control" placeholder="Siet Email" value="<?php if(isset($job_details)){echo $job_details->site_email;}?>" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Telephone</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_telephone" id="site_telephone" class="form-control" placeholder="Siet Telephone" value="" maxlength="255">
+                                    <input type="text" name="site_telephone" id="site_telephone" class="form-control" placeholder="Siet Telephone" value="<?php if(isset($job_details)){echo $job_details->site_telephone;}?>" maxlength="255">
                                 </div>
                             </div> 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Mobile</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_mobile" id="site_mobile" class="form-control" placeholder="Siet Mobile" value="" maxlength="255">
+                                    <input type="text" name="site_mobile" id="site_mobile" class="form-control" placeholder="Siet Mobile" value="<?php if(isset($job_details)){echo $job_details->site_mobile;}?>" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Address</label>
                                 <div class="col-lg-9">
-                                    <textarea name="site_address" id="site_address" id="site_address" placeholder="Siet Address" class="form-control" rows="5" cols="10"></textarea>
+                                    <textarea name="site_address" id="site_address" id="site_address" placeholder="Siet Address" class="form-control" rows="5" cols="10"><?php if(isset($job_details)){echo $job_details->site_address;}?></textarea>
                                 </div>
                             </div>  
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">City</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_city" id="site_city" class="form-control" placeholder="Siet City" value="" maxlength="255">
+                                    <input type="text" name="site_city" id="site_city" class="form-control" placeholder="Siet City" value="<?php if(isset($job_details)){echo $job_details->site_city;}?>" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Country</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_country" id="site_country" class="form-control" placeholder="Siet Country" value="" maxlength="255">
+                                    <input type="text" name="site_country" id="site_country" class="form-control" placeholder="Siet Country" value="<?php if(isset($job_details)){echo $job_details->site_country;}?>" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Pincode</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_pincode" id="site_pincode" class="form-control" placeholder="Siet Pincode" value="" maxlength="255">
+                                    <input type="text" name="site_pincode" id="site_pincode" class="form-control" placeholder="Siet Pincode" value="<?php if(isset($job_details)){echo $job_details->site_pincode;}?>" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Notes</label>
                                 <div class="col-lg-9">
-                                    <textarea name="notes" id="notes" class="form-control" rows="5" cols="10"></textarea>
+                                    <textarea name="notes" id="notes" class="form-control" rows="5" cols="10"><?php if(isset($job_details)){echo $job_details->notes;}?></textarea>
                                 </div>
                             </div>
                             <label>Jobs Details</label> 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Customer Ref</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="cust_ref" id="cust_ref" class="form-control" placeholder="Customer Ref If any" value="" maxlength="255">
+                                    <input type="text" name="cust_ref" id="cust_ref" class="form-control" placeholder="Customer Ref If any" value="<?php if(isset($job_details)){echo $job_details->customer_ref;}?>" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Customer Job Ref</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="cust_job_ref" id="cust_job_ref" class="form-control" placeholder="Customer Job Ref If any" value="" maxlength="255">
+                                    <input type="text" name="cust_job_ref" id="cust_job_ref" class="form-control" placeholder="Customer Job Ref If any" value="<?php if(isset($job_details)){echo $job_details->cust_job_ref;}?>" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Purch. Order Ref</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="order_ref" id="order_ref" class="form-control" placeholder="Purchase Order Ref if any" value="" maxlength="255">
+                                    <input type="text" name="order_ref" id="order_ref" class="form-control" placeholder="Purchase Order Ref if any" value="<?php if(isset($job_details)){echo $job_details->purchase_order_ref;}?>" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -326,8 +329,10 @@ padding: 5px 0px 15px 0px;
                                 <div class="col-lg-9">
                                     <select class="form-control" name="job_type" id="job_type">
 										<option disabled selected>select Job Type</option>
-                                        <option value="1">Carpentor</option>
-                                        <option value="2">Barber</option>
+                                        <?php foreach($job_type as $type){?>
+                                            <option value="{{$type->id}}" <?php if(isset($job_details) && $job_details->job_type == $type->id){echo 'selected';}?>>{{$type->name}}</option>
+                                        <?php }?>
+                                        
                                         
 									</select>
                                 </div>
@@ -337,9 +342,9 @@ padding: 5px 0px 15px 0px;
                                 <div class="col-lg-9">
                                     <select class="form-control" name="priority" id="priority">
 										<option disabled selected>select Priority</option>
-                                        <option value="1">Normal</option>
-                                        <option value="2">Medium</option>
-                                        <option value="3">None</option>
+                                        <option value="1" <?php if(isset($job_details) && $job_details->priorty == 1){echo 'selected';}?>>Normal</option>
+                                        <option value="2" <?php if(isset($job_details) && $job_details->priorty == 2){echo 'selected';}?>>Medium</option>
+                                        <option value="3" <?php if(isset($job_details) && $job_details->priorty == 3){echo 'selected';}?>>None</option>
                                         
 									</select>
                                 </div>
@@ -347,45 +352,47 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Alert Customer</label>
                                 <div class="col-lg-9">
-                                    <input type="checkbox" name="alert_cust" id="alert_cust" value=""> By Email
+                                    <input type="checkbox" name="alert_cust" id="alert_cust" value="0" <?php if(isset($job_details) && $job_details->alert_customer == 1){echo 'checked';}?>> By Email
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">On Rout SMS Alert</label>
                                 <div class="col-lg-9">
-                                    <input type="radio" name="sms" id="sms" value="1"> Yes
-                                    <input type="radio" name="sms" id="sms1" value="2" checked> No
+                                    <input type="radio" name="sms" id="sms" value="1" <?php if(isset($job_details) && $job_details->on_route_sms == 1){echo 'checked';}?>> Yes
+                                    <input type="radio" name="sms" id="sms1" value="2" <?php if(isset($job_details) && $job_details->on_route_sms == 2){echo 'checked';}else{echo 'checked';}?> > No
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Start Date*</label>
                                 <div class="col-lg-9">
-                                    <input type="date" name="start_date" id="start_date" class="form-control">
+                                    <input type="date" name="start_date" id="start_date" class="form-control" value="<?php if(isset($job_details)){echo $job_details->start_date;}?>">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Complete By</label>
                                 <div class="col-lg-9">
-                                    <input type="date" name="end_date" id="end_date" class="form-control">
+                                    <input type="date" name="end_date" id="end_date" class="form-control" value="<?php if(isset($job_details)){echo $job_details->complete_by;}?>">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Tags</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="tags" id="tags" class="form-control">
+                                    <input type="text" name="tags" id="tags" class="form-control" value="<?php if(isset($job_details)){echo $job_details->tags;}?>">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Short Description <font style="color:red">*</font>(max 250 characters)</label>
                                 <div class="col-lg-9">
-                                	<textarea name="description" class="form-control" placeholder="description" rows="5" cols="10" onkeyup="get_char()" id="short_dec"></textarea>
+                                	<textarea name="description" class="form-control" placeholder="description" rows="5" cols="10" onkeyup="get_char()" id="short_dec"><?php if(isset($job_details)){echo $job_details->description;}?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Description/Instructions</label>
                                 <div class="col-lg-9">
-                                	<textarea name="short_decinc" class="form-control editor" placeholder="description" rows="5" cols="10" id="short_decinc"></textarea>
+                                	<textarea class="form-control editor" placeholder="description" rows="5" cols="10"><?php if(isset($job_details)){echo $job_details->short_decinc;}?></textarea>
+                                	<textarea name="short_decinc" class="form-control displaynone" placeholder="description" rows="5" cols="10" id="description1"></textarea>
                                 </div>
+                                
                             </div>
                             <div class="form-group col-md-12 mb-3 mt-3">
                                 <div class="custom-fieldset">
@@ -410,9 +417,21 @@ padding: 5px 0px 15px 0px;
                                                     </tr>
                                                 </thead>
                                                 <tbody id="details_pro">
+                                                    <?php if(isset($job_details) && count($jobassign_products)>0){
+                                                            foreach($jobassign_products as $v){
+                                                               $product_details=App\Models\Product::where('id',$v->product_id)->first(); 
+                                                        ?>
+                                                        <tr>
+                                                            <th>{{$product_details->product_name}}</th>
+                                                            <th>{{$product_details->description}}</th>
+                                                            <th>{{$v->qty}}</th>
+                                                            <th><a href="javascript:void(0)" class="btn btn-danger" onclick="get_delete_jobproduct({{$v->id}})">Delete</a></th>
+                                                        </tr>
+                                                    <?php }}else{?>
                                                     <tr id="temp_result1">
                                                         <td style="color:red;text-align:center" colspan="4">Sorry No data</td>
                                                     </tr>
+                                                    <?php }?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -559,13 +578,15 @@ padding: 5px 0px 15px 0px;
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Customer Notes</label>
                                         <div class="col-lg-6">
-                                            <textarea name="customer_notes" class="form-control editor" placeholder="Customer Notes" rows="5" cols="10" id="short_decinc1"></textarea>
+                                            <textarea class="form-control editor" placeholder="Customer Notes" rows="5" cols="10" id="short_decinc1"><?php if(isset($job_details)){echo $job_details->customer_notes;}?></textarea>
+                                	        <textarea name="customer_notes" class="form-control displaynone"  rows="5" cols="10" id="description2"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Internal Notes </label>
                                         <div class="col-lg-6">
-                                            <textarea name="internal_notes" class="form-control editor" placeholder="Internal Notes" rows="5" cols="10" id="short_decinc2"></textarea>
+                                            <textarea class="form-control editor" placeholder="Internal Notes" rows="5" cols="10" id="short_decinc2"><?php if(isset($job_details)){echo $job_details->internal_notes;}?></textarea>
+                                            <textarea name="internal_notes" class="form-control displaynone"  rows="5" cols="10" id="description3"></textarea>
                                         </div>
                                     </div>
                                   
@@ -576,6 +597,7 @@ padding: 5px 0px 15px 0px;
                                 <label class="col-lg-3 control-label">Attachments*</label>
                                 <div class="col-lg-9">
                                     <input type="file" name="img_upload" id="img_upload" class="form-control">
+                                    <input type="hidden" value="<?php if(isset($job_details)){echo $job_details->attachments;}?>" name="old_image">
                                 </div>
                             </div>
                             
@@ -584,7 +606,7 @@ padding: 5px 0px 15px 0px;
 									<div class="col-lg-offset-3 col-lg-10">
                                      <div class="add-admin-btn-area">   
 										<input type="hidden" name="_token" value="{{ csrf_token() }}">
-										<input type="hidden" name="id" id="id" value="">
+										<input type="hidden" name="id" id="id" value="<?php if(isset($job_details)){echo $job_details->id;}?>">
                                         <input type="hidden" name="last_job_id" id="last_job_id" value="{{ $last_job_id->id ?? '' }}">
 										<button type="button" class="btn btn-primary save-btn" onclick="get_save_data()">Save</button>
                                         
@@ -672,6 +694,7 @@ padding: 5px 0px 15px 0px;
                 console.error(error);
             });
     });
+    console.log(editors)
     </script>
 
 <script>
@@ -726,7 +749,7 @@ $(document).ready(function()
 </script>
 <script>
     function get_save_data(){
-    alert("hit hai")
+    // alert("hit hai")
     var id = $('#id').val();
     var Customer_id = $('#customer_id').val();
     var name = $("#name").val();
@@ -812,6 +835,9 @@ $(document).ready(function()
         firstErrorField.focus();
         return false;
     } else {
+        editors.forEach((editor, index) => {
+            $(`#description${index + 1}`).val(editor.getData());
+        });
         $.ajax({
             type: "POST",
             url: "{{url('admin/job_save_data')}}",
@@ -881,6 +907,29 @@ function get_search(){
     }
     function get_data_product(){
         $('#product_model').modal('hide');  
+    }
+
+    $('#alert_cust').change(function(){
+    var alert_cust = $('#alert_cust');
+        if($('#alert_cust').is(':checked')){
+            alert_cust.val(1);
+        }
+    });
+    function get_delete_jobproduct(id){
+        if(confirm("Do you want to delete it ?")){
+        var token='<?php echo csrf_token();?>'
+            $.ajax({  
+                type:"POST",
+                url:"{{url('admin/get_delete_jobproduct')}}",
+                data:{id:id,_token:token},
+                success:function(data)
+                {
+                    console.log(data);
+                    window.location.reload();
+                    
+                }
+            });
+        }
     }
 </script>	
 

@@ -96,7 +96,7 @@
                                         if(count($jobs) == 0){ ?>
                                             <?php
                                                 echo '<tr style="text-align:center">
-                                                      <td colspan="4">No Job found.</td>
+                                                      <td colspan="6">No Job found.</td>
                                                       </tr>';
                                             ?>
                                         <?php 
@@ -120,7 +120,7 @@
                                                 @endif
                                             </td>
                                             <td class="action-icn">
-                                                <a href="{{ url('admin/users/edit/'.$value->id) }}" class="edit"><span style= "font-size: 13px; color: #000;"><span style= "color: #000"><i data-toggle="tooltip" title="Edit" class="fa fa-edit fa-lg"></i></span></a> &nbsp &nbsp &nbsp 
+                                                <a href="{{ url('admin/job_add?key=') }}{{base64_encode($value->id)}}" class="edit"><span style= "font-size: 13px; color: #000;"><span style= "color: #000"><i data-toggle="tooltip" title="Edit" class="fa fa-edit fa-lg"></i></span></a> &nbsp &nbsp &nbsp 
 
                                                 <a href="javascript:" onclick="delete_job('{{base64_encode($value->id)}}')" class="text-danger"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o fa-lg"></i></a>
                                              

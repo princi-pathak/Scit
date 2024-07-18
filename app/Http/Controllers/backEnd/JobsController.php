@@ -86,8 +86,12 @@ class JobsController extends Controller
         $data['del_status']=0;
         $data['projects']=Project::where('status',1)->get();
         $data['last_job_id']=Job::orderBy('id','DESC')->first();
-        // echo "<pre>";print_r($data['last_job_id']);die;
+        $data['job_details']=Job::find($key);
+        $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1])->get();
+        $data['job_type']=Job_type::where('status',1)->get();
+        // echo "<pre>";print_r($data['job_details']);die;
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')->join('product_categories as cat','cat.id','=','pr.cat_id')->get();
+        // echo "<pre>";print_r($data['product_details1']);die;
         return view('backEnd.jobs_management.job_form',$data);
     }
     public function search_value(Request $request){
@@ -104,7 +108,7 @@ class JobsController extends Controller
         }
     }
     public function job_save_data(Request $request){
-        echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());die;
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if ($request->hasFile('img_upload')) {
@@ -127,6 +131,8 @@ class JobsController extends Controller
             $table->project_id=$request->project_id;
             $table->contact=$request->mobile;
             $table->telephone=$request->telephone;
+            $table->email=$request->email;
+            $table->short_decinc=$request->short_decinc;
             $table->description=$request->description;
             $table->address=$request->address;
             $table->city=$request->city;
@@ -169,11 +175,69 @@ class JobsController extends Controller
             }
             echo "done";
         }else {
-
+            $table=Job::find($request->id);
+            $table->home_id=$home_id;
+            $table->name=$request->name;
+            $table->customer_id=$request->customer_id;
+            $table->job_ref=$job_ref;
+            $table->project_id=$request->project_id;
+            $table->contact=$request->mobile;
+            $table->telephone=$request->telephone;
+            $table->email=$request->email;
+            $table->short_decinc=$request->short_decinc;
+            $table->description=$request->description;
+            $table->address=$request->address;
+            $table->city=$request->city;
+            $table->country=$request->country;
+            $table->pincode=$request->pincode;
+            $table->site_id=$request->site_id;
+            $table->region=$request->region;
+            $table->company=$request->company_id;
+            $table->conatact_name=$request->conatact_name;
+            $table->site_email=$request->site_email;
+            $table->site_telephone=$request->site_telephone;
+            $table->site_mobile=$request->site_mobile;
+            $table->site_address=$request->site_address;
+            $table->site_city=$request->site_city;
+            $table->site_country=$request->site_country;
+            $table->site_pincode=$request->site_pincode;
+            $table->notes=$request->notes;
+            $table->customer_ref=$request->cust_ref;
+            $table->purchase_order_ref=$request->order_ref;
+            $table->cust_job_ref=$request->cust_job_ref;
+            $table->job_type=$request->job_type;
+            $table->priorty=$request->priority;
+            $table->alert_customer=$request->alert_cust;
+            $table->on_route_sms=$request->sms;
+            $table->start_date=$request->start_date;
+            $table->complete_by=$request->end_date;
+            $table->tags=$request->tags;
+            $table->customer_notes=$request->customer_notes;
+            $table->internal_notes=$request->internal_notes;
+            $table->attachments=$imageName;
+            $table->save();
+            // echo "<pre>";print_r($table);die;
+            $product_detail_id=$request->product_detail_id;
+            if(isset($product_detail_id) && $product_detail_id !=''){
+                for($i=0;$i<count($product_detail_id);$i++){
+                    $table1=new Construction_jobassign_product;
+                    $table1->job_id=$table->id;
+                    $table1->product_id=$product_detail_id[$i];
+                    $table1->qty=$request->quantity[$i];
+                    $table1->save();
+                }
+            }
+            echo "done";
         }
 
-        
-
+    }
+    public function get_delete_jobproduct(Request $request){
+        $id=$request->id;
+        $table=Construction_jobassign_product::find($id);
+        $table->status=2;
+        $table->save();
+        // Session::flash('success','Deleted Successfully Done');
+        echo "done";
     }
     public function jobs_type_list(Request $request){
         $admin   = Session::get('scitsAdminSession');
