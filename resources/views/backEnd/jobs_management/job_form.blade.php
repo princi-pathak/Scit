@@ -134,6 +134,7 @@ padding: 5px 0px 15px 0px;
                                         <option value="4">Customer-4</option>
                                         
 									</select>
+                                    <p style="color:red;display:none" id="Customer_idError">* Customer is Required Field *</p>
                                 </div>
                             </div>  
                             
@@ -146,6 +147,7 @@ padding: 5px 0px 15px 0px;
                                         <option value="{{$val->id}}">{{$val->project_name}}</option>
                                         <?php }?>
 									</select>
+                                    <p style="color:red;display:none" id="project_idError">* Project is Required Field *</p>
                                 </div>
                             </div> 
                             <div class="form-group">
@@ -156,62 +158,70 @@ padding: 5px 0px 15px 0px;
                                         <option value="2">None</option>
                                         
 									</select>
+                                    <p style="color:red;display:none" id="contact_idError">* Contact is Required Field *</p>
                                 </div>
                             </div>   
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Name*</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="name" class="form-control" placeholder="Name" value="" maxlength="255">
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="" maxlength="255">
+                                    <p style="color:red;display:none" id="nameError">* Name is Required Field *</p>
                                 </div>
                             </div>                            
                                           
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="email" class="form-control" placeholder="job title" value="" maxlength="255">
+                                    <input type="text" name="email" id="email" class="form-control" placeholder="Email" value="">
+                                    <p style="color:red;display:none" id="emailError">* Email is Required Field *</p>
                                 </div>
                             </div> 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Telephone</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="telephone" class="form-control" placeholder="Telephone" value="" maxlength="255">
+                                    <input type="text" name="telephone" id="telephone" class="form-control" placeholder="Telephone" value="" maxlength="255">
+                                    <p style="color:red;display:none" id="telephoneError">* Telephone is Required Field *</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Mobile</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="mobile" class="form-control" placeholder="Mobile" value="" maxlength="255">
+                                    <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile" value="" maxlength="255">
+                                    <p style="color:red;display:none" id="mobileError">* Mobile is Required Field *</p>
                                 </div>
                             </div>  
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Mobile</label>
+                                <label class="col-lg-3 control-label">Address</label>
                                 <div class="col-lg-9">
                                     <textarea name="address" id="address" class="form-control" rows="5" cols="10"></textarea>
+                                    <p style="color:red;display:none" id="addressError">* Address is Required Field *</p>
                                 </div>
                             </div>  
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">City</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="city" class="form-control" placeholder="City" value="" maxlength="255">
+                                    <input type="text" name="city" id="city" class="form-control" placeholder="City" value="" maxlength="255">
+                                    <p style="color:red;display:none" id="cityError">* City is Required Field *</p>
                                 </div>
                             </div>   
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Country</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="country" class="form-control" placeholder="Country" value="" maxlength="255">
+                                    <input type="text" name="country" id="country" class="form-control" placeholder="Country" value="" maxlength="255">
+                                    <p style="color:red;display:none" id="countryError">* Country is Required Field *</p>
                                 </div>
                             </div> 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Pincode</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="pincode" class="form-control" placeholder="Pincode" value="" maxlength="255">
+                                    <input type="text" name="pincode" id="pincode" class="form-control" placeholder="Pincode" value="" maxlength="255">
                                 </div>
                             </div>     
                             <label>Site Details</label>                      
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Site</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" name="site_id">
+                                    <select class="form-control" name="site_id" id="site_id">
 										<option desabled selected>select Site</option>
                                         <option value="1">Site-1</option>
                                         <option value="2">Site-2</option>
@@ -224,13 +234,13 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Region</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="region" class="form-control" placeholder="Region" value="" maxlength="255">
+                                    <input type="text" name="region" id="region" class="form-control" placeholder="Region" value="" maxlength="255">
                                 </div>
                             </div>  
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Company</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" name="company_id">
+                                    <select class="form-control" name="company_id" id="company_id">
 										<option desabled selected>select Company</option>
                                         <option value="1">Company-7</option>
                                         <option value="2">Company-8</option>
@@ -241,49 +251,49 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Contact Name</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="conatact_name" class="form-control" placeholder="Contact Name" value="" maxlength="255">
+                                    <input type="text" name="conatact_name" id="conatact_name" class="form-control" placeholder="Contact Name" value="" maxlength="255">
                                 </div>
                             </div> 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_email" class="form-control" placeholder="Siet Email" value="" maxlength="255">
+                                    <input type="text" name="site_email" id="site_email" class="form-control" placeholder="Siet Email" value="" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Telephone</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_telephone" class="form-control" placeholder="Siet Telephone" value="" maxlength="255">
+                                    <input type="text" name="site_telephone" id="site_telephone" class="form-control" placeholder="Siet Telephone" value="" maxlength="255">
                                 </div>
                             </div> 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Mobile</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_mobile" class="form-control" placeholder="Siet Mobile" value="" maxlength="255">
+                                    <input type="text" name="site_mobile" id="site_mobile" class="form-control" placeholder="Siet Mobile" value="" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Address</label>
                                 <div class="col-lg-9">
-                                    <textarea name="site_address" id="site_address" placeholder="Siet Address" class="form-control" rows="5" cols="10"></textarea>
+                                    <textarea name="site_address" id="site_address" id="site_address" placeholder="Siet Address" class="form-control" rows="5" cols="10"></textarea>
                                 </div>
                             </div>  
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">City</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_city" class="form-control" placeholder="Siet City" value="" maxlength="255">
+                                    <input type="text" name="site_city" id="site_city" class="form-control" placeholder="Siet City" value="" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Country</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_country" class="form-control" placeholder="Siet Country" value="" maxlength="255">
+                                    <input type="text" name="site_country" id="site_country" class="form-control" placeholder="Siet Country" value="" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Pincode</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="site_pincode" class="form-control" placeholder="Siet Pincode" value="" maxlength="255">
+                                    <input type="text" name="site_pincode" id="site_pincode" class="form-control" placeholder="Siet Pincode" value="" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -296,26 +306,26 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Customer Ref</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="cust_ref" class="form-control" placeholder="Customer Ref If any" value="" maxlength="255">
+                                    <input type="text" name="cust_ref" id="cust_ref" class="form-control" placeholder="Customer Ref If any" value="" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Customer Job Ref</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="cust_job_ref" class="form-control" placeholder="Customer Job Ref If any" value="" maxlength="255">
+                                    <input type="text" name="cust_job_ref" id="cust_job_ref" class="form-control" placeholder="Customer Job Ref If any" value="" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Purch. Order Ref</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="order_ref" class="form-control" placeholder="Purchase Order Ref if any" value="" maxlength="255">
+                                    <input type="text" name="order_ref" id="order_ref" class="form-control" placeholder="Purchase Order Ref if any" value="" maxlength="255">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Job Type</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" name="job_type">
-										<option desabled selected>select Job Type</option>
+                                    <select class="form-control" name="job_type" id="job_type">
+										<option disabled selected>select Job Type</option>
                                         <option value="1">Carpentor</option>
                                         <option value="2">Barber</option>
                                         
@@ -325,8 +335,8 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Priority</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" name="priority">
-										<option desabled selected>select Priority</option>
+                                    <select class="form-control" name="priority" id="priority">
+										<option disabled selected>select Priority</option>
                                         <option value="1">Normal</option>
                                         <option value="2">Medium</option>
                                         <option value="3">None</option>
@@ -337,32 +347,32 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Alert Customer</label>
                                 <div class="col-lg-9">
-                                    <input type="checkbox" name="alert_cust" class="" value=""> By Email
+                                    <input type="checkbox" name="alert_cust" id="alert_cust" value=""> By Email
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">On Rout SMS Alert</label>
                                 <div class="col-lg-9">
-                                    <input type="radio" name="sms" class="" value="1"> Yes
-                                    <input type="radio" name="sms" class="" value="2"> No
+                                    <input type="radio" name="sms" id="sms" value="1"> Yes
+                                    <input type="radio" name="sms" id="sms1" value="2" checked> No
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Start Date*</label>
                                 <div class="col-lg-9">
-                                    <input type="date" name="start_date" class="form-control">
+                                    <input type="date" name="start_date" id="start_date" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Complete By</label>
                                 <div class="col-lg-9">
-                                    <input type="date" name="end_date" class="form-control">
+                                    <input type="date" name="end_date" id="end_date" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Tags</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="tags" class="form-control">
+                                    <input type="text" name="tags" id="tags" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -374,7 +384,7 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Description/Instructions</label>
                                 <div class="col-lg-9">
-                                	<textarea name="description" class="form-control" placeholder="description" rows="5" cols="10" onkeyup="get_char()" id="short_decinc"></textarea>
+                                	<textarea name="short_decinc" class="form-control editor" placeholder="description" rows="5" cols="10" id="short_decinc"></textarea>
                                 </div>
                             </div>
                             <div class="form-group col-md-12 mb-3 mt-3">
@@ -410,7 +420,7 @@ padding: 5px 0px 15px 0px;
                                 </div>
                             </div>
                             <!-- Appointments -->
-                            <div class="col-sm-12">
+                            <!-- <div class="col-sm-12">
                                     <div class="productDetailTable pt-3">
                                         <table class="table table-bordered">
                                             <thead class="table-light">
@@ -539,9 +549,29 @@ padding: 5px 0px 15px 0px;
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> -->
                             <!-- end -->
                             
+                            <div class="form-group col-md-12 mb-3 mt-3">
+                                <div class="custom-fieldset">
+                                    <div class="custom-legend">Notes</div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Customer Notes</label>
+                                        <div class="col-lg-6">
+                                            <textarea name="customer_notes" class="form-control editor" placeholder="Customer Notes" rows="5" cols="10" id="short_decinc1"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Internal Notes </label>
+                                        <div class="col-lg-6">
+                                            <textarea name="internal_notes" class="form-control editor" placeholder="Internal Notes" rows="5" cols="10" id="short_decinc2"></textarea>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Attachments*</label>
                                 <div class="col-lg-9">
@@ -554,7 +584,8 @@ padding: 5px 0px 15px 0px;
 									<div class="col-lg-offset-3 col-lg-10">
                                      <div class="add-admin-btn-area">   
 										<input type="hidden" name="_token" value="{{ csrf_token() }}">
-										<!-- <input type="hidden" name="user_id" value=""> -->
+										<input type="hidden" name="id" id="id" value="">
+                                        <input type="hidden" name="last_job_id" id="last_job_id" value="{{ $last_job_id->id ?? '' }}">
 										<button type="button" class="btn btn-primary save-btn" onclick="get_save_data()">Save</button>
                                         
                                         <a href="{{ url('admin/jobs_list') }}">
@@ -631,7 +662,7 @@ padding: 5px 0px 15px 0px;
 <script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
 <script>
     let editors = [];
-    document.querySelectorAll('#short_decinc').forEach((element, index) => {
+    document.querySelectorAll('.editor').forEach((element, index) => {
         ClassicEditor
             .create(element)
             .then(editor => {
@@ -695,17 +726,21 @@ $(document).ready(function()
 </script>
 <script>
     function get_save_data(){
+    alert("hit hai")
     var id = $('#id').val();
-    var Customer_id = $('#Customer_id').val();
+    var Customer_id = $('#customer_id').val();
     var name = $("#name").val();
-    var start_date=$("#start_date").val();
-    var end_date=$("#end_date").val();
-    var project_value=$("#project_value").val();
-    var description = $("#description").val();
-    var catalogue_id=$("#catalogue_id").val();
+    var project_id=$('#project_id').val();
+    var contact_id=$("#contact_id").val();
+    var email=$("#email").val();
+    var telephone=$("#telephone").val();
+    var mobile=$("#mobile").val();
+    var address=$("#address").val();
+    var city=$("#city").val();
+    var country=$("#country").val();
+
     var token = '<?php echo csrf_token();?>';
     var firstErrorField = null;
-
     if (Customer_id == '' || Customer_id == null) {
         $("#Customer_idError").show();
         if (!firstErrorField) firstErrorField = $('#Customer_id');
@@ -720,39 +755,57 @@ $(document).ready(function()
         $("#nameError").hide();
     }
 
-    if (start_date == '') {
-        $("#start_dateError").show();
-        if (!firstErrorField) firstErrorField = $('#start_date');
+    if (project_id == '' || project_id == null) {
+        $("#project_idError").show();
+        if (!firstErrorField) firstErrorField = $('#project_id');
     } else {
-        $("#start_dateError").hide();
+        $("#project_idError").hide();
     }
 
-    if (end_date == '') {
-        $("#end_dateError").show();
-        if (!firstErrorField) firstErrorField = $('#end_date');
+    if (contact_id == '' || contact_id == null) {
+        $("#contact_idError").show();
+        if (!firstErrorField) firstErrorField = $('#contact_id');
     } else {
-        $("#end_dateError").hide();
+        $("#contact_idError").hide();
     }
 
-    if (project_value == '') {
-        $("#project_valueError").show();
-        if (!firstErrorField) firstErrorField = $('#project_value');
+    if (email == '') {
+        $("#emailError").show();
+        if (!firstErrorField) firstErrorField = $('#email');
     } else {
-        $("#project_valueError").hide();
+        $("#emailError").hide();
     }
 
-    if (description == '') {
-        $("#descriptionError").show();
-        if (!firstErrorField) firstErrorField = $('#description');
+    if (telephone == '') {
+        $("#telephoneError").show();
+        if (!firstErrorField) firstErrorField = $('#telephone');
     } else {
-        $("#descriptionError").hide();
+        $("#telephoneError").hide();
     }
 
-    if (catalogue_id == '' || catalogue_id == null) {
-        $("#catalogue_idError").show();
-        if (!firstErrorField) firstErrorField = $('#catalogue_id');
+    if (mobile == '') {
+        $("#mobileError").show();
+        if (!firstErrorField) firstErrorField = $('#mobile');
     } else {
-        $("#catalogue_idError").hide();
+        $("#mobileError").hide();
+    }
+    if (address == '') {
+        $("#addressError").show();
+        if (!firstErrorField) firstErrorField = $('#address');
+    } else {
+        $("#addressError").hide();
+    }
+    if (city == '') {
+        $("#cityError").show();
+        if (!firstErrorField) firstErrorField = $('#city');
+    } else {
+        $("#cityError").hide();
+    }
+    if (country == '') {
+        $("#countryError").show();
+        if (!firstErrorField) firstErrorField = $('#country');
+    } else {
+        $("#countryError").hide();
     }
 
     if (firstErrorField) {
