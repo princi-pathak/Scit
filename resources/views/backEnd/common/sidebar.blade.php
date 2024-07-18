@@ -1,3 +1,10 @@
+<style>
+    ul.sidebar-menu li ul.sub.pdlft {
+        padding-left: 36px;
+        list-style: none;
+        background-color: #202025;
+    }
+    </style>
 <!-- sidebar start -->
 <?php $super_admin = Session::get('scitsAdminSession')->access_type;  ?>
 <aside> 
@@ -251,10 +258,7 @@
                         </li>
                         <li class="{{ ($page == 'supplier_list') ? 'active' : '' }}">
                             <a href="{{ url('admin/supplier_list') }}">Supplier </a>
-                        </li> -->
-
-                        
-                        
+                        </li> --> 
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -263,8 +267,13 @@
                         <span>Setting</span>
                     </a>
                     <ul class="sub">
-                        <li class="{{ ($page == 'Lead Reject Type') ? 'active' : '' }}">
+                        <li  class="sub-menu {{ ($page == 'Lead Reject Type') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Lead Reject Type </a>
+                            <!-- <ul class="sub pdlft">
+                                <li><a href="#!">Leads2222</a></li>
+                                <li><a href="#!">Leads2222</a></li>
+                                <li><a href="#!">Leads2222</a></li>    
+                            </ul> -->
                         </li>
                         <li class="{{ ($page == 'Lead Status') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/leads/lead_status') }}">Lead Status </a>
@@ -295,7 +304,7 @@
                         </li>
                     </ul>
                 </li>            
-
+            
                 <!-- <li>
                     <a href="login.html">
                         <i class="fa fa-user"></i>

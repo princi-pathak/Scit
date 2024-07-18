@@ -59,7 +59,8 @@ class LeadController extends Controller
         $page = "Leads";
         $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
         $status = LeadStatus::where('deleted_at', null)->get();
-        return view('backEnd/salesFinance/leads/leads_form',compact('page','users', 'status'));
+        $sources = LeadSource::where('deleted_at', null)->get();
+        return view('backEnd/salesFinance/leads/leads_form',compact('page','users', 'status', 'sources'));
     }
 
     public function store(Request $request){
@@ -145,9 +146,9 @@ class LeadController extends Controller
     }
 
     public function saveLeadRejectType(Request $request){
-
+       
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255|unique:lead_reject_types,title',
+            'title' => 'required|string|max:255',
             'status' => 'required|boolean',
         ]);
 
@@ -164,6 +165,7 @@ class LeadController extends Controller
             return response()->json(['message' => 'Lead Reject Type added successfully!']);
         }
     }
+    
     public function lead_reject_type_delete($id){
         $affectedRows  = LeadRejectType::where('id', $id)->update(['deleted_at' => Carbon::now()]);
         if($affectedRows ){
