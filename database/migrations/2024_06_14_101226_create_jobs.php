@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('contact')->nullable();
             $table->string('telephone')->nullable();
+            $table->string('email')->nullable();
+            $table->longText('short_decinc')->nullable();
             $table->string('description')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
