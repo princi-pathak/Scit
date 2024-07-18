@@ -21,5 +21,19 @@ class Lead extends Model
         'prefer_date',
         'prefer_time',
     ];
+
+    public static function getAllLeadCount(){
+        $all = Lead::whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6'])->count();
+        return $all;
+    }
+
+    public static function getUnassignedCount(){
+        $all = Lead::where('assign_to', 0)->count();
+        return $all;
+    }
     
+    public static function getRejectedCount(){
+        $all = Lead::where('status', '6')->count();
+        return $all;
+    }
 }

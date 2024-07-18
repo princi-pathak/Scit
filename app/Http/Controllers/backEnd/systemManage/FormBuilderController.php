@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\backEnd\systemManage;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;    
 use Illuminate\Http\Request;
 use Session; 
 use App\DynamicFormBuilder, App\DynamicForm, App\DynamicFormLocation;  
@@ -68,9 +68,9 @@ class FormBuilderController extends Controller
     }
 
     public function add(Request $request) { 
-        
-        if($request->isMethod('post')) {     
 
+        if($request->isMethod('post')) {     
+            // dd($request);
             $data = $request->input();
           // echo "<pre>"; print_r($data); die;
             
@@ -80,28 +80,37 @@ class FormBuilderController extends Controller
                 return redirect()->back()->with('error','No input field added in the form.'); 
             }
             
-            $home_id            = Session::get('scitsAdminSession')->home_id;
-            $form               = new DynamicFormBuilder;
-            $form->home_id      = $home_id;
-            $form->title        = $data['form_title'];
-            $form->detail       = $data['form_detail'];
-            $form->location_ids = $data['form_location_ids'];
-            $form->pattern      = json_encode($data['formdata']);
-            $form->alert_field  =  $data['alert_field'];
-            $form->reminder_day =  $data['form_reminder_day'];
-            $form->send_to      =  $data['send_to'];
-            $form->logtype      =  $data['logtypes'];
+            foreach (explode(',', $data['form_home_ids']) as $homeId) {
+                $home_id            = $homeId;
+                $form               = new DynamicFormBuilder;
+                $form->home_id      = $home_id;
+                $form->home_ids     = $data['form_home_ids'];
+                $form->title        = $data['form_title'];
+                $form->detail       = $data['form_detail'];
+                $form->location_ids = $data['form_location_ids'];
+                $form->pattern      = json_encode($data['formdata']);
+                $form->alert_field  =  $data['alert_field'];
+                $form->reminder_day =  $data['form_reminder_day'];
+                $form->send_to      =  $data['send_to'];
 
-            if($form->save()) {
-                return redirect('admin/form-builder')->with('success', 'New Form added successfully.');
-            } else {
-                return redirect()->back()->with('error','Some error occurred. Please try after sometime.'); 
+                if (!$form->save()) {
+                    return redirect()->back()->with('error', 'Some error occurred. Please try again later.');
+                }
+    
+                // if($form->save()) {
+                //     return redirect('admin/form-builder')->with('success', 'New Form added successfully.');
+                // } else {
+                //     return redirect()->back()->with('error','Some error occurred. Please try after sometime.'); 
+                // }
             }
-         }
+            
+            return redirect('admin/form-builder')->with('success', 'New Form added successfully.');
+        }
          
-         $locations = DynamicFormLocation::get()->toArray();
-         $page = 'form-builder';
-         return view('backEnd.systemManage.formBuilder.form_builder_form', compact('page','locations'));
+        $locations = DynamicFormLocation::get()->toArray();
+       
+        $page = 'form-builder';
+        return view('backEnd.systemManage.formBuilder.form_builder_form', compact('page','locations'));
     }
 
     public function edit(Request $request, $form_builder_id = null) { 
@@ -135,7 +144,7 @@ class FormBuilderController extends Controller
                 $form->location_ids = $data['form_location_ids'];
                 $form->pattern      = json_encode($data['formdata']);
                 $form->alert_field  =  $data['alert_field'];
-                
+                $form->home_ids      = $data['form_home_ids'];
                 $form->reminder_day  =  $form_reminder_day;
                 $form->send_to       =  $data['send_to'];
                 $form->logtype      =  $data['logtypes'];

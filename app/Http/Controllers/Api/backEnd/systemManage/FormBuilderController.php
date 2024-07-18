@@ -98,9 +98,10 @@ class FormBuilderController extends Controller
             }
          }
          
-         $locations = DynamicFormLocation::get()->toArray();
-         $page = 'form-builder';
-         return view('backEnd.systemManage.formBuilder.form_builder_form', compact('page','locations'));
+        $locations = DynamicFormLocation::get()->toArray();
+        
+        $page = 'form-builder';
+        return view('backEnd.systemManage.formBuilder.form_builder_form', compact('page','locations'));
     }
 
     public function edit(Request $request, $form_builder_id = null) { 
