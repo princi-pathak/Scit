@@ -23,7 +23,7 @@
                                 <div class="col-lg-6">
                                     <div id="editable-sample_length" class="dataTables_length">
                                         <div class="btn-group">
-                                            <a href="users/add">
+                                            <a href="{{ url('customers.create') }}">
                                                 <button id="editable-sample_new" class="btn btn-primary">
                                                     Add Customers <i class="fa fa-plus"></i>
                                                 </button>
