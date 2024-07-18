@@ -81,11 +81,11 @@
                     <div class="form-group">
                         <input type="hidden" name="lead_reject_id" id="lead_reject_id">
                         <label class="col-lg-3 col-sm-3 ">Lead Reject Type</label>
-                        <input type="text" name="title" placeholder="Lead Reject Type" id="lead_title">
+                        <input type="text" name="title" placeholder="Lead Reject Type" id="title">
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 col-sm-3 ">Status</label>
-                        <select name="status" id="lead_status">
+                        <select name="status" id="status">
                             <option value="1">Active</option>
                             <option value="0">InActive</option>
                         </select>
@@ -106,21 +106,21 @@
             var itemTitle = $(this).data('title');
             var itemStatus = $(this).data('status');
             $('#lead_reject_id').val(itemId);
-            $('#lead_title').val(itemTitle);
-            $('#lead_status').val(itemStatus);
+            $('#title').val(itemTitle);
+            $('#status').val(itemStatus);
 
             if (itemId) {
                 // Editing existing record
                 $('#lead_reject_id').val(itemId);
-                $('#lead_title').val(itemTitle);
-                $('#lead_status').val(itemStatus);
+                $('#title').val(itemTitle);
+                $('#status').val(itemStatus);
                 $('.modal-title').text('Edit Lead Reject Type');
                 $('#saveChanges').text('Save Changes');
             } else {
                 // Adding new record (clear form fields if needed)
                 $('#lead_reject_id').val('');
-                $('#lead_title').val('');
-                $('#lead_status').val(1); // Default to Active
+                $('#title').val('');
+                $('#status').val(1); // Default to Active
                 $('.modal-title').text('Add Lead Reject Type');
                 $('#saveChanges').text('Add');
             }
