@@ -2,10 +2,6 @@
 @section('title',' :Leads From')
 @section('content')
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="{{url('public/backEnd/js/select2.min.js')}}"></script>
-<link rel="stylesheet" type="text/css" href="{{url('public/backEnd/css/select2.min.css')}}">
 
 <?php
 if (isset($lead)) {
@@ -29,46 +25,16 @@ if (isset($lead)) {
 }
 ?>
 
-
-<style type="text/css">
-    .edit-submit-btn-area .btn.btn-primary {
-        margin: 0px 10px 0px 0px;
-    }
-
-    .position-center label {
-        font-size: 20px;
-        font-weight: 500;
-    }
-
-    .position-center .assign-access {
-        font-size: 16px;
-        font-weight: 500;
-    }
-
-    .edit-submit-btn-area {
-        margin: 0px 0px 15px 0px;
-    }
-
-    .form-group .qualification-information {
-        margin: -6px 0px 0px 0px;
-    }
-
-    .required:after {
-        content: " *";
-        color: red;
-    }
-</style>
-
-
 <section id="main-content" class="">
     <section class="wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Leads
+                        Add Leads
                     </header>
                     <div class="panel-body">
+                        @include('backEnd.salesFinance.leads.leads_button')
                         <div class="position-center">
                             <form class="form-horizontal" role="form" method="Post" action="{{ $action }}" id="{{ $form_id }}">
                                 @csrf
@@ -109,12 +75,9 @@ if (isset($lead)) {
                                     <div class="col-lg-9">
                                         <select class="form-control" name="status">
                                             <option value="">Select Status</option>
-                                            <option value="Contact Later" {{ isset($lead->status) && $lead->status == "Contact Later" ? 'selected' : '' }}>Contact Later</option>
-                                            <option value="Contacted" {{ isset($lead->status) && $lead->status == "Contacted" ? 'selected' : '' }}>Contacted</option>
-                                            <option value="New" {{ isset($lead->status) && $lead->status == "New" ? 'selected' : '' }}>New</option>
-                                            <option value="Pre-Qualified" {{ isset($lead->status) && $lead->status == "Pre-Qualified" ? 'selected' : '' }}>Pre-Qualified</option>
-                                            <option value="Qualified" {{ isset($lead->status) && $lead->status == "Qualified" ? 'selected' : '' }}>Qualified</option>
-                                            <option value="Rejected" {{ isset($lead->status) && $lead->status == "Rejected" ? 'selected' : '' }}>Rejected</option>
+                                            @foreach($status as $value)
+                                                <option value="{{ $value->id }}" @if($value->id == 6) disabled @endif   {{ isset($lead->status) && $lead->status == $value->id ? 'selected' : '' }} >{{ $value->title }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

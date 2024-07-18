@@ -257,6 +257,45 @@
                         
                     </ul>
                 </li>
+                <li class="sub-menu">
+                    <a href="javascript:;" class="<?php if(($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type')){ echo 'active'; } ?>" >
+                        <i class="fa fa-cogs"></i>
+                        <span>Setting</span>
+                    </a>
+                    <ul class="sub">
+                        <li class="{{ ($page == 'Lead Reject Type') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Lead Reject Type </a>
+                        </li>
+                        <li class="{{ ($page == 'Lead Status') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/leads/lead_status') }}">Lead Status </a>
+                        </li>
+                        <li class="{{ ($page == 'Lead Sources') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/leads/lead_sources') }}">Lead Sources </a>
+                        </li>
+                        <li class="{{ ($page == 'lead_task_type') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/leads/lead_task_type') }}">Lead Task Types </a>
+                        </li>
+                        <li class="{{ ($page == 'lead_notes_type') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/leads/lead_notes_type') }}">Lead Notes Type </a>
+                        </li>
+                    </ul>
+                </li>            
+                
+                <li class="sub-menu">
+                    <a href="javascript:;" class="<?php if(($page == 'Customers') || ($page == 'Suppliers')){ echo 'active'; } ?>" >
+                        <i class="fa fa-cogs"></i>
+                        <span>Contacts</span>
+                    </a>
+                    <ul class="sub">
+                        <li class="{{ ($page == 'Customers') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Customers </a>
+                        </li>
+                        <li class="{{ ($page == 'Suppliers') ? 'active' : '' }}">
+                            <a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Suppliers </a>
+                        </li>
+                    </ul>
+                </li>            
+
                 <!-- <li>
                     <a href="login.html">
                         <i class="fa fa-user"></i>

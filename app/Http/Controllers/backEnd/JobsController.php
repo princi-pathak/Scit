@@ -16,6 +16,7 @@ use App\Models\Product_category;
 use App\Models\Construction_tax_rate;
 use App\Models\Workflow_notification;
 use App\Models\Construction_account_code;
+use App\Models\Construction_jobassign_product;
 use App\Models\Construction_product_supplier_list;
 
 class JobsController extends Controller
@@ -84,6 +85,8 @@ class JobsController extends Controller
         $data['page']='jobs_list';
         $data['del_status']=0;
         $data['projects']=Project::where('status',1)->get();
+        $data['last_job_id']=Job::orderBy('id','DESC')->first();
+        // echo "<pre>";print_r($data['last_job_id']);die;
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')->join('product_categories as cat','cat.id','=','pr.cat_id')->get();
         return view('backEnd.jobs_management.job_form',$data);
     }
@@ -102,42 +105,74 @@ class JobsController extends Controller
     }
     public function job_save_data(Request $request){
         echo "<pre>";print_r($request->all());die;
-        $customer_id=$request->customer_id;
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
-        $project_id=$request->project_id;
-        $contact_id=$request->contact_id;
-        $name=$request->name;
-        $email=$request->email;
-        $telephone=$request->telephone;
-        $mobile=$request->mobile;
-        $address=$request->address;
-        $city=$request->city;
-        $country=$request->country;
-        $pincode=$request->pincode;
-        $site_id=$request->site_id;
-        $region=$request->region;
-        $company_id=$request->company_id;
-        $conatact_name=$request->conatact_name;
-        $site_email=$request->site_email;
-        $site_telephone=$request->site_telephone;
-        $site_mobile=$request->site_mobile;
-        $site_address=$request->site_address;
-        $site_city=$request->site_city;
-        $site_country=$request->site_country;
-        $site_pincode=$request->site_pincode;
-        $notes=$request->notes;
-        $cust_ref=$request->cust_ref;
-        $cust_job_ref=$request->cust_job_ref;
-        $order_ref=$request->order_ref;
-        $job_type=$request->job_type;
-        $priority=$request->priority;
-        $alert_cust=$request->alert_cust;
-        $sms=$request->sms;
-        $start_date=$request->start_date;
-        $end_date=$request->end_date;
-        $tags=$request->tags;
-        $description=$request->description;
+        if ($request->hasFile('img_upload')) {
+            $imageName = time().'.'.$request->img_upload->extension();      
+            // $request->img_upload->move(public_path('images/jobs'), $imageName);
+        } else {
+            $imageName=$request->old_image; 
+        }
+        if($request->last_job_id == ''){
+            $job_ref="JOB-1";    
+        }else {
+            $job_ref="JOB-".$request->last_job_id+1;
+        }
+        if($request->id == ''){
+            $table=new Job;
+            $table->home_id=$home_id;
+            $table->name=$request->name;
+            $table->customer_id=$request->customer_id;
+            $table->job_ref=$job_ref;
+            $table->project_id=$request->project_id;
+            $table->contact=$request->mobile;
+            $table->telephone=$request->telephone;
+            $table->description=$request->description;
+            $table->address=$request->address;
+            $table->city=$request->city;
+            $table->country=$request->country;
+            $table->pincode=$request->pincode;
+            $table->site_id=$request->site_id;
+            $table->region=$request->region;
+            $table->company=$request->company_id;
+            $table->conatact_name=$request->conatact_name;
+            $table->site_email=$request->site_email;
+            $table->site_telephone=$request->site_telephone;
+            $table->site_mobile=$request->site_mobile;
+            $table->site_address=$request->site_address;
+            $table->site_city=$request->site_city;
+            $table->site_country=$request->site_country;
+            $table->site_pincode=$request->site_pincode;
+            $table->notes=$request->notes;
+            $table->customer_ref=$request->cust_ref;
+            $table->purchase_order_ref=$request->order_ref;
+            $table->cust_job_ref=$request->cust_job_ref;
+            $table->job_type=$request->job_type;
+            $table->priorty=$request->priority;
+            $table->alert_customer=$request->alert_cust;
+            $table->on_route_sms=$request->sms;
+            $table->start_date=$request->start_date;
+            $table->complete_by=$request->end_date;
+            $table->tags=$request->tags;
+            $table->customer_notes=$request->customer_notes;
+            $table->internal_notes=$request->internal_notes;
+            $table->attachments=$imageName;
+            $table->save();
+            // echo "<pre>";print_r($table);die;
+            $product_detail_id=$request->product_detail_id;
+            for($i=0;$i<count($product_detail_id);$i++){
+                $table1=new Construction_jobassign_product;
+                $table1->job_id=$table->id;
+                $table1->product_id=$product_detail_id[$i];
+                $table1->qty=$request->quantity[$i];
+                $table1->save();
+            }
+            echo "done";
+        }else {
+
+        }
+
+        
 
     }
     public function jobs_type_list(Request $request){
