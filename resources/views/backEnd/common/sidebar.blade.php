@@ -194,9 +194,6 @@
                         <span>Sales & Finance</span>
                     </a>
                     <ul class="sub">
-                        <!-- <li class="{{ ($page == 'customers') ? 'active' : '' }}">
-                            <a href="{{ url('admin/sales-finance/customers') }}">Customers </a>
-                        </li> -->
                         <li class="{{ ($page == 'Leads') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/leads') }}">Leads </a>
                         </li>
@@ -253,12 +250,6 @@
                         <li class="{{ ($page == 'tax_rate') ? 'active' : '' }}">
                             <a href="{{ url('admin/tax_rate') }}">% Tax Rate </a>
                         </li>
-                        <!-- <li class="{{ ($page == 'customer_list') ? 'active' : '' }}">
-                            <a href="{{ url('admin/customer_list') }}">Customer </a>
-                        </li>
-                        <li class="{{ ($page == 'supplier_list') ? 'active' : '' }}">
-                            <a href="{{ url('admin/supplier_list') }}">Supplier </a>
-                        </li> --> 
                     </ul>
                 </li>
                 <li class="sub-menu">
