@@ -926,7 +926,6 @@ function get_search(){
                 {
                     console.log(data);
                     window.location.reload();
-                    
                 }
             });
         }

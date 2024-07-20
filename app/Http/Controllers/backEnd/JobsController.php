@@ -5,19 +5,24 @@ namespace App\Http\Controllers\backEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session,DB;
+use App\Customer;
 use App\Models\Job;
 use App\Models\Product;
 use App\Models\Project;
 use App\Models\Country;
 use App\Models\Job_type;
 use App\Models\Work_flow;
+use App\Models\Job_title;
+use App\Models\Customer_type;
 use App\Models\Job_recurring;
 use App\Models\Product_category;
 use App\Models\Construction_tax_rate;
 use App\Models\Workflow_notification;
 use App\Models\Construction_account_code;
 use App\Models\Construction_jobassign_product;
+use App\Models\Construction_job_appointment_type;
 use App\Models\Construction_product_supplier_list;
+use App\Models\Construction_job_rejection_category;
 
 class JobsController extends Controller
 {
@@ -50,12 +55,15 @@ class JobsController extends Controller
                 $jobs_query = $jobs_query->where('type.name','like','%'.$search.'%');
             }
             $jobs = $jobs_query->paginate($limit);
+            $data['jobs']=$jobs;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='jobs_list';
+            return view('backEnd.jobs_management.list',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
         }
-        $data['jobs']=$jobs;
-        $data['limit']=$limit;
-        $data['search']=$search;
-        $data['page']='jobs_list';
-        return view('backEnd.jobs_management.list',$data);
+        
     }
     public function job_status_change(Request $request){
         $id=base64_decode($request->id);
@@ -113,7 +121,7 @@ class JobsController extends Controller
         $home_id = $admin->home_id;
         if ($request->hasFile('img_upload')) {
             $imageName = time().'.'.$request->img_upload->extension();      
-            // $request->img_upload->move(public_path('images/jobs'), $imageName);
+            $request->img_upload->move(public_path('images/jobs'), $imageName);
         } else {
             $imageName=$request->old_image; 
         }
@@ -264,12 +272,15 @@ class JobsController extends Controller
                 $query = $query->where('name','like','%'.$search.'%');
             }
             $jobs_type = $query->paginate($limit);
+            $data['jobs_type']=$jobs_type;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='jobs_type_list';
+            return view('backEnd.jobs_management.job_type_list',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
         }
-        $data['jobs_type']=$jobs_type;
-        $data['limit']=$limit;
-        $data['search']=$search;
-        $data['page']='jobs_type_list';
-        return view('backEnd.jobs_management.job_type_list',$data);
+        
     }
     public function job_type_status_change(Request $request){
         $id=base64_decode($request->id);
@@ -362,12 +373,15 @@ class JobsController extends Controller
                 $query = $query->where('flow_name','like','%'.$search.'%');
             }
             $flow = $query->paginate($limit);
+            $data['flow']=$flow;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='work_flow_list';
+            return view('backEnd.jobs_management.work_flow_list',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
         }
-        $data['flow']=$flow;
-        $data['limit']=$limit;
-        $data['search']=$search;
-        $data['page']='work_flow_list';
-        return view('backEnd.jobs_management.work_flow_list',$data);
+        
     }
     public function wrok_flow_status_change(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -494,16 +508,19 @@ class JobsController extends Controller
     
             // $cat = $query->paginate($limit);
             $cat = $query->paginate($limit);
+            $data['cat']=$cat;
+            // echo "<pre>";print_r($data['cat']);die;
+            // $data['category']=Product_category::where('status',1)->get();
+            // $product_category=Product_category::all();
+            // echo "<pre>";print_r($product_category);die;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='product_category';
+            return view('backEnd.jobs_management.product_category_list',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
         }
-        $data['cat']=$cat;
-        // echo "<pre>";print_r($data['cat']);die;
-        // $data['category']=Product_category::where('status',1)->get();
-        // $product_category=Product_category::all();
-        // echo "<pre>";print_r($product_category);die;
-        $data['limit']=$limit;
-        $data['search']=$search;
-        $data['page']='product_category';
-        return view('backEnd.jobs_management.product_category_list',$data);
+        
     }
     public function product_cat_status_change(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -584,12 +601,15 @@ class JobsController extends Controller
                 $query = $query->where('product_name','like','%'.$search.'%');
             }
             $product = $query->paginate($limit);
+            $data['product']=$product;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='product_list';
+            return view('backEnd.jobs_management.product_list',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
         }
-        $data['product']=$product;
-        $data['limit']=$limit;
-        $data['search']=$search;
-        $data['page']='product_list';
-        return view('backEnd.jobs_management.product_list',$data);
+        
     }
     public function product_status_change(Request $request){
         $id=base64_decode($request->id);
@@ -633,12 +653,15 @@ class JobsController extends Controller
                 $query = $query->where('name','like','%'.$search.'%');
             }
             $acc_code = $query->paginate($limit);
+            $data['acc_code']=$acc_code;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='account_codes';
+            return view('backEnd.jobs_management.account_list',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
         }
-        $data['acc_code']=$acc_code;
-        $data['limit']=$limit;
-        $data['search']=$search;
-        $data['page']='account_codes';
-        return view('backEnd.jobs_management.account_list',$data);
+        
     }
     public function account_code_add(Request $request){
         $key=base64_decode($request->key);
@@ -719,12 +742,15 @@ class JobsController extends Controller
                 $query = $query->where('name','like','%'.$search.'%');
             }
             $tax = $query->paginate($limit);
+            $data['tax']=$tax;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='tax_rate';
+            return view('backEnd.jobs_management.tax_list',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
         }
-        $data['tax']=$tax;
-        $data['limit']=$limit;
-        $data['search']=$search;
-        $data['page']='tax_rate';
-        return view('backEnd.jobs_management.tax_list',$data);
+        
     }
     public function tax_add(Request $request){
         $key=base64_decode($request->key);
@@ -933,12 +959,15 @@ class JobsController extends Controller
                 $query = $query->where('project_name','like','%'.$search.'%');
             }
             $project = $query->paginate($limit);
+            $data['project']=$project;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='project_list';
+            return view('backEnd.jobs_management.project_list',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
         }
-        $data['project']=$project;
-        $data['limit']=$limit;
-        $data['search']=$search;
-        $data['page']='project_list';
-        return view('backEnd.jobs_management.project_list',$data);
+        
     }
     public function project_add(Request $request){
         $key=base64_decode($request->key);
@@ -1039,11 +1068,319 @@ class JobsController extends Controller
                 $query = $query->where('project_name','like','%'.$search.'%');
             }
             $recurring = $query->paginate($limit);
+            $data['recurring']=$recurring;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='project_list';
+            return view('backEnd.jobs_management.recurring_job_list',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
         }
-        $data['recurring']=$recurring;
-        $data['limit']=$limit;
-        $data['search']=$search;
-        $data['page']='project_list';
-        return view('backEnd.jobs_management.recurring_job_list',$data);
+        
+    }
+    public function job_appointment_type(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $query=Construction_job_appointment_type::whereNot('status',2);
+
+            $search = '';
+
+            if(isset($request->limit)) {
+                $limit = $request->limit;
+                Session::put('page_record_limit',$limit);
+            } else {
+
+                if(Session::has('page_record_limit')){
+                    $limit = Session::get('page_record_limit');
+                } else{
+                    $limit = 20;
+                }
+            }
+            if(isset($request->search))
+            {
+                $search      = trim($request->search);
+                $query = $query->where('name','like','%'.$search.'%');
+            }
+            $appointtype = $query->paginate($limit);
+            
+            $data['appointtype']=$appointtype;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='job_appointment_type';
+            return view('backEnd.jobs_management.job_appointment_type',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
+    }
+    public function job_appointment_type_add(Request $request){
+        $key=base64_decode($request->key);
+        if($key){
+            $task='Edit';
+        }else{
+            $task='Add';
+        }
+        $data['appointmenttype']=Construction_job_appointment_type::find($key);
+        $data['task']=$task;
+        $data['page']='job_appointment_type';
+        $data['del_status']=0;
+        return view('backEnd.jobs_management.job_appointment_type_form',$data);
+    }
+    public function job_appointment_type_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($request->id == ''){
+            $table=new Construction_job_appointment_type;
+            $table->home_id=$home_id;
+            $table->name=$request->name;
+            $table->hours=$request->hours;
+            $table->minute=$request->minutes;
+            $table->auth=$request->auth;
+            $table->save();
+            Session::flash('success','Added Successfully Done');
+        }else {
+            $table=Construction_job_appointment_type::find($request->id);
+            $table->home_id=$home_id;
+            $table->name=$request->name;
+            $table->hours=$request->hours;
+            $table->minute=$request->minutes;
+            $table->auth=$request->auth;
+            $table->save();
+            Session::flash('success','Updated Successfully Done');
+        }
+        echo "done";
+    }
+    public function job_appointment_type_status_change(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id=base64_decode($request->id);
+        $status=$request->status;
+        $table=Construction_job_appointment_type::find($id);
+        $table->status=$status;
+        $table->save();
+        Session::flash('success','Status Change Successfully Done');
+        echo "done";
+    }
+    public function job_appointment_type_delete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id=base64_decode($request->id);
+        $table=Construction_job_appointment_type::find($id);
+        $table->status=2;
+        $table->save();
+        Session::flash('success','Deleted Successfully Done');
+        echo "done";
+    }
+    public function job_rejection_categories(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $query=Construction_job_rejection_category::whereNot('status',2)->orderBy('id','DESC');
+
+            $search = '';
+
+            if(isset($request->limit)) {
+                $limit = $request->limit;
+                Session::put('page_record_limit',$limit);
+            } else {
+
+                if(Session::has('page_record_limit')){
+                    $limit = Session::get('page_record_limit');
+                } else{
+                    $limit = 20;
+                }
+            }
+            if(isset($request->search))
+            {
+                $search      = trim($request->search);
+                $query = $query->where('name','like','%'.$search.'%');
+            }
+            $rejectionCat = $query->paginate($limit);
+            
+            $data['rejectionCat']=$rejectionCat;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='job_rejection_categories';
+            return view('backEnd.jobs_management.job_rejection_categories',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
+    }
+    public function job_rejection_category_add(Request $request){
+        $key=base64_decode($request->key);
+        if($key){
+            $task='Edit';
+        }else{
+            $task='Add';
+        }
+        $data['rejection']=Construction_job_rejection_category::find($key);
+        $data['task']=$task;
+        $data['page']='job_appointment_type';
+        $data['del_status']=0;
+        return view('backEnd.jobs_management.job_rejection_categories_form',$data);
+    }
+    public function job_rejection_category_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($request->id == ''){
+            $table=new Construction_job_rejection_category;
+            $table->home_id=$home_id;
+            $table->appointment_id=$request->status;
+            $table->name=$request->name;
+            $table->save();
+            Session::flash('success','Added Successfully Done');
+        }else {
+            $table=Construction_job_rejection_category::find($request->id);
+            $table->home_id=$home_id;
+            $table->appointment_id=$request->status;
+            $table->name=$request->name;
+            $table->save();
+            Session::flash('success','Updated Successfully Done');
+        }
+        echo "done";
+    }
+    public function job_rejection_category_status_change(Request $request){
+        $id=base64_decode($request->id);
+        $status=$request->status;
+        $table=Construction_job_rejection_category::find($id);
+        $table->status=$status;
+        $table->save();
+        Session::flash('success','Status Change Successfully Done');
+        echo "done";
+    }
+    public function job_rejection_category_delete(Request $request){
+        $id=base64_decode($request->id);
+        $table=Construction_job_rejection_category::find($id);
+        $table->status=2;
+        $table->save();
+        Session::flash('success','Deleted Successfully Done');
+        echo "done";
+    }
+    public function customers(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $query=Customer::whereNot('status',2)->orderBy('id','DESC');
+
+            $search = '';
+
+            if(isset($request->limit)) {
+                $limit = $request->limit;
+                Session::put('page_record_limit',$limit);
+            } else {
+
+                if(Session::has('page_record_limit')){
+                    $limit = Session::get('page_record_limit');
+                } else{
+                    $limit = 20;
+                }
+            }
+            if(isset($request->search))
+            {
+                $search      = trim($request->search);
+                $query = $query->where('name','like','%'.$search.'%');
+            }
+            $customers = $query->paginate($limit);
+            
+            $data['customers']=$customers;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='customers';
+            return view('backEnd.jobs_management.customers',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
+    }
+    public function customer_add(Request $request){
+        $key=base64_decode($request->key);
+        if($key){
+            $task='Edit';
+        }else{
+            $task='Add';
+        }
+        $data['rejection']=Customer::find($key);
+        $data['task']=$task;
+        $data['page']='customers';
+        $data['del_status']=0;
+        return view('backEnd.jobs_management.customers_form',$data);
+    }
+    public function customer_type(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $query=Customer_type::whereNot('status',2)->orderBy('id','DESC');
+
+            $search = '';
+
+            if(isset($request->limit)) {
+                $limit = $request->limit;
+                Session::put('page_record_limit',$limit);
+            } else {
+
+                if(Session::has('page_record_limit')){
+                    $limit = Session::get('page_record_limit');
+                } else{
+                    $limit = 20;
+                }
+            }
+            if(isset($request->search))
+            {
+                $search      = trim($request->search);
+                $query = $query->where('name','like','%'.$search.'%');
+            }
+            $customer_type = $query->paginate($limit);
+            
+            $data['customer_type']=$customer_type;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='customer_type';
+            return view('backEnd.jobs_management.customer_type',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
+    }
+    public function customer_type_add(Request $request){
+        $key=base64_decode($request->key);
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($key){
+            $task='Edit';
+        }else{
+            $task='Add';
+        }
+        $data['type']=Customer_type::find($key);
+        $data['task']=$task;
+        $data['page']='customer_type';
+        $data['del_status']=0;
+        $data['home_id']=$home_id;
+        return view('backEnd.jobs_management.customer_type_form',$data);
+    }
+    public function customer_type_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        Customer_type::updateOrCreate(['id' => $request->id], $request->all());
+        if(isset($request->id)){
+            Session::flash('success','Updated Successfully Done');
+        } else {
+            Session::flash('success','Added Successfully Done');
+        }
+        
+        echo "done";
+    }
+    public function customer_type_status_change(Request $request){
+        $id=base64_decode($request->id);
+        $status=$request->status;
+        $table=Customer_type::find($id);
+        $table->status=$status;
+        $table->save();
+        Session::flash('success','Status Change Successfully Done');
+        echo "done";
+    }
+    public function customer_type_delete(Request $request){
+        $id=base64_decode($request->id);
+        $table=Customer_type::find($id);
+        $table->status=2;
+        $table->save();
+        Session::flash('success','Deleted Successfully Done');
+        echo "done";
     }
 }
