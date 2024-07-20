@@ -32,7 +32,7 @@ class LeadController extends Controller
             ->select('customers.*', 'leads.*')
             ->orderBy('leads.created_at', 'desc')
             ->whereNotIn('assign_to', [0])
-            ->whereNotIn('leads.status', ['Rejected'])
+            ->whereNotIn('leads.status', ['6'])
             ->get();
         } 
         else if($lastSegment === "unassigned"){
@@ -51,15 +51,15 @@ class LeadController extends Controller
             ->get();
         }
 
-        $leadRejectTypes = LeadRejectType::where('deleted_at', null)->get();
+        $leadRejectTypes = LeadRejectType::where('deleted_at', null)->where('status', 1)->get();
 
         return view('backEnd/salesFinance/leads/leads', compact('page', 'customers', 'leadRejectTypes'));
     }
     public function create(){
         $page = "Leads";
         $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
-        $status = LeadStatus::where('deleted_at', null)->get();
-        $sources = LeadSource::where('deleted_at', null)->get();
+        $status = LeadStatus::where('deleted_at', null)->where('status', 1)->get();
+        $sources = LeadSource::where('deleted_at', null)->where('status', 1)->get();
         return view('backEnd/salesFinance/leads/leads_form',compact('page','users', 'status', 'sources'));
     }
 
@@ -135,7 +135,9 @@ class LeadController extends Controller
         ->where('leads.id', $id)
         ->first();
         $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
-        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page'));   
+        $status = LeadStatus::where('deleted_at', null)->where('status', 1)->get();
+        $sources = LeadSource::where('deleted_at', null)->where('status', 1)->get();
+        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status'));   
     }
 
     // Lead Reject Type
@@ -186,7 +188,7 @@ class LeadController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        Lead::where('lead_ref', $request->lead_ref)->update(['status' => 'Rejected']);
+        Lead::where('lead_ref', $request->lead_ref)->update(['status' => 6]);
 
         // Save form data to the database
         LeadRejectReason::updateOrCreate(['id' => $request->lead_reject_id], $request->all());
