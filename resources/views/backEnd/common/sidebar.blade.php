@@ -189,14 +189,14 @@
                     </ul>
                 </li>                     
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'customers') || ($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders')){ echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders')){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i>
                         <span>Sales & Finance</span>
                     </a>
                     <ul class="sub">
-                        <li class="{{ ($page == 'customers') ? 'active' : '' }}">
+                        <!-- <li class="{{ ($page == 'customers') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/customers') }}">Customers </a>
-                        </li>
+                        </li> -->
                         <li class="{{ ($page == 'Leads') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/leads') }}">Leads </a>
                         </li>
@@ -219,7 +219,7 @@
                 </li>                     
 
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'jobs_list') || ($page == 'jobs_type_list') || ($page == 'work_flow_list') || ($page == 'product_list') || ($page == 'project_list') || ($page == 'product_category') || ($page == 'account_codes') || ($page == 'tax_rate') || ($page == 'customer_list') || ($page == 'supplier_list') || ($page == 'job_recurring_list') ) { echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'jobs_list') || ($page == 'work_flow_list') || ($page == 'product_list') || ($page == 'project_list') || ($page == 'product_category') || ($page == 'account_codes') || ($page == 'tax_rate') || ($page == 'customer_list') || ($page == 'supplier_list') || ($page == 'job_recurring_list') ) { echo 'active'; } ?>" >
                         <i class="fa fa-briefcase"></i>
                         <span>Jobs</span>
                     </a>
@@ -228,9 +228,9 @@
                         <li class="{{ ($page == 'jobs_list') ? 'active' : '' }}">
                             <a href="{{ url('admin/jobs_list') }}">Jobs </a>
                         </li>
-                        <li class="{{ ($page == 'jobs_type_list') ? 'active' : '' }}">
+                        <!-- <li class="{{ ($page == 'jobs_type_list') ? 'active' : '' }}">
                             <a href="{{ url('admin/jobs_type_list') }}">Job Type List </a>
-                        </li>
+                        </li> -->
                         <li class="{{ ($page == 'job_recurring_list') ? 'active' : '' }}">
                             <a href="{{ url('admin/job_recurring_list') }}">Job Recurring </a>
                         </li>
@@ -262,7 +262,7 @@
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type')){ echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type') || ($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') ){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i>
                         <span>Setting</span>
                     </a>
@@ -287,17 +287,32 @@
                         <li class="{{ ($page == 'lead_notes_type') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/leads/lead_notes_type') }}">Lead Notes Type </a>
                         </li>
+                        <li  class="sub-menu ">
+                            <a href="javascript:void(0)"  <?php if(($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') ){echo 'class="active" style="color:#1fb5ad"';}?>>
+                                <i class="fa fa-road"></i><span >Jobs</span>
+                            </a>
+                            <ul class="sub pdlft">
+                                <li class="{{ ($page == 'jobs_type_list') ? 'active' : '' }}">
+                                    <a href="{{ url('admin/jobs_type_list') }}">Job Type</a>
+                                </li>
+                                <li class="sub-menu {{($page == 'job_appointment_type') ? 'active' : ''}}"><a href="{{url('admin/job_appointment_type')}}">Job Appointment Type</a></li>
+                                <li class="sub-menu {{($page == 'job_rejection_categories') ? 'active' : ''}}"><a href="{{url('admin/job_rejection_categories')}}">Appointment Rejection Categories</a></li>    
+                            </ul>
+                        </li>
                     </ul>
                 </li>            
                 
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'Customers') || ($page == 'Suppliers')){ echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'customers') || ($page == 'Suppliers') || ($page == 'customer_type') ){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i>
                         <span>Contacts</span>
                     </a>
                     <ul class="sub">
-                        <li class="{{ ($page == 'Customers') ? 'active' : '' }}">
-                            <a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Customers </a>
+                        <li class="{{ ($page == 'customers') ? 'active' : '' }}">
+                            <a href="{{ url('admin/customers') }}">Customers </a>
+                        </li>
+                        <li class="{{ ($page == 'customer_type') ? 'active' : '' }}">
+                            <a href="{{ url('admin/customer_type') }}">Customers Type</a>
                         </li>
                         <li class="{{ ($page == 'Suppliers') ? 'active' : '' }}">
                             <a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Suppliers </a>
