@@ -79,7 +79,10 @@
                                             </td>
                                             <td><a href="{{ url('admin/sales-finance/leads/edit').'/'.$customer->id }}" class="edit"><span style="color: #000;"><i data-toggle="tooltip" title="Edit" class="fa fa-edit fa-lg"></i></a>
                                                 <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-lead_ref="{{ $customer->lead_ref }}" data-target="#rejectModal" class="fa fa-times fa-lg open-modal"></i></a>
-                                                <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-target="#secondModal" class="fa fa-times fa-lg"></i></a>
+                                                <!-- <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-target="#secondModal" class="fa fa-times fa-lg"></i></a> -->
+                                                <a href="#" class="reject"><i data-toggle="modal" title="Authorization" data-target="#secondModal" class="fa fa-lock fa-lg"></i></a>
+
+                                                
                                                 <a href="" class="delete"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o fa-lg"></i></a>
                                             </td>
                                         </tr>
@@ -211,6 +214,7 @@
                 success: function(response) {
                     alert(response.message);
                     $('#secondModal').modal('hide'); 
+                    location.reload();
                 },
                 error: function(xhr, status, error) {
                     console.error(error);

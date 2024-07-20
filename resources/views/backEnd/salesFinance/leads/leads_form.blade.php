@@ -57,10 +57,6 @@ if (isset($lead)) {
                                             @foreach($sources as $value)
                                                 <option value="{{ $value->id }}"  {{ isset($lead->source) && $lead->source == $value->id ? 'selected' : '' }} >{{ $value->title }}</option>
                                             @endforeach
-                                            <!-- <option value="Checkatrade" {{ isset($lead->source) && $lead->source == "Checkatrade" ? 'selected' : '' }}>Checkatrade</option>
-                                            <option value="Current Customer" {{ isset($lead->source) && $lead->source  == "Current Customer" ? 'selected' : '' }}>Current Customer</option>
-                                            <option value="Telephone" {{ isset($lead->source) && $lead->source == "Telephone" ? 'selected' : '' }}>Telephone</option>
-                                            <option value="Website" {{ isset($lead->source) && $lead->source  == "Website" ? 'selected' : '' }}>Website</option> -->
                                         </select>
                                     </div>
                                 </div>
@@ -77,8 +73,10 @@ if (isset($lead)) {
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Preferred date to call</label>
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-3">
                                         <input type="date" name="prefer_date" class="form-control" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}" >
+                                    </div>
+                                    <div class="col-lg-3">
                                         <input type="time" name="prefer_time" class="form-control" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}" >
                                     </div>
                                 </div>
