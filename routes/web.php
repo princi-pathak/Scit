@@ -921,6 +921,24 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::match(['get','post'],'/job_recurring_list','App\Http\Controllers\backEnd\JobsController@job_recurring_list');
 
 	// end here
+	Route::match(['get','post'],'/job_appointment_type','App\Http\Controllers\backEnd\JobsController@job_appointment_type');
+	Route::get('/job_appointment_type_add','App\Http\Controllers\backEnd\JobsController@job_appointment_type_add');
+	Route::post('/job_appointment_type_save','App\Http\Controllers\backEnd\JobsController@job_appointment_type_save');
+	Route::post('/job_appointment_type_status_change','App\Http\Controllers\backEnd\JobsController@job_appointment_type_status_change');
+	Route::post('/job_appointment_type_delete','App\Http\Controllers\backEnd\JobsController@job_appointment_type_delete');
+	Route::match(['get','post'],'/job_rejection_categories','App\Http\Controllers\backEnd\JobsController@job_rejection_categories');
+	Route::get('/job_rejection_category_add','App\Http\Controllers\backEnd\JobsController@job_rejection_category_add');
+	Route::post('/job_rejection_category_save','App\Http\Controllers\backEnd\JobsController@job_rejection_category_save');
+	Route::post('/job_rejection_category_status_change','App\Http\Controllers\backEnd\JobsController@job_rejection_category_status_change');
+	Route::post('/job_rejection_category_delete','App\Http\Controllers\backEnd\JobsController@job_rejection_category_delete');
+
+	Route::match(['get','post'],'/customers','App\Http\Controllers\backEnd\JobsController@customers');
+	Route::get('customer_add','App\Http\Controllers\backEnd\JobsController@customer_add');
+	Route::match(['get','post'],'/customer_type','App\Http\Controllers\backEnd\JobsController@customer_type');
+	Route::get('/customer_type_add','App\Http\Controllers\backEnd\JobsController@customer_type_add');
+	Route::post('/customer_type_save','App\Http\Controllers\backEnd\JobsController@customer_type_save');
+	Route::post('/customer_type_status_change','App\Http\Controllers\backEnd\JobsController@customer_type_status_change');
+	Route::post('/customer_type_delete','App\Http\Controllers\backEnd\JobsController@customer_type_delete');
 
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');
