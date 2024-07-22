@@ -23,7 +23,7 @@
                 <div class="row gx-0 d-none d-lg-flex">
                     <div class="col-lg-2 px-3 text-start">
                         <div class="h-100 d-inline-flex align-items-center py-1 ms-3">
-                            <a href="index.html" class="brand_logo"><img src="{{ url('public/images/ewm_logo.png')}}"
+                            <a href="#!" class="brand_logo"><img src="{{ url('public/images/ewm_logo.png')}}"
                                     alt="ewm_logo"></a>
                         </div>
                     </div>
@@ -106,8 +106,8 @@
                                 </div>
                             </div>
 
-
-                            <a href="{{url('planner_day')}}" class="nav-item nav-link dropdown-toggle">
+                            <!-- {{url('planner_day')}} -->
+                            <a href="#!" class="nav-item nav-link dropdown-toggle">
                                 <span><i class="material-symbols-outlined"> planner_review </i></span>
                                 Planner
                             </a>

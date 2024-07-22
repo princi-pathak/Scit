@@ -93,10 +93,10 @@
                                     <td></td>
                                     <td>{{++$key}}</td>
                                     <td><a href="#!">{{$val->job_ref}}</a></td>
-                                    <td>{{$job_type_detail->name}}</td>
-                                    <td>{{$customer_name->name}}</td>
+                                    <td><?php echo $job_type_detail->name ?? ''; ?></td>
+                                    <td><?php echo $customer_name->name ?? ''; ?></td>
                                     <td>...</td>
-                                    <td>{{$product_details->description}}</td>
+                                    <td><?php echo $product_details->description ?? ''; ?></td>
                                     <td>Byme and King Limited 2-3 Euston Grove Wirral SN5 4HU</td>
                                     <td><span class="danger">Dave Taylor-26/04/2017 16:00-23:00 General - Awaiting</span></td>
                                     <td>{{$val->complete_by}}</td>
