@@ -83,11 +83,11 @@
                     <div class="form-group">
                         <input type="hidden" name="lead_source_id" id="lead_source_id">
                         <label class="col-lg-3 col-sm-3 ">Lead Source</label>
-                        <input type="text" name="title" placeholder="Lead Source" id="title">
+                        <input type="text" name="title" class="form-control" placeholder="Lead Source" id="title">
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 col-sm-3 ">Status</label>
-                        <select name="status" id="status">
+                        <select name="status" id="status" class="form-control">
                             <option value="1">Active</option>
                             <option value="0">InActive</option>
                         </select>

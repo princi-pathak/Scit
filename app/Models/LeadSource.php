@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LeadSource extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'status'];
+    protected $fillable = ['title', 'status', 'home_id'];
 
 }

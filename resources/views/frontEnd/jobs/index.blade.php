@@ -79,10 +79,16 @@
                                     Lead
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#" class="dropdown-item">Products</a>
-                                    <a href="#" class="dropdown-item">Our Team</a>
-                                    <a href="#" class="dropdown-item">Testimonial</a>
-                                    <a href="#" class="dropdown-item">Our Works</a>
+                                    <a href="#" class="dropdown-item">New Lead</a>
+                                    <a href="#" class="dropdown-item">All Lead</a>
+                                    <a href="#" class="dropdown-item">My Leads</a>
+                                    <a href="#" class="dropdown-item">Unassigned Lead</a>
+                                    <a href="#" class="dropdown-item">Actioned Lead</a>
+                                    <a href="#" class="dropdown-item">Rejected Lead</a>
+                                    <a href="#" class="dropdown-item">Authorization</a>
+                                    <a href="#" class="dropdown-item">Converted Lead</a>
+                                    <a href="#" class="dropdown-item">Search Lead</a>
+                                    <a href="#" class="dropdown-item">Lead Task</a>
                                 </div>
                             </div>
 
@@ -154,7 +160,6 @@
             </div>
         </div>
     </header>
-
 
 
     <section class="home_section_cont px-3 ">

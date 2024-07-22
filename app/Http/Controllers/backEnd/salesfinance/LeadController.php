@@ -93,10 +93,10 @@ class LeadController extends Controller
                 $nextId = $lastLead ? $lastLead->id + 1 : 1;
                 $lead_refid = 'LEAD-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
 
-
+                $admin   = Session::get('scitsAdminSession');
                 // Create the lead using the customer ID
                 $lead = Lead::updateOrCreate(['id' => $request->lead_id],[
-                    'home_id' => 1,
+                    'home_id' => $admin->home_id,
                     'lead_ref' => $lead_refid,
                     'customer_id' => $customer_id,
                     'assign_to' => $request->input('assign_to'),
@@ -159,7 +159,7 @@ class LeadController extends Controller
         }
 
         // Save form data to the database
-        LeadRejectType::updateOrCreate(['id' => $request->lead_reject_id], $request->all());
+        LeadRejectType::updateOrCreate(['id' => $request->lead_reject_id], array_merge($request->all(), ['home_id' => Session::get('scitsAdminSession')->home_id]));
 
         if(isset($request->lead_reject_id)){
             return response()->json(['message' => 'Record updated successfully!']);
@@ -217,7 +217,7 @@ class LeadController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
         
-        LeadStatus::updateOrCreate(['id' => $request->lead_status_id], $request->all());
+        LeadStatus::updateOrCreate(['id' => $request->lead_status_id], array_merge($request->all(), ['home_id' => Session::get('scitsAdminSession')->home_id]));
 
         if(isset($request->lead_status_id)){
             return response()->json(['message' => 'Record updated successfully!']);
@@ -251,8 +251,7 @@ class LeadController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        
-        LeadSource::updateOrCreate(['id' => $request->lead_source_id], $request->all());
+        LeadSource::updateOrCreate(['id' => $request->lead_source_id], array_merge($request->all(), ['home_id' =>  Session::get('scitsAdminSession')->home_id]));
 
         if(isset($request->lead_source_id)){
             return response()->json(['message' => 'Record updated successfully!']);
@@ -287,7 +286,7 @@ class LeadController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
         
-        LeadTaskType::updateOrCreate(['id' => $request->lead_task_type_id], $request->all());
+        LeadTaskType::updateOrCreate(['id' => $request->lead_task_type_id], array_merge($request->all(), ['home_id' =>  Session::get('scitsAdminSession')->home_id]));
 
         if(isset($request->lead_task_type_id)){
             return response()->json(['message' => 'Record updated successfully!']);
@@ -322,7 +321,7 @@ class LeadController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
         
-        LeadNoteType::updateOrCreate(['id' => $request->lead_notes_type_id], $request->all());
+        LeadNoteType::updateOrCreate(['id' => $request->lead_notes_type_id], array_merge($request->all(), ['home_id' =>  Session::get('scitsAdminSession')->home_id]));
 
         if(isset($request->lead_notes_type_id)){
             return response()->json(['message' => 'Record updated successfully!']);
