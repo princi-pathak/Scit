@@ -1,7 +1,5 @@
 @extends('backEnd.layouts.master')
-
 @section('title',' Task Type')
-
 @section('content')
 <!--main content start-->
 <section id="main-content">
@@ -80,11 +78,11 @@
                     <div class="form-group">
                         <input type="hidden" name="lead_task_type_id" id="lead_task_type_id">
                         <label class="col-lg-3 col-sm-3 ">Task Type</label>
-                        <input type="text" name="title" placeholder="Task Type" id="title">
+                        <input type="text" class="form-control" name="title" placeholder="Task Type" id="title">
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 col-sm-3 ">Status</label>
-                        <select name="status" id="status">
+                        <select name="status" class="form-control" id="status">
                             <option value="1">Active</option>
                             <option value="0">InActive</option>
                         </select>
