@@ -160,6 +160,7 @@ Route::match(['get', 'post'], '/switch_home_submit', 'App\Http\Controllers\front
 
 Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
+	// Rota Management
 	Route::get('/rota-dashboard', 'App\Http\Controllers\Rota\RotaController@index');
 	Route::get('/rota', 'App\Http\Controllers\Rota\RotaController@create');
 	Route::post('/add-rota-data', 'App\Http\Controllers\Rota\RotaController@store');
@@ -206,6 +207,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/permissions', 'App\Http\Controllers\Rota\RotaController@permission_index');
 
 	Route::post('/check_users_add_in_shift', 'App\Http\Controllers\Rota\RotaController@check_users_add_in_shift');
+
 	// Route::get('/payroll','App\Http\Controllers\Rota\RotaController@payroll');
 	// Route::get('/information_checker','App\Http\Controllers\Rota\RotaController@information_checker');
 	// Route::get('/overtime','App\Http\Controllers\Rota\RotaController@overtime');
@@ -213,6 +215,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	Route::match(['get', 'post'], '/', 'App\Http\Controllers\frontEnd\DashboardController@dashboard')->name('dashboard');
 	Route::post('/add-incident-report', 'App\Http\Controllers\frontEnd\DashboardController@add_incident_report');
+
 	// Ram 14/06/2024 path for jobs create
 	Route::get('/jobs_list','App\Http\Controllers\jobs\JobController@job_list');
 	Route::post('/job_save_all','App\Http\Controllers\jobs\JobController@job_save_all');
@@ -224,8 +227,15 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/job_type','App\Http\Controllers\jobs\JobController@job_type');
 	Route::get('/jobs_index','App\Http\Controllers\jobs\JobController@index');
 	Route::get('/planner_day','App\Http\Controllers\jobs\JobController@planner_day');
-
 	// end here
+
+	//Leads 
+	Route::get('/leads/lead','App\Http\Controllers\frontEnd\salesFinance\LeadController@index')->name('lead.index');
+	Route::get('/leads/add','App\Http\Controllers\frontEnd\salesFinance\LeadController@create');
+	Route::post('/leads/create','App\Http\Controllers\frontEnd\salesFinance\LeadController@store')->name('lead.store');
+	// Route::get('/leads/rejected', 'App\Http\Controllers\frontEnd\salesfinance\LeadController@index')->name('leads.rejected');
+
+
 
 	// ------------- Personal Management - My profile ---------------------// 
 	Route::get('/my-profile/{user_id}', 'App\Http\Controllers\frontEnd\PersonalManagement\ProfileController@index');

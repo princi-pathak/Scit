@@ -8,7 +8,7 @@ use App\User;
 use App\Lead;
 use App\Customer;
 use Illuminate\Support\Facades\DB;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Validator;
 use App\Models\LeadRejectType;
 use App\Models\LeadRejectReason;
@@ -17,6 +17,7 @@ use App\Models\LeadSource;
 use App\Models\LeadTaskType;
 use App\Models\LeadNoteType;
 use Carbon\Carbon;
+
 class LeadController extends Controller
 {
     public function index(Request $request){
@@ -64,7 +65,7 @@ class LeadController extends Controller
     }
 
     public function store(Request $request){
-
+        // dd($request);
         try {
 
             $website = $request->input('website');

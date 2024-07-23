@@ -15,9 +15,6 @@ if (isset($lead)) {
     $form_id = 'add_leads_form';
 }
 ?>
-<style>
-
-</style>
 <section id="main-content" class="">
     <section class="wrapper">
         <div class="row">
