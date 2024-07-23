@@ -13,7 +13,8 @@
 </head>
 
 <body>
-<header>
+    <header>
+
         <div class="topbaar">
             <div class="container-fluid bg-light p-0">
                 <div class="row gx-0 d-none d-lg-flex">
@@ -39,15 +40,12 @@
                                 Partners </a>
                         </div>
                         <?php }else {?>
+
                         <div class="h-100 d-inline-flex align-items-center me-5">
-                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i
-                                    class="material-symbols-outlined"> group</i></a>
-                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i
-                                    class="material-symbols-outlined"> dns</i></a>
-                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i
-                                    class="material-symbols-outlined"> mail </i></a>
-                            <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i
-                                    class="material-symbols-outlined"> notifications </i></a>
+                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> group</i></a>
+                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> dns</i></a>
+                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> mail </i></a>
+                            <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i class="material-symbols-outlined"> notifications </i></a>
                         </div>
                         <?php }?>
 
@@ -73,8 +71,7 @@
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg navbar-light sticky-top px-3">
 
-                    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
-                        data-bs-target="#navbarCollapse">
+                    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -86,16 +83,16 @@
                                     Lead
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#!" class="dropdown-item">New Lead</a>
-                                    <a href="#!" class="dropdown-item">All Leads</a>
-                                    <a href="#!" class="dropdown-item">My Leads</a>
-                                    <a href="#!" class="dropdown-item">Unassigned Leads</a>
-                                    <a href="#!" class="dropdown-item">Actioned Leads</a>
-                                    <a href="#!" class="dropdown-item">Rejected Leads</a>
-                                    <a href="#!" class="dropdown-item">Authorization</a>
-                                    <a href="#!" class="dropdown-item">Converted Leads</a>
-                                    <a href="#!" class="dropdown-item">Search Leads</a>
-                                    <a href="#!" class="dropdown-item">Lead Tasks</a>
+                                    <a href="{{ url('/leads/add') }}" class="dropdown-item">New Lead</a>
+                                    <a href="{{ url('/leads/lead') }}" class="dropdown-item">All Lead</a>
+                                    <a href="#" class="dropdown-item">My Leads</a>
+                                    <a href="#" class="dropdown-item">Unassigned Lead</a>
+                                    <a href="#" class="dropdown-item">Actioned Lead</a>
+                                    <a href="#" class="dropdown-item">Rejected Lead</a>
+                                    <a href="#" class="dropdown-item">Authorization</a>
+                                    <a href="#" class="dropdown-item">Converted Lead</a>
+                                    <a href="#" class="dropdown-item">Search Lead</a>
+                                    <a href="#" class="dropdown-item">Lead Task</a>
                                 </div>
                             </div>
 
@@ -138,6 +135,7 @@
                                     <a href="#!" class="dropdown-item">Search Jobs</a>
                                     <a href="#!" class="dropdown-item">Appointments</a>
                                     <a href="#!" class="dropdown-item">Recurring Jobs</a>
+
                                 </div>
                             </div>
 
