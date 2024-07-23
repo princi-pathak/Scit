@@ -108,8 +108,8 @@
                                 </div>
                             </div>
 
-
-                            <a href="{{url('planner_day')}}" class="nav-item nav-link dropdown-toggle">
+                            <!-- {{url('planner_day')}} -->
+                            <a href="#!" class="nav-item nav-link dropdown-toggle">
                                 <span><i class="material-symbols-outlined"> planner_review </i></span>
                                 Planner
                             </a>

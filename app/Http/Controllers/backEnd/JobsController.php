@@ -1302,6 +1302,11 @@ class JobsController extends Controller
         $data['task']=$task;
         $data['page']='customers';
         $data['del_status']=0;
+        $data['customer_type']=Customer_type::where('status',1)->get();
+        $data['job_title']=Job_title::where('status',1)->get();
+        $data['country']=Country::where('status',1)->get();
+        $country=DB::table('countries')->select('name')->get();
+        echo "<pre>";print_r($country);die;
         return view('backEnd.jobs_management.customers_form',$data);
     }
     public function customer_type(Request $request){
@@ -1378,6 +1383,84 @@ class JobsController extends Controller
     public function customer_type_delete(Request $request){
         $id=base64_decode($request->id);
         $table=Customer_type::find($id);
+        $table->status=2;
+        $table->save();
+        Session::flash('success','Deleted Successfully Done');
+        echo "done";
+    }
+    public function job_title(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $query=Job_title::whereNot('status',2)->orderBy('id','DESC');
+
+            $search = '';
+
+            if(isset($request->limit)) {
+                $limit = $request->limit;
+                Session::put('page_record_limit',$limit);
+            } else {
+
+                if(Session::has('page_record_limit')){
+                    $limit = Session::get('page_record_limit');
+                } else{
+                    $limit = 20;
+                }
+            }
+            if(isset($request->search))
+            {
+                $search      = trim($request->search);
+                $query = $query->where('name','like','%'.$search.'%');
+            }
+            $job_title = $query->paginate($limit);
+            $data['job_title']=$job_title;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='job_title';
+            return view('backEnd.jobs_management.job_title',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
+    }
+    public function job_title_add(Request $request){
+        $key=base64_decode($request->key);
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($key){
+            $task='Edit';
+        }else{
+            $task='Add';
+        }
+        $data['type']=Job_title::find($key);
+        $data['task']=$task;
+        $data['page']='job_title';
+        $data['del_status']=0;
+        $data['home_id']=$home_id;
+        return view('backEnd.jobs_management.Job_title_form',$data);
+    }
+    public function job_title_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        Job_title::updateOrCreate(['id' => $request->id], $request->all());
+        if(isset($request->id)){
+            Session::flash('success','Updated Successfully Done');
+        } else {
+            Session::flash('success','Added Successfully Done');
+        }
+        
+        echo "done";
+    }
+    public function job_title_status_change(Request $request){
+        $id=base64_decode($request->id);
+        $status=$request->status;
+        $table=Job_title::find($id);
+        $table->status=$status;
+        $table->save();
+        Session::flash('success','Status Change Successfully Done');
+        echo "done";
+    }
+    public function job_title_delete(Request $request){
+        $id=base64_decode($request->id);
+        $table=Job_title::find($id);
         $table->status=2;
         $table->save();
         Session::flash('success','Deleted Successfully Done');
