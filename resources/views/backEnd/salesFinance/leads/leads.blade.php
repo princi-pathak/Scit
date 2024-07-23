@@ -1,7 +1,13 @@
 @extends('backEnd.layouts.master')
 @section('title',' Leads')
 @section('content')
-
+<style>
+    a.rejectReasons i {
+    font-size: 22px;
+    color: #1fb5ad;
+    line-height: 34px;
+}
+</style>
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">
@@ -111,22 +117,30 @@
             <div class="modal-body">
                 <form action="" id="lead_reject_reason_form">            
                     @csrf    
-                    <div class="form-group">
+                    <div class="row form-group">
                         <label class="col-lg-3 col-sm-3 ">Lead Ref</label>
-                        <input type="text" name="lead_ref" class="" id="lead_ref" placeholder="Auto Generate" value="" >
+                        <div  class="col-lg-9 col-sm-9 ">
+                        <input type="text" name="lead_ref" class="form-control" id="lead_ref" placeholder="Auto Generate" value="" >
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <div class="row form-group">
                         <label class="col-lg-3 col-sm-3 ">Reject Type</label>
-                        <select name="reject_type_id" id="">
-                            @foreach($leadRejectTypes as $value)
-                                <option value="{{ $value->id }}">{{ $value->title}}</option>
-                            @endforeach
-                        </select>
-                        <a href="#" class="rejectReasons"> <i data-toggle="modal" title="Reject" data-target="#secondModal" id="openSecondModal" class="fa fa-plus-square"></i></a>
+                        <div  class="col-lg-8 col-sm-8 ">
+                            <select name="reject_type_id" class="form-control" id="">
+                                @foreach($leadRejectTypes as $value)
+                                    <option value="{{ $value->id }}">{{ $value->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div  class="col-lg-1 col-sm-1 ">
+                            <a href="#" class="rejectReasons"> <i data-toggle="modal" title="Reject" data-target="#secondModal" id="openSecondModal" class="fa fa-plus-square"></i></a>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <div class="row form-group">
                         <label class="col-lg-3 col-sm-3 ">Reject Reason</label>
-                        <textarea name="reject_reason" id=""></textarea>
+                        <div  class="col-lg-9 col-sm-9 ">
+                        <textarea name="reject_reason" class="form-control" id=""></textarea>
+                        </div>
                     </div>
                 </form>
             </div>

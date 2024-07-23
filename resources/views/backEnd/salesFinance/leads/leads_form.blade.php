@@ -15,7 +15,9 @@ if (isset($lead)) {
     $form_id = 'add_leads_form';
 }
 ?>
+<style>
 
+</style>
 <section id="main-content" class="">
     <section class="wrapper">
         <div class="row">
@@ -26,10 +28,12 @@ if (isset($lead)) {
                     </header>
                     <div class="panel-body">
                         @include('backEnd.salesFinance.leads.leads_button')
-                        <div class="position-center">
-                            <form class="form-horizontal" role="form" method="Post" action="{{ $action }}" id="{{ $form_id }}">
+                       
+                            <form class=" form-horizontal" role="form" method="Post" action="{{ $action }}" id="{{ $form_id }}">
                                 @csrf
-                                <label>Lead Details</label>
+                                <div class="row main_Form">
+                                <div class="col-md-4">
+                                <label class="formTitle">Lead Details</label>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Lead Ref.</label>
                                     <div class="col-lg-9">
@@ -80,7 +84,10 @@ if (isset($lead)) {
                                         <input type="time" name="prefer_time" class="form-control" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}" >
                                     </div>
                                 </div>
-                                <label>Data Feilds</label>
+
+</div>
+<div class="col-md-4">
+                                <label class="formTitle">Data Feilds</label>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Full Name</label>
                                     <div class="col-lg-9">
@@ -111,6 +118,8 @@ if (isset($lead)) {
                                         <input type="text" name="mobile" class="form-control" placeholder="Mobile" value="{{ (isset($lead->mobile)) ? $lead->mobile : '' }}" maxlength="255">
                                     </div>
                                 </div>
+</div>
+<div class="col-md-4">
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Website</label>
                                     <div class="col-lg-9">
@@ -142,11 +151,85 @@ if (isset($lead)) {
                                         <input type="text" name="postal_code" class="form-control" placeholder="Postal Code" value="{{ (isset($lead->postal_code)) ? $lead->postal_code : '' }}" maxlength="255">
                                     </div>
                                 </div>
-                                <div class="form-actions">
-                                    <div class="row">
-                                        <div class="col-lg-3">
+</div>
+                             
+                                </div>
+                                <div class="from_outside_border mrg_tp">
+                            <label class="upperlineTitle">Extra Information</label>
+                            <div class="row">
+                                <div class="form-group padd0">
+                                    <div class="col-sm-12">
+                                        <div class="pddtp">
+                                            <button type="button" class="btn btn-primary">Notes</button>
+                                            <button type="button" class="btn btn-primary">Tasks</button>
+                                            <button type="button" class="btn btn-primary">Authorization</button>
+                                            <!-- <label class="clickhere">
+                                                <a href="#!"> Click here</a><span> to download import template </span>
+                                            </label> -->
+                                            <!-- <label>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Bulk Action
+                                                    <span class="caret"></span></button>
+                                                    <ul class="dropdown-menu">
+                                                    <li><a href="#">Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                            </label> -->
                                         </div>
-                                        <div class="col-lg-9">
+                                    </div>
+                                </div>
+
+                                <div class="padd0">
+                                    <form action="">
+                                        <div class="form-group">
+                                            <label class="col-lg-1 control-label">Lead Ref.</label>
+                                            <div class="col-lg-12">
+                                                <input type="hidden" name="lead_id" value="{{ (isset($lead->id)) ? $lead->id : '' }}">
+                                                <input type="hidden" name="customer_id" value="{{ (isset($lead->customer_id)) ? $lead->customer_id : '' }}">
+                                                <input type="text" name="lead_ref" class="form-control" placeholder="Auto Generate" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" maxlength="255" disabled>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <table class="table">
+                                        <thead>
+                                          <tr class="active">
+                                            <th>Date</th>
+                                            <th>By</th>
+                                            <th>Type</th>
+                                            <th>Notes</th>
+                                            <th>Telephone</th>
+                                            <th>Mobile</th>
+                                            <th>Address</th>
+                                            <th>City</th>
+                                            <th>County</th>
+                                            <th>Postcode</th>
+                                            <th>Default Billing	</th>
+
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                          </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                                <div class="form-actions formBottomBtn">
+                                    <div class="row">
+                                        <div class="col-lg-12">
                                             <div class="edit-submit-btn-area">
                                                 <button type="submit" class="btn btn-primary" name="submit1">Save</button>
                                                 <a href="{{ url('admin/company-managers') }}">
@@ -157,7 +240,7 @@ if (isset($lead)) {
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                       
                     </div>
                 </section>
             </div>

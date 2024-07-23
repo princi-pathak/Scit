@@ -5,58 +5,7 @@
 @section('content')
 
 <style type="text/css">
-.contTitle {
-    font-size: 16px;
-    color: #1fb5ad;
-    font-weight: 600;
-    text-align: center;
-    text-transform: uppercase;
-}
-#inputPlusCircle{
-    padding: 0;
-}
-#inputPlusCircle a i{
-    font-size: 26px;
-    color: #009da7;
-    line-height: 34px;
-}
-.inputIcon{
-    font-size: 18px;
-    line-height: 34px;
-    color: #009da7;
-}
-.afterInputText {
-    font-size: 13px;
-    line-height: 30px;
-}
-.from_outside_border{
-    border: 1px solid #1fb5ad;
-    padding: 14px;
-    position: relative;
-    border-radius: 3px;
-}
-.mrg_tp{
-    margin-top: 30px;
-}
-.upperlineTitle {
-    font-size: 17px;
-    color: #000;
-    font-weight: 700;
-    position: absolute;
-    top: -14px;
-    left: 12px;
-    background: #fff;
-    padding: 0 6px;
-}
-.padd0{
-    padding: 0 14px;
-}
-.clickhere{
-    padding: 0 12px ;
-}
-.pddtp{
-    padding-top: 10px;
-}
+
 </style>
  <section id="main-content">
         <section class="wrapper">
