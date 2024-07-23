@@ -227,6 +227,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/job_type','App\Http\Controllers\jobs\JobController@job_type');
 	Route::get('/jobs_index','App\Http\Controllers\jobs\JobController@index');
 	Route::get('/planner_day','App\Http\Controllers\jobs\JobController@planner_day');
+	Route::get('/jobs_create','App\Http\Controllers\jobs\JobController@jobs_create');
+
 	// end here
 
 	//Leads 

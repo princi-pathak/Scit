@@ -47,7 +47,7 @@ class JobController extends Controller
         $data['job_recurring_list']=Job_recurring::whereNot('status',2)->get();
         $data['job_list']=Job::whereNot('status',2)->get();
         $data['quote_type_list']=Quote_type::whereNot('status',2)->get();
-        // return view('frontEnd.jobs.job_backup',$data);
+        $data['page']="job_index";
         return view('frontEnd.jobs.index',$data);
     }
     public function job_list(){
@@ -70,6 +70,10 @@ class JobController extends Controller
         $access_rights=explode(',',$rights);
         return $access_rights;
 
+    }
+    public function jobs_create(Request $request){
+        // echo 1;die;
+        return view('frontEnd.jobs.add_job');
     }
     public function job_save_all(Request $request){
         // echo "<pre>";print_r($request->all());die;
