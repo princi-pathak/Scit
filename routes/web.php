@@ -921,6 +921,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::match(['get','post'],'/job_recurring_list','App\Http\Controllers\backEnd\JobsController@job_recurring_list');
 
 	// end here
+	Route::match(['get','post'],'/job_title','App\Http\Controllers\backEnd\JobsController@job_title');
+	Route::get('/job_title_add','App\Http\Controllers\backEnd\JobsController@job_title_add');
+	Route::post('/job_title_save','App\Http\Controllers\backEnd\JobsController@job_title_save');
+	Route::post('/job_title_status_change','App\Http\Controllers\backEnd\JobsController@job_title_status_change');
+	Route::post('/job_title_delete','App\Http\Controllers\backEnd\JobsController@job_title_delete');
 	Route::match(['get','post'],'/job_appointment_type','App\Http\Controllers\backEnd\JobsController@job_appointment_type');
 	Route::get('/job_appointment_type_add','App\Http\Controllers\backEnd\JobsController@job_appointment_type_add');
 	Route::post('/job_appointment_type_save','App\Http\Controllers\backEnd\JobsController@job_appointment_type_save');

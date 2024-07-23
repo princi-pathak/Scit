@@ -37,8 +37,10 @@
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Customer Type</label>
                                         <div class="col-lg-7">
                                             <select class="form-control" >
-                                                <option>General Customer</option>
-                                                <option>General Customer</option>
+                                                <option selected disabled>Customer Type</option>
+                                                <?php foreach($customer_type as $type){?>
+                                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                                <?php }?>
                                             </select>
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
@@ -48,15 +50,17 @@
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-4 col-sm-4 control-label">Contact Name *</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email">
+                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Contact Name">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Job Title (Position)</label>
                                         <div class="col-lg-7">
                                             <select class="form-control" >
-                                                <option>General Customer</option>
-                                                <option>General Customer</option>
+                                                <option selected disabled>Job Title</option>
+                                                <?php foreach($job_title as $title){?>
+                                                <option value="{{$title->id}}">{{$title->name}}</option>
+                                                <?php }?>
                                             </select>
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
@@ -159,8 +163,10 @@
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Country</label>
                                         <div class="col-lg-8">
                                             <select class="form-control" >
-                                                <option>General Customer</option>
-                                                <option>General Customer</option>
+                                                <option selected disabled>Select Country</option>
+                                                <?php foreach($country as $con){?>
+                                                <option value="{{$con->id}}">{{$con->name}} {{$con->code}}</option>
+                                                <?php }?>
                                             </select>
                                         </div>
                                     </div>
@@ -181,8 +187,10 @@
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Currency</label>
                                         <div class="col-lg-8">
                                             <select class="form-control" >
-                                                <option>General Customer</option>
-                                                <option>General Customer</option>
+                                                <option selected disabled>Select Currency</option>
+                                                <?php foreach($country as $currency){?>
+                                                <option value="{{$currency->id}}">{{$currency->name}} {{$currency->code}}</option>
+                                                <?php }?>
                                             </select>
                                         </div>
                                     </div>

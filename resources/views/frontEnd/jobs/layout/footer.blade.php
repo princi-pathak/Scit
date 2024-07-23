@@ -4,7 +4,7 @@
         <div class="row">
              <div class="col-lg-12">
                 <div class="f_text">
-                    <p>Powered by <a href="#!">Eworks Manager</a> @ 2020 v. 6.9.53, last updated : <?php echo date('d/m/Y H:i');?> (A2) Our <a href="#!"> Teams Of Business</a> and <a href="#!">Privacy Policy</a></p>
+                    <p><?php echo date('Y');?> © SCIT</p>
                 </div>
              </div>
         </div>

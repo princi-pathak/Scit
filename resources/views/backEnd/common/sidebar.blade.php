@@ -219,7 +219,7 @@
                 </li>
                 <!-- Setting Section Start -->
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type') || ($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') ){ echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type') || ($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') || ($page == 'job_title') || ($page == 'customer_type') ){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i>
                         <span>Setting</span>
                     </a>
@@ -236,7 +236,7 @@
                                 <li class="{{ ($page == 'lead_notes_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_notes_type') }}">Lead Notes Type </a></li>
                             </ul>
                         </li>
-                    
+            
                         <li class="sub-menu">
                             <a href="javascript:void(0)"  <?php if(($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') ){echo 'class="active" style="color:#1fb5ad"';}?>>
                                 <i class="fa fa-road"></i><span >Jobs</span>
@@ -252,6 +252,7 @@
                  <!-- Setting Section End -->       
                 <!-- Contact Section Start -->
                 <li class="sub-menu">
+
                     <a href="javascript:;" class="<?php if(($page == 'customers') || ($page == 'Suppliers') || ($page == 'customer_type') ){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i><span>Contacts</span>
                     </a>
@@ -259,6 +260,7 @@
                         <li class="{{ ($page == 'customers') ? 'active' : '' }}"><a href="{{ url('admin/customers') }}">Customers </a></li>
                         <li class="{{ ($page == 'customer_type') ? 'active' : '' }}"><a href="{{ url('admin/customer_type') }}">Customers Type</a></li>
                         <li class="{{ ($page == 'Suppliers') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Suppliers </a></li>
+
                     </ul>
                 </li>            
                 <!-- Contact Section End -->
