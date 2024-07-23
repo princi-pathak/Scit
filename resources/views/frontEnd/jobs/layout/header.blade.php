@@ -1,5 +1,4 @@
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +13,6 @@
 </head>
 
 <body>
-
 <header>
         <div class="topbaar">
             <div class="container-fluid bg-light p-0">
@@ -25,8 +23,22 @@
                         </div>
                     </div>
                     <div class="col-lg-9 px-3 text-end toprigihticon">
-
-
+                    <?php if(isset($page) && $page == 'job_index'){?>
+                        <div class="d-inline-flex align-items-center me-5 topbaarBtn">
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> storage</i> My Diary
+                            </a>
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> dashboard</i> CRM
+                            </a>
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> contact_support </i>
+                                Help Desk <span class="notifiNumberRadColor">2</span></a>
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> mail </i> Messages
+                            </a>
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active
+                                </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i>
+                                Partners </a>
+                        </div>
+                        <?php }else {?>
                         <div class="h-100 d-inline-flex align-items-center me-5">
                             <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i
                                     class="material-symbols-outlined"> group</i></a>
@@ -37,6 +49,7 @@
                             <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i
                                     class="material-symbols-outlined"> notifications </i></a>
                         </div>
+                        <?php }?>
 
                         <div class="h-100 d-inline-flex align-items-center py-3 me-4">
                             <div class="nav-item dropdown">
@@ -73,23 +86,38 @@
                                     Lead
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#" class="dropdown-item">New Lead</a>
-                                    <a href="#" class="dropdown-item">All Lead</a>
-                                    <a href="#" class="dropdown-item">My Leads</a>
-                                    <a href="#" class="dropdown-item">Unassigned Lead</a>
-                                    <a href="#" class="dropdown-item">Actioned Lead</a>
-                                    <a href="#" class="dropdown-item">Rejected Lead</a>
-                                    <a href="#" class="dropdown-item">Authorization</a>
-                                    <a href="#" class="dropdown-item">Converted Lead</a>
-                                    <a href="#" class="dropdown-item">Search Lead</a>
-                                    <a href="#" class="dropdown-item">Lead Task</a>
+                                    <a href="#!" class="dropdown-item">New Lead</a>
+                                    <a href="#!" class="dropdown-item">All Leads</a>
+                                    <a href="#!" class="dropdown-item">My Leads</a>
+                                    <a href="#!" class="dropdown-item">Unassigned Leads</a>
+                                    <a href="#!" class="dropdown-item">Actioned Leads</a>
+                                    <a href="#!" class="dropdown-item">Rejected Leads</a>
+                                    <a href="#!" class="dropdown-item">Authorization</a>
+                                    <a href="#!" class="dropdown-item">Converted Leads</a>
+                                    <a href="#!" class="dropdown-item">Search Leads</a>
+                                    <a href="#!" class="dropdown-item">Lead Tasks</a>
                                 </div>
                             </div>
 
-                            <a href="#" class="nav-item nav-link dropdown-toggle">
-                                <span><i class="material-symbols-outlined"> description </i></span>
-                                Quotes
-                            </a>
+                            <div class="nav-item dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <span><i class="material-symbols-outlined"> description </i></span>
+                                    Quotes
+                                </a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">Dashboard</a>
+                                    <a href="#!" class="dropdown-item">New Quote</a>
+                                    <a href="#!" class="dropdown-item">Draft Quote</a>
+                                    <a href="#!" class="dropdown-item">Actioned Quote</a>
+                                    <a href="#!" class="dropdown-item">Call Back Quote</a>
+                                    <a href="#!" class="dropdown-item">Accepted Quote</a>
+                                    <a href="#!" class="dropdown-item">Converted Quote</a>
+                                    <a href="#!" class="dropdown-item">Search Quote</a>
+                                    <a href="#!" class="dropdown-item">Appointment</a>
+                                    <a href="#!" class="dropdown-item">Recurring Quote</a>
+                                </div>
+                            </div>
+                            
 
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link active dropdown-toggle" data-bs-toggle="dropdown">
@@ -97,59 +125,173 @@
                                     Jobs
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">Dashboard</a>
+                                    <a href="{{url('/jobs_create')}}" class="dropdown-item">New Jobs</a>
                                     <a href="{{url('jobs_list')}}" class="dropdown-item">Active Jobs</a>
                                     <?php if(@$access_rights[314] == 328){?>
                                     <a href="{{url('job_type')}}" class="dropdown-item">Job Type</a>
                                     <?php }?>
-                                    <a href="#" class="dropdown-item">Unassigned</a>
-                                    <a href="#" class="dropdown-item">Active Required</a>
-                                    <a href="#" class="dropdown-item">Overdue</a>
-                                    <a href="#" class="dropdown-item">authorization</a>
+                                    <a href="#!" class="dropdown-item">Action Required Jobs</a>
+                                    <a href="#!" class="dropdown-item">Overdue Jobs</a>
+                                    <a href="#!" class="dropdown-item">Authorization Jobs</a>
+                                    <a href="#!" class="dropdown-item">On Hold</a>
+                                    <a href="#!" class="dropdown-item">Search Jobs</a>
+                                    <a href="#!" class="dropdown-item">Appointments</a>
+                                    <a href="#!" class="dropdown-item">Recurring Jobs</a>
                                 </div>
                             </div>
 
                             <!-- {{url('planner_day')}} -->
-                            <a href="#!" class="nav-item nav-link dropdown-toggle">
-                                <span><i class="material-symbols-outlined"> planner_review </i></span>
-                                Planner
-                            </a>
-                            <a href="#!" class="nav-item nav-link">
-                                <span><i class="material-symbols-outlined"> business_center</i></span>
+                            <div class="nav-item dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <span><i class="material-symbols-outlined"> planner_review </i></span>
+                                    Planner
+                                </a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">Time Planner</a>
+                                    <a href="#!" class="dropdown-item">Project Planner</a>
+                                    <a href="#!" class="dropdown-item">Geo Planner</a>
+                                    <a href="#!" class="dropdown-item">Vehicle Tracking</a>                                    
+                                    <a href="#!" class="dropdown-item">Mobile Tracking</a>
+                                </div>
+                            </div>
+                            <div class="nav-item dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <span><i class="material-symbols-outlined"> business_center</i></span>
                                 Projects
-                            </a>
+                                </a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">New Project</a>
+                                    <a href="#!" class="dropdown-item">Active Projects</a>
+                                    <a href="#!" class="dropdown-item">Inactive Projects</a>
+                                    <a href="#!" class="dropdown-item">Completed Projects</a>  
+                                </div>
+                            </div>
 
-                            <a href="#" class="nav-item nav-link dropdown-toggle">
-                                <span><i class="material-symbols-outlined">finance_mode </i></span>
+                            <div class="nav-item dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <span><i class="material-symbols-outlined">finance_mode </i></span>
                                 Finance
-                            </a>
-                            <a href="#" class="nav-item nav-link dropdown-toggle">
-                                <span><i class="material-symbols-outlined"> contact_support </i></span>
+                                </a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">Invoices</a>
+                                    <div class="nav-item dropdown">
+                                        <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                            Purchase Orders
+                                        </a>
+                                        <div class="dropdown-menu fade-up m-0 submenu">
+                                            <a href="#!" class="dropdown-item">Invoices2</a>
+                                            <a href="#!" class="dropdown-item">Purchase Orders2 </a>
+                                        </div>
+                                    </div>
+                                    <!-- <a href="#!" class="dropdown-item">Purchase Orders </a> -->
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="nav-item dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <span><i class="material-symbols-outlined"> contact_support </i></span>
                                 Contacts
-                            </a>
-                            <a href="#" class="nav-item nav-link dropdown-toggle">
-                                <span><i class="material-symbols-outlined"> production_quantity_limits</i></span>
-                                Products
-                            </a>
+                                </a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">Customers</a>
+                                    <a href="#!" class="dropdown-item">Suppliers</a>
+                                </div>
+                            </div>
+
+                            <div class="nav-item dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <span><i class="material-symbols-outlined"> production_quantity_limits</i></span>
+                                    Items
+                                </a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">Product Categories</a>
+                                    <a href="#!" class="dropdown-item">Products</a>
+                                    <a href="#!" class="dropdown-item">Product Groups</a>
+                                    <a href="#!" class="dropdown-item">Catalogues</a>  
+                                </div>
+                            </div>
+
+
+
                             <a href="#" class="nav-item nav-link">
                                 <span><i class="material-symbols-outlined"> calculate </i></span>
                                 Expenses
                             </a>
-                            <a href="#" class="nav-item nav-link dropdown-toggle">
-                                <span><i class="material-symbols-outlined"> diversity_2 </i></span>
+                            <div class="nav-item dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <span><i class="material-symbols-outlined"> diversity_2 </i></span>
                                 Users
-                            </a>
-                            <a href="#" class="nav-item nav-link dropdown-toggle">
-                                <span><i class="material-symbols-outlined"> partner_reports </i></span>
+                                </a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">Users </a>
+                                    <a href="#!" class="dropdown-item">Team Members</a>
+                                    <a href="#!" class="dropdown-item">Timeoff </a>
+                                    <a href="#!" class="dropdown-item">Lone Worker Active List</a>  
+                                </div>
+                            </div>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <span><i class="material-symbols-outlined"> partner_reports </i></span>
                                 Reports
-                            </a>
-                            <a href="#" class="nav-item nav-link dropdown-toggle ">
-                                <span><i class="material-symbols-outlined"> bookmark_manager</i></span>
+                                </a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">Customers</a>
+                                    <a href="#!" class="dropdown-item"> Quote</a>
+                                    <a href="#!" class="dropdown-item"> Jobs</a>
+                                    <a href="#!" class="dropdown-item"> Invoices</a>
+                                    <a href="#!" class="dropdown-item"> Users</a>
+                                    <a href="#!" class="dropdown-item"> Purchase Orders</a>
+                                    <a href="#!" class="dropdown-item"> Products</a>
+                                    <a href="#!" class="dropdown-item"> Vehicle Tracking</a>
+                                    <a href="#!" class="dropdown-item"> SMS Report</a>
+                                    <a href="#!" class="dropdown-item"> Email Report</a>
+                                    <a href="#!" class="dropdown-item"> Reminder Report</a>
+                                    <a href="#!" class="dropdown-item"> Task Report</a>
+                                    <a href="#!" class="dropdown-item"> Report Builder</a>
+
+                                </div>
+                            </div>
+                            <div class="nav-item dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <span><i class="material-symbols-outlined"> bookmark_manager</i></span>
                                 FileManager
-                            </a>
-                            <a href="#" class="nav-item nav-link dropdown-toggle">
-                                <span><i class="material-symbols-outlined"> construction</i></span>
-                                Tools
-                            </a>
+                                </a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">Attachments </a>
+                                    <a href="#!" class="dropdown-item">Digital Documents</a>
+                                    <a href="#!" class="dropdown-item">Completed Questionnaires </a> 
+                                </div>
+                            </div>
+                            
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <span><i class="material-symbols-outlined"> construction</i></span>
+                                Settings
+                                </a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="#!" class="dropdown-item">General Settings</a>
+                                    <a href="#!" class="dropdown-item">Digital Doc. Manager</a>
+                                    <a href="#!" class="dropdown-item">Questionnaires</a>
+                                    <a href="#!" class="dropdown-item">Template Editor</a>
+                                    <a href="#!" class="dropdown-item">Custom Field Management</a>
+                                    <a href="#!" class="dropdown-item">Triggers</a>
+                                    <a href="#!" class="dropdown-item">Leads</a>
+                                    <a href="#!" class="dropdown-item">Quotes</a>
+                                    <a href="#!" class="dropdown-item">Jobs</a>
+                                    <a href="#!" class="dropdown-item">Invoices</a>
+                                    <a href="#!" class="dropdown-item">Purchase Orders</a>
+                                    <a href="#!" class="dropdown-item">Customers</a>
+                                    <a href="#!" class="dropdown-item">Users</a>
+                                    <a href="#!" class="dropdown-item">CRM</a>
+                                    <a href="#!" class="dropdown-item">General</a>
+                                    <a href="#!" class="dropdown-item">Quick Setup Wizard</a>
+                                    
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </nav>
