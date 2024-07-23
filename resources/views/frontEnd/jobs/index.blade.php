@@ -79,8 +79,8 @@
                                     Lead
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#" class="dropdown-item">New Lead</a>
-                                    <a href="#" class="dropdown-item">All Lead</a>
+                                <a href="{{ url('/leads/add') }}" class="dropdown-item">New Lead</a>
+                                    <a href="{{ url('/leads/lead') }}" class="dropdown-item">All Lead</a>
                                     <a href="#" class="dropdown-item">My Leads</a>
                                     <a href="#" class="dropdown-item">Unassigned Lead</a>
                                     <a href="#" class="dropdown-item">Actioned Lead</a>

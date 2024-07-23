@@ -15,7 +15,7 @@
 
 <body>
 
-<header>
+    <header>
         <div class="topbaar">
             <div class="container-fluid bg-light p-0">
                 <div class="row gx-0 d-none d-lg-flex">
@@ -25,17 +25,11 @@
                         </div>
                     </div>
                     <div class="col-lg-9 px-3 text-end toprigihticon">
-
-
                         <div class="h-100 d-inline-flex align-items-center me-5">
-                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i
-                                    class="material-symbols-outlined"> group</i></a>
-                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i
-                                    class="material-symbols-outlined"> dns</i></a>
-                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i
-                                    class="material-symbols-outlined"> mail </i></a>
-                            <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i
-                                    class="material-symbols-outlined"> notifications </i></a>
+                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> group</i></a>
+                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> dns</i></a>
+                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> mail </i></a>
+                            <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i class="material-symbols-outlined"> notifications </i></a>
                         </div>
 
                         <div class="h-100 d-inline-flex align-items-center py-3 me-4">
@@ -60,8 +54,7 @@
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg navbar-light sticky-top px-3">
 
-                    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
-                        data-bs-target="#navbarCollapse">
+                    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -73,8 +66,8 @@
                                     Lead
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#" class="dropdown-item">New Lead</a>
-                                    <a href="#" class="dropdown-item">All Lead</a>
+                                    <a href="{{ url('/leads/add') }}" class="dropdown-item">New Lead</a>
+                                    <a href="{{ url('/leads/lead') }}" class="dropdown-item">All Lead</a>
                                     <a href="#" class="dropdown-item">My Leads</a>
                                     <a href="#" class="dropdown-item">Unassigned Lead</a>
                                     <a href="#" class="dropdown-item">Actioned Lead</a>
@@ -98,9 +91,9 @@
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="{{url('jobs_list')}}" class="dropdown-item">Active Jobs</a>
-                                    <?php if(@$access_rights[314] == 328){?>
-                                    <a href="{{url('job_type')}}" class="dropdown-item">Job Type</a>
-                                    <?php }?>
+                                    <?php if (@$access_rights[314] == 328) { ?>
+                                        <a href="{{url('job_type')}}" class="dropdown-item">Job Type</a>
+                                    <?php } ?>
                                     <a href="#" class="dropdown-item">Unassigned</a>
                                     <a href="#" class="dropdown-item">Active Required</a>
                                     <a href="#" class="dropdown-item">Overdue</a>
