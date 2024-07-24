@@ -16,6 +16,7 @@ use App\Models\LeadStatus;
 use App\Models\LeadSource;
 use App\Models\LeadTaskType;
 use App\Models\LeadNoteType;
+use App\Models\LeadNote;
 use Carbon\Carbon;
 
 class LeadController extends Controller
@@ -50,7 +51,16 @@ class LeadController extends Controller
             ->orderBy('leads.created_at', 'desc')
             ->where('leads.status', '6')
             ->get();
+        } else if($lastSegment === "converted"){
+            $customers = DB::table('customers')
+            ->join('leads', 'customers.id', '=', 'leads.customer_id')
+            ->select('customers.*', 'leads.*')
+            ->orderBy('leads.created_at', 'desc')
+            ->where('customers.is_converted', 1)
+            ->get();
         }
+
+        // dd($customers);
 
         $leadRejectTypes = LeadRejectType::where('deleted_at', null)->where('status', 1)->get();
 
@@ -61,6 +71,7 @@ class LeadController extends Controller
         $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
         $status = LeadStatus::where('deleted_at', null)->where('status', 1)->get();
         $sources = LeadSource::where('deleted_at', null)->where('status', 1)->get();
+      
         return view('backEnd/salesFinance/leads/leads_form',compact('page','users', 'status', 'sources'));
     }
 
@@ -73,8 +84,8 @@ class LeadController extends Controller
                 $website = 'http://' . $website;
             }
 
-            $customer = Customer::updateOrCreate(  ['id' => $request->customer_id],[
-                'home_id' => 1,
+            $customer = Customer::updateOrCreate(['id' => $request->customer_id],[
+                'home_id' => Session::get('scitsAdminSession')->home_id,
                 'name' => $request->company_name,
                 'contact_name' => $request->name,
                 'email' => $request->email,
@@ -115,7 +126,6 @@ class LeadController extends Controller
                     $message =  'Lead updated successfully.';
                 }
 
-        
                 return redirect()->route('leads.index')->with('success', $message);
             } else {
                 // Handle the error case where the customer was not created successfully
@@ -132,13 +142,16 @@ class LeadController extends Controller
         $page = 'Leads';
         $lead = DB::table('customers')
         ->join('leads', 'customers.id', '=', 'leads.customer_id')
+        ->join('lead_notes', 'lead_notes.lead_id', '=', 'leads.id')
         ->select('customers.*', 'leads.*')
         ->where('leads.id', $id)
         ->first();
         $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
         $status = LeadStatus::where('deleted_at', null)->where('status', 1)->get();
         $sources = LeadSource::where('deleted_at', null)->where('status', 1)->get();
-        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status'));   
+        $notes_type = LeadNoteType::where(['deleted_at'=> null, 'status' => 1, 'home_id' => Session::get('scitsAdminSession')->home_id])->get();
+        $lead_notes = LeadNote::where('lead_id', $id)->get();
+        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes'));   
     }
 
     // Lead Reject Type
@@ -338,6 +351,25 @@ class LeadController extends Controller
         } else {
             return redirect()->route('leads.lead_notes_type')->with('error', "Record not found");
         } 
+    }
+
+    public function convert_to_customer($id){
+        $customer = Customer::where('id', $id)->update(['is_converted' => 1]);
+        if($customer ){
+            return redirect()->route('leads.index')->with('success', "Customer converted successfully");
+        } else {
+            return redirect()->route('leads.index')->with('error', "Record not found");
+        } 
+    }
+
+    public function save_lead_notes(Request $request){
+        $save = LeadNote::create(array_merge($request->all(), ['home_id' =>  Session::get('scitsAdminSession')->home_id]));
+            
+        if( $save ){
+            return response()->json(['message' => 'Record added successfully!']);
+        } else {
+            return response()->json(['message' => "Error ! Notes doesn't save!"]);
+        }
     }
 
 }
