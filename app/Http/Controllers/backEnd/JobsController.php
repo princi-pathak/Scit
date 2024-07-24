@@ -1298,6 +1298,8 @@ class JobsController extends Controller
         }else{
             $task='Add';
         }
+        $admin   = Session::get('scitsAdminSession');
+        $data['home_id'] = $admin->home_id;
         $data['rejection']=Customer::find($key);
         $data['task']=$task;
         $data['page']='customers';
@@ -1306,7 +1308,7 @@ class JobsController extends Controller
         $data['job_title']=Job_title::where('status',1)->get();
         $data['country']=Country::where('status',1)->get();
         $country=DB::table('countries')->select('name')->get();
-        echo "<pre>";print_r($country);die;
+        // echo "<pre>";print_r($country);die;
         return view('backEnd.jobs_management.customers_form',$data);
     }
     public function customer_type(Request $request){
@@ -1465,5 +1467,12 @@ class JobsController extends Controller
         $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
+    }
+    public function customer_save(Request $request){
+        echo "<pre>";print_r($request->all());die;
+        // $a=Customer::find(1)->section_id;
+        // echo "<pre>";print_r(json_decode($a));die;
+        $customer = Customer::saveCustomer($request->all());
+        echo $customer;
     }
 }
