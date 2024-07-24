@@ -42,7 +42,21 @@ class Customer extends Model
         'notes',
         'product_tax',
         'service_tax',
+        'show_msg',
+        'msg',
+        'section_id',
         'status',
     ];
+    public static function saveCustomer(array $data)
+    {
+        if (isset($data['section_id'])) {
+            $data['section_id'] = implode(',',$data['section_id']);
+        }
+        $insert=self::updateOrCreate(
+            ['id' => $data['id'] ?? null],
+            $data
+        );
+        return $insert->id;
+    }
     
 }

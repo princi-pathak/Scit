@@ -43,6 +43,9 @@ return new class extends Migration
             $table->string('notes')->nullable(); 
             $table->string('product_tax')->nullable()->comment('VAT 20 or VAT 5'); 
             $table->string('service_tax')->nullable()->comment('VAT 20 or VAT 5'); 
+            $table->integer('show_msg');
+            $table->longText('msg');
+            $table->string('section_id');
             $table->boolean('status')->default(1)->comment('1-lead, 2-quotes'); 
             $table->timestamps(); 
         });
