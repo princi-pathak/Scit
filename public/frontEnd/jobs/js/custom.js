@@ -1,0 +1,290 @@
+
+
+$(document).ready(function() {
+  $('#exampleOne').DataTable( {
+      columnDefs: [ {
+          orderable: false,
+          className: 'select-checkbox',
+          targets:   0
+      } ],
+      select: {
+          style:    'os',
+          selector: 'td:first-child'
+      },
+      order: [[ 1, 'asc' ]]
+  } );
+} );
+
+
+
+
+
+// *******************PaiChart
+
+var myConfig = {
+  "type": "pie",
+ "title": {
+    "text": "All Potential Jobs - July 2024"
+  },
+  "series": [{
+      "values": [59]
+    },
+    {
+      "values": [55]
+    },
+    {
+      "values": [30]
+    },
+    {
+      "values": [28]
+    },
+    {
+      "values": [15]
+    }
+  ]
+};
+ 
+zingchart.render({
+  id: 'PieChart',
+  data: myConfig,
+  height: 326,
+  width: "100%"
+});
+
+// ***************************************************************************
+
+// DEFINE CHART LOCATIONS (IDS)
+// -----------------------------
+// Main chart render location
+let chartId = 'lineChart';
+
+// CHART CONFIG
+// -----------------------------
+let chartConfig = {
+  type: 'mixed',
+  title: {
+    text: 'Authorised Jobs For Period',
+    align: 'left',
+    marginLeft: '23%',
+  },
+  legend: {
+    adjustLayout: true,
+    verticalAlign: 'middle',
+  },
+  plot: {
+    animation: {
+      delay: 500,
+      effect: 'ANIMATION_SLIDE_TOP',
+      method: 'ANIMATION_BOUNCE_EASE_OUT',
+      sequence: 'ANIMATION_NO_SEQUENCE',
+      speed: 975,
+    },
+  },
+  scaleX: {
+    labels: [
+      'Day 1',
+      'Day 2',
+      'Day 3',
+      'Day 4',
+      'Day 5',
+      'Day 6',
+      'Day 7',
+      'Day 8',
+    ], //one label for every datapoint
+  },
+  scaleY: {
+    label: {
+      text: 'Remaining effort (hours)',
+      fontSize: '14px',
+    },
+    guide: {
+      // dashed lines
+      visible: false,
+    },
+  },
+  scaleY2: {
+    minValue: 0,
+    maxValue: 100,
+    step: 25, // can define scale step values or default
+    label: {
+      text: 'Remaing and completed tasks',
+      fontSize: '14px',
+    },
+  },
+  crosshairX: {
+    lineColor: '#424242',
+    lineGapSize: '4px',
+    lineStyle: 'dotted',
+    plotLabel: {
+      backgroundColor: 'white',
+      bold: true,
+      borderColor: '#e3e3e3',
+      borderRadius: '5px',
+      fontColor: '#2f2f2f',
+      fontFamily: 'Lato',
+      fontSize: '12px',
+      padding: '15px',
+      shadow: true,
+      shadowAlpha: 0.2,
+      shadowBlur: 5,
+      shadowColor: '#a1a1a1',
+      shadowDistance: 4,
+      textAlign: 'left',
+    },
+    scaleLabel: {
+      backgroundColor: '#424242',
+    },
+  },
+  series: [
+    {
+      type: 'line',
+      text: 'Remaining Tasks',
+      values: [35, 42, 67, 89, 25, 34, 67, 85].sort().reverse(),
+      lineColor: '#42a5f5',
+      marker: {
+        visible: 'false',
+      },
+      scales: 'scale-x, scale-y',
+    },
+    {
+      type: 'line',
+      text: 'Remaining Effort',
+      values: [25, 32, 57, 79, 15, 24, 57, 75].sort().reverse(),
+      lineColor: '#5c6bc0',
+      marker: {
+        type: 'square',
+        backgroundColor: '#5c6bc0',
+      },
+      scales: 'scale-x, scale-y',
+    },
+    {
+      type: 'line',
+      text: 'Completed Tasks',
+      values: [90, 80, 70, 60, 50, 40, 30, 20],
+      lineColor: '#66bb6a',
+      marker: {
+        visible: false,
+      },
+      scales: 'scale-x, scale-y',
+    },
+    {
+      type: 'bar',
+      text: 'Completed Tasks',
+      values: [5, 10, 6, 3, 6, 2, 0, 9],
+      backgroundColor: '#0877bd',
+      scales: 'scale-x, scale-y-2',
+    },
+  ],
+};
+
+// RENDER CHART
+// -----------------------------
+zingchart.render({
+  id: chartId,
+  data: chartConfig,
+  height: '325px',
+  width: '100%',
+});
+
+
+
+
+    // --------------------- /* Select option with search  */ ---------------------
+    let customInput = document.querySelector('.customInput')
+    selectedData = document.querySelector('.selectedData')
+    searchInput = document.querySelector('.searchInput input')
+    ul = document.querySelector('.options ul')
+    customInputContainer = document.querySelector('.customInputContainer')
+    
+    window.addEventListener('click', (e) => {
+        if (document.querySelector('.searchInput').contains(e.target)) {
+            document.querySelector('.searchInput').classList.add('focus')
+        } else {
+            document.querySelector('.searchInput').classList.remove('focus')
+        }
+    })
+    
+    var countries = [
+        "Custom Input",
+        "Afghanistan",
+        "Aland Islands",
+        
+        "Zimbabwe"
+    ];
+    
+    customInput.addEventListener('click', () => {
+        customInputContainer.classList.toggle('show')
+    })
+    
+    let countriesLength = countries.length
+    
+    for (let i = 0; i < countriesLength; i++) {
+        let country = countries[i]
+        const li = document.createElement("li");
+        const countryName = document.createTextNode(country);
+        li.appendChild(countryName);
+        ul.appendChild(li);
+    }
+    
+    
+    ul.querySelectorAll('li').forEach(li => {
+        li.addEventListener('click', (e) => {
+            let selectdItem = e.target.innerText
+            selectedData.innerText = selectdItem
+            
+            for (const li of document.querySelectorAll("li.selected")) {
+                li.classList.remove("selected");
+            }
+            e.target.classList.add('selected')
+            customInputContainer.classList.toggle('show')
+        })
+    });
+    
+    function updateData(data) {
+        let selectedCountry = data.innerText
+        selectedData.innerText = selectedCountry
+    
+        for (const li of document.querySelectorAll("li.selected")) {
+            li.classList.remove("selected");
+        }
+        data.classList.add('selected')
+        customInputContainer.classList.toggle('show')
+        console.log(selectedCountry);
+    }
+    
+    searchInput.addEventListener('keyup', (e) => {
+        let searchedVal = searchInput.value.toLowerCase()
+        let searched_country = []
+    
+        searched_country = countries.filter(data => {
+            return data.toLocaleLowerCase().startsWith(searchedVal)
+        }).map(data => {
+            return `<li onClick="updateData(this)">${data}</li>`
+        }).join('')
+        ul.innerHTML = searched_country ? searched_country : "<p style='margin-top: 1rem;'>Opps can't find any result <p style='margin-top: .2rem; font-size: .9rem;'>Try searching something else.</p></p>"
+    })
+
+
+    // ************************************************************************************************
+
+$(window).scroll(function () {
+    if ($(this).scrollTop() > 250) {
+        $('.sticky-top').addClass('sticky-nav').css('top', '0px');
+    } else {
+        $('.sticky-top').removeClass('sticky-nav').css('top', '-100px');
+    }
+  });
+
+
+//   Data Table Js
+
+
+
+
+
+
+
+
+
+
+

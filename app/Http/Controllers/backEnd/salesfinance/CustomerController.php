@@ -8,8 +8,17 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
     public function index(Request $request){
-        print_r("hello");
         $page = 'Customers';
-        return view('backEnd.salesFinance.customer_form', compact('page'));
+        return view('backEnd.salesFinance.customers.form', compact('page'));
     }
+    public function create(Request $request){
+        $page = 'Customers';
+        return view('backEnd.salesFinance.customers.form', compact('page'));
+    }
+
+    public function store(Request $request){
+        $page = 'Customers';
+        return view('backEnd.salesFinance.customers.form', compact('page'));
+    }
+
 }

@@ -100,6 +100,25 @@
                         </div>
                     </div>
                 </a> <?php } ?>
+                 <!-- Ram 14/06/2024 here code for job -->
+             
+                <a href="{{ url('/jobs_index') }}">
+                     <div class="col-md-6">
+                        <div class="profile-nav alt">
+                            <section class="panel text-center">
+                                <div class="user-heading alt wdgt-row lightRed"> <i class="fa fa-briefcase"></i></div>
+                                <div class="panel-body">
+                                    <div class="wdgt-value">
+                                        <h1 class="count">Sales & <br> Finance</h1>
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </a>
+             
+                <!-- end here -->
                 <!-- <div class="col-md-6">
                     <div class="profile-nav alt">
                         <a data-target="#PoliProcModal" data-toggle="modal" class="MainNavText" >    <!-- #PoliProcModal --
