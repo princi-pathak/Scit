@@ -15,7 +15,7 @@
         <button id="editable-sample_new" class="btn btn-primary">Authorization ()</button>
     </a>
     <a href="{{ url('admin/sales-finance/leads/converted') }}">
-        <button id="editable-sample_new" class="btn btn-primary">Converted ()</button>
+        <button id="editable-sample_new" class="btn btn-primary">Converted ({{ App\Customer::getConvertedCustomersCount() }})</button>
     </a>
     <a href="{{ url('admin/sales-finance/leads/tasks') }}">
         <button id="editable-sample_new" class="btn btn-primary">Tasks </button>

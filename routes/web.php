@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backEnd\salesfinance\LeadController as BackendLeadController;
 
 
 Route::get('clear', function () {
@@ -1321,39 +1322,45 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::get('sales-finance/customers/add', 'App\Http\Controllers\backEnd\salesfinance\CustomerController@create')->name('customers.create');
 	Route::get('sales-finance/customers/create', 'App\Http\Controllers\backEnd\salesfinance\CustomerController@store')->name('customers.store');
 
-	// Admin leads
-	Route::get('sales-finance/leads', 'App\Http\Controllers\backEnd\salesfinance\LeadController@index')->name('leads.index');
-	Route::get('sales-finance/leads/add', 'App\Http\Controllers\backEnd\salesfinance\LeadController@create')->name('leads.create');
-	Route::post('sales-finance/leads/create', 'App\Http\Controllers\backEnd\salesfinance\LeadController@store')->name('leads.store');
-	Route::get('sales-finance/leads/edit/{id}', 'App\Http\Controllers\backEnd\salesfinance\LeadController@edit')->name('leads.edit');
-	Route::get('sales-finance/leads/unassigned', 'App\Http\Controllers\backEnd\salesfinance\LeadController@index')->name('leads.unassigned');
-	Route::get('sales-finance/leads/rejected', 'App\Http\Controllers\backEnd\salesfinance\LeadController@index')->name('leads.rejected');
+	Route::controller(BackendLeadController::class)->group(function(){
+		// Admin leads
+		Route::get('sales-finance/leads', 'index')->name('leads.index');
+		Route::get('sales-finance/leads/add', 'create')->name('leads.create');
+		Route::post('sales-finance/leads/create', 'store')->name('leads.store');
+		Route::get('sales-finance/leads/edit/{id}', 'edit')->name('leads.edit');
+		Route::get('sales-finance/leads/unassigned', 'index')->name('leads.unassigned');
+		Route::get('sales-finance/leads/rejected', 'index')->name('leads.rejected');
+		Route::get('sales-finance/leads/convert_to_customer/{id}', 'convert_to_customer')->name('leads.convertCustomer');
+		Route::get('sales-finance/leads/converted', 'index')->name('leads.converted');
+		Route::post('sales-finance/leads/saveLeadNotes', 'save_lead_notes')->name('leads.ajax.saveLeadNotes');
+		
+		// Lead Status
+		Route::get('sales-finance/leads/lead_status', 'lead_status')->name('leads.lead_status');
+		Route::post('sales-finance/leads/saveLeadStatus', 'saveLeadStatus')->name('leads.ajax.saveLeadStatus');
+		Route::get('sales-finance/leads/lead_status/delete/{id}', 'lead_status_delete');
 
-	// Lead Status
-	Route::get('sales-finance/leads/lead_status', 'App\Http\Controllers\backEnd\salesfinance\LeadController@lead_status')->name('leads.lead_status');
-	Route::post('sales-finance/leads/saveLeadStatus', 'App\Http\Controllers\backEnd\salesfinance\LeadController@saveLeadStatus')->name('leads.ajax.saveLeadStatus');
-	Route::get('sales-finance/leads/lead_status/delete/{id}', 'App\Http\Controllers\backEnd\salesfinance\LeadController@lead_status_delete');
+		// Lead Sources
+		Route::get('sales-finance/leads/lead_sources', 'lead_sources')->name('leads.lead_sources');
+		Route::post('sales-finance/leads/saveLeadSource', 'saveLeadSource')->name('leads.ajax.saveLeadSource');
+		Route::get('sales-finance/leads/lead_source/delete/{id}', 'lead_source_delete');
 
-	// Lead Sources
-	Route::get('sales-finance/leads/lead_sources', 'App\Http\Controllers\backEnd\salesfinance\LeadController@lead_sources')->name('leads.lead_sources');
-	Route::post('sales-finance/leads/saveLeadSource', 'App\Http\Controllers\backEnd\salesfinance\LeadController@saveLeadSource')->name('leads.ajax.saveLeadSource');
-	Route::get('sales-finance/leads/lead_source/delete/{id}', 'App\Http\Controllers\backEnd\salesfinance\LeadController@lead_source_delete');
+		// Lead Task Type
+		Route::get('sales-finance/leads/lead_task_type', 'lead_task_type')->name('leads.lead_task_type');
+		Route::post('sales-finance/leads/saveLeadTaskType', 'saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
+		Route::get('sales-finance/leads/lead_task_type/delete/{id}', 'lead_task_type_delete');
 
-	// Lead Task Type
-	Route::get('sales-finance/leads/lead_task_type', 'App\Http\Controllers\backEnd\salesfinance\LeadController@lead_task_type')->name('leads.lead_task_type');
-	Route::post('sales-finance/leads/saveLeadTaskType', 'App\Http\Controllers\backEnd\salesfinance\LeadController@saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
-	Route::get('sales-finance/leads/lead_task_type/delete/{id}', 'App\Http\Controllers\backEnd\salesfinance\LeadController@lead_task_type_delete');
+		// Lead Notes Type
+		Route::get('sales-finance/leads/lead_notes_type', 'lead_notes_type')->name('leads.lead_notes_type');
+		Route::post('sales-finance/leads/saveLeadNotesType', 'saveLeadNotesType')->name('leads.ajax.saveLeadNoteType');
+		Route::get('sales-finance/leads/lead_note_type/delete/{id}', 'lead_note_type_delete');
 
-	// Lead Notes Type
-	Route::get('sales-finance/leads/lead_notes_type', 'App\Http\Controllers\backEnd\salesfinance\LeadController@lead_notes_type')->name('leads.lead_notes_type');
-	Route::post('sales-finance/leads/saveLeadNotesType', 'App\Http\Controllers\backEnd\salesfinance\LeadController@saveLeadNotesType')->name('leads.ajax.saveLeadNoteType');
-	Route::get('sales-finance/leads/lead_note_type/delete/{id}', 'App\Http\Controllers\backEnd\salesfinance\LeadController@lead_note_type_delete');
+		// Lead reject type or resons
+		Route::get('sales-finance/leads/lead_reject_type', 'lead_reject_type')->name('leads.lead_reject_type');
+		Route::post('sales-finance/leads/saveLeadRejectType', 'saveLeadRejectType')->name('leads.ajax.saveLeadRejectType');
+		Route::get('sales-finance/leads/lead_reject_type/delete/{id}', 'lead_reject_type_delete');
+		Route::post('sales-finance/leads/saveLeadRejectReason', 'saveLeadRejectReason')->name('leads.ajax.saveLeadRejectReason');
 
-	// Lead reject type or resons
-	Route::get('sales-finance/leads/lead_reject_type', 'App\Http\Controllers\backEnd\salesfinance\LeadController@lead_reject_type')->name('leads.lead_reject_type');
-	Route::post('sales-finance/leads/saveLeadRejectType', 'App\Http\Controllers\backEnd\salesfinance\LeadController@saveLeadRejectType')->name('leads.ajax.saveLeadRejectType');
-	Route::get('sales-finance/leads/lead_reject_type/delete/{id}', 'App\Http\Controllers\backEnd\salesfinance\LeadController@lead_reject_type_delete');
-	Route::post('sales-finance/leads/saveLeadRejectReason', 'App\Http\Controllers\backEnd\salesfinance\LeadController@saveLeadRejectReason')->name('leads.ajax.saveLeadRejectReason');
+	});
 
 });
 
