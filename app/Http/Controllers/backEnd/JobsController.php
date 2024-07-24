@@ -1260,7 +1260,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Customer::whereNot('status',2)->orderBy('id','DESC');
+            $query=Customer::whereNot('status',2)->where('is_converted', 1)->orderBy('id','DESC');
 
             $search = '';
 

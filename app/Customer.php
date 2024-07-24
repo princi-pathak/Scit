@@ -42,7 +42,13 @@ class Customer extends Model
         'notes',
         'product_tax',
         'service_tax',
+        'is_converted',
         'status',
     ];
+
+    public static function getConvertedCustomersCount(){
+        $all = Customer::where(['is_converted' => '1', 'status' => 1])->count();
+        return $all;
+    }
     
 }
