@@ -5977,3 +5977,80 @@ padding-bottom: 12px;
 .formBottomBtn .edit-submit-btn-area button{
   margin-left: 10px;
 }
+/* *************extra_informationTabs css******* */
+.tabsBtnRit{
+    display: flex;
+    justify-content: end;
+}
+.tabsBtnRit button{
+    margin-left: 10px;
+}
+.extra_informationTabs{
+
+}
+.extra_informationTabs .nav>li>a:hover, .extra_informationTabs .nav>li>a:focus {
+    text-decoration: none;
+    background-color: #1ca59e;
+    color: #fff;
+}
+.extra_informationTabs .nav-tabs>li.active>a, .extra_informationTabs .nav-tabs>li.active>a:hover, .extra_informationTabs .nav-tabs>li.active>a:focus {
+    color: #555;
+    background-color: #1ca59e;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    cursor: default;
+    color: #fff;
+}
+.tabform{
+    /* padding-top: 30px; */
+}
+.pddtp.noteSaveBtn {
+    padding-top: 58px;
+}
+.modal-title.pupTitle{
+    font-weight: 600 !important;
+    color: #fff;
+}
+.tabheadingTitle {
+    display: flex;
+    padding-bottom: 20px;
+}
+.tabheadingTitle h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+.tabheadingTitle a{
+    padding: 0px 12px;
+    margin-top: 8px;
+    margin-left: 10px;
+    line-height: 36px;
+    border-radius: 3px;
+}
+canvas#canv1 {
+    height: 80px;
+}
+
+.uploadImg {
+    border: 2px dashed #1fb5ad;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #fff;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.uploadImg i {
+    font-size: 50px;
+    color: #1fb5ad;
+}
+.uploadImg input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}

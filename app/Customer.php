@@ -42,7 +42,29 @@ class Customer extends Model
         'notes',
         'product_tax',
         'service_tax',
+        'is_converted',
         'status',
+         'show_msg',
+          'msg',
+          'section_id',
+          'status',
     ];
+
+    public static function getConvertedCustomersCount(){
+        $all = Customer::where(['is_converted' => '1', 'status' => 1])->count();
+        return $all;
+       
+    }
+    public static function saveCustomer(array $data)
+    {
+        if (isset($data['section_id'])) {
+            $data['section_id'] = implode(',',$data['section_id']);
+        }
+        $insert=self::updateOrCreate(
+            ['id' => $data['id'] ?? null],
+            $data
+        );
+        return $insert->id;
+    }
     
 }
