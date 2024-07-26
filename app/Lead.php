@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\LeadNote;
 
 class Lead extends Model
 {
@@ -35,5 +36,10 @@ class Lead extends Model
     public static function getRejectedCount(){
         $all = Lead::where('status', '6')->count();
         return $all;
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(LeadNote::class);
     }
 }

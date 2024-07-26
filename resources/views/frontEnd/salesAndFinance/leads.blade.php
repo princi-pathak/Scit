@@ -13,14 +13,16 @@
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="jobsection">
-                    <a href="{{ url('/leads/add_lead') }}" class="profileDrop">New Job</a>
-                    <a href="#" class="profileDrop">Active <span>(5)</span></a>
-                    <a href="#" class="profileDrop">Unassigned<span>(8)</span></a>
-                    <a href="#" class="profileDrop">Action Required<span>(15)</span></a>
-                    <a href="#" class="profileDrop">Overdue<span>(76)</span></a>
-                    <a href="#" class="profileDrop">authorization<span>(32)</span></a>
-                    <a href="#" class="profileDrop">On Hold<span>(2)</span></a>
-                    <a href="#" class="profileDrop">Recursing Jobs</a>
+                    <a href="{{ url('/leads/add_lead') }}" class="profileDrop">New Lead</a>
+                    <a href="#" class="profileDrop">All Leads <span>(5)</span></a>
+                    <a href="#" class="profileDrop">My Leads<span>(8)</span></a>
+                    <a href="#" class="profileDrop">Unassigned<span>(15)</span></a>
+                    <a href="#" class="profileDrop">Actioned<span>(76)</span></a>
+                    <a href="#" class="profileDrop">Rejected<span>(32)</span></a>
+                    <a href="#" class="profileDrop">Authorization<span>(2)</span></a>
+                    <a href="#" class="profileDrop">Converted</a>
+                    <a href="#" class="profileDrop">Search Leads</a>
+                    <a href="#" class="profileDrop">Task</a>
                 </div>
             </div>
         </div>
@@ -109,13 +111,13 @@
                                 <td>{{ $customer->postal_code }}</td>
                                 <td>{{ $customer->lead_ref }}</td>
                                 <td> @switch($customer->status)
-                                    @case(1) Contact Later @break
-                                    @case(2) Contacted @break
-                                    @case(3) New @break
-                                    @case(4) Pre Qualified @break
-                                    @case(5) Qualified @break
-                                    @case(6) Rejected @break
-                                    @default {{-- No output if none of the cases match --}}
+                                        @case(1) Contact Later @break
+                                        @case(2) Contacted @break
+                                        @case(3) New @break
+                                        @case(4) Pre Qualified @break
+                                        @case(5) Qualified @break
+                                        @case(6) Rejected @break
+                                        @default {{-- No output if none of the cases match --}}
                                     @endswitch
                                 </td>
                                 <td>
@@ -125,7 +127,7 @@
                                                 Action
                                             </a>
                                             <div class="dropdown-menu fade-up m-0">
-                                                <a href="#" class="dropdown-item">Edit Details</a>
+                                                <a href="{{ url('/leads/edit').'/'.$customer->id }}" class="dropdown-item">Edit Details</a>
                                                 <a href="#" class="dropdown-item">Send SMS</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="#" class="dropdown-item">CRM History</a>
@@ -138,9 +140,6 @@
                                         </div>
                                     </div>
                                     <!-- **************** -->
-
-
-
 
                                     <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">

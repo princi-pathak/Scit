@@ -16,6 +16,7 @@ use App\Models\LeadStatus;
 use App\Models\LeadSource;
 use App\Models\LeadTaskType;
 use App\Models\LeadNoteType;
+use App\Models\LeadNote;
 use Carbon\Carbon;
 
 class LeadController extends Controller
@@ -103,4 +104,22 @@ class LeadController extends Controller
             return back()->withInput()->withErrors(['error' => 'Failed to save lead. Please try again.']);
         }
     }
+
+    public function edit($id){
+        $page = 'Leads';
+        $lead = DB::table('customers')
+        ->join('leads', 'customers.id', '=', 'leads.customer_id')
+        ->join('lead_notes', 'lead_notes.lead_id', '=', 'leads.id')
+        ->select('customers.*', 'leads.*')
+        ->where('leads.id', $id)
+        ->first();
+        $users = User::where('home_id', Auth::user()->home_id)->get();
+        $status = LeadStatus::where('deleted_at', null)->where('status', 1)->get();
+        $sources = LeadSource::where('deleted_at', null)->where('status', 1)->get();
+        $notes_type = LeadNoteType::where(['deleted_at'=> null, 'status' => 1, 'home_id' => Auth::user()->home_id])->get();
+        $lead_notes = LeadNote::where('lead_id', $id)->get();
+        return view('frontEnd.salesAndFinance.lead_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes'));   
+    }
+
+
 }
