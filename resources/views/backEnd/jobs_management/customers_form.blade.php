@@ -551,41 +551,101 @@
                         <div class="custom-fieldset">
                             <div class="custom-legend"><strong>Customer Contact</strong></div>
                             <form id="notification_form">
-                            
+                            @csrf
+                            <input type="hidden" value="" name="customer_id" id="customer_id">
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Notify When *</label>
+                                <label class="col-lg-3 control-label">Default Billing</label>
                                 <div class="col-lg-9">
-                                    
+                                    <input type="radio" name="r" id="yes" class="billing"> Yes
+                                    <input type="radio" name="r" id="no" class="billing"> No
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Notify Who? *</label>
+                                <label class="col-lg-3 control-label">Contact Name</label>
                                 <div class="col-lg-9">
-                                <select class="form-select who_noti" name="who_noti" id="who_noti" multiselect-search="true" multiselect-select-all="true" multiselect-max-items="4" multiple="multiple">
-                                    <option value="1">Tom</option>
-                                    <option value="2">Jerry</option>
+                                    <input type="text" name="customer_name" id="customer_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Job Title(Position)</label>
+                                <div class="col-lg-9">
+                                <select class="form-control who_noti" name="customer_job_titleid" id="customer_job_titleid">
+                                    <option selected disabled>Select Job Title</option>
+                                    <?php foreach($job_title as $titleval){?>
+                                    <option value="{{$titleval->id}}">{{$titleval->name}}</option>
+                                    <?php }?>
                                 </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Notify Customer</label>
+                                <label class="col-lg-3 control-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input type="checkbox" name="om_complete" id="om_complete" value=""> On Complete
+                                    <input type="email" name="customer_email" id="customer_email" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Send As *</label>
+                                <label class="col-lg-3 control-label">Telephone</label>
                                 <div class="col-lg-9">
-                                    <input type="checkbox" name="om_complete" id="om_complete_noti" value=""> Notification (User Only) <br>
-                                    <input type="checkbox" name="sms" id="sms" value=""> SMS <br>
-                                    <input type="checkbox" name="emailsend" id="emailsend" value=""> Email <br>
+                                    <input type="text" id="customer_telephone" name="customer_telephone" class="form-control">
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Mobile</label>
+                                <div class="col-lg-9">
+                                <input type="text" id="customer_mobile" name="customer_mobile" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Fax</label>
+                                <div class="col-lg-9">
+                                <input type="text" id="customer_fax" name="customer_fax" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Address Details</label>
+                                <div class="col-lg-9">Same as Default
+                                <input type="checkbox" id="check" name="check">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Address</label>
+                                <div class="col-lg-9">
+                                <textarea name="customer_address" class="form-control" id="customer_address" rows="10" cols="10"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">City</label>
+                                <div class="col-lg-9">
+                                    <input type="text" id="customer_city" name="customer_city" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Country</label>
+                                <div class="col-lg-9">
+                                    <input type="text" id="customer_country" name="customer_country" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Post Code</label>
+                                <div class="col-lg-9">
+                                    <input type="text" id="customer_post_code" name="customer_post_code" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Country</label>
+                                <div class="col-lg-9">
+                                    <select id="customer_country_id" name="customer_country_id" class="form-control">
+                                        <option selected disabled>Select Country</option>
+                                        <?php foreach($country as $valc){?>
+                                            <option value="{{$valc->id}}">{{$valc->name}}</option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="noti_button">
-                            <a href="javascript:" class="btn btn-primary" onclick="get_save_notification()">Save</a>
-                            <a href="javascript:" class="btn btn-primary">Cancel</a>
+                            <a href="javascript:" class="btn btn-primary" onclick="get_save_contact()">Save</a>
+                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
                         </div>
                                             </form>
                     </div>
@@ -647,15 +707,50 @@ function get_data(){
             success:function(data)
             {
                 console.log(data);
-                if($.trim(data)=="done"){
-                    window.location.href='<?php echo url('admin/customers');?>';
-                }
+                $("#customer_id").val(data);
+                // if($.trim(data)=="done"){
+                //     window.location.href='<?php echo url('admin/customers');?>';
+                // }
             }
         }); 
     
 }
 function open_additional_contact_model(){
     $("#additionl_contact_model").modal('show');
+}
+function get_save_contact(){
+    var token='<?php echo csrf_token();?>'
+    var default_billing;
+    if($('#yes').is(':checked')){
+        default_billing=1;
+    }else {
+        default_billing=0;
+    }
+    var contact_name=$("#customer_name").val();
+    var job_title_id=$("#customer_job_titleid").val();
+    var customer_id=$("#customer_id").val();
+    var email=$("#customer_email").val();
+    var telephone=$("#customer_telephone").val();
+    var mobile=$("#customer_mobile").val();
+    var fax=$("#customer_fax").val();
+    var address=$("#customer_address").val();
+    var city=$("#customer_city").val();
+    var country=$("#customer_country").val();
+    var postcode=$("#customer_post_code").val();
+    var country_id=$("#customer_country_id").val();
+
+    $.ajax({  
+            type:"POST",
+            url:"{{url('admin/customer_contact_save')}}",
+            data: {_token:token,default_billing:default_billing,contact_name:contact_name,job_title_id:job_title_id,customer_id:customer_id,email:email,telephone:telephone,mobile:mobile,fax:fax,address:address,city:city,country:country,postcode:postcode,country_id:country_id},
+            success:function(data)
+            {
+                console.log(data);
+                if($.trim(data)=="done"){
+                    $("#additionl_contact_model").modal('hide');
+                }
+            }
+        }); 
 }
 </script>					
 @endsection
