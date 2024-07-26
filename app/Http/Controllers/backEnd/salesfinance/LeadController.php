@@ -13,6 +13,8 @@ use Validator;
 use App\Models\LeadRejectType;
 use App\Models\LeadRejectReason;
 use App\Models\LeadStatus;
+use App\Models\LeadTask;
+
 use App\Models\LeadSource;
 use App\Models\LeadTaskType;
 use App\Models\LeadNoteType;
@@ -143,15 +145,32 @@ class LeadController extends Controller
         $lead = DB::table('customers')
         ->join('leads', 'customers.id', '=', 'leads.customer_id')
         ->join('lead_notes', 'lead_notes.lead_id', '=', 'leads.id')
-        ->select('customers.*', 'leads.*')
+        ->join('lead_note_types', 'lead_note_types.id', '=', 'lead_notes.notes_type_id')
+        ->select('customers.*', 'leads.*', 'lead_notes.*', 'lead_note_types.*')
         ->where('leads.id', $id)
         ->first();
+        // dd($lead->lead_ref);
         $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
         $status = LeadStatus::where('deleted_at', null)->where('status', 1)->get();
         $sources = LeadSource::where('deleted_at', null)->where('status', 1)->get();
         $notes_type = LeadNoteType::where(['deleted_at'=> null, 'status' => 1, 'home_id' => Session::get('scitsAdminSession')->home_id])->get();
         $lead_notes = LeadNote::where('lead_id', $id)->get();
-        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes'));   
+        $leadTask = LeadTaskType::where(['deleted_at'=> null, 'status' => 1])->get();
+        $lead_notes_data = DB::table('lead_notes')
+            ->join('lead_note_types', 'lead_note_types.id', '=', 'lead_notes.notes_type_id')
+            ->select('lead_notes.*', 'lead_note_types.*')
+            ->where('lead_notes.lead_id', $id)
+            ->get();
+            // dd($lead_notes_data);
+        $lead_task =  DB::table('lead_tasks')
+            ->join('lead_task_types', 'lead_task_types.id', '=', 'lead_tasks.lead_task_type_id')
+            ->select('lead_tasks.*', 'lead_task_types.title as task_type_title')
+            ->where('lead_tasks.lead_ref', $lead->lead_ref)
+            ->get();
+
+
+        // dd($lead_task);
+        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes', 'lead_notes_data', 'leadTask', 'lead_task'));   
     }
 
     // Lead Reject Type
@@ -369,6 +388,26 @@ class LeadController extends Controller
             return response()->json(['message' => 'Record added successfully!']);
         } else {
             return response()->json(['message' => "Error ! Notes doesn't save!"]);
+        }
+    }
+
+    public function save_lead_tasks(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_task_type_id' => 'required',
+            'title' => 'required',
+            'notes' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        
+        LeadTask::updateOrCreate(['id' => $request->lead_task_id], $request->all());
+
+        if(isset($request->lead_task_id)){
+            return response()->json(['message' => 'Record updated successfully!']);
+        } else {
+            return response()->json(['message' => 'Task added successfully!']);
         }
     }
 
