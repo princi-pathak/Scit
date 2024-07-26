@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backEnd\salesfinance\LeadController as BackendLeadController;
+use App\Http\Controllers\frontEnd\salesFinance\LeadController as FrontendLeadController;
 
 
 Route::get('clear', function () {
@@ -229,13 +230,17 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/jobs_index','App\Http\Controllers\jobs\JobController@index');
 	Route::get('/planner_day','App\Http\Controllers\jobs\JobController@planner_day');
 	Route::get('/jobs_create','App\Http\Controllers\jobs\JobController@jobs_create');
-
 	// end here
 
-	//Leads 
-	Route::get('/leads/lead','App\Http\Controllers\frontEnd\salesFinance\LeadController@index')->name('lead.index');
-	Route::get('/leads/add','App\Http\Controllers\frontEnd\salesFinance\LeadController@create');
-	Route::post('/leads/create','App\Http\Controllers\frontEnd\salesFinance\LeadController@store')->name('lead.store');
+
+	Route::controller(FrontendLeadController::class)->group(function(){
+		//Leads 
+		Route::get('/leads/lead','index')->name('lead.index');
+		Route::get('/leads/add','create');
+		Route::post('/leads/create','store')->name('lead.store');
+		Route::get('/leads/edit/{id}', 'edit')->name('lead.edit');
+	});
+
 	// Route::get('/leads/rejected', 'App\Http\Controllers\frontEnd\salesfinance\LeadController@index')->name('leads.rejected');
 
 
@@ -1333,6 +1338,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		Route::get('sales-finance/leads/convert_to_customer/{id}', 'convert_to_customer')->name('leads.convertCustomer');
 		Route::get('sales-finance/leads/converted', 'index')->name('leads.converted');
 		Route::post('sales-finance/leads/saveLeadNotes', 'save_lead_notes')->name('leads.ajax.saveLeadNotes');
+		Route::post('sales-finance/leads/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
+
+		
 		
 		// Lead Status
 		Route::get('sales-finance/leads/lead_status', 'lead_status')->name('leads.lead_status');

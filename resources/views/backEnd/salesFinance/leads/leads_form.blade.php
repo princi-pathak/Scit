@@ -5,6 +5,9 @@
     #hiddenDiv {
         display: none; /* Initially hide the div */
     }
+    #optionsDiv {
+        display: none;
+    }
 </style>
 
 <?php
@@ -179,9 +182,11 @@ if (isset($lead)) {
                                                             <div class="col-lg-4">
                                                                 <select class="form-control" id="notes_type" name="notes_type"> 
                                                                     <option value="">Select Type</option>
-                                                                    @foreach($notes_type as $value)
-                                                                        <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                                                    @endforeach 
+                                                                    @if(isset($notes_type))
+                                                                        @foreach($notes_type as $value)
+                                                                            <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                                        @endforeach 
+                                                                    @endif
                                                                 </select>
                                                             </div>
                                                             <div class="col-lg-1" id="inputPlusCircle">
@@ -247,21 +252,34 @@ if (isset($lead)) {
                                                         <table class="table">
                                                             <thead>
                                                                 <tr class="active">
-                                                                    <th>1</th>
-                                                                    <th>Date</th>
+                                                                    <th>Data</th>
                                                                     <th>By</th>
                                                                     <th>Type</th>
                                                                     <th>Notes</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                </tr>
+                                                                @if(isset($lead_notes_data))
+                                                                    @foreach($lead_notes_data as $value)
+                                                                        <tr>
+                                                                            <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y H:i') }}</td>
+                                                                            <td>{{ $value->home_id }}</td>
+                                                                            <td>{{ $value->title }}</td>
+                                                                            <td>{{ $value->notes }}</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                @else
+                                                                    <tr>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                    </tr>
+                                                                @endif
+                                                               
+                                                             
+
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -280,92 +298,108 @@ if (isset($lead)) {
                                                             <div class="modal-content">
                                                                 <div class="modal-header terques-bg">
                                                                     <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                                                    <h4 class="modal-title pupTitle">History
-                                                                        Type - Add</h4>
+                                                                    <h4 class="modal-title pupTitle">Add Task</h4>
                                                                 </div>
                                                                 <div class="modal-body">
 
-                                                                    <form role="form">
+                                                                    <form role="form" id="addTask">
                                                                         <div class="form-group">
                                                                             <label class="col-lg-3 col-sm-3 control-label">Leads Ref.*</label>
                                                                             <div class="col-md-9">
-                                                                                <input type="email" class="form-control" id="leadsRef" placeholder="Leads Ref.">
+                                                                                <input type="email" class="form-control" name="lead_ref" id="leadsRef" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" id="lead_ref" placeholder="Leads Ref." readonly>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Type</label>
+                                                                            <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Task User</label>
                                                                             <div class="col-lg-9">
-                                                                                <select class="form-control">
-                                                                                    <option>General1</option>
-                                                                                    <option>General2</option>
+                                                                                <select class="form-control" name="user_id" id="user_id">
+                                                                                    @foreach($users as $value)
+                                                                                        <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
+                                                                                    @endforeach
                                                                                 </select>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Type</label>
+                                                                            <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Task Type</label>
                                                                             <div class="col-lg-9">
-                                                                                <select class="form-control">
-                                                                                    <option>General1</option>
-                                                                                    <option>General2</option>
+                                                                                <select class="form-control" id="lead_task_type_id" name="lead_task_type_id">
+                                                                                    <option>Select</option>
+                                                                                    @foreach($leadTask as $value)
+                                                                                        <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                                                    @endforeach
                                                                                 </select>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Date</label>
                                                                             <div class="col-lg-4">
-                                                                                <input type="date" class="form-control">
+                                                                                <input type="date" name="" name="" class="form-control">
                                                                             </div>
                                                                             <div class="col-lg-1">
                                                                                 <i class="fa fa-calendar"></i>
                                                                             </div>
                                                                             <div class="col-lg-4">
-                                                                                <input type="time" class="form-control">
+                                                                                <input type="time" class="form-control" id="" name="">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label class="col-lg-3 col-sm-3 control-label">History Type*</label>
+                                                                            <label class="col-lg-3 col-sm-3 control-label">Title*</label>
                                                                             <div class="col-md-9">
-                                                                                <input type="email" class="form-control" id="" placeholder="Enter email">
+                                                                                <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label class="col-lg-3 col-sm-3 control-label">History Type*</label>
+                                                                            <label class="col-lg-3 col-sm-3 control-label">Contact Name*</label>
                                                                             <div class="col-md-9">
-                                                                                <input type="email" class="form-control" id="" placeholder="Enter email">
+                                                                                <input type="text" class="form-control" id="canatact_name" name="canatact_name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}" placeholder="Enter name" readonly>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label class="col-lg-3 col-sm-3 control-label">History Type*</label>
+                                                                            <label class="col-lg-3 col-sm-3 control-label">Contact Phone*</label>
                                                                             <div class="col-md-9">
-                                                                                <input type="email" class="form-control" id="" placeholder="Enter email">
+                                                                                <input type="text" class="form-control" id="phone_num" name="phone_num" value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" placeholder="Enter email" readonly>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Date</label>
+                                                                            <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Notify?</label>
                                                                             <div class="col-lg-2">
                                                                                 <input type="checkbox" id="yeson">
                                                                                 <label for="yeson">Yes, ON</label>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <input type="date" class="form-control">
+                                                                                <input type="date" id="notify_date" name="notify_date" class="form-control">
                                                                             </div>
                                                                             <div class="col-lg-1">
                                                                                 <i class="fa fa-calendar"></i>
                                                                             </div>
                                                                             <div class="col-lg-3">
-                                                                                <input type="time" class="form-control">
+                                                                                <input type="time" class="form-control" id="notify_time" name="notify_time">
+                                                                            </div>
+                                                                            <div id="optionsDiv">
+                                                                                <label>
+                                                                                    <input type="checkbox" value="1" id="notificationCheckbox" name="notificationCheckbox">
+                                                                                    Notification
+                                                                                </label>
+                                                                                <label>
+                                                                                    <input type="checkbox" value="1" id="emailCheckbox" name="emailCheckbox">
+                                                                                    Email
+                                                                                </label>
+                                                                                <label>
+                                                                                    <input type="checkbox" value="1" id="smsCheckbox" name="smsCheckbox">
+                                                                                    SMS
+                                                                                </label>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label class="col-lg-3 col-sm-3 control-label">Notes</label>
                                                                             <div class="col-md-9">
-                                                                                <textarea class="form-control" rows="4" cols="70"> </textarea>
+                                                                                <textarea class="form-control" name="notes" id="notes" rows="4" cols="70"> </textarea>
                                                                             </div>
                                                                         </div>
                                                                     </form>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-primary">Save</button>
+                                                                    <button type="button" class="btn btn-primary" id="saveAddTask">Save</button>
                                                                     <button type="button" class="btn btn-primary">Save & Close</button>
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                 </div>
@@ -390,18 +424,35 @@ if (isset($lead)) {
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                </tr>
+                                                                @if(isset($lead_task))
+                                                                    @foreach($lead_task as $value)
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td>{{ $value->created_at}}</td>
+                                                                            <td>{{ $value->user_id}}</td>
+                                                                            <td>{{ $value->task_type_title}}</td>
+                                                                            <td>{{ $value->title}}</td>
+                                                                            <td>{{$lead->contact_name}}</td>
+                                                                            <td>{{$lead->telephone}}</td>
+                                                                            <td></td>
+                                                                            <td>{{ $value->notes}}</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                @else
+                                                                    <tr>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                        <td>...</td>
+                                                                    </tr>
+                                                                @endif
+                                                             
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -572,8 +623,39 @@ if (isset($lead)) {
             });
         });
 
+        var mainCheckbox = document.getElementById('yeson');
+        var optionsDiv = document.getElementById('optionsDiv');
+
+        // Add an event listener for changes to the main checkbox
+        mainCheckbox.addEventListener('change', function() {
+            // Toggle the display of the optionsDiv based on the checkbox state
+            if (mainCheckbox.checked) {
+                optionsDiv.style.display = 'block';
+            } else {
+                optionsDiv.style.display = 'none';
+            }
+        });
 
     });
+
+    $('#saveAddTask').on('click', function() {
+            var formData = $('#addTask').serialize();
+            console.log(formData);
+
+            $.ajax({
+                url: '{{ route("leads.ajax.saveLeadTasks") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#notesModel').modal('hide');
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
 
   
 

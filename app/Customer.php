@@ -44,10 +44,10 @@ class Customer extends Model
         'service_tax',
         'is_converted',
         'status',
-         'show_msg',
-          'msg',
-          'section_id',
-          'status',
+        'show_msg',
+        'msg',
+        'section_id',
+        'status',
     ];
 
     public static function getConvertedCustomersCount(){
