@@ -1339,6 +1339,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		Route::get('sales-finance/leads/converted', 'index')->name('leads.converted');
 		Route::post('sales-finance/leads/saveLeadNotes', 'save_lead_notes')->name('leads.ajax.saveLeadNotes');
 		Route::post('sales-finance/leads/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
+		Route::get('sales-finance/leads/lead_task/delete/{task}/{lead}', 'lead_task_delete');
 
 		
 		
