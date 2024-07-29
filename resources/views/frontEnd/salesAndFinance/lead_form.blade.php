@@ -451,6 +451,19 @@ if (isset($lead)) {
                                                                 <td>.</td>
                                                                 <td>.</td>
                                                                 <td>.</td>
+                                                                <td>
+                                                                    <div class="nav-item dropdown tableActionBtn">
+                                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                                            Action
+                                                                        </a>
+                                                                        <div class="dropdown-menu fade-up m-0">
+                                                                            <a href="#" class="dropdown-item">Products</a>
+                                                                            <a href="#" class="dropdown-item">Our Team</a>
+                                                                            <a href="#" class="dropdown-item">Testimonial</a>
+                                                                            <a href="#" class="dropdown-item">Our Works</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

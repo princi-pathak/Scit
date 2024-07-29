@@ -3,8 +3,9 @@
 @section('content')
 <style>
     #hiddenDiv {
-        display: none; /* Initially hide the div */
+        display: none;
     }
+
     #optionsDiv {
         display: none;
     }
@@ -41,7 +42,7 @@ if (isset($lead)) {
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Lead Ref.</label>
                                         <div class="col-lg-9">
-                                            <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->id)) ? $lead->id : '' }}">
+                                            <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->lead_id)) ? $lead->lead_id : '' }}">
                                             <input type="hidden" name="customer_id" value="{{ (isset($lead->customer_id)) ? $lead->customer_id : '' }}">
                                             <input type="text" name="lead_ref" class="form-control" placeholder="Auto Generate" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" maxlength="255" disabled>
                                         </div>
@@ -180,12 +181,12 @@ if (isset($lead)) {
                                                         <div class="form-group">
                                                             <label for="inputPassword1" class="col-lg-1 col-sm-2 control-label">Type</label>
                                                             <div class="col-lg-4">
-                                                                <select class="form-control" id="notes_type" name="notes_type"> 
+                                                                <select class="form-control" id="notes_type" name="notes_type">
                                                                     <option value="">Select Type</option>
                                                                     @if(isset($notes_type))
-                                                                        @foreach($notes_type as $value)
-                                                                            <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                                                        @endforeach 
+                                                                    @foreach($notes_type as $value)
+                                                                    <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                                    @endforeach
                                                                     @endif
                                                                 </select>
                                                             </div>
@@ -206,7 +207,7 @@ if (isset($lead)) {
                                                                         <div class="modal-body">
 
                                                                             <form role="form" id="lead_notes_type_form">
-                                                                             
+
                                                                                 <div class="form-group">
                                                                                     <label class="col-lg-3 col-sm-3 control-label">History
                                                                                         Type*</label>
@@ -260,25 +261,25 @@ if (isset($lead)) {
                                                             </thead>
                                                             <tbody>
                                                                 @if(isset($lead_notes_data))
-                                                                    @foreach($lead_notes_data as $value)
-                                                                        <tr>
-                                                                            <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y H:i') }}</td>
-                                                                            <td>{{ $value->home_id }}</td>
-                                                                            <td>{{ $value->title }}</td>
-                                                                            <td>{{ $value->notes }}</td>
-                                                                        </tr>
-                                                                    @endforeach
+                                                                @foreach($lead_notes_data as $value)
+                                                                <tr>
+                                                                    <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y H:i') }}</td>
+                                                                    <td>{{ $value->home_id }}</td>
+                                                                    <td>{{ $value->title }}</td>
+                                                                    <td>{{ $value->notes }}</td>
+                                                                </tr>
+                                                                @endforeach
                                                                 @else
-                                                                    <tr>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                    </tr>
+                                                                <tr>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                </tr>
                                                                 @endif
-                                                               
-                                                             
+
+
 
                                                             </tbody>
                                                         </table>
@@ -287,9 +288,7 @@ if (isset($lead)) {
                                                 <div id="tasksTab" class="tab-pane fade">
                                                     <div class="tabheadingTitle">
                                                         <h3>TasksTab - </h3>
-
-                                                        <a href="#tasksModel" data-toggle="modal" class="btn-primary">New Tasks</a>
-
+                                                        <a href="#tasksModel" data-toggle="modal" class="btn-primary open-modal">New Tasks</a>
                                                     </div>
 
                                                     <!-- modal -->
@@ -306,7 +305,8 @@ if (isset($lead)) {
                                                                         <div class="form-group">
                                                                             <label class="col-lg-3 col-sm-3 control-label">Leads Ref.*</label>
                                                                             <div class="col-md-9">
-                                                                                <input type="email" class="form-control" name="lead_ref" id="leadsRef" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" id="lead_ref" placeholder="Leads Ref." readonly>
+                                                                                <input type="hidden" id="lead_task_id" name="lead_task_id">
+                                                                                <input type="text" class="form-control" name="lead_ref" id="leadsRef" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" id="lead_ref" placeholder="Leads Ref." readonly>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
@@ -314,7 +314,7 @@ if (isset($lead)) {
                                                                             <div class="col-lg-9">
                                                                                 <select class="form-control" name="user_id" id="user_id">
                                                                                     @foreach($users as $value)
-                                                                                        <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
+                                                                                    <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
@@ -323,9 +323,8 @@ if (isset($lead)) {
                                                                             <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Task Type</label>
                                                                             <div class="col-lg-9">
                                                                                 <select class="form-control" id="lead_task_type_id" name="lead_task_type_id">
-                                                                                    <option>Select</option>
                                                                                     @foreach($leadTask as $value)
-                                                                                        <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                                                    <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
@@ -333,19 +332,19 @@ if (isset($lead)) {
                                                                         <div class="form-group">
                                                                             <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Date</label>
                                                                             <div class="col-lg-4">
-                                                                                <input type="date" name="" name="" class="form-control">
+                                                                                <input type="date" id="create_date" name="create_date" class="form-control">
                                                                             </div>
                                                                             <div class="col-lg-1">
                                                                                 <i class="fa fa-calendar"></i>
                                                                             </div>
                                                                             <div class="col-lg-4">
-                                                                                <input type="time" class="form-control" id="" name="">
+                                                                                <input type="time" class="form-control" id="create_time" name="create_time">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label class="col-lg-3 col-sm-3 control-label">Title*</label>
                                                                             <div class="col-md-9">
-                                                                                <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+                                                                                <input type="text" class="form-control" id="task_title" name="title" placeholder="Enter title">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
@@ -377,15 +376,15 @@ if (isset($lead)) {
                                                                             </div>
                                                                             <div id="optionsDiv">
                                                                                 <label>
-                                                                                    <input type="checkbox" value="1" id="notificationCheckbox" name="notificationCheckbox">
+                                                                                    <input type="checkbox" value="1" id="notificationCheckbox" name="notification">
                                                                                     Notification
                                                                                 </label>
                                                                                 <label>
-                                                                                    <input type="checkbox" value="1" id="emailCheckbox" name="emailCheckbox">
+                                                                                    <input type="checkbox" value="1" id="emailCheckbox" name="email_notify">
                                                                                     Email
                                                                                 </label>
                                                                                 <label>
-                                                                                    <input type="checkbox" value="1" id="smsCheckbox" name="smsCheckbox">
+                                                                                    <input type="checkbox" value="1" id="smsCheckbox" name="sms_notify">
                                                                                     SMS
                                                                                 </label>
                                                                             </div>
@@ -420,39 +419,44 @@ if (isset($lead)) {
                                                                     <th>Contact Phone</th>
                                                                     <th>Notify</th>
                                                                     <th>Notes</th>
-                                                                    <th></th>
+                                                                    <th>Action</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 @if(isset($lead_task))
-                                                                    @foreach($lead_task as $value)
-                                                                        <tr>
-                                                                            <td></td>
-                                                                            <td>{{ $value->created_at}}</td>
-                                                                            <td>{{ $value->user_id}}</td>
-                                                                            <td>{{ $value->task_type_title}}</td>
-                                                                            <td>{{ $value->title}}</td>
-                                                                            <td>{{$lead->contact_name}}</td>
-                                                                            <td>{{$lead->telephone}}</td>
-                                                                            <td></td>
-                                                                            <td>{{ $value->notes}}</td>
-                                                                        </tr>
-                                                                    @endforeach
+                                                                @foreach($lead_task as $value)
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y m:i')}}</td>
+                                                                    <td>{{ $value->name }}</td>
+                                                                    <td>{{ $value->task_type_title}}</td>
+                                                                    <td>{{ $value->title}}</td>
+                                                                    <td>{{$lead->contact_name}}</td>
+                                                                    <td>{{$lead->telephone}}</td>
+                                                                    <td> @if( $value->notification === 1 || $value->email_notify === 1 || $value->sms_notify === 1)
+                                                                        Yes, on<br>
+                                                                        {{ \Carbon\Carbon::parse($value->notify_date)->format('d/m/Y') }} {{ \Carbon\Carbon::parse($value->notify_time)->format('h:i') }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>{{ $value->notes}}</td>
+                                                                    <td><a href="#" class="edit"><span style="color: #000;"><i data-toggle="modal" title="Edit" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}"  data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}" data-target="#tasksModel" class="fa fa-edit fa-lg open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->lead_id]) }}"><i data-toggle="tooltip" title="" class="fa fa-trash-o fa-lg" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
+                                                                </tr>
+                                                                @endforeach
                                                                 @else
-                                                                    <tr>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                    </tr>
+                                                                <tr>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                </tr>
                                                                 @endif
-                                                             
+
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -571,19 +575,17 @@ if (isset($lead)) {
         var inputField = document.getElementById('lead_id');
         var hiddenDiv = document.getElementById('hiddenDiv');
 
-        // inputField.addEventListener('input', function() {
         if (inputField.value.trim() !== '') {
             hiddenDiv.style.display = 'block'; // Show the div
         } else {
             hiddenDiv.style.display = 'none'; // Hide the div if input is empty
         }
-        // });
-
+        
         $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
-            });
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        });
 
         $('#addNotesType').on('click', function() {
             var title = document.getElementById('title').value;
@@ -591,7 +593,10 @@ if (isset($lead)) {
             $.ajax({
                 url: '{{ route("leads.ajax.saveLeadNoteType") }}',
                 method: 'POST',
-                data: {title: title, status: status},
+                data: {
+                    title: title,
+                    status: status
+                },
                 success: function(response) {
                     alert(response.message);
                     $('#notesModel').modal('hide');
@@ -607,11 +612,15 @@ if (isset($lead)) {
             var notes_type = document.getElementById('notes_type').value;
             var notes = document.getElementById('notes').value;
             var lead_id = document.getElementById('lead_id').value;
-            
+
             $.ajax({
                 url: '{{ route("leads.ajax.saveLeadNotes") }}',
                 method: 'POST',
-                data: {notes_type_id: notes_type, notes: notes, lead_id: lead_id},
+                data: {
+                    notes_type_id: notes_type,
+                    notes: notes,
+                    lead_id: lead_id
+                },
                 success: function(response) {
                     alert(response.message);
                     $('#notesModel').modal('hide');
@@ -626,9 +635,7 @@ if (isset($lead)) {
         var mainCheckbox = document.getElementById('yeson');
         var optionsDiv = document.getElementById('optionsDiv');
 
-        // Add an event listener for changes to the main checkbox
         mainCheckbox.addEventListener('change', function() {
-            // Toggle the display of the optionsDiv based on the checkbox state
             if (mainCheckbox.checked) {
                 optionsDiv.style.display = 'block';
             } else {
@@ -638,10 +645,99 @@ if (isset($lead)) {
 
     });
 
-    $('#saveAddTask').on('click', function() {
+    $('.open-modal').on('click', function() {
+            var itemId = $(this).data('id');
+            var itemUserId = $(this).data('user_id');
+            var itemTitle = $(this).data('title');
+            var itemLeadTaskTypeId = $(this).data('lead_task_type_id');
+            var itemCreateDate = $(this).data('create_date');
+            var itemCreateTime = $(this).data('create_time');
+            var itemNotifyDate = $(this).data('notify_date');
+            var itemNotifyTime = $(this).data('notify_time');
+            var itemNotes = $(this).data('notes');
+            var itemNotification = $(this).data('notification');
+            var itemEmailNotify = $(this).data('email_notify');
+            var itemSmsNotify = $(this).data('sms_notify');
+            const notifyCheckbox = document.getElementById('yeson');
+            const notificationCheckbox = document.getElementById('notificationCheckbox');
+            const emailCheckbox = document.getElementById('emailCheckbox');
+            const smsCheckbox = document.getElementById('smsCheckbox');
+            var optionsDiv = document.getElementById('optionsDiv');
+            const userSelect = document.getElementById('user_id');
+            optionsDiv.style.display = 'none';
+            notifyCheckbox.checked = false;
+            
+            $('#lead_task_id').val('');
+            $('#task_title').val('');
+            $('#create_date').val('');
+            $('#create_time').val('');
+            $('#notify_date').val('');
+            $('#notify_time').val('');
+            $('#notes').val('');
+            $('.modal-title').text('');
+            $('#saveChanges').text('');
+
+            if (itemId) {
+                $('#lead_task_id').val(itemId);
+
+                const option = userSelect.querySelector(`option[value="${itemUserId}"]`);
+                if (option) {
+                    option.selected = true;
+                }
+
+                const taskSelect = document.getElementById('lead_task_type_id');
+                const optionTask = taskSelect.querySelector(`option[value="${itemLeadTaskTypeId}"]`);
+                if (optionTask) {
+                    optionTask.selected = true;
+                }
+                $('#create_date').val(itemCreateDate);
+                $('#create_time').val(itemCreateTime);
+                $('#task_title').val(itemTitle);
+
+                if(itemNotification === 1 || itemEmailNotify === 1 ||itemSmsNotify === 1) {
+                    optionsDiv.style.display = 'block';
+                    notifyCheckbox.checked = true;
+                } else {
+                    optionsDiv.style.display = 'none';
+                    notifyCheckbox.checked = false;
+                }
+                notificationCheckbox.checked = itemNotification === 1;
+                emailCheckbox.checked = itemEmailNotify === 1;
+                smsCheckbox.checked = itemSmsNotify === 1;
+
+                $('#notify_date').val(itemNotifyDate);
+                $('#notify_time').val(itemNotifyTime);
+                $('#notes').val(itemNotes);
+                $('.modal-title').text('Edit Lead Task ');
+                $('#saveChanges').text('Save Changes');
+            } else {
+                // Adding new record (clear form fields if needed)
+              
+                $('.modal-title').text('Add Lead Task');
+                $('#saveChanges').text('Add');
+            }
+        });
+
+    document.getElementById('saveAddTask').addEventListener('click', function(event) {
+        const yeson = document.getElementById('yeson').checked;
+        const notifyDate = document.getElementById('notify_date').value;
+        const notifyTime = document.getElementById('notify_time').value;
+        const createDate = document.getElementById('create_date').value;
+        const createTime = document.getElementById('create_time').value;
+        const task_title = document.getElementById('task_title').value;
+
+        if (yeson && (!notifyDate || !notifyTime)) {
+            alert('Please select the notification date and time.');
+            event.preventDefault(); // Prevent form submission
+        } else if (!createDate & !createTime) {
+            alert('Please select the date and time.');
+            event.preventDefault(); // Prevent form submission
+        } else if (!task_title) {
+            alert('Please select title.');
+            event.preventDefault(); // Prevent form submission
+        } else {
             var formData = $('#addTask').serialize();
             console.log(formData);
-
             $.ajax({
                 url: '{{ route("leads.ajax.saveLeadTasks") }}',
                 method: 'POST',
@@ -655,9 +751,7 @@ if (isset($lead)) {
                     console.error(error);
                 }
             });
-        });
-
-  
-
+        }
+    });
 </script>
 @endsection
