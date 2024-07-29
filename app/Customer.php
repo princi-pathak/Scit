@@ -43,7 +43,6 @@ class Customer extends Model
         'product_tax',
         'service_tax',
         'is_converted',
-        'status',
         'show_msg',
         'msg',
         'section_id',

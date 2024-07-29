@@ -20,6 +20,7 @@ use App\Models\Construction_tax_rate;
 use App\Models\Workflow_notification;
 use App\Models\Construction_account_code;
 use App\Models\Construction_jobassign_product;
+use App\Models\Constructor_additional_contact;
 use App\Models\Construction_job_appointment_type;
 use App\Models\Construction_product_supplier_list;
 use App\Models\Construction_job_rejection_category;
@@ -1307,8 +1308,6 @@ class JobsController extends Controller
         $data['customer_type']=Customer_type::where('status',1)->get();
         $data['job_title']=Job_title::where('status',1)->get();
         $data['country']=Country::where('status',1)->get();
-        $country=DB::table('countries')->select('name')->get();
-        // echo "<pre>";print_r($country);die;
         return view('backEnd.jobs_management.customers_form',$data);
     }
     public function customer_type(Request $request){
@@ -1469,10 +1468,14 @@ class JobsController extends Controller
         echo "done";
     }
     public function customer_save(Request $request){
-        echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());die;
         // $a=Customer::find(1)->section_id;
         // echo "<pre>";print_r(json_decode($a));die;
         $customer = Customer::saveCustomer($request->all());
         echo $customer;
+    }
+    public function customer_contact_save(Request $request){
+        $customer=Constructor_additional_contact::saveCustomerAdditional($request->all());
+        echo "done";
     }
 }
