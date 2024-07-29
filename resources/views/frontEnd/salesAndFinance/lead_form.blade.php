@@ -203,8 +203,11 @@ if (isset($lead)) {
                                     <nav>
                                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                             <button class="nav-link active" id="nav-Notes-tab" data-bs-toggle="tab" data-bs-target="#nav-Notes" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Notes</button>
+
                                             <button class="nav-link" id="nav-Tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-Tasks" type="button" role="tab" aria-controls="nav-Tasks" aria-selected="false">Tasks</button>
-                                            <button class="nav-link" id="nav-Attechmants-tab" type="button" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">Attechmants</button>
+                                             
+                                            <button class="nav-link" id="nav-attachments-tab" data-bs-toggle="tab" data-bs-target="#nav-attachments" type="button" role="tab" aria-controls="nav-attachments" aria-selected="false">Attechmants</button>
+                                            <!-- <button class="nav-link" id="nav-attechmants-tab" type="button" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">Attechmants</button> -->
 
                                         </div>
                                     </nav>
@@ -470,22 +473,72 @@ if (isset($lead)) {
                                                 </div>
                                             </div>
                                         </div>
+                                         
 
-                                        <!-- Modal -->
+                                        <div class="tab-pane fade" id="nav-attachments" role="tabpanel" aria-labelledby="nav-attachments-tab" tabindex="0">
+                                            <div class="tabheadingTitle">
+                                                <h3>Attechmants - </h3>
+                                                <a href="#" class="profileDrop ms-3" data-bs-toggle="modal" data-bs-target="#attachmentsPopup"><i class="fa-solid fa-floppy-disk"></i> New Attechmants</a>
+                                            </div>
+                                            <div class="col-sm-12">
+
+                                            <!-- Modal -->
                                         <div class="modal fade" id="attachmentsPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Attechmants</h1>
+                                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Attechmants</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <canvas id="canv1"></canvas>
 
-                                                        <p class="uploadImg">
-                                                            <i class="fa fa-cloud-upload"></i>
-                                                            <input type="file" multiple="false" accept="image/*" id="finput" onchange="upload()">
-                                                        </p>
+                                                                <form action="" class="customerForm pt-0">
+
+                                                                    <div class="mb-3 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Lead Ref.</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="LEAD-0004">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Type</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                                <option>Genral</option>
+                                                                                <option>Customer-2</option>
+                                                                                <option>Customer-3</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">File Name*</label>
+                                                                        <div class="col-sm-9">
+                                                                        <!-- <canvas id="canv1"></canvas> -->
+                                                                        <p class="uploadImg">
+                                                                            <i class="fa fa-cloud-upload"></i>
+                                                                            <input type="file" multiple="false" accept="image/*" id="finput" onchange="upload()">
+                                                                        </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Title</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control editInput" id="inputName" value="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Description
+                                                                        (max 500 characters)</label>
+                                                                        <div class="col-sm-9">
+                                                                            <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="3" placeholder="Address"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+
+
+                                                        
+
+                                                        
                                                     </div>
                                                     <div class="modal-footer">
                                                         <div class="pageTitleBtn p-0">
@@ -497,6 +550,58 @@ if (isset($lead)) {
                                             </div>
                                             </div>
                                         </div>
+
+                                                
+                                                <div class="productDetailTable mt-3">
+                                                    <table class="table" id="containerA">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th># </th>
+                                                                <th>Date </th>
+                                                                <th>User</th>
+                                                                <th>Tasks Type </th>
+                                                                <th>Title </th>
+                                                                <th>Contact Name </th>
+                                                                <th>Contact Phone </th>
+                                                                <th>Notify </th>
+                                                                <th>Notes </th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>.</td>
+                                                                <td>.</td>
+                                                                <td>.</td>
+                                                                <td>.</td>
+                                                                <td>.</td>
+                                                                <td>.</td>
+                                                                <td>.</td>
+                                                                <td>.</td>
+                                                                <td>.</td>
+                                                                <td>
+                                                                    <div class="nav-item dropdown tableActionBtn">
+                                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                                            Action
+                                                                        </a>
+                                                                        <div class="dropdown-menu fade-up m-0">
+                                                                            <a href="#" class="dropdown-item">Products</a>
+                                                                            <a href="#" class="dropdown-item">Our Team</a>
+                                                                            <a href="#" class="dropdown-item">Testimonial</a>
+                                                                            <a href="#" class="dropdown-item">Our Works</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+
+                                        
                                     </div>
                                 </div>
                             </div>
