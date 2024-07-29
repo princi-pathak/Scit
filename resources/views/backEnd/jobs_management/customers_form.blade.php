@@ -58,7 +58,7 @@
                 <form class="form-horizontal" role="form" enctype="multipart/form-data" id="form_data">
                     @csrf
                     <input type="hidden" name="home_id" value="{{$home_id}}">
-                    <input type="hidden" name="status" value="2">
+                    <!-- <input type="hidden" name="status" value="2"> -->
                     <div class="from_outside_border">
                         <div class="row">
                             <div class="col-md-4">
@@ -371,7 +371,7 @@
                             <div class="form-group padd0">
                                 <div class="col-sm-12">
                                     <div class="pddtp">
-                                        <button type="button" class="btn btn-primary" onclick="open_additional_contact_model()">Add Contact</button>
+                                        <button type="button" class="btn btn-primary" onclick="open_additional_contact_model(1)">Add Contact</button>
                                         <button type="button" class="btn btn-primary">Export</button>
                                         <button type="button" class="btn btn-primary">Import</button>
                                         <label class="clickhere">
@@ -394,7 +394,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr class="active">
-                                            <th>1</th>
+                                            <th><input type="checkbox"></th>
                                             <th>Contact Name</th>
                                             <th>Customer Job Title</th>
                                             <th>Email</th>
@@ -408,20 +408,8 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                        </tr>
+                                    <tbody id="contact_result">
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -435,7 +423,7 @@
                             <div class="form-group padd0">
                                 <div class="col-sm-12">
                                     <div class="pddtp">
-                                        <button type="button" class="btn btn-primary">Add Site</button>
+                                        <button type="button" class="btn btn-primary" onclick="open_additional_contact_model(2)">Add Site</button>
                                         <button type="button" class="btn btn-primary">Export</button>
                                         <button type="button" class="btn btn-primary">Import</button>
                                         <label class="clickhere">
@@ -458,7 +446,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr class="active">
-                                            <th>1</th>
+                                            <th><input type="checkbox"></th>
                                             <th>Contact Name</th>
                                             <th>Customer Job Title</th>
                                             <th>Email</th>
@@ -472,20 +460,8 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                        </tr>
+                                    <tbody id="site_result">
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -498,7 +474,7 @@
                             <div class="form-group padd0">
                                 <div class="col-sm-12">
                                     <div class="pddtp">
-                                        <button type="button" class="btn btn-primary">Add Login</button>
+                                        <button type="button" class="btn btn-primary" onclick="open_additional_contact_model(3)">Add Login</button>
                                     </div>
                                 </div>
                             </div>
@@ -507,33 +483,17 @@
                                 <table class="table">
                                     <thead>
                                         <tr class="active">
-                                            <th>1</th>
-                                            <th>Contact Name</th>
-                                            <th>Customer Job Title</th>
+                                            <th>#</th>
+                                            <th>Full Name</th>
+                                            <th>Username</th>
                                             <th>Email</th>
                                             <th>Telephone</th>
-                                            <th>Mobile</th>
-                                            <th>Address</th>
-                                            <th>City</th>
-                                            <th>County</th>
-                                            <th>Postcode</th>
-                                            <th>Default Billing </th>
+                                            <th>Last Login</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                            <td>...</td>
-                                        </tr>
+                                    <tbody id="login_result">
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -552,7 +512,7 @@
 
         </section>
         <!-- page end-->
-        <!-- Modal start here -->
+        <!-- Modal additionl_contact_model start here -->
         <div class="modal fade in" id="additionl_contact_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -565,7 +525,7 @@
                     <div class="foor-box-wrap foor-plan">
                         <div class="custom-fieldset">
                             <div class="custom-legend"><strong>Customer Contact</strong></div>
-                            <form id="notification_form">
+                            <form id="contact_form">
                             @csrf
                             <input type="hidden" value="" name="customer_id" id="customer_id">
                             <div class="form-group">
@@ -669,6 +629,233 @@
         </div>
     </div>
 </div>
+<!-- Modal add site start here -->
+<div class="modal fade in" id="customer_site" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"> Add Customer Site </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">  
+                    <div class="foor-box-wrap foor-plan">
+                        <div class="custom-fieldset">
+                            <!-- <div class="custom-legend"><strong>Customer Site</strong></div> -->
+                            <form id="site_form">
+                            @csrf
+                            <input type="hidden" value="" name="site_customer_id" id="site_customer_id">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Site Name</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="site_name" id="site_name" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Contact Name</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="site_contact_name" id="site_contact_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Job Title(Position)</label>
+                                <div class="col-lg-9">
+                                <select class="form-control who_noti" name="site_title_id" id="site_title_id">
+                                    <option selected disabled>Select Job Title</option>
+                                    <?php foreach($job_title as $titleval){?>
+                                    <option value="{{$titleval->id}}">{{$titleval->name}}</option>
+                                    <?php }?>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Company Name</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="company_name" id="company_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Email</label>
+                                <div class="col-lg-9">
+                                    <input type="email" name="site_email" id="site_email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Telephone</label>
+                                <div class="col-lg-9">
+                                    <input type="text" id="site_telephone" name="site_telephone" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Mobile</label>
+                                <div class="col-lg-9">
+                                <input type="text" id="site_mobile" name="site_mobile" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Fax</label>
+                                <div class="col-lg-9">
+                                <input type="text" id="site_fax" name="site_fax" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Region</label>
+                                <div class="col-lg-9">
+                                <select class="form-control" name="site_region" id="site_region">
+                                    <option selected disabled>Select Region</option>
+                                   <option value="1">India</option>
+                                   <option value="2">Pakistan</option>
+                                   <option value="3">Afganistan</option>
+                                   <option value="4">China</option>
+                                   <option value="5">Korea</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Address</label>
+                                <div class="col-lg-9">
+                                <textarea name="site_address" class="form-control" id="site_address" rows="10" cols="10"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">City</label>
+                                <div class="col-lg-9">
+                                    <input type="text" id="site_city" name="site_city" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Country</label>
+                                <div class="col-lg-9">
+                                    <input type="text" id="site_country" name="site_country" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Post Code</label>
+                                <div class="col-lg-9">
+                                    <input type="text" id="site_post_code" name="site_post_code" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Country</label>
+                                <div class="col-lg-9">
+                                    <select id="site_country_id" name="site_country_id" class="form-control">
+                                        <option selected disabled>Select Country</option>
+                                        <?php foreach($country as $valc){?>
+                                            <option value="{{$valc->id}}">{{$valc->name}}</option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Default Catalogue</label>
+                                <div class="col-lg-9">
+                                    <select id="site_catalogue" name="site_catalogue" class="form-control">
+                                        <option selected disabled>Select Catalogue</option>
+                                        <option value="1">General</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Notes</label>
+                                <div class="col-lg-9">
+                                <textarea name="customer_site_notes" class="form-control" id="customer_site_notes" rows="10" cols="10"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="noti_button">
+                            <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                        </div>
+                                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Customer Login add Modal start here -->
+<div class="modal fade in" id="customer_login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"> Add Customer Login </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">  
+                    <div class="foor-box-wrap foor-plan">
+                        <div class="custom-fieldset">
+                            <!-- <div class="custom-legend"><strong>Customer Site</strong></div> -->
+                            <form id="login_form">
+                            @csrf
+                            <input type="hidden" value="" name="login_customer_id" id="login_customer_id">
+                            
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Email</label>
+                                <div class="col-lg-9">
+                                    <input type="email" name="login_email" id="login_email" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Password Type</label>
+                                <div class="col-lg-9">
+                                    <input type="radio" id="pass1" name="pass"> Generate Now
+                                    <input type="radio" id="pass2" name="pass" checked> Email Password
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Name</label>
+                                <div class="col-lg-9">
+                                    <input type="email" name="login_name" id="login_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Telephone</label>
+                                <div class="col-lg-9">
+                                <input type="text" id="login_telephone" name="login_telephone" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Access Right</label>
+                                <div class="col-lg-9">
+                                    <input type="checkbox" id="login_check" name="login_check" value="1" class="login_check"> Quotes
+                                    <input type="checkbox" id="login_check" name="login_check" value="2" class="login_check"> Jobs
+                                    <input type="checkbox" id="login_check" name="login_check" value="3" class="login_check"> Invoices
+                                    <input type="checkbox" id="login_check" name="login_check" value="4" class="login_check"> File Manager
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Projects</label>
+                                <div class="col-lg-9">
+                                <input type="radio" id="pro" class="pro" name="pro" checked> All
+                                <input type="radio" id="pro1" class="pro" name="pro"> Customise
+                                </div>
+                            </div>
+                            
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Notes</label>
+                                <div class="col-lg-9">
+                                <textarea name="login_notes" class="form-control" id="login_notes" rows="10" cols="10"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="noti_button">
+                            <a href="javascript:" class="btn btn-primary" onclick="get_save_login()">Save</a>
+                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                        </div>
+                                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
         <!-- end here -->
     </section>
 </section>
@@ -721,10 +908,10 @@
             cache: false,
             processData: false,
             success: function(data) {
-                console.log(data); <<
-                <<
-                << < ram
+                console.log(data);
                 $("#customer_id").val(data);
+                $("#site_customer_id").val(data);
+                $("#login_customer_id").val(data);
                 // if($.trim(data)=="done"){
                 //     window.location.href='<?php echo url('admin/customers'); ?>';
                 // }
@@ -733,8 +920,17 @@
 
     }
 
-    function open_additional_contact_model() {
-        $("#additionl_contact_model").modal('show');
+    function open_additional_contact_model(id) {
+        if(id == 1){
+            $('#contact_form')[0].reset();
+            $("#additionl_contact_model").modal('show');
+        }else if(id == 2){ 
+            $('#site_form')[0].reset();
+            $("#customer_site").modal('show');
+        }else if(id == 3){
+            $('#login_form')[0].reset();
+            $("#customer_login").modal('show');
+        }
     }
 
     function get_save_contact() {
@@ -779,9 +975,103 @@
             },
             success: function(data) {
                 console.log(data);
-                if ($.trim(data) == "done") {
-                    $("#additionl_contact_model").modal('hide');
-                }
+                $('#contact_result').append(data);
+                $("#additionl_contact_model").modal('hide');
+            }
+        });
+    }
+    function get_save_site(){
+        var token = '<?php echo csrf_token(); ?>'
+        var customer_id = $("#site_customer_id").val();
+        var site_name=$("#site_name").val();
+        var contact_name = $("#site_contact_name").val();
+        var title_id = $("#site_title_id").val();
+        var company_name=$("#company_name").val();
+        var region=$("#site_region").val();
+        var catalogue=$("#site_catalogue").val();
+        var notes=$("#customer_site_notes").val();
+        var email = $("#site_email").val();
+        var telephone = $("#site_telephone").val();
+        var mobile = $("#site_mobile").val();
+        var fax = $("#site_fax").val();
+        var address = $("#site_address").val();
+        var city = $("#site_city").val();
+        var country = $("#site_country").val();
+        var post_code = $("#site_post_code").val();
+        var country_id = $("#site_country_id").val();
+
+        $.ajax({
+            type: "POST",
+            url: "{{url('admin/customer_site_save')}}",
+            data: {
+                _token: token,
+                site_name: site_name,
+                contact_name: contact_name,
+                title_id: title_id,
+                customer_id: customer_id,
+                email: email,
+                telephone: telephone,
+                mobile: mobile,
+                fax: fax,
+                address: address,
+                city: city,
+                country: country,
+                post_code: post_code,
+                country_id: country_id,
+                region:region,
+                notes:notes,
+                catalogue:catalogue,
+                company_name:company_name
+            },
+            success: function(data) {
+                console.log(data);
+                $("#site_result").append(data);
+                $("#customer_site").modal('hide');
+            }
+        });
+    }
+    function get_save_login(){
+        var token = '<?php echo csrf_token(); ?>'
+        var email=$('#login_email').val();
+        var customer_id=$("#login_customer_id").val();
+        var password_type;
+        if ($('#pass1').is(':checked')) {
+            password_type = 1;
+        } else {
+            password_type = 2;
+        }
+        var name=$("#login_name").val();
+        var telephone=$("#login_telephone").val();
+       
+        var access_rights=[];
+        $('.login_check').each(function(){
+            if ($(this).is(':checked')) {
+                access_rights.push($(this).val());
+            } 
+        });
+        access_rights=access_rights;
+        var projects;
+        if ($('#pro').is(':checked')) {
+            projects = 1;
+        } else {
+            projects = 2;
+        }
+        var notes=$("#login_notes").val();
+        // console.log(access_rights);
+        // return false;
+        $.ajax({
+            type: "POST",
+            url: "{{url('admin/customer_login_save')}}",
+            data: {
+                _token: token,email:email,customer_id:customer_id,password_type:password_type,name:name,telephone:telephone,access_rights:access_rights,projects:projects,notes:notes
+            },
+            success: function(data) {
+                console.log(data);
+                $("#login_result").append(data)
+                $("#customer_login").modal('hide');
+                // if ($.trim(data) == "done") {
+                //     // window.location.href='<?php echo url('admin/customers'); ?>';
+                // }
             }
         });
     }

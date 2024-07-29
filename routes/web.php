@@ -955,15 +955,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/job_rejection_category_status_change','App\Http\Controllers\backEnd\JobsController@job_rejection_category_status_change');
 	Route::post('/job_rejection_category_delete','App\Http\Controllers\backEnd\JobsController@job_rejection_category_delete');
 
-	Route::match(['get','post'],'/customers','App\Http\Controllers\backEnd\JobsController@customers');
-	Route::get('customer_add','App\Http\Controllers\backEnd\JobsController@customer_add');
-	Route::match(['get','post'],'/customer_type','App\Http\Controllers\backEnd\JobsController@customer_type');
-	Route::get('/customer_type_add','App\Http\Controllers\backEnd\JobsController@customer_type_add');
-	Route::post('/customer_type_save','App\Http\Controllers\backEnd\JobsController@customer_type_save');
-	Route::post('/customer_type_status_change','App\Http\Controllers\backEnd\JobsController@customer_type_status_change');
-	Route::post('/customer_type_delete','App\Http\Controllers\backEnd\JobsController@customer_type_delete');
-	Route::post('/customer_save','App\Http\Controllers\backEnd\JobsController@customer_save');
-	Route::post('/customer_contact_save','App\Http\Controllers\backEnd\JobsController@customer_contact_save');
+	Route::match(['get','post'],'/customers','App\Http\Controllers\backEnd\CustomerController@customers');
+	Route::get('customer_add','App\Http\Controllers\backEnd\CustomerController@customer_add');
+	Route::match(['get','post'],'/customer_type','App\Http\Controllers\backEnd\CustomerController@customer_type');
+	Route::get('/customer_type_add','App\Http\Controllers\backEnd\CustomerController@customer_type_add');
+	Route::post('/customer_type_save','App\Http\Controllers\backEnd\CustomerController@customer_type_save');
+	Route::post('/customer_type_status_change','App\Http\Controllers\backEnd\CustomerController@customer_type_status_change');
+	Route::post('/customer_type_delete','App\Http\Controllers\backEnd\CustomerController@customer_type_delete');
+	Route::post('/customer_save','App\Http\Controllers\backEnd\CustomerController@customer_save');
+	Route::post('/customer_contact_save','App\Http\Controllers\backEnd\CustomerController@customer_contact_save');
+	Route::post('/customer_site_save','App\Http\Controllers\backEnd\CustomerController@customer_site_save');
+	Route::post('/customer_login_save','App\Http\Controllers\backEnd\CustomerController@customer_login_save');
 
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');
