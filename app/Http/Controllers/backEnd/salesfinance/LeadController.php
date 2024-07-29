@@ -141,6 +141,8 @@ class LeadController extends Controller
     }
 
     public function edit($id){
+
+        // dd($id);
         $page = 'Leads';
         $lead = DB::table('customers')
         ->join('leads', 'customers.id', '=', 'leads.customer_id')
@@ -149,25 +151,28 @@ class LeadController extends Controller
         ->select('customers.*', 'leads.*', 'lead_notes.*', 'lead_note_types.*')
         ->where('leads.id', $id)
         ->first();
-        // dd($lead->lead_ref);
+        // dd($lead);
         $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
         $status = LeadStatus::where('deleted_at', null)->where('status', 1)->get();
         $sources = LeadSource::where('deleted_at', null)->where('status', 1)->get();
         $notes_type = LeadNoteType::where(['deleted_at'=> null, 'status' => 1, 'home_id' => Session::get('scitsAdminSession')->home_id])->get();
         $lead_notes = LeadNote::where('lead_id', $id)->get();
         $leadTask = LeadTaskType::where(['deleted_at'=> null, 'status' => 1])->get();
-        $lead_notes_data = DB::table('lead_notes')
-            ->join('lead_note_types', 'lead_note_types.id', '=', 'lead_notes.notes_type_id')
-            ->select('lead_notes.*', 'lead_note_types.*')
-            ->where('lead_notes.lead_id', $id)
-            ->get();
-            // dd($lead_notes_data);
-        $lead_task =  DB::table('lead_tasks')
-            ->join('lead_task_types', 'lead_task_types.id', '=', 'lead_tasks.lead_task_type_id')
-            ->select('lead_tasks.*', 'lead_task_types.title as task_type_title')
-            ->where('lead_tasks.lead_ref', $lead->lead_ref)
-            ->get();
 
+        $lead_notes_data = DB::table('lead_notes')
+        ->join('lead_note_types', 'lead_note_types.id', '=', 'lead_notes.notes_type_id')
+        ->select('lead_notes.*', 'lead_note_types.*')
+        ->where('lead_notes.lead_id', $id)
+        ->get();
+
+        // dd($lead_notes_data);
+        $lead_task =  DB::table('lead_tasks')
+        ->join('lead_task_types', 'lead_task_types.id', '=', 'lead_tasks.lead_task_type_id')
+        ->join('user', 'user.id', '=', 'lead_tasks.user_id')
+        ->select('lead_tasks.*', 'lead_task_types.title as task_type_title','user.name')
+        ->where('lead_tasks.lead_ref', $lead->lead_ref)
+        ->where('lead_tasks.deleted_at', null)
+        ->get();
 
         // dd($lead_task);
         return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes', 'lead_notes_data', 'leadTask', 'lead_task'));   
@@ -392,10 +397,10 @@ class LeadController extends Controller
     }
 
     public function save_lead_tasks(Request $request){
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'lead_task_type_id' => 'required',
             'title' => 'required',
-            'notes' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -409,6 +414,18 @@ class LeadController extends Controller
         } else {
             return response()->json(['message' => 'Task added successfully!']);
         }
+    }
+
+    public function lead_task_delete($taskId, $leadId){
+        $affectedRows  = LeadTask::where('id', $taskId)->update(['deleted_at' => Carbon::now()]);
+    
+        if($affectedRows ){
+            // return redirect()->route('leads.lead_notes_type')->with('success', "Record deleted successfully");
+            return redirect()->route('leads.edit', ['id' => $leadId])->with('success', 'Lead Taks deleted successfully');
+        } else {
+            // return redirect()->route('leads.lead_notes_type')->with('error', "Record not found");
+            return redirect()->route('leads.edit', ['id' => $leadId])->with('fails', 'Error in Lead task deletion');
+        } 
     }
 
 }

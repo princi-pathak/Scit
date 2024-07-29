@@ -247,18 +247,27 @@
                                 <li class="{{ ($page == 'job_rejection_categories') ? 'active' : ''}}"><a href="{{url('admin/job_rejection_categories')}}">Appointment Rejection Categories</a></li>    
                             </ul>
                         </li>
+                        <li class="sub-menu">
+                            <a href="javascript:void(0)"  <?php if(($page == 'customer_type') ){echo 'class="active" style="color:#1fb5ad"';}?>>
+                                <i class="fa fa-users"></i><span >Customers</span>
+                            </a>
+                            <ul class="sub pdlft">
+                                <li class="{{ ($page == 'customer_type') ? 'active' : '' }}"><a href="{{ url('admin/customer_type') }}">Customers Type</a></li>
+                            </ul>
+                        </li>
+                        
                     </ul>
                 </li>     
                  <!-- Setting Section End -->       
                 <!-- Contact Section Start -->
                 <li class="sub-menu">
 
-                    <a href="javascript:;" class="<?php if(($page == 'customers') || ($page == 'Suppliers') || ($page == 'customer_type') ){ echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'customers') || ($page == 'Suppliers') ){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i><span>Contacts</span>
                     </a>
                     <ul class="sub">
                         <li class="{{ ($page == 'customers') ? 'active' : '' }}"><a href="{{ url('admin/customers') }}">Customers </a></li>
-                        <li class="{{ ($page == 'customer_type') ? 'active' : '' }}"><a href="{{ url('admin/customer_type') }}">Customers Type</a></li>
+                        
                         <li class="{{ ($page == 'Suppliers') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Suppliers </a></li>
 
                     </ul>
