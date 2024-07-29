@@ -63,12 +63,12 @@ class LeadController extends Controller
         }
 
         // dd($customers);
-
         $leadRejectTypes = LeadRejectType::where('deleted_at', null)->where('status', 1)->get();
 
         return view('backEnd/salesFinance/leads/leads', compact('page', 'customers', 'leadRejectTypes'));
     }
     public function create(){
+        // dd("data");
         $page = "Leads";
         $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
         $status = LeadStatus::where('deleted_at', null)->where('status', 1)->get();
@@ -80,11 +80,10 @@ class LeadController extends Controller
     public function store(Request $request){
         // dd($request);
         try {
-
             $website = $request->input('website');
             if ($website && !preg_match('/^http/', $website)) {
                 $website = 'http://' . $website;
-            }
+            }   
 
             $customer = Customer::updateOrCreate(['id' => $request->customer_id],[
                 'home_id' => Session::get('scitsAdminSession')->home_id,
@@ -123,12 +122,13 @@ class LeadController extends Controller
                 if ($lead->wasRecentlyCreated) {
                     // New record was created
                     $message =  'Lead created successfully.';
+                    return redirect()->route('leads.edit', ['id' => $lead->id])->with('success', $message);
                 } else {
                     // Existing record was updated
                     $message =  'Lead updated successfully.';
+                    return redirect()->route('leads.index')->with('success', $message);
                 }
 
-                return redirect()->route('leads.index')->with('success', $message);
             } else {
                 // Handle the error case where the customer was not created successfully
                 return redirect()->route('leads.index')->with('error', 'Failed to create customer.');
@@ -146,9 +146,7 @@ class LeadController extends Controller
         $page = 'Leads';
         $lead = DB::table('customers')
         ->join('leads', 'customers.id', '=', 'leads.customer_id')
-        ->join('lead_notes', 'lead_notes.lead_id', '=', 'leads.id')
-        ->join('lead_note_types', 'lead_note_types.id', '=', 'lead_notes.notes_type_id')
-        ->select('customers.*', 'leads.*', 'lead_notes.*', 'lead_note_types.*')
+        ->select('customers.*', 'leads.*')
         ->where('leads.id', $id)
         ->first();
         // dd($lead);

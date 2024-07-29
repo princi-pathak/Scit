@@ -1315,10 +1315,11 @@ canvas#canv1 {
   position: relative;
   cursor: pointer;
   transition: 0.3s ease;
+  margin-bottom: 0;
 }
 
 .uploadImg i {
-  font-size: 50px;
+  font-size: 27px;
   color: #0877bd;
 }
 .uploadImg input {

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backEnd\salesfinance\LeadController as BackendLeadController;
+use App\Http\Controllers\backEnd\salesfinance\GeneralController;
 use App\Http\Controllers\frontEnd\salesFinance\LeadController as FrontendLeadController;
 
 
@@ -1343,8 +1344,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		Route::post('sales-finance/leads/saveLeadNotes', 'save_lead_notes')->name('leads.ajax.saveLeadNotes');
 		Route::post('sales-finance/leads/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
 		Route::get('sales-finance/leads/lead_task/delete/{task}/{lead}', 'lead_task_delete');
-
-		
 		
 		// Lead Status
 		Route::get('sales-finance/leads/lead_status', 'lead_status')->name('leads.lead_status');
@@ -1374,6 +1373,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 	});
 
+	Route::controller(GeneralController::class)->group(function(){
+		Route::get('general/attachment_types', 'attachment_types_index')->name('attachment_types.view');
+		Route::post('general/saveAttachmentType', 'saveAttachmentType')->name('general.ajax.saveAttachmentType');
+		Route::get('general/attachment_type/delete/{id}', 'delete_attachment_type');
+
+	});
 });
 
 //super admin path

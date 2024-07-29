@@ -200,7 +200,7 @@
                         <li class="{{ ($page == 'invoices') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Invoices </a></li>
                         <li class="{{ ($page == 'purchase_orders') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Purchase Orders </a></li>
                     </ul>
-                </li>                     
+                </li>
                 <!-- Jobs -->
                 <li class="sub-menu">
                     <a href="javascript:;" class="<?php if(($page == 'jobs_list') || ($page == 'work_flow_list') || ($page == 'product_list') || ($page == 'project_list') || ($page == 'product_category') || ($page == 'account_codes') || ($page == 'tax_rate') || ($page == 'customer_list') || ($page == 'supplier_list') || ($page == 'job_recurring_list') ) { echo 'active'; } ?>" >
@@ -247,6 +247,7 @@
                                 <li class="{{ ($page == 'job_rejection_categories') ? 'active' : ''}}"><a href="{{url('admin/job_rejection_categories')}}">Appointment Rejection Categories</a></li>    
                             </ul>
                         </li>
+
                         <li class="sub-menu">
                             <a href="javascript:void(0)"  <?php if(($page == 'customer_type') ){echo 'class="active" style="color:#1fb5ad"';}?>>
                                 <i class="fa fa-users"></i><span >Customers</span>
@@ -255,25 +256,34 @@
                                 <li class="{{ ($page == 'customer_type') ? 'active' : '' }}"><a href="{{ url('admin/customer_type') }}">Customers Type</a></li>
                             </ul>
                         </li>
+
+                        <li class="sub-menu">
+                        <a href="javascript:void(0)"  <?php if(($page == 'attachment_types') ){echo 'class="active" style="color:#1fb5ad"';}?>>
+                            <i class="fa fa-users"></i><span >General</span>
+                        </a>
+                        <ul class="sub pdlft">
+                            <li class="{{ ($page == 'attachment_types') ? 'active' : '' }}"><a href="{{ url('admin/general/attachment_types') }}">Attachment Types </a></li>
+                            <li class="{{ ($page == 'payment_types') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/quotes') }}">Payment Types </a></li>
+                            <li class="{{ ($page == 'regions') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Regions </a></li>
+                            <li class="{{ ($page == 'task_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Task Type </a></li>
+                            <li class="{{ ($page == 'tags') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Tags </a></li>
+                        </ul>
+                    </li>
                         
                     </ul>
                 </li>     
-                 <!-- Setting Section End -->       
+                <!-- Setting Section End -->  
+
                 <!-- Contact Section Start -->
                 <li class="sub-menu">
-
-                    <a href="javascript:;" class="<?php if(($page == 'customers') || ($page == 'Suppliers') ){ echo 'active'; } ?>" >
-                        <i class="fa fa-cogs"></i><span>Contacts</span>
-                    </a>
+                    <a href="javascript:;" class="<?php if(($page == 'customers') || ($page == 'Suppliers') ){ echo 'active'; } ?>" ><i class="fa fa-cogs"></i><span>Contacts</span></a>
                     <ul class="sub">
                         <li class="{{ ($page == 'customers') ? 'active' : '' }}"><a href="{{ url('admin/customers') }}">Customers </a></li>
-                        
                         <li class="{{ ($page == 'Suppliers') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Suppliers </a></li>
-
                     </ul>
                 </li>            
                 <!-- Contact Section End -->
-
+                
                 <!-- <li>
                     <a href="login.html">
                         <i class="fa fa-user"></i>

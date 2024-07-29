@@ -34,7 +34,7 @@ if (isset($lead)) {
                     <div class="panel-body">
                         @include('backEnd.salesFinance.leads.leads_button')
 
-                        <form class=" form-horizontal" role="form" method="Post" action="{{ $action }}" id="{{ $form_id }}">
+                        <form class="form-horizontal" role="form" method="Post" action="{{ $action }}" id="add_leads_form">
                             @csrf
                             <div class="row main_Form">
                                 <div class="col-md-4">
@@ -42,7 +42,7 @@ if (isset($lead)) {
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Lead Ref.</label>
                                         <div class="col-lg-9">
-                                            <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->lead_id)) ? $lead->lead_id : '' }}">
+                                            <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->id)) ? $lead->id : '' }}">
                                             <input type="hidden" name="customer_id" value="{{ (isset($lead->customer_id)) ? $lead->customer_id : '' }}">
                                             <input type="text" name="lead_ref" class="form-control" placeholder="Auto Generate" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" maxlength="255" disabled>
                                         </div>
@@ -82,14 +82,13 @@ if (isset($lead)) {
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Preferred date to call</label>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-5">
                                             <input type="date" name="prefer_date" class="form-control" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}">
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-4">
                                             <input type="time" name="prefer_time" class="form-control" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}">
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="col-md-4">
                                     <label class="formTitle">Data Feilds</label>
@@ -136,7 +135,6 @@ if (isset($lead)) {
                                         <label class="col-lg-3 control-label">Address</label>
                                         <div class="col-lg-9">
                                             <textarea name="address" class="form-control" id="" placeholder="Address" rows="3">{{ (isset($lead->address)) ? $lead->address : '' }}</textarea>
-                                            <!-- <input type="text" name="address" class="form-control" placeholder="Address" value="{{ (isset($lead->address)) ? $lead->address : '' }}" maxlength="255"> -->
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -158,8 +156,9 @@ if (isset($lead)) {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+                            <!-- <input type="submit" class="btn btn-primary" value="Submit"> -->
+                        </form>
                             <div class="from_outside_border mrg_tp" id="hiddenDiv">
                                 <label class="upperlineTitle">Extra Information</label>
                                 <div class="row">
@@ -247,7 +246,6 @@ if (isset($lead)) {
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                     <div class="">
                                                         <table class="table">
@@ -278,9 +276,6 @@ if (isset($lead)) {
                                                                     <td>...</td>
                                                                 </tr>
                                                                 @endif
-
-
-
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -323,9 +318,11 @@ if (isset($lead)) {
                                                                             <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Task Type</label>
                                                                             <div class="col-lg-9">
                                                                                 <select class="form-control" id="lead_task_type_id" name="lead_task_type_id">
+                                                                                    @if(isset($leadTask))
                                                                                     @foreach($leadTask as $value)
                                                                                     <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
                                                                                     @endforeach
+                                                                                    @endif
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -439,7 +436,7 @@ if (isset($lead)) {
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $value->notes}}</td>
-                                                                    <td><a href="#" class="edit"><span style="color: #000;"><i data-toggle="modal" title="Edit" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}"  data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}" data-target="#tasksModel" class="fa fa-edit fa-lg open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->lead_id]) }}"><i data-toggle="tooltip" title="" class="fa fa-trash-o fa-lg" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
+                                                                    <td><a href="#" class="edit"><span style="color: #000;"><i data-toggle="modal" title="Edit" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}" data-target="#tasksModel" class="fa fa-edit fa-lg open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->lead_id]) }}"><i data-toggle="tooltip" title="" class="fa fa-trash-o fa-lg" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
                                                                 </tr>
                                                                 @endforeach
                                                                 @else
@@ -456,7 +453,6 @@ if (isset($lead)) {
                                                                     <td>...</td>
                                                                 </tr>
                                                                 @endif
-
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -501,52 +497,6 @@ if (isset($lead)) {
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group padd0">
-                                        <div class="col-sm-12">
-                                            <div class="pddtp">
-                                                <button type="button" class="btn btn-primary">Nots</button>
-                                                <button type="button" class="btn btn-primary">Tasks</button>
-                                                <button type="button" class="btn btn-primary">Attechmants</button>
-                                          
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="padd0">
-                                        <table class="table">
-                                            <thead>
-                                                <tr class="active">
-                                                    <th>1</th>
-                                                    <th>Contact Name</th>
-                                                    <th>Customer Job Title</th>
-                                                    <th>Email</th>
-                                                    <th>Telephone</th>
-                                                    <th>Mobile</th>
-                                                    <th>Address</th>
-                                                    <th>City</th>
-                                                    <th>County</th>
-                                                    <th>Postcode</th>
-                                                    <th>Default Billing </th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>...</td>
-                                                    <td>...</td>
-                                                    <td>...</td>
-                                                    <td>...</td>
-                                                    <td>...</td>
-                                                    <td>...</td>
-                                                    <td>...</td>
-                                                    <td>...</td>
-                                                    <td>...</td>
-                                                    <td>...</td>
-                                                    <td>...</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div> -->
                                 </div>
                             </div>
 
@@ -554,7 +504,8 @@ if (isset($lead)) {
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="edit-submit-btn-area">
-                                            <button type="submit" class="btn btn-primary" name="submit1">Save</button>
+                                            <!-- <input type="submit" class="btn btn-primary" name="submit1" value="Submit"> -->
+                                            <button type="submit" class="btn btn-primary" id = "submit_main_form" name="submit1">Save</button>
                                             <a href="{{ url('admin/company-managers') }}">
                                                 <button type="button" class="btn btn-default" name="cancel">Cancel</button>
                                             </a>
@@ -571,6 +522,11 @@ if (isset($lead)) {
     </section>
 </section>
 <script>
+
+    document.getElementById('submit_main_form').addEventListener('click', function() {
+        document.getElementById('add_leads_form').submit();
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         var inputField = document.getElementById('lead_id');
         var hiddenDiv = document.getElementById('hiddenDiv');
@@ -580,7 +536,7 @@ if (isset($lead)) {
         } else {
             hiddenDiv.style.display = 'none'; // Hide the div if input is empty
         }
-        
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -646,77 +602,77 @@ if (isset($lead)) {
     });
 
     $('.open-modal').on('click', function() {
-            var itemId = $(this).data('id');
-            var itemUserId = $(this).data('user_id');
-            var itemTitle = $(this).data('title');
-            var itemLeadTaskTypeId = $(this).data('lead_task_type_id');
-            var itemCreateDate = $(this).data('create_date');
-            var itemCreateTime = $(this).data('create_time');
-            var itemNotifyDate = $(this).data('notify_date');
-            var itemNotifyTime = $(this).data('notify_time');
-            var itemNotes = $(this).data('notes');
-            var itemNotification = $(this).data('notification');
-            var itemEmailNotify = $(this).data('email_notify');
-            var itemSmsNotify = $(this).data('sms_notify');
-            const notifyCheckbox = document.getElementById('yeson');
-            const notificationCheckbox = document.getElementById('notificationCheckbox');
-            const emailCheckbox = document.getElementById('emailCheckbox');
-            const smsCheckbox = document.getElementById('smsCheckbox');
-            var optionsDiv = document.getElementById('optionsDiv');
-            const userSelect = document.getElementById('user_id');
-            optionsDiv.style.display = 'none';
-            notifyCheckbox.checked = false;
-            
-            $('#lead_task_id').val('');
-            $('#task_title').val('');
-            $('#create_date').val('');
-            $('#create_time').val('');
-            $('#notify_date').val('');
-            $('#notify_time').val('');
-            $('#notes').val('');
-            $('.modal-title').text('');
-            $('#saveChanges').text('');
+        var itemId = $(this).data('id');
+        var itemUserId = $(this).data('user_id');
+        var itemTitle = $(this).data('title');
+        var itemLeadTaskTypeId = $(this).data('lead_task_type_id');
+        var itemCreateDate = $(this).data('create_date');
+        var itemCreateTime = $(this).data('create_time');
+        var itemNotifyDate = $(this).data('notify_date');
+        var itemNotifyTime = $(this).data('notify_time');
+        var itemNotes = $(this).data('notes');
+        var itemNotification = $(this).data('notification');
+        var itemEmailNotify = $(this).data('email_notify');
+        var itemSmsNotify = $(this).data('sms_notify');
+        const notifyCheckbox = document.getElementById('yeson');
+        const notificationCheckbox = document.getElementById('notificationCheckbox');
+        const emailCheckbox = document.getElementById('emailCheckbox');
+        const smsCheckbox = document.getElementById('smsCheckbox');
+        var optionsDiv = document.getElementById('optionsDiv');
+        const userSelect = document.getElementById('user_id');
+        optionsDiv.style.display = 'none';
+        notifyCheckbox.checked = false;
 
-            if (itemId) {
-                $('#lead_task_id').val(itemId);
+        $('#lead_task_id').val('');
+        $('#task_title').val('');
+        $('#create_date').val('');
+        $('#create_time').val('');
+        $('#notify_date').val('');
+        $('#notify_time').val('');
+        $('#notes').val('');
+        $('.modal-title').text('');
+        $('#saveChanges').text('');
 
-                const option = userSelect.querySelector(`option[value="${itemUserId}"]`);
-                if (option) {
-                    option.selected = true;
-                }
+        if (itemId) {
+            $('#lead_task_id').val(itemId);
 
-                const taskSelect = document.getElementById('lead_task_type_id');
-                const optionTask = taskSelect.querySelector(`option[value="${itemLeadTaskTypeId}"]`);
-                if (optionTask) {
-                    optionTask.selected = true;
-                }
-                $('#create_date').val(itemCreateDate);
-                $('#create_time').val(itemCreateTime);
-                $('#task_title').val(itemTitle);
-
-                if(itemNotification === 1 || itemEmailNotify === 1 ||itemSmsNotify === 1) {
-                    optionsDiv.style.display = 'block';
-                    notifyCheckbox.checked = true;
-                } else {
-                    optionsDiv.style.display = 'none';
-                    notifyCheckbox.checked = false;
-                }
-                notificationCheckbox.checked = itemNotification === 1;
-                emailCheckbox.checked = itemEmailNotify === 1;
-                smsCheckbox.checked = itemSmsNotify === 1;
-
-                $('#notify_date').val(itemNotifyDate);
-                $('#notify_time').val(itemNotifyTime);
-                $('#notes').val(itemNotes);
-                $('.modal-title').text('Edit Lead Task ');
-                $('#saveChanges').text('Save Changes');
-            } else {
-                // Adding new record (clear form fields if needed)
-              
-                $('.modal-title').text('Add Lead Task');
-                $('#saveChanges').text('Add');
+            const option = userSelect.querySelector(`option[value="${itemUserId}"]`);
+            if (option) {
+                option.selected = true;
             }
-        });
+
+            const taskSelect = document.getElementById('lead_task_type_id');
+            const optionTask = taskSelect.querySelector(`option[value="${itemLeadTaskTypeId}"]`);
+            if (optionTask) {
+                optionTask.selected = true;
+            }
+            $('#create_date').val(itemCreateDate);
+            $('#create_time').val(itemCreateTime);
+            $('#task_title').val(itemTitle);
+
+            if (itemNotification === 1 || itemEmailNotify === 1 || itemSmsNotify === 1) {
+                optionsDiv.style.display = 'block';
+                notifyCheckbox.checked = true;
+            } else {
+                optionsDiv.style.display = 'none';
+                notifyCheckbox.checked = false;
+            }
+            notificationCheckbox.checked = itemNotification === 1;
+            emailCheckbox.checked = itemEmailNotify === 1;
+            smsCheckbox.checked = itemSmsNotify === 1;
+
+            $('#notify_date').val(itemNotifyDate);
+            $('#notify_time').val(itemNotifyTime);
+            $('#notes').val(itemNotes);
+            $('.modal-title').text('Edit Lead Task ');
+            $('#saveChanges').text('Save Changes');
+        } else {
+            // Adding new record (clear form fields if needed)
+
+            $('.modal-title').text('Add Lead Task');
+            $('#saveChanges').text('Add');
+        }
+    });
 
     document.getElementById('saveAddTask').addEventListener('click', function(event) {
         const yeson = document.getElementById('yeson').checked;
