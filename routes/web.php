@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backEnd\salesfinance\LeadController as BackendLeadController;
+use App\Http\Controllers\backEnd\salesfinance\GeneralController;
 use App\Http\Controllers\frontEnd\salesFinance\LeadController as FrontendLeadController;
 
 
@@ -955,15 +956,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/job_rejection_category_status_change','App\Http\Controllers\backEnd\JobsController@job_rejection_category_status_change');
 	Route::post('/job_rejection_category_delete','App\Http\Controllers\backEnd\JobsController@job_rejection_category_delete');
 
-	Route::match(['get','post'],'/customers','App\Http\Controllers\backEnd\JobsController@customers');
-	Route::get('customer_add','App\Http\Controllers\backEnd\JobsController@customer_add');
-	Route::match(['get','post'],'/customer_type','App\Http\Controllers\backEnd\JobsController@customer_type');
-	Route::get('/customer_type_add','App\Http\Controllers\backEnd\JobsController@customer_type_add');
-	Route::post('/customer_type_save','App\Http\Controllers\backEnd\JobsController@customer_type_save');
-	Route::post('/customer_type_status_change','App\Http\Controllers\backEnd\JobsController@customer_type_status_change');
-	Route::post('/customer_type_delete','App\Http\Controllers\backEnd\JobsController@customer_type_delete');
-	Route::post('/customer_save','App\Http\Controllers\backEnd\JobsController@customer_save');
-	Route::post('/customer_contact_save','App\Http\Controllers\backEnd\JobsController@customer_contact_save');
+	Route::match(['get','post'],'/customers','App\Http\Controllers\backEnd\CustomerController@customers');
+	Route::get('customer_add','App\Http\Controllers\backEnd\CustomerController@customer_add');
+	Route::match(['get','post'],'/customer_type','App\Http\Controllers\backEnd\CustomerController@customer_type');
+	Route::get('/customer_type_add','App\Http\Controllers\backEnd\CustomerController@customer_type_add');
+	Route::post('/customer_type_save','App\Http\Controllers\backEnd\CustomerController@customer_type_save');
+	Route::post('/customer_type_status_change','App\Http\Controllers\backEnd\CustomerController@customer_type_status_change');
+	Route::post('/customer_type_delete','App\Http\Controllers\backEnd\CustomerController@customer_type_delete');
+	Route::post('/customer_save','App\Http\Controllers\backEnd\CustomerController@customer_save');
+	Route::post('/customer_contact_save','App\Http\Controllers\backEnd\CustomerController@customer_contact_save');
+	Route::post('/customer_site_save','App\Http\Controllers\backEnd\CustomerController@customer_site_save');
+	Route::post('/customer_login_save','App\Http\Controllers\backEnd\CustomerController@customer_login_save');
 
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');
@@ -1341,8 +1344,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		Route::post('sales-finance/leads/saveLeadNotes', 'save_lead_notes')->name('leads.ajax.saveLeadNotes');
 		Route::post('sales-finance/leads/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
 		Route::get('sales-finance/leads/lead_task/delete/{task}/{lead}', 'lead_task_delete');
-
-		
 		
 		// Lead Status
 		Route::get('sales-finance/leads/lead_status', 'lead_status')->name('leads.lead_status');
@@ -1372,6 +1373,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 	});
 
+	Route::controller(GeneralController::class)->group(function(){
+		Route::get('general/attachment_types', 'attachment_types_index')->name('attachment_types.view');
+		Route::post('general/saveAttachmentType', 'saveAttachmentType')->name('general.ajax.saveAttachmentType');
+		Route::get('general/attachment_type/delete/{id}', 'delete_attachment_type');
+
+	});
 });
 
 //super admin path
