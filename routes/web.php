@@ -963,6 +963,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/customer_type_status_change','App\Http\Controllers\backEnd\JobsController@customer_type_status_change');
 	Route::post('/customer_type_delete','App\Http\Controllers\backEnd\JobsController@customer_type_delete');
 	Route::post('/customer_save','App\Http\Controllers\backEnd\JobsController@customer_save');
+	Route::post('/customer_contact_save','App\Http\Controllers\backEnd\JobsController@customer_contact_save');
 
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');

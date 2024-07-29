@@ -11,21 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('constructor_additional_contacts', function (Blueprint $table) {
+        Schema::create('constructor_customer_sites', function (Blueprint $table) {
             $table->id();
             $table->string('customer_id')->nullable();
+            $table->string('site_name')->nullable();
             $table->string('contact_name')->nullable();
-            $table->string('job_title_id')->nullable();
+            $table->string('title_id')->nullable();
+            $table->string('company_name')->nullable();
             $table->string('email')->nullable();
             $table->string('telephone')->nullable();
             $table->string('mobile')->nullable();
+            $table->string('fax')->nullable();
+            $table->string('region')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
-            $table->string('postcode')->nullable();
-            $table->string('default_billing')->nullable();
-            $table->string('fax')->nullable();
+            $table->string('post_code')->nullable();
             $table->string('country_id')->nullable();
+            $table->string('catalogue')->nullable();
+            $table->string('notes')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
@@ -36,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('constructor_additional_contacts');
+        Schema::dropIfExists('constructor_customer_sites');
     }
 };
