@@ -40,7 +40,7 @@ class CustomerController extends Controller
                 $query = $query->where('name','like','%'.$search.'%');
             }
             $customers = $query->paginate($limit);
-            
+            // echo "<pre>";print_r($customers);die;
             $data['customers']=$customers;
             $data['limit']=$limit;
             $data['search']=$search;
@@ -59,13 +59,17 @@ class CustomerController extends Controller
         }
         $admin   = Session::get('scitsAdminSession');
         $data['home_id'] = $admin->home_id;
-        $data['rejection']=Customer::find($key);
+        $data['customer']=Customer::find($key);
         $data['task']=$task;
         $data['page']='customers';
         $data['del_status']=0;
         $data['customer_type']=Customer_type::where('status',1)->get();
         $data['job_title']=Job_title::where('status',1)->get();
+        $data['contact']=Constructor_additional_contact::where('customer_id',$key)->get();
+        $data['site']=Constructor_customer_site::where('customer_id',$key)->get();
+        $data['login']=Construction_customer_login::where('customer_id',$key)->get();
         $data['country']=Country::where('status',1)->get();
+        // echo "<pre>";print_r($data['login']);die;
         return view('backEnd.jobs_management.customers_form',$data);
     }
     public function customer_type(Request $request){
@@ -211,5 +215,24 @@ class CustomerController extends Controller
             </tr>';
 
         echo $result;
+    }
+    public function customer_status_change(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id=base64_decode($request->id);
+        $status=$request->status;
+        $table=Customer::find($id);
+        $table->status=$status;
+        $table->save();
+        Session::flash('success','Status Change Successfully Done');
+        echo "done";
+    }
+    public function customer_delete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id=base64_decode($request->id);
+        $table=Customer::find($id);
+        $table->status=2;
+        $table->save();
+        Session::flash('success','Deleted Successfully Done');
+        echo "done";
     }
 }
