@@ -1375,6 +1375,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		Route::get('sales-finance/leads/lead_reject_type/delete/{id}', 'lead_reject_type_delete');
 		Route::post('sales-finance/leads/saveLeadRejectReason', 'saveLeadRejectReason')->name('leads.ajax.saveLeadRejectReason');
 
+		// Lead Attachment 
+		Route::post('sales-finance/leads/saveLeadAttachment', 'saveLeadAttachment')->name('leads.ajax.saveLeadAttachment');
+
 	});
 
 	Route::controller(GeneralController::class)->group(function(){
