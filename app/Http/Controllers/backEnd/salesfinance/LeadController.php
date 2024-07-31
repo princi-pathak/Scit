@@ -14,11 +14,13 @@ use App\Models\LeadRejectType;
 use App\Models\LeadRejectReason;
 use App\Models\LeadStatus;
 use App\Models\LeadTask;
-
+use App\Models\AttachmentType;
 use App\Models\LeadSource;
 use App\Models\LeadTaskType;
 use App\Models\LeadNoteType;
 use App\Models\LeadNote;
+use App\Models\LeadAttachment;
+
 use Carbon\Carbon;
 
 class LeadController extends Controller
@@ -156,6 +158,7 @@ class LeadController extends Controller
         $notes_type = LeadNoteType::where(['deleted_at'=> null, 'status' => 1, 'home_id' => Session::get('scitsAdminSession')->home_id])->get();
         $lead_notes = LeadNote::where('lead_id', $id)->get();
         $leadTask = LeadTaskType::where(['deleted_at'=> null, 'status' => 1])->get();
+        $attachment_type = AttachmentType::getAttachmentType();
 
         $lead_notes_data = DB::table('lead_notes')
         ->join('lead_note_types', 'lead_note_types.id', '=', 'lead_notes.notes_type_id')
@@ -172,8 +175,9 @@ class LeadController extends Controller
         ->where('lead_tasks.deleted_at', null)
         ->get();
 
-        // dd($lead_task);
-        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes', 'lead_notes_data', 'leadTask', 'lead_task'));   
+        $lead_attachment = LeadAttachment::getLeadAttachments($id);
+
+        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes', 'lead_notes_data', 'leadTask', 'lead_task', 'attachment_type', 'lead_attachment'));   
     }
 
     // Lead Reject Type
@@ -426,4 +430,39 @@ class LeadController extends Controller
         } 
     }
 
+    public function saveLeadAttachment(Request $request){
+        // dd($request->file('file'));
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required',
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif|max:25600',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        if ($request->file('file')->isValid()) {
+            $file = $request->file('file');
+
+            $mimeType = $file->getMimeType();
+            $sizeInBytes = $file->getSize(); // Size in bytes
+
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads', $fileName, 'public');
+
+            LeadAttachment::updateOrCreate(['id' => $request->lead_attachment_id], array_merge($request->all(), ['image' => $filePath,  'mime_type' => $mimeType,
+            'size_in_bytes' => $sizeInBytes, ]) );
+
+            return response()->json('success', 'File uploaded successfully.')->with('file', $filePath);
+        } else {
+            return response()->json(['message' => 'Error in file upload!']);
+        }
+        
+
+        // if(isset($request->lead_task_id)){
+        //     return response()->json(['message' => 'Record updated successfully!']);
+        // } else {
+        //     return response()->json(['message' => 'Attachment added successfully!']);
+        // }
+    }
 }
