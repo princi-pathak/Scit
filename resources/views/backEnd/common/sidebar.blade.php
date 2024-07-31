@@ -238,11 +238,14 @@
                         </li>
             
                         <li class="sub-menu">
-                            <a href="javascript:void(0)"  <?php if(($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') ){echo 'class="active" style="color:#1fb5ad"';}?>>
+                            <a href="javascript:void(0)"  <?php if(($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') || ($page == 'job_title') ){echo 'class="active" style="color:#1fb5ad"';}?>>
                                 <i class="fa fa-road"></i><span >Jobs</span>
                             </a>
                             <ul class="sub pdlft">
                                 <li class="{{ ($page == 'jobs_type_list') ? 'active' : '' }}"><a href="{{ url('admin/jobs_type_list') }}">Job Type</a></li>
+                                <li class="{{ ($page == 'job_title') ? 'active' : '' }}">
+                                    <a href="{{ url('admin/job_title') }}">Job Title</a>
+                                </li>
                                 <li class="{{ ($page == 'job_appointment_type') ? 'active' : ''}}"><a href="{{url('admin/job_appointment_type')}}">Job Appointment Type</a></li>
                                 <li class="{{ ($page == 'job_rejection_categories') ? 'active' : ''}}"><a href="{{url('admin/job_rejection_categories')}}">Appointment Rejection Categories</a></li>    
                             </ul>

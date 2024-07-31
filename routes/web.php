@@ -231,6 +231,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/jobs_index','App\Http\Controllers\jobs\JobController@index');
 	Route::get('/planner_day','App\Http\Controllers\jobs\JobController@planner_day');
 	Route::get('/jobs_create','App\Http\Controllers\jobs\JobController@jobs_create');
+	// Customer
+	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit');
 	// end here
 
 
@@ -967,6 +969,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/customer_contact_save','App\Http\Controllers\backEnd\CustomerController@customer_contact_save');
 	Route::post('/customer_site_save','App\Http\Controllers\backEnd\CustomerController@customer_site_save');
 	Route::post('/customer_login_save','App\Http\Controllers\backEnd\CustomerController@customer_login_save');
+	Route::post('/customer_status_change','App\Http\Controllers\backEnd\CustomerController@customer_status_change');
+	Route::post('/customer_delete','App\Http\Controllers\backEnd\CustomerController@customer_delete');
 
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');
@@ -1370,6 +1374,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		Route::post('sales-finance/leads/saveLeadRejectType', 'saveLeadRejectType')->name('leads.ajax.saveLeadRejectType');
 		Route::get('sales-finance/leads/lead_reject_type/delete/{id}', 'lead_reject_type_delete');
 		Route::post('sales-finance/leads/saveLeadRejectReason', 'saveLeadRejectReason')->name('leads.ajax.saveLeadRejectReason');
+
+		// Lead Attachment 
+		Route::post('sales-finance/leads/saveLeadAttachment', 'saveLeadAttachment')->name('leads.ajax.saveLeadAttachment');
 
 	});
 
