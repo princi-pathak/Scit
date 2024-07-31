@@ -26,40 +26,31 @@ use Carbon\Carbon;
 class LeadController extends Controller
 {
     public function index(Request $request){
-
         $page = "Leads";
         $path = $request->path();
         $segments = explode('/', $path);
         $lastSegment = end($segments);
+
+        $query = DB::table('customers')
+        ->join('leads', 'customers.id', '=', 'leads.customer_id')
+        ->select('customers.*', 'leads.*')
+        ->orderBy('leads.created_at', 'desc');
    
         if($lastSegment ===  "leads") {
-            $customers = DB::table('customers')
-            ->join('leads', 'customers.id', '=', 'leads.customer_id')
-            ->select('customers.*', 'leads.*')
-            ->orderBy('leads.created_at', 'desc')
-            ->whereNotIn('assign_to', [0])
+            $customers =$query->whereNotIn('assign_to', [0])
             ->whereNotIn('leads.status', ['6'])
             ->get();
         } 
         else if($lastSegment === "unassigned"){
-            $customers = DB::table('customers')
-            ->join('leads', 'customers.id', '=', 'leads.customer_id')
-            ->select('customers.*', 'leads.*')
-            ->orderBy('leads.created_at', 'desc')
+            $customers = $query->orderBy('leads.created_at', 'desc')
             ->where('assign_to', 0)
             ->get();
         } else if($lastSegment === "rejected"){
-            $customers = DB::table('customers')
-            ->join('leads', 'customers.id', '=', 'leads.customer_id')
-            ->select('customers.*', 'leads.*')
-            ->orderBy('leads.created_at', 'desc')
+            $customers = $query->orderBy('leads.created_at', 'desc')
             ->where('leads.status', '6')
             ->get();
         } else if($lastSegment === "converted"){
-            $customers = DB::table('customers')
-            ->join('leads', 'customers.id', '=', 'leads.customer_id')
-            ->select('customers.*', 'leads.*')
-            ->orderBy('leads.created_at', 'desc')
+            $customers = $query->orderBy('leads.created_at', 'desc')
             ->where('customers.is_converted', 1)
             ->get();
         }
@@ -344,7 +335,7 @@ class LeadController extends Controller
         } 
     }
 
-    // Lead Note Types
+    // Lead Note Types start
     public function lead_notes_type(){
         $page = "lead_notes_type";
         $lead_notes_type = LeadNoteType::where('deleted_at', null)->get();
@@ -378,6 +369,7 @@ class LeadController extends Controller
             return redirect()->route('leads.lead_notes_type')->with('error', "Record not found");
         } 
     }
+    // Lead Notes Type End
 
     public function convert_to_customer($id){
         $customer = Customer::where('id', $id)->update(['is_converted' => 1]);
@@ -398,6 +390,7 @@ class LeadController extends Controller
         }
     }
 
+    // Lead Tasks
     public function save_lead_tasks(Request $request){
         // dd($request);
         $validator = Validator::make($request->all(), [
@@ -412,9 +405,9 @@ class LeadController extends Controller
         LeadTask::updateOrCreate(['id' => $request->lead_task_id], $request->all());
 
         if(isset($request->lead_task_id)){
-            return response()->json(['message' => 'Record updated successfully!']);
+            return response()->json(['success' => true, 'message' => 'Record updated successfully!']);
         } else {
-            return response()->json(['message' => 'Task added successfully!']);
+            return response()->json(['success' => false, 'message' => 'Task added successfully!']);
         }
     }
 
@@ -430,8 +423,9 @@ class LeadController extends Controller
         } 
     }
 
+    // Lead Attachments start
     public function saveLeadAttachment(Request $request){
-        // dd($request->file('file'));
+
         $validator = Validator::make($request->all(), [
             'lead_id' => 'required',
             'file' => 'required|file|mimes:jpg,jpeg,png,gif|max:25600',
@@ -443,26 +437,29 @@ class LeadController extends Controller
 
         if ($request->file('file')->isValid()) {
             $file = $request->file('file');
-
             $mimeType = $file->getMimeType();
             $sizeInBytes = $file->getSize(); // Size in bytes
-
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads', $fileName, 'public');
+            $filePath = $file->storeAs('lead_attachments', $fileName, 'public');
 
-            LeadAttachment::updateOrCreate(['id' => $request->lead_attachment_id], array_merge($request->all(), ['image' => $filePath,  'mime_type' => $mimeType,
-            'size_in_bytes' => $sizeInBytes, ]) );
+            LeadAttachment::create(array_merge($request->all(), ['image' => $filePath,  'mime_type' => $mimeType, 'size_in_bytes' => $sizeInBytes, ]) );
 
-            return response()->json('success', 'File uploaded successfully.')->with('file', $filePath);
+            return response()->json(['success' => true, 'message' => 'File uploaded successfully.']);
         } else {
-            return response()->json(['message' => 'Error in file upload!']);
+            return response()->json(['success' => false, 'message' => 'Error in file upload!']);
         }
-        
-
-        // if(isset($request->lead_task_id)){
-        //     return response()->json(['message' => 'Record updated successfully!']);
-        // } else {
-        //     return response()->json(['message' => 'Attachment added successfully!']);
-        // }
     }
+
+    public function lead_attachments_delete($attachment_id, $leadId){
+        $affectedRows  = LeadAttachment::where('id', $attachment_id)->update(['deleted_at' => Carbon::now()]);
+    
+        if($affectedRows ){
+            return redirect()->route('leads.edit', ['id' => $leadId])->with('success', 'Lead Atachments deleted successfully');
+        } else {
+            return redirect()->route('leads.edit', ['id' => $leadId])->with('fails', 'Error in Lead attachments deletion');
+        } 
+    }
+    // Lead Attachments end
+
+
 }

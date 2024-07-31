@@ -1346,6 +1346,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		Route::get('sales-finance/leads/convert_to_customer/{id}', 'convert_to_customer')->name('leads.convertCustomer');
 		Route::get('sales-finance/leads/converted', 'index')->name('leads.converted');
 		Route::post('sales-finance/leads/saveLeadNotes', 'save_lead_notes')->name('leads.ajax.saveLeadNotes');
+
+		// Lead Task 
 		Route::post('sales-finance/leads/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
 		Route::get('sales-finance/leads/lead_task/delete/{task}/{lead}', 'lead_task_delete');
 		
@@ -1377,6 +1379,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 		// Lead Attachment 
 		Route::post('sales-finance/leads/saveLeadAttachment', 'saveLeadAttachment')->name('leads.ajax.saveLeadAttachment');
+		Route::get('sales-finance/leads/lead_attachments/delete/{attachment}/{lead}', 'lead_attachments_delete');
+
 
 	});
 
