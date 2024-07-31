@@ -437,7 +437,7 @@ if (isset($lead)) {
                                                                     @endif
                                                                 </td>
                                                                 <td>{{ $value->notes}}</td>
-                                                                <td><a href="#" class="edit"><span style="color: #000;"><i data-toggle="modal" title="Edit" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}" data-target="#tasksModel" class="fa fa-edit fa-lg open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->lead_id]) }}"><i data-toggle="tooltip" title="" class="fa fa-trash-o fa-lg" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
+                                                                <td><a href="#" class="edit"><span style="color: #000;"><i data-toggle="modal" title="Edit" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}" data-target="#tasksModel" class="fa fa-edit fa-lg open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}"><i data-toggle="tooltip" title="" class="fa fa-trash-o fa-lg" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
                                                             </tr>
                                                             @endforeach
                                                             @else
@@ -480,7 +480,7 @@ if (isset($lead)) {
                                                                     <div class="form-group">
                                                                         <label class="col-lg-3 col-sm-3 control-label">Leads Ref.*</label>
                                                                         <div class="col-md-9">
-                                                                        <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->id)) ? $lead->id : '' }}">
+                                                                            <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->id)) ? $lead->id : '' }}">
                                                                             <input type="hidden" id="lead_attachment_id" name="lead_attachment_id">
                                                                             <input type="text" class="form-control" name="lead_ref" id="leadsRef" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" id="lead_ref" placeholder="Leads Ref." readonly>
                                                                         </div>
@@ -490,9 +490,11 @@ if (isset($lead)) {
                                                                         <div class="col-lg-9">
                                                                             <select class="form-control" name="attachment_type_id" id="attachment_type_id">
                                                                                 <option value="">Select</option>
+                                                                                @if(isset($attachment_type))
                                                                                 @foreach($attachment_type as $value)
                                                                                 <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
                                                                                 @endforeach
+                                                                                @endif
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -543,48 +545,36 @@ if (isset($lead)) {
                                                         </thead>
                                                         <tbody>
                                                             @if(isset($lead_attachment))
-                                                                @foreach($lead_attachment as $value)
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td>{{ $value['type'] }}</td>
-                                                                        <td>{{ $value['title'] }}</td>
-                                                                        <td>{{ $value['description'] }}</td>
-                                                                        <td>{{ $value['filename'] }}</td>
-                                                                        <td>{{ $value['mime_type'] }} / {{ $value['size'] }}</td>
-                                                                        <td>{{ $value['created_at'] }}</td>
-                                                                        <td><a href="#" class="edit"><span style="color: #000;"><i data-toggle="modal" title="Edit"  data-target="#tasksModel" class="fa fa-edit fa-lg open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/lead_task/delete', $value['id']) }}"><i data-toggle="tooltip" title="" class="fa fa-trash-o fa-lg" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
-                                                                    </tr>
-                                                                @endforeach
+                                                            @foreach($lead_attachment as $value)
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>{{ $value['type'] }}</td>
+                                                                <td>{{ $value['title'] }}</td>
+                                                                <td>{{ $value['description'] }}</td>
+                                                                <td>{{ $value['filename'] }}</td>
+                                                                <td>{{ $value['mime_type'] }} / {{ $value['size'] }}</td>
+                                                                <td>{{ $value['created_at'] }}</td>
+                                                                <td><a href="{{ url('storage/app/public/lead_attachments/' . $value['filename']) }}" target="_blank"><i data-toggle="tooltip" data-original-title="View" class="fa fa-eye"></i></a> | <a href="{{ url('admin/sales-finance/leads/lead_attachments/delete', ['attachment_id' => $value['id'], 'lead_id' => $lead->id]) }}"><i data-toggle="tooltip" class="fa fa-trash-o fa-lg" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
+                                                            </tr>
+                                                            @endforeach
                                                             @else
-                                                                <tr>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                </tr>
+                                                            <tr>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                            </tr>
                                                             @endif
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
-
-
-
-                                            <!-- <div id="attechmantsTab" class="tab-pane fade">
-                                                    <h3>AttechmantsTab 2</h3>
-                                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                                        accusantium doloremque laudantium, totam rem aperiam.</p>
-                                                </div> -->
-
-
-
-
 
                                             <!-- **************** -->
 
@@ -598,7 +588,6 @@ if (isset($lead)) {
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="edit-submit-btn-area">
-                                        <!-- <input type="submit" class="btn btn-primary" name="submit1" value="Submit"> -->
                                         <button type="submit" class="btn btn-primary" id="submit_main_form" name="submit1">Save</button>
                                         <a href="{{ url('admin/company-managers') }}">
                                             <button type="button" class="btn btn-default" name="cancel">Cancel</button>
@@ -616,23 +605,6 @@ if (isset($lead)) {
     </section>
 </section>
 <script>
-
-    // document.getElementById('imageUploadForm').addEventListener('submit', function(event) {
-    //     var imageInput = document.getElementById('image');
-    //     var errorMessage = document.getElementById('error-message');
-
-    //     // Reset the error message
-    //     errorMessage.textContent = '';
-
-    //     // Check if an image is selected
-    //     if (!imageInput.files || imageInput.files.length === 0) {
-    //         event.preventDefault(); // Prevent form submission
-    //         errorMessage.textContent = 'Please upload an image.';
-    //     }
-    // });
-
-    
-
     $('#saveAttachmentType').on('click', function() {
         event.preventDefault();
         var form = document.getElementById('imageUploadForm');
@@ -666,7 +638,6 @@ if (isset($lead)) {
             });
         }
     });
-
 
     document.getElementById('submit_main_form').addEventListener('click', function() {
         document.getElementById('add_leads_form').submit();
