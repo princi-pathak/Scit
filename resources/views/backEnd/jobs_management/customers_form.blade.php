@@ -58,6 +58,7 @@
                 <form class="form-horizontal" role="form" enctype="multipart/form-data" id="form_data">
                     @csrf
                     <input type="hidden" name="home_id" value="{{$home_id}}">
+                    <input type="hidden" name="id" id="id" value="<?php if(isset($customer)){echo $customer->id;}?>">
                     <!-- <input type="hidden" name="status" value="2"> -->
                     <div class="from_outside_border">
                         <div class="row">
@@ -67,7 +68,7 @@
                                     <div class="form-group">
                                         <label for="name" class="col-lg-4 col-sm-4 control-label">Customer Name *</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php if(isset($customer)){echo $customer->name;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -76,7 +77,7 @@
                                             <select class="form-control" name="customer_type_id" id="customer_type_id">
                                                 <option selected disabled>Customer Type</option>
                                                 <?php foreach ($customer_type as $type) { ?>
-                                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                                    <option value="{{$type->id}}" <?php if(isset($customer) && $customer->customer_type_id == $type->id){echo "selected";}?>>{{$type->name}}</option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -87,7 +88,7 @@
                                     <div class="form-group">
                                         <label for="contact_name" class="col-lg-4 col-sm-4 control-label">Contact Name *</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="contact_name" name="contact_name" placeholder="Contact Name">
+                                            <input type="email" class="form-control" id="contact_name" name="contact_name" placeholder="Contact Name" value="<?php if(isset($customer)){echo $customer->contact_name;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -96,7 +97,7 @@
                                             <select class="form-control" name="job_title" id="job_title">
                                                 <option selected disabled>Job Title</option>
                                                 <?php foreach ($job_title as $title) { ?>
-                                                    <option value="{{$title->id}}">{{$title->name}}</option>
+                                                    <option value="{{$title->id}}" <?php if(isset($customer) && $customer->job_title == $title->id){echo "selected";}?>>{{$title->name}}</option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -107,39 +108,39 @@
                                     <div class="form-group">
                                         <label for="email" class="col-lg-4 col-sm-4 control-label">Email</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php if(isset($customer)){echo $customer->email;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="telephone" class="col-lg-4 col-sm-4 control-label">Telephone</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="telephone" name="telephone" placeholder="Telephone">
+                                            <input type="email" class="form-control" id="telephone" name="telephone" placeholder="Telephone" value="<?php if(isset($customer)){echo $customer->telephone;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="mobile" class="col-lg-4 col-sm-4 control-label">Mobile</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile">
+                                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value="<?php if(isset($customer)){echo $customer->mobile;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="fax" class="col-lg-4 col-sm-4 control-label">Fax</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="fax" name="fax" placeholder="Fax">
+                                            <input type="text" class="form-control" id="fax" name="fax" placeholder="Fax" value="<?php if(isset($customer)){echo $customer->fax;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="website" class="col-lg-4 col-sm-4 control-label">Website</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
+                                            <input type="text" class="form-control" id="website" name="website" placeholder="Website" value="<?php if(isset($customer)){echo $customer->website;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Default Catalogue</label>
                                         <div class="col-lg-8">
                                             <select class="form-control" id="catalogue_id" name="catalogue_id">
-                                                <option value="1">General Customer</option>
-                                                <option value="2">General Customer</option>
+                                                <option value="1" <?php if(isset($customer) && $customer->catalogue_id == 1){echo "selected";}?>>General Customer</option>
+                                                <option value="2" <?php if(isset($customer) && $customer->catalogue_id == 2){echo "selected";}?>>General Customer</option>
                                             </select>
                                         </div>
                                     </div>
@@ -160,34 +161,34 @@
                                     <div class="form-group">
                                         <label for="region" class="col-lg-4 col-sm-4 control-label">Region </label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="region" name="region" placeholder="Region">
+                                            <input type="text" class="form-control" id="region" name="region" placeholder="Region" value="<?php if(isset($customer)){echo $customer->region;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Address *</label>
                                         <div class="col-lg-8">
                                             <textarea class="form-control" rows="8" cols="70" id="address" name="address">
-
+                                            <?php if(isset($customer)){echo $customer->address;}?>
                                             </textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="city" class="col-lg-4 col-sm-4 control-label">City</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="city" name="city" placeholder="City">
+                                            <input type="email" class="form-control" id="city" name="city" placeholder="City" value="<?php if(isset($customer)){echo $customer->city;}?>">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="country" class="col-lg-4 col-sm-4 control-label">County</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="country" name="country" placeholder="County">
+                                            <input type="email" class="form-control" id="country" name="country" placeholder="County" value="<?php if(isset($customer)){echo $customer->country;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="postal_code" class="col-lg-4 col-sm-4 control-label">Postcode</label>
                                         <div class="col-lg-6">
-                                            <input type="email" class="form-control" id="postal_code" name="postal_code" placeholder="Postcode">
+                                            <input type="email" class="form-control" id="postal_code" name="postal_code" placeholder="Postcode" value="<?php if(isset($customer)){echo $customer->postal_code;}?>">
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
                                             <a href="#!"><i class="fa fa-search"></i></a>
@@ -202,7 +203,7 @@
                                             <select class="form-control" id="country_code" name="country_code">
                                                 <option selected disabled>Select Country</option>
                                                 <?php foreach ($country as $con) { ?>
-                                                    <option value="{{$con->code}}">{{$con->name}} ({{$con->code}})</option>
+                                                    <option value="{{$con->code}}" <?php if(isset($customer) && $customer->country_code == $con->code){echo "selected";}?>>{{$con->name}} ({{$con->code}})</option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -211,7 +212,7 @@
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Site Notes</label>
                                         <div class="col-lg-8">
                                             <textarea class="form-control" rows="4" cols="70" id="site_notes" name="site_notes">
-
+                                            <?php if(isset($customer)){echo $customer->site_notes;}?>
                                             </textarea>
                                         </div>
                                     </div>
@@ -226,7 +227,7 @@
                                             <select class="form-control" id="currency" name="currency">
                                                 <option selected disabled>Select Currency</option>
                                                 <?php foreach ($country as $currency) { ?>
-                                                    <option value="{{$currency->id}}">{{$currency->name}} ({{$currency->code}})</option>
+                                                    <option value="{{$currency->currency_code}}" <?php if(isset($customer) && $customer->currency == $currency->currency_code){echo "selected";}?>>{{$currency->name}} ({{$currency->currency_code}})</option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -234,21 +235,21 @@
                                     <div class="form-group">
                                         <label for="credit_limit" class="col-lg-4 col-sm-4 control-label">Credit Limit</label>
                                         <div class="col-lg-6">
-                                            <input type="email" class="form-control" id="credit_limit" name="credit_limit" placeholder="Credit Limit">
+                                            <input type="email" class="form-control" id="credit_limit" name="credit_limit" placeholder="Credit Limit" value="<?php if(isset($customer)){echo $customer->credit_limit;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="discount" class="col-lg-4 col-sm-4 control-label">Discount</label>
                                         <div class="col-lg-4">
-                                            <input type="email" class="form-control" id="discount" name="discount" placeholder="Discount">
+                                            <input type="email" class="form-control" id="discount" name="discount" placeholder="Discount" value="<?php if(isset($customer)){echo $customer->discount;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Discount Type</label>
                                         <div class="col-lg-8">
                                             <select class="form-control" id="discount_type" name="discount_type">
-                                                <option value="1">General Offer</option>
-                                                <option value="2">Festival Offer</option>
+                                                <option value="1" <?php if(isset($customer) && $customer->discount_type == 1){echo "selected";}?>>Percentage</option>
+                                                <option value="2" <?php if(isset($customer) && $customer->discount_type == 2){echo "selected";}?>>Flat</option>
                                             </select>
                                         </div>
 
@@ -256,19 +257,19 @@
                                     <div class="form-group">
                                         <label for="saga_ref" class="col-lg-4 col-sm-4 control-label">Sage Ref.</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="saga_ref" name="saga_ref" placeholder="Sage Ref.">
+                                            <input type="email" class="form-control" id="saga_ref" name="saga_ref" placeholder="Sage Ref." value="<?php if(isset($customer)){echo $customer->saga_ref;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="company_reg" class="col-lg-4 col-sm-4 control-label">Company Reg</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="company_reg" name="company_reg" placeholder="Company Reg">
+                                            <input type="email" class="form-control" id="company_reg" name="company_reg" placeholder="Company Reg" value="<?php if(isset($customer)){echo $customer->company_reg;}?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="vat_tax_no" class="col-lg-4 col-sm-4 control-label">VAT / Tax No.</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="vat_tax_no" name="vat_tax_no" placeholder="VAT / Tax No.">
+                                            <input type="email" class="form-control" id="vat_tax_no" name="vat_tax_no" placeholder="VAT / Tax No." value="<?php if(isset($customer)){echo $customer->vat_tax_no;}?>">
                                         </div>
                                     </div>
 
@@ -276,7 +277,7 @@
                                     <div class="form-group">
                                         <label for="payment_terms" class="col-lg-4 col-sm-4 control-label">Payment Terms</label>
                                         <div class="col-lg-4">
-                                            <input type="text" class="form-control" id="payment_terms" name="payment_terms" placeholder="Payment Terms">
+                                            <input type="text" class="form-control" id="payment_terms" name="payment_terms" placeholder="Payment Terms" value="<?php if(isset($customer)){echo $customer->payment_terms;}?>">
                                         </div>
                                         <div class="col-lg-3">
                                             <span class="afterInputText">
@@ -289,10 +290,10 @@
                                         <div class="col-sm-8">
 
                                             <label class="radio-inline">
-                                                <input type="radio" id="assigned_product1" class="assigned_product"> Yes
+                                                <input type="radio" id="assigned_product1" class="assigned_product" <?php if(isset($customer) && $customer->assigned_product ==1){echo "checked";}?>> Yes
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" id="assigned_product2" class="assigned_product"> No
+                                                <input type="radio" id="assigned_product2" class="assigned_product" <?php if(isset($customer)  && $customer->assigned_product ==2){echo "checked";}?>> No
                                             </label>
                                             <input type="hidden" value="" name="assigned_product" id="assigned_product">
 
@@ -303,7 +304,7 @@
                                         <label for="inputEmail1" class="col-lg-4 col-sm-4 control-label">Notes</label>
                                         <div class="col-lg-8">
                                             <textarea class="form-control" rows="4" cols="70" id="notes" name="notes">
-
+                                            <?php if(isset($customer)){echo $customer->notes;}?>
                                             </textarea>
                                         </div>
                                     </div>
@@ -312,8 +313,8 @@
                                         <label for="product_tax" class="col-lg-4 col-sm-4 control-label">Dflt Products Tax</label>
                                         <div class="col-lg-8">
                                             <select class="form-control" id="product_tax" name="product_tax">
-                                                <option value="1">General Customer</option>
-                                                <option value="2">General Customer</option>
+                                                <option value="1" <?php if(isset($customer) && $customer->product_tax == 1){echo "selected";}?>>General Customer</option>
+                                                <option value="2" <?php if(isset($customer) && $customer->product_tax == 2){echo "selected";}?>>General Customer</option>
                                             </select>
                                         </div>
                                     </div>
@@ -321,8 +322,8 @@
                                         <label for="service_tax" class="col-lg-4 col-sm-4 control-label">Dflt Services Tax</label>
                                         <div class="col-lg-8">
                                             <select class="form-control" id="service_tax" name="service_tax">
-                                                <option value="1">General Customer</option>
-                                                <option value="2">General Customer</option>
+                                                <option value="1" <?php if(isset($customer) && $customer->service_tax == 1){echo "selected";}?>>General Customer</option>
+                                                <option value="2" <?php if(isset($customer) && $customer->service_tax == 2){echo "selected";}?>>General Customer</option>
                                             </select>
                                         </div>
                                     </div>
@@ -340,7 +341,7 @@
                                 <label for="show_msg" class="col-lg-2 col-sm-2 control-label">Show Message</label>
                                 <div class="col-sm-10">
                                     <label class="radio-inline">
-                                        <input type="checkbox" name="show_msg" id="show_msg" value="0"> Yes, show the message
+                                        <input type="checkbox" name="show_msg" id="show_msg" <?php if(isset($customer) && $customer->show_msg == 1){echo "checked";}?> value="<?php if(isset($customer) && $customer->show_msg == 1){echo "1";}else{echo "0";}?>"> Yes, show the message
                                     </label>
                                 </div>
                             </div>
@@ -348,7 +349,7 @@
                             <div class="form-group padd0">
                                 <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Message</label>
                                 <div class="col-lg-10">
-                                    <textarea class="form-control" rows="4" cols="70" id="msg" name="msg"> </textarea>
+                                    <textarea class="form-control" rows="4" cols="70" id="msg" name="msg"><?php if(isset($customer) && $customer->show_msg == 1){echo $customer->msg;}?></textarea>
                                 </div>
                             </div>
 
@@ -356,9 +357,9 @@
                                 <label for="section_id" class="col-lg-2 col-sm-2 control-label">Section</label>
                                 <div class="col-lg-4">
                                     <select class="form-control" id="section_id" name="section_id[]">
-                                        <option value="1">Quote</option>
-                                        <option value="2">Job</option>
-                                        <option value="3">Invoice</option>
+                                        <option value="1" <?php if(isset($customer) && $customer->section_id == 1){echo "selected";}?>>Quote</option>
+                                        <option value="2" <?php if(isset($customer) && $customer->section_id == 2){echo "selected";}?>>Job</option>
+                                        <option value="3" <?php if(isset($customer) && $customer->section_id == 3){echo "selected";}?>>Invoice</option>
                                     </select>
                                 </div>
                             </div>
@@ -409,7 +410,25 @@
                                         </tr>
                                     </thead>
                                     <tbody id="contact_result">
-                                        
+                                        <?php foreach($contact as $conv){
+                                            $job_title_details=App\Models\Job_title::find($conv->job_title_id);
+                                            // echo "<pre>";print_r($job_title->name);die;
+                                            ?>
+                                        <tr>
+                                            <td><input type="checkbox" class="checkboxContactId" value="{{$conv->id}}"></td>
+                                            <td>{{$conv->contact_name}}</td>
+                                            <td>{{$job_title_details->name}}</td>
+                                            <td>{{$conv->email}}</td>
+                                            <td>{{$conv->telephone}}</td>
+                                            <td>{{$conv->mobile}}</td>
+                                            <td>{{$conv->address}}</td>
+                                            <td>{{$conv->city}}</td>
+                                            <td>{{$conv->country}}</td>
+                                            <td>{{$conv->postcode}}</td>
+                                            <td><?php echo ($conv->default_billing == 1)?"Yes":"No";?></td>
+
+                                        </tr>
+                                        <?php }?>
                                     </tbody>
                                 </table>
                             </div>
@@ -456,12 +475,28 @@
                                             <th>City</th>
                                             <th>County</th>
                                             <th>Postcode</th>
-                                            <th>Default Billing </th>
+                                            <th>Region </th>
 
                                         </tr>
                                     </thead>
                                     <tbody id="site_result">
-                                        
+                                        <?php foreach($site as $sitev){
+                                            $job_title_detail=App\Models\Job_title::find($sitev->title_id);
+                                            ?>
+                                            <tr>
+                                                <td><input type="checkbox" value="{{$sitev->id}}"></td>
+                                                <td>{{$sitev->contact_name}}</td>
+                                                <td>{{$job_title_detail->name}}</td>
+                                                <td>{{$sitev->email}}</td>
+                                                <td>{{$sitev->telephone}}</td>
+                                                <td>{{$sitev->mobile}}</td>
+                                                <td>{{$sitev->address}}</td>
+                                                <td>{{$sitev->city}}</td>
+                                                <td>{{$sitev->country}}</td>
+                                                <td>{{$sitev->post_code}}</td>
+                                                <td></td>
+                                        </tr>
+                                        <?php }?>
                                     </tbody>
                                 </table>
                             </div>
@@ -493,7 +528,17 @@
                                         </tr>
                                     </thead>
                                     <tbody id="login_result">
-                                        
+                                        <?php foreach($login as $k=>$logv){?>
+                                            <tr>
+                                                <td>{{++$k}}</td>
+                                                <td>{{$logv->name}}</td>
+                                                <td>{{$logv->email}}</td>
+                                                <td>{{$logv->email}}</td>
+                                                <td>{{$logv->telephone}}</td>
+                                                <td></td>
+                                                <td><?php echo($logv->status == 1)?"Active":"In-active";?></td>
+                                        </tr>
+                                        <?php }?>
                                     </tbody>
                                 </table>
                             </div>
@@ -502,7 +547,7 @@
 
                     <div class="pddtp">
                         <button type="button" class="btn btn-primary" onclick="get_data()"><i class="fa fa-floppy-o"></i> Save</button>
-                        <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn btn-primary" onclick="return window.location.href='<?php echo url('admin/customers'); ?>'"><i class="fa fa-arrow-left"></i> Back</button>
                         <button type="button" class="btn btn-primary"><i class="fa fa-chevron-down"></i> Add</button>
                     </div>
                 </form>

@@ -246,7 +246,7 @@
                                             </a>
 
                                             <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">New Customers</a></li>
+                                                <li><a class="dropdown-item" href="{{url('customer_add_edit')}}">New Customers</a></li>
                                                 <li><a class="dropdown-item" href="#">Active Customers</a></li>
                                                 <li><a class="dropdown-item" href="#">Inactive Customers</a></li>
                                                 <li><a class="dropdown-item" href="#">Customers Logins</a></li>

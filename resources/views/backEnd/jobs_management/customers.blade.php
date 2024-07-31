@@ -113,12 +113,11 @@ thead#flowhead {
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th>Contact Name</th>
+                                        <th>Customer Name</th>
+                                        <th>Address</th>
+                                        <th>Contact Nmae</th>
                                         <th>Email</th>
                                         <th>Telephone</th>
-                                        <th>Mobile</th>
-                                        <th>Country</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
@@ -129,7 +128,7 @@ thead#flowhead {
                                         if(count($customers) == 0){ ?>
                                             <?php
                                                 echo '<tr style="text-align:center">
-                                                      <td colspan="9">No Job Type found.</td>
+                                                      <td colspan="9">No Customer found.</td>
                                                       </tr>';
                                             ?>
                                         <?php 
@@ -143,11 +142,10 @@ thead#flowhead {
                                         <tr >
                                             <td>{{++$key}}</td>
                                             <td class="user_name">{{ ucfirst($val->name) }}</td>
+                                            <td>{{$val->address}}</td>
                                             <td>{{$val->contact_name}}</td>
                                             <td>{{$val->email}}</td>
                                             <td>{{$val->telephone}}</td>
-                                            <td>{{$val->mobile}}</td>
-                                            <td>{{$val->country}}</td>
                                             <td>
                                                 @if($val->status == 1)
                                                     <a href="javascript:void(0)" onclick="status_change('{{base64_encode($val->id)}}',0)" class="btn btn-success">Active</a>
@@ -189,7 +187,7 @@ thead#flowhead {
         var token='<?php echo csrf_token();?>'
             $.ajax({  
                 type:"POST",
-                url:"{{url('admin/job_rejection_category_status_change')}}",
+                url:"{{url('admin/customer_status_change')}}",
                 data:{id:id,status:status,_token:token},
                 success:function(data)
                 {
@@ -206,7 +204,7 @@ thead#flowhead {
         var token='<?php echo csrf_token();?>'
             $.ajax({  
                 type:"POST",
-                url:"{{url('admin/job_rejection_category_delete')}}",
+                url:"{{url('admin/customer_delete')}}",
                 data:{id:id,_token:token},
                 success:function(data)
                 {
