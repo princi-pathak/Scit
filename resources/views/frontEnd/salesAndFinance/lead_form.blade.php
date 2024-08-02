@@ -115,7 +115,7 @@ if (isset($lead)) {
 
 
                                     <div class="mb-3 row">
-                                        <label for="inputName" class="col-sm-3 col-form-label">Full Name *</label>
+                                        <label for="inputName" class="col-sm-3 col-form-label">Full Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control editInput" name="name" id="inputName" placeholder="Full Name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}">
                                         </div>
@@ -128,14 +128,14 @@ if (isset($lead)) {
                                     </div>
 
                                     <div class="mb-3 row">
-                                        <label for="inputMobile" class="col-sm-3 col-form-label">Email Address *</label>
+                                        <label for="inputMobile" class="col-sm-3 col-form-label">Email Address <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" name="email" class="form-control editInput" id="inputMobile" placeholder="Email Address" value="{{ (isset($lead->email)) ? $lead->email : '' }}">
                                         </div>
                                     </div>
 
                                     <div class="mb-3 row">
-                                        <label for="inputEmail" class="col-sm-3 col-form-label">Telephone *</label>
+                                        <label for="inputEmail" class="col-sm-3 col-form-label">Telephone <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" name="telephone" class="form-control editInput" id="inputEmail" placeholder="Telephone " value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}">
                                         </div>
@@ -280,7 +280,7 @@ if (isset($lead)) {
                                                                 <form action="" class="customerForm">
 
                                                                     <div class="mb-3 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">History Type*</label>
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">History Type<span class="radStar">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control editInput" id="inputName" placeholder="Auto generate">
                                                                         </div>
@@ -334,13 +334,13 @@ if (isset($lead)) {
                                                                 <form action="" class="customerForm">
 
                                                                     <div class="mb-3 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Leads Ref.*</label>
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Leads Ref.<span class="radStar">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control editInput" id="inputName" placeholder="Auto generate">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks User*</label>
+                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks User<span class="radStar">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <select class="form-control editInput selectOptions" id="inputCustomer">
                                                                                 <option>Genral</option>
@@ -350,7 +350,7 @@ if (isset($lead)) {
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks Type*</label>
+                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks Type<span class="radStar">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <select class="form-control editInput selectOptions" id="inputCustomer">
                                                                                 <option>Genral</option>
@@ -360,7 +360,7 @@ if (isset($lead)) {
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Date*</label>
+                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Date<span class="radStar">*</span></label>
                                                                         <div class="col-sm-4">
                                                                             <input type="date" class="form-control editInput" id="inputName">
                                                                         </div>
@@ -372,7 +372,7 @@ if (isset($lead)) {
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Title*</label>
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Title<span class="radStar">*</span></label>
                                                                         <div class="col-sm-9">
                                                                             <input type="text" class="form-control editInput" id="inputName" placeholder="Auto generate">
                                                                         </div>
@@ -511,7 +511,7 @@ if (isset($lead)) {
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">File Name*</label>
+                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">File Name<span class="radStar">*</span></label>
                                                                         <div class="col-sm-9">
                                                                         <!-- <canvas id="canv1"></canvas> -->
                                                                         <p class="uploadImg">
