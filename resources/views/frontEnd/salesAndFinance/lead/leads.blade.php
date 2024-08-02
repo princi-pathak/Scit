@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="jobsection">
-                    <a href="{{ url('/leads/add_lead') }}" class="profileDrop">New Lead</a>
+                    <a href="{{ url('/leads/add') }}" class="profileDrop">New Lead</a>
                     <a href="#" class="profileDrop">All Leads <span>(5)</span></a>
                     <a href="#" class="profileDrop">My Leads<span>(8)</span></a>
                     <a href="#" class="profileDrop">Unassigned<span>(15)</span></a>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="pageTitleBtn p-0">
-                                    <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a>
+                                    <!-- <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a> -->
                                 </div>
                             </div>
                         </div>
@@ -77,28 +77,12 @@
                         </thead>
 
                         <tbody>
-                            <!-- <tr>
-                                <td></td>
-                                <td>1</td>
-                                <td>Prince Gautam</td>
-                                <td>None</td>
-                                <td>Prince@gmail.com</td>
-                                <td>84845631</td>
-                                <td>4465132</td>
-                                <td>www.mobapps</td>
-                                <td>49 Featherstone</td>
-                                <td>LONDON</td>
-                                <td>UK</td>
-                                <td>EC1Y 8SY</td>
-                                <td>LEAD-0024</td>
-                                <td>contacted</td>
-                                <td><a href="#!" class="profileDrop dropdown-toggle">Action</a></td>
-                            </tr> -->
+                           
 
                             @foreach ($customers as $customer)
                             <tr>
                                 <td></td>
-                                <td></td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $customer->contact_name }}</td>
                                 <td>{{ $customer->name }}</td>
                                 <td>{{ $customer->email }}</td>

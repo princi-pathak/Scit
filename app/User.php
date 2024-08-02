@@ -30,6 +30,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function getHomeUsers($home_id){
+        return User::where('home_id', $home_id)->where('is_deleted', 0)->get();
+    } 
+
     public function access_level() {
         return $this->hasOne('App\AccessLevel','id','access_level');
     }

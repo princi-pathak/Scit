@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class LeadTask extends Model
 {
@@ -22,4 +24,31 @@ class LeadTask extends Model
                     'notify_time', 
                     'notes'
     ];
+
+    public static function getLeadTaskTypeUser($lead_ref){
+        return DB::table('lead_tasks')
+        ->join('lead_task_types', 'lead_task_types.id', '=', 'lead_tasks.lead_task_type_id')
+        ->join('user', 'user.id', '=', 'lead_tasks.user_id')
+        ->select('lead_tasks.*', 'lead_task_types.title as task_type_title','user.name')
+        ->where('lead_tasks.lead_ref', $lead_ref)
+        ->where('lead_tasks.deleted_at', null)
+        ->get();
+    } 
+
+    public static function getLeadTasks(){
+        return DB::table('lead_tasks')
+        ->join('leads', 'leads.lead_ref', '=', 'lead_tasks.lead_ref')
+        ->join('user', 'user.id', '=', 'lead_tasks.user_id')
+        ->join('lead_task_types', 'lead_task_types.id', '=', 'lead_tasks.lead_task_type_id')
+        ->join('customers', 'customers.id', '=', 'leads.customer_id')
+        ->select('lead_tasks.*', 'user.name','lead_task_types.title as lead_task_type_title','leads.id as lead_id','customers.contact_name', 'customers.telephone')
+        ->orderBy('lead_tasks.id', 'desc')
+        ->where('lead_tasks.deleted_at', null)
+        ->get();  
+    }
+
+    public static function deleteLeadTask($taskId){
+        return LeadTask::where('id', $taskId)->update(['deleted_at' => Carbon::now()]);
+    }
+  
 }

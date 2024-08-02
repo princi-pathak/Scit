@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Lead;
 use App\Customer;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Validator;
 use App\Models\LeadRejectType;
@@ -21,8 +20,6 @@ use App\Models\LeadNoteType;
 use App\Models\LeadNote;
 use App\Models\LeadAttachment;
 
-use Carbon\Carbon;
-
 class LeadController extends Controller
 {
     public function index(Request $request){
@@ -30,54 +27,33 @@ class LeadController extends Controller
         $path = $request->path();
         $segments = explode('/', $path);
         $lastSegment = end($segments);
-
-        $query = DB::table('customers')
-        ->join('leads', 'customers.id', '=', 'leads.customer_id')
-        ->select('customers.*', 'leads.*')
-        ->orderBy('leads.created_at', 'desc');
-   
-        if($lastSegment ===  "leads") {
-            $customers =$query->whereNotIn('assign_to', [0])
-            ->whereNotIn('leads.status', ['6'])
-            ->get();
-        } 
-        else if($lastSegment === "unassigned"){
-            $customers = $query->orderBy('leads.created_at', 'desc')
-            ->where('assign_to', 0)
-            ->get();
-        } else if($lastSegment === "rejected"){
-            $customers = $query->orderBy('leads.created_at', 'desc')
-            ->where('leads.status', '6')
-            ->get();
-        } else if($lastSegment === "converted"){
-            $customers = $query->orderBy('leads.created_at', 'desc')
-            ->where('customers.is_converted', 1)
-            ->get();
-        }
-
-        // dd($customers);
-        $leadRejectTypes = LeadRejectType::where('deleted_at', null)->where('status', 1)->get();
-
+        $customers = Customer::getCustomerWithLeads($lastSegment);
+        $leadRejectTypes = LeadRejectType::getLeadRejectType();
         return view('backEnd/salesFinance/leads/leads', compact('page', 'customers', 'leadRejectTypes'));
     }
     public function create(){
-        // dd("data");
         $page = "Leads";
-        $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
-        $status = LeadStatus::where('deleted_at', null)->where('status', 1)->get();
-        $sources = LeadSource::where('deleted_at', null)->where('status', 1)->get();
+        $users = User::getHomeUsers(Session::get('scitsAdminSession')->home_id);
+        $status = LeadStatus::getLeadStatus();
+        $sources = LeadSource::getLeadSources();
       
         return view('backEnd/salesFinance/leads/leads_form',compact('page','users', 'status', 'sources'));
     }
 
     public function store(Request $request){
-        // dd($request);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|email|max:255',
+        //     'telephone' => 'required|string|max:15',
+        // ]);
+        // if ($validator->fails()) {
+        //     return response()->json(['errors' => $validator->errors()], 422);
+        // }
         try {
             $website = $request->input('website');
             if ($website && !preg_match('/^http/', $website)) {
                 $website = 'http://' . $website;
             }   
-
             $customer = Customer::updateOrCreate(['id' => $request->customer_id],[
                 'home_id' => Session::get('scitsAdminSession')->home_id,
                 'name' => $request->company_name,
@@ -92,13 +68,10 @@ class LeadController extends Controller
                 'postal_code' => $request->postal_code,
             ]);
             $customer_id = $customer->id;
-
             if ($customer && $customer->id) {
-
                 $lastLead = Lead::orderBy('id', 'desc')->first();
                 $nextId = $lastLead ? $lastLead->id + 1 : 1;
                 $lead_refid = 'LEAD-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
-
                 $admin   = Session::get('scitsAdminSession');
                 // Create the lead using the customer ID
                 $lead = Lead::updateOrCreate(['id' => $request->lead_id],[
@@ -111,22 +84,16 @@ class LeadController extends Controller
                     'prefer_date' => $request->input('prefer_date'),
                     'prefer_time' => $request->input('prefer_time'),
                 ]);
-
                 if ($lead->wasRecentlyCreated) {
-                    // New record was created
                     $message =  'Lead created successfully.';
                     return redirect()->route('leads.edit', ['id' => $lead->id])->with('success', $message);
                 } else {
-                    // Existing record was updated
                     $message =  'Lead updated successfully.';
                     return redirect()->route('leads.index')->with('success', $message);
                 }
-
             } else {
-                // Handle the error case where the customer was not created successfully
                 return redirect()->route('leads.index')->with('error', 'Failed to create customer.');
-            }
-  
+            }  
         } catch (\Exception $e) {
             \Log::error('Error saving lead: ' . $e->getMessage());
             return back()->withInput()->withErrors(['error' => 'Failed to save lead. Please try again.']);
@@ -134,64 +101,37 @@ class LeadController extends Controller
     }
 
     public function edit($id){
-
-        // dd($id);
         $page = 'Leads';
-        $lead = DB::table('customers')
-        ->join('leads', 'customers.id', '=', 'leads.customer_id')
-        ->select('customers.*', 'leads.*')
-        ->where('leads.id', $id)
-        ->first();
-        // dd($lead);
-        $users = User::where('home_id', Session::get('scitsAdminSession')->home_id)->get();
-        $status = LeadStatus::where('deleted_at', null)->where('status', 1)->get();
-        $sources = LeadSource::where('deleted_at', null)->where('status', 1)->get();
-        $notes_type = LeadNoteType::where(['deleted_at'=> null, 'status' => 1, 'home_id' => Session::get('scitsAdminSession')->home_id])->get();
-        $lead_notes = LeadNote::where('lead_id', $id)->get();
-        $leadTask = LeadTaskType::where(['deleted_at'=> null, 'status' => 1])->get();
+        $lead = Customer::getCustomerLeads($id);  
+        $users = User::getHomeUsers(Session::get('scitsAdminSession')->home_id);
+        $status = LeadStatus::getLeadStatus();
+        $sources = LeadSource::getLeadSources();
+        $notes_type = LeadNoteType::getLeadNoteTypeWithHomeId(Session::get('scitsAdminSession')->home_id);
+        // $lead_notes = LeadNote::getLeadNoteFromLeadId($id);
+        $leadTask = LeadTaskType::getLeadTaskType();
         $attachment_type = AttachmentType::getAttachmentType();
-
-        $lead_notes_data = DB::table('lead_notes')
-        ->join('lead_note_types', 'lead_note_types.id', '=', 'lead_notes.notes_type_id')
-        ->select('lead_notes.*', 'lead_note_types.*')
-        ->where('lead_notes.lead_id', $id)
-        ->get();
-
-        // dd($lead_notes_data);
-        $lead_task =  DB::table('lead_tasks')
-        ->join('lead_task_types', 'lead_task_types.id', '=', 'lead_tasks.lead_task_type_id')
-        ->join('user', 'user.id', '=', 'lead_tasks.user_id')
-        ->select('lead_tasks.*', 'lead_task_types.title as task_type_title','user.name')
-        ->where('lead_tasks.lead_ref', $lead->lead_ref)
-        ->where('lead_tasks.deleted_at', null)
-        ->get();
-
+        $lead_notes_data = LeadNote::getLeadNoteFromleadNoteType($id); 
+        $lead_task =  LeadTask::getLeadTaskTypeUser($lead->lead_ref); 
         $lead_attachment = LeadAttachment::getLeadAttachments($id);
-
-        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes', 'lead_notes_data', 'leadTask', 'lead_task', 'attachment_type', 'lead_attachment'));   
+        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes_data', 'leadTask', 'lead_task', 'attachment_type', 'lead_attachment'));   
     }
 
     // Lead Reject Type
     public function lead_reject_type(){
         $page = "Lead Reject Type";
-        $lead_rejects = LeadRejectType::where('deleted_at', null)->get();
+        $lead_rejects = LeadRejectType::getAllLeadRjectType();
         return view('backEnd/salesFinance/leads/lead_reject_type', compact('lead_rejects', 'page'));   
     }
 
     public function saveLeadRejectType(Request $request){
-       
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'status' => 'required|boolean',
-        ]);
-
+        ]); 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
-        // Save form data to the database
         LeadRejectType::updateOrCreate(['id' => $request->lead_reject_id], array_merge($request->all(), ['home_id' => Session::get('scitsAdminSession')->home_id]));
-
         if(isset($request->lead_reject_id)){
             return response()->json(['message' => 'Record updated successfully!']);
         } else {
@@ -200,8 +140,7 @@ class LeadController extends Controller
     }
     
     public function lead_reject_type_delete($id){
-        $affectedRows  = LeadRejectType::where('id', $id)->update(['deleted_at' => Carbon::now()]);
-        if($affectedRows ){
+        if(LeadRejectType::deleteLeadRejectType($id) ){
             return redirect()->route('leads.lead_reject_type')->with('success', "Record deleted successfully");
         } else {
             return redirect()->route('leads.lead_reject_type')->with('error', "Record not found");
@@ -209,21 +148,16 @@ class LeadController extends Controller
     }
 
     public function saveLeadRejectReason(Request $request){
-
         $validator = Validator::make($request->all(), [
             'lead_ref' => 'required',
             'reject_type_id' => 'required',
             'reject_reason' => 'required',
         ]);
-
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
         Lead::where('lead_ref', $request->lead_ref)->update(['status' => 6]);
-
-        // Save form data to the database
         LeadRejectReason::updateOrCreate(['id' => $request->lead_reject_id], $request->all());
-
         if(isset($request->lead_reject_id)){
             return response()->json(['message' => 'Record updated successfully!']);
         } else {
@@ -234,7 +168,7 @@ class LeadController extends Controller
     // Lead Status 
     public function lead_status(){
         $page = "Lead Status";
-        $lead_status = LeadStatus::where('deleted_at', null)->get();
+        $lead_status = LeadStatus::getAllLeadStatus();
         return view('backEnd/salesFinance/leads/lead_status', compact('page', 'lead_status'));
     }
 
@@ -247,9 +181,7 @@ class LeadController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        
         LeadStatus::updateOrCreate(['id' => $request->lead_status_id], array_merge($request->all(), ['home_id' => Session::get('scitsAdminSession')->home_id]));
-
         if(isset($request->lead_status_id)){
             return response()->json(['message' => 'Record updated successfully!']);
         } else {
@@ -258,8 +190,7 @@ class LeadController extends Controller
     }
 
     public function lead_status_delete($id){
-        $affectedRows  = LeadStatus::where('id', $id)->update(['deleted_at' => Carbon::now()]);
-        if($affectedRows ){
+        if(LeadStatus::deleteLeadStatus($id) ){
             return redirect()->route('leads.lead_status')->with('success', "Record deleted successfully");
         } else {
             return redirect()->route('leads.lead_status')->with('error', "Record not found");
@@ -269,7 +200,7 @@ class LeadController extends Controller
     // Lead Sources
     public function lead_sources(){
         $page = "Lead Sources";
-        $lead_sources = LeadSource::where('deleted_at', null)->get();
+        $lead_sources = LeadSource::getAllLeadSources();
         return view('backEnd/salesFinance/leads/lead_sources', compact('page', 'lead_sources'));
     }
 
@@ -278,12 +209,10 @@ class LeadController extends Controller
             'title' => 'required',
             'status' => 'required',
         ]);
-
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
         LeadSource::updateOrCreate(['id' => $request->lead_source_id], array_merge($request->all(), ['home_id' =>  Session::get('scitsAdminSession')->home_id]));
-
         if(isset($request->lead_source_id)){
             return response()->json(['message' => 'Record updated successfully!']);
         } else {
@@ -292,8 +221,7 @@ class LeadController extends Controller
     }
 
     public function lead_source_delete($id){
-        $affectedRows  = LeadSource::where('id', $id)->update(['deleted_at' => Carbon::now()]);
-        if($affectedRows ){
+        if(LeadSource::deleteLeadSources($id) ){
             return redirect()->route('leads.lead_sources')->with('success', "Record deleted successfully");
         } else {
             return redirect()->route('leads.lead_sources')->with('error', "Record not found");
@@ -303,7 +231,7 @@ class LeadController extends Controller
     // Lead Task Type
     public function lead_task_type(){
         $page = "lead_task_type";
-        $lead_task_type = LeadTaskType::where('deleted_at', null)->get();
+        $lead_task_type = LeadTaskType::getAllLeadTask();
         return view('backEnd/salesFinance/leads/lead_task_type', compact('page', 'lead_task_type'));
     }
 
@@ -327,8 +255,7 @@ class LeadController extends Controller
     }
 
     public function lead_task_type_delete($id){
-        $affectedRows  = LeadTaskType::where('id', $id)->update(['deleted_at' => Carbon::now()]);
-        if($affectedRows ){
+        if(LeadTaskType::deleteLeadTaskType($id) ){
             return redirect()->route('leads.lead_task_type')->with('success', "Record deleted successfully");
         } else {
             return redirect()->route('leads.lead_task_type')->with('error', "Record not found");
@@ -338,7 +265,7 @@ class LeadController extends Controller
     // Lead Note Types start
     public function lead_notes_type(){
         $page = "lead_notes_type";
-        $lead_notes_type = LeadNoteType::where('deleted_at', null)->get();
+        $lead_notes_type = LeadNoteType::getAllLeadNoteType();
         return view('backEnd/salesFinance/leads/lead_notes_type', compact('page', 'lead_notes_type'));
     }
 
@@ -362,8 +289,7 @@ class LeadController extends Controller
     }
 
     public function lead_note_type_delete($id){
-        $affectedRows  = LeadNoteType::where('id', $id)->update(['deleted_at' => Carbon::now()]);
-        if($affectedRows ){
+        if(LeadNoteType::deleteLeadNoteType($id) ){
             return redirect()->route('leads.lead_notes_type')->with('success', "Record deleted successfully");
         } else {
             return redirect()->route('leads.lead_notes_type')->with('error', "Record not found");
@@ -372,8 +298,7 @@ class LeadController extends Controller
     // Lead Notes Type End
 
     public function convert_to_customer($id){
-        $customer = Customer::where('id', $id)->update(['is_converted' => 1]);
-        if($customer ){
+        if(Customer::converToCustomer($id) ){
             return redirect()->route('leads.index')->with('success', "Customer converted successfully");
         } else {
             return redirect()->route('leads.index')->with('error', "Record not found");
@@ -382,7 +307,6 @@ class LeadController extends Controller
 
     public function save_lead_notes(Request $request){
         $save = LeadNote::create(array_merge($request->all(), ['home_id' =>  Session::get('scitsAdminSession')->home_id]));
-            
         if( $save ){
             return response()->json(['message' => 'Record added successfully!']);
         } else {
@@ -392,18 +316,14 @@ class LeadController extends Controller
 
     // Lead Tasks
     public function save_lead_tasks(Request $request){
-        // dd($request);
         $validator = Validator::make($request->all(), [
             'lead_task_type_id' => 'required',
             'title' => 'required',
         ]);
-
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        
         LeadTask::updateOrCreate(['id' => $request->lead_task_id], $request->all());
-
         if(isset($request->lead_task_id)){
             return response()->json(['success' => true, 'message' => 'Record updated successfully!']);
         } else {
@@ -412,38 +332,29 @@ class LeadController extends Controller
     }
 
     public function lead_task_delete($taskId, $leadId){
-        $affectedRows  = LeadTask::where('id', $taskId)->update(['deleted_at' => Carbon::now()]);
-    
-        if($affectedRows ){
-            // return redirect()->route('leads.lead_notes_type')->with('success', "Record deleted successfully");
+        if(LeadTask::deleteLeadTask($taskId) ){
             return redirect()->route('leads.edit', ['id' => $leadId])->with('success', 'Lead Taks deleted successfully');
         } else {
-            // return redirect()->route('leads.lead_notes_type')->with('error', "Record not found");
             return redirect()->route('leads.edit', ['id' => $leadId])->with('fails', 'Error in Lead task deletion');
         } 
     }
 
     // Lead Attachments start
     public function saveLeadAttachment(Request $request){
-
         $validator = Validator::make($request->all(), [
             'lead_id' => 'required',
             'file' => 'required|file|mimes:jpg,jpeg,png,gif|max:25600',
         ]);
-
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
         if ($request->file('file')->isValid()) {
             $file = $request->file('file');
             $mimeType = $file->getMimeType();
             $sizeInBytes = $file->getSize(); // Size in bytes
             $fileName = time() . '_' . $file->getClientOriginalName();
             $filePath = $file->storeAs('lead_attachments', $fileName, 'public');
-
             LeadAttachment::create(array_merge($request->all(), ['image' => $filePath,  'mime_type' => $mimeType, 'size_in_bytes' => $sizeInBytes, ]) );
-
             return response()->json(['success' => true, 'message' => 'File uploaded successfully.']);
         } else {
             return response()->json(['success' => false, 'message' => 'Error in file upload!']);
@@ -451,9 +362,7 @@ class LeadController extends Controller
     }
 
     public function lead_attachments_delete($attachment_id, $leadId){
-        $affectedRows  = LeadAttachment::where('id', $attachment_id)->update(['deleted_at' => Carbon::now()]);
-    
-        if($affectedRows ){
+        if(LeadAttachment::deleteLeadAttachment($attachment_id)){
             return redirect()->route('leads.edit', ['id' => $leadId])->with('success', 'Lead Atachments deleted successfully');
         } else {
             return redirect()->route('leads.edit', ['id' => $leadId])->with('fails', 'Error in Lead attachments deletion');
@@ -461,5 +370,19 @@ class LeadController extends Controller
     }
     // Lead Attachments end
 
+    public function task_list(){
+        $page = "Leads";
+        $lead_tasks = LeadTask::getLeadTasks();
+        return view('backEnd/salesFinance/leads/lead_task', compact('page', 'lead_tasks'));
+    }
+
+    public function lead_task_list_delete($id){
+        $data = LeadTask::deleteLeadTask($id);
+        if($data){
+            return redirect()->route('leads.list')->with('success', "Record deleted successfully");
+        } else {
+            return redirect()->route('leads.list')->with('error', "Record not found");
+        }
+    }
 
 }
