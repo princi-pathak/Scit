@@ -101,7 +101,7 @@ if (isset($lead)) {
                                 <div class="formDtail">
                                     <h4 class="contTitle">Data Fields</h4>
                                     <div class="mb-3 row">
-                                        <label for="inputName" class="col-sm-3 col-form-label">Full Name <span class="radStar">*</span></label>
+                                        <label for="inputName" class="col-sm-3 col-form-label">Full Name *</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control editInput" name="name" id="inputName" placeholder="Full Name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}">
                                         </div>
@@ -113,13 +113,13 @@ if (isset($lead)) {
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputMobile" class="col-sm-3 col-form-label">Email Address <span class="radStar">*</span></label>
+                                        <label for="inputMobile" class="col-sm-3 col-form-label">Email Address *</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="email" class="form-control editInput" id="inputMobile" placeholder="Email Address" value="{{ (isset($lead->email)) ? $lead->email : '' }}">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputEmail" class="col-sm-3 col-form-label">Telephone <span class="radStar">*</span></label>
+                                        <label for="inputEmail" class="col-sm-3 col-form-label">Telephone *</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="telephone" class="form-control editInput" id="inputEmail" placeholder="Telephone " value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}">
                                         </div>
@@ -220,178 +220,27 @@ if (isset($lead)) {
                                                     </div>
                                                 </div>
 
-                                                <!-- Button trigger modal -->
-
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="notesPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">History Type - Add</h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-
-                                                                <form action="" class="customerForm">
-
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">History Type<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputName" placeholder="Auto generate">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Type</label>
-                                                                        <div class="col-sm-9">
-                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                <option>Genral</option>
-                                                                                <option>Customer-2</option>
-                                                                                <option>Customer-3</option>
-                                                                            </select>
-                                                                            <!-- <input type="text"  id="staticEmail"> -->
-                                                                        </div>
-
-                                                                    </div><!-- End off Customer -->
-                                                                </form>
-
-
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <div class="pageTitleBtn p-0">
-                                                                    <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                                                                    <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save & Close </a>
-                                                                    <a href="#" class="profileDrop" data-bs-dismiss="modal"> Close</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div><!-- ENd col-9 -->
-                                        </div>
-                                        <div class="tab-pane fade" id="nav-Tasks" role="tabpanel" aria-labelledby="nav-Tasks-tab" tabindex="0">
-                                            <div class="tabheadingTitle">
-                                                <h3>Tasks - </h3>
-                                                <a href="#" class="profileDrop ms-3" data-bs-toggle="modal" data-bs-target="#tasksPopup"><i class="fa-solid fa-floppy-disk"></i> New Tasks</a>
-                                            </div>
-                                            <div class="col-sm-12">
-
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="tasksPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Tasks</h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-
-                                                                <form action="" class="customerForm">
-
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Leads Ref.<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputName" placeholder="Auto generate">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks User<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                <option>Genral</option>
-                                                                                <option>Customer-2</option>
-                                                                                <option>Customer-3</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks Type<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                <option>Genral</option>
-                                                                                <option>Customer-2</option>
-                                                                                <option>Customer-3</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Date<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" id="inputName">
-                                                                        </div>
-                                                                        <div class="col-sm-1 text-center">
-                                                                            <i class="fa fa-calendar-days"></i>
-                                                                        </div>
-                                                                        <div class="col-sm-4">
-                                                                            <input type="time" class="form-control editInput" id="inputName">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Title<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputName" placeholder="Auto generate">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Contact Name</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputName" placeholder="Auto generate">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Contact Phone</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputName" placeholder="Auto generate">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Notify?</label>
-                                                                        <div class="col-sm-2 d-flex">
-                                                                            <input type="checkbox" class="editInput" id="notify" placeholder="Auto generate">
-                                                                            <label for="notify" class="col-form-label ps-3">Yes, On</label>
-                                                                        </div>
-                                                                        <div class="col-sm-3">
-                                                                            <input type="date" class="form-control editInput" id="date">
-                                                                        </div>
-                                                                        <div class="col-sm-1 text-center">
-                                                                            <i class="fa fa-calendar-days"></i>
-                                                                        </div>
-                                                                        <div class="col-sm-3">
-                                                                            <input type="time" class="form-control editInput" id="time">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Notes</label>
-                                                                        <div class="col-sm-9">
-                                                                            <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="3" placeholder="75 Cope Road Mall Park USA"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-
-
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <div class="pageTitleBtn p-0">
-                                                                    <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                                                                    <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save & Close </a>
-                                                                    <a href="#" class="profileDrop" data-bs-dismiss="modal"> Close</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="productDetailTable mt-3">
-                                                    <table class="table" id="containerA">
-                                                        <thead class="table-light">
-                                                            <tr>
-                                                                <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y H:i') }}</td>
-                                                                <td>{{ $value->home_id }}</td>
-                                                                <td>{{ $value->title }}</td>
-                                                                <td>{{ $value->notes }}</td>
-                                                            </tr>
-                                                            @endforeach
+                                                <div class="col-md-12">
+                                                    <div class="productDetailTable pt-3">
+                                                        <table class="table" id="containerA">
+                                                            <thead class="table-light">
+                                                                <tr>
+                                                                <th>Data</th>
+                                                                <th>By</th>
+                                                                <th>Type</th>
+                                                                <th>Notes</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @if(isset($lead_notes_data))
+                                                                @foreach($lead_notes_data as $value)
+                                                                <tr>
+                                                                    <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y H:i') }}</td>
+                                                                    <td>{{ \App\User::where('id', $lead->user_id)->value('name') }}</td>
+                                                                    <td>{{ $value->title }}</td>
+                                                                    <td>{{ $value->notes }}</td>
+                                                                </tr>
+                                                                @endforeach
                                                             @else
                                                             <tr>
                                                                 <td>...</td>
@@ -452,65 +301,123 @@ if (isset($lead)) {
                                     <div class="tab-pane fade" id="nav-Tasks" role="tabpanel" aria-labelledby="nav-Tasks-tab" tabindex="0">
                                         <div class="tabheadingTitle">
                                             <h3>Tasks - </h3>
-                                            <a href="#" class="profileDrop ms-3" data-bs-toggle="modal" data-bs-target="#tasksPopup"><i class="fa-solid fa-floppy-disk"></i> New Tasks</a>
+                                            <a href="#" class="profileDrop ms-3 open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel"><i class="fa-solid fa-floppy-disk"></i> New Tasks</a>
                                         </div>
                                         <div class="col-sm-12">
 
                                             <!-- Modal -->
-                                            <div class="modal fade" id="tasksPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal fade" id="tasksModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Tasks</h1>
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Task</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
 
-                                                            <form action="" class="customerForm">
+                                                            <form action="" class="customerForm" id="addTask">
 
                                                                 <div class="mb-3 row">
                                                                     <label for="inputName" class="col-sm-3 col-form-label">Leads Ref.*</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputName" placeholder="Auto generate">
+                                                                        <input type="hidden" id="lead_task_id" name="lead_task_id">
+                                                                        <input type="text" class="form-control editInput" name="lead_ref" id="leadsRef" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" id="lead_ref" placeholder="Leads Ref." readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
-                                                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks User*</label>
+                                                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Task User*</label>
                                                                     <div class="col-sm-9">
-                                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                            <option>Genral</option>
-                                                                            <option>Customer-2</option>
-                                                                            <option>Customer-3</option>
+                                                                        <select class="form-control editInput selectOptions" name="user_id" id="user_id">
+                                                                            @foreach($users as $value)
+                                                                            <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
+                                                                            @endforeach
                                                                         </select>
                                                                     </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="inputCustomer" class="col-sm-3 col-form-label">File Name<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                        <!-- <canvas id="canv1"></canvas> -->
-                                                                        <p class="uploadImg">
-                                                                            <i class="fa fa-cloud-upload"></i>
-                                                                            <input type="file" multiple="false" accept="image/*" id="finput" onchange="upload()">
-                                                                        </p>
+                                                                </div>
+                                                                <div class="mb-3 row">
+                                                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks Type*</label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-control editInput selectOptions" id="lead_task_type_id" name="lead_task_type_id">
+                                                                            @if(isset($leadTask))
+                                                                                @foreach($leadTask as $value)
+                                                                                <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                                                @endforeach
+                                                                            @endif
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Title</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputName" value="">
+                                                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Date*</label>
+                                                                    <div class="col-sm-4">
+                                                                        <input type="date" class="form-control editInput" id="create_date" name="create_date">
+                                                                    </div>
+                                                                    <div class="col-sm-1 text-center">
+                                                                        <i class="fa fa-calendar-days"></i>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <input type="time" class="form-control editInput" id="create_time" name="create_time">
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Description
-                                                                        (max 500 characters)</label>
+                                                                <div class="mb-3 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Title*</label>
                                                                     <div class="col-sm-9">
-                                                                        <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="3" placeholder="Address"></textarea>
+                                                                        <input type="text" class="form-control editInput" id="task_title" name="title" placeholder="Title ">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Contact Name</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="canatact_name" name="canatact_name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}" placeholder="Enter name" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Contact Phone</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="phone_num" name="phone_num" value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" placeholder="Enter email" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Notify?</label>
+                                                                    <div class="col-sm-2 d-flex">
+                                                                        <input type="checkbox" class="editInput" id="yeson" >
+                                                                        <label for="notify" class="col-form-label ps-3">Yes, On</label>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <input type="date" class="form-control editInput" id="notify_date" name="notify_date">
+                                                                    </div>
+                                                                    <div class="col-sm-1 text-center">
+                                                                        <i class="fa fa-calendar-days"></i>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
+                                                                    </div>
+                                                                    <div id="optionsDiv">
+                                                                        <label>
+                                                                            <input type="checkbox" value="1" id="notificationCheckbox" name="notification">
+                                                                            Notification
+                                                                        </label>
+                                                                        <label>
+                                                                            <input type="checkbox" value="1" id="emailCheckbox" name="email_notify">
+                                                                            Email
+                                                                        </label>
+                                                                        <label>
+                                                                            <input type="checkbox" value="1" id="smsCheckbox" name="sms_notify">
+                                                                            SMS
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="mb-3 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Notes</label>
+                                                                    <div class="col-sm-9">
+                                                                        <textarea class="form-control textareaInput" name="notes" id="notes" rows="3" placeholder="75 Cope Road Mall Park USA"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <div class="pageTitleBtn p-0">
-                                                                <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
+                                                                <a href="#" class="profileDrop" id="saveAddTask"><i class="fa-solid fa-floppy-disk" ></i> Save</a>
                                                                 <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save & Close </a>
                                                                 <a href="#" class="profileDrop" data-bs-dismiss="modal"> Close</a>
                                                             </div>
@@ -518,7 +425,6 @@ if (isset($lead)) {
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="productDetailTable mt-3">
                                                 <table class="table" id="containerA">
                                                     <thead class="table-light">
@@ -532,34 +438,179 @@ if (isset($lead)) {
                                                             <th>Contact Phone </th>
                                                             <th>Notify </th>
                                                             <th>Notes </th>
-                                                            <th></th>
+                                                            <th>Actions</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>.</td>
-                                                            <td>.</td>
-                                                            <td>.</td>
-                                                            <td>.</td>
-                                                            <td>.</td>
-                                                            <td>.</td>
-                                                            <td>.</td>
-                                                            <td>.</td>
-                                                            <td>.</td>
-                                                            <td>
-                                                                <div class="nav-item dropdown tableActionBtn">
-                                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                                                        Action
-                                                                    </a>
-                                                                    <div class="dropdown-menu fade-up m-0">
-                                                                        <a href="#" class="dropdown-item">Products</a>
-                                                                        <a href="#" class="dropdown-item">Our Team</a>
-                                                                        <a href="#" class="dropdown-item">Testimonial</a>
-                                                                        <a href="#" class="dropdown-item">Our Works</a>
+
+                                                    @if(isset($lead_task))
+                                                            @foreach($lead_task as $value)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration}}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y m:i')}}</td>
+                                                                <td>{{ $value->name }}</td>
+                                                                <td>{{ $value->task_type_title}}</td>
+                                                                <td>{{ $value->title}}</td>
+                                                                <td>{{$lead->contact_name}}</td>
+                                                                <td>{{$lead->telephone}}</td>
+                                                                <td> @if( $value->notification === 1 || $value->email_notify === 1 || $value->sms_notify === 1)
+                                                                    Yes, on<br>
+                                                                    {{ \Carbon\Carbon::parse($value->notify_date)->format('d/m/Y') }} {{ \Carbon\Carbon::parse($value->notify_time)->format('h:i') }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{ $value->notes}}</td>
+                                                                <td>
+                                                                    <div class="nav-item dropdown tableActionBtn">
+                                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                                            Action
+                                                                        </a>
+                                                                        <div class="dropdown-menu fade-up m-0">
+                                                                            <a href="#" class="dropdown-item">Mark As Completed</a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}" >Edit Task</a>
+                                                                            <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                            @else
+                                                            <tr>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                            </tr>
+                                                            @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="tab-pane fade" id="nav-attachments" role="tabpanel" aria-labelledby="nav-attachments-tab" tabindex="0">
+                                        <div class="tabheadingTitle">
+                                            <h3>Attachments - </h3>
+                                            <a href="#" class="profileDrop ms-3 open-modal-attachment" data-bs-toggle="modal" data-bs-target="#attechmentModel"><i class="fa-solid fa-floppy-disk"></i> Attachments</a>
+                                        </div>
+                                        <div class="col-sm-12">
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="attechmentModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Attachments</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="" id="imageUploadForm" enctype="multipart/form-data" class="customerForm pt-0">
+                                                                <div><span id="error-message" class="error"></span></div>
+                                                                <div class="mb-3 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Lead Ref.</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->id)) ? $lead->id : '' }}">
+                                                                        <input type="hidden" id="lead_attachment_id" name="lead_attachment_id">
+                                                                        <input type="text" class="form-control-plaintext editInput" name="lead_ref" id="leadsRef" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" id="lead_ref" readonly>
                                                                     </div>
                                                                 </div>
-                                                            </td>
+                                                                <div class="mb-3 row">
+                                                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Type</label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-control editInput selectOptions" name="attachment_type_id" id="attachment_type_id">
+                                                                            <option value="">Select</option>
+                                                                            @if(isset($attachment_type))
+                                                                                @foreach($attachment_type as $value)
+                                                                                <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                                                @endforeach
+                                                                            @endif
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 row">
+                                                                    <label for="inputCustomer" class="col-sm-3 col-form-label">File Name*</label>
+                                                                    <div class="col-sm-9">
+                                                                        <!-- <canvas id="canv1"></canvas> -->
+                                                                        <!-- <p class="uploadImg"> -->
+                                                                            <!-- <i class="fa fa-cloud-upload"></i> -->
+                                                                            <input type="file" class="editInput" multiple="false" id="file" name="file" accept="image/*" id="finput" onchange="upload()">
+                                                                        <!-- </p> -->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Title</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="attachment_title" name="title" value="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Description
+                                                                        (max 500 characters)</label>
+                                                                    <div class="col-sm-9">
+                                                                        <textarea class="form-control textareaInput" name="description" id="description" rows="3" placeholder="Description"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="pageTitleBtn p-0">
+                                                                <a href="#" class="profileDrop" id="saveAttachmentType"><i class="fa-solid fa-floppy-disk"></i> Save</a>
+                                                                <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save & Close </a> -->
+                                                                <a href="#" class="profileDrop" data-bs-dismiss="modal"> Close</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="productDetailTable mt-3">
+                                                <table class="table" id="containerA">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Type</th>
+                                                            <th>Title</th>
+                                                            <th>Description</th>
+                                                            <th>File Name</th>
+                                                            <th>Mime Type / Size</th>
+                                                            <th>Created On</th>
+                                                            <th>Action</th>
                                                         </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if(isset($lead_attachment))
+                                                            @foreach($lead_attachment as $value)
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>{{ $value['type'] }}</td>
+                                                                <td>{{ $value['title'] }}</td>
+                                                                <td>{{ $value['description'] }}</td>
+                                                                <td>{{ $value['filename'] }}</td>
+                                                                <td>{{ $value['mime_type'] }} / {{ $value['size'] }}</td>
+                                                                <td>{{ $value['created_at'] }}</td>
+                                                                <td><a href="{{ url('storage/app/public/lead_attachments/' . $value['filename']) }}" target="_blank"><i data-toggle="tooltip" data-original-title="View" class="fa fa-eye"></i></a> | <a href="{{ url('/leads/lead_attachment/delete', ['attachment_id' => $value['id'], 'lead_id' => $lead->id]) }}" class="delete"><i data-toggle="tooltip" class="fa fa-trash" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
+                                                            </tr>
+                                                            @endforeach
+                                                        @else
+                                                            <tr>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                                <td>...</td>
+                                                            </tr>
+                                                        @endif
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -587,6 +638,9 @@ if (isset($lead)) {
 <script>
     var addNotesTypeURL = '{{ route("lead.ajax.saveLeadNoteType") }}';
     var saveLeadNotes = '{{ route("lead.ajax.saveLeadNotes") }}';
+    var addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
+    var saveLeadAttachmentUrl =  '{{ route("lead.ajax.saveLeadAttachment") }}';
+
 
 </script>
 @include('frontEnd.jobs.layout.footer')

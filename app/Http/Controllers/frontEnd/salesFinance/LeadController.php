@@ -20,28 +20,18 @@ use App\Models\LeadSource;
 use App\Models\LeadTaskType;
 use App\Models\LeadNoteType;
 use App\Models\LeadNote;
-use Illuminate\Support\Facades\Session;
 
 class LeadController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $page = "leads";
-        $customers = DB::table('customers')
-        ->join('leads', 'customers.id', '=', 'leads.customer_id')
-        ->select('customers.*', 'leads.*')
-        ->orderBy('leads.created_at', 'desc')
-        ->whereNotIn('assign_to', [0])
-        ->whereNotIn('leads.status', ['6'])
-        ->where('leads.home_id', Auth::user()->home_id)
-        ->get();
 
-        // $path = $request->path();
-        // $segments = explode('/', $path);
-        // $lastSegment = end($segments);
-        $lastSegment= "leads";
-        $customers = Customer::getCustomerWithLeads($lastSegment);
+        $path = $request->path();
+        $segments = explode('/', $path);
+        $lastSegment = end($segments);
+        $customers = Customer::getCustomerWithLeads($lastSegment, Auth::user()->home_id);
         $leadRejectTypes = LeadRejectType::getLeadRejectType();
-
+        // dd($customers);
 
         return view('frontEnd.salesAndFinance.lead.leads', compact('customers', 'page'));
 
@@ -116,6 +106,7 @@ class LeadController extends Controller
 
         $page = 'leads';
         $lead = Customer::getCustomerLeads($id);  
+        // dd($lead);
         $users = User::getHomeUsers(Auth::user()->home_id);
         $status = LeadStatus::getLeadStatus();
         $sources = LeadSource::getLeadSources();
@@ -171,6 +162,67 @@ class LeadController extends Controller
         } else {
             return response()->json(['message' => "Error ! Notes doesn't save!"]);
         }
+    }
+
+     // Lead Tasks
+     public function save_lead_tasks(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_task_type_id' => 'required',
+            'title' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        LeadTask::updateOrCreate(['id' => $request->lead_task_id], $request->all());
+        if(isset($request->lead_task_id)){
+            return response()->json(['success' => true, 'message' => 'Record updated successfully!']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Task added successfully!']);
+        }
+    }
+    public function lead_task_delete($taskId, $leadId){
+        if(LeadTask::deleteLeadTask($taskId) ){
+            return redirect()->route('lead.edit', ['id' => $leadId])->with('success', 'Lead Taks deleted successfully');
+        } else {
+            return redirect()->route('lead.edit', ['id' => $leadId])->with('fails', 'Error in Lead task deletion');
+        } 
+    }
+
+    // Lead Attachments start
+    public function saveLeadAttachment(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required',
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif|max:25600',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        if ($request->file('file')->isValid()) {
+            $file = $request->file('file');
+            $mimeType = $file->getMimeType();
+            $sizeInBytes = $file->getSize(); // Size in bytes
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('lead_attachments', $fileName, 'public');
+            LeadAttachment::create(array_merge($request->all(), ['image' => $filePath,  'mime_type' => $mimeType, 'size_in_bytes' => $sizeInBytes, ]) );
+            return response()->json(['success' => true, 'message' => 'File uploaded successfully.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Error in file upload!']);
+        }
+    }
+
+    public function lead_attachments_delete($attachment_id, $leadId){
+        if(LeadAttachment::deleteLeadAttachment($attachment_id)){
+            return redirect()->route('lead.edit', ['id' => $leadId])->with('success', 'Lead Atachments deleted successfully');
+        } else {
+            return redirect()->route('lead.edit', ['id' => $leadId])->with('fails', 'Error in Lead attachments deletion');
+        } 
+    }
+    // Lead Attachments end
+
+    public function task_list(){
+        $page = "Leads";
+        $lead_tasks = LeadTask::getLeadTasks();
+        return view('frontEnd.salesAndFinance.lead.lead_task', compact('page', 'lead_tasks'));
     }
 
 }

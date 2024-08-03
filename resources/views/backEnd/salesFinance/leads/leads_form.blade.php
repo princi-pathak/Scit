@@ -246,7 +246,7 @@ if (isset($lead)) {
                                                             @foreach($lead_notes_data as $value)
                                                             <tr>
                                                                 <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y H:i') }}</td>
-                                                                <td>{{ $value->home_id }}</td>
+                                                                <td> @if(isset($value->user_id) ) $value->user_id @endif</td>
                                                                 <td>{{ $value->title }}</td>
                                                                 <td>{{ $value->notes }}</td>
                                                             </tr>
@@ -445,8 +445,8 @@ if (isset($lead)) {
 
                                             <div id="attechmantsTab" class="tab-pane fade">
                                                 <div class="tabheadingTitle">
-                                                    <h3>attechmants - </h3>
-                                                    <a href="#attechmentModel" data-toggle="modal" class="btn-primary open-modal-attachment">Attechments</a>
+                                                    <h3>Attachments - </h3>
+                                                    <a href="#attechmentModel" data-toggle="modal" class="btn-primary open-modal-attachment">Attachments</a>
                                                 </div>
 
                                                 <!-- modal -->
@@ -455,7 +455,7 @@ if (isset($lead)) {
                                                         <div class="modal-content">
                                                             <div class="modal-header terques-bg">
                                                                 <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                                                <h4 class="modal-title pupTitle">Attechmants</h4>
+                                                                <h4 class="modal-title pupTitle">Attachments</h4>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <form role="form" id="imageUploadForm" enctype="multipart/form-data">
@@ -503,7 +503,7 @@ if (isset($lead)) {
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-primary" id="saveAttachmentType">Save</button>
-                                                                <button type="button" class="btn btn-primary">Save & Close</button>
+                                                                <!-- <button type="button" class="btn btn-primary">Save & Close</button> -->
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                             </div>
                                                         </div>
@@ -550,8 +550,6 @@ if (isset($lead)) {
                                                                 <td>...</td>
                                                                 <td>...</td>
                                                                 <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
                                                             </tr>
                                                             @endif
                                                         </tbody>
@@ -590,6 +588,9 @@ if (isset($lead)) {
 <script>
     var addNotesTypeURL = '{{ route("leads.ajax.saveLeadNoteType") }}';
     var saveLeadNotes = '{{ route("leads.ajax.saveLeadNotes") }}';
+    var addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
+    var saveLeadAttachmentUrl =  '{{ route("leads.ajax.saveLeadAttachment") }}';
+
 </script>
 <!-- Custom JS -->
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>

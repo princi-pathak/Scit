@@ -4,7 +4,7 @@
 //     }
 // });
 
-$('#saveAttachmentType').on('click', function() {
+$('#saveAttachmentType').on('click', function () {
     event.preventDefault();
     var form = document.getElementById('imageUploadForm');
     var imageInput = document.getElementById('file');
@@ -21,28 +21,28 @@ $('#saveAttachmentType').on('click', function() {
         var formData = new FormData(form);
 
         $.ajax({
-            url: '{{ route("leads.ajax.saveLeadAttachment") }}',
+            url: saveLeadAttachmentUrl,
             method: 'POST',
             contentType: false, // Prevent jQuery from setting Content-Type header
             processData: false, // Prevent jQuery from processing data
             data: formData,
-            success: function(response) {
+            success: function (response) {
                 alert(response.message);
                 $('#attechmentModel').modal('hide');
                 location.reload();
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
     }
 });
 
-document.getElementById('submit_main_form').addEventListener('click', function() {
+document.getElementById('submit_main_form').addEventListener('click', function () {
     document.getElementById('add_leads_form').submit();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     $.ajaxSetup({
         headers: {
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    $('#addNotesType').on('click', function() {
+    $('#addNotesType').on('click', function () {
 
         var title = document.getElementById('title').value;
         var status = document.getElementById('status').value;
@@ -71,18 +71,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 title: title,
                 status: status
             },
-            success: function(response) {
+            success: function (response) {
                 alert(response.message);
                 $('#notesModel').modal('hide');
                 location.reload();
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
     });
 
-    $('#saveLeadNotes').on('click', function() {
+    $('#saveLeadNotes').on('click', function () {
         var notes_type = document.getElementById('notes_type').value;
         var notes = document.getElementById('notes').value;
         var lead_id = document.getElementById('lead_id').value;
@@ -95,12 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 notes: notes,
                 lead_id: lead_id
             },
-            success: function(response) {
+            success: function (response) {
                 alert(response.message);
                 $('#notesModel').modal('hide');
                 location.reload();
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var mainCheckbox = document.getElementById('yeson');
     var optionsDiv = document.getElementById('optionsDiv');
 
-    mainCheckbox.addEventListener('change', function() {
+    mainCheckbox.addEventListener('change', function () {
         if (mainCheckbox.checked) {
             optionsDiv.style.display = 'block';
         } else {
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-$('.open-modal').on('click', function() {
+$('.open-modal').on('click', function () {
     var itemId = $(this).data('id');
     var itemUserId = $(this).data('user_id');
     var itemTitle = $(this).data('title');
@@ -192,7 +192,7 @@ $('.open-modal').on('click', function() {
     }
 });
 
-document.getElementById('saveAddTask').addEventListener('click', function(event) {
+document.getElementById('saveAddTask').addEventListener('click', function (event) {
     const yeson = document.getElementById('yeson').checked;
     const notifyDate = document.getElementById('notify_date').value;
     const notifyTime = document.getElementById('notify_time').value;
@@ -213,15 +213,15 @@ document.getElementById('saveAddTask').addEventListener('click', function(event)
         var formData = $('#addTask').serialize();
         console.log(formData);
         $.ajax({
-            url: '{{ route("leads.ajax.saveLeadTasks") }}',
+            url: addLeadTaskUrl,
             method: 'POST',
             data: formData,
-            success: function(response) {
+            success: function (response) {
                 alert(response.message);
                 $('#notesModel').modal('hide');
                 location.reload();
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });

@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('leads', function (Blueprint $table) {
-            $table->string('prefer_date')->nullable()->change();
-            $table->string('prefer_time')->nullable()->change();
+            $table->date('prefer_date')->nullable()->change();
+            $table->time('prefer_time')->nullable()->change();
+            $table->integer('user_id')->comment('0-admin')->nullable()->after('home_id');
         });
     }
 
@@ -22,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('leads', function (Blueprint $table) {
-            //
-        });
+        //
     }
 };
