@@ -85,9 +85,9 @@
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="{{ url('/leads/add') }}" class="dropdown-item">New Lead</a>
-                                    <a href="{{ url('/leads/lead') }}" class="dropdown-item">All Lead</a>
+                                    <a href="{{ url('/leads/leads') }}" class="dropdown-item">All Lead</a>
                                     <a href="{{ url('/leads/my_lead') }}" class="dropdown-item">My Leads</a>
-                                    <a href="{{ url('/leads/un_assigned') }}" class="dropdown-item">Unassigned Lead</a>
+                                    <a href="{{ url('/leads/unassigned') }}" class="dropdown-item">Unassigned Lead</a>
                                     <a href="{{ url('/leads/actioned') }}" class="dropdown-item">Actioned Lead</a>
                                     <a href="{{ url('/leads/rejected') }}" class="dropdown-item">Rejected Lead</a>
                                     <a href="{{ url('/leads/authorization') }}" class="dropdown-item">Authorization</a>

@@ -238,7 +238,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	Route::controller(FrontendLeadController::class)->group(function(){
 		//Leads 
-		Route::get('/leads/lead','index')->name('lead.index');
+		Route::get('/leads/leads','index')->name('lead.index');
+		Route::get('/leads/unassigned','index')->name('lead.unassigned');
+		Route::get('/leads/rejected','index')->name('lead.rejected');
+		Route::get('/leads/converted','index')->name('lead.converted');
+		Route::get('/leads/tasks','task_list')->name('lead.task_list');
 		Route::get('/leads/add','create');
 		Route::post('/leads/create','store')->name('lead.store');
 		Route::get('/leads/edit/{id}', 'edit')->name('lead.edit');
@@ -247,8 +251,13 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/lead_notes_type', 'lead_notes_type')->name('lead.lead_notes_type');
 		Route::post('/saveLeadNotesType', 'saveLeadNotesType')->name('lead.ajax.saveLeadNoteType');
 		Route::get('/lead_note_type/delete/{id}', 'lead_note_type_delete');
-
+		Route::post('/saveLeadTasks', 'save_lead_tasks')->name('lead.ajax.saveLeadTasks');
+		Route::get('/leads/lead_task/delete/{task}/{lead}', 'lead_task_delete');
 		Route::post('/saveLeadNotes', 'save_lead_notes')->name('lead.ajax.saveLeadNotes');
+
+		// Lead Attachment 
+		Route::post('/saveLeadAttachment', 'saveLeadAttachment')->name('lead.ajax.saveLeadAttachment');
+		Route::get('/leads/lead_attachment/delete/{attachment}/{lead}', 'lead_attachments_delete');
 
 
 
