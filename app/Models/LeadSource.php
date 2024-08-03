@@ -4,10 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class LeadSource extends Model
 {
     use HasFactory;
     protected $fillable = ['title', 'status', 'home_id'];
 
+
+    public static function getAllLeadSources(){
+        return LeadSource::where('deleted_at', null)->get();
+    } 
+    public static function getLeadSources(){
+        return LeadSource::where('deleted_at', null)->where('status', 1)->get();
+    }
+    public static function deleteLeadSources($id){
+        return LeadSource::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+    }
 }

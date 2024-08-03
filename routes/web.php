@@ -238,14 +238,30 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	Route::controller(FrontendLeadController::class)->group(function(){
 		//Leads 
-		Route::get('/leads/lead','index')->name('lead.index');
+		Route::get('/leads/leads','index')->name('lead.index');
+		Route::get('/leads/unassigned','index')->name('lead.unassigned');
+		Route::get('/leads/rejected','index')->name('lead.rejected');
+		Route::get('/leads/converted','index')->name('lead.converted');
+		Route::get('/leads/tasks','task_list')->name('lead.task_list');
 		Route::get('/leads/add','create');
 		Route::post('/leads/create','store')->name('lead.store');
 		Route::get('/leads/edit/{id}', 'edit')->name('lead.edit');
+
+		// Lead Notes Type
+		Route::get('/lead_notes_type', 'lead_notes_type')->name('lead.lead_notes_type');
+		Route::post('/saveLeadNotesType', 'saveLeadNotesType')->name('lead.ajax.saveLeadNoteType');
+		Route::get('/lead_note_type/delete/{id}', 'lead_note_type_delete');
+		Route::post('/saveLeadTasks', 'save_lead_tasks')->name('lead.ajax.saveLeadTasks');
+		Route::get('/leads/lead_task/delete/{task}/{lead}', 'lead_task_delete');
+		Route::post('/saveLeadNotes', 'save_lead_notes')->name('lead.ajax.saveLeadNotes');
+
+		// Lead Attachment 
+		Route::post('/saveLeadAttachment', 'saveLeadAttachment')->name('lead.ajax.saveLeadAttachment');
+		Route::get('/leads/lead_attachment/delete/{attachment}/{lead}', 'lead_attachments_delete');
+
+
+
 	});
-
-	// Route::get('/leads/rejected', 'App\Http\Controllers\frontEnd\salesfinance\LeadController@index')->name('leads.rejected');
-
 
 
 	// ------------- Personal Management - My profile ---------------------// 
@@ -1336,58 +1352,66 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::get('sales-finance/customers/create', 'App\Http\Controllers\backEnd\salesfinance\CustomerController@store')->name('customers.store');
 
 	Route::controller(BackendLeadController::class)->group(function(){
-		// Admin leads
-		Route::get('sales-finance/leads', 'index')->name('leads.index');
-		Route::get('sales-finance/leads/add', 'create')->name('leads.create');
-		Route::post('sales-finance/leads/create', 'store')->name('leads.store');
-		Route::get('sales-finance/leads/edit/{id}', 'edit')->name('leads.edit');
-		Route::get('sales-finance/leads/unassigned', 'index')->name('leads.unassigned');
-		Route::get('sales-finance/leads/rejected', 'index')->name('leads.rejected');
-		Route::get('sales-finance/leads/convert_to_customer/{id}', 'convert_to_customer')->name('leads.convertCustomer');
-		Route::get('sales-finance/leads/converted', 'index')->name('leads.converted');
-		Route::post('sales-finance/leads/saveLeadNotes', 'save_lead_notes')->name('leads.ajax.saveLeadNotes');
 
-		// Lead Task 
-		Route::post('sales-finance/leads/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
-		Route::get('sales-finance/leads/lead_task/delete/{task}/{lead}', 'lead_task_delete');
+		Route::prefix('sales-finance/leads')->group(function () {
+			// Admin leads
+			Route::get('/', 'index')->name('leads.index');
+			Route::get('/add', 'create')->name('leads.create');
+			Route::post('/create', 'store')->name('leads.store');
+			Route::get('/edit/{id}', 'edit')->name('leads.edit');
+			Route::get('/unassigned', 'index')->name('leads.unassigned');
+			Route::get('/rejected', 'index')->name('leads.rejected');
+			Route::get('/convert_to_customer/{id}', 'convert_to_customer')->name('leads.convertCustomer');
+			Route::get('/converted', 'index')->name('leads.converted');
+			Route::post('/saveLeadNotes', 'save_lead_notes')->name('leads.ajax.saveLeadNotes');
+			Route::get('/tasks', 'task_list')->name('leads.list');
+			Route::get('/lead_task_delete/{id}', 'lead_task_list_delete');
+
+			// Lead Task 
+			Route::post('/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
+			Route::get('/lead_task/delete/{task}/{lead}', 'lead_task_delete');
+			
+			// Lead Status
+			Route::get('/lead_status', 'lead_status')->name('leads.lead_status');
+			Route::post('/saveLeadStatus', 'saveLeadStatus')->name('leads.ajax.saveLeadStatus');
+			Route::get('/lead_status/delete/{id}', 'lead_status_delete');
 		
-		// Lead Status
-		Route::get('sales-finance/leads/lead_status', 'lead_status')->name('leads.lead_status');
-		Route::post('sales-finance/leads/saveLeadStatus', 'saveLeadStatus')->name('leads.ajax.saveLeadStatus');
-		Route::get('sales-finance/leads/lead_status/delete/{id}', 'lead_status_delete');
-
-		// Lead Sources
-		Route::get('sales-finance/leads/lead_sources', 'lead_sources')->name('leads.lead_sources');
-		Route::post('sales-finance/leads/saveLeadSource', 'saveLeadSource')->name('leads.ajax.saveLeadSource');
-		Route::get('sales-finance/leads/lead_source/delete/{id}', 'lead_source_delete');
-
-		// Lead Task Type
-		Route::get('sales-finance/leads/lead_task_type', 'lead_task_type')->name('leads.lead_task_type');
-		Route::post('sales-finance/leads/saveLeadTaskType', 'saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
-		Route::get('sales-finance/leads/lead_task_type/delete/{id}', 'lead_task_type_delete');
-
-		// Lead Notes Type
-		Route::get('sales-finance/leads/lead_notes_type', 'lead_notes_type')->name('leads.lead_notes_type');
-		Route::post('sales-finance/leads/saveLeadNotesType', 'saveLeadNotesType')->name('leads.ajax.saveLeadNoteType');
-		Route::get('sales-finance/leads/lead_note_type/delete/{id}', 'lead_note_type_delete');
-
-		// Lead reject type or resons
-		Route::get('sales-finance/leads/lead_reject_type', 'lead_reject_type')->name('leads.lead_reject_type');
-		Route::post('sales-finance/leads/saveLeadRejectType', 'saveLeadRejectType')->name('leads.ajax.saveLeadRejectType');
-		Route::get('sales-finance/leads/lead_reject_type/delete/{id}', 'lead_reject_type_delete');
-		Route::post('sales-finance/leads/saveLeadRejectReason', 'saveLeadRejectReason')->name('leads.ajax.saveLeadRejectReason');
-
-		// Lead Attachment 
-		Route::post('sales-finance/leads/saveLeadAttachment', 'saveLeadAttachment')->name('leads.ajax.saveLeadAttachment');
-		Route::get('sales-finance/leads/lead_attachments/delete/{attachment}/{lead}', 'lead_attachments_delete');
-
+			// Lead Sources
+			Route::get('/lead_sources', 'lead_sources')->name('leads.lead_sources');
+			Route::post('/saveLeadSource', 'saveLeadSource')->name('leads.ajax.saveLeadSource');
+			Route::get('/lead_source/delete/{id}', 'lead_source_delete');
+		
+			// Lead Task Type
+			Route::get('/lead_task_type', 'lead_task_type')->name('leads.lead_task_type');
+			Route::post('/saveLeadTaskType', 'saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
+			Route::get('/lead_task_type/delete/{id}', 'lead_task_type_delete');
+		
+			// Lead Notes Type
+			Route::get('/lead_notes_type', 'lead_notes_type')->name('leads.lead_notes_type');
+			Route::post('/saveLeadNotesType', 'saveLeadNotesType')->name('leads.ajax.saveLeadNoteType');
+			Route::get('/lead_note_type/delete/{id}', 'lead_note_type_delete');
+		
+			// Lead reject type or resons
+			Route::get('/lead_reject_type', 'lead_reject_type')->name('leads.lead_reject_type');
+			Route::post('/saveLeadRejectType', 'saveLeadRejectType')->name('leads.ajax.saveLeadRejectType');
+			Route::get('/lead_reject_type/delete/{id}', 'lead_reject_type_delete');
+			Route::post('/saveLeadRejectReason', 'saveLeadRejectReason')->name('leads.ajax.saveLeadRejectReason');
+		
+			// Lead Attachment 
+			Route::post('/saveLeadAttachment', 'saveLeadAttachment')->name('leads.ajax.saveLeadAttachment');
+			Route::get('/lead_attachments/delete/{attachment}/{lead}', 'lead_attachments_delete');
+		});
 
 	});
 
 	Route::controller(GeneralController::class)->group(function(){
-		Route::get('general/attachment_types', 'attachment_types_index')->name('attachment_types.view');
-		Route::post('general/saveAttachmentType', 'saveAttachmentType')->name('general.ajax.saveAttachmentType');
-		Route::get('general/attachment_type/delete/{id}', 'delete_attachment_type');
+
+		Route::prefix('general')->group(function () {
+			Route::get('/attachment_types', 'attachment_types_index')->name('attachment_types.view');
+			Route::post('/saveAttachmentType', 'saveAttachmentType')->name('general.ajax.saveAttachmentType');
+			Route::get('/attachment_type/delete/{id}', 'delete_attachment_type');
+		
+		});
 
 	});
 });

@@ -83,13 +83,10 @@
                                                     @default {{-- No output if none of the cases match --}}
                                                     @endswitch 
                                             </td>
-                                            <td><a href="{{ url('admin/sales-finance/leads/edit').'/'.$customer->id }}" class="edit"><span style="color: #000;"><i data-toggle="tooltip" title="Edit" class="fa fa-edit fa-lg"></i></a>
-                                                <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-lead_ref="{{ $customer->lead_ref }}" data-target="#rejectModal" class="fa fa-times fa-lg open-modal"></i></a>
-                                                <!-- <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-target="#secondModal" class="fa fa-times fa-lg"></i></a> -->
-                                                <a href="{{ url('admin/sales-finance/leads/convert_to_customer').'/'.$customer->customer_id }}" class="reject"><i data-toggle="modal" title="Convert to Customer Only" data-target="#secondModal" class="fa fa-exchange fa-lg"></i></a>
-
-                                                <!-- <i class="fa fa-exchange"></i> -->
-                                                <a href="" class="delete"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o fa-lg"></i></a>
+                                            <td><a href="{{ url('admin/sales-finance/leads/edit').'/'.$customer->id }}" class="edit"><span style="color: #000;"><i data-toggle="tooltip" title="Edit" class="fa fa-edit"></i></a>
+                                                <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-lead_ref="{{ $customer->lead_ref }}" data-target="#rejectModal" class="fa fa-times open-modal"></i></a>
+                                                <a href="{{ url('admin/sales-finance/leads/convert_to_customer').'/'.$customer->customer_id }}" class="reject"><i data-toggle="modal" title="Convert to Customer Only" data-target="#secondModal" class="fa fa-exchange"></i></a>
+                                                <!-- <a href="" class="delete"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o"></i></a> -->
                                             </td>
                                         </tr>
                                         @endforeach

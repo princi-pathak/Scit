@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\AttachmentType;
+use Carbon\Carbon;
 
 class LeadAttachment extends Model
 {
@@ -30,6 +31,10 @@ class LeadAttachment extends Model
             array_push($record, $data);
         }
         return $record;
+    }
+
+    public static function deleteLeadAttachment($id){
+        return LeadAttachment::where('id', $id)->update(['deleted_at' => Carbon::now()]);
     }
 
   
