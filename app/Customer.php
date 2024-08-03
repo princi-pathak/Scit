@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use SebastianBergmann\CodeUnit\FunctionUnit;
 
 class Customer extends Model
 {
@@ -69,12 +68,13 @@ class Customer extends Model
         );
         return $insert->id;
     }
-    public static function getCustomerWithLeads($lastSegment){
+    public static function getCustomerWithLeads($lastSegment, $home_id){
 
         $query = DB::table('customers')
         ->join('leads', 'customers.id', '=', 'leads.customer_id')
         ->select('customers.*', 'leads.*')
-        ->orderBy('leads.created_at', 'desc');
+        ->orderBy('leads.created_at', 'desc')
+        ->where('leads.home_id', $home_id);
    
         if($lastSegment ===  "leads") {
             return $query->whereNotIn('assign_to', [0])

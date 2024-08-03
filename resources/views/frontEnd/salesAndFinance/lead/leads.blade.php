@@ -14,15 +14,15 @@
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="jobsection">
                     <a href="{{ url('/leads/add') }}" class="profileDrop">New Lead</a>
-                    <a href="#" class="profileDrop">All Leads <span>(5)</span></a>
+                    <a href="#" class="profileDrop">All Leads <span>({{ App\Lead::getAllLeadCount() }})</span></a>
                     <a href="#" class="profileDrop">My Leads<span>(8)</span></a>
-                    <a href="#" class="profileDrop">Unassigned<span>(15)</span></a>
-                    <a href="#" class="profileDrop">Actioned<span>(76)</span></a>
-                    <a href="#" class="profileDrop">Rejected<span>(32)</span></a>
+                    <a href="{{ url('/leads/unassigned') }}" class="profileDrop">Unassigned<span>({{ App\Lead::getUnassignedCount() }})</span></a>
+                    <a href="" class="profileDrop">Actioned<span>(76)</span></a>
+                    <a href="{{ url('/leads/rejected') }}" class="profileDrop">Rejected<span>({{ App\Lead::getRejectedCount() }})</span></a>
                     <a href="#" class="profileDrop">Authorization<span>(2)</span></a>
-                    <a href="#" class="profileDrop">Converted</a>
+                    <a href="{{ url('/leads/converted') }}" class="profileDrop">Converted <span>({{ App\Customer::getConvertedCustomersCount() }})</span></a>
                     <a href="#" class="profileDrop">Search Leads</a>
-                    <a href="#" class="profileDrop">Task</a>
+                    <a href="{{ url('/leads/tasks') }}" class="profileDrop">Task</a>
                 </div>
             </div>
         </div>

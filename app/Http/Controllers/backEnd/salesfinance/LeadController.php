@@ -27,7 +27,7 @@ class LeadController extends Controller
         $path = $request->path();
         $segments = explode('/', $path);
         $lastSegment = end($segments);
-        $customers = Customer::getCustomerWithLeads($lastSegment);
+        $customers = Customer::getCustomerWithLeads($lastSegment, Session::get('scitsAdminSession')->home_id);
         $leadRejectTypes = LeadRejectType::getLeadRejectType();
         return view('backEnd/salesFinance/leads/leads', compact('page', 'customers', 'leadRejectTypes'));
     }
@@ -116,6 +116,8 @@ class LeadController extends Controller
         return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes_data', 'leadTask', 'lead_task', 'attachment_type', 'lead_attachment'));   
     }
 
+
+
     // Lead Reject Type
     public function lead_reject_type(){
         $page = "Lead Reject Type";
@@ -189,7 +191,7 @@ class LeadController extends Controller
         }
     }
 
-    public function lead_status_delete($id){
+    public function lead_status_delete($id){ 
         if(LeadStatus::deleteLeadStatus($id) ){
             return redirect()->route('leads.lead_status')->with('success', "Record deleted successfully");
         } else {
