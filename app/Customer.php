@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use SebastianBergmann\CodeUnit\FunctionUnit;
 
 class Customer extends Model
 {
@@ -50,9 +52,11 @@ class Customer extends Model
     ];
 
     public static function getConvertedCustomersCount(){
-        $all = Customer::where(['is_converted' => '1', 'status' => 1])->count();
-        return $all;
-       
+        return Customer::where(['is_converted' => '1', 'status' => 1])->count();
+    }
+
+    public static function converToCustomer($id){
+        return Customer::where('id', $id)->update(['is_converted' => 1]);
     }
     public static function saveCustomer(array $data)
     {
@@ -64,6 +68,40 @@ class Customer extends Model
             $data
         );
         return $insert->id;
+    }
+    public static function getCustomerWithLeads($lastSegment){
+
+        $query = DB::table('customers')
+        ->join('leads', 'customers.id', '=', 'leads.customer_id')
+        ->select('customers.*', 'leads.*')
+        ->orderBy('leads.created_at', 'desc');
+   
+        if($lastSegment ===  "leads") {
+            return $query->whereNotIn('assign_to', [0])
+            ->whereNotIn('leads.status', ['6'])
+            ->get();
+        } 
+        else if($lastSegment === "unassigned"){
+            return $query->orderBy('leads.created_at', 'desc')
+            ->where('assign_to', 0)
+            ->get();
+        } else if($lastSegment === "rejected"){
+            return $query->orderBy('leads.created_at', 'desc')
+            ->where('leads.status', '6')
+            ->get();
+        } else if($lastSegment === "converted"){
+            return $query->orderBy('leads.created_at', 'desc')
+            ->where('customers.is_converted', 1)
+            ->get();
+        } 
+    }
+
+    public static function getCustomerLeads($id){
+        return DB::table('customers')
+        ->join('leads', 'customers.id', '=', 'leads.customer_id')
+        ->select('customers.*', 'leads.*')
+        ->where('leads.id', $id)
+        ->first();
     }
     
 }

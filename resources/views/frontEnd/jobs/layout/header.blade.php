@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,30 +25,30 @@
                         </div>
                     </div>
                     <div class="col-lg-9 px-3 text-end toprigihticon">
-                    <?php if(isset($page) && $page == 'job_index'){?>
-                        <div class="d-inline-flex align-items-center me-5 topbaarBtn">
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> storage</i> My Diary
-                            </a>
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> dashboard</i> CRM
-                            </a>
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> contact_support </i>
-                                Help Desk <span class="notifiNumberRadColor">2</span></a>
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> mail </i> Messages
-                            </a>
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active
-                                </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
-                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i>
-                                Partners </a>
-                        </div>
-                        <?php }else {?>
+                        <?php if (isset($page) && $page == 'job_index') { ?>
+                            <div class="d-inline-flex align-items-center me-5 topbaarBtn">
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> storage</i> My Diary
+                                </a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> dashboard</i> CRM
+                                </a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> contact_support </i>
+                                    Help Desk <span class="notifiNumberRadColor">2</span></a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> mail </i> Messages
+                                </a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active
+                                    </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i>
+                                    Partners </a>
+                            </div>
+                        <?php } else { ?>
 
-                        <div class="h-100 d-inline-flex align-items-center me-5">
-                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> group</i></a>
-                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> dns</i></a>
-                            <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> mail </i></a>
-                            <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i class="material-symbols-outlined"> notifications </i></a>
-                        </div>
-                        <?php }?>
+                            <div class="h-100 d-inline-flex align-items-center me-5">
+                                <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> group</i></a>
+                                <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> dns</i></a>
+                                <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> mail </i></a>
+                                <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i class="material-symbols-outlined"> notifications </i></a>
+                            </div>
+                        <?php } ?>
 
                         <div class="h-100 d-inline-flex align-items-center py-3 me-4">
                             <div class="nav-item dropdown">
@@ -78,26 +79,26 @@
                         <div class="navbar-nav ml-auto p-4 p-lg-0">
 
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <a href="#" class="nav-item nav-link dropdown-toggle @if(isset($page)) @if($page == 'leads') active @endif @endif" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> keep_public </i></span>
                                     Lead
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="{{ url('/leads/add') }}" class="dropdown-item">New Lead</a>
                                     <a href="{{ url('/leads/lead') }}" class="dropdown-item">All Lead</a>
-                                    <a href="#" class="dropdown-item">My Leads</a>
-                                    <a href="#" class="dropdown-item">Unassigned Lead</a>
-                                    <a href="#" class="dropdown-item">Actioned Lead</a>
-                                    <a href="#" class="dropdown-item">Rejected Lead</a>
-                                    <a href="#" class="dropdown-item">Authorization</a>
-                                    <a href="#" class="dropdown-item">Converted Lead</a>
-                                    <a href="#" class="dropdown-item">Search Lead</a>
-                                    <a href="#" class="dropdown-item">Lead Task</a>
+                                    <a href="{{ url('/leads/my_lead') }}" class="dropdown-item">My Leads</a>
+                                    <a href="{{ url('/leads/un_assigned') }}" class="dropdown-item">Unassigned Lead</a>
+                                    <a href="{{ url('/leads/actioned') }}" class="dropdown-item">Actioned Lead</a>
+                                    <a href="{{ url('/leads/rejected') }}" class="dropdown-item">Rejected Lead</a>
+                                    <a href="{{ url('/leads/authorization') }}" class="dropdown-item">Authorization</a>
+                                    <a href="{{ url('/leads/converted_leads') }}" class="dropdown-item">Converted Lead</a>
+                                    <a href="{{ url('/leads/search_lead') }}" class="dropdown-item">Search Lead</a>
+                                    <a href="{{ url('/leads/lead_tasks') }}" class="dropdown-item">Lead Task</a>
                                 </div>
                             </div>
 
                             <div class="nav-item dropdown">
-                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle @if(isset($page)) @if($page == 'quotes') active @endif @endif" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> description </i></span>
                                     Quotes
                                 </a>
@@ -114,10 +115,10 @@
                                     <a href="#!" class="dropdown-item">Recurring Quote</a>
                                 </div>
                             </div>
-                            
+
 
                             <div class="nav-item dropdown">
-                                <a href="#!" class="nav-item nav-link active dropdown-toggle" data-bs-toggle="dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle @if(isset($page)) @if($page == 'jobs') active @endif @endif" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined">work </i></span>
                                     Jobs
                                 </a>
@@ -125,9 +126,9 @@
                                     <a href="#!" class="dropdown-item">Dashboard</a>
                                     <a href="{{url('/jobs_create')}}" class="dropdown-item">New Jobs</a>
                                     <a href="{{url('jobs_list')}}" class="dropdown-item">Active Jobs</a>
-                                    <?php if(@$access_rights[314] == 328){?>
-                                    <a href="{{url('job_type')}}" class="dropdown-item">Job Type</a>
-                                    <?php }?>
+                                    <?php if (@$access_rights[314] == 328) { ?>
+                                        <a href="{{url('job_type')}}" class="dropdown-item">Job Type</a>
+                                    <?php } ?>
                                     <a href="#!" class="dropdown-item">Action Required Jobs</a>
                                     <a href="#!" class="dropdown-item">Overdue Jobs</a>
                                     <a href="#!" class="dropdown-item">Authorization Jobs</a>
@@ -149,20 +150,20 @@
                                     <a href="#!" class="dropdown-item">Time Planner</a>
                                     <a href="#!" class="dropdown-item">Project Planner</a>
                                     <a href="#!" class="dropdown-item">Geo Planner</a>
-                                    <a href="#!" class="dropdown-item">Vehicle Tracking</a>                                    
+                                    <a href="#!" class="dropdown-item">Vehicle Tracking</a>
                                     <a href="#!" class="dropdown-item">Mobile Tracking</a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> business_center</i></span>
-                                Projects
+                                    Projects
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="#!" class="dropdown-item">New Project</a>
                                     <a href="#!" class="dropdown-item">Active Projects</a>
                                     <a href="#!" class="dropdown-item">Inactive Projects</a>
-                                    <a href="#!" class="dropdown-item">Completed Projects</a>  
+                                    <a href="#!" class="dropdown-item">Completed Projects</a>
                                 </div>
                             </div>
 
@@ -257,14 +258,14 @@
                                                 Suppliers <i class="fa-solid fa-angle-right"></i>
                                             </a>
 
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">New Customers</a></li>
-                                                <li><a class="dropdown-item" href="#">Active Customers</a></li>
-                                                <li><a class="dropdown-item" href="#">Inactive Customers</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">New Customers</a></li>
+                                            <li><a class="dropdown-item" href="#">Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="#">Inactive Customers</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
 
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -275,7 +276,7 @@
                                     <a href="#!" class="dropdown-item">Product Categories</a>
                                     <a href="#!" class="dropdown-item">Products</a>
                                     <a href="#!" class="dropdown-item">Product Groups</a>
-                                    <a href="#!" class="dropdown-item">Catalogues</a>  
+                                    <a href="#!" class="dropdown-item">Catalogues</a>
                                 </div>
                             </div>
 
@@ -288,19 +289,19 @@
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> diversity_2 </i></span>
-                                Users
+                                    Users
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="#!" class="dropdown-item">Users </a>
                                     <a href="#!" class="dropdown-item">Team Members</a>
                                     <a href="#!" class="dropdown-item">Timeoff </a>
-                                    <a href="#!" class="dropdown-item">Lone Worker Active List</a>  
+                                    <a href="#!" class="dropdown-item">Lone Worker Active List</a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> partner_reports </i></span>
-                                Reports
+                                    Reports
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="#!" class="dropdown-item">Customers</a>
@@ -322,12 +323,12 @@
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> bookmark_manager</i></span>
-                                FileManager
+                                    FileManager
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="#!" class="dropdown-item">Attachments </a>
                                     <a href="#!" class="dropdown-item">Digital Documents</a>
-                                    <a href="#!" class="dropdown-item">Completed Questionnaires </a> 
+                                    <a href="#!" class="dropdown-item">Completed Questionnaires </a>
                                 </div>
                             </div>
 
@@ -453,7 +454,7 @@
                             <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> construction</i></span>
-                                Settings
+                                    Settings
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="#!" class="dropdown-item">General Settings</a>
@@ -472,7 +473,7 @@
                                     <a href="#!" class="dropdown-item">CRM</a>
                                     <a href="#!" class="dropdown-item">General</a>
                                     <a href="#!" class="dropdown-item">Quick Setup Wizard</a>
-                                    
+
                                 </div>
                             </div> -->
                         </div>
