@@ -197,9 +197,9 @@ if (isset($lead)) {
                                                 <div class="col-sm-2">
                                                     <select class="form-control editInput" id="notes_type" name="notes_type">
                                                         @if(isset($notes_type))
-                                                            @foreach($notes_type as $value)
-                                                            <option value="{{ $value->id }}">{{ $value->title }}</option>
-                                                            @endforeach
+                                                        @foreach($notes_type as $value)
+                                                        <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                                        @endforeach
                                                         @endif
                                                     </select>
                                                 </div>
@@ -210,7 +210,7 @@ if (isset($lead)) {
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-7 mt-3">
-                                                    <textarea class="form-control textareaInput" name="notes" id="notes" rows="3" ></textarea>
+                                                    <textarea class="form-control textareaInput" name="notes" id="notes" rows="3"></textarea>
                                                 </div>
                                                 <div class="col-sm-3 mt-3">
                                                     <div class="jobsection">
@@ -225,14 +225,14 @@ if (isset($lead)) {
                                                         <table class="table" id="containerA">
                                                             <thead class="table-light">
                                                                 <tr>
-                                                                <th>Data</th>
-                                                                <th>By</th>
-                                                                <th>Type</th>
-                                                                <th>Notes</th>
+                                                                    <th>Data</th>
+                                                                    <th>By</th>
+                                                                    <th>Type</th>
+                                                                    <th>Notes</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                            @if(isset($lead_notes_data))
+                                                                @if(isset($lead_notes_data))
                                                                 @foreach($lead_notes_data as $value)
                                                                 <tr>
                                                                     <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y H:i') }}</td>
@@ -241,15 +241,15 @@ if (isset($lead)) {
                                                                     <td>{{ $value->notes }}</td>
                                                                 </tr>
                                                                 @endforeach
-                                                            @else
-                                                            <tr>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                            </tr>
-                                                            @endif
+                                                                @else
+                                                                <tr>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                </tr>
+                                                                @endif
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -339,9 +339,9 @@ if (isset($lead)) {
                                                                     <div class="col-sm-9">
                                                                         <select class="form-control editInput selectOptions" id="lead_task_type_id" name="lead_task_type_id">
                                                                             @if(isset($leadTask))
-                                                                                @foreach($leadTask as $value)
-                                                                                <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                                                                @endforeach
+                                                                            @foreach($leadTask as $value)
+                                                                            <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                                            @endforeach
                                                                             @endif
                                                                         </select>
                                                                     </div>
@@ -379,7 +379,7 @@ if (isset($lead)) {
                                                                 <div class="mb-3 row">
                                                                     <label for="inputName" class="col-sm-3 col-form-label">Notify?</label>
                                                                     <div class="col-sm-2 d-flex">
-                                                                        <input type="checkbox" class="editInput" id="yeson" >
+                                                                        <input type="checkbox" class="editInput" id="yeson">
                                                                         <label for="notify" class="col-form-label ps-3">Yes, On</label>
                                                                     </div>
                                                                     <div class="col-sm-3">
@@ -417,7 +417,7 @@ if (isset($lead)) {
                                                         </div>
                                                         <div class="modal-footer">
                                                             <div class="pageTitleBtn p-0">
-                                                                <a href="#" class="profileDrop" id="saveAddTask"><i class="fa-solid fa-floppy-disk" ></i> Save</a>
+                                                                <a href="#" class="profileDrop" id="saveAddTask"><i class="fa-solid fa-floppy-disk"></i> Save</a>
                                                                 <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save & Close </a>
                                                                 <a href="#" class="profileDrop" data-bs-dismiss="modal"> Close</a>
                                                             </div>
@@ -442,9 +442,54 @@ if (isset($lead)) {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <tr>
+                                                            <td colspan="10"><strong>Open tasks</strong></td>
+                                                        </tr>
+                                                        @if(isset($lead_task_open))
+                                                        @if( !$lead_task_open->isEmpty() )
+                                                        @foreach($lead_task_open as $value)
 
-                                                    @if(isset($lead_task))
-                                                            @foreach($lead_task as $value)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y m:i')}}</td>
+                                                            <td>{{ $value->name }}</td>
+                                                            <td>{{ $value->task_type_title}}</td>
+                                                            <td>{{ $value->title}}</td>
+                                                            <td>{{$lead->contact_name}}</td>
+                                                            <td>{{$lead->telephone}}</td>
+                                                            <td> @if( $value->notification === 1 || $value->email_notify === 1 || $value->sms_notify === 1)
+                                                                Yes, on<br>
+                                                                {{ \Carbon\Carbon::parse($value->notify_date)->format('d/m/Y') }} {{ \Carbon\Carbon::parse($value->notify_time)->format('h:i') }}
+                                                                @endif
+                                                            </td>
+                                                            <td>{{ $value->notes}}</td>
+                                                            <td>
+                                                                <div class="nav-item dropdown tableActionBtn">
+                                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                                        Action
+                                                                    </a>
+                                                                    <div class="dropdown-menu fade-up m-0">
+                                                                        <a href="{{ url('/lead/task_mark_as_completed', ['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Mark As Completed</a>
+                                                                        <hr class="dropdown-divider">
+                                                                        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
+                                                                        <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                        @else
+                                                        <tr>
+                                                            <td colspan="10" class="text-center"><strong>No task(s) found</strong></td>
+                                                        </tr>
+                                                        @endif
+                                                        <tr>
+                                                            <td colspan="10"><strong>Close tasks</strong></td>
+                                                        </tr>
+                                                        @endif
+                                                        @if(isset($lead_task_open))
+                                                        @if( !$lead_task_close->isEmpty())
+                                                            @foreach($lead_task_close as $value)
                                                             <tr>
                                                                 <td>{{ $loop->iteration}}</td>
                                                                 <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y m:i')}}</td>
@@ -465,30 +510,21 @@ if (isset($lead)) {
                                                                             Action
                                                                         </a>
                                                                         <div class="dropdown-menu fade-up m-0">
-                                                                            <a href="#" class="dropdown-item">Mark As Completed</a>
-                                                                            <hr class="dropdown-divider">
-                                                                            <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}" >Edit Task</a>
+                                                                            <!-- <a href="{{ url('/lead/task_mark_as_completed', ['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Mark As Completed</a>
+                                                                            <hr class="dropdown-divider"> -->
+                                                                            <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
                                                                             <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
                                                                         </div>
                                                                     </div>
                                                                 </td>
                                                             </tr>
                                                             @endforeach
-                                                            @else
+                                                        @else
                                                             <tr>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
+                                                                <td colspan="10" class="text-center"><strong>No task(s) found</strong></td>
                                                             </tr>
-                                                            @endif
+                                                        @endif
+                                                        @endif
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -528,9 +564,9 @@ if (isset($lead)) {
                                                                         <select class="form-control editInput selectOptions" name="attachment_type_id" id="attachment_type_id">
                                                                             <option value="">Select</option>
                                                                             @if(isset($attachment_type))
-                                                                                @foreach($attachment_type as $value)
-                                                                                <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                                                                @endforeach
+                                                                            @foreach($attachment_type as $value)
+                                                                            <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                                            @endforeach
                                                                             @endif
                                                                         </select>
                                                                     </div>
@@ -540,8 +576,8 @@ if (isset($lead)) {
                                                                     <div class="col-sm-9">
                                                                         <!-- <canvas id="canv1"></canvas> -->
                                                                         <!-- <p class="uploadImg"> -->
-                                                                            <!-- <i class="fa fa-cloud-upload"></i> -->
-                                                                            <input type="file" class="editInput" multiple="false" id="file" name="file" accept="image/*" id="finput" onchange="upload()">
+                                                                        <!-- <i class="fa fa-cloud-upload"></i> -->
+                                                                        <input type="file" class="editInput" multiple="false" id="file" name="file" accept="image/*" id="finput" onchange="upload()">
                                                                         <!-- </p> -->
                                                                     </div>
                                                                 </div>
@@ -587,29 +623,29 @@ if (isset($lead)) {
                                                     </thead>
                                                     <tbody>
                                                         @if(isset($lead_attachment))
-                                                            @foreach($lead_attachment as $value)
-                                                            <tr>
-                                                                <td></td>
-                                                                <td>{{ $value['type'] }}</td>
-                                                                <td>{{ $value['title'] }}</td>
-                                                                <td>{{ $value['description'] }}</td>
-                                                                <td>{{ $value['filename'] }}</td>
-                                                                <td>{{ $value['mime_type'] }} / {{ $value['size'] }}</td>
-                                                                <td>{{ $value['created_at'] }}</td>
-                                                                <td><a href="{{ url('storage/app/public/lead_attachments/' . $value['filename']) }}" target="_blank"><i data-toggle="tooltip" data-original-title="View" class="fa fa-eye"></i></a> | <a href="{{ url('/leads/lead_attachment/delete', ['attachment_id' => $value['id'], 'lead_id' => $lead->id]) }}" class="delete"><i data-toggle="tooltip" class="fa fa-trash" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
-                                                            </tr>
-                                                            @endforeach
+                                                        @foreach($lead_attachment as $value)
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>{{ $value['type'] }}</td>
+                                                            <td>{{ $value['title'] }}</td>
+                                                            <td>{{ $value['description'] }}</td>
+                                                            <td>{{ $value['filename'] }}</td>
+                                                            <td>{{ $value['mime_type'] }} / {{ $value['size'] }}</td>
+                                                            <td>{{ $value['created_at'] }}</td>
+                                                            <td><a href="{{ url('storage/app/public/lead_attachments/' . $value['filename']) }}" target="_blank"><i data-toggle="tooltip" data-original-title="View" class="fa fa-eye"></i></a> | <a href="{{ url('/leads/lead_attachment/delete', ['attachment_id' => $value['id'], 'lead_id' => $lead->id]) }}" class="delete"><i data-toggle="tooltip" class="fa fa-trash" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
+                                                        </tr>
+                                                        @endforeach
                                                         @else
-                                                            <tr>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                        </tr>
                                                         @endif
                                                     </tbody>
                                                 </table>
@@ -639,9 +675,7 @@ if (isset($lead)) {
     var addNotesTypeURL = '{{ route("lead.ajax.saveLeadNoteType") }}';
     var saveLeadNotes = '{{ route("lead.ajax.saveLeadNotes") }}';
     var addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
-    var saveLeadAttachmentUrl =  '{{ route("lead.ajax.saveLeadAttachment") }}';
-
-
+    var saveLeadAttachmentUrl = '{{ route("lead.ajax.saveLeadAttachment") }}';
 </script>
 @include('frontEnd.jobs.layout.footer')
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>
