@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Customer extends Model
 {
@@ -78,23 +79,18 @@ class Customer extends Model
         ->where('leads.home_id', $home_id);
    
         if($lastSegment ===  "leads") {
-            return $query->whereNotIn('assign_to', [0])
-            ->whereNotIn('leads.status', ['6'])
-            ->get();
-        } 
-        else if($lastSegment === "unassigned"){
-            return $query->orderBy('leads.created_at', 'desc')
-            ->where('assign_to', 0)
-            ->get();
+            return $query->whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6'])->whereNotIn('leads.authorization_status', [1])->get();
+        } else if($lastSegment === "unassigned"){
+            return $query->where('assign_to', 0)->get();
         } else if($lastSegment === "rejected"){
-            return $query->orderBy('leads.created_at', 'desc')
-            ->where('leads.status', '6')
-            ->get();
+            return $query->where('leads.status', '6')->get();
         } else if($lastSegment === "converted"){
-            return $query->orderBy('leads.created_at', 'desc')
-            ->where('customers.is_converted', 1)
-            ->get();
-        } 
+            return $query->where('customers.is_converted', 1)->where('customers.status', 1)->get();
+        } else if ($lastSegment === "myLeads"){
+            return $query->where('user_id', Auth::user()->id)->get();
+        }else if($lastSegment === "authorization"){
+            return $query->where('leads.authorization_status', 1)->get();
+        }
     }
 
     public static function getCustomerLeads($id){
