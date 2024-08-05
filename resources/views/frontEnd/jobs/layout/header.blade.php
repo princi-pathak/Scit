@@ -50,7 +50,7 @@
                             </div>
                         <?php } ?>
 
-                        <div class="h-100 d-inline-flex align-items-center py-3 me-4">
+                        <!-- <div class="h-100 d-inline-flex align-items-center py-3 me-4">
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
                                     Welcome back Sam
@@ -62,7 +62,7 @@
                                     <a href="#" class="dropdown-item">Our Works</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -168,95 +168,93 @@
                             </div>
 
                             <div class="nav-item1 dropdown1">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <span><i class="material-symbols-outlined">finance_mode </i></span> Finance
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Customers <i class="fa-solid fa-angle-right"></i>
-                                            </a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span><i class="material-symbols-outlined">finance_mode </i></span> Finance
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Customers <i class="fa-solid fa-angle-right"></i>
+                                        </a>
 
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                                                <li><a class="dropdown-item" href="#">New Invoice</a></li>
-                                                <li><a class="dropdown-item" href="#">Draft Invoices</a></li>
-                                                <li><a class="dropdown-item" href="#">Outstanding Invoices</a></li>
-                                                <li><a class="dropdown-item" href="#">Overdue Invoices</a></li>
-                                                <li><a class="dropdown-item" href="#">Paid Invoices</a></li>
-                                                <li><a class="dropdown-item" href="#">Search Invoices</a></li>
-                                                <li><a class="dropdown-item" href="#">Account Statements</a></li>
-                                                <li><a class="dropdown-item" href="#">Reminders</a></li>
-                                                <li class="nav-item1 dropend">
-                                                    <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Recurring Invoices <i class="fa-solid fa-angle-right"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu1">
-                                                      <li><a class="dropdown-item" href="#">New Recurring Invoice</a></li>
-                                                      <li><a class="dropdown-item" href="#">Recurring Invoices</a></li>                                                          
-                                                    </ul>
-                                                </li>
-                                                <li class="nav-item1 dropend">
-                                                    <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Credit Notes <i class="fa-solid fa-angle-right"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu1">
-                                                      <li><a class="dropdown-item" href="#">New Credit Note</a></li>
-                                                      <li><a class="dropdown-item" href="#">Draft Credit Notes</a></li>
-                                                      <li><a class="dropdown-item" href="#">Awaiting Approval Credit Notes</a></li>
-                                                      <li><a class="dropdown-item" href="#">Approval Credit Notes</a></li>                                                       
-                                                      <li><a class="dropdown-item" href="#">Paid Credit Notes</a></li>
-                                                      <li><a class="dropdown-item" href="#">Cancelled Credit Notes</a></li>                                                           
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                Suppliers <i class="fa-solid fa-angle-right"></i>
-                                            </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                                            <li><a class="dropdown-item" href="#">New Invoice</a></li>
+                                            <li><a class="dropdown-item" href="#">Draft Invoices</a></li>
+                                            <li><a class="dropdown-item" href="#">Outstanding Invoices</a></li>
+                                            <li><a class="dropdown-item" href="#">Overdue Invoices</a></li>
+                                            <li><a class="dropdown-item" href="#">Paid Invoices</a></li>
+                                            <li><a class="dropdown-item" href="#">Search Invoices</a></li>
+                                            <li><a class="dropdown-item" href="#">Account Statements</a></li>
+                                            <li><a class="dropdown-item" href="#">Reminders</a></li>
+                                            <li class="nav-item1 dropend">
+                                                <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Recurring Invoices <i class="fa-solid fa-angle-right"></i>
+                                                </a>
+                                                <ul class="dropdown-menu1">
+                                                    <li><a class="dropdown-item" href="#">New Recurring Invoice</a></li>
+                                                    <li><a class="dropdown-item" href="#">Recurring Invoices</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="nav-item1 dropend">
+                                                <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Credit Notes <i class="fa-solid fa-angle-right"></i>
+                                                </a>
+                                                <ul class="dropdown-menu1">
+                                                    <li><a class="dropdown-item" href="#">New Credit Note</a></li>
+                                                    <li><a class="dropdown-item" href="#">Draft Credit Notes</a></li>
+                                                    <li><a class="dropdown-item" href="#">Awaiting Approval Credit Notes</a></li>
+                                                    <li><a class="dropdown-item" href="#">Approval Credit Notes</a></li>
+                                                    <li><a class="dropdown-item" href="#">Paid Credit Notes</a></li>
+                                                    <li><a class="dropdown-item" href="#">Cancelled Credit Notes</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Suppliers <i class="fa-solid fa-angle-right"></i>
+                                        </a>
 
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                                                <li><a class="dropdown-item" href="#">New Purchase Order</a></li>
-                                                <li><a class="dropdown-item" href="#">Draft Purchase Orders</a></li>
-                                                <li><a class="dropdown-item" href="#">Awaiting Approval Purchase Orders</a></li>
-                                                <li><a class="dropdown-item" href="#">Approved Purchase Orders </a></li>                                                  
-                                                <li><a class="dropdown-item" href="#">Active Customers</a></li>
-                                                <li><a class="dropdown-item" href="#">Rejected Purchase Orders </a></li>
-                                                <li><a class="dropdown-item" href="#">Paid Purchase Orders</a></li>
-                                                <li><a class="dropdown-item" href="#">Actioned Purchase Orders</a></li>
-                                                <li><a class="dropdown-item" href="#">Invoices Received</a></li>
-                                                <li><a class="dropdown-item" href="#">Purchase Orders Statements</a></li>
-                                                <li><a class="dropdown-item" href="#">Recurring Purchase Orders</a></li>
-                                                <li><a class="dropdown-item" href="#">Credit Notes</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="nav-item1 dropdown1">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span><i class="material-symbols-outlined"> contact_support </i></span> Contacts
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Customers <i class="fa-solid fa-angle-right"></i>
-                                            </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                                            <li><a class="dropdown-item" href="#">New Purchase Order</a></li>
+                                            <li><a class="dropdown-item" href="#">Draft Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#">Awaiting Approval Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#">Approved Purchase Orders </a></li>
+                                            <li><a class="dropdown-item" href="#">Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="#">Rejected Purchase Orders </a></li>
+                                            <li><a class="dropdown-item" href="#">Paid Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#">Actioned Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#">Invoices Received</a></li>
+                                            <li><a class="dropdown-item" href="#">Purchase Orders Statements</a></li>
+                                            <li><a class="dropdown-item" href="#">Recurring Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#">Credit Notes</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="nav-item1 dropdown1">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span><i class="material-symbols-outlined"> contact_support </i></span> Contacts
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Customers <i class="fa-solid fa-angle-right"></i>
+                                        </a>
 
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="{{url('customer_add_edit')}}">New Customers</a></li>
-                                                <li><a class="dropdown-item" href="#">Active Customers</a></li>
-                                                <li><a class="dropdown-item" href="#">Inactive Customers</a></li>
-                                                <li><a class="dropdown-item" href="#">Customers Logins</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Suppliers <i class="fa-solid fa-angle-right"></i>
-                                            </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="{{url('customer_add_edit')}}">New Customers</a></li>
+                                            <li><a class="dropdown-item" href="#">Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="#">Inactive Customers</a></li>
+                                            <li><a class="dropdown-item" href="#">Customers Logins</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Suppliers <i class="fa-solid fa-angle-right"></i>
+                                        </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="#">New Customers</a></li>
@@ -333,124 +331,114 @@
                             </div>
 
                             <div class="nav-item1 dropdown1">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <span><i class="material-symbols-outlined"> construction</i></span> Settings
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                        <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> General Settings</a></li>
-                                        <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Digital Doc. Manager</a></li>
-                                        <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Questionnaires</a></li>
-                                        <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Template Editor</a></li>
-                                        <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Custom Field Management</a></li>
-                                        <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Triggers</a></li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                Leads <i class="fa-solid fa-angle-right"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">Lead Settings</a></li>
-                                                <li><a class="dropdown-item" href="#">Lead Sources</a></li>
-                                                <li><a class="dropdown-item" href="#">Lead Status</a></li>
-                                                <li><a class="dropdown-item" href="#">Lead Task Types</a></li>
-                                                <li><a class="dropdown-item" href="#">Lead Reject Types</a></li>                                                  
-                                                <li><a class="dropdown-item" href="#">Lead Notes Type</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                Quotes <i class="fa-solid fa-angle-right"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">Quote Type </a></li>
-                                                <li><a class="dropdown-item" href="#">Quote Source </a></li>
-                                                <li><a class="dropdown-item" href="#">Quote Reject Type </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                Jobs <i class="fa-solid fa-angle-right"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">Job Type </a></li>
-                                                <li><a class="dropdown-item" href="#">Job Appointment Type </a></li>
-                                                <li><a class="dropdown-item" href="#">Appointment Rejection Categories </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                Invoices <i class="fa-solid fa-angle-right"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">Account Codes </a></li>
-                                                <li><a class="dropdown-item" href="#">Tax Rate </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                Purchase Orders <i class="fa-solid fa-angle-right"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">Departments </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                Customers <i class="fa-solid fa-angle-right"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">Customer Type </a></li>
-                                                <li><a class="dropdown-item" href="#">Customer Job Title </a></li>
-                                                <li><a class="dropdown-item" href="#">Complaint Type </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                Users <i class="fa-solid fa-angle-right"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">User Type </a></li>
-                                                <li><a class="dropdown-item" href="#">User Profiles </a></li>
-                                                <li><a class="dropdown-item" href="#">User Working Areas </a></li>
-                                                <li><a class="dropdown-item" href="#">Personal Time Type </a></li>
-                                                <li><a class="dropdown-item" href="#">User Contractors </a></li>                                                  
-                                                <li><a class="dropdown-item" href="#">User Location </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                CRM <i class="fa-solid fa-angle-right"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">CRM Section Types </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item1 dropend">
-                                            <a class="dropdown-item" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                General <i class="fa-solid fa-angle-right"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                <li><a class="dropdown-item" href="#">Attachment Types </a></li>
-                                                <li><a class="dropdown-item" href="#">Payment Types </a></li>
-                                                <li><a class="dropdown-item" href="#">Regions </a></li>
-                                                <li><a class="dropdown-item" href="#">Task Types </a></li>
-                                                <li><a class="dropdown-item" href="#">Tags </a></li>  
-                                            </ul>
-                                        </li>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span><i class="material-symbols-outlined"> construction</i></span> Settings
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> General Settings</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Digital Doc. Manager</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Questionnaires</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Template Editor</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Custom Field Management</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Triggers</a></li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Leads <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">Lead Settings</a></li>
+                                            <li><a class="dropdown-item" href="#">Lead Sources</a></li>
+                                            <li><a class="dropdown-item" href="#">Lead Status</a></li>
+                                            <li><a class="dropdown-item" href="#">Lead Task Types</a></li>
+                                            <li><a class="dropdown-item" href="#">Lead Reject Types</a></li>
+                                            <li><a class="dropdown-item" href="#">Lead Notes Type</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Quotes <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">Quote Type </a></li>
+                                            <li><a class="dropdown-item" href="#">Quote Source </a></li>
+                                            <li><a class="dropdown-item" href="#">Quote Reject Type </a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Jobs <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">Job Type </a></li>
+                                            <li><a class="dropdown-item" href="#">Job Appointment Type </a></li>
+                                            <li><a class="dropdown-item" href="#">Appointment Rejection Categories </a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Invoices <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">Account Codes </a></li>
+                                            <li><a class="dropdown-item" href="#">Tax Rate </a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Purchase Orders <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">Departments </a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Customers <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">Customer Type </a></li>
+                                            <li><a class="dropdown-item" href="#">Customer Job Title </a></li>
+                                            <li><a class="dropdown-item" href="#">Complaint Type </a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Users <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">User Type </a></li>
+                                            <li><a class="dropdown-item" href="#">User Profiles </a></li>
+                                            <li><a class="dropdown-item" href="#">User Working Areas </a></li>
+                                            <li><a class="dropdown-item" href="#">Personal Time Type </a></li>
+                                            <li><a class="dropdown-item" href="#">User Contractors </a></li>
+                                            <li><a class="dropdown-item" href="#">User Location </a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            CRM <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">CRM Section Types </a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            General <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">Attachment Types </a></li>
+                                            <li><a class="dropdown-item" href="#">Payment Types </a></li>
+                                            <li><a class="dropdown-item" href="#">Regions </a></li>
+                                            <li><a class="dropdown-item" href="#">Task Types </a></li>
+                                            <li><a class="dropdown-item" href="#">Tags </a></li>
+                                        </ul>
+                                    </li>
 
-                                        <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Quick Setup Wizard</a></li>
-                                    </ul>
-                                </div>
-                            
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Quick Setup Wizard</a></li>
+                                </ul>
+                            </div>
+
                             <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> construction</i></span>

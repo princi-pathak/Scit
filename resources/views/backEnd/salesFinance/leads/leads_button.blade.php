@@ -15,7 +15,7 @@
         <button id="editable-sample_new" class="btn btn-primary">Rejected ({{ App\Lead::getRejectedCount() }})</button>
     </a>
     <a href="{{ url('admin/sales-finance/leads/authorization') }}">
-        <button id="editable-sample_new" class="btn btn-primary">Authorization ()</button>
+        <button id="editable-sample_new" class="btn btn-primary">Authorization ({{ App\Lead::getAuthorizationCount() }})</button>
     </a>
     <a href="{{ url('admin/sales-finance/leads/converted') }}">
         <button id="editable-sample_new" class="btn btn-primary">Converted ({{ App\Customer::getConvertedCustomersCount() }})</button>
