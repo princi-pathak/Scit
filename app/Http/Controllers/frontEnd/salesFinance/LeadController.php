@@ -8,7 +8,6 @@ use App\User;
 use App\Lead;
 use Illuminate\Support\Facades\Auth;
 use App\Customer;
-use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Models\LeadRejectType;
 use App\Models\LeadRejectReason;
@@ -24,8 +23,8 @@ use App\Models\LeadNote;
 class LeadController extends Controller
 {
     public function index(Request $request){
+        // dd($request);
         $page = "leads";
-
         $path = $request->path();
         $segments = explode('/', $path);
         $lastSegment = end($segments);
@@ -114,9 +113,11 @@ class LeadController extends Controller
         $leadTask = LeadTaskType::getLeadTaskType();
         $attachment_type = AttachmentType::getAttachmentType();
         $lead_notes_data = LeadNote::getLeadNoteFromleadNoteType($id); 
-        $lead_task =  LeadTask::getLeadTaskTypeUser($lead->lead_ref); 
+        $lead_task_open =  LeadTask::getLeadTaskTypeUser($lead->lead_ref, 0); 
+        $lead_task_close =  LeadTask::getLeadTaskTypeUser($lead->lead_ref, 1); 
+        // dd($lead_task_close);
         $lead_attachment = LeadAttachment::getLeadAttachments($id);
-        return view('frontEnd.salesAndFinance.lead.lead_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes_data', 'leadTask', 'lead_task', 'attachment_type', 'lead_attachment'));           
+        return view('frontEnd.salesAndFinance.lead.lead_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes_data', 'leadTask', 'lead_task_open', 'lead_task_close', 'attachment_type', 'lead_attachment'));           
     }
 
     // Lead Note Types start
@@ -221,8 +222,32 @@ class LeadController extends Controller
 
     public function task_list(){
         $page = "Leads";
-        $lead_tasks = LeadTask::getLeadTasks();
+        $lead_tasks = LeadTask::getLeadTasks(0);
         return view('frontEnd.salesAndFinance.lead.lead_task', compact('page', 'lead_tasks'));
+    }
+
+    public function lead_task_list_delete($id){
+        if(LeadTask::deleteLeadTask($id)){
+            return redirect()->route('lead.task_list')->with('success', "Record deleted successfully");
+        } else {
+            return redirect()->route('lead.task_list')->with('error', "Record not found");
+        }
+    }
+    public function task_mark_as_completed($task_id, $leadId){
+        if( LeadTask::taskMarkAsCompleted($task_id)){
+            return redirect()->route('lead.edit', ['id' => $leadId])->with('success', 'Task mark as completed');
+        } else {
+            return redirect()->route('lead.edit', ['id' => $leadId])->with('fails', 'Error in task complete');
+        } 
+
+    }
+
+    public function sentToAuthorization($leadId){
+        if (Lead::leadForAdminAuthorization($leadId)){
+            return redirect()->route('lead.index')->with('success', 'Lead Sent for authorization');
+        } else {
+            return redirect()->route('lead.index')->with('error', 'Error in sending for authorization');
+        }
     }
 
 }
