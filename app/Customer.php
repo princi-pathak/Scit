@@ -67,7 +67,8 @@ class Customer extends Model
             ['id' => $data['id'] ?? null],
             $data
         );
-        return $insert->id;
+        $data=['id'=>$insert->id,'name'=>$insert->name];
+        return $data;
     }
     public static function getCustomerWithLeads($lastSegment, $home_id){
 

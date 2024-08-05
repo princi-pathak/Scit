@@ -233,6 +233,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/jobs_create','App\Http\Controllers\jobs\JobController@jobs_create');
 	// Customer
 	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit');
+	Route::post('/customer_add_edit_save','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit_save');
+	Route::get('/add_currency','App\Http\Controllers\frontEnd\CustomerController@add_currency');
 	// end here
 
 
