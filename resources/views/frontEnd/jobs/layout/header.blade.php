@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="https://www.ville-pont-eveque.fr/tools/library/DataTables/media/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://www.ville-pont-eveque.fr/tools/library/DataTables/extensions/Select/css/select.dataTables.css" />
     <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+
+    <style>
+        table.dataTable td.select-checkbox:before{
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -347,11 +353,11 @@
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="#">Lead Settings</a></li>
-                                            <li><a class="dropdown-item" href="#">Lead Sources</a></li>
-                                            <li><a class="dropdown-item" href="#">Lead Status</a></li>
-                                            <li><a class="dropdown-item" href="#">Lead Task Types</a></li>
-                                            <li><a class="dropdown-item" href="#">Lead Reject Types</a></li>
-                                            <li><a class="dropdown-item" href="#">Lead Notes Type</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_sources') }}">Lead Sources</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_status') }}">Lead Status</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_task_type') }}">Lead Task Types</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_reject_type') }}">Lead Reject Types</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_notes_type') }}">Lead Notes Type</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
