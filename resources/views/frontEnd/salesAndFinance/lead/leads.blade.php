@@ -5,25 +5,24 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>All Leads</h3>
+                    <h3>
+                        @switch($lastSegment)
+                            @case("leads") Leads @break
+                            @case("myLeads") My Leads @break
+                            @case("unassigned") Unassigned Leads @break
+                            @case("rejected") Rejected Leads @break
+                            @case("authorization") Authorization Leads @break
+                            @case("converted") Converted Leads @break
+                            @default {{-- No output if none of the cases match --}}
+                        @endswitch
+                                    
+                    </h3>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12 col-lg-12 col-xl-12 px-3">
-                <div class="jobsection">
-                    <a href="{{ url('/leads/add_lead') }}" class="profileDrop">New Job</a>
-                    <a href="#" class="profileDrop">Active <span>(5)</span></a>
-                    <a href="#" class="profileDrop">Unassigned<span>(8)</span></a>
-                    <a href="#" class="profileDrop">Action Required<span>(15)</span></a>
-                    <a href="#" class="profileDrop">Overdue<span>(76)</span></a>
-                    <a href="#" class="profileDrop">authorization<span>(32)</span></a>
-                    <a href="#" class="profileDrop">On Hold<span>(2)</span></a>
-                    <a href="#" class="profileDrop">Recursing Jobs</a>
-                </div>
-            </div>
-        </div>
+        @include('frontEnd.salesAndFinance.lead.lead_buttons')
+
         <di class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
@@ -47,7 +46,7 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="pageTitleBtn p-0">
-                                    <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a>
+                                    <!-- <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a> -->
                                 </div>
                             </div>
                         </div>
@@ -75,28 +74,12 @@
                         </thead>
 
                         <tbody>
-                            <!-- <tr>
-                                <td></td>
-                                <td>1</td>
-                                <td>Prince Gautam</td>
-                                <td>None</td>
-                                <td>Prince@gmail.com</td>
-                                <td>84845631</td>
-                                <td>4465132</td>
-                                <td>www.mobapps</td>
-                                <td>49 Featherstone</td>
-                                <td>LONDON</td>
-                                <td>UK</td>
-                                <td>EC1Y 8SY</td>
-                                <td>LEAD-0024</td>
-                                <td>contacted</td>
-                                <td><a href="#!" class="profileDrop dropdown-toggle">Action</a></td>
-                            </tr> -->
+
 
                             @foreach ($customers as $customer)
                             <tr>
                                 <td></td>
-                                <td></td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $customer->contact_name }}</td>
                                 <td>{{ $customer->name }}</td>
                                 <td>{{ $customer->email }}</td>
@@ -125,12 +108,12 @@
                                                 Action
                                             </a>
                                             <div class="dropdown-menu fade-up m-0">
-                                                <a href="#" class="dropdown-item">Edit Details</a>
+                                                <a href="{{ url('/leads/edit').'/'.$customer->id }}" class="dropdown-item">Edit Details</a>
                                                 <a href="#" class="dropdown-item">Send SMS</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="#" class="dropdown-item">CRM History</a>
                                                 <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
-                                                <a href="#" class="dropdown-item">Send for Authorization</a>
+                                                <a href="{{ url('/leads/authorization').'/'.$customer->id }}" class="dropdown-item">Send for Authorization</a>
                                                 <a href="#" class="dropdown-item">Send to Quote</a>
                                                 <a href="#" class="dropdown-item">Send to Job</a>
                                                 <a href="#" class="dropdown-item">Convert to Customer Only</a>
@@ -138,9 +121,6 @@
                                         </div>
                                     </div>
                                     <!-- **************** -->
-
-
-
 
                                     <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -159,7 +139,7 @@
                                                             <label for="recipient-name" class="col-form-label">Reject Type:</label>
                                                             <input type="text" class="form-control" id="recipient-name">
                                                         </div>
-                                                        <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectModal2"><i class="fa-solid fa-square-plus"></i></a> 
+                                                        <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectModal2"><i class="fa-solid fa-square-plus"></i></a>
                                                         <div class="mb-3">
                                                             <label for="message-text" class="col-form-label">Reject Reason:</label>
                                                             <textarea class="form-control" id="message-text"></textarea>

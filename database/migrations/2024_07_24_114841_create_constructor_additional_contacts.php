@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('constructor_additional_contacts', function (Blueprint $table) {
             $table->id();
+            $table->string('customer_id')->nullable();
             $table->string('contact_name')->nullable();
             $table->string('job_title_id')->nullable();
             $table->string('email')->nullable();

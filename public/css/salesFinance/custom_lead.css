@@ -1,0 +1,9 @@
+#hiddenDiv {
+    display: none;
+}
+#optionsDiv {
+    display: none;
+}
+button.profileDrop.reDesignBtn {
+    border: 0;
+}

@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use App\Models\LeadNote;
+
 
 class Lead extends Model
 {
@@ -23,17 +26,35 @@ class Lead extends Model
     ];
 
     public static function getAllLeadCount(){
-        $all = Lead::whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6'])->count();
-        return $all;
+        return Lead::whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6'])->count();
     }
 
     public static function getUnassignedCount(){
-        $all = Lead::where('assign_to', 0)->count();
-        return $all;
+        return Lead::where('assign_to', 0)->count();
     }
     
     public static function getRejectedCount(){
-        $all = Lead::where('status', '6')->count();
-        return $all;
+        return Lead::where('status', '6')->count();
     }
+
+    public function notes()
+    {
+        return $this->hasMany(LeadNote::class);
+    }
+
+    public static function getLeadByUser(){
+        return Lead::where('user_id', Auth::user()->id)->where('home_id', Auth::user()->home_id)->count();
+    } 
+
+    public static function getAuthorizationCount(){
+        return Lead::where('authorization_status', 1)->count();
+    }
+
+    public static function leadForAdminAuthorization($id){
+        return Lead::where('id', $id)->update(['authorization_status' => 1]);
+    }
+
+    public static function LeadAuthorizedAdmin($id){
+        return Lead::where('id', $id)->update(['authorization_status' => 2]);
+    } 
 }

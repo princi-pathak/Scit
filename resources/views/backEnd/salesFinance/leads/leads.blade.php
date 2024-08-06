@@ -73,7 +73,7 @@
                                             <td>{{ $customer->country }}</td>
                                             <td>{{ $customer->postal_code }}</td>
                                             <td>{{ $customer->lead_ref }}</td>
-                                            <td>  @switch($customer->status)
+                                            <td>@switch($customer->status)
                                                     @case(1) Contact Later @break
                                                     @case(2) Contacted @break
                                                     @case(3) New @break
@@ -81,15 +81,10 @@
                                                     @case(5) Qualified @break
                                                     @case(6) Rejected @break
                                                     @default {{-- No output if none of the cases match --}}
-                                                    @endswitch 
+                                                @endswitch 
                                             </td>
-                                            <td><a href="{{ url('admin/sales-finance/leads/edit').'/'.$customer->id }}" class="edit"><span style="color: #000;"><i data-toggle="tooltip" title="Edit" class="fa fa-edit fa-lg"></i></a>
-                                                <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-lead_ref="{{ $customer->lead_ref }}" data-target="#rejectModal" class="fa fa-times fa-lg open-modal"></i></a>
-                                                <!-- <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-target="#secondModal" class="fa fa-times fa-lg"></i></a> -->
-                                                <a href="{{ url('admin/sales-finance/leads/convert_to_customer').'/'.$customer->customer_id }}" class="reject"><i data-toggle="modal" title="Convert to Customer Only" data-target="#secondModal" class="fa fa-exchange fa-lg"></i></a>
-
-                                                <!-- <i class="fa fa-exchange"></i> -->
-                                                <a href="" class="delete"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o fa-lg"></i></a>
+                                            <td> <a href="{{ url('admin/sales-finance/leads/authorized').'/'.$customer->id }}" class=""><span style="color: #000;"><i data-toggle="tooltip" title="Authorized" class="fa fa-lock"></i></a> | <a href="{{ url('admin/sales-finance/leads/edit').'/'.$customer->id }}" class="edit"><span style="color: #000;"><i data-toggle="tooltip" title="Edit" class="fa fa-edit"></i></a> | <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-lead_ref="{{ $customer->lead_ref }}" data-target="#rejectModal" class="fa fa-times open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/convert_to_customer').'/'.$customer->customer_id }}" class="reject"><i data-toggle="modal" title="Convert to Customer Only" data-target="#secondModal" class="fa fa-exchange"></i></a>
+                                                <!-- <a href="" class="delete"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o"></i></a> -->
                                             </td>
                                         </tr>
                                         @endforeach
