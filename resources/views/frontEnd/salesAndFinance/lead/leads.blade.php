@@ -5,7 +5,18 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>All Leads</h3>
+                    <h3>
+                        @switch($lastSegment)
+                            @case("leads") Leads @break
+                            @case("myLeads") My Leads @break
+                            @case("unassigned") Unassigned Leads @break
+                            @case("rejected") Rejected Leads @break
+                            @case("authorization") Authorization Leads @break
+                            @case("converted") Converted Leads @break
+                            @default {{-- No output if none of the cases match --}}
+                        @endswitch
+                                    
+                    </h3>
                 </div>
             </div>
         </div>
