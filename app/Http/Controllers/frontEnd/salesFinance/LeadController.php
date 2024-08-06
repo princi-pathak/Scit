@@ -25,14 +25,14 @@ class LeadController extends Controller
     public function index(Request $request){
         // dd($request);
         $page = "leads";
-        $path = $request->path();
+        $path = $request->path();  
         $segments = explode('/', $path);
         $lastSegment = end($segments);
         $customers = Customer::getCustomerWithLeads($lastSegment, Auth::user()->home_id);
         $leadRejectTypes = LeadRejectType::getLeadRejectType();
         // dd($customers);
 
-        return view('frontEnd.salesAndFinance.lead.leads', compact('customers', 'page'));
+        return view('frontEnd.salesAndFinance.lead.leads', compact('customers', 'page', 'lastSegment'));
 
     }
     public function create(){
@@ -124,7 +124,7 @@ class LeadController extends Controller
     public function lead_notes_type(){
         $page = "lead_notes_type";
         $lead_notes_type = LeadNoteType::getAllLeadNoteType();
-        return view('backEnd/salesFinance/leads/lead_notes_type', compact('page', 'lead_notes_type'));
+        return view('frontEnd.salesAndFinance.lead.lead_note_type', compact('page', 'lead_notes_type'));
     }
 
     public function saveLeadNotesType(Request $request){
@@ -159,9 +159,9 @@ class LeadController extends Controller
     public function save_lead_notes(Request $request){
         $save = LeadNote::create(array_merge($request->all(), ['home_id' =>  Auth::user()->home_id]));
         if( $save ){
-            return response()->json(['message' => 'Record added successfully!']);
+            return response()->json(['success' => true, 'message' => 'Record added successfully!']);
         } else {
-            return response()->json(['message' => "Error ! Notes doesn't save!"]);
+            return response()->json(['success' => false,'message' => "Error ! Notes doesn't save!"]);
         }
     }
 
@@ -249,5 +249,152 @@ class LeadController extends Controller
             return redirect()->route('lead.index')->with('error', 'Error in sending for authorization');
         }
     }
+
+     // Lead Sources
+     public function lead_sources(){
+        $page = "Lead";
+        $lead_sources = LeadSource::getAllLeadSources();
+        return view('frontEnd.salesAndFinance.lead.lead_sources', compact('page', 'lead_sources'));
+    }
+
+    public function saveLeadSource(Request $request){
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'status' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        LeadSource::updateOrCreate(['id' => $request->lead_source_id], array_merge($request->all(), ['home_id' =>  Auth::user()->home_id]));
+        if(isset($request->lead_source_id)){
+            return response()->json(['message' => 'Record updated successfully!']);
+        } else {
+            return response()->json(['message' => 'Lead Source added successfully!']);
+        }
+    }
+
+    // public function lead_source_delete($id){
+    //     if(LeadSource::deleteLeadSources($id) ){
+    //         return redirect()->route('leads.lead_sources')->with('success', "Record deleted successfully");
+    //     } else {
+    //         return redirect()->route('leads.lead_sources')->with('error', "Record not found");
+    //     } 
+    // }
+
+        // Lead Status 
+        public function lead_status(){
+            $page = "Lead Status";
+            $lead_status = LeadStatus::getAllLeadStatus();
+            return view('frontEnd.salesAndFinance.lead.lead_status', compact('page', 'lead_status'));
+        }
+    
+        public function saveLeadStatus(Request $request){
+            $validator = Validator::make($request->all(), [
+                'title' => 'required',
+                'status' => 'required',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+            LeadStatus::updateOrCreate(['id' => $request->lead_status_id], array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
+            if(isset($request->lead_status_id)){
+                return response()->json(['message' => 'Record updated successfully!']);
+            } else {
+                return response()->json(['message' => 'Lead Status added successfully!']);
+            }
+        }
+    
+        // public function lead_status_delete($id){ 
+        //     if(LeadStatus::deleteLeadStatus($id) ){
+        //         return redirect()->route('lead.lead_status')->with('success', "Record deleted successfully");
+        //     } else {
+        //         return redirect()->route('lead.lead_status')->with('error', "Record not found");
+        //     }
+        // }
+
+    // Lead Task Type
+    public function lead_task_type(){
+        $page = "lead_task_type";
+        $lead_task_type = LeadTaskType::getAllLeadTask();
+        return view('frontEnd.salesAndFinance.lead.lead_task_type', compact('page', 'lead_task_type'));
+    }
+    
+    public function saveLeadTaskType(Request $request){
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        
+        LeadTaskType::updateOrCreate(['id' => $request->lead_task_type_id], array_merge($request->all(), ['home_id' =>  Auth::user()->home_id]));
+
+        if(isset($request->lead_task_type_id)){
+            return response()->json(['message' => 'Record updated successfully!']);
+        } else {
+            return response()->json(['message' => 'Task Type added successfully!']);
+        }
+    }
+
+    public function lead_task_type_delete($id){
+        if(LeadTaskType::deleteLeadTaskType($id) ){
+            return redirect()->route('leads.lead_task_type')->with('success', "Record deleted successfully");
+        } else {
+            return redirect()->route('leads.lead_task_type')->with('error', "Record not found");
+        } 
+    }
+
+        // Lead Reject Type
+        public function lead_reject_type(){
+            $page = "Lead Reject Type";
+            $lead_rejects = LeadRejectType::getAllLeadRjectType();
+            return view('frontEnd.salesAndFinance.lead.lead_reject_type', compact('lead_rejects', 'page'));   
+        }
+    
+        public function saveLeadRejectType(Request $request){
+            $validator = Validator::make($request->all(), [
+                'title' => 'required|string|max:255',
+                'status' => 'required|boolean',
+            ]); 
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+            LeadRejectType::updateOrCreate(['id' => $request->lead_reject_id], array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
+            if(isset($request->lead_reject_id)){
+                return response()->json(['message' => 'Record updated successfully!']);
+            } else {
+                return response()->json(['message' => 'Lead Reject Type added successfully!']);
+            }
+        }
+        
+        public function lead_reject_type_delete($id){
+            if(LeadRejectType::deleteLeadRejectType($id) ){
+                return redirect()->route('leads.lead_reject_type')->with('success', "Record deleted successfully");
+            } else {
+                return redirect()->route('leads.lead_reject_type')->with('error', "Record not found");
+            }
+        }
+    
+        public function saveLeadRejectReason(Request $request){
+            $validator = Validator::make($request->all(), [
+                'lead_ref' => 'required',
+                'reject_type_id' => 'required',
+                'reject_reason' => 'required',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+            Lead::where('lead_ref', $request->lead_ref)->update(['status' => 6]);
+            LeadRejectReason::updateOrCreate(['id' => $request->lead_reject_id], $request->all());
+            if(isset($request->lead_reject_id)){
+                return response()->json(['message' => 'Record updated successfully!']);
+            } else {
+                return response()->json(['message' => 'Lead Rejected added successfully!']);
+            }
+        }
+    
 
 }

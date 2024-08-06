@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12 px-3">
         <div class="jobsection">
-            <a href="{{ url('/leads/add') }}" class="profileDrop">New Lead</a>
-            <a href="{{ url('/leads/leads') }}" class="profileDrop">All Leads <span>({{ App\Lead::getAllLeadCount() }})</span></a>
+            <a href="{{ url('/leads/add') }}" class="profileDrop" >New Lead</a>
+            <a href="{{ url('/leads/leads') }}" class="profileDrop" >All Leads <span>({{ App\Lead::getAllLeadCount() }})</span></a>
             <a href="{{ url('/lead/myLeads') }}" class="profileDrop">My Leads<span>({{ App\Lead::getLeadByUser() }})</span></a>
             <a href="{{ url('/leads/unassigned') }}" class="profileDrop">Unassigned<span>({{ App\Lead::getUnassignedCount() }})</span></a>
             <a href="" class="profileDrop">Actioned<span>(76)</span></a>
