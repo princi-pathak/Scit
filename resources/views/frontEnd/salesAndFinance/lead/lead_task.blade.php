@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>All Leads</h3>
+                    <h3>Tasks</h3>
                 </div>
             </div>
         </div>

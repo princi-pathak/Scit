@@ -251,17 +251,20 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/leads/edit/{id}', 'edit')->name('lead.edit');
 		Route::get('/leads/authorization/{id}', 'sentToAuthorization')->name('lead.authorization');
 
-
-		// 
+		// Lead Task Type
 		Route::get('/leads/tasks','task_list')->name('lead.task_list');   
 		Route::get('/lead/task_mark_as_completed/{task}/{lead}', 'task_mark_as_completed')->name('lead.task_mark_as_completed');   
 		Route::get('/lead/lead_task_delete/{id}', 'lead_task_list_delete');
-
+		Route::get('/lead/lead_task_type', 'lead_task_type')->name('leads.lead_task_type');
+		Route::post('/lead/saveLeadTaskType', 'saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
+		Route::get('/lead/lead_task_type/delete/{id}', 'lead_task_type_delete');
+		Route::get('/lead/lead_mark_as_completed/{task}/{lead}', 'lead_mark_as_completed');
 
 		// Lead Notes Type
-		Route::get('/lead_notes_type', 'lead_notes_type')->name('lead.lead_notes_type');
-		Route::post('/saveLeadNotesType', 'saveLeadNotesType')->name('lead.ajax.saveLeadNoteType');
-		Route::get('/lead_note_type/delete/{id}', 'lead_note_type_delete');
+		Route::get('/lead/lead_notes_type', 'lead_notes_type')->name('lead.lead_notes_type');
+		Route::post('/lead/saveLeadNotesType', 'saveLeadNotesType')->name('lead.ajax.saveLeadNoteType');
+		Route::get('/lead/lead_note_type/delete/{id}', 'lead_note_type_delete');
+		// 
 		Route::post('/saveLeadTasks', 'save_lead_tasks')->name('lead.ajax.saveLeadTasks');
 		Route::get('/leads/lead_task/delete/{task}/{lead}', 'lead_task_delete');
 		Route::post('/saveLeadNotes', 'save_lead_notes')->name('lead.ajax.saveLeadNotes');
@@ -270,7 +273,22 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/saveLeadAttachment', 'saveLeadAttachment')->name('lead.ajax.saveLeadAttachment');
 		Route::get('/leads/lead_attachment/delete/{attachment}/{lead}', 'lead_attachments_delete');
 
+		// Lead Sources
+		Route::get('/lead/lead_sources', 'lead_sources')->name('leads.lead_sources');
+		Route::post('/lead/saveLeadSource', 'saveLeadSource')->name('lead.ajax.saveLeadSource');
+		// Route::get('/lead/lead_source/delete/{id}', 'lead_source_delete');
 
+		// Lead Status
+		Route::get('/lead/lead_status', 'lead_status')->name('lead.lead_status');
+		Route::post('lead/saveLeadStatus', 'saveLeadStatus')->name('lead.ajax.saveLeadStatus');
+		// Route::get('/lead_status/delete/{id}', 'lead_status_delete');
+
+
+		// Lead reject type or resons
+		Route::get('/lead/lead_reject_types', 'lead_reject_type')->name('lead.lead_reject_types');
+		Route::post('/lead/saveLeadRejectTypes', 'saveLeadRejectType')->name('lead.ajax.saveLeadRejectTypes');
+		// Route::get('/lead/lead_reject_types/delete/{id}', 'lead_reject_type_delete');
+		Route::post('/lead/saveLeadRejectReasons', 'saveLeadRejectReason')->name('lead.ajax.saveLeadRejectReasons');
 
 	});
 
@@ -1380,7 +1398,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/lead_task_delete/{id}', 'lead_task_list_delete');
 			Route::get('/authorized/{id}', 'lead_authorized_by_admin');
 
-			
+
 
 			// Lead Task 
 			Route::post('/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
@@ -1401,9 +1419,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('/saveLeadTaskType', 'saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
 			Route::get('/lead_task_type/delete/{id}', 'lead_task_type_delete');
 			Route::get('/lead_mark_as_completed/{task}/{lead}', 'lead_mark_as_completed');
-
 			
-		
+
 			// Lead Notes Type
 			Route::get('/lead_notes_type', 'lead_notes_type')->name('leads.lead_notes_type');
 			Route::post('/saveLeadNotesType', 'saveLeadNotesType')->name('leads.ajax.saveLeadNoteType');

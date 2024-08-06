@@ -29,7 +29,7 @@ class LeadController extends Controller
         $lastSegment = end($segments);
         $customers = Customer::getCustomerWithLeads($lastSegment, Session::get('scitsAdminSession')->home_id);
         $leadRejectTypes = LeadRejectType::getLeadRejectType();
-        return view('backEnd/salesFinance/leads/leads', compact('page', 'customers', 'leadRejectTypes'));
+        return view('backEnd/salesFinance/leads/leads', compact('page', 'customers', 'leadRejectTypes', 'lastSegment'));
     }
     public function create(){
         $page = "Leads";
@@ -116,7 +116,6 @@ class LeadController extends Controller
         $lead_attachment = LeadAttachment::getLeadAttachments($id);
         return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes_data', 'leadTask', 'lead_task_open', 'lead_task_close', 'attachment_type', 'lead_attachment'));   
     }
-
 
 
     // Lead Reject Type
