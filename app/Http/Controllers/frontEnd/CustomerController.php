@@ -46,7 +46,87 @@ class CustomerController extends Controller
         $customer = Customer::saveCustomer($request->all());
         return response()->json($customer);
     }
+    public function default_address(Request $request){
+        // $login_customer_id=$request->login_customer_id;
+        $country=$this->all_country_trait();
+        $address_details=Customer::find($request->login_customer_id);
+        $result='';
+        if($request->check == 1){
+            $result.='<option value="" selected disabled>None</option>';
+                    foreach($country as $country_codev){
+                        $select=($country_codev->id == $address_details->country_code)?"selected":"";
+                        $result.='<option value="'.$country_codev->code.'" '.$select.'>'.$country_codev->name.' ('.$country_codev->code.')</option>';
+                    }
+        }else {
+            $result.='<option value="" selected disabled>None</option>';
+                    foreach($country as $country_codev){
+                        $result.='<option value="'.$country_codev->code.'">'.$country_codev->name.' ('.$country_codev->code.')</option>';
+                    }
+        }
+        $data['reslut']=$result;
+        $data['details']=$address_details;
+        return response()->json($data);
+    }
+    public function save_contact(Request $request){
+        $customer=Constructor_additional_contact::saveCustomerAdditional($request->all());
+        // echo "<pre>";print_r($customer);die;
+        $data=Constructor_additional_contact::find($customer);
+        $job_title=Job_title::find($data->job_title_id);
+        $result='<tr class="active">
+                    <td><input type="checkbox" value="'.$data->id.'" class="checkboxContactId"></td>
+                    <td>'.$data->contact_name.'</td>
+                    <td>'.$job_title->name.'</td>
+                    <td>'.$data->email.'</td>
+                    <td>'.$data->telephone.'</td>
+                    <td>'.$data->mobile.'</td>
+                    <td>'.$data->address.'</td>
+                    <td>'.$data->city.'</td>
+                    <td>'.$data->country.'</td>
+                    <td>'.$data->postcode.'</td>
+                    <td>Yes </td>
 
+                </tr>';
+        echo $result;
+    }
+    public function save_site(Request $request){
+        $customer=Constructor_customer_site::saveCustomerAdditional($request->all());
+        $data=Constructor_customer_site::find($customer);
+        $job_title=Job_title::find($data->title_id);
+        $result='<tr class="active">
+                    <td><input type="checkbox" value="'.$data->id.'" class="checkboxContactId"></td>
+                    <td>'.$data->site_name.'</td>
+                    <td>'.$job_title->name.'</td>
+                    <td>'.$data->email.'</td>
+                    <td>'.$data->telephone.'</td>
+                    <td>'.$data->mobile.'</td>
+                    <td>'.$data->address.'</td>
+                    <td>'.$data->city.'</td>
+                    <td>'.$data->country.'</td>
+                    <td>'.$data->post_code.'</td>
+                    <td>Yes </td>
+
+                </tr>';
+        echo $result;
+    }
+    public function save_login(Request $request){
+        $customer=Construction_customer_login::saveCustomerAdditional($request->all());
+        $data=Construction_customer_login::find($customer);
+        $job_title=Job_title::find($data->title_id);
+                $result = '<tr class="active">
+                <td>#</td>
+                <td>'.$data->name.'</td>
+                <td>'.$data->email.'</td>
+                <td>'.$data->email.'</td>
+                <td>'.$data->telephone.'</td>
+                <td>29/07/2024</td>
+                <td>Active</td>
+            </tr>';
+
+        echo $result;
+    }
+    public function active_customer(Request $request){
+
+    }
 
     public function add_currency(Request $request){
         $all_country=Country::all();
