@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('leads', function (Blueprint $table) {
-            $table->string('prefer_date')->nullable()->change();
-            $table->string('prefer_time')->nullable()->change();
+        Schema::table('lead_tasks', function (Blueprint $table) {
+            $table->boolean('is_completed')->after('notes')->default(false)->comment('true on task complete');
         });
     }
 
@@ -22,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('leads', function (Blueprint $table) {
+        Schema::table('lead_tasks', function (Blueprint $table) {
             //
         });
     }

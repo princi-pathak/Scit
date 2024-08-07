@@ -27,9 +27,9 @@ class LeadController extends Controller
         $path = $request->path();
         $segments = explode('/', $path);
         $lastSegment = end($segments);
-        $customers = Customer::getCustomerWithLeads($lastSegment);
+        $customers = Customer::getCustomerWithLeads($lastSegment, Session::get('scitsAdminSession')->home_id);
         $leadRejectTypes = LeadRejectType::getLeadRejectType();
-        return view('backEnd/salesFinance/leads/leads', compact('page', 'customers', 'leadRejectTypes'));
+        return view('backEnd/salesFinance/leads/leads', compact('page', 'customers', 'leadRejectTypes', 'lastSegment'));
     }
     public function create(){
         $page = "Leads";
@@ -111,10 +111,12 @@ class LeadController extends Controller
         $leadTask = LeadTaskType::getLeadTaskType();
         $attachment_type = AttachmentType::getAttachmentType();
         $lead_notes_data = LeadNote::getLeadNoteFromleadNoteType($id); 
-        $lead_task =  LeadTask::getLeadTaskTypeUser($lead->lead_ref); 
+        $lead_task_open =  LeadTask::getLeadTaskTypeUser($lead->lead_ref, 0); 
+        $lead_task_close =  LeadTask::getLeadTaskTypeUser($lead->lead_ref, 1); 
         $lead_attachment = LeadAttachment::getLeadAttachments($id);
-        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes_data', 'leadTask', 'lead_task', 'attachment_type', 'lead_attachment'));   
+        return view('backEnd/salesFinance/leads/leads_form', compact('lead', 'users', 'page','sources', 'status', 'notes_type', 'lead_notes_data', 'leadTask', 'lead_task_open', 'lead_task_close', 'attachment_type', 'lead_attachment'));   
     }
+
 
     // Lead Reject Type
     public function lead_reject_type(){
@@ -189,7 +191,7 @@ class LeadController extends Controller
         }
     }
 
-    public function lead_status_delete($id){
+    public function lead_status_delete($id){ 
         if(LeadStatus::deleteLeadStatus($id) ){
             return redirect()->route('leads.lead_status')->with('success', "Record deleted successfully");
         } else {
@@ -372,7 +374,7 @@ class LeadController extends Controller
 
     public function task_list(){
         $page = "Leads";
-        $lead_tasks = LeadTask::getLeadTasks();
+        $lead_tasks = LeadTask::getLeadTasks(0);
         return view('backEnd/salesFinance/leads/lead_task', compact('page', 'lead_tasks'));
     }
 
@@ -382,6 +384,22 @@ class LeadController extends Controller
             return redirect()->route('leads.list')->with('success', "Record deleted successfully");
         } else {
             return redirect()->route('leads.list')->with('error', "Record not found");
+        }
+    }
+
+    public function lead_mark_as_completed($task_id, $leadId){
+        if( LeadTask::taskMarkAsCompleted($task_id)){
+            return redirect()->route('leads.edit', ['id' => $leadId])->with('success', 'Task mark as completed');
+        } else {
+            return redirect()->route('leads.edit', ['id' => $leadId])->with('fails', 'Error in task complete');
+        } 
+    }
+
+    public function lead_authorized_by_admin($lead_id){
+        if (Lead::LeadAuthorizedAdmin($lead_id)){
+            return redirect()->route('leads.list')->with('success', "Lead Authorized successfully");
+        } else {
+            return redirect()->route('leads.list')->with('error', "Error in Lead Authorizataion");
         }
     }
 

@@ -246,7 +246,7 @@ if (isset($lead)) {
                                                             @foreach($lead_notes_data as $value)
                                                             <tr>
                                                                 <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y H:i') }}</td>
-                                                                <td>{{ $value->home_id }}</td>
+                                                                <td> @if(isset($value->user_id) ) $value->user_id @endif</td>
                                                                 <td>{{ $value->title }}</td>
                                                                 <td>{{ $value->notes }}</td>
                                                             </tr>
@@ -404,10 +404,13 @@ if (isset($lead)) {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if(isset($lead_task))
-                                                            @foreach($lead_task as $value)
                                                             <tr>
-                                                                <td></td>
+                                                                <td colspan="10"><strong>Open tasks</strong></td>
+                                                            </tr>
+                                                            @if(!$lead_task_open->isEmpty())
+                                                            @foreach($lead_task_open as $value)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y m:i')}}</td>
                                                                 <td>{{ $value->name }}</td>
                                                                 <td>{{ $value->task_type_title}}</td>
@@ -420,23 +423,42 @@ if (isset($lead)) {
                                                                     @endif
                                                                 </td>
                                                                 <td>{{ $value->notes}}</td>
-                                                                <td><a href="#" class="edit"><span style="color: #000;"><i data-toggle="modal" title="Edit" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}" data-target="#tasksModel" class="fa fa-edit fa-lg open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}"><i data-toggle="tooltip" title="" class="fa fa-trash-o fa-lg" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
+                                                                <td> <a href="{{ url('admin/sales-finance/leads/lead_mark_as_completed',['task' => $value->id, 'lead_id' => $lead->id]) }}"><i data-toggle="tooltip" title="" class="fa fa-check-circle fa-lg" data-original-title="Mark as Completed" aria-describedby="tooltip895132"></i></a> | <a href="#" class="edit"><span style="color: #000;"><i data-toggle="modal" title="Edit" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}" data-target="#tasksModel" class="fa fa-edit fa-lg open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}"><i data-toggle="tooltip" title="" class="fa fa-trash-o fa-lg" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
                                                             </tr>
                                                             @endforeach
                                                             @else
                                                             <tr>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
+                                                                <td colspan="10" class="text-center"><strong>No task(s) found</strong></td>
                                                             </tr>
                                                             @endif
+                                                            <tr>
+                                                                <td colspan="10"><strong>Close tasks</strong></td>
+                                                            </tr>
+                                                            @if(!$lead_task_close->isEmpty())
+                                                                @foreach($lead_task_close as $value)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y m:i')}}</td>
+                                                                    <td>{{ $value->name }}</td>
+                                                                    <td>{{ $value->task_type_title}}</td>
+                                                                    <td>{{ $value->title}}</td>
+                                                                    <td>{{$lead->contact_name}}</td>
+                                                                    <td>{{$lead->telephone}}</td>
+                                                                    <td> @if( $value->notification === 1 || $value->email_notify === 1 || $value->sms_notify === 1)
+                                                                        Yes, on<br>
+                                                                        {{ \Carbon\Carbon::parse($value->notify_date)->format('d/m/Y') }} {{ \Carbon\Carbon::parse($value->notify_time)->format('h:i') }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>{{ $value->notes}}</td>
+                                                                    <td><a href="#" class="edit"><span style="color: #000;"><i data-toggle="modal" title="Edit" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}" data-target="#tasksModel" class="fa fa-edit fa-lg open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}"><i data-toggle="tooltip" title="" class="fa fa-trash-o fa-lg" data-original-title="Delete" aria-describedby="tooltip895132"></i></a></td>
+                                                                </tr>
+                                                                @endforeach
+                                                            @else
+                                                            <tr>
+                                                                <td colspan="10" class="text-center"><strong>No task(s) found</strong></td>
+                                                            </tr>
+                                                            @endif
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -445,8 +467,8 @@ if (isset($lead)) {
 
                                             <div id="attechmantsTab" class="tab-pane fade">
                                                 <div class="tabheadingTitle">
-                                                    <h3>attechmants - </h3>
-                                                    <a href="#attechmentModel" data-toggle="modal" class="btn-primary open-modal-attachment">Attechments</a>
+                                                    <h3>Attachments - </h3>
+                                                    <a href="#attechmentModel" data-toggle="modal" class="btn-primary open-modal-attachment">Attachments</a>
                                                 </div>
 
                                                 <!-- modal -->
@@ -455,7 +477,7 @@ if (isset($lead)) {
                                                         <div class="modal-content">
                                                             <div class="modal-header terques-bg">
                                                                 <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                                                <h4 class="modal-title pupTitle">Attechmants</h4>
+                                                                <h4 class="modal-title pupTitle">Attachments</h4>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <form role="form" id="imageUploadForm" enctype="multipart/form-data">
@@ -503,7 +525,7 @@ if (isset($lead)) {
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-primary" id="saveAttachmentType">Save</button>
-                                                                <button type="button" class="btn btn-primary">Save & Close</button>
+                                                                <!-- <button type="button" class="btn btn-primary">Save & Close</button> -->
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                             </div>
                                                         </div>
@@ -550,8 +572,6 @@ if (isset($lead)) {
                                                                 <td>...</td>
                                                                 <td>...</td>
                                                                 <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
                                                             </tr>
                                                             @endif
                                                         </tbody>
@@ -590,6 +610,9 @@ if (isset($lead)) {
 <script>
     var addNotesTypeURL = '{{ route("leads.ajax.saveLeadNoteType") }}';
     var saveLeadNotes = '{{ route("leads.ajax.saveLeadNotes") }}';
+    var addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
+    var saveLeadAttachmentUrl =  '{{ route("leads.ajax.saveLeadAttachment") }}';
+
 </script>
 <!-- Custom JS -->
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>

@@ -5,27 +5,24 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>All Leads</h3>
+                    <h3>
+                        @switch($lastSegment)
+                            @case("leads") Leads @break
+                            @case("myLeads") My Leads @break
+                            @case("unassigned") Unassigned Leads @break
+                            @case("rejected") Rejected Leads @break
+                            @case("authorization") Authorization Leads @break
+                            @case("converted") Converted Leads @break
+                            @default {{-- No output if none of the cases match --}}
+                        @endswitch
+                                    
+                    </h3>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12 col-lg-12 col-xl-12 px-3">
-                <div class="jobsection">
-                    <a href="{{ url('/leads/add') }}" class="profileDrop">New Lead</a>
-                    <a href="#" class="profileDrop">All Leads <span>(5)</span></a>
-                    <a href="#" class="profileDrop">My Leads<span>(8)</span></a>
-                    <a href="#" class="profileDrop">Unassigned<span>(15)</span></a>
-                    <a href="#" class="profileDrop">Actioned<span>(76)</span></a>
-                    <a href="#" class="profileDrop">Rejected<span>(32)</span></a>
-                    <a href="#" class="profileDrop">Authorization<span>(2)</span></a>
-                    <a href="#" class="profileDrop">Converted</a>
-                    <a href="#" class="profileDrop">Search Leads</a>
-                    <a href="#" class="profileDrop">Task</a>
-                </div>
-            </div>
-        </div>
+        @include('frontEnd.salesAndFinance.lead.lead_buttons')
+
         <di class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
@@ -77,7 +74,7 @@
                         </thead>
 
                         <tbody>
-                           
+
 
                             @foreach ($customers as $customer)
                             <tr>
@@ -95,13 +92,13 @@
                                 <td>{{ $customer->postal_code }}</td>
                                 <td>{{ $customer->lead_ref }}</td>
                                 <td> @switch($customer->status)
-                                        @case(1) Contact Later @break
-                                        @case(2) Contacted @break
-                                        @case(3) New @break
-                                        @case(4) Pre Qualified @break
-                                        @case(5) Qualified @break
-                                        @case(6) Rejected @break
-                                        @default {{-- No output if none of the cases match --}}
+                                    @case(1) Contact Later @break
+                                    @case(2) Contacted @break
+                                    @case(3) New @break
+                                    @case(4) Pre Qualified @break
+                                    @case(5) Qualified @break
+                                    @case(6) Rejected @break
+                                    @default {{-- No output if none of the cases match --}}
                                     @endswitch
                                 </td>
                                 <td>
@@ -116,7 +113,7 @@
                                                 <hr class="dropdown-divider">
                                                 <a href="#" class="dropdown-item">CRM History</a>
                                                 <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
-                                                <a href="#" class="dropdown-item">Send for Authorization</a>
+                                                <a href="{{ url('/leads/authorization').'/'.$customer->id }}" class="dropdown-item">Send for Authorization</a>
                                                 <a href="#" class="dropdown-item">Send to Quote</a>
                                                 <a href="#" class="dropdown-item">Send to Job</a>
                                                 <a href="#" class="dropdown-item">Convert to Customer Only</a>
@@ -142,7 +139,7 @@
                                                             <label for="recipient-name" class="col-form-label">Reject Type:</label>
                                                             <input type="text" class="form-control" id="recipient-name">
                                                         </div>
-                                                        <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectModal2"><i class="fa-solid fa-square-plus"></i></a> 
+                                                        <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectModal2"><i class="fa-solid fa-square-plus"></i></a>
                                                         <div class="mb-3">
                                                             <label for="message-text" class="col-form-label">Reject Reason:</label>
                                                             <textarea class="form-control" id="message-text"></textarea>
