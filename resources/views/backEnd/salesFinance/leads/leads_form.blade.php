@@ -3,6 +3,12 @@
 @section('content')
 <link rel="stylesheet" href="{{ url('public/css/salesFinance/custom_lead.css') }}" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+    .error {
+        color: red;
+        font-size: 0.9em;
+    }
+</style>
 <?php
 if (isset($lead)) {
     $action   = route('leads.store');
@@ -83,9 +89,10 @@ if (isset($lead)) {
                                 <div class="col-md-4">
                                     <label class="formTitle">Data Feilds</label>
                                     <div class="form-group">
-                                        <label class="col-lg-3 control-label">Full Name</label>
+                                        <label class="col-lg-3 control-label">Full Name *</label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="name" class="form-control" placeholder="Full Name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}" maxlength="255">
+                                            <input type="text" name="name" class="form-control" id="inputName" placeholder="Full Name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}" maxlength="255">
+                                            <span id="fullNameError" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -95,15 +102,17 @@ if (isset($lead)) {
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-3 control-label">Email Address</label>
+                                        <label class="col-lg-3 control-label">Email Address *</label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="email" class="form-control" placeholder="Email Address" value="{{ (isset($lead->email)) ? $lead->email : '' }}" maxlength="255">
+                                            <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email Address" value="{{ (isset($lead->email)) ? $lead->email : '' }}" maxlength="255">
+                                            <span id="emailError" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-3 control-label">Telephone</label>
+                                        <label class="col-lg-3 control-label">Telephone *</label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="telephone" class="form-control" placeholder="Telephone" value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" maxlength="255">
+                                            <input type="text" name="telephone" class="form-control" id="inputTelephone" placeholder="Telephone" value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" maxlength="255">
+                                            <span id="phoneError" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -407,6 +416,7 @@ if (isset($lead)) {
                                                             <tr>
                                                                 <td colspan="10"><strong>Open tasks</strong></td>
                                                             </tr>
+                                                            @if(isset($lead_task_open))
                                                             @if(!$lead_task_open->isEmpty())
                                                             @foreach($lead_task_open as $value)
                                                             <tr>
@@ -434,6 +444,8 @@ if (isset($lead)) {
                                                             <tr>
                                                                 <td colspan="10"><strong>Close tasks</strong></td>
                                                             </tr>
+                                                            @endif
+                                                            @if(isset($lead_task_open))
                                                             @if(!$lead_task_close->isEmpty())
                                                                 @foreach($lead_task_close as $value)
                                                                 <tr>
@@ -458,7 +470,7 @@ if (isset($lead)) {
                                                                 <td colspan="10" class="text-center"><strong>No task(s) found</strong></td>
                                                             </tr>
                                                             @endif
-
+                                                            @endif
                                                         </tbody>
                                                     </table>
                                                 </div>

@@ -92,14 +92,14 @@
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="{{ url('/leads/add') }}" class="dropdown-item">New Lead</a>
                                     <a href="{{ url('/leads/leads') }}" class="dropdown-item">All Lead</a>
-                                    <a href="{{ url('/leads/my_lead') }}" class="dropdown-item">My Leads</a>
+                                    <a href="{{ url('/lead/myLeads') }}" class="dropdown-item">My Leads</a>
                                     <a href="{{ url('/leads/unassigned') }}" class="dropdown-item">Unassigned Lead</a>
                                     <a href="{{ url('/leads/actioned') }}" class="dropdown-item">Actioned Lead</a>
                                     <a href="{{ url('/leads/rejected') }}" class="dropdown-item">Rejected Lead</a>
-                                    <a href="{{ url('/leads/authorization') }}" class="dropdown-item">Authorization</a>
-                                    <a href="{{ url('/leads/converted_leads') }}" class="dropdown-item">Converted Lead</a>
+                                    <a href="{{ url('/lead/authorization') }}" class="dropdown-item">Authorization</a>
+                                    <a href="{{ url('/leads/converted') }}" class="dropdown-item">Converted Lead</a>
                                     <a href="{{ url('/leads/search_lead') }}" class="dropdown-item">Search Lead</a>
-                                    <a href="{{ url('/leads/lead_tasks') }}" class="dropdown-item">Lead Task</a>
+                                    <a href="{{ url('/leads/tasks') }}" class="dropdown-item">Lead Task</a>
                                 </div>
                             </div>
 
