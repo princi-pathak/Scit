@@ -235,6 +235,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit_save');
 	Route::get('/add_currency','App\Http\Controllers\frontEnd\CustomerController@add_currency');
+	Route::post('/default_address','App\Http\Controllers\frontEnd\CustomerController@default_address');
+	Route::post('/save_contact','App\Http\Controllers\frontEnd\CustomerController@save_contact');
+	Route::post('/save_site','App\Http\Controllers\frontEnd\CustomerController@save_site');
+	Route::post('/save_login','App\Http\Controllers\frontEnd\CustomerController@save_login');
+	Route::get('/active_customer','App\Http\Controllers\frontEnd\CustomerController@active_customer');
 	// end here
 
 

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://www.ville-pont-eveque.fr/tools/library/DataTables/media/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://www.ville-pont-eveque.fr/tools/library/DataTables/extensions/Select/css/select.dataTables.css" />
     <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <style>
         table.dataTable td.select-checkbox:before{
@@ -252,7 +253,7 @@
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{url('customer_add_edit')}}">New Customers</a></li>
-                                            <li><a class="dropdown-item" href="#">Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{url('active_customer')}}">Active Customers</a></li>
                                             <li><a class="dropdown-item" href="#">Inactive Customers</a></li>
                                             <li><a class="dropdown-item" href="#">Customers Logins</a></li>
                                         </ul>
