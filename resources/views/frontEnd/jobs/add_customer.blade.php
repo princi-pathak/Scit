@@ -187,7 +187,7 @@
                                         </div>
                                     </div>
                                     <div class="field nextfornBtn">
-                                        <button class="firstNext next profileDrop">Next</button>
+                                        <button type="button" class="firstNext next profileDrop">Next</button>
                                     </div>
                                 </div>
 
@@ -235,7 +235,7 @@
                                         <select class="form-control editInput selectOptions" name="country_code" id="country_code" required>
                                                 <option value="" selected disabled>None</option>
                                                 <?php foreach($country as $country_code){?>
-                                                    <option value="{{$country_code->code}}">{{$country_code->name}} ({{$country_code->code}})</option>
+                                                    <option value="{{$country_code->id}}">{{$country_code->name}} ({{$country_code->code}})</option>
                                                 <?php }?>
                                             </select>
                                         </div>
@@ -249,7 +249,7 @@
                                     </div>
                                     <div class="field btns nextfornBtn">
                                         <button class="prev-1 prev profileDrop">Previous</button>
-                                        <button class="next-1 next profileDrop">Next</button>
+                                        <button type="button" class="next-1 next profileDrop">Next</button>
                                     </div>
                                 </div>
                                 <div class="page">
@@ -359,7 +359,7 @@
 
                                     <div class="field btns nextfornBtn">
                                         <button class="prev-2 prev profileDrop">Previous</button>
-                                        <button class="next-2 next profileDrop">Next</button>
+                                        <button type="button" class="next-2 next profileDrop">Next</button>
                                     </div>
                                 </div>
                                 <div class="page">
@@ -373,7 +373,7 @@
                                                     <label for="inputCountry" class="col-sm-2 col-form-label">Show Message</label>
                                                     <div class="col-sm-10">
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" name="inlinecheckOptions" id="show_msg" name="show_msg" value="0">
+                                                            <input class="form-check-input" type="checkbox" id="show_msg" name="show_msg" value="0">
                                                             <label class="form-check-label checkboxtext" for="checkalrt">Yes, show
                                                                 the
                                                                 message</label>
@@ -402,7 +402,7 @@
                                     </div>
                                     <div class="field btns nextfornBtn mt-3 p-0">
                                         <button class="prev-3 prev profileDrop">Previous</button>
-                                        <button class="next-3 next profileDrop">Next</button>
+                                        <button type="button" class="next-3 next profileDrop">Next</button>
                                     </div>
                                 </div>
 
@@ -428,22 +428,41 @@
                                                 <div class="productDetailTable">
                                                     <table class="table">
                                                         <thead class="table-light">
-                                                            <tr>
-                                                                <th>Asset Ref </th>
-                                                                <th>Title </th>
-                                                                <th>Description</th>
-                                                                <th>Asset Status </th>
-                                                                <th>Assigned To </th>
-                                                            </tr>
+                                                        <tr class="active">
+                                                            <th><input type="checkbox"></th>
+                                                            <th>Contact Name</th>
+                                                            <th>Customer Job Title</th>
+                                                            <th>Email</th>
+                                                            <th>Telephone</th>
+                                                            <th>Mobile</th>
+                                                            <th>Address</th>
+                                                            <th>City</th>
+                                                            <th>County</th>
+                                                            <th>Postcode</th>
+                                                            <th>Default Billing </th>
+
+                                                        </tr>
                                                         </thead>
-                                                        <tbody>
+                                                        <tbody id="contact_result">
+                                                        <?php foreach($contact as $conv){
+                                                                $job_title_details=App\Models\Job_title::find($conv->job_title_id);
+                                                                // echo "<pre>";print_r($job_title->name);die;
+                                                        ?>
                                                             <tr>
-                                                                <td>..</td>
-                                                                <td>..</td>
-                                                                <td>..</td>
-                                                                <td>..</td>
-                                                                <td>..</td>
+                                                                <td><input type="checkbox" class="checkboxContactId" value="{{$conv->id}}"></td>
+                                                                <td>{{$conv->contact_name}}</td>
+                                                                <td>{{$job_title_details->name}}</td>
+                                                                <td>{{$conv->email}}</td>
+                                                                <td>{{$conv->telephone}}</td>
+                                                                <td>{{$conv->mobile}}</td>
+                                                                <td>{{$conv->address}}</td>
+                                                                <td>{{$conv->city}}</td>
+                                                                <td>{{$conv->country}}</td>
+                                                                <td>{{$conv->postcode}}</td>
+                                                                <td><?php echo ($conv->default_billing == 1)?"Yes":"No";?></td>
+
                                                             </tr>
+                                                            <?php }?>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -452,7 +471,7 @@
                                     </div><!-- End  off newJobForm -->
                                     <div class="field btns nextfornBtn mt-3 p-0">
                                         <button class="prev-4 prev profileDrop">Previous</button>
-                                        <button class="next-4 next profileDrop">Next</button>
+                                        <button type="button" class="next-4 next profileDrop">Next</button>
                                     </div>
                                 </div>
 
@@ -463,7 +482,7 @@
                                         <div class="row">
                                             <div class="col-sm-12 mb-3 mt-2">
                                                 <div class="jobsection">
-                                                    <a href="#" class="profileDrop">Add Site</a>
+                                                    <a href="javascript:void(0)" onclick="open_model(2)" class="profileDrop">Add Site</a>
                                                     <a href="#" class="profileDrop">Export</a>
                                                     <a href="#" class="profileDrop">Import</a>
                                                     <label class="col-form-label"><a href="#!">Click here </a>to download import
@@ -478,22 +497,39 @@
                                                 <div class="productDetailTable">
                                                     <table class="table">
                                                         <thead class="table-light">
-                                                            <tr>
-                                                                <th>Asset Ref </th>
-                                                                <th>Title </th>
-                                                                <th>Description</th>
-                                                                <th>Asset Status </th>
-                                                                <th>Assigned To </th>
-                                                            </tr>
+                                                        <tr class="active">
+                                                            <th><input type="checkbox"></th>
+                                                            <th>Contact Name</th>
+                                                            <th>Customer Job Title</th>
+                                                            <th>Email</th>
+                                                            <th>Telephone</th>
+                                                            <th>Mobile</th>
+                                                            <th>Address</th>
+                                                            <th>City</th>
+                                                            <th>County</th>
+                                                            <th>Postcode</th>
+                                                            <th>Region </th>
+
+                                                        </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>..</td>
-                                                                <td>..</td>
-                                                                <td>..</td>
-                                                                <td>..</td>
-                                                                <td>..</td>
+                                                        <tbody id="site_result">
+                                                            <?php foreach($site as $sitev){
+                                                                $job_title_detail=App\Models\Job_title::find($sitev->title_id);
+                                                                ?>
+                                                                <tr>
+                                                                    <td><input type="checkbox" value="{{$sitev->id}}"></td>
+                                                                    <td>{{$sitev->contact_name}}</td>
+                                                                    <td>{{$job_title_detail->name}}</td>
+                                                                    <td>{{$sitev->email}}</td>
+                                                                    <td>{{$sitev->telephone}}</td>
+                                                                    <td>{{$sitev->mobile}}</td>
+                                                                    <td>{{$sitev->address}}</td>
+                                                                    <td>{{$sitev->city}}</td>
+                                                                    <td>{{$sitev->country}}</td>
+                                                                    <td>{{$sitev->post_code}}</td>
+                                                                    <td></td>
                                                             </tr>
+                                                            <?php }?>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -502,39 +538,46 @@
                                     </div><!-- End  off newJobForm -->
                                     <div class="field btns nextfornBtn mt-3 p-0">
                                         <button class="prev-4 prev profileDrop">Previous</button>
-                                        <button class="next-4 next profileDrop">Next</button>
+                                        <button type="button" class="next-4 next profileDrop">Next</button>
                                     </div>
                                 </div>
                                 <div class="page">
                                     <div class="title">Customer Logins</div>
                                     <div class="newJobForm mt-4">
-                                        <label class="upperlineTitle">Logins</label>
+                                        <label class="upperlineTitle">
+                                            Logins</label>
                                         <div class="row">
                                             <div class="col-sm-12 mb-3 mt-2">
                                                 <div class="jobsection">
-                                                    <a href="#" class="profileDrop">Add Login</a>
+                                                    <a href="javascript:void(0)" onclick="open_model(3)" class="profileDrop">Add Login</a>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="productDetailTable">
                                                     <table class="table">
                                                         <thead class="table-light">
-                                                            <tr>
-                                                                <th>Asset Ref </th>
-                                                                <th>Title </th>
-                                                                <th>Description</th>
-                                                                <th>Asset Status </th>
-                                                                <th>Assigned To </th>
-                                                            </tr>
+                                                        <tr class="active">
+                                                            <th>#</th>
+                                                            <th>Full Name</th>
+                                                            <th>Username</th>
+                                                            <th>Email</th>
+                                                            <th>Telephone</th>
+                                                            <th>Last Login</th>
+                                                            <th>Status</th>
+                                                        </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>..</td>
-                                                                <td>..</td>
-                                                                <td>..</td>
-                                                                <td>..</td>
-                                                                <td>..</td>
+                                                        <tbody id="login_result">
+                                                            <?php foreach($login as $k=>$logv){?>
+                                                                <tr>
+                                                                    <td>{{++$k}}</td>
+                                                                    <td>{{$logv->name}}</td>
+                                                                    <td>{{$logv->email}}</td>
+                                                                    <td>{{$logv->email}}</td>
+                                                                    <td>{{$logv->telephone}}</td>
+                                                                    <td></td>
+                                                                    <td><?php echo($logv->status == 1)?"Active":"In-active";?></td>
                                                             </tr>
+                                                            <?php }?>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -543,7 +586,7 @@
                                     </div><!-- End  off newJobForm -->
                                     <div class="field btns nextfornBtn mt-3 p-0">
                                         <button class="prev-5 prev profileDrop">Previous</button>
-                                        <button class="submit profileDrop">Submit</button>
+                                        <button type="button" class="submit profileDrop">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -552,7 +595,8 @@
                 </div>
             </div> <!-- End  off col-12 -->
             <!-- Modal -->
-            <div class="modal fade" id="loginContactModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+             <!-- Contact Model -->
+            <div class="modal fade" id="ContactModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -562,7 +606,7 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control editInput" id="customer_name" value="">
+                                <p id="customer_name" class="customer_name"></p>
                             </div>
                         </div>
                         <div class="modal-body">
@@ -570,20 +614,20 @@
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Default Billing*</label>
                                     <div class="col-sm-9">
-                                        <input type="radio" class="form-control editInput" name="billing" id="billing1" value="1"> Yes
-                                        <input type="radio" class="form-control editInput" name="billing" id="billing2" value="0"> No
+                                        <input type="radio" class="editInput" name="billing" id="billing1" value="1"> Yes
+                                        <input type="radio" class="editInput" name="billing" id="billing2" value="0"> No
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Contact Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="login_name" id="login_name">
+                                        <input type="text" class="form-control editInput" name="contact_name" id="contact_name">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Job Title(Position)</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control editInput selectOptions" id="login_title_id" name="login_title_id">
+                                        <select class="form-control editInput selectOptions" id="contact_title_id" name="contact_title_id">
                                             <option selected disabled>Select Job Title</option>
                                             <?php foreach($job_title as $titlev){?>
                                             <option value="{{$titlev->id}}">{{$titlev->name}}</option>
@@ -594,65 +638,65 @@
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="login_email" id="login_email">
+                                        <input type="text" class="form-control editInput" name="contact_email" id="contact_email">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Telephone</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="login_telephone" id="login_telephone">
+                                        <input type="text" class="form-control editInput" name="contact_telephone" id="contact_telephone">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Mobile</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="login_mobile" id="login_mobile">
+                                        <input type="text" class="form-control editInput" name="contact_mobile" id="contact_mobile">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Fax</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="login_fax" id="login_fax">
+                                        <input type="text" class="form-control editInput" name="contact_fax" id="contact_fax">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Address Details</label>
                                     <div class="col-sm-9">
                                         Same as default
-                                        <input type="checkbox" class="form-control editInput" name="defaultaddcheck" id="defaultaddcheck">
+                                        <input type="checkbox" class="editInput" name="defaultaddcheck" id="defaultaddcheck">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Address*</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control textareaInput" name="login_address" id="login_address" rows="3" placeholder="Site Notes"></textarea>
+                                        <textarea class="form-control textareaInput" name="contact_address" id="contact_address" rows="3" placeholder="Site Notes"></textarea>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">City</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="login_city" id="login_city">
+                                        <input type="text" class="form-control editInput" name="contact_city" id="contact_city">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Country</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="login_country" id="login_country">
+                                        <input type="text" class="form-control editInput" name="contact_country" id="contact_country">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Postcode</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="login_postcode" id="login_postcode">
+                                        <input type="text" class="form-control editInput" name="contact_postcode" id="contact_postcode">
                                     </div>
                                 </div>
                                 <div class="mb-3 row field">
                                         <label for="inputCountry" class="col-sm-3 col-form-label">Country</label>
                                         <div class="col-sm-9">
-                                        <select class="form-control editInput selectOptions" name="login_country_code" id="login_country_code" required>
+                                        <select class="form-control editInput selectOptions" name="contact_country_code" id="contact_country_code" required>
                                                 <option value="" selected disabled>None</option>
-                                                <?php foreach($country as $country_codev){?>
-                                                    <option value="{{$country_codev->code}}">{{$country_codev->name}} ({{$country_codev->code}})</option>
+                                                <?php foreach($country as $country_idc){?>
+                                                    <option value="{{$country_idc->id}}">{{$country_idc->name}} ({{$country_idc->code}})</option>
                                                 <?php }?>
                                             </select>
                                         </div>
@@ -661,8 +705,237 @@
                         </div>
                         <div class="modal-footer">
                             <div class="pageTitleBtn p-0">
-                                <button type="button" class="profileDrop" id="addNotesType">Save</button>
-                                <button type="button" class="profileDrop">Save & Close</button>
+                                <button type="button" class="profileDrop" id="addNotesType" onclick="save_contact()">Save</button>
+                                <button type="button" class="profileDrop" onclick="SaveAndClose(1)">Save & Close</button>
+                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Site Model start -->
+            <div class="modal fade" id="SiteModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Site Address</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                            <div class="col-sm-9">
+                                <p id="customer_name" class="customer_name"></p>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" id="site_form">
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Site Name*</label>
+                                    <div class="col-sm-9">
+                                    <input type="text" class="form-control editInput" name="site_name" id="site_name">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Contact Name*</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="site_contact_name" id="site_contact_name">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Job Title(Position)</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control editInput selectOptions" id="site_title_id" name="site_title_id">
+                                            <option selected disabled>Select Job Title</option>
+                                            <?php foreach($job_title as $titlev){?>
+                                            <option value="{{$titlev->id}}">{{$titlev->name}}</option>
+                                            <?php }?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Company Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="company_name" id="company_name">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="site_email" id="site_email">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Telephone</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="site_telephone" id="site_telephone">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Mobile</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="site_mobile" id="site_mobile">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Fax</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="site_fax" id="site_fax">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Region</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control editInput selectOptions" id="site_region" name="site_region">
+                                            <option selected disabled>None</option>
+                                            <option value="1">India</option>
+                                            <option value="2">Canada</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Address*</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control textareaInput" name="site_address" id="site_address" rows="3" placeholder="Site Notes"></textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">City</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="site_city" id="site_city">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Country</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="site_country" id="site_country">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Postcode</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="site_postcode" id="site_postcode">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row field">
+                                        <label for="inputCountry" class="col-sm-3 col-form-label">Country</label>
+                                        <div class="col-sm-9">
+                                        <select class="form-control editInput selectOptions" name="site_country_id" id="site_country_id" required>
+                                                <option value="" selected disabled>None</option>
+                                                <?php foreach($country as $country_ids){?>
+                                                    <option value="{{$country_ids->id}}">{{$country_ids->name}} ({{$country_ids->code}})</option>
+                                                <?php }?>
+                                            </select>
+                                        </div>
+                                </div>
+                                <div class="mb-3 row field">
+                                    <label for="inputCountry" class="col-sm-3 col-form-label">Default Catalogue</label>
+                                    <div class="col-sm-9">
+                                    <select class="form-control editInput selectOptions" name="site_catalogue_id" id="site_catalogue_id" required>
+                                            <option value="" selected disabled>None</option>
+                                            <option value="1">General Catalogue</option>
+                                            <option value="2">Custome Catalogue</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row field">
+                                    <label for="inputCountry" class="col-sm-3 col-form-label">Notes</label>
+                                    <div class="col-sm-12">
+                                        <textarea name="site_note" id="site_note" rows="3" class="form-control editInput textareaInput"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="pageTitleBtn p-0">
+                                <button type="button" class="profileDrop" id="addNotesType" onclick="save_site()">Save</button>
+                                <button type="button" class="profileDrop" onclick="SaveAndClose(2)">Save & Close</button>
+                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Login Model start -->
+            <div class="modal fade" id="LoginModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Customer Login</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                            <div class="col-sm-9">
+                                <p id="customer_name" class="customer_name"></p>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" id="login_form">
+                            <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Email*</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="login_email" id="login_email">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Password Type*</label>
+                                    <div class="col-sm-9">
+                                        <input type="radio" class="editInput" name="password_type" id="password_type1"> Generate Now
+                                        <input type="radio" class="editInput" name="password_type" id="password_type2" checked> Email Password
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Name*</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="login_name" id="login_name">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Telephone</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="login_telephone" id="login_telephone">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row field">
+                                    <label for="inputCountry" class="col-sm-3 col-form-label">Status</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control editInput selectOptions" name="login_status" id="login_status" required>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">Inactive</option>
+                                            </select>
+                                        </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Access Rights</label>
+                                    <div class="col-sm-9">
+                                        <input type="checkbox" id="login_check" name="login_check" value="1" class="login_check"> Quotes
+                                        <input type="checkbox" id="login_check" name="login_check" value="2" class="login_check"> Jobs
+                                        <input type="checkbox" id="login_check" name="login_check" value="3" class="login_check"> Invoices
+                                        <input type="checkbox" id="login_check" name="login_check" value="4" class="login_check"> File Manager
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Projects</label>
+                                    <div class="col-sm-9">
+                                        <input type="radio" class="editInput" name="project" id="project1"> All
+                                        <input type="radio" class="editInput" name="project" id="project2"> Customise
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3 row field">
+                                    <label for="inputCountry" class="col-sm-3 col-form-label">Notes</label>
+                                    <div class="col-sm-12">
+                                        <textarea name="login_note" id="login_note" rows="3" class="form-control editInput textareaInput"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="pageTitleBtn p-0">
+                                <button type="button" class="profileDrop" id="addNotesType" onclick="save_login()">Save</button>
+                                <button type="button" class="profileDrop" onclick="SaveAndClose(3)">Save & Close</button>
                                 <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -785,8 +1058,10 @@
     function get_form(form_id){
         if(form_id == 0 || form_id == 1 || form_id == 2 || form_id == 3){
             get_saveFromData();
-        }else if(form_id == 4){
-            get_saveForthFromData();
+        }else if(form_id == 4 || form_id == 5 || form_id == 6){
+            return true;
+        }else {
+            return false;
         }
     }
     function get_saveFromData(){
@@ -805,7 +1080,7 @@
                 $("#customer_id").val(data.id);
                 $("#site_customer_id").val(data.id);
                 $("#login_customer_id").val(data.id);
-                $("#customer_name").val(data.name);
+                $(".customer_name").text(data.name);
             }
         });
     }
@@ -824,9 +1099,176 @@
     function open_model(id){
         if(id == 1){
             $('#contact_form')[0].reset();
-            $("#loginContactModel").modal('show');
+            $("#ContactModel").modal('show');
             // $("#additionl_contact_model").modal('show');
+        }else if(id == 2){
+            $('#site_form')[0].reset();
+            $("#SiteModel").modal('show');
+        }else if(id == 3){
+            $('#login_form')[0].reset();
+            $("#LoginModel").modal('show');
         }
+    }
+    $("#show_msg").change(function() {
+        if ($('#show_msg').is(':checked')) {
+            $("#show_msg").val(1);
+        }
+    });
+    $("#defaultaddcheck").change(function() {
+        var check;
+        if ($('#defaultaddcheck').is(':checked')) {
+            check=1;
+        }else {
+            check=0;
+        }
+        var token='<?php echo csrf_token();?>'
+        var login_customer_id=$("#login_customer_id").val();
+        $.ajax({
+            type: "POST",
+            url: "{{url('/default_address')}}",
+            data: {check:check,login_customer_id:login_customer_id,_token:token},
+            success: function(data) {
+                console.log(data);
+                if(check == 1){
+                    $("#contact_address").val(data.details.address);
+                    $("#contact_city").val(data.details.city);
+                    $("#contact_country").val(data.details.country);
+                    $("#contact_postcode").val(data.details.postal_code);
+                }else{
+                    $("#contact_address").val('');
+                    $("#contact_city").val('');
+                    $("#contact_country").val('');
+                    $("#contact_postcode").val('');
+                }
+                $("#contact_country_code").html(data.reslut);
+            }
+        });
+    });
+    function SaveAndClose(id){
+        if(id == 1){
+            $("#ContactModel").modal('hide');
+            save_contact();
+        }else if(id == 2){
+            save_site();
+            $("#SiteModel").modal('hide');
+        }else if(id == 3){
+            save_login();
+            $("#LoginModel").modal('hide');
+        }else {
+            alert("Unauthorized Model");
+            return false;
+        }
+    }
+    function save_contact(){
+        var token='<?php echo csrf_token();?>'
+        var default_billing;
+        if ($('#billing1').is(':checked')) {
+            default_billing=1;
+        }else {
+            default_billing=0;
+        }
+        var contact_name=$("#contact_name").val();
+        var customer_id=$("#login_customer_id").val();
+        var job_title_id=$('#contact_title_id').val();
+        var email=$("#contact_email").val();
+        var telephone=$("#contact_telephone").val();
+        var mobile=$("#contact_mobile").val();
+        var fax=$("#contact_fax").val();
+        var address=$("#contact_address").val();
+        var city=$("#contact_city").val();
+        var country=$("#contact_country").val();
+        var postcode=$("#contact_postcode").val();
+        var country_id=$("#contact_country_code").val();
+        
+        $.ajax({
+            type: "POST",
+            url: "{{url('/save_contact')}}",
+            data: {default_billing:default_billing,contact_name:contact_name,customer_id:customer_id,job_title_id:job_title_id,
+                email:email,telephone:telephone,mobile:mobile,fax:fax,address:address,city:city,country:country,postcode:postcode,
+                country_id:country_id,_token:token},
+            success: function(data) {
+                console.log(data);
+                $('#contact_result').append(data);
+                $("#ContactModel").modal('hide');
+                
+            }
+        });
+    }
+    function save_site(){
+        var token='<?php echo csrf_token();?>'
+        var site_name=$("#site_name").val();
+        var contact_name=$("#site_contact_name").val();
+        var customer_id=$("#site_customer_id").val();
+        var title_id=$('#site_title_id').val();
+        var company_name=$("#company_name").val();
+        var email=$("#site_email").val();
+        var telephone=$("#site_telephone").val();
+        var mobile=$("#site_mobile").val();
+        var fax=$("#site_fax").val();
+        var region=$("#site_region").val();
+        var address=$("#site_address").val();
+        var city=$("#site_city").val();
+        var country=$("#site_country").val();
+        var catalogue=$("#site_catalogue_id").val();
+        var post_code=$("#site_postcode").val();
+        var country_id=$("#site_country_id").val();
+        var notes=$("#site_note").val();
+        
+        $.ajax({
+            type: "POST",
+            url: "{{url('/save_site')}}",
+            data: {site_name:site_name,contact_name:contact_name,customer_id:customer_id,title_id:title_id,company_name:company_name,
+                email:email,telephone:telephone,mobile:mobile,fax:fax,region:region,address:address,city:city,country:country,
+                catalogue:catalogue,post_code:post_code,country_id:country_id,notes:notes,_token:token},
+            success: function(data) {
+                console.log(data);
+                $('#site_result').append(data);
+                $("#SiteModel").modal('hide');
+                
+            }
+        });
+    }
+    function save_login(){
+        var token='<?php echo csrf_token();?>'
+        var email=$('#login_email').val();
+        var customer_id=$("#login_customer_id").val();
+        var password_type;
+        if ($('#password_type1').is(':checked')) {
+            password_type = 1;
+        } else {
+            password_type = 2;
+        }
+        var name=$("#login_name").val();
+        var telephone=$("#login_telephone").val();
+        var status=$("#login_status").val();
+       
+        var access_rights=[];
+        $('.login_check').each(function(){
+            if ($(this).is(':checked')) {
+                access_rights.push($(this).val());
+            } 
+        });
+        access_rights=access_rights;
+        var projects;
+        if ($('#project1').is(':checked')) {
+            projects = 1;
+        } else {
+            projects = 2;
+        }
+        var notes=$("#login_note").val();
+        
+        $.ajax({
+            type: "POST",
+            url: "{{url('/save_login')}}",
+            data: {email:email,customer_id:customer_id,password_type:password_type,name:name,telephone:telephone,status:status,
+                access_rights:access_rights,projects:projects,notes:notes,_token:token},
+            success: function(data) {
+                console.log(data);
+                $('#login_result').append(data);
+                $("#LoginModel").modal('hide');
+                
+            }
+        });
     }
 </script>
 @include('frontEnd.jobs.layout.footer')

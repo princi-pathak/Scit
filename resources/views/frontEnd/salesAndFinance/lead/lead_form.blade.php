@@ -2,6 +2,12 @@
 @section('title',' Add Leads')
 <link rel="stylesheet" href="{{ url('public/css/salesFinance/custom_lead.css') }}" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+    .error {
+        color: red;
+        font-size: 0.9em;
+    }
+</style>
 <?php
 if (isset($lead)) {
     $action   = route('lead.store');
@@ -24,13 +30,6 @@ if (isset($lead)) {
                     <h3>New Leads</h3>
                 </div>
             </div>
-            <!-- <div class="col-md-8 col-lg-8 col-xl-8 px-3">
-                    <div class="pageTitleBtn">
-                        <button type="submit" class="profileDrop reDesignBtn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                        <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
-                        <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a>
-                    </div>
-                </div> -->
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -46,7 +45,7 @@ if (isset($lead)) {
                                         <div class="col-sm-9">
                                             <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->id)) ? $lead->id : '' }}">
                                             <input type="hidden" name="customer_id" value="{{ (isset($lead->customer_id)) ? $lead->customer_id : '' }}">
-                                            <input type="text" name="lead_ref" class="form-control-plaintext editInput" id="inputName" placeholder="Auto Generate" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" disabled>
+                                            <input type="text" name="lead_ref" class="form-control-plaintext editInput" id="" placeholder="Auto Generate" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" disabled>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -85,11 +84,13 @@ if (isset($lead)) {
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Preferred date call</label>
                                         <div class="col-sm-3">
-                                            <input type="date" name="prefer_date" class="form-control editInput" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}" id="inputName">
+                                            <input type="date" name="prefer_date" class="form-control editInput" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}" id="">
                                         </div>
                                         <div class="col-sm-1"><label class="col-form-label">To</label></div>
-                                        <div class="col-sm-3">
-                                            <input type="time" name="prefer_time" class="form-control editInput" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}" id="inputName">
+
+                                        <div class="col-sm-2">
+                                            <input type="time" name="prefer_time" class="form-control editInput" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}" id="">
+
                                         </div>
                                         <div class="col-sm-2 p-0">
                                             <label for="inputContact" class="col-form-label">Next 30 days</label>
@@ -103,25 +104,28 @@ if (isset($lead)) {
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Full Name *</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" name="name" id="inputName" placeholder="Full Name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}">
+                                            <input type="text" class="form-control editInput" name="name" id="inputName" placeholder="Full Name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}" required>
+                                            <span id="fullNameError" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputEmail" class="col-sm-3 col-form-label">Company Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" name="company_name" id="inputEmail" placeholder="Company Name" value="{{ (isset($lead->name)) ? $lead->name : '' }}">
+                                            <input type="text" class="form-control editInput" name="company_name" id="inputcompany" placeholder="Company Name" value="{{ (isset($lead->name)) ? $lead->name : '' }}">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Email Address *</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="email" class="form-control editInput" id="inputMobile" placeholder="Email Address" value="{{ (isset($lead->email)) ? $lead->email : '' }}">
+                                            <input type="text" name="email" class="form-control editInput" id="inputEmail" placeholder="Email Address" value="{{ (isset($lead->email)) ? $lead->email : '' }}" required>
+                                            <span id="emailError" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputEmail" class="col-sm-3 col-form-label">Telephone *</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="telephone" class="form-control editInput" id="inputEmail" placeholder="Telephone " value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}">
+                                            <input type="text" name="telephone" class="form-control editInput" id="inputTelephone" placeholder="Telephone " value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" required>
+                                            <span id="phoneError" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -182,7 +186,6 @@ if (isset($lead)) {
                                         <button class="nav-link" id="nav-Tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-Tasks" type="button" role="tab" aria-controls="nav-Tasks" aria-selected="false">Tasks</button>
 
                                         <button class="nav-link" id="nav-attachments-tab" data-bs-toggle="tab" data-bs-target="#nav-attachments" type="button" role="tab" aria-controls="nav-attachments" aria-selected="false">Attechmants</button>
-                                        <!-- <button class="nav-link" id="nav-attechmants-tab" type="button" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">Attechmants</button> -->
 
                                     </div>
                                 </nav>
@@ -215,8 +218,6 @@ if (isset($lead)) {
                                                 <div class="col-sm-3 mt-3">
                                                     <div class="jobsection">
                                                         <button type="button" id="saveLeadNotes" class="profileDrop">Save Notes</button>
-
-                                                        <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save Notes</a> -->
                                                     </div>
                                                 </div>
 
@@ -225,6 +226,7 @@ if (isset($lead)) {
                                                         <table class="table" id="containerA">
                                                             <thead class="table-light">
                                                                 <tr>
+
                                                                     <th>Data</th>
                                                                     <th>By</th>
                                                                     <th>Type</th>
@@ -243,11 +245,7 @@ if (isset($lead)) {
                                                                 @endforeach
                                                                 @else
                                                                 <tr>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
+                                                                    <td colspan="4">no data </td>
                                                                 </tr>
                                                                 @endif
                                                             </tbody>
@@ -255,7 +253,6 @@ if (isset($lead)) {
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <!-- Button trigger modal -->
 
                                             <!-- Modal -->
@@ -337,6 +334,7 @@ if (isset($lead)) {
                                                                 <div class="mb-3 row">
                                                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks Type*</label>
                                                                     <div class="col-sm-9">
+
                                                                         <select class="form-control editInput selectOptions" id="lead_task_type_id" name="lead_task_type_id">
                                                                             @if(isset($leadTask))
                                                                             @foreach($leadTask as $value)
@@ -344,6 +342,7 @@ if (isset($lead)) {
                                                                             @endforeach
                                                                             @endif
                                                                         </select>
+
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
@@ -489,40 +488,40 @@ if (isset($lead)) {
                                                         @endif
                                                         @if(isset($lead_task_open))
                                                         @if( !$lead_task_close->isEmpty())
-                                                            @foreach($lead_task_close as $value)
-                                                            <tr>
-                                                                <td>{{ $loop->iteration}}</td>
-                                                                <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y m:i')}}</td>
-                                                                <td>{{ $value->name }}</td>
-                                                                <td>{{ $value->task_type_title}}</td>
-                                                                <td>{{ $value->title}}</td>
-                                                                <td>{{$lead->contact_name}}</td>
-                                                                <td>{{$lead->telephone}}</td>
-                                                                <td> @if( $value->notification === 1 || $value->email_notify === 1 || $value->sms_notify === 1)
-                                                                    Yes, on<br>
-                                                                    {{ \Carbon\Carbon::parse($value->notify_date)->format('d/m/Y') }} {{ \Carbon\Carbon::parse($value->notify_time)->format('h:i') }}
-                                                                    @endif
-                                                                </td>
-                                                                <td>{{ $value->notes}}</td>
-                                                                <td>
-                                                                    <div class="nav-item dropdown tableActionBtn">
-                                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                                                            Action
-                                                                        </a>
-                                                                        <div class="dropdown-menu fade-up m-0">
-                                                                            <!-- <a href="{{ url('/lead/task_mark_as_completed', ['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Mark As Completed</a>
+                                                        @foreach($lead_task_close as $value)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration}}</td>
+                                                            <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y m:i')}}</td>
+                                                            <td>{{ $value->name }}</td>
+                                                            <td>{{ $value->task_type_title}}</td>
+                                                            <td>{{ $value->title}}</td>
+                                                            <td>{{$lead->contact_name}}</td>
+                                                            <td>{{$lead->telephone}}</td>
+                                                            <td> @if( $value->notification === 1 || $value->email_notify === 1 || $value->sms_notify === 1)
+                                                                Yes, on<br>
+                                                                {{ \Carbon\Carbon::parse($value->notify_date)->format('d/m/Y') }} {{ \Carbon\Carbon::parse($value->notify_time)->format('h:i') }}
+                                                                @endif
+                                                            </td>
+                                                            <td>{{ $value->notes}}</td>
+                                                            <td>
+                                                                <div class="nav-item dropdown tableActionBtn">
+                                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                                        Action
+                                                                    </a>
+                                                                    <div class="dropdown-menu fade-up m-0">
+                                                                        <!-- <a href="{{ url('/lead/task_mark_as_completed', ['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Mark As Completed</a>
                                                                             <hr class="dropdown-divider"> -->
-                                                                            <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
-                                                                            <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
-                                                                        </div>
+                                                                        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
+                                                                        <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
                                                                     </div>
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
                                                         @else
-                                                            <tr>
-                                                                <td colspan="10" class="text-center"><strong>No task(s) found</strong></td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td colspan="10" class="text-center"><strong>No task(s) found</strong></td>
+                                                        </tr>
                                                         @endif
                                                         @endif
                                                     </tbody>
@@ -574,11 +573,7 @@ if (isset($lead)) {
                                                                 <div class="mb-3 row">
                                                                     <label for="inputCustomer" class="col-sm-3 col-form-label">File Name*</label>
                                                                     <div class="col-sm-9">
-                                                                        <!-- <canvas id="canv1"></canvas> -->
-                                                                        <!-- <p class="uploadImg"> -->
-                                                                        <!-- <i class="fa fa-cloud-upload"></i> -->
                                                                         <input type="file" class="editInput" multiple="false" id="file" name="file" accept="image/*" id="finput" onchange="upload()">
-                                                                        <!-- </p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
@@ -591,7 +586,7 @@ if (isset($lead)) {
                                                                     <label for="inputName" class="col-sm-3 col-form-label">Description
                                                                         (max 500 characters)</label>
                                                                     <div class="col-sm-9">
-                                                                        <textarea class="form-control textareaInput" name="description" id="description" rows="3" placeholder="Description"></textarea>
+                                                                        <textarea class="form-control textareaInput" name="description" id="description" maxlength="500" rows="3" placeholder="Description"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -599,7 +594,6 @@ if (isset($lead)) {
                                                         <div class="modal-footer">
                                                             <div class="pageTitleBtn p-0">
                                                                 <a href="#" class="profileDrop" id="saveAttachmentType"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                                                                <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save & Close </a> -->
                                                                 <a href="#" class="profileDrop" data-bs-dismiss="modal"> Close</a>
                                                             </div>
                                                         </div>

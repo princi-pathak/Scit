@@ -38,8 +38,48 @@ $('#saveAttachmentType').on('click', function () {
     }
 });
 
-document.getElementById('submit_main_form').addEventListener('click', function () {
-    document.getElementById('add_leads_form').submit();
+document.getElementById('submit_main_form').addEventListener('click', function() {
+    const formID = document.getElementById('add_leads_form');
+    const fullNameInput = document.getElementById('inputName');
+    const emailInput = document.getElementById('inputEmail');
+    const phoneInput = document.getElementById('inputTelephone');
+
+    const fullNameError = document.getElementById('fullNameError');
+    const emailError = document.getElementById('emailError');
+    const phoneError = document.getElementById('phoneError');
+    console.log("check ");
+    let valid = true;
+    // Full Name validation
+    const fullNameRegex = /^[a-zA-Z\s]+$/;
+    if (!fullNameRegex.test(fullNameInput.value)) {
+        fullNameError.textContent = 'Please enter a valid full name (letters and spaces only).';
+        valid = false;
+    } else {
+        fullNameError.textContent = '';
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailInput.value)) {
+        emailError.textContent = 'Please enter a valid email address.';
+        valid = false;
+    } else {
+        emailError.textContent = '';
+    }
+
+    // Telephone validation
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phoneInput.value)) {
+        phoneError.textContent = 'Please enter a valid 10-digit telephone number.';
+        valid = false;
+    } else {
+        phoneError.textContent = '';
+    }
+
+    if (valid == true) {
+        // e.preventDefault(); // Prevent form submission if any field is invalid
+        formID.submit();
+    } 
 });
 
 document.addEventListener('DOMContentLoaded', function () {

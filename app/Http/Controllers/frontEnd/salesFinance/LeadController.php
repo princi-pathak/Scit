@@ -66,10 +66,14 @@ class LeadController extends Controller
             $customer_id = $customer->id;
 
             if ($customer && $customer->id) {
+                if(!isset($request->lead_ref)){
+                    $lastLead = Lead::orderBy('id', 'desc')->first();
+                    $nextId = $lastLead ? $lastLead->id + 1 : 1;
+                    $lead_refid = 'LEAD-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+                } else {
+                    $lead_refid = $request->lead_ref;
+                }
 
-                $lastLead = Lead::orderBy('id', 'desc')->first();
-                $nextId = $lastLead ? $lastLead->id + 1 : 1;
-                $lead_refid = 'LEAD-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
 
                 // Create the lead using the customer ID
                 $lead = Lead::updateOrCreate(['id' => $request->lead_id],[
@@ -88,7 +92,7 @@ class LeadController extends Controller
                     return redirect()->route('lead.edit', ['id' => $lead->id])->with('success', $message);
                 } else {
                     $message =  'Lead updated successfully.';
-                    return redirect()->route('leads.index')->with('success', $message);
+                    return redirect()->route('lead.index')->with('success', $message);
                 }
             } else {
                 // Handle the error case where the customer was not created successfully

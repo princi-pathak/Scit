@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://www.ville-pont-eveque.fr/tools/library/DataTables/media/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://www.ville-pont-eveque.fr/tools/library/DataTables/extensions/Select/css/select.dataTables.css" />
     <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <style>
         table.dataTable td.select-checkbox:before{
@@ -92,14 +93,14 @@
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="{{ url('/leads/add') }}" class="dropdown-item">New Lead</a>
                                     <a href="{{ url('/leads/leads') }}" class="dropdown-item">All Lead</a>
-                                    <a href="{{ url('/leads/my_lead') }}" class="dropdown-item">My Leads</a>
+                                    <a href="{{ url('/lead/myLeads') }}" class="dropdown-item">My Leads</a>
                                     <a href="{{ url('/leads/unassigned') }}" class="dropdown-item">Unassigned Lead</a>
                                     <a href="{{ url('/leads/actioned') }}" class="dropdown-item">Actioned Lead</a>
                                     <a href="{{ url('/leads/rejected') }}" class="dropdown-item">Rejected Lead</a>
-                                    <a href="{{ url('/leads/authorization') }}" class="dropdown-item">Authorization</a>
-                                    <a href="{{ url('/leads/converted_leads') }}" class="dropdown-item">Converted Lead</a>
+                                    <a href="{{ url('/lead/authorization') }}" class="dropdown-item">Authorization</a>
+                                    <a href="{{ url('/leads/converted') }}" class="dropdown-item">Converted Lead</a>
                                     <a href="{{ url('/leads/search_lead') }}" class="dropdown-item">Search Lead</a>
-                                    <a href="{{ url('/leads/lead_tasks') }}" class="dropdown-item">Lead Task</a>
+                                    <a href="{{ url('/leads/tasks') }}" class="dropdown-item">Lead Task</a>
                                 </div>
                             </div>
 
@@ -272,7 +273,7 @@
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{url('customer_add_edit')}}">New Customers</a></li>
-                                            <li><a class="dropdown-item" href="#">Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{url('active_customer')}}">Active Customers</a></li>
                                             <li><a class="dropdown-item" href="#">Inactive Customers</a></li>
                                             <li><a class="dropdown-item" href="#">Customers Logins</a></li>
                                         </ul>
