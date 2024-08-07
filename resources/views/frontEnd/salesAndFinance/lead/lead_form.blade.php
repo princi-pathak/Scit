@@ -87,10 +87,12 @@ if (isset($lead)) {
                                             <input type="date" name="prefer_date" class="form-control editInput" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}" id="">
                                         </div>
                                         <div class="col-sm-1"><label class="col-form-label">To</label></div>
+
                                         <div class="col-sm-2">
                                             <input type="time" name="prefer_time" class="form-control editInput" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}" id="">
+
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-2 p-0">
                                             <label for="inputContact" class="col-form-label">Next 30 days</label>
                                         </div>
                                     </div>
