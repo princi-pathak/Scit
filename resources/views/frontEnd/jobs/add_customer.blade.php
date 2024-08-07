@@ -508,7 +508,8 @@
                                 <div class="page">
                                     <div class="title">Customer Logins</div>
                                     <div class="newJobForm mt-4">
-                                        <label class="upperlineTitle">Logins</label>
+                                        <label class="upperlineTitle">
+                                            Logins</label>
                                         <div class="row">
                                             <div class="col-sm-12 mb-3 mt-2">
                                                 <div class="jobsection">

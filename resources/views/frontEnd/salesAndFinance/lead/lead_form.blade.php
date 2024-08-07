@@ -225,6 +225,7 @@ if (isset($lead)) {
                                                         <table class="table" id="containerA">
                                                             <thead class="table-light">
                                                                 <tr>
+
                                                                     <th>Data</th>
                                                                     <th>By</th>
                                                                     <th>Type</th>
@@ -337,6 +338,7 @@ if (isset($lead)) {
                                                                 <div class="mb-3 row">
                                                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks Type*</label>
                                                                     <div class="col-sm-9">
+
                                                                         <select class="form-control editInput selectOptions" id="lead_task_type_id" name="lead_task_type_id">
                                                                             @if(isset($leadTask))
                                                                             @foreach($leadTask as $value)
@@ -344,6 +346,7 @@ if (isset($lead)) {
                                                                             @endforeach
                                                                             @endif
                                                                         </select>
+
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
