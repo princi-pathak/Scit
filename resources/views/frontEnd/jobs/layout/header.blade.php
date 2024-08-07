@@ -103,7 +103,7 @@
                                 </div>
                             </div>
 
-                            <div class="nav-item dropdown">
+                            <!-- <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle @if(isset($page)) @if($page == 'quotes') active @endif @endif" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> description </i></span>
                                     Quotes
@@ -120,7 +120,48 @@
                                     <a href="#!" class="dropdown-item">Appointment</a>
                                     <a href="#!" class="dropdown-item">Recurring Quote</a>
                                 </div>
+                            </div> -->
+
+
+
+
+                            <div class="nav-item1 dropdown1">
+                                <a class="nav-link dropdown-toggle @if(isset($page)) @if($page == 'quotes') active @endif @endif" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span><i class="material-symbols-outlined"> description </i></span> Quotes
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                    <li class="nav-item1"><a href="#!" class="dropdown-item">Dashboard</a></li>
+                                    <li class="nav-item1"><a href="#!" class="dropdown-item">New Quote</a></li>
+                                    <li class="nav-item1"><a href="#!" class="dropdown-item">Draft Quote</a></li>
+                                    <li class="nav-item1"><a href="#!" class="dropdown-item">Actioned Quote</a></li>
+                                    <li class="nav-item1"><a href="#!" class="dropdown-item">Call Back Quote</a></li>
+                                    <li class="nav-item1"><a href="#!" class="dropdown-item">Accepted Quote</a></li>
+                                    <li class="nav-item1"><a href="#!" class="dropdown-item">Converted Quote</a></li>
+                                    <li class="nav-item1"><a href="#!" class="dropdown-item">Search Quote</a></li>
+                                    
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Appointment <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">Sales Appointments</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item1 dropend">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Recurring Quote <i class="fa-solid fa-angle-right"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
+                                            <li><a class="dropdown-item" href="#">New Recurring Quote</a></li>
+                                            <li><a class="dropdown-item" href="#">Recurring Quote</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </div>
+
+
 
 
                             <div class="nav-item dropdown">
@@ -195,7 +236,7 @@
                                             <li><a class="dropdown-item" href="#">Reminders</a></li>
                                             <li class="nav-item1 dropend">
                                                 <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Recurring Invoices <i class="fa-solid fa-angle-right"></i>
+                                                    <span>Recurring Invoices</span> <i class="fa-solid fa-angle-right"></i>
                                                 </a>
                                                 <ul class="dropdown-menu1">
                                                     <li><a class="dropdown-item" href="#">New Recurring Invoice</a></li>
@@ -204,7 +245,7 @@
                                             </li>
                                             <li class="nav-item1 dropend">
                                                 <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Credit Notes <i class="fa-solid fa-angle-right"></i>
+                                                <span>Credit Notes</span> <i class="fa-solid fa-angle-right"></i>
                                                 </a>
                                                 <ul class="dropdown-menu1">
                                                     <li><a class="dropdown-item" href="#">New Credit Note</a></li>
@@ -219,7 +260,7 @@
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Suppliers <i class="fa-solid fa-angle-right"></i>
+                                        <span>Suppliers</span> <i class="fa-solid fa-angle-right"></i>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
