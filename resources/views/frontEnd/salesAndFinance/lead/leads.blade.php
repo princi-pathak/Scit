@@ -77,6 +77,18 @@
 
 
                             @foreach ($customers as $customer)
+                            @php
+                                $authorizationText = '';
+                                if ($customer->status == 7) {
+                                    if ($customer->authorization_status == 1) {
+                                        $authorizationText = 'Waiting for Authorization';
+                                    } elseif ($customer->authorization_status == 2) {
+                                        $authorizationText = 'Authorized';
+                                    } else {
+                                        $authorizationText = 'none';
+                                    }
+                                }
+                            @endphp
                             <tr>
                                 <td></td>
                                 <td>{{ $loop->iteration }}</td>
@@ -98,6 +110,7 @@
                                     @case(4) Pre Qualified @break
                                     @case(5) Qualified @break
                                     @case(6) Rejected @break
+                                    @case(7)  {{ $authorizationText }} @break
                                     @default {{-- No output if none of the cases match --}}
                                     @endswitch
                                 </td>
