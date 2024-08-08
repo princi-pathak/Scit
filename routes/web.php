@@ -250,6 +250,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/lead/authorization','index')->name('lead.authorization');
 		Route::get('/leads/unassigned','index')->name('lead.unassigned');
 		Route::get('/lead/rejected','index')->name('lead.rejected');
+		Route::get('/lead/actioned','index')->name('lead.actioned');
 		Route::get('/leads/converted','index')->name('lead.converted');
 		Route::get('/leads/add','create');
 		Route::post('/leads/create','store')->name('lead.store');
@@ -1394,6 +1395,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('/create', 'store')->name('leads.store');
 			Route::get('/edit/{id}', 'edit')->name('leads.edit');
 			Route::get('/unassigned', 'index')->name('leads.unassigned');
+			Route::get('/actioned', 'index')->name('leads.actioned');
+			
 			Route::get('/rejected', 'index')->name('leads.rejected');
 			Route::get('/authorization', 'index')->name('leads.authorization');
 			Route::get('/convert_to_customer/{id}', 'convert_to_customer')->name('leads.convertCustomer');

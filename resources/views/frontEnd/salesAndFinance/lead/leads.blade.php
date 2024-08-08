@@ -57,18 +57,19 @@
                             <tr>
                                 <td></td>
                                 <th>#</th>
+                                <th>Lead Ref.</th>
                                 <th>Full Name</th>
                                 <th>Company Name</th>
                                 <th>Email Address</th>
                                 <th>Telephone</th>
                                 <th>Mobile</th>
+                                <th>Assigned User</th>
+                                <th>Status</th>
                                 <th>Website</th>
                                 <th>Address</th>
                                 <th>City </th>
                                 <th>County </th>
                                 <th>Postcode</th>
-                                <th>Lead Ref.</th>
-                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -92,17 +93,13 @@
                             <tr>
                                 <td></td>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $customer->lead_ref }}</td>
                                 <td>{{ $customer->contact_name }}</td>
                                 <td>{{ $customer->name }}</td>
                                 <td>{{ $customer->email }}</td>
                                 <td>{{ $customer->telephone }}</td>
                                 <td>{{ $customer->mobile }}</td>
-                                <td>{{ $customer->website }}</td>
-                                <td>{{ $customer->address }}</td>
-                                <td>{{ $customer->city }}</td>
-                                <td>{{ $customer->country }}</td>
-                                <td>{{ $customer->postal_code }}</td>
-                                <td>{{ $customer->lead_ref }}</td>
+                                <td>users</td>
                                 <td> @switch($customer->status)
                                     @case(1) Contact Later @break
                                     @case(2) Contacted @break
@@ -114,6 +111,11 @@
                                     @default {{-- No output if none of the cases match --}}
                                     @endswitch
                                 </td>
+                                <td>{{ $customer->website }}</td>
+                                <td>{{ $customer->address }}</td>
+                                <td>{{ $customer->city }}</td>
+                                <td>{{ $customer->country }}</td>
+                                <td>{{ $customer->postal_code }}</td>
                                 <td>
                                     <div class="d-inline-flex align-items-center ">
                                         <div class="nav-item dropdown">

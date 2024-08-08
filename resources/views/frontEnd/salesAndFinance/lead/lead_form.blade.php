@@ -74,7 +74,6 @@ if (isset($lead)) {
                                         <label for="inputContact" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
                                             <select class="form-control editInput selectOptions" id="inputCustomer" name="status">
-                                                <option>Default</option>
                                                 @foreach($status as $value)
                                                 <option value="{{ $value->id }}" @if($value->id == 6) disabled @endif {{ isset($lead->status) && $lead->status == $value->id ? 'selected' : '' }} >{{ $value->title }}</option>
                                                 @endforeach
