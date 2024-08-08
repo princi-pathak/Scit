@@ -239,7 +239,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/save_contact','App\Http\Controllers\frontEnd\CustomerController@save_contact');
 	Route::post('/save_site','App\Http\Controllers\frontEnd\CustomerController@save_site');
 	Route::post('/save_login','App\Http\Controllers\frontEnd\CustomerController@save_login');
-	Route::get('/active_customer','App\Http\Controllers\frontEnd\CustomerController@active_customer');
+	Route::get('/customers','App\Http\Controllers\frontEnd\CustomerController@active_customer');
+	Route::post('/status_change','App\Http\Controllers\frontEnd\CustomerController@status_change');
 	// end here
 
 
@@ -989,6 +990,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/project_status_change','App\Http\Controllers\backEnd\JobsController@project_status_change');
 	Route::post('/project_delete','App\Http\Controllers\backEnd\JobsController@project_delete');
 	Route::post('/search_value','App\Http\Controllers\backEnd\JobsController@search_value');
+	Route::post('/get_customer_details','App\Http\Controllers\backEnd\JobsController@get_customer_details');
 	// Job Recurring Start
 	Route::match(['get','post'],'/job_recurring_list','App\Http\Controllers\backEnd\JobsController@job_recurring_list');
 

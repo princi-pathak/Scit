@@ -5,6 +5,8 @@ namespace App\Http\Controllers\backEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session,DB;
+use App\traits\CountryTrait;
+use App\Customer;
 use App\Models\Job;
 use App\Models\Product;
 use App\Models\Project;
@@ -24,6 +26,7 @@ use App\Models\Construction_job_rejection_category;
 
 class JobsController extends Controller
 {
+    use CountryTrait;
     public function jobs_list(Request $request){
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
@@ -95,9 +98,12 @@ class JobsController extends Controller
         $data['job_details']=Job::find($key);
         $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1])->get();
         $data['job_type']=Job_type::where('status',1)->get();
-        // echo "<pre>";print_r($data['job_details']);die;
+        $data['country']=$this->all_country_trait();
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')->join('product_categories as cat','cat.id','=','pr.cat_id')->get();
-        // echo "<pre>";print_r($data['product_details1']);die;
+        $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
+        // echo "<pre>";print_r($data['customers']);die;
         return view('backEnd.jobs_management.job_form',$data);
     }
     public function search_value(Request $request){
@@ -1332,6 +1338,15 @@ class JobsController extends Controller
         $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
+    }
+    public function get_customer_details(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $customer_id=$request->customer_id;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $customers=Job::getCustomerDetailsAttribute($customer_id);
+        // echo "<pre>";print_r($data['customers']);die;
+        return response()->json($customers);
     }
     
 }
