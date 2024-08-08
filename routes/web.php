@@ -235,6 +235,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit_save');
 	Route::get('/add_currency','App\Http\Controllers\frontEnd\CustomerController@add_currency');
+	Route::post('/default_address','App\Http\Controllers\frontEnd\CustomerController@default_address');
+	Route::post('/save_contact','App\Http\Controllers\frontEnd\CustomerController@save_contact');
+	Route::post('/save_site','App\Http\Controllers\frontEnd\CustomerController@save_site');
+	Route::post('/save_login','App\Http\Controllers\frontEnd\CustomerController@save_login');
+	Route::get('/active_customer','App\Http\Controllers\frontEnd\CustomerController@active_customer');
 	// end here
 
 
@@ -244,7 +249,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/lead/myLeads','index')->name('lead.myleads');
 		Route::get('/lead/authorization','index')->name('lead.authorization');
 		Route::get('/leads/unassigned','index')->name('lead.unassigned');
-		Route::get('/leads/rejected','index')->name('lead.rejected');
+		Route::get('/lead/rejected','index')->name('lead.rejected');
 		Route::get('/leads/converted','index')->name('lead.converted');
 		Route::get('/leads/add','create');
 		Route::post('/leads/create','store')->name('lead.store');
@@ -1398,8 +1403,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/lead_task_delete/{id}', 'lead_task_list_delete');
 			Route::get('/authorized/{id}', 'lead_authorized_by_admin');
 
-
-
 			// Lead Task 
 			Route::post('/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
 			Route::get('/lead_task/delete/{task}/{lead}', 'lead_task_delete');
@@ -1419,7 +1422,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('/saveLeadTaskType', 'saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
 			Route::get('/lead_task_type/delete/{id}', 'lead_task_type_delete');
 			Route::get('/lead_mark_as_completed/{task}/{lead}', 'lead_mark_as_completed');
-			
+
 
 			// Lead Notes Type
 			Route::get('/lead_notes_type', 'lead_notes_type')->name('leads.lead_notes_type');

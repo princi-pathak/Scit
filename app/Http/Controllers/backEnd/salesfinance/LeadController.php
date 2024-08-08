@@ -69,13 +69,17 @@ class LeadController extends Controller
             ]);
             $customer_id = $customer->id;
             if ($customer && $customer->id) {
-                $lastLead = Lead::orderBy('id', 'desc')->first();
-                $nextId = $lastLead ? $lastLead->id + 1 : 1;
-                $lead_refid = 'LEAD-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
-                $admin   = Session::get('scitsAdminSession');
+                if(!isset($request->lead_ref)){
+                    $lastLead = Lead::orderBy('id', 'desc')->first();
+                    $nextId = $lastLead ? $lastLead->id + 1 : 1;
+                    $lead_refid = 'LEAD-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+                } else {
+                    $lead_refid = $request->lead_ref;
+                }     
+
                 // Create the lead using the customer ID
                 $lead = Lead::updateOrCreate(['id' => $request->lead_id],[
-                    'home_id' => $admin->home_id,
+                    'home_id' => Session::get('scitsAdminSession')->home_id,
                     'lead_ref' => $lead_refid,
                     'customer_id' => $customer_id,
                     'assign_to' => $request->input('assign_to'),
@@ -397,9 +401,9 @@ class LeadController extends Controller
 
     public function lead_authorized_by_admin($lead_id){
         if (Lead::LeadAuthorizedAdmin($lead_id)){
-            return redirect()->route('leads.list')->with('success', "Lead Authorized successfully");
+            return redirect()->route('leads.index')->with('success', "Lead Authorized successfully");
         } else {
-            return redirect()->route('leads.list')->with('error', "Error in Lead Authorizataion");
+            return redirect()->route('leads.index')->with('error', "Error in Lead Authorizataion");
         }
     }
 

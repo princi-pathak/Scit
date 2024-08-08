@@ -51,8 +51,8 @@ class Customer extends Model
         'status',
     ];
 
-    public static function getConvertedCustomersCount(){
-        return Customer::where(['is_converted' => '1', 'status' => 1])->count();
+    public static function getConvertedCustomersCount($home_id){
+        return Customer::where(['is_converted' => '1', 'status' => 1])->where('home_id', $home_id)->count();
     }
 
     public static function converToCustomer($id){
@@ -79,7 +79,7 @@ class Customer extends Model
         ->where('leads.home_id', $home_id);
    
         if($lastSegment ===  "leads") {
-            return $query->whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6'])->whereNotIn('leads.authorization_status', [1])->get();
+            return $query->whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->get();
         } else if($lastSegment === "unassigned"){
             return $query->where('assign_to', 0)->get();
         } else if($lastSegment === "rejected"){
@@ -89,7 +89,7 @@ class Customer extends Model
         } else if ($lastSegment === "myLeads"){
             return $query->where('user_id', Auth::user()->id)->get();
         }else if($lastSegment === "authorization"){
-            return $query->where('leads.authorization_status', 1)->get();
+            return $query->where('leads.status', 7)->get();
         }
     }
 

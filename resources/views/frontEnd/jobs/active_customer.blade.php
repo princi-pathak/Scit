@@ -5,18 +5,7 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>
-                        @switch($lastSegment)
-                            @case("leads") Leads @break
-                            @case("myLeads") My Leads @break
-                            @case("unassigned") Unassigned Leads @break
-                            @case("rejected") Rejected Leads @break
-                            @case("authorization") Authorization Leads @break
-                            @case("converted") Converted Leads @break
-                            @default {{-- No output if none of the cases match --}}
-                        @endswitch
-                                    
-                    </h3>
+                    <h3>All Leads</h3>
                 </div>
             </div>
         </div>
@@ -76,44 +65,22 @@
                         <tbody>
 
 
-                            @foreach ($customers as $customer)
-                            @php
-                                $authorizationText = '';
-                                if ($customer->status == 7) {
-                                    if ($customer->authorization_status == 1) {
-                                        $authorizationText = 'Waiting for Authorization';
-                                    } elseif ($customer->authorization_status == 2) {
-                                        $authorizationText = 'Authorized';
-                                    } else {
-                                        $authorizationText = 'none';
-                                    }
-                                }
-                            @endphp
+                            
                             <tr>
                                 <td></td>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $customer->contact_name }}</td>
-                                <td>{{ $customer->name }}</td>
-                                <td>{{ $customer->email }}</td>
-                                <td>{{ $customer->telephone }}</td>
-                                <td>{{ $customer->mobile }}</td>
-                                <td>{{ $customer->website }}</td>
-                                <td>{{ $customer->address }}</td>
-                                <td>{{ $customer->city }}</td>
-                                <td>{{ $customer->country }}</td>
-                                <td>{{ $customer->postal_code }}</td>
-                                <td>{{ $customer->lead_ref }}</td>
-                                <td> @switch($customer->status)
-                                    @case(1) Contact Later @break
-                                    @case(2) Contacted @break
-                                    @case(3) New @break
-                                    @case(4) Pre Qualified @break
-                                    @case(5) Qualified @break
-                                    @case(6) Rejected @break
-                                    @case(7)  {{ $authorizationText }} @break
-                                    @default {{-- No output if none of the cases match --}}
-                                    @endswitch
-                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td>
                                     <div class="d-inline-flex align-items-center ">
                                         <div class="nav-item dropdown">
