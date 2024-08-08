@@ -83,18 +83,30 @@ class Customer extends Model
         ->orderBy('leads.created_at', 'desc')
         ->where('leads.home_id', $home_id);
    
-        if($lastSegment ===  "leads") {
+        if ($lastSegment ===  "leads") {
             return $query->whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->get();
-        } else if($lastSegment === "unassigned"){
+        } else if ($lastSegment === "unassigned"){
             return $query->where('assign_to', 0)->get();
-        } else if($lastSegment === "rejected"){
+        } else if ($lastSegment === "rejected"){
             return $query->where('leads.status', '6')->get();
-        } else if($lastSegment === "converted"){
+        } else if ($lastSegment === "converted"){
             return $query->where('customers.is_converted', 1)->where('customers.status', 1)->get();
         } else if ($lastSegment === "myLeads"){
-            return $query->where('user_id', Auth::user()->id)->get();
-        }else if($lastSegment === "authorization"){
+            return $query->where('user_id', Auth::user()->id)->whereNotIn('leads.status', [7])->get();
+        } else if ($lastSegment === "authorization"){
             return $query->where('leads.status', 7)->get();
+        } else if ($lastSegment === "actioned") {
+            return DB::table('customers')
+                ->join('leads', 'leads.customer_id', '=','customers.id')
+                ->join('lead_tasks', 'lead_tasks.lead_ref', '=', 'leads.lead_ref')
+                ->select('leads.*', 'customers.*','leads.')
+                ->orderBy('leads.created_at', 'desc')
+                ->where('leads.home_id', $home_id)
+                ->distinct()
+                ->get();
+
+                // return $query->get();
+    
         }
     }
 

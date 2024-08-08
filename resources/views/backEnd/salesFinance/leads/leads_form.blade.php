@@ -59,7 +59,7 @@ if (isset($lead)) {
                                         <label class="col-lg-3 control-label">Source</label>
                                         <div class="col-lg-9">
                                             <select name="source" class="form-control" id="">
-                                                <option value="null">None</option>
+                                                <option value="0">None</option>
                                                 @foreach($sources as $value)
                                                 <option value="{{ $value->id }}" {{ isset($lead->source) && $lead->source == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
                                                 @endforeach

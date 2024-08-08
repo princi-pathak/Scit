@@ -1,4 +1,16 @@
 
+
+// CRM JS
+
+document.getElementById('onclickbtnHideShow').addEventListener('click', function(){
+  var element = document.getElementById('showDivCont');
+  element.classList.toggle('show');
+});
+
+//End  CRM JS
+
+
+
 // search leads show search Filter
 function hideShowDiv() {
   let div = document.getElementById("divTohide");

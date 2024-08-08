@@ -954,6 +954,7 @@ form.customerForm {
 .add_Customer .modal-header {
   padding: 8px 16px;
   background: #0877bd;
+  cursor: move;
 }
 .add_Customer .modal-header h5 {
   font-size: 18px;
@@ -1625,4 +1626,44 @@ form .page .btns button.next {
   height: 250px;
   opacity: 1;
   display: block;
+}
+
+/* ******************CRM css********************* */
+.crmModelCont .nav-pills .nav-link {
+  border-radius: 3px;
+  margin-right: 8px;
+  color: #0877bd;
+  border: 1px solid #0877bd;
+}
+.crmModelCont .nav-pills .nav-link.active, .crmModelCont .nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: #0877bd;
+}
+.sarchBtn{
+font-size: 12px;
+background-color: #0877bd;
+color: #fff;
+border: 1px solid #0877bd;
+}
+.searchForm .form-control:focus {
+  border-color: #dddddd;
+  outline: 0;
+  box-shadow: none;
+}
+a.crmNewBtn{
+  font-size: 12px;
+  display: block;
+  text-align: center;
+}
+.hideandshow{
+  display: flex;
+  justify-content: end;
+}
+#showDivCont {
+  height: 146px;
+  transition: .7s;
+  overflow: hidden;
+}
+#showDivCont.show {        
+ height: 0;
 }
