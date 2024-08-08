@@ -104,7 +104,8 @@ class LeadController extends Controller
         }
     }
 
-    public function edit($id){
+    public function edit($id){ 
+        // dd();
         $page = 'Leads';
         $lead = Customer::getCustomerLeads($id);  
         $users = User::getHomeUsers(Session::get('scitsAdminSession')->home_id);

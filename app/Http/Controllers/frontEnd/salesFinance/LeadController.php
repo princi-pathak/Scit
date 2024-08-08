@@ -23,9 +23,8 @@ use App\Models\LeadNote;
 class LeadController extends Controller
 {
     public function index(Request $request){
-        // dd($request);
         $page = "leads";
-        $path = $request->path();  
+        $path = $request->path();   
         $segments = explode('/', $path);
         $lastSegment = end($segments);
         $customers = Customer::getCustomerWithLeads($lastSegment, Auth::user()->home_id);

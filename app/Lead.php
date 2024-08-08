@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\LeadNote;
 
 
@@ -37,8 +38,7 @@ class Lead extends Model
         return Lead::where('status', '6')->count();
     }
 
-    public function notes()
-    {
+    public function notes(){
         return $this->hasMany(LeadNote::class);
     }
 
@@ -57,4 +57,13 @@ class Lead extends Model
     public static function LeadAuthorizedAdmin($id){
         return Lead::where('id', $id)->update(['authorization_status' => 2]);
     } 
+
+    public static function getActionedLead($home_id){
+        return DB::table('lead_tasks')
+        ->join('leads', 'lead_tasks.lead_ref', '=', 'leads.lead_ref')
+        ->select('leads.lead_ref')
+        ->where('leads.home_id', $home_id)
+        ->distinct()
+        ->count();
+    }
 }
