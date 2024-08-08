@@ -63,10 +63,15 @@ class Customer extends Model
         if (isset($data['section_id'])) {
             $data['section_id'] = implode(',',$data['section_id']);
         }
+        // echo "<pre>";print_r($data);die;
+        try {
         $insert=self::updateOrCreate(
             ['id' => $data['id'] ?? null],
             $data
         );
+    } catch (\Exception $e) {
+        return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+    }
         $data=['id'=>$insert->id,'name'=>$insert->name];
         return $data;
     }
@@ -111,6 +116,10 @@ class Customer extends Model
         ->select('customers.*', 'leads.*')
         ->where('leads.id', $id)
         ->first();
+    }
+    public static function get_customer_list_Attribute($home_id,$list_mode){
+        $status = ($list_mode == 'ACTIVE') ? 1 : 0;
+        return Customer::where(['is_converted' => '1', 'status' => $status,'home_id'=>$home_id])->get();
     }
     
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session,DB,Auth;
 use App\traits\CountryTrait;
+use App\traits\ActionTrait;
 use App\Customer;
 use App\Models\Country;
 use App\Models\Job_title;
@@ -17,14 +18,14 @@ use App\Models\Constructor_additional_contact;
 
 class CustomerController extends Controller
 {
-    use CountryTrait;
+    use CountryTrait;use ActionTrait;
     public function customer_add_edit(Request $request){
         // echo "<pre>";print_r(Auth::user()->home_id);die;
         $key=base64_decode($request->key);
         if($key){
-            $task='Edit';
+            $task='Edited';
         }else{
-            $task='Add';
+            $task='Added';
         }
         $data['customer']=Customer::find($key);
         $data['task']=$task;
@@ -37,7 +38,7 @@ class CustomerController extends Controller
         $data['login']=Construction_customer_login::where('customer_id',$key)->get();
         $data['country']=$this->all_country_trait();
         $data['home_id']=Auth::user()->home_id;
-        // echo "<pre>";print_r($data['country']);die;
+        // echo "<pre>";print_r($data['customer']);die;
         return view('frontEnd.jobs.add_customer',$data);
     }
     public function customer_add_edit_save(Request $request){
@@ -125,7 +126,16 @@ class CustomerController extends Controller
         echo $result;
     }
     public function active_customer(Request $request){
-
+        $home_id=Auth::user()->home_id;
+        $data['customer']=Customer::get_customer_list_Attribute($home_id,$request->list_mode);
+        $data['list_mode']=$request->list_mode;
+        $data['active_customer']=Customer::getConvertedCustomersCount($home_id);
+        $data['inactive_customer']=Customer::where(['is_converted'=>1,'status'=>0,'home_id'=>$home_id])->count();
+        return view('frontEnd.jobs.active_customer',$data);
+    }
+    public function status_change(Request $request){
+       $status= $this->status_change_trait($request->all());
+        echo $status;
     }
 
     public function add_currency(Request $request){

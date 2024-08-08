@@ -7,15 +7,15 @@
                 <div class="pageTitle">
                     <h3>
                         @switch($lastSegment)
-                            @case("leads") Leads @break
-                            @case("myLeads") My Leads @break
-                            @case("unassigned") Unassigned Leads @break
-                            @case("rejected") Rejected Leads @break
-                            @case("authorization") Authorization Leads @break
-                            @case("converted") Converted Leads @break
-                            @default {{-- No output if none of the cases match --}}
+                        @case("leads") Leads @break
+                        @case("myLeads") My Leads @break
+                        @case("unassigned") Unassigned Leads @break
+                        @case("rejected") Rejected Leads @break
+                        @case("authorization") Authorization Leads @break
+                        @case("converted") Converted Leads @break
+                        @default {{-- No output if none of the cases match --}}
                         @endswitch
-                                    
+
                     </h3>
                 </div>
             </div>
@@ -79,16 +79,16 @@
 
                             @foreach ($customers as $customer)
                             @php
-                                $authorizationText = '';
-                                if ($customer->status == 7) {
-                                    if ($customer->authorization_status == 1) {
-                                        $authorizationText = 'Waiting for Authorization';
-                                    } elseif ($customer->authorization_status == 2) {
-                                        $authorizationText = 'Authorized';
-                                    } else {
-                                        $authorizationText = 'none';
-                                    }
-                                }
+                            $authorizationText = '';
+                            if ($customer->status == 7) {
+                            if ($customer->authorization_status == 1) {
+                            $authorizationText = 'Waiting for Authorization';
+                            } elseif ($customer->authorization_status == 2) {
+                            $authorizationText = 'Authorized';
+                            } else {
+                            $authorizationText = 'none';
+                            }
+                            }
                             @endphp
                             <tr>
                                 <td></td>
@@ -107,7 +107,7 @@
                                     @case(4) Pre Qualified @break
                                     @case(5) Qualified @break
                                     @case(6) Rejected @break
-                                    @case(7)  {{ $authorizationText }} @break
+                                    @case(7) {{ $authorizationText }} @break
                                     @default {{-- No output if none of the cases match --}}
                                     @endswitch
                                 </td>
@@ -126,7 +126,7 @@
                                                 <a href="{{ url('/leads/edit').'/'.$customer->id }}" class="dropdown-item">Edit Details</a>
                                                 <a href="#" class="dropdown-item">Send SMS</a>
                                                 <hr class="dropdown-divider">
-                                                <a href="#" class="dropdown-item">CRM History</a>
+                                                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CRMHistoryModal">CRM History</a>
                                                 <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
                                                 <a href="{{ url('/leads/authorization').'/'.$customer->id }}" class="dropdown-item">Send for Authorization</a>
                                                 <a href="#" class="dropdown-item">Send to Quote</a>
@@ -135,7 +135,389 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- **************** -->
+                                    <!-- ****************CRM History Modal ****************-->
+
+                                    <div class="modal fade" id="CRMHistoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl">
+                                            <div class="modal-content add_Customer">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="customerModalLabel">CRM Dashboard - LEAD-0012</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body crmModelCont">
+                                                <div class="jobsection pb-2 hideandshow">
+                                                    <button class="profileDrop" id="onclickbtnHideShow">Hide/Show</button>
+                                                </div>
+
+                                                <div id="showDivCont">
+                                                    <div class="newJobForm mb-4">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="">
+                                                                    <h4 class="contTitle text-center">Contact Details</h4>
+                                                                </div>
+                                                                <div class="row pt-3">
+                                                                    <label class="col-md-4"><strong>Full Name:</strong></label>
+                                                                    <div class="col-md-8">
+                                                                        <span>Swaonil Gautam</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row pt-3">
+                                                                    <label class="col-md-4"><strong>Email Address:</strong></label>
+                                                                    <div class="col-md-8">
+                                                                        <span>Swaonil@gmail.com</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row pt-3">
+                                                                    <label class="col-md-4"><strong>Telephone:</strong></label>
+                                                                    <div class="col-md-8">
+                                                                        <span>1234567890</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="">
+                                                                    <h4 class="contTitle text-center">Lead Details</h4>
+                                                                </div>
+                                                                <div class="row pt-3">
+                                                                    <label class="col-md-4"><strong>Lead Ref.:</strong></label>
+                                                                    <div class="col-md-8">
+                                                                        <span> LEAD-0012</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row pt-3">
+                                                                    <label class="col-md-4"><strong>Lead Status:</strong></label>
+                                                                    <div class="col-md-8">
+                                                                        <span>Contact Later</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                    <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link active" id="pills-fullHistory-tab" data-bs-toggle="pill" data-bs-target="#pills-fullHistory" type="button" role="tab" aria-controls="pills-fullHistory" aria-selected="true">Full History</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link " id="pills-Calls-tab" data-bs-toggle="pill" data-bs-target="#pills-Calls" type="button" role="tab" aria-controls="pills-Calls" aria-selected="false">Calls</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link " id="pills-emails-tab" data-bs-toggle="pill" data-bs-target="#pills-emails" type="button" role="tab" aria-controls="pills-emails" aria-selected="false">Emails</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link " id="pills-tasks-tab" data-bs-toggle="pill" data-bs-target="#pills-tasks" type="button" role="tab" aria-controls="pills-tasks" aria-selected="false">Tasks</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link " id="pills-notes-tab" data-bs-toggle="pill" data-bs-target="#pills-notes" type="button" role="tab" aria-controls="pills-notes" aria-selected="false">Notes</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link " id="pills-complaints-tab" data-bs-toggle="pill" data-bs-target="#pills-complaints" type="button" role="tab" aria-controls="pills-complaints" aria-selected="false">Complaints</button>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content" id="pills-tabContent">
+                                                        <div class="tab-pane fade show active" id="pills-fullHistory" role="tabpanel" aria-labelledby="pills-fullHistory-tab" tabindex="0">
+                                                            <div class="newJobForm mt-4">
+                                                                <label class="upperlineTitle">Full History</label>
+                                                                <div class="row">
+                                                                    <div class="col-sm-3">
+                                                                        <form class="searchForm" action="">
+                                                                            <div class="input-group mb-3 mt-3">
+                                                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="productDetailTable">
+                                                                            <table class="table">
+                                                                                <thead class="table-light">
+                                                                                    <tr>
+                                                                                        <th>Date</th>
+                                                                                        <th>By</th>
+                                                                                        <th>Contact</th>
+                                                                                        <th>Type</th>
+                                                                                        <th>Note(s)</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Customer Visible</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>08/08/2024 06:16</td>
+                                                                                        <td>Abhi - (mobappssolutions131@gmail.com) </td>
+                                                                                        <td>1234567890</td>
+                                                                                        <td> System</td>
+                                                                                        <td>New Task 'Swapnil Task add' created for '08/08/2024 00:10'</td>
+                                                                                        <td>New Task</td>
+                                                                                        <td>..</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="pills-Calls" role="tabpanel" aria-labelledby="pills-Calls-tab" tabindex="0">
+                                                            <div class="newJobForm mt-4">
+                                                                <label class="upperlineTitle">Calls History</label>
+                                                                <div class="row">
+                                                                    <div class="col-sm-1">
+                                                                        <div class="jobsection  mt-3">
+                                                                            <a href="#" class="profileDrop p-2 crmNewBtn"> New</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <form class="searchForm" action="">
+                                                                            <div class="input-group mb-3  mt-3">
+                                                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="productDetailTable">
+                                                                            <table class="table">
+                                                                                <thead class="table-light">
+                                                                                    <tr>
+                                                                                        <th>Date</th>
+                                                                                        <th>By</th>
+                                                                                        <th>Contact</th>
+                                                                                        <th>Type</th>
+                                                                                        <th>Note(s)</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Customer Visible</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="pills-emails" role="tabpanel" aria-labelledby="pills-emails-tab" tabindex="0">
+                                                        <div class="newJobForm mt-4">
+                                                                <label class="upperlineTitle">Emails History</label>
+                                                                <div class="row">
+                                                                    <div class="col-sm-1">
+                                                                        <div class="jobsection  mt-3">
+                                                                            <a href="#" class="profileDrop p-2 crmNewBtn"> New</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <form class="searchForm" action="">
+                                                                            <div class="input-group mb-3  mt-3">
+                                                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="productDetailTable">
+                                                                            <table class="table">
+                                                                                <thead class="table-light">
+                                                                                    <tr>
+                                                                                        <th>Date</th>
+                                                                                        <th>By</th>
+                                                                                        <th>Contact</th>
+                                                                                        <th>Type</th>
+                                                                                        <th>Note(s)</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Customer Visible</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="pills-tasks" role="tabpanel" aria-labelledby="pills-tasks-tab" tabindex="0">
+                                                        <div class="newJobForm mt-4">
+                                                                <label class="upperlineTitle">Tasks</label>
+                                                                <div class="row">
+                                                                    <div class="col-sm-1">
+                                                                        <div class="jobsection  mt-3">
+                                                                            <a href="#" class="profileDrop p-2 crmNewBtn"> New</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <form class="searchForm" action="">
+                                                                            <div class="input-group mb-3  mt-3">
+                                                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="productDetailTable">
+                                                                            <table class="table">
+                                                                                <thead class="table-light">
+                                                                                    <tr>
+                                                                                        <th>Date</th>
+                                                                                        <th>By</th>
+                                                                                        <th>Contact</th>
+                                                                                        <th>Type</th>
+                                                                                        <th>Note(s)</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Customer Visible</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab" tabindex="0">
+                                                        <div class="newJobForm mt-4">
+                                                                <label class="upperlineTitle">Notes</label>
+                                                                <div class="row">
+                                                                    <div class="col-sm-1">
+                                                                        <div class="jobsection  mt-3">
+                                                                            <a href="#" class="profileDrop p-2 crmNewBtn"> New</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <form class="searchForm" action="">
+                                                                            <div class="input-group mb-3  mt-3">
+                                                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="productDetailTable">
+                                                                            <table class="table">
+                                                                                <thead class="table-light">
+                                                                                    <tr>
+                                                                                        <th>Date</th>
+                                                                                        <th>By</th>
+                                                                                        <th>Contact</th>
+                                                                                        <th>Type</th>
+                                                                                        <th>Note(s)</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Customer Visible</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="pills-complaints" role="tabpanel" aria-labelledby="pills-complaints-tab" tabindex="0">
+                                                        <div class="newJobForm mt-4">
+                                                                <label class="upperlineTitle">Complaints History</label>
+                                                                <div class="row">
+                                                                    <div class="col-sm-1">
+                                                                        <div class="jobsection  mt-3">
+                                                                            <a href="#" class="profileDrop p-2 crmNewBtn"> New</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <form class="searchForm" action="">
+                                                                            <div class="input-group mb-3  mt-3">
+                                                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        <div class="productDetailTable">
+                                                                            <table class="table">
+                                                                                <thead class="table-light">
+                                                                                    <tr>
+                                                                                        <th>Date</th>
+                                                                                        <th>By</th>
+                                                                                        <th>Contact</th>
+                                                                                        <th>Type</th>
+                                                                                        <th>Note(s)</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Customer Visible</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                        <td>.</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- 
+                                                     -->
+
+
+                                                </div> <!-- End off model body  -->
+                                                <div class="modal-footer customer_Form_Popup">
+                                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- ****************End CRM History Modal ****************-->
+
+                                    <!-- ****************Reject Modal ****************-->
 
                                     <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
