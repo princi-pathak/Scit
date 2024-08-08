@@ -25,8 +25,8 @@ class Lead extends Model
         'prefer_time',
     ];
 
-    public static function getAllLeadCount(){
-        return Lead::whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6'])->count();
+    public static function getAllLeadCount($home_id){
+        return Lead::whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->where('home_id', $home_id)->count();
     }
 
     public static function getUnassignedCount(){
@@ -47,11 +47,11 @@ class Lead extends Model
     } 
 
     public static function getAuthorizationCount(){
-        return Lead::where('authorization_status', 1)->count();
+        return Lead::where('status', 7)->count();
     }
 
     public static function leadForAdminAuthorization($id){
-        return Lead::where('id', $id)->update(['authorization_status' => 1]);
+        return Lead::where('id', $id)->update(['authorization_status' => 1, 'status' => 7]);
     }
 
     public static function LeadAuthorizedAdmin($id){

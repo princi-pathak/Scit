@@ -1,4 +1,23 @@
 
+// search leads show search Filter
+function hideShowDiv() {
+  let div = document.getElementById("divTohide");
+
+  if (div.style.display === 'none' || div.style.opacity === '0') {
+      div.style.display = 'block';
+      div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
+      div.style.opacity = '1';
+  } else {
+      div.style.height = '0px';
+      div.style.opacity = '0';
+      // Use a timeout to set display to none after the transition
+      setTimeout(() => {
+          div.style.display = 'none';
+      }, 500); // 500ms matches the CSS transition duration
+  }
+}
+// end search leads show search Filter js
+
 
 $(document).ready(function() {
   $('#exampleOne').DataTable( {
