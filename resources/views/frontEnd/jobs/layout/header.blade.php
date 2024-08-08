@@ -273,8 +273,8 @@
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{url('customer_add_edit')}}">New Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{url('active_customer')}}">Active Customers</a></li>
-                                            <li><a class="dropdown-item" href="#">Inactive Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=ACTIVE') }}">Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=INACTIVE') }}">Inactive Customers</a></li>
                                             <li><a class="dropdown-item" href="#">Customers Logins</a></li>
                                         </ul>
                                     </li>

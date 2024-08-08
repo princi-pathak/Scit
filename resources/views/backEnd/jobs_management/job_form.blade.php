@@ -129,13 +129,11 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Customer*</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" name="customer_id" id="customer_id">
+                                    <select class="form-control" name="customer_id" id="customer_id" onchange="get_customer_details()">
 										<option disabled selected>select Customer</option>
-                                        <option value="1" <?php if(isset($job_details) && $job_details->customer_id == 1){echo 'selected';}?>>Customer-1</option>
-                                        <option value="2" <?php if(isset($job_details) && $job_details->customer_id == 2){echo 'selected';}?>>Customer-2</option>
-                                        <option value="3" <?php if(isset($job_details) && $job_details->customer_id == 3){echo 'selected';}?>>Customer-3</option>
-                                        <option value="4" <?php if(isset($job_details) && $job_details->customer_id == 4){echo 'selected';}?>>Customer-4</option>
-                                        
+                                        <?php foreach($customers as $cust){?>
+                                            <option value="{{$cust->id}}" <?php if(isset($job_details) && $job_details->customer_id == $cust->id){echo 'selected';}?>>{{$cust->name}}</option>
+                                        <?php }?>
 									</select>
                                     <p style="color:red;display:none" id="Customer_idError">* Customer is Required Field *</p>
                                 </div>
@@ -144,7 +142,7 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Project</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" name="project_id" id="project_id">
+                                    <select class="form-control" name="project_id" id="project_id" disabled>
 										<option disabled selected>select Project</option>
                                         <?php foreach($projects as $val){?>
                                         <option value="{{$val->id}}" <?php if(isset($job_details) && $job_details->customer_id == $val->id){echo 'selected';}?>>{{$val->project_name}}</option>
@@ -156,9 +154,8 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Contact</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" name="contact_id" id="contact_id">
-                                        <option value="1" selected>Default</option>
-                                        <option value="2">None</option>
+                                    <select class="form-control" name="contact_id" id="contact_id" disabled>
+                                        <option value="default" selected>Default</option>
                                         
 									</select>
                                     <p style="color:red;display:none" id="contact_idError">* Contact is Required Field *</p>
@@ -224,7 +221,7 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Site</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" name="site_id" id="site_id">
+                                    <select class="form-control" name="site_id" id="site_id" disabled>
 										<option desabled selected>select Site</option>
                                         <option value="1" <?php if(isset($job_details) && $job_details->site_id == 1){echo 'selected';}?>>Site-1</option>
                                         <option value="2" <?php if(isset($job_details) && $job_details->site_id == 2){echo 'selected';}?>>Site-2</option>
@@ -929,6 +926,24 @@ function get_search(){
                 }
             });
         }
+    }
+    function get_customer_details(){
+        var customer_id=$("#customer_id").val();
+        var token='<?php echo csrf_token();?>'
+        $.ajax({  
+            type:"POST",
+            url:"{{url('admin/get_customer_details')}}",
+            data:{customer_id:customer_id,_token:token},
+            success:function(data)
+            {
+                console.log(data);
+                $('#project_id').removeAttr('disabled');
+                $('#contact_id').removeAttr('disabled');
+                $('#site_id').removeAttr('disabled');
+                
+                
+            }
+        });
     }
 </script>	
 
