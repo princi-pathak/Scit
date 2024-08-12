@@ -79,7 +79,8 @@ class Customer extends Model
 
         $query = DB::table('customers')
         ->join('leads', 'customers.id', '=', 'leads.customer_id')
-        ->select('customers.*', 'leads.*')
+        ->join('lead_statuses', 'lead_statuses.id', 'leads.status')
+        ->select('customers.*', 'leads.*', 'lead_statuses.title as status', 'lead_statuses.id as status_id')
         ->orderBy('leads.created_at', 'desc')
         ->where('leads.home_id', $home_id);
    
@@ -99,14 +100,12 @@ class Customer extends Model
             return DB::table('customers')
                 ->join('leads', 'leads.customer_id', '=','customers.id')
                 ->join('lead_tasks', 'lead_tasks.lead_ref', '=', 'leads.lead_ref')
-                ->select('leads.*', 'customers.*','leads.')
+                ->join('lead_statuses', 'lead_statuses.id', 'leads.status')
+                ->select('leads.lead_ref', 'customers.contact_name', 'customers.name', 'customers.email', 'customers.telephone', 'customers.mobile', 'leads.assign_to', 'lead_statuses.title as status', 'lead_statuses.id as status_id','customers.website','customers.address', 'customers.city', 'customers.country', 'customers.postal_code', 'leads.id as id', 'Customers.id as customer_id', 'leads.authorization_status')
                 ->orderBy('leads.created_at', 'desc')
                 ->where('leads.home_id', $home_id)
                 ->distinct()
-                ->get();
-
-                // return $query->get();
-    
+                ->get();    
         }
     }
 
@@ -121,5 +120,6 @@ class Customer extends Model
         $status = ($list_mode == 'ACTIVE') ? 1 : 0;
         return Customer::where(['is_converted' => '1', 'status' => $status,'home_id'=>$home_id])->get();
     }
+
     
 }

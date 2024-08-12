@@ -112,7 +112,6 @@ class LeadController extends Controller
         $status = LeadStatus::getLeadStatus();
         $sources = LeadSource::getLeadSources();
         $notes_type = LeadNoteType::getLeadNoteTypeWithHomeId(Session::get('scitsAdminSession')->home_id);
-        // $lead_notes = LeadNote::getLeadNoteFromLeadId($id);
         $leadTask = LeadTaskType::getLeadTaskType();
         $attachment_type = AttachmentType::getAttachmentType();
         $lead_notes_data = LeadNote::getLeadNoteFromleadNoteType($id); 

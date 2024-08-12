@@ -27,11 +27,13 @@ class LeadController extends Controller
         $path = $request->path();   
         $segments = explode('/', $path);
         $lastSegment = end($segments);
+        $users = User::getHomeUsers(Auth::user()->home_id);
+        $leadTask = LeadTaskType::getLeadTaskType();
         $customers = Customer::getCustomerWithLeads($lastSegment, Auth::user()->home_id);
         $leadRejectTypes = LeadRejectType::getLeadRejectType();
         // dd($customers);
 
-        return view('frontEnd.salesAndFinance.lead.leads', compact('customers', 'page', 'lastSegment'));
+        return view('frontEnd.salesAndFinance.lead.leads', compact('customers', 'page', 'lastSegment', 'users', 'leadTask'));
 
     }
     public function create(){
@@ -42,6 +44,7 @@ class LeadController extends Controller
         return view('frontEnd.salesAndFinance.lead.lead_form', compact('page','users', 'status', 'sources'));
     }
     public function store(Request $request){
+        // dd($request);
         try {
 
             $website = $request->input('website');

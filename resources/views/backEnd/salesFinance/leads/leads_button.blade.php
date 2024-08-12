@@ -9,7 +9,7 @@
         <button id="editable-sample_new" class="btn btn-primary">Unassigned ({{ App\Lead::getUnassignedCount() }})</button>
     </a>
     <a href="{{ url('admin/sales-finance/leads/actioned') }}">
-        <button id="editable-sample_new" class="btn btn-primary">Actioned ()</button>
+        <button id="editable-sample_new" class="btn btn-primary">Actioned ({{ App\Lead::getActionedLead(Session::get('scitsAdminSession')->home_id)}})</button>
     </a>
     <a href="{{ url('admin/sales-finance/leads/rejected') }}">
         <button id="editable-sample_new" class="btn btn-primary">Rejected ({{ App\Lead::getRejectedCount() }})</button>
