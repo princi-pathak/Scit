@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="alert alert-success text-center" id="msg" style="display:none">
+        <div class="alert alert-success text-center" id="msg" style="display:none;height:50px">
             <p>{{$task}} Successfully Done</p>
         </div>
         
@@ -1012,7 +1012,7 @@
             progressText[current - 1].classList.add("active");
             current += 1;
             setTimeout(function() {
-                alert("Your Form Successfully Signed up");
+                alert("Your Form Successfully Created");
                 location.reload();
             }, 800);
         });

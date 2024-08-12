@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Project;
+use App\Models\Constructor_customer_site;
+use App\Models\Construction_customer_login;
+use App\Models\Constructor_additional_contact;
 
 class Customer extends Model
 {
@@ -121,5 +125,16 @@ class Customer extends Model
         return Customer::where(['is_converted' => '1', 'status' => $status,'home_id'=>$home_id])->get();
     }
 
-    
+    public function sites()
+    {
+        return $this->hasMany(Constructor_customer_site::class, 'customer_id');
+    }
+    public function additional_contact()
+    {
+        return $this->hasMany(Constructor_additional_contact::class, 'customer_id');
+    }
+    public function customer_project()
+    {
+        return $this->hasMany(Project::class, 'customer_name');
+    }
 }
