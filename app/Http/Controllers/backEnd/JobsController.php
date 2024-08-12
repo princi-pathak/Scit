@@ -175,8 +175,10 @@ class JobsController extends Controller
             $table->customer_notes=$request->customer_notes;
             $table->internal_notes=$request->internal_notes;
             $table->attachments=$imageName;
-            $table->save();
+            $table->site_country_id=$request->site_country_code;
+            $table->country_id=$request->country_code;
             // echo "<pre>";print_r($table);die;
+            $table->save();
             $product_detail_id=$request->product_detail_id;
             for($i=0;$i<count($product_detail_id);$i++){
                 $table1=new Construction_jobassign_product;
@@ -227,6 +229,8 @@ class JobsController extends Controller
             $table->customer_notes=$request->customer_notes;
             $table->internal_notes=$request->internal_notes;
             $table->attachments=$imageName;
+            $table->site_country_id=$request->site_country_id;
+            $table->country_id=$request->country_code;
             $table->save();
             // echo "<pre>";print_r($table);die;
             $product_detail_id=$request->product_detail_id;
@@ -1342,10 +1346,8 @@ class JobsController extends Controller
     public function get_customer_details(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $customer_id=$request->customer_id;
-        $admin   = Session::get('scitsAdminSession');
-        $home_id = $admin->home_id;
-        $customers=Job::getCustomerDetailsAttribute($customer_id);
-        // echo "<pre>";print_r($data['customers']);die;
+        $customers = Customer::with('sites','additional_contact','customer_project')->where('id', $customer_id)->get();
+        // echo "<pre>";print_r($customers);die;
         return response()->json($customers);
     }
     
