@@ -231,6 +231,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/jobs_index','App\Http\Controllers\jobs\JobController@index');
 	Route::get('/planner_day','App\Http\Controllers\jobs\JobController@planner_day');
 	Route::get('/jobs_create','App\Http\Controllers\jobs\JobController@jobs_create');
+	Route::post('/job_add_edit_save','App\Http\Controllers\jobs\JobController@job_add_edit_save');
+	Route::post('/get_customer_details_front','App\Http\Controllers\jobs\JobController@get_customer_details_front');
 	// Customer
 	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit_save');

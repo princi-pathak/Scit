@@ -143,7 +143,7 @@ padding: 5px 0px 15px 0px;
                                 <label class="col-lg-3 control-label">Project</label>
                                 <div class="col-lg-9">
                                     <select class="form-control" name="project_id" id="project_id" disabled>
-										<option disabled selected>select Project</option>
+										<option disabled selected>select Customer First</option>
                                         <?php foreach($projects as $val){?>
                                         <option value="{{$val->id}}" <?php if(isset($job_details) && $job_details->customer_id == $val->id){echo 'selected';}?>>{{$val->project_name}}</option>
                                         <?php }?>
@@ -155,7 +155,7 @@ padding: 5px 0px 15px 0px;
                                 <label class="col-lg-3 control-label">Contact</label>
                                 <div class="col-lg-9">
                                     <select class="form-control" name="contact_id" id="contact_id" disabled>
-                                        <option value="default" selected>Default</option>
+                                        <option value="default" selected>Select Customer First</option>
                                         
 									</select>
                                     <p style="color:red;display:none" id="contact_idError">* Contact is Required Field *</p>
@@ -216,7 +216,19 @@ padding: 5px 0px 15px 0px;
                                 <div class="col-lg-9">
                                     <input type="text" name="pincode" id="pincode" class="form-control" placeholder="Pincode" value="<?php if(isset($job_details)){echo $job_details->pincode;}?>" maxlength="255">
                                 </div>
-                            </div>     
+                            </div> 
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Country</label>
+                                <div class="col-lg-9">
+                                    
+                                    <select class="form-control" name="country_code" id="country_code">
+										<option disabled selected>select Country</option>
+                                        <?php foreach($country as $val_country){?>
+                                            <option value="{{$val_country->id}}" class="country_code">{{$val_country->name}}</option>
+                                        <?php }?>
+									</select>
+                                </div>
+                            </div>    
                             <label>Site Details</label>                      
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Site</label>
@@ -234,18 +246,18 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Region</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="region" id="region" class="form-control" placeholder="Region" value="<?php if(isset($job_details)){echo $job_details->region;}?>" maxlength="255">
+                                    <select class="form-control" name="region" id="region">
+										<option desabled selected>select Site</option>
+                                        <option value="1">India</option>
+                                        <option value="2">Canada</option>
+                                        
+									</select>
                                 </div>
                             </div>  
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Company</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" name="company_id" id="company_id">
-										<option desabled selected>select Company</option>
-                                        <option value="1" <?php if(isset($job_details) && $job_details->company == 1){echo 'selected';}?>>Company-7</option>
-                                        <option value="2" <?php if(isset($job_details) && $job_details->company == 2){echo 'selected';}?>>Company-8</option>
-                                        
-									</select>
+                                    <input type="text" class="form-control" name="company_id" id="company_id">
                                 </div>
                             </div> 
                             <div class="form-group">
@@ -296,6 +308,18 @@ padding: 5px 0px 15px 0px;
                                     <input type="text" name="site_pincode" id="site_pincode" class="form-control" placeholder="Siet Pincode" value="<?php if(isset($job_details)){echo $job_details->site_pincode;}?>" maxlength="255">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Country</label>
+                                <div class="col-lg-9">
+                                    
+                                    <select class="form-control" name="site_country_code" id="site_country_code">
+										<option disabled selected>select Country</option>
+                                        <?php foreach($country as $site_country){?>
+                                            <option value="{{$site_country->id}}" class="site_country_code">{{$site_country->name}}</option>
+                                        <?php }?>
+									</select>
+                                </div>
+                            </div>  
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Notes</label>
                                 <div class="col-lg-9">
@@ -940,8 +964,71 @@ function get_search(){
                 $('#project_id').removeAttr('disabled');
                 $('#contact_id').removeAttr('disabled');
                 $('#site_id').removeAttr('disabled');
+                data.forEach(customerData => {
+                    $("#name").val(customerData.name);
+                    $("#email").val(customerData.email);
+                    $("#telephone").val(customerData.telephone);
+                    $("#mobile").val(customerData.mobile);
+                    $("#address").val(customerData.address);
+                    $("#city").val(customerData.city);
+                    $("#country").val(customerData.country);
+                    $("#pincode").val(customerData.postal_code);
+                    $("#conatact_name").val(customerData.contact_name);
+                    $("#site_email").val(customerData.email);
+                    $("#site_telephone").val(customerData.telephone);
+                    $("#site_mobile").val(customerData.mobile);
+                    $("#site_address").val(customerData.address);
+                    $("#site_city").val(customerData.city);
+                    $("#site_country").val(customerData.country);
+                    $("#site_pincode").val(customerData.postal_code);
+                    $("#company_id").val(customerData.name)
+                    var project = '<option value="0" selected>Select Project</option>';
+                    if (customerData.customer_project && Array.isArray(customerData.customer_project)) {
+                        for (let i = 0; i < customerData.customer_project.length; i++) {
+                            project += '<option value="' + customerData.customer_project[i].id + '">' + customerData.customer_project[i].project_name + '</option>';
+                        }
+                    }
+                    document.getElementById('project_id').innerHTML = project;
+
+                    var contact = '<option value="0" selected>Default</option>';
+                    if (customerData.additional_contact && Array.isArray(customerData.additional_contact)) {
+                        for (let i = 0; i < customerData.additional_contact.length; i++) {
+                            contact += '<option value="' + customerData.additional_contact[i].id + '">' + customerData.additional_contact[i].contact_name + '</option>';
+                        }
+                    }
+                    document.getElementById('contact_id').innerHTML = contact;
+
+                    var site = '<option value="default" selected>Select Site</option>';
+                    if (customerData.sites && Array.isArray(customerData.sites)) {
+                        for (let i = 0; i < customerData.sites.length; i++) {
+                            site += '<option value="' + customerData.sites[i].id + '">' + customerData.sites[i].site_name + '</option>';
+                        }
+                    }
+                    document.getElementById('site_id').innerHTML = site;
+                    // var country_code_selected = document.querySelectorAll(".country_code");
+                    $(".country_code").each(function() {
+                        if ($(this).val() === customerData.country_code) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    $(".site_country_code").each(function() {
+                        if ($(this).val() === customerData.country_code) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+                    // $(".country_code.site_country_code").each(function() {
+                    //     if ($(this).val() === customerData.country_code) {
+                    //         $(this).prop('selected', true);
+                    //     }
+                    // });
+                    // console.log(country_code_selected);
+                });
                 
                 
+                
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
             }
         });
     }
