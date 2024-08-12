@@ -230,6 +230,10 @@ class User extends Authenticatable
             }
         }
     }
+
+    public static function getLeadAssignUserName($id){
+        return User::where('id', $id)->value('name');
+    }
     /*
     Note: User(manager/staff) - set password functionality
         1. Super admin will create a new user
