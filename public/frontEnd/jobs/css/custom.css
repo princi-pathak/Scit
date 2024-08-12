@@ -1453,6 +1453,10 @@ form .page .field input.invalid-input {
 form .page .field select.invalid-input {
   border-color: var(--errorColor);
 }
+/*Ram here code for select validation 12/08/2024*/
+form .page .field textarea.invalid-input {
+  border-color: var(--errorColor);
+}
 form .page .field select {
   width: 100%;
   padding-left: 10px;
