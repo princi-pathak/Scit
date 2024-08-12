@@ -45,7 +45,7 @@ if (isset($lead)) {
                                         <div class="col-sm-9">
                                             <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->id)) ? $lead->id : '' }}">
                                             <input type="hidden" name="customer_id" value="{{ (isset($lead->customer_id)) ? $lead->customer_id : '' }}">
-                                            <input type="text" name="lead_ref" class="form-control-plaintext editInput" id="" placeholder="Auto Generate" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" disabled>
+                                            <input type="text" name="lead_ref" class="form-control-plaintext editInput" id="" placeholder="Auto Generate" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" readonly>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -300,7 +300,6 @@ if (isset($lead)) {
                                             <a href="#" class="profileDrop ms-3 open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel"><i class="fa-solid fa-floppy-disk"></i> New Tasks</a>
                                         </div>
                                         <div class="col-sm-12">
-
                                             <!-- Modal -->
                                             <div class="modal fade" id="tasksModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
@@ -390,18 +389,9 @@ if (isset($lead)) {
                                                                         <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
                                                                     </div>
                                                                     <div id="optionsDiv">
-                                                                        <label>
-                                                                            <input type="checkbox" value="1" id="notificationCheckbox" name="notification">
-                                                                            Notification
-                                                                        </label>
-                                                                        <label>
-                                                                            <input type="checkbox" value="1" id="emailCheckbox" name="email_notify">
-                                                                            Email
-                                                                        </label>
-                                                                        <label>
-                                                                            <input type="checkbox" value="1" id="smsCheckbox" name="sms_notify">
-                                                                            SMS
-                                                                        </label>
+                                                                        <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
+                                                                        <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
+                                                                        <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
                                                                     </div>
                                                                 </div>
 
@@ -423,6 +413,7 @@ if (isset($lead)) {
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="productDetailTable mt-3">
                                                 <table class="table" id="containerA">
                                                     <thead class="table-light">

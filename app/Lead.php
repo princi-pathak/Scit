@@ -59,10 +59,13 @@ class Lead extends Model
     } 
 
     public static function getActionedLead($home_id){
-        return DB::table('lead_tasks')
-        ->join('leads', 'lead_tasks.lead_ref', '=', 'leads.lead_ref')
-        ->select('leads.lead_ref')
+        return DB::table('leads')
         ->where('leads.home_id', $home_id)
+        ->whereExists(function($query) {
+            $query->select(DB::raw(1))
+                ->from('lead_tasks')
+                ->whereColumn('lead_tasks.lead_ref', 'leads.lead_ref');
+        })
         ->distinct()
         ->count();
     }
