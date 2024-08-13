@@ -302,6 +302,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		// Route::get('/lead/lead_reject_types/delete/{id}', 'lead_reject_type_delete');
 		Route::post('/lead/saveLeadRejectReasons', 'saveLeadRejectReason')->name('lead.ajax.saveLeadRejectReasons');
 
+		// CRM Section Types
+		Route::get('lead/CRM_section_types', 'CRM_section_type')->name('lead.crm_section');
+		Route::post('lead/saveCRMSectionType', 'saveCRMSectionType')->name('lead.ajax.saveCRMSectionType');
+		Route::get('lead/crm_section_type/delete/{id}', 'crm_section_type_delete');
+
 	});
 
 
@@ -1435,7 +1440,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/lead_task_type/delete/{id}', 'lead_task_type_delete');
 			Route::get('/lead_mark_as_completed/{task}/{lead}', 'lead_mark_as_completed');
 
-
 			// Lead Notes Type
 			Route::get('/lead_notes_type', 'lead_notes_type')->name('leads.lead_notes_type');
 			Route::post('/saveLeadNotesType', 'saveLeadNotesType')->name('leads.ajax.saveLeadNoteType');
@@ -1450,6 +1454,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			// Lead Attachment 
 			Route::post('/saveLeadAttachment', 'saveLeadAttachment')->name('leads.ajax.saveLeadAttachment');
 			Route::get('/lead_attachments/delete/{attachment}/{lead}', 'lead_attachments_delete');
+
+			// CRM Section Types
+			Route::get('/CRM_section_types', 'CRM_section_type')->name('leads.crm_section');
+			Route::post('/saveCRMSectionType', 'saveCRMSectionType')->name('leads.ajax.saveCRMSectionType');
+			Route::get('/crm_section_type/delete/{id}', 'crm_section_type_delete');
+
+			
+
 		});
 
 	});

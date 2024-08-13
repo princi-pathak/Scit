@@ -35,21 +35,6 @@
         z-index: 99999;
         transition: opacity 0.3s ease;
     }
-
-    /* .modal-backdrop {
-        z-index: 1040 !important;
-    }
-
-    .modal {
-        z-index: 1050 !important;
-    }
-
-    .modal.in {
-        z-index: 1050 !important;
-    } */
-    /* #optionsDiv{
-        display: none;
-    } */
 </style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
@@ -95,7 +80,6 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="pageTitleBtn p-0">
-                                    <!-- <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a> -->
                                 </div>
                             </div>
                         </div>
@@ -165,7 +149,7 @@
                                                 <hr class="dropdown-divider">
                                                 <!-- <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CRMHistoryModal">CRM History</a> -->
                                                 <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#customerPop">CRM History</a>
-                                                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
+                                                <a href="#" class="dropdown-item open-modal" data-lead_ref="{{ $customer->lead_ref }}" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
                                                 <a href="{{ url('/leads/authorization').'/'.$customer->id }}" class="dropdown-item">Send for Authorization</a>
                                                 <a href="#" class="dropdown-item">Send to Quote</a>
                                                 <a href="#" class="dropdown-item">Send to Job</a>
@@ -185,25 +169,40 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form>
+                                                    <form id = "lead_reject_reason_form">
+                                                        @csrf
                                                         <div class="mb-3">
                                                             <label for="recipient-name" class="col-form-label">Lead Ref:</label>
-                                                            <input type="text" class="form-control" id="recipient-name">
+                                                            <input type="text" name="lead_ref" class="form-control editInput" id="lead_ref" placeholder="Auto Generate" value="" >
+                                                            <!-- <input type="text" class="form-control" id="recipient-name"> -->
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="recipient-name" class="col-form-label">Reject Type:</label>
-                                                            <input type="text" class="form-control" id="recipient-name">
+                                                            <div class="row">
+                                                                <div class="col-10">
+                                                                    <select name="reject_type_id" class="form-control editInput" id="">
+                                                                        @foreach($leadRejectTypes as $value)
+                                                                            <option value="{{ $value->id }}">{{ $value->title}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-2 d-flex align-items-center">
+                                                                    <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectModal2">
+                                                                        <i class="fa-solid fa-square-plus"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <a href="#!" data-bs-toggle="modal" data-bs-target="#rejectModal2"><i class="fa-solid fa-square-plus"></i></a>
                                                         <div class="mb-3">
                                                             <label for="message-text" class="col-form-label">Reject Reason:</label>
-                                                            <textarea class="form-control" id="message-text"></textarea>
+                                                            <textarea name="reject_reason" class="form-control editInput" id=""></textarea>
+                                                            <!-- <textarea class="form-control" id="message-text"></textarea> -->
                                                         </div>
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Send message</button>
+                                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="profileDrop" id="lead_reject_reason">Confirm Reject</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -214,24 +213,28 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel2">New message</h1>
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel2"> Add Lead Reject Type </h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form>
+                                                    <form id="lead_reject_type_form_edit">
+                                                        @csrf
                                                         <div class="mb-3">
-                                                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                                            <input type="text" class="form-control" id="recipient-name">
+                                                            <label for="recipient-name" class="col-form-label">Lead Reject Type :</label>
+                                                            <input type="text" class="form-control editInput" name="title" id="recipient-name">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="message-text" class="col-form-label">Message:</label>
-                                                            <textarea class="form-control" id="message-text"></textarea>
+                                                            <label for="message-text" class="col-form-label">Status:</label>
+                                                            <select name="status" class="form-control editInput" id="">
+                                                                <option value="1">Active</option>
+                                                                <option value="0">InActive</option>
+                                                            </select>
                                                         </div>
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Send message</button>
+                                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button"  id="lead_reject" class="profileDrop">Save</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -930,7 +933,7 @@
     const openPopupButton2 = document.getElementById('openPopupButton2');
     const popup2 = document.getElementById('popup2');
     const closePopup2 = document.getElementById('closePopup');
-
+    
     openPopupButton2.addEventListener('click', () => {
         popup2.style.display = 'block';
         setTimeout(() => {
@@ -944,8 +947,7 @@
             popup2.style.display = 'none';
         }, 300); // Ensure the popup is hidden after the transition ends
     });
-</script>
-<script>
+    
     const openPopupButton = document.getElementById('openPopupButton');
     const popup = document.getElementById('popup');
     const closePopup = document.getElementById('closePopup');
@@ -981,7 +983,7 @@
         });
         $('#openThirdModal2').on('click', function() {
             $('#thirdModal').modal('show');
-           
+            
         });
 
         mainCheckbox.addEventListener('change', function () {
@@ -990,6 +992,47 @@
             } else {
                 optionsDiv.style.display = 'none';
             }
+        });
+
+        $('.open-modal').on('click', function() {
+            var lead_ref = $(this).data('lead_ref');
+            $('#lead_ref').val(lead_ref);  
+        });
+        
+        $('#lead_reject').on('click', function() {
+            var formData = $('#lead_reject_type_form_edit').serialize();
+
+            $.ajax({
+                url: '{{ route("lead.ajax.saveLeadRejectTypes") }}', 
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#secondModal').modal('hide'); 
+                    location.reload(); 
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        $('#lead_reject_reason').on('click', function() {
+            var formData = $('#lead_reject_reason_form').serialize();
+
+            $.ajax({
+                url: '{{ route("lead.ajax.saveLeadRejectReasons") }}', 
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#secondModal').modal('hide'); 
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
 
     });

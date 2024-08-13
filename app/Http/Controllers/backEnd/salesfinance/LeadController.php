@@ -19,9 +19,12 @@ use App\Models\LeadTaskType;
 use App\Models\LeadNoteType;
 use App\Models\LeadNote;
 use App\Models\LeadAttachment;
+use App\Models\CRMSectionType;
+
 
 class LeadController extends Controller
 {
+    
     public function index(Request $request){
         $page = "Leads";
         $path = $request->path();
@@ -404,6 +407,40 @@ class LeadController extends Controller
             return redirect()->route('leads.index')->with('success', "Lead Authorized successfully");
         } else {
             return redirect()->route('leads.index')->with('error', "Error in Lead Authorizataion");
+        }
+    }
+
+    // CRM Section Type
+    public function CRM_section_type(){
+        $page = "crm_section_type";
+        $crm_sections = CRMSectionType::getCRMSectionTypes();
+        return view('backEnd/salesFinance/leads/CRM_section_type', compact('page', 'crm_sections'));
+
+    }
+
+    public function saveCRMSectionType(Request $request){
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'crm_section' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        CRMSectionType::updateOrCreate(['id' => $request->section_type_id],  array_merge($request->all() , ['home_id' => Session::get('scitsAdminSession')->home_id]));
+        if ( isset($request->section_type_id)) {
+            return response()->json(['success' => true, 'message' => 'CRM Section updated successfully']);
+        } else {
+            return response()->json(['success' => true, 'message' => 'CRM Section Type added successfully.']);
+        }
+    }
+
+    public function crm_section_type_delete($id){
+        $data = CRMSectionType::deleteCRMSectionType($id);
+        if($data){
+            return redirect()->route('leads.crm_section')->with('success', "Record deleted successfully");
+        } else {
+            return redirect()->route('leads.crm_section')->with('error', "Record not found");
         }
     }
 
