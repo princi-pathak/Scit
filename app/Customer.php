@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
+use App\Models\Job_title;
 use App\Models\Constructor_customer_site;
 use App\Models\Construction_customer_login;
 use App\Models\Constructor_additional_contact;
@@ -136,5 +137,8 @@ class Customer extends Model
     public function customer_project()
     {
         return $this->hasMany(Project::class, 'customer_name');
+    }
+    public function customer_profession(){
+        return $this->hasOne(Job_title::class, 'id');
     }
 }

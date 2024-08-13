@@ -20,6 +20,7 @@ use App\Models\Quote_product_detail;
 use App\Models\Recurrence_pattern_rule;
 use App\Models\Recurring_product_detail;
 use App\Models\Construction_jobassign_product;
+use App\Models\Construction_job_appointment_type;
 use DB,Auth,Session,Validator;
 use App\traits\CountryTrait;
 
@@ -93,10 +94,15 @@ class JobController extends Controller
         $data['job_type']=Job_type::where('status',1)->get();
         $data['country']=$this->all_country_trait();
         $home_id = Auth::user()->home_id;
-        $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')->join('product_categories as cat','cat.id','=','pr.cat_id')->get();
+        $user_id=Auth::user()->id;
+        $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')
+        ->join('product_categories as cat','cat.id','=','pr.cat_id')
+        ->where(['pr.home_id'=>$home_id,'pr.adder_id'=>$user_id])->get();
         $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
         $data['home_id']=$home_id;
-        // echo "<pre>";print_r($data['country']);die;
+        $data['users']=User::where('is_deleted',0)->get();
+        $data['appointment_type']=Construction_job_appointment_type::where('home_id',$home_id)->get();
+        // echo "<pre>";print_r($data['users']);die;
         return view('frontEnd.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
@@ -107,9 +113,66 @@ class JobController extends Controller
     }
     public function get_customer_details_front(Request $request){
         $customer_id=$request->customer_id;
-        $customers = Customer::with('sites','additional_contact','customer_project')->where('id', $customer_id)->get();
+        $customers = Customer::with('sites','additional_contact','customer_project','customer_profession')->where('id', $customer_id)->get();
         // echo "<pre>";print_r($customers);die;
         return response()->json($customers);
+    }
+    public function search_value_front(Request $request){
+        $search_value = $request->search_value;
+        $data = Product::where('product_name', 'like', "%{$search_value}%")->get();  
+        foreach($data as $val){
+            $cat_name=Product_category::find($val->cat_id);
+            echo '<tr onclick="selectProduct(this)">
+                            <td>'.$val->id.'</td>
+                            <td>'.$cat_name->name.'</td>
+                            <td>'.$val->product_name.'</td>
+                            <td>'.$val->description.'</td>
+                        </tr>';
+        }
+    }
+    public function result_product_calculation(Request $request){
+        $home_id = Auth::user()->home_id;
+        $user_id=Auth::user()->id;
+        $product_details=Product::product_detail($request->id);
+        $tax=Product::tax_detail($home_id);
+        echo '
+                <td>'.$product_details->product_code.'</td>
+                <td>'.$product_details->product_name.'</td>
+                <td>'.$product_details->description.'</td>
+                <td><input type="text" class="" value="'.$product_details->qty.'" name="quantity[]" id="quantity"></td>
+                <td>'.$product_details->cost_price.'</td>
+                <td>'.$product_details->price.'</td>
+                <td><input type="text" class="" value="0" name="discount[]"></td>';
+
+        echo '<td>';
+        foreach($tax as $taxv){
+        echo '<select id="" name="">
+                    <option value="'.$taxv->id.'">'.$taxv->name.'</option>  
+               </select>';
+        }
+        echo '</td>
+                <td id="pre_total_amount">'.$product_details->price.'<input type="hidden" name="final_amount" id="final_amount" value="'.$product_details->price.'"></td>
+                <td><button type="button" class="btn btn-danger" onclick="removeRow('.$product_details->id.')">Delete<input type="hidden" value="'.$product_details->id.'" name="product_detail_id[]" id="product_detail_id"></button></td>
+            ';
+    }
+    public function save_job_product(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $quantity=$request->quantity;
+        for($i=0;$i<count($quantity);$i++){
+            $table=new Construction_jobassign_product;
+            $table->job_id=$request->id;
+            $table->product_id=$request->product_detail_id[$i];
+            $table->qty=$request->quantity[$i];
+            $table->save();
+        }
+        
+        $job_table=Job::find($request->id);
+        $job_table->pay_amount=$request->final_amount;
+        $job_table->save();
+        echo "done";
+    }
+    public function get_save_appointment(Request $request){
+        echo "<pre>";print_r($request->all());die;
     }
     public function job_save_all(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -570,8 +633,8 @@ class JobController extends Controller
         $table->save();
         echo "done";
     }
-    public function delete_job(Request $request){
-        // echo "<pre>";print_r($request->all());die;
+    public function delete_function(Request $request){
+        echo "<pre>";print_r($request->all());die;
         $form_id=$request->form_id;
         if($form_id == 1){
             $table = Job::find($request->id);
