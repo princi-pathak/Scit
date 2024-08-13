@@ -5,16 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
-
+use App\Models\Project;
+use App\Customer;
+use App\Models\Constructor_additional_contact;
 class Job extends Model
 {
     use HasFactory;
-    protected $table = 'customers';
+    protected $table = 'jobs';
 
     protected $fillable = [
         'home_id',
         'customer_id',
         'job_ref',
+        'contact_id',
         'project_id',
         'name',
         'contact',
@@ -53,17 +56,29 @@ class Job extends Model
         'customer_notes',
         'internal_notes',
         'attachments',
+        'site_country_id',
+        'country_id',
+        'user_id',
         'status',
     ];
-    public static function getCustomerDetailsAttribute($customer_id){
-        $data=DB::table('customers as cust')->select('cust.*','con.id as contact_id','con.customer_id','con.contact_name as con_name','con.job_title_id','pro.home_id as pro_home_id','pro.project_name','pro.customer_name as pro_customer_id','site.id as site_id','site.customer_id as site_customer_id','site.site_name','site.contact_name as site_contact_name','site.company_name','site.email as site_email','site.telephone as site_telephone','site.mobile as site_mobile','site.fax as site_fax','site.address as site_address','site.city as site_city','site.country as site_country','site.post_code as site_post_code','site.country_id as site_country_id','site.notes as site_notes')
-        ->join('constructor_additional_contacts as con','cust.id','=','con.customer_id')
-        ->join('projects as pro','cust.id','=','pro.customer_name')
-        ->join('constructor_customer_sites as site','cust.id','=','site.customer_id')
-        ->where('cust.id',$customer_id)
-        ->where('cust.is_converted',1)
-        ->where('cust.status',1)
-        ->get();
-        return $data;
+    public static function job_save($data){
+        $last_id=$data['last_job_id'];
+        if($last_id == ''){
+            $job_ref="JOB-1";    
+        }else {
+            $job_ref="JOB-".$last_id+1;
+        }
+        $data['job_ref'] = $job_ref;
+        try {
+            $insert=self::updateOrCreate(
+                ['id' => $data['id'] ?? null],
+                $data
+            );
+        } catch (\Exception $e) {
+            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+        }
+            $data=['id'=>$insert->id,'name'=>$insert->name];
+            return $data;
     }
+    
 }

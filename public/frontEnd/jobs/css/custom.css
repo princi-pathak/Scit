@@ -972,6 +972,7 @@ form.customerForm {
 
 /* Start popup before popup  */
 
+
 .popup {
   display: none;
   position: fixed;
@@ -1354,9 +1355,9 @@ canvas#canv1 {
   left: inherit;
 }
 
-.dropdown-menu1 .nav-item1 .nav-link i{
+/* .dropdown-menu1 .nav-item1 .nav-link i{
  
-}
+} */
 .dropdown1:hover>.dropdown-menu1, 
 .dropend:hover>.dropdown-menu1 {
   display: block;
@@ -1451,6 +1452,10 @@ form .page .field input.invalid-input {
 }
 /*Ram here code for select validation 05/08/2024*/
 form .page .field select.invalid-input {
+  border-color: var(--errorColor);
+}
+/*Ram here code for select validation 12/08/2024*/
+form .page .field textarea.invalid-input {
   border-color: var(--errorColor);
 }
 form .page .field select {

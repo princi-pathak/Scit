@@ -4,25 +4,28 @@ namespace App\Http\Controllers\jobs;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Validator;
+use App\User;
+use App\Customer;
+use App\ServiceUser;
 use App\Models\Job;
+use App\Models\Quote;
+use App\Models\Product;
+use App\Models\Project;
 use App\Models\Job_type;
 use App\Models\Work_flow;
-use App\ServiceUser;
-use App\Models\Product_category;
-use App\Models\Product;
-use App\Models\Quote;
-use App\Models\Project;
+use App\Models\Quote_type;
 use App\Models\Job_recurring;
+use App\Models\Product_category;
+use App\Models\Quote_product_detail;
 use App\Models\Recurrence_pattern_rule;
 use App\Models\Recurring_product_detail;
-use App\Models\Quote_product_detail;
-use App\Models\Quote_type;
-use App\User;
-use DB,Auth;
+use App\Models\Construction_jobassign_product;
+use DB,Auth,Session,Validator;
+use App\traits\CountryTrait;
 
 class JobController extends Controller
 {
+    use CountryTrait;
     public function index(){
         $data['header_title']="Active Jobs";
         $data['job_type']=Job_type::where('status',1)->get();
@@ -73,7 +76,40 @@ class JobController extends Controller
     }
     public function jobs_create(Request $request){
         // echo 1;die;
-        return view('frontEnd.jobs.add_job');
+        // echo "<pre>";print_r(Auth::user());die;
+        if($request->key == '') {
+            $task="Added";
+        }else {
+            $task="Eddited";
+        }
+        $key=$request->key;
+        $data['task']=$task;
+        $data['page']='jobs_list';
+        $data['del_status']=0;
+        $data['projects']=Project::where('status',1)->get();
+        $data['last_job_id']=Job::orderBy('id','DESC')->first();
+        $data['job_details']=Job::find($key);
+        $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1])->get();
+        $data['job_type']=Job_type::where('status',1)->get();
+        $data['country']=$this->all_country_trait();
+        $home_id = Auth::user()->home_id;
+        $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')->join('product_categories as cat','cat.id','=','pr.cat_id')->get();
+        $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
+        $data['home_id']=$home_id;
+        // echo "<pre>";print_r($data['country']);die;
+        return view('frontEnd.jobs.add_job',$data);
+    }
+    public function job_add_edit_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $job_id=Job::job_save($request->all());
+        return response()->json($job_id);
+
+    }
+    public function get_customer_details_front(Request $request){
+        $customer_id=$request->customer_id;
+        $customers = Customer::with('sites','additional_contact','customer_project')->where('id', $customer_id)->get();
+        // echo "<pre>";print_r($customers);die;
+        return response()->json($customers);
     }
     public function job_save_all(Request $request){
         // echo "<pre>";print_r($request->all());die;
