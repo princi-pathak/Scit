@@ -427,7 +427,7 @@
                                         @csrf
                                         <input type="hidden" id="id" name="id">
                                         <input type="hidden" id="home_id" name="home_id" value="{{$home_id}}">
-                                        <input type="hidden" id="last_job_id" name="last_job_id" value="{{$last_job_id->id}}">
+                                        <input type="hidden" id="last_job_id" name="last_job_id" value="<?php if(isset($last_job_id->id)){echo $last_job_id->id;}?>">
                                         <div class="page slide-page">
                                             <div class="title">Customer Details</div>
 
