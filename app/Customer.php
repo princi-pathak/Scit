@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
+use App\Models\Job_title;
 use App\Models\Constructor_customer_site;
-use App\Models\Construction_customer_login;
 use App\Models\Constructor_additional_contact;
 
 class Customer extends Model
@@ -69,13 +69,13 @@ class Customer extends Model
         }
         // echo "<pre>";print_r($data);die;
         try {
-        $insert=self::updateOrCreate(
-            ['id' => $data['id'] ?? null],
-            $data
-        );
-    } catch (\Exception $e) {
-        return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
-    }
+            $insert=self::updateOrCreate(
+                ['id' => $data['id'] ?? null],
+                $data
+            );
+        } catch (\Exception $e) {
+            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+        }
         $data=['id'=>$insert->id,'name'=>$insert->name];
         return $data;
     }
@@ -136,5 +136,8 @@ class Customer extends Model
     public function customer_project()
     {
         return $this->hasMany(Project::class, 'customer_name');
+    }
+    public function customer_profession(){
+        return $this->hasOne(Job_title::class, 'id');
     }
 }

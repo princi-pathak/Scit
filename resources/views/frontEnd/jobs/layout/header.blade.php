@@ -34,18 +34,12 @@
                     <div class="col-lg-9 px-3 text-end toprigihticon">
                         <?php if (isset($page) && $page == 'job_index') { ?>
                             <div class="d-inline-flex align-items-center me-5 topbaarBtn">
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> storage</i> My Diary
-                                </a>
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> dashboard</i> CRM
-                                </a>
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> contact_support </i>
-                                    Help Desk <span class="notifiNumberRadColor">2</span></a>
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> mail </i> Messages
-                                </a>
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active
-                                    </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i>
-                                    Partners </a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> storage</i> My Diary</a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> dashboard</i> CRM</a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> contact_support </i> Help Desk <span class="notifiNumberRadColor">2</span></a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> mail </i> Messages </a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
+                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i> Partners </a>
                             </div>
                         <?php } else { ?>
 
@@ -56,20 +50,6 @@
                                 <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i class="material-symbols-outlined"> notifications </i></a>
                             </div>
                         <?php } ?>
-
-                        <!-- <div class="h-100 d-inline-flex align-items-center py-3 me-4">
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                    Welcome back Sam
-                                </a>
-                                <div class="dropdown-menu fade-up m-0">
-                                    <a href="#" class="dropdown-item">Products</a>
-                                    <a href="#" class="dropdown-item">Our Team</a>
-                                    <a href="#" class="dropdown-item">Testimonial</a>
-                                    <a href="#" class="dropdown-item">Our Works</a>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -446,7 +426,7 @@
                                             CRM <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">CRM Section Types </a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/CRM_section_types') }}"><i class="fa fa-list-ul"></i>   CRM Section Types </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
