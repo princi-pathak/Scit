@@ -66,7 +66,12 @@ class Job extends Model
         if($last_id == ''){
             $job_ref="JOB-1";    
         }else {
-            $job_ref="JOB-".$last_id+1;
+            if($data['id'] == '') {
+                $job_ref="JOB-".$last_id+1;
+            }else {
+                $job_ref="JOB-".$data['last_job_id'];
+            }
+            
         }
         $data['job_ref'] = $job_ref;
         try {

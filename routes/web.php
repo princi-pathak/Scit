@@ -223,7 +223,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/jobs_list','App\Http\Controllers\jobs\JobController@job_list');
 	Route::post('/job_save_all','App\Http\Controllers\jobs\JobController@job_save_all');
 	Route::post('/status_change','App\Http\Controllers\jobs\JobController@status_change');
-	Route::post('/delete_job','App\Http\Controllers\jobs\JobController@delete_job');
+	Route::post('/delete_function','App\Http\Controllers\jobs\JobController@delete_function');
 	Route::post('/edit_job','App\Http\Controllers\jobs\JobController@edit_job');
 	Route::post('/search_value','App\Http\Controllers\jobs\JobController@search_value');
 	Route::post('/save_get_ajax','App\Http\Controllers\jobs\JobController@save_get_ajax');
@@ -233,6 +233,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/jobs_create','App\Http\Controllers\jobs\JobController@jobs_create');
 	Route::post('/job_add_edit_save','App\Http\Controllers\jobs\JobController@job_add_edit_save');
 	Route::post('/get_customer_details_front','App\Http\Controllers\jobs\JobController@get_customer_details_front');
+	Route::post('/result_product_calculation','App\Http\Controllers\jobs\JobController@result_product_calculation');
+	Route::post('/save_job_product','App\Http\Controllers\jobs\JobController@save_job_product');
+	Route::post('/get_save_appointment','App\Http\Controllers\jobs\JobController@get_save_appointment');
 	// Customer
 	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit_save');
@@ -998,6 +1001,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/project_delete','App\Http\Controllers\backEnd\JobsController@project_delete');
 	Route::post('/search_value','App\Http\Controllers\backEnd\JobsController@search_value');
 	Route::post('/get_customer_details','App\Http\Controllers\backEnd\JobsController@get_customer_details');
+	Route::post('/get_delete_jobproduct','App\Http\Controllers\backEnd\JobsController@get_delete_jobproduct');
+	Route::post('/search_value_front','App\Http\Controllers\backEnd\JobsController@search_value_front');
 	// Job Recurring Start
 	Route::match(['get','post'],'/job_recurring_list','App\Http\Controllers\backEnd\JobsController@job_recurring_list');
 

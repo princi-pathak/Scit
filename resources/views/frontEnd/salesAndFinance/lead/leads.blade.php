@@ -476,7 +476,7 @@
                             <div class="row">
                                 <div class="col-sm-1">
                                     <div class="jobsection  mt-3">
-                                        <a href="#" class="profileDrop p-2 crmNewBtn open-modal" data-target=".bd-example-modal-lg" id="openSecondModal"> New</a>
+                                        <a href="#" class="profileDrop p-2 crmNewBtn open-modal" data-target="bd-example-modal-lg" id="openSecondModal"> New</a>
                                     </div>
                                 </div>  
                                 <!-- Second Modal -->
@@ -503,7 +503,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
                                                                         <div class="col-sm-8">
-                                                                            <select class="editInput" name="" id="">
+                                                                            <select class="form-control editInput" name="" id="">
                                                                                 @foreach($users as $value)
                                                                                     <option value="{{ $value->id }}">{{ $value->name }}</option>
                                                                                 @endforeach
@@ -520,12 +520,12 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
                                                                         <div class="col-sm-6">
-                                                                            <select class="editInput" name="" id="">
+                                                                            <select class="form-control editInput" name="" id="">
                                                                                 @foreach($leadTask as $value)
                                                                                 <option value="{{ $value->id }}">{{ $value->title }}</option>
                                                                                 @endforeach
                                                                             </select>
-                                                                            <input type="text"  class="form-control editInput" id="staticEmail" value="">
+                                                                            <!-- <input type="text"  class="form-control editInput" id="staticEmail" value=""> -->
                                                                         </div>
                                                                         <div class="col-sm-2">
                                                                             <a href="#!" class="formicon" id="openThirdModal"><i class="fa-solid fa-square-plus"></i></a>
@@ -533,15 +533,19 @@
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Start Date</label>
-                                                                        <div class="col-sm-8">
+                                                                        <div class="col-sm-4">
                                                                             <input type="date" class="form-control editInput" id="staticEmail" value="">
+                                                                        </div>
+                                                                        <div class="col-sm-4">
                                                                             <input type="time" class="form-control editInput" id="staticEmail" value="">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">End Date</label>
-                                                                        <div class="col-sm-8">
+                                                                        <div class="col-sm-4">
                                                                             <input type="date" class="form-control editInput" id="staticEmail" value="">
+                                                                        </div>
+                                                                        <div class="col-sm-4">
                                                                             <input type="time" class="form-control editInput" id="staticEmail" value="">
                                                                         </div>
                                                                     </div>
@@ -553,18 +557,34 @@
                                                             </div>
                                                             <div class="col-6">
                                                                 <form>
+
+
+
+
+                                                                <!--  -->
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notify ? </label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="checkbox" class="editInput" id="yeson">
-                                                                            <label for="notify" class="col-form-label ps-3">Yes, On</label>
-                                                                            <input type="date" class="form-control editInput" id="notify_date" name="notify_date">
-                                                                            <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input" type="checkbox" name="inlinecheckOptions" id="checkalrt" value="option1" required="">
+                                                                                <label class="form-check-label checkboxtext" for="checkalrt">Yes, On</label>
+                                                                            </div>
+                                                                            <!-- <input type="checkbox" class="editInput" id="yeson">
+                                                                            <label for="notify" class="col-form-label ps-3">Yes, On</label>                                                                             -->
                                                                             <div id="optionsDiv">
                                                                                 <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
                                                                                 <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
                                                                                 <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
                                                                             </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="related_to" class="col-sm-4 col-form-label">Date & Time</label>
+                                                                        <div class="col-sm-4">
+                                                                            <input type="date" class="form-control editInput" id="notify_date" name="notify_date">
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
@@ -576,7 +596,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
                                                                         <div class="col-sm-8">
-                                                                            <textarea name="" class="form-control editInput" id=""></textarea>
+                                                                            <textarea name="" class="form-control" rows="2" id=""></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -619,12 +639,12 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
                                                                         <div class="col-sm-6">
-                                                                            <select class="editInput" name="" id="">
+                                                                            <select class="form-control editInput" name="" id="">
                                                                                 @foreach($leadTask as $value)
                                                                                 <option value="{{ $value->id }}">{{ $value->title }}</option>
                                                                                 @endforeach
                                                                             </select>
-                                                                            <input type="text" class="form-control editInput" id="staticEmail" value="">
+                                                                            <!-- <input type="text" class="form-control editInput" id="staticEmail" value=""> -->
                                                                         </div>
                                                                         <div class="col-sm-2">
                                                                             <a href="#!" class="formicon" id="openThirdModal2"><i class="fa-solid fa-square-plus"></i></a>
@@ -644,7 +664,8 @@
                                                 <!-- tab -->
                                                 <div class="pageTitleBtn">
                                                 <a href="#" class="profileDrop p-2 crmNewBtn" > Save</a>
-                                                <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a>
+                                                <!-- <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a> -->
+                                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -675,7 +696,8 @@
                                                     </div>
                                                     <div class="pageTitleBtn">
                                                     <a href="#" class="profileDrop p-2 crmNewBtn" > Save</a>
-                                                    <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a>
+                                                    <!-- <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a> -->
+                                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                                     </div>
 
                                                 </form>
