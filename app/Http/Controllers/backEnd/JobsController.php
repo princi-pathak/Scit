@@ -989,6 +989,9 @@ class JobsController extends Controller
         $data['task']=$task;
         $data['page']='project_list';
         $data['del_status']=0;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
         return view('backEnd.jobs_management.project_form',$data);
     }
     public function project_save_data(Request $request){

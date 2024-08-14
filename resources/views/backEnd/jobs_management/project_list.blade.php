@@ -156,13 +156,14 @@ thead#flowhead {
                                         else
                                         {
                                             foreach($project as $key => $val) 
-                                            {  ?>
+                                            {  
+                                                $cust=App\Customer::find($val->customer_name);?>
 
                                         <tr >
                                             <td class="user_name">{{ ++$key }}</td>
                                             <td>{{$val->project_ref}}</td>
                                             <td class="transform-none" style="text-transform: none;">{{ucfirst($val->project_name)}}</td>
-                                            <td>Ram</td>
+                                            <td><?php echo ($cust->name) ?? "";?></td>
                                             <td>0</td>
                                             <td>1</td>
                                             <td>0</td>
