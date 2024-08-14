@@ -226,14 +226,14 @@
                     <ul class="sub">
                         <li class="sub-menu">
                             <a href="javascript:void(0)"  <?php if(($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type')){echo 'class="active" style="color:#1fb5ad"';}?>>
-                                    <i class="fa fa-road"></i><span >Leads</span>
+                            <i class="fa fa-bullhorn"></i> <span >Leads</span>
                             </a>
                             <ul class="sub pdlft">
-                                <li class="{{ ($page == 'Lead Sources') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_sources') }}">Lead Sources </a></li>
-                                <li class="{{ ($page == 'Lead Status') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_status') }}">Lead Status </a></li>
-                                <li class="{{ ($page == 'lead_task_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_task_type') }}">Lead Task Types </a></li>
-                                <li class="{{ ($page == 'Lead Reject Type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}">Lead Reject Type </a></li>
-                                <li class="{{ ($page == 'lead_notes_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_notes_type') }}">Lead Notes Type </a></li>
+                                <li class="{{ ($page == 'Lead Sources') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_sources') }}"> <i class="fa fa-list-ul"></i> Lead Sources </a></li>
+                                <li class="{{ ($page == 'Lead Status') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_status') }}"> <i class="fa fa-list-ul"></i> Lead Status </a></li>
+                                <li class="{{ ($page == 'lead_task_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_task_type') }}"> <i class="fa fa-list-ul"></i> Lead Task Types </a></li>
+                                <li class="{{ ($page == 'Lead Reject Type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_reject_type') }}"> <i class="fa fa-list-ul"></i> Lead Reject Type </a></li>
+                                <li class="{{ ($page == 'lead_notes_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/lead_notes_type') }}"> <i class="fa fa-list-ul"></i> Lead Notes Type </a></li>
                             </ul>
                         </li>
             
@@ -242,12 +242,10 @@
                                 <i class="fa fa-road"></i><span >Jobs</span>
                             </a>
                             <ul class="sub pdlft">
-                                <li class="{{ ($page == 'jobs_type_list') ? 'active' : '' }}"><a href="{{ url('admin/jobs_type_list') }}">Job Type</a></li>
-                                <li class="{{ ($page == 'job_title') ? 'active' : '' }}">
-                                    <a href="{{ url('admin/job_title') }}">Job Title</a>
-                                </li>
-                                <li class="{{ ($page == 'job_appointment_type') ? 'active' : ''}}"><a href="{{url('admin/job_appointment_type')}}">Job Appointment Type</a></li>
-                                <li class="{{ ($page == 'job_rejection_categories') ? 'active' : ''}}"><a href="{{url('admin/job_rejection_categories')}}">Appointment Rejection Categories</a></li>    
+                                <li class="{{ ($page == 'jobs_type_list') ? 'active' : '' }}"><a href="{{ url('admin/jobs_type_list') }}"><i class="fa fa-list-ul"></i> Job Type</a></li>
+                                <li class="{{ ($page == 'job_title') ? 'active' : '' }}"><a href="{{ url('admin/job_title') }}"> <i class="fa fa-list-ul"></i> Job Title</a></li>
+                                <li class="{{ ($page == 'job_appointment_type') ? 'active' : ''}}"><a href="{{url('admin/job_appointment_type')}}"> <i class="fa fa-list-ul"></i> Job Appointment Type</a></li>
+                                <li class="{{ ($page == 'job_rejection_categories') ? 'active' : ''}}"><a href="{{url('admin/job_rejection_categories')}}"><i class="fa fa-list-ul"></i> Appointment Rejection Categories</a></li>    
                             </ul>
                         </li>
 
@@ -256,23 +254,31 @@
                                 <i class="fa fa-users"></i><span >Customers</span>
                             </a>
                             <ul class="sub pdlft">
-                                <li class="{{ ($page == 'customer_type') ? 'active' : '' }}"><a href="{{ url('admin/customer_type') }}">Customers Type</a></li>
+                                <li class="{{ ($page == 'customer_type') ? 'active' : '' }}"><a href="{{ url('admin/customer_type') }}"><i class="fa fa-list-ul"></i> Customers Type</a></li>
                             </ul>
                         </li>
 
                         <li class="sub-menu">
-                        <a href="javascript:void(0)"  <?php if(($page == 'attachment_types') ){echo 'class="active" style="color:#1fb5ad"';}?>>
-                            <i class="fa fa-users"></i><span >General</span>
-                        </a>
-                        <ul class="sub pdlft">
-                            <li class="{{ ($page == 'attachment_types') ? 'active' : '' }}"><a href="{{ url('admin/general/attachment_types') }}">Attachment Types </a></li>
-                            <li class="{{ ($page == 'payment_types') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/quotes') }}">Payment Types </a></li>
-                            <li class="{{ ($page == 'regions') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Regions </a></li>
-                            <li class="{{ ($page == 'task_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Task Type </a></li>
-                            <li class="{{ ($page == 'tags') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Tags </a></li>
-                        </ul>
-                    </li>
-                        
+                            <a href="javascript:void(0)"  <?php if(($page == 'crm_section_type') ){echo 'class="active" style="color:#1fb5ad"';}?>>
+                            <i class="fa fa-comments"></i> <span >CRM</span>
+                            </a>
+                            <ul class="sub pdlft">
+                                <li class="{{ ($page == 'crm_section_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/leads/CRM_section_types') }}"><i class="fa fa-list-ul"></i> CRM Section Type</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:void(0)"  <?php if(($page == 'attachment_types') ){echo 'class="active" style="color:#1fb5ad"';}?>>
+                                <i class="fa fa-list-ul"></i><span >General</span>
+                            </a>
+                            <ul class="sub pdlft">
+                                <li class="{{ ($page == 'attachment_types') ? 'active' : '' }}"><a href="{{ url('admin/general/attachment_types') }}"> <i class="fa fa-paperclip"></i> Attachment Types </a></li>
+                                <li class="{{ ($page == 'payment_types') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/quotes') }}"><i class="fa fa-money"></i> Payment Types </a></li>
+                                <li class="{{ ($page == 'regions') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}"><i class="fa fa-globe"></i> Regions </a></li>
+                                <li class="{{ ($page == 'task_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}"><i class="fa fa-list-ul"></i> Task Type </a></li>
+                                <li class="{{ ($page == 'tags') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}"><i class="fa fa-tags"></i> Tags </a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>     
                 <!-- Setting Section End -->  
@@ -286,13 +292,7 @@
                     </ul>
                 </li>            
                 <!-- Contact Section End -->
-                
-                <!-- <li>
-                    <a href="login.html">
-                        <i class="fa fa-user"></i>
-                        <span>Login Page</span>
-                    </a>
-                </li> -->
+            
             </ul>            
         </div>
         <!-- sidebar menu end-->

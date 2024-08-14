@@ -3,10 +3,10 @@
 @section('content')
 <style>
     a.rejectReasons i {
-    font-size: 22px;
-    color: #1fb5ad;
-    line-height: 34px;
-}
+        font-size: 22px;
+        color: #1fb5ad;
+        line-height: 34px;
+    }
 </style>
 <!--main content start-->
 <section id="main-content">
@@ -74,14 +74,14 @@
                                             <td>{{ $customer->postal_code }}</td>
                                             <td>{{ $customer->lead_ref }}</td>
                                             <td>@switch($customer->status)
-                                                    @case(1) Contact Later @break
-                                                    @case(2) Contacted @break
-                                                    @case(3) New @break
-                                                    @case(4) Pre Qualified @break
-                                                    @case(5) Qualified @break
-                                                    @case(6) Rejected @break
-                                                    @default {{-- No output if none of the cases match --}}
-                                                @endswitch 
+                                                @case(1) Contact Later @break
+                                                @case(2) Contacted @break
+                                                @case(3) New @break
+                                                @case(4) Pre Qualified @break
+                                                @case(5) Qualified @break
+                                                @case(6) Rejected @break
+                                                @default {{-- No output if none of the cases match --}}
+                                                @endswitch
                                             </td>
                                             <td> <a href="{{ url('admin/sales-finance/leads/authorized').'/'.$customer->id }}" class=""><span style="color: #000;"><i data-toggle="tooltip" title="Authorized" class="fa fa-lock"></i></a> | <a href="{{ url('admin/sales-finance/leads/edit').'/'.$customer->id }}" class="edit"><span style="color: #000;"><i data-toggle="tooltip" title="Edit" class="fa fa-edit"></i></a> | <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-lead_ref="{{ $customer->lead_ref }}" data-target="#rejectModal" class="fa fa-times open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/convert_to_customer').'/'.$customer->customer_id }}" class="reject"><i data-toggle="modal" title="Convert to Customer Only" data-target="#secondModal" class="fa fa-exchange"></i></a>
                                                 <!-- <a href="" class="delete"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o"></i></a> -->
@@ -110,31 +110,31 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" id="lead_reject_reason_form">            
-                    @csrf    
+                <form action="" id="lead_reject_reason_form">
+                    @csrf
                     <div class="row form-group">
                         <label class="col-lg-3 col-sm-3 ">Lead Ref</label>
-                        <div  class="col-lg-9 col-sm-9 ">
-                        <input type="text" name="lead_ref" class="form-control" id="lead_ref" placeholder="Auto Generate" value="" >
+                        <div class="col-lg-9 col-sm-9 ">
+                            <input type="text" name="lead_ref" class="form-control" id="lead_ref" placeholder="Auto Generate" value="">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-lg-3 col-sm-3 ">Reject Type</label>
-                        <div  class="col-lg-8 col-sm-8 ">
+                        <div class="col-lg-8 col-sm-8 ">
                             <select name="reject_type_id" class="form-control" id="">
                                 @foreach($leadRejectTypes as $value)
-                                    <option value="{{ $value->id }}">{{ $value->title}}</option>
+                                <option value="{{ $value->id }}">{{ $value->title}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div  class="col-lg-1 col-sm-1 ">
+                        <div class="col-lg-1 col-sm-1 ">
                             <a href="#" class="rejectReasons"> <i data-toggle="modal" title="Reject" data-target="#secondModal" id="openSecondModal" class="fa fa-plus-square"></i></a>
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-lg-3 col-sm-3 ">Reject Reason</label>
-                        <div  class="col-lg-9 col-sm-9 ">
-                        <textarea name="reject_reason" class="form-control" id=""></textarea>
+                        <div class="col-lg-9 col-sm-9 ">
+                            <textarea name="reject_reason" class="form-control" id=""></textarea>
                         </div>
                     </div>
                 </form>
@@ -159,7 +159,7 @@
             </div>
             <div class="modal-body">
                 <form action="" id="lead_reject_type_form_edit">
-                @csrf
+                    @csrf
                     <div class="form-group">
                         <label class="col-lg-3 col-sm-3 ">Lead Reject Type</label>
                         <input type="text" name="title" placeholder="Lead Reject Type" value="">
@@ -182,30 +182,21 @@
 </div>
 <script>
     $(document).ready(function() {
-
         $('.open-modal').on('click', function() {
             var lead_ref = $(this).data('lead_ref');
-            $('#lead_ref').val(lead_ref);  
+            $('#lead_ref').val(lead_ref);
         });
-
-        // $('#openSecondModal').on('click', function() {
-        //     $('#rejectModal').modal('hide');
-        //     $('#rejectModal').on('hidden.bs.modal', function () {
-        //         $('#secondModal').modal('show');
-        //     });
-        // });
 
         $('#lead_reject').on('click', function() {
             var formData = $('#lead_reject_type_form_edit').serialize();
-
             $.ajax({
-                url: '{{ route("leads.ajax.saveLeadRejectType") }}', 
+                url: '{{ route("leads.ajax.saveLeadRejectType") }}',
                 method: 'POST',
                 data: formData,
                 success: function(response) {
                     alert(response.message);
-                    $('#secondModal').modal('hide'); 
-                    location.reload(); 
+                    $('#secondModal').modal('hide');
+                    location.reload();
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -215,14 +206,13 @@
 
         $('#lead_reject_reason').on('click', function() {
             var formData = $('#lead_reject_reason_form').serialize();
-
             $.ajax({
-                url: '{{ route("leads.ajax.saveLeadRejectReason") }}', 
+                url: '{{ route("leads.ajax.saveLeadRejectReason") }}',
                 method: 'POST',
                 data: formData,
                 success: function(response) {
                     alert(response.message);
-                    $('#secondModal').modal('hide'); 
+                    $('#secondModal').modal('hide');
                     location.reload();
                 },
                 error: function(xhr, status, error) {
@@ -230,7 +220,6 @@
                 }
             });
         });
-
     });
 </script>
 <!--main content end-->

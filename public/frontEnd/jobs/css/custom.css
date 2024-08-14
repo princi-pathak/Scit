@@ -1665,7 +1665,7 @@ a.crmNewBtn{
   justify-content: end;
 }
 #showDivCont {
-  height: 146px;
+  height: 176px;
   transition: .7s;
   overflow: hidden;
 }
