@@ -1672,3 +1672,14 @@ a.crmNewBtn{
 #showDivCont.show {        
  height: 0;
 }
+
+.red-text {
+    color: red;
+}
+
+.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable{
+  height: 200px; /* Set your desired height */
+}
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+  height: 200px; /* Set your desired height */
+}
