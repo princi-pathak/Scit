@@ -1,6 +1,8 @@
 @include('frontEnd.jobs.layout.header')
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 
 <style>
     .CRMFullModel .modal-dialog.modal-xl {
@@ -62,7 +64,7 @@
 
         @include('frontEnd.salesAndFinance.lead.lead_buttons')
 
-        <di class="row">
+        <div class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
                     <div class="printExpt">
@@ -152,8 +154,8 @@
                                                 <a href="#" class="dropdown-item">Send SMS</a>
                                                 <hr class="dropdown-divider">
                                                 <!-- <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CRMHistoryModal">CRM History</a> -->
-                                                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#customerPop">CRM History</a>
-                                                <a href="#" class="dropdown-item open-modal" data-lead_ref="{{ $customer->lead_ref }}" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
+                                                <a href="#" class="dropdown-item set-value-on-CRM-model" data-bs-toggle="modal" data-bs-target="#customerPop" data-id="{{ $customer->id }}" data-lead_ref="{{ $customer->contact_name }}" data-lead_ref ="{{ $customer->lead_ref }}">CRM History</a>
+                                                <a href="#" class="dropdown-item open-modal" data-lead_ref="{{ $customer->lead_ref }}" daat-email="{{ $customer->email }}" data-status="{{ $customer->status }}" data-telephone="{{ $customer->telephone }}" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
                                                 <a href="{{ url('/leads/authorization').'/'.$customer->id }}" class="dropdown-item">Send for Authorization</a>
                                                 <a href="#" class="dropdown-item">Send to Quote</a>
                                                 <a href="#" class="dropdown-item">Send to Job</a>
@@ -162,9 +164,7 @@
                                         </div>
                                     </div>
 
-
-                                    <!-- ****************Reject Modal ****************-->
-
+                                    <!-- **************** Reject Modal Start ****************-->
                                     <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -212,7 +212,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="modal fade" id="rejectModal2" tabindex="1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -243,8 +242,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!--  **************** Reject Model End *****************  -->
 
-                                    <!-- ***************** -->
                                 </td>
                             </tr>
                             @endforeach
@@ -261,7 +260,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title" id="customerModalLabel">CRM Dashboard - {{ $customer->lead_ref }}</h5>
+                <h5 class="modal-title" id="customerModalLabel">CRM Dashboard - <span id="calls_lead_ref"></span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body crmModelCont">
@@ -278,19 +277,19 @@
                                 <div class="row pt-3">
                                     <label class="col-md-4"><strong>Full Name:</strong></label>
                                     <div class="col-md-8">
-                                        <span>{{ $customer->contact_name }}</span>
+                                        <span id="calls_contact_name"></span>
                                     </div>
                                 </div>
                                 <div class="row pt-3">
                                     <label class="col-md-4"><strong>Email Address:</strong></label>
                                     <div class="col-md-8">
-                                        <span>{{ $customer->email }}</span>
+                                        <span id="calls_email"></span>
                                     </div>
                                 </div>
                                 <div class="row pt-3">
                                     <label class="col-md-4"><strong>Telephone:</strong></label>
                                     <div class="col-md-8">
-                                        <span>{{ $customer->telephone }}</span>
+                                        <span id="calls_telephone"></span>
                                     </div>
                                 </div>
                             </div>
@@ -301,13 +300,13 @@
                                 <div class="row pt-3">
                                     <label class="col-md-4"><strong>Lead Ref.:</strong></label>
                                     <div class="col-md-8">
-                                        <span> {{ $customer->lead_ref}}</span>
+                                        <span id="calls_lead_refs"></span>
                                     </div>
                                 </div>
                                 <div class="row pt-3">
                                     <label class="col-md-4"><strong>Lead Status:</strong></label>
                                     <div class="col-md-8">
-                                        <span>{{ $customer->status }}</span>
+                                        <span id="calls_status"></span>
                                     </div>
                                 </div>
                             </div>
@@ -384,14 +383,9 @@
                             <div class="row">
                                 <div class="col-sm-1">
                                     <div class="jobsection  mt-3">
-                                        <a href="#" class="profileDrop p-2 crmNewBtn" data-bs-toggle="modal" data-bs-target="#callsModal"> New</a>
+                                        <a href="#" class="profileDrop p-2 crmNewBtn" id="openCallsModel" > New</a>
                                     </div>
                                 </div>
-
-
-
-
-
 
                                 <div class="col-sm-3">
                                     <form class="searchForm" action="">
@@ -480,9 +474,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
 
                     <div class="tab-pane fade" id="pills-tasks" role="tabpanel" aria-labelledby="pills-tasks-tab" tabindex="0">
                         <div class="newJobForm mt-4">
@@ -973,7 +964,7 @@
             <div class="modal-header">
                 <!-- <h1 class="modal-title fs-5" id="callsModalLabel">Calls </h1> -->
                 <h5 class="modal-title" id="customerModalLabel">Calls</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeCallsModels"></button>
             </div>
             <div class="modal-body">
                 <form action="" class="customerForm" id="calls-form">
@@ -1000,7 +991,6 @@
                         </div>
                         <div class="col-sm-7">
                             <input type="text" class="form-control editInput" id="calls_telephone" name="telephone" placeholder="Telephone" value="">
-                        
                         </div>
                     </div>
                     <div class="mb-2 row">
@@ -1009,7 +999,7 @@
                             <input type="text" class="form-control editInput" id="calls_type" name="telephone" placeholder="Type" value="">
                         </div>
                         <div class="col-sm-2">
-                        <a href="#!" class="formicon" id="openPopupButton"><i class="fa-solid fa-square-plus"></i></a>
+                        <a href="#!" class="formicon" id="openCrmTypeModel" ><i class="fa-solid fa-square-plus"></i></a>
                         </div>   
                     </div>
                     <div class="mb-2 row">
@@ -1030,13 +1020,9 @@
                         <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
                         <div class="col-sm-9">
                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="notify_radio1">
-                            <label class="form-check-label editInput" for="flexRadioDefault1">
-                                Yes
-                            </label>
+                            <label class="form-check-label editInput" for="flexRadioDefault1"> Yes </label>
                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="notify_radio2">
-                            <label class="form-check-label editInput" for="flexRadioDefault2">
-                                No
-                            </label>
+                            <label class="form-check-label editInput" for="flexRadioDefault2"> No </label>
                         </div>
                     </div>
                     <div id="notification_div">
@@ -1073,17 +1059,52 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="profileDrop">Save</button>
-                <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="profileDrop" id="closeCallsModels" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 <!-- end Calls Modal -->
 
+<!-- CRM Types Modal Start -->
+<div class="modal fade" id="crmTypeModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content add_Customer">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
+        <button type="button" class="close" data-dismiss="modal" id="closeCrmModalBtn" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" id="crm_section_type_form">
+            <div class="mb-2 row">
+                <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control editInput" name="title" id="type_title" value="">
+                    <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <label for="colour_code" class="col-sm-3 col-form-label">Colour Code  </label>
+                <div class="col-sm-9">
+                    <input type="color" class="form-control editInput" name="colour_code" id="colour_code" value="">
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="profileDrop" id="closeCrmModalBtn">Close</button>
+        <button type="button" class="profileDrop" id="saveCRMTypes">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CRM Types Modal End -->
+
 <!-- ****************End CRM History Modal ****************-->
 <script>
-
-    // Get references to the radio buttons and the div
+    
     const notify_radio1 = document.getElementById('notify_radio1');
     const notify_radio2 = document.getElementById('notify_radio2');
     const notification_div = document.getElementById('notification_div');
@@ -1100,7 +1121,6 @@
             notification_div.style.display = 'none';
         }
     });
-
 
     const openPopupButton2 = document.getElementById('openPopupButton2');
     const popup2 = document.getElementById('popup2');
@@ -1140,8 +1160,80 @@
 
     $(document).ready(function() {
 
-        notification_div.style.display = 'none';
+        $('.set-value-on-CRM-model').on('click', function(){
+            var itemId = $(this).data('id');
 
+            // document.getElementById('calls_contact_name').value = $(this).data('id');  
+            document.getElementById('calls_lead_ref').value = $(this).data('lead_ref');  
+            document.getElementById('calls_contact_name').value = $(this).data('customer_name');  
+            document.getElementById('calls_status').value = $(this).data('status');  
+            document.getElementById('calls_lead_refs').value = $(this).data('lead_ref');  
+            document.getElementById('calls_telephone').value = $(this).data('telephone');  
+            document.getElementById('calls_email').value = $(this).data('email');  
+            
+        });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#saveCRMTypes').on('click', function() {
+            var formData = $('#crm_section_type_form').serialize();
+            $.ajax({
+                url: '{{ route("lead.ajax.saveCRMSectionType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#crmTypeModel').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+
+        const openCallsModel = document.getElementById('openCallsModel');
+        // const callsModel = document.getElementById('callsModal');
+        const closeCallsModel = document.getElementById('closeCallsModels');
+
+        // When the user clicks the button, open the modal 
+        openCallsModel.onclick = function() {
+            $('#callsModal').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeCallsModel.onclick = function() {
+            $('#callsModal').modal('hide');
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                $('#callsModal').modal('hide');
+                $('#crmTypeModel').modal('hide');
+            }
+        }
+
+        // const modal = document.getElementById('crmTypeModel');
+        const openModalBtn = document.getElementById('openCrmTypeModel');
+        const closeModalBtn = document.getElementById('closeCrmModalBtn');
+
+        // When the user clicks the button, open the modal 
+        openModalBtn.onclick = function() {
+            $('#crmTypeModel').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeModalBtn.onclick = function() {
+            $('#crmTypeModel').modal('hide');
+        }
+
+
+        notification_div.style.display = 'none';
 
         const mainCheckbox = document.getElementById('yeson');
         const optionsDiv = document.getElementById('optionsDiv');
@@ -1215,12 +1307,12 @@
 
 <script type="importmap">
     {
-                "imports": {
-                    "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
-                    "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
-                }
-            }
-        </script>
+        "imports": {
+            "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
+            "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
+        }
+    }
+</script>
 
 <script type="module">
     import {
