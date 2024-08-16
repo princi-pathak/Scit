@@ -86,10 +86,9 @@ padding: 5px 0px 15px 0px;
                                 <div class="col-lg-9">
                                     <select class="form-control" name="Customer_id" id="Customer_id">
 										<option disabled selected>-All-</option>
-                                        <option value="1" <?php if(isset($project) && $project->customer_name == 1){echo "selected";}else{}?>>Ram</option>
-                                        <option value="2" <?php if(isset($project) && $project->customer_name == 2){echo "selected";}else{}?>>Deena</option>
-                                        <option value="3" <?php if(isset($project) && $project->customer_name == 3){echo "selected";}else{}?>>Harsh</option>
-                                        
+                                        <?php foreach($customers as $cust){?>
+                                            <option value="{{$cust->id}}" <?php if(isset($project) && $project->customer_name == $cust->id){echo "selected";}else{}?>>{{$cust->name}}</option>
+                                        <?php }?>
 									</select>
                                     <p style="color:red;display:none" id="Customer_idError">* Customer is Required Field *</p>
                                 </div>

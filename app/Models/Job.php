@@ -62,14 +62,16 @@ class Job extends Model
         'status',
     ];
     public static function job_save($data){
+        // echo "<pre>";print_r($data);die;
         $last_id=$data['last_job_id'];
         if($last_id == ''){
             $job_ref="JOB-1";    
         }else {
             if($data['id'] == '') {
-                $job_ref="JOB-".$last_id+1;
-            }else {
                 $job_ref="JOB-".$data['last_job_id'];
+                
+            }else {
+                $job_ref="JOB-".$last_id+1;
             }
             
         }
