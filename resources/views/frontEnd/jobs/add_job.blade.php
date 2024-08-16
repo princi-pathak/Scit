@@ -636,9 +636,9 @@
                                         </div> -->
                                 
                                         <div class="page">
-                                        <form id="appointment_form">
+                                        <!-- <form id="appointment_form">
                                     
-                                         @csrf
+                                         @csrf -->
                                             <div class="title">Appoinments</div>
 
                                             <div class="newJobForm mt-4">
@@ -667,6 +667,7 @@
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>
+                                                                        <input type="hidden" id="count_number" value="1">
                                                                             <div class="d-flex">
                                                                                 <p class="leftNum">1</p>
                                                                                 <select class="form-control editInput selectOptions" id="user_id" name="user_id[]">
@@ -726,7 +727,7 @@
                                                                         <td>
                                                                             <div class="addDateAndTime">
                                                                                 <div class="startDate">
-                                                                                    <input type="date" name="start_date[]"
+                                                                                    <input type="date" name="appointment_start_date[]"
                                                                                         class=" editInput">
                                                                                     <input type="time" name="start_time[]"
                                                                                         class=" editInput">
@@ -765,9 +766,9 @@
                                                                         </td>
                                                                         <td>
                                                                             <div class="addTextarea">
-                                                                                <textarea cols="40" rows="5">
-                                                                njgjkd
-                                                            </textarea>
+                                                                                <textarea cols="40" rows="5" id="appointment_notes" name="appointment_notes[]">
+                                                                
+                                                                    </textarea>
                                                                             </div>
                                                                         </td>
                                                                         <td>
@@ -802,8 +803,8 @@
                                                                                         -</strong></label>
                                                                                 <input type="text"
                                                                                     class="form-control editInput"
-                                                                                    id="inputCountry"
-                                                                                    placeholder="12345"><label>
+                                                                                    id="input_time1"
+                                                                                    placeholder="" onkeyup="get_time()"><label>
                                                                                     Mins</label>
                                                                             </div>
                                                                         </td>
@@ -814,17 +815,17 @@
                                                                                         -</strong></label>
                                                                                 <input type="text"
                                                                                     class="form-control editInput"
-                                                                                    id="inputCountry"
-                                                                                    placeholder="12345"><label> Mins
-                                                                                    <strong>Total Time -</strong> 0h
-                                                                                    0mins</label>
+                                                                                    id="input_time2"
+                                                                                    placeholder="" onkeyup="get_time()"><label> Mins
+                                                                                    <strong>Total Time -</strong><font id="time_show">0h
+                                                                                    0mins</font> </label>
                                                                             </div>
                                                                             <input type="hidden" id="appointment_time" class="appointment_time" name="appointment_time[]">
                                                                         </td>
                                                                         <td></td>
                                                                         <td></td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr class="del-btn">
                                                                         <td>
                                                                             <div class="Priority p-0">
                                                                                 <label class="p-0"><strong>Assigned
@@ -850,17 +851,18 @@
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr class="del-btn">
                                                                         <td colspan="5" class="padingtableBottom"></td>
                                                                     </tr>
                                                                 </tbody>
+                                                                <div id="appointment_result"></div>
                                                                 
                                                             </table>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div><!-- End  off newJobForm -->
-                                            <form>
+                                            <!-- <form> -->
                                             <div class="field btns nextfornBtn mt-3 p-0">
                                                 <button class="prev-4 prev profileDrop">Previous</button>
                                                 <button type="button" class="next-4 next profileDrop">Next</button>
@@ -876,8 +878,8 @@
                                                         <div class="">
                                                             <h4 class="contTitle text-start">Customer Notes</h4>
                                                             <div class="mt-3">
-                                                                <textarea cols="40" rows="5" id="textarea2">
-                                                                    Arjun Kumar UI/UX Designer and Developer
+                                                                <textarea cols="40" rows="5" id="customer_notes" name="customer_notes">
+                                                                   
                                                                   </textarea>
                                                             </div>
                                                         </div>
@@ -886,8 +888,8 @@
                                                         <div class="">
                                                             <h4 class="contTitle text-start">Internal Notes</h4>
                                                             <div class="mt-3">
-                                                                <textarea cols="40" rows="5" id="textarea3">
-                                                                    Arjun Kumar UI/UX Designer and Developer
+                                                                <textarea cols="40" rows="5" id="internal_notes" name="internal_notes">
+                                                                    
                                                                   </textarea>
                                                             </div>
                                                         </div>
@@ -896,7 +898,7 @@
                                             </div><!-- End  off newJobForm -->
                                             <div class="field btns nextfornBtn mt-3 p-0">
                                                 <button class="prev-4 prev profileDrop">Previous</button>
-                                                <button type="button" class="next-4 next profileDrop">Next</button>
+                                                <button type="button" onclick="get_notes()" class="next-4 next profileDrop">Next</button>
                                             </div>
                                         </div>
 
@@ -909,7 +911,7 @@
 
                                                         <div class="py-4">
                                                             <div class="jobsection">
-                                                                <a href="#" class="profileDrop">Upload Attachments</a>
+                                                                <input type="file" id="attachments" name="attachments" class="profileDrop">Upload Attachments
                                                             </div>
                                                         </div>
                                                     </div>
@@ -918,7 +920,7 @@
 
                                             <div class="field btns nextfornBtn mt-3 p-0">
                                                 <button class="prev-5 prev profileDrop">Previous</button>
-                                                <button type="button" class="submit profileDrop">Submit</button>
+                                                <button type="button" onclick="get_attachment_save()" class="submit profileDrop">Submit</button>
                                             </div>
                                         </div>
 
@@ -1466,7 +1468,7 @@ function initMultiStepForm() {
         progressText[current - 1].classList.add("active");
         current += 1;
         setTimeout(function () {
-            alert("Your Form Successfully Signed up");
+            alert("Your Form Successfully Done");
             location.reload();
         }, 800);
     });
@@ -1588,12 +1590,12 @@ function initMultiStepForm() {
         });
     }
     function get_form(form_id){
-        alert(form_id)
+        // alert(form_id)
         if(form_id == 0 || form_id == 1 || form_id == 2) {
             get_saveFromData();
         } else if(form_id == 4) {
             get_save_appointment();
-        } else if(form_id == 3) {
+        } else if(form_id == 3 || form_id == 5 || form_id == 6) {
             return true;
         } else {
             return false;
@@ -1640,13 +1642,14 @@ function initMultiStepForm() {
         $.ajax({
             type: "POST",
             url: "{{url('/get_save_appointment')}}",
-            data: new FormData($("#appointment_form")[0]),
+            data: new FormData($("#form_data")[0]),
             async: false,
             contentType: false,
             cache: false,
             processData: false,
             success: function(data) {
                 console.log(data);
+                $("#id").val(data.id);
                 
             }
         });
@@ -1685,33 +1688,10 @@ function initMultiStepForm() {
             success:function(data)
             {
                 console.log(data);
-                // 
-                // $("#product_model").modal('show');
-                // $('#search_result').html(data);
                 $("#product_result").html(data);
                 
             }
         });
-        // var cells = row.getElementsByTagName("td");
-        // var code = cells[0].innerText;
-        // var category = cells[1].innerText;
-        // var product = cells[2].innerText;
-        // var description = cells[3].innerText;
-        // var resultTable = document.getElementById("result");
-        // var newRow = document.createElement("tr");
-        // var productCell = document.createElement("td");
-        // productCell.innerText = product;
-        // var descriptionCell = document.createElement("td");
-        // descriptionCell.innerText = description;
-        // var qtyCell = document.createElement("td");
-        // qtyCell.innerHTML = '<input type="number" class="form-control" value="1" name="quantity[]">';
-        // var actionCell = document.createElement("td");
-        // actionCell.innerHTML = '<button class="btn btn-danger" onclick="removeRow(this)">Delete<input type="hidden" value="'+code+'" name="product_detail_id[]"></button>';
-        // newRow.appendChild(productCell);
-        // newRow.appendChild(descriptionCell);
-        // newRow.appendChild(qtyCell);
-        // newRow.appendChild(actionCell);
-        // resultTable.appendChild(newRow);
         $("#temp_result1").hide();
     }
     function removeRow(button) {
@@ -1737,137 +1717,81 @@ function initMultiStepForm() {
             });
         }
     }
+    function get_notes(){
+        var token='<?php echo csrf_token();?>'
+        var id=$("#id").val();
+        var last_job_id=$("#last_job_id").val();
+        var customer_notes=$("#customer_notes").val();
+        var internal_notes=$("#internal_notes").val()
+            $.ajax({  
+                type:"POST",
+                url:"{{url('job_add_edit_save')}}",
+                data:{id:id,last_job_id:last_job_id,customer_notes:customer_notes,internal_notes:internal_notes,_token:token},
+                success:function(data)
+                {
+                    console.log(data);
+                    // window.location.reload();
+                }
+            });
+    }
+    function get_attachment_save(){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            type: "POST",
+            url: "{{url('/job_add_edit_save')}}",
+            data: new FormData($("#form_data")[0]),
+            async: false,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                console.log(data);
+                $("#id").val(data.id);
+            }
+        });
+    }
     function new_appointment(){
-        const rowCount = document.querySelectorAll('#appointment_table .leftNum').length + 1;
-        const newRow = `
-    <tbody>
-        <tr>
-            <td>
-                <div class="d-flex">
-                    <p class="leftNum">${rowCount}</p>
-                    <select class="form-control editInput selectOptions" id="inputJobType">
-                        <option>Select user</option>
-                        <option>Default</option>
-                    </select>
-                    <a href="#!" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
-                </div>
-                <div class="alertBy">
-                    <label><strong>Alert By :</strong></label>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                        <label class="form-check-label" for="inlineCheckbox1">SMS</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                        <label class="form-check-label" for="inlineCheckbox2">Email</label>
-                    </div>
-                </div>
-            </td>
-            <td class="col-2">
-                <div class="appoinment_type">
-                    <select class="form-control editInput selectOptions" id="inputJobType">
-                        <option>Select user</option>
-                        <option>Default</option>
-                    </select>
-                </div>
-                <div class="Priority">
-                    <label>Priority :</label>
-                    <select class="form-control editInput selectOptions" id="inputJobType">
-                        <option>Select user</option>
-                        <option>Default</option>
-                    </select>
-                </div>
-            </td>
-            <td>
-                <div class="addDateAndTime">
-                    <div class="startDate">
-                        <input type="date" name="date" class="editInput">
-                        <input type="time" name="time" class="editInput">
-                    </div>
-                    <span class="p-2">To</span>
-                    <div class="endDate">
-                        <input type="date" name="date" class="editInput">
-                        <input type="time" name="time" class="editInput">
-                    </div>
-                </div>
-                <div class="pt-3">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="singleAppointment" value="option1">
-                        <label class="form-check-label" for="singleAppointment">Single Appointment</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="floatingAppointment" value="option2">
-                        <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="addTextarea">
-                    <textarea cols="40" rows="5">njgjkd</textarea>
-                </div>
-            </td>
-            <td>
-                <div class="statuswating">
-                    <select class="form-control editInput selectOptions" id="inputJobType">
-                        <option>Select user</option>
-                        <option>Default</option>
-                    </select>
-                    <a href="javascript:void(0)" onclick="deleteRow(this)"><i class="fa-solid fa-circle-xmark"></i></a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="Priority">
-                    <label><strong>Travel Time -</strong></label>
-                    <input type="text" class="form-control editInput" id="inputCountry" placeholder="12345"><label> Mins</label>
-                </div>
-            </td>
-            <td></td>
-            <td>
-                <div class="Priority">
-                    <label><strong>Appointment Time -</strong></label>
-                    <input type="text" class="form-control editInput" id="inputCountry" placeholder="12345"><label> Mins <strong>Total Time -</strong> 0h 0mins</label>
-                </div>
-            </td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>
-                <div class="Priority p-0">
-                    <label class="p-0"><strong>Assigned Products: </strong><a href="#!">All</a> None</label>
-                </div>
-            </td>
-            <td>
-                <div class="pageTitleBtn p-0">
-                    <a href="#" class="profileDrop">Assign Product</a>
-                </div>
-            </td>
-            <td></td>
-            <td colspan="2">
-                <div class="pageTitleBtn p-0">
-                    <a href="#" class="profileDrop">Add Title</a>
-                    <a href="#" class="profileDrop">Show Variations</a>
-                    <a href="#" class="profileDrop bg-secondary">Export</a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="5" class="padingtableBottom"></td>
-        </tr>
-    </tbody>`;
-    
-    document.getElementById('appointment_table').insertAdjacentHTML('beforeend', newRow);
+        var token = '<?php echo csrf_token(); ?>';
+        var count_number = $('#count_number').val();
+
+        $.ajax({
+            type: "POST",
+            url: "{{url('/new_appointment_add_section')}}",
+            data: { count_number: count_number, _token: token },
+            success: function(data) {
+                console.log(data);
+                // Append the new appointment row at the end of the table
+                $("#appointment_table tbody").last().append(data);
+
+                // Increment the count number for the next appointment
+                count_number++;
+                $('#count_number').val(count_number);
+            },
+            error: function(xhr, status, error) {
+                console.error("An error occurred: " + error);
+            }
+        });
     }
     function deleteRow(element) {
-    element.closest('tbody').remove();
-    const rows = document.querySelectorAll('#appointmentTable .leftNum');
-    rows.forEach((row, index) => {
-        row.textContent = index + 1;
-    });
+    // element.closest('tbody').remove();
+    $(element).closest('tr').nextUntil('tr:has(td[colspan])').addBack().remove();
+    $(element).closest('tr').remove();
 }
-    
+function get_time(){
+    var input_time1=$("#input_time1").val();
+    var input_time2=$("#input_time2").val();
+    var minutes;
+    if(input_time2) {
+        minutes=input_time2;
+    } else {
+        minutes=input_time1;
+    }
+    var hours = Math.floor(minutes / 60);
+    var remainingMinutes = minutes % 60;
+    $("#appointment_time").val(hours + " h " + remainingMinutes + " mins");
+    $("#time_show").text(hours + " h " + remainingMinutes + " mins")
+    // return hours + " hours and " + remainingMinutes + " minutes";
+}
 </script>
 <script>
 //Text Editer

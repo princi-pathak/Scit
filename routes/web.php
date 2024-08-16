@@ -236,6 +236,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/result_product_calculation','App\Http\Controllers\jobs\JobController@result_product_calculation');
 	Route::post('/save_job_product','App\Http\Controllers\jobs\JobController@save_job_product');
 	Route::post('/get_save_appointment','App\Http\Controllers\jobs\JobController@get_save_appointment');
+	Route::post('/new_appointment_add_section','App\Http\Controllers\jobs\JobController@new_appointment_add_section');
 	// Customer
 	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit_save');

@@ -19,6 +19,7 @@ use App\Models\Product_category;
 use App\Models\Quote_product_detail;
 use App\Models\Recurrence_pattern_rule;
 use App\Models\Recurring_product_detail;
+use App\Models\Construction_job_appointment;
 use App\Models\Construction_jobassign_product;
 use App\Models\Construction_job_appointment_type;
 use DB,Auth,Session,Validator;
@@ -107,7 +108,20 @@ class JobController extends Controller
     }
     public function job_add_edit_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $job_id=Job::job_save($request->all());
+        if ($request->hasFile('attachments')) {
+            $imageName = time().'.'.$request->attachments->extension();      
+            $request->attachments->move(public_path('images/jobs'), $imageName);
+
+            $data=[
+                'id'=>$request->id,
+                'last_job_id'=>$request->last_job_id,
+                'attachments'=>$imageName,
+            ];
+            $job_id=Job::job_save($data);
+        } else {
+            $job_id=Job::job_save($request->all());
+        }
+        
         return response()->json($job_id);
 
     }
@@ -172,8 +186,188 @@ class JobController extends Controller
         echo "done";
     }
     public function get_save_appointment(Request $request){
-        echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());die;
+        $data=[
+            'user_id'=>$request->user_id,
+            'home_id'=>$request->home_id,
+            'job_id'=>$request->last_job_id,
+            'appointment_type_id'=>$request->appointment_type_id,
+            'start_date'=>$request->appointment_start_date,
+            'start_time'=>$request->start_time,
+            'end_date'=>$request->end_date,
+            'end_time'=>$request->end_time,
+            'appointment_checkbox'=>$request->appointment_checkbox,
+            'appointment_status'=>$request->appointment_status,
+            'appointment_time'=>$request->appointment_time,
+            'priority'=>$request->priority,
+            'alert_by'=>$request->alert_by,
+            'notes'=>$request->appointment_notes
+        ];
+        // echo "<pre>";print_r($data);die;
+        $result= Construction_job_appointment::save_appointement($data);
+        return response()->json($result);
+        
     }
+    public function new_appointment_add_section(Request $request){
+        $home_id = Auth::user()->home_id;
+        $count_number = $request->count_number + 1;
+        $users = User::where('is_deleted', 0)->get();
+        $appointment_type = Construction_job_appointment_type::where('home_id', $home_id)->get();
+    
+        $html = '<tr>
+                    <td>
+                        <div class="d-flex">
+                            <p class="leftNum">'.$count_number.'</p>
+                            <select class="form-control editInput selectOptions" id="user_id" name="user_id[]">
+                                <option selected disabled>Select user</option>';
+                                foreach($users as $user){
+                                    $html .= '<option value="'.$user->id.'">'.$user->name.'</option>';
+                                }
+        $html .=         '</select>
+                            <a href="#!" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
+                        </div>
+                        <div class="alertBy">
+                            <label><strong>Alert By:</strong></label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="alert_by_check_1" value="0">
+                                <label class="form-check-label" for="inlineCheckbox1">SMS</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="alert_by_check_2" value="1">
+                                <label class="form-check-label" for="inlineCheckbox2">Email</label>
+                            </div>
+                            <input type="hidden" name="alert_by[]" id="alert_by" class="alert_by">
+                        </div>
+                    </td>
+                    <td class="col-2">
+                        <div class="appoinment_type">
+                            <select class="form-control editInput selectOptions" id="appointment_type_id" name="appointment_type_id[]">
+                                <option selected disabled>Select Appointment Type</option>';
+                                foreach($appointment_type as $appointmentv){
+                                    $html .= '<option value="'.$appointmentv->id.'">'.$appointmentv->name.'</option>';
+                                }
+        $html .=         '</select>
+                        </div>
+                        <div class="Priority">
+                            <label>Priority :</label>
+                            <select class="form-control editInput selectOptions" id="priority" name="priority[]">
+                                <option selected disabled>Select Priority</option>
+                                <option>Default</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="addDateAndTime">
+                            <div class="startDate">
+                                <input type="date" name="appointment_start_date[]" class="editInput">
+                                <input type="time" name="start_time[]" class="editInput">
+                            </div>
+                            <span class="p-2">To</span>
+                            <div class="endDate">
+                                <input type="date" name="end_date[]" class="editInput">
+                                <input type="time" name="end_time[]" class="editInput">
+                            </div>
+                        </div>
+                        <div class="pt-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="appointment_checkbox1" value="option1">
+                                <label class="form-check-label" for="singleAppointment">Single Appointment</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="appointment_checkbox2" value="option2">
+                                <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
+                            </div>
+                            <input type="hidden" name="appointment_checkbox[]" id="appointment_checkbox" class="appointment_checkbox">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="addTextarea">
+                            <textarea cols="40" rows="5" id="appointment_notes" name="appointment_notes[]"></textarea>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="statuswating">
+                            <select class="form-control editInput selectOptions" id="appointment_status" name="appointment_status[]">
+                                <option selected disabled>Select Status</option>
+                                <option value="1">Awaiting</option>
+                                <option value="2">Received</option>
+                                <option value="3">Accepted</option>
+                                <option value="4">Declined</option>
+                                <option value="5">on Route</option>
+                                <option value="6">On Site</option>
+                                <option value="7">Completed</option>
+                                <option value="8">Follow On</option>
+                                <option value="9">Abandoned</option>
+                                <option value="10">No Access</option>
+                                <option value="11">Cancelled</option>
+                                <option value="12">On Hold</option>
+                            </select>
+                            <a href="javascript:void(0)" onclick="deleteRow(this)"><i class="fa-solid fa-circle-xmark"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="Priority">
+                            <label><strong>Travel Time
+                                    -</strong></label>
+                            <input type="text"
+                                class="form-control editInput"
+                                id="input_time1"
+                                placeholder="" onkeyup="get_time()"><label>
+                                Mins</label>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="Priority">
+                            <label><strong>Appointment Time
+                                    -</strong></label>
+                            <input type="text"
+                                class="form-control editInput"
+                                id="input_time2"
+                                placeholder="" onkeyup="get_time()"><label> Mins
+                                <strong>Total Time -</strong><font id="time_show">0h
+                                0mins</font> </label>
+                        </div>
+                        <input type="hidden" id="appointment_time" class="appointment_time" name="appointment_time[]">
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="Priority p-0">
+                            <label class="p-0"><strong>Assigned
+                                    Products: </strong><a
+                                    href="#!">All</a> None</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pageTitleBtn p-0">
+                            <a href="#" class="profileDrop">Asign
+                                Product</a>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td colspan="2">
+                        <div class="pageTitleBtn p-0">
+                            <a href="#" class="profileDrop">Add
+                                Title</a>
+                            <a href="#" class="profileDrop">Show
+                                Variations</a>
+                            <a href="#"
+                                class="profileDrop bg-secondary">Export</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="padingtableBottom"></td>
+                </tr>';
+        
+        return $html;
+    }
+    
     public function job_save_all(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $form_id=$request->form_id;

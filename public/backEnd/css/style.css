@@ -3157,6 +3157,7 @@ input:focus:invalid:focus,textarea:focus:invalid:focus,select:focus:invalid:focu
 }
 .terques-bg {
     background:#1fb5ad;
+    padding: 10px 15px;
 }
 .profile-nav.alt.green-border ul>li>a:hover i {
     color:#1fb5ad;
@@ -6053,4 +6054,7 @@ canvas#canv1 {
     height: 100%;
     opacity: 0;
     cursor: pointer;
+}
+.modal-body.pdbotm{
+    padding-bottom: 15px;
 }
