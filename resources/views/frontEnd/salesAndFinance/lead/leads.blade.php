@@ -62,7 +62,7 @@
 
         @include('frontEnd.salesAndFinance.lead.lead_buttons')
 
-        <di class="row">
+        <div class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
                     <div class="printExpt">
