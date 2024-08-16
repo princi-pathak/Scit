@@ -1,4 +1,6 @@
 @include('frontEnd.jobs.layout.header')
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
+<script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>
 
 <style>
     .CRMFullModel .modal-dialog.modal-xl {
@@ -35,6 +37,8 @@
         z-index: 99999;
         transition: opacity 0.3s ease;
     }
+  
+    
 </style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
@@ -169,11 +173,11 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form id = "lead_reject_reason_form">
+                                                    <form id="lead_reject_reason_form">
                                                         @csrf
                                                         <div class="mb-3">
                                                             <label for="recipient-name" class="col-form-label">Lead Ref:</label>
-                                                            <input type="text" name="lead_ref" class="form-control editInput" id="lead_ref" placeholder="Auto Generate" value="" >
+                                                            <input type="text" name="lead_ref" class="form-control editInput" id="lead_ref" placeholder="Auto Generate" value="">
                                                             <!-- <input type="text" class="form-control" id="recipient-name"> -->
                                                         </div>
                                                         <div class="mb-3">
@@ -182,7 +186,7 @@
                                                                 <div class="col-10">
                                                                     <select name="reject_type_id" class="form-control editInput" id="">
                                                                         @foreach($leadRejectTypes as $value)
-                                                                            <option value="{{ $value->id }}">{{ $value->title}}</option>
+                                                                        <option value="{{ $value->id }}">{{ $value->title}}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -234,7 +238,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
-                                                    <button type="button"  id="lead_reject" class="profileDrop">Save</button>
+                                                    <button type="button" id="lead_reject" class="profileDrop">Save</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -380,9 +384,15 @@
                             <div class="row">
                                 <div class="col-sm-1">
                                     <div class="jobsection  mt-3">
-                                        <a href="#" class="profileDrop p-2 crmNewBtn"> New</a>
+                                        <a href="#" class="profileDrop p-2 crmNewBtn" data-bs-toggle="modal" data-bs-target="#callsModal"> New</a>
                                     </div>
                                 </div>
+
+
+
+
+
+
                                 <div class="col-sm-3">
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
@@ -470,6 +480,10 @@
                             </div>
                         </div>
                     </div>
+
+
+
+
                     <div class="tab-pane fade" id="pills-tasks" role="tabpanel" aria-labelledby="pills-tasks-tab" tabindex="0">
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Tasks</label>
@@ -478,7 +492,7 @@
                                     <div class="jobsection  mt-3">
                                         <a href="#" class="profileDrop p-2 crmNewBtn open-modal" data-target="bd-example-modal-lg" id="openSecondModal"> New</a>
                                     </div>
-                                </div>  
+                                </div>
                                 <!-- Second Modal -->
                                 <div class="modal fade bd-example-modal-lg" id="secondModal" tabindex="-1" aria-labelledby="secondModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
@@ -505,7 +519,7 @@
                                                                         <div class="col-sm-8">
                                                                             <select class="form-control editInput" name="" id="">
                                                                                 @foreach($users as $value)
-                                                                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
                                                                                 @endforeach
                                                                             </select>
                                                                             <!-- <input type="text" class="form-control editInput" id="staticEmail" value=""> -->
@@ -561,7 +575,7 @@
 
 
 
-                                                                <!--  -->
+                                                                    <!--  -->
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notify ? </label>
                                                                         <div class="col-sm-8">
@@ -590,7 +604,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text"  class="form-control editInput" id="related_To" value="{{ $customer->lead_ref }}">
+                                                                            <input type="text" class="form-control editInput" id="related_To" value="{{ $customer->lead_ref }}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
@@ -601,7 +615,7 @@
                                                                     </div>
                                                                 </form>
                                                             </div>
-                                                        </div>  
+                                                        </div>
                                                     </div>
                                                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                                         <div class="row">
@@ -610,26 +624,26 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text"  class="form-control" id="staticEmail" value="">
+                                                                            <input type="text" class="form-control" id="staticEmail" value="">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text"  class="form-control" id="staticEmail" value="">
+                                                                            <input type="text" class="form-control" id="staticEmail" value="">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Timer</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text"  class="form-control" id="staticEmail" value="">
+                                                                            <input type="text" class="form-control" id="staticEmail" value="">
                                                                         </div>
                                                                     </div>
-                                                              
+
                                                                     <div class="mb-3 row">
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text"  class="form-control editInput" id="related_To" value="{{ $customer->lead_ref }}">
+                                                                            <input type="text" class="form-control editInput" id="related_To" value="{{ $customer->lead_ref }}">
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -658,22 +672,22 @@
                                                                     </div>
                                                                 </form>
                                                             </div>
-                                                        </div>  
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <!-- tab -->
                                                 <div class="pageTitleBtn">
-                                                <a href="#" class="profileDrop p-2 crmNewBtn" > Save</a>
-                                                <!-- <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a> -->
-                                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                                                    <a href="#" class="profileDrop p-2 crmNewBtn"> Save</a>
+                                                    <!-- <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a> -->
+                                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                    <!-- Third Modal -->
-                                    <div class="modal fade" id="thirdModal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+                                <!-- Third Modal -->
+                                <div class="modal fade" id="thirdModal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -695,16 +709,16 @@
                                                         </div>
                                                     </div>
                                                     <div class="pageTitleBtn">
-                                                    <a href="#" class="profileDrop p-2 crmNewBtn" > Save</a>
-                                                    <!-- <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a> -->
-                                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                                                        <a href="#" class="profileDrop p-2 crmNewBtn"> Save</a>
+                                                        <!-- <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a> -->
+                                                        <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                                     </div>
 
                                                 </form>
                                             </div>
-                                            </div>
                                         </div>
                                     </div>
+                                </div>
 
                                 <!--Start Region Popup -->
 
@@ -950,12 +964,148 @@
         </div>
     </div>
 </div>
+
+
+<!-- Calls Modal -->
+<div class="modal fade" id="callsModal" tabindex="-1" aria-labelledby="callsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <!-- <h1 class="modal-title fs-5" id="callsModalLabel">Calls </h1> -->
+                <h5 class="modal-title" id="customerModalLabel">Calls</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" class="customerForm" id="calls-form">
+                    <div class="mb-2 row">
+                        <label for="calls_telephone" class="col-sm-3 col-form-label">Direction </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="direction_radio1">
+                            <label class="form-check-label editInput" for="direction_radio1">
+                                Call Out
+                            </label>
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="direction_radio2">
+                            <label class="form-check-label editInput" for="direction_radio2">
+                                Call In
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_telephone" class="col-sm-3 col-form-label">Telephone </label>
+                        <div class="col-sm-2">
+                            <select class="form-control editInput selectOptions" required="">
+                                <option>+444</option>
+                                <option>+91</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control editInput" id="calls_telephone" name="telephone" placeholder="Telephone" value="">
+                        
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control editInput" id="calls_type" name="telephone" placeholder="Type" value="">
+                        </div>
+                        <div class="col-sm-2">
+                        <a href="#!" class="formicon" id="openPopupButton"><i class="fa-solid fa-square-plus"></i></a>
+                        </div>   
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                        <div class="col-sm-9">
+                            <div id="editor">
+                            </div>
+                            <textarea name="content" id="calls_notes" style="display: none;"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_lead_ref" class="col-sm-3 col-form-label">Related To </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control editInput" name="lead_ref" id="calls_lead_ref" value="">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="notify_radio1">
+                            <label class="form-check-label editInput" for="flexRadioDefault1">
+                                Yes
+                            </label>
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="notify_radio2">
+                            <label class="form-check-label editInput" for="flexRadioDefault2">
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    <div id="notification_div">
+                        <div class="mb-2 row">
+                            <label for="calls_notify_who" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <select name="" class="form-control editInput" id="">
+                                    <option value=""></option>
+                                    @foreach($users as $value)
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="calls_notify_who" class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <label for="" class="editInput"> <input type="checkbox" class="" name="user" id="calls_notify_who" value=""> Notification (User Only) </label>
+                                <label for="" class="editInput"> <input type="checkbox" class="" name="user" id="calls_notify_who" value=""> SMS </label>
+                                <label for="" class="editInput"> <input type="checkbox" class="" name="user" id="calls_notify_who" value=""> Email </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Calls Modal -->
+
 <!-- ****************End CRM History Modal ****************-->
 <script>
+
+    // Get references to the radio buttons and the div
+    const notify_radio1 = document.getElementById('notify_radio1');
+    const notify_radio2 = document.getElementById('notify_radio2');
+    const notification_div = document.getElementById('notification_div');
+
+    // Add event listeners to the radio buttons
+    notify_radio1.addEventListener('change', function() {
+        if (notify_radio1.checked) {
+            notification_div.style.display = 'block';
+        }
+    });
+
+    notify_radio2.addEventListener('change', function() {
+        if (notify_radio2.checked) {
+            notification_div.style.display = 'none';
+        }
+    });
+
+
     const openPopupButton2 = document.getElementById('openPopupButton2');
     const popup2 = document.getElementById('popup2');
     const closePopup2 = document.getElementById('closePopup');
-    
+
     openPopupButton2.addEventListener('click', () => {
         popup2.style.display = 'block';
         setTimeout(() => {
@@ -969,7 +1119,7 @@
             popup2.style.display = 'none';
         }, 300); // Ensure the popup is hidden after the transition ends
     });
-    
+
     const openPopupButton = document.getElementById('openPopupButton');
     const popup = document.getElementById('popup');
     const closePopup = document.getElementById('closePopup');
@@ -990,6 +1140,9 @@
 
     $(document).ready(function() {
 
+        notification_div.style.display = 'none';
+
+
         const mainCheckbox = document.getElementById('yeson');
         const optionsDiv = document.getElementById('optionsDiv');
         // Open the second modal without hiding the first one
@@ -1001,14 +1154,14 @@
         // Open the third modal without hiding the first and second ones
         $('#openThirdModal').on('click', function() {
             $('#thirdModal').modal('show');
-           
+
         });
         $('#openThirdModal2').on('click', function() {
             $('#thirdModal').modal('show');
-            
+
         });
 
-        mainCheckbox.addEventListener('change', function () {
+        mainCheckbox.addEventListener('change', function() {
             if (mainCheckbox.checked) {
                 optionsDiv.style.display = 'block';
             } else {
@@ -1018,20 +1171,20 @@
 
         $('.open-modal').on('click', function() {
             var lead_ref = $(this).data('lead_ref');
-            $('#lead_ref').val(lead_ref);  
+            $('#lead_ref').val(lead_ref);
         });
-        
+
         $('#lead_reject').on('click', function() {
             var formData = $('#lead_reject_type_form_edit').serialize();
 
             $.ajax({
-                url: '{{ route("lead.ajax.saveLeadRejectTypes") }}', 
+                url: '{{ route("lead.ajax.saveLeadRejectTypes") }}',
                 method: 'POST',
                 data: formData,
                 success: function(response) {
                     alert(response.message);
-                    $('#secondModal').modal('hide'); 
-                    location.reload(); 
+                    $('#secondModal').modal('hide');
+                    location.reload();
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -1043,12 +1196,12 @@
             var formData = $('#lead_reject_reason_form').serialize();
 
             $.ajax({
-                url: '{{ route("lead.ajax.saveLeadRejectReasons") }}', 
+                url: '{{ route("lead.ajax.saveLeadRejectReasons") }}',
                 method: 'POST',
                 data: formData,
                 success: function(response) {
                     alert(response.message);
-                    $('#secondModal').modal('hide'); 
+                    $('#secondModal').modal('hide');
                     location.reload();
                 },
                 error: function(xhr, status, error) {
@@ -1059,5 +1212,45 @@
 
     });
 </script>
-@include('frontEnd.jobs.layout.footer')
 
+<script type="importmap">
+    {
+                "imports": {
+                    "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
+                    "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
+                }
+            }
+        </script>
+
+<script type="module">
+    import {
+        ClassicEditor,
+        Essentials,
+        Paragraph,
+        Bold,
+        Italic,
+        Font,
+        Underline,
+        Alignment 
+    } from 'ckeditor5';
+
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment ],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic',  'underline', 'alignment', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ]
+        })
+        .then(editor => {
+            window.editor = editor;
+            // When the form is submitted, copy the CKEditor content to the hidden textarea
+            // document.querySelector('form').addEventListener('submit', function() {
+            //     document.getElementById('editor-hidden').value = editor.getData();
+            // });
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+@include('frontEnd.jobs.layout.footer')
