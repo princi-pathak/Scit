@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>Lead Sources</h3>
+                    <h3>Lead Sources </h3>
                 </div>
             </div>
         </div>
@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <di class="row">
+        <div class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
                     <div class="printExpt">
@@ -115,7 +115,7 @@
     </div>
 </div>
 <!-- end Popup  -->
-@include('frontEnd.jobs.layout.footer')
+
 <script>
     $(document).ready(function() {
         $('.open-modal').on('click', function() {
@@ -161,4 +161,9 @@
             });
         });
     });
+
+
+
 </script>
+
+@include('frontEnd.jobs.layout.footer')
