@@ -646,13 +646,13 @@
         <div class="modal fade" id="product_model" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="productModalLabel">Product</h5>
-                        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button> -->
+                    <div class="modal-header terques-bg">
+                        <h4 class="modal-title pupTitle" id="productModalLabel">Product</h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body pdbotm">
+                    <div class="row">
+                            <div class="col-md-12">
+                                <div class="">
                         <div class="form-group">
                             <div class="table-responsive">
                                 <table class="table">
@@ -681,6 +681,9 @@
                         <div style="display:flex;justify-content: end;">
                             <button class="btn btn-primary" onclick="get_data_product()">Choose</button>
                         </div>
+                                </div>
+                            </div>
+                    </div>
                     </div>
                 </div>
             </div>

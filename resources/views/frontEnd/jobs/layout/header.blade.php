@@ -357,7 +357,7 @@
                                             <li><a class="dropdown-item" href="{{ url('/lead/lead_sources') }}">Lead Sources</a></li>
                                             <li><a class="dropdown-item" href="{{ url('/lead/lead_status') }}">Lead Status</a></li>
                                             <li><a class="dropdown-item" href="{{ url('/lead/lead_task_type') }}">Lead Task Types</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_reject_type') }}">Lead Reject Types</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_reject_types') }}">Lead Reject Types</a></li>
                                             <li><a class="dropdown-item" href="{{ url('/lead/lead_notes_type') }}">Lead Notes Type</a></li>
                                         </ul>
                                     </li>
