@@ -1,3 +1,21 @@
+//   Data Table Js
+
+
+$(document).ready(function() {
+  $('#exampleOne').DataTable( {
+      columnDefs: [ {
+          orderable: false,
+          className: 'select-checkbox',
+          targets:   0
+      } ],
+      select: {
+          style:    'os',
+          selector: 'td:first-child'
+      },
+      order: [[ 1, 'asc' ]]
+  } );
+} );
+
 
 
 // CRM JS
@@ -29,26 +47,6 @@ function hideShowDiv() {
   }
 }
 // end search leads show search Filter js
-
-
-$(document).ready(function() {
-  $('#exampleOne').DataTable( {
-      columnDefs: [ {
-          orderable: false,
-          className: 'select-checkbox',
-          targets:   0
-      } ],
-      select: {
-          style:    'os',
-          selector: 'td:first-child'
-      },
-      order: [[ 1, 'asc' ]]
-  } );
-} );
-
-
-
-
 
 // *******************PaiChart
 
@@ -298,6 +296,9 @@ zingchart.render({
 
     // ************************************************************************************************
 
+
+
+
 $(window).scroll(function () {
     if ($(this).scrollTop() > 250) {
         $('.sticky-top').addClass('sticky-nav').css('top', '0px');
@@ -305,10 +306,6 @@ $(window).scroll(function () {
         $('.sticky-top').removeClass('sticky-nav').css('top', '-100px');
     }
   });
-
-
-//   Data Table Js
-
 
 
 

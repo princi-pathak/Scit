@@ -19,7 +19,10 @@
         }
     </style>
 </head>
-
+<?php 
+    $rights = App\User::where('id', Auth::user()->id)->where('is_deleted', 0)->first()->access_rights;
+    $access_rights=explode(',',$rights);
+?>
 <body>
     <header>
 
@@ -133,7 +136,7 @@
                                     <a href="#!" class="dropdown-item">Dashboard</a>
                                     <a href="{{url('/jobs_create')}}" class="dropdown-item">New Jobs</a>
                                     <a href="{{url('jobs_list')}}" class="dropdown-item">Active Jobs</a>
-                                    <?php if (@$access_rights[314] == 328) { ?>
+                                    <?php if ($access_rights[314] == 328) { ?>
                                         <a href="{{url('job_type')}}" class="dropdown-item">Job Type</a>
                                     <?php } ?>
                                     <a href="#!" class="dropdown-item">Action Required Jobs</a>
@@ -376,7 +379,9 @@
                                             Jobs <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">Job Type </a></li>
+                                        <?php if ($access_rights[314] == 328) { ?>
+                                            <li><a class="dropdown-item" href="{{url('job_type')}}">Job Type </a></li>
+                                        <?php }?>
                                             <li><a class="dropdown-item" href="#">Job Appointment Type </a></li>
                                             <li><a class="dropdown-item" href="#">Appointment Rejection Categories </a></li>
                                         </ul>
