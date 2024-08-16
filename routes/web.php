@@ -228,6 +228,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/search_value','App\Http\Controllers\jobs\JobController@search_value');
 	Route::post('/save_get_ajax','App\Http\Controllers\jobs\JobController@save_get_ajax');
 	Route::get('/job_type','App\Http\Controllers\jobs\JobController@job_type');
+	Route::post('/job_type_save','App\Http\Controllers\jobs\JobController@job_type_save');
+	Route::post('/job_type_edit_form','App\Http\Controllers\jobs\JobController@job_type_edit_form');
+	Route::post('/workflow_save_data','App\Http\Controllers\jobs\JobController@workflow_save_data');
+	Route::post('/Workflow_notification_save','App\Http\Controllers\jobs\JobController@Workflow_notification_save');
+	Route::post('/workflow_list_job','App\Http\Controllers\jobs\JobController@workflow_list_job');
+	Route::post('/workflow_list_add','App\Http\Controllers\jobs\JobController@workflow_list_add');
 	Route::get('/jobs_index','App\Http\Controllers\jobs\JobController@index');
 	Route::get('/planner_day','App\Http\Controllers\jobs\JobController@planner_day');
 	Route::get('/jobs_create','App\Http\Controllers\jobs\JobController@jobs_create');

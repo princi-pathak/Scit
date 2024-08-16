@@ -1,4 +1,9 @@
 @include('frontEnd.jobs.layout.header')
+<style>
+    .addError {
+        border:1px solid red;
+    }
+</style>
     <section class="main_section_page px-3">
         <div class="container-fluid">
             <div class="row">
@@ -16,15 +21,18 @@
             <div class="row">
 
                 <div class="col-md-8 col-lg-8 col-xl-8 px-3">
-                <?php if(@$access_rights[315] == 329){?>
+                <?php if($access_rights[315] == 329){?>
                     <div class="jobsection">
-                        <a href="{{url('job_type_create')}}" class="profileDrop">Add</a>
+                        <a href="#!" data-bs-toggle="modal" data-bs-target="#customerPop" class="profileDrop">Add</a>
                     </div>
                     <?php }?>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 ">
                 </div>
             </div>
+            <div class="alert alert-success text-center" id="msg" style="display:none;height:50px">
+            <p id="status_meesage"></p>
+        </div>
             <di class="row">
                 <div class="col-lg-12">
                     <div class="maimTable">
@@ -53,18 +61,40 @@
                                 </tr>
                             </thead>
                                                
-                            <tbody>
+                            <tbody id="result">
                             <?php foreach($job_type as $key=>$val){?>
                                 <tr>
                                     <td></td>
                                     <td>{{++$key}}</td>
                                     <td>{{$val->name}}</td>
-                                    <td><?php echo ($val->status == 1)?"Yes":"No";?></td>
+                                    <td><?php echo ($val->customer_visible == 1)?"Yes":"No";?></td>
                                     <td>{{$val->default_days}}</td>
                                     <td><span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span></td>
                                     <td>-</td>
-                                    <td><span class="grencheck"><i class="fa-solid fa-circle-check"></i></span></td>
-                                    <td><a href="#!" class="profileDrop dropdown-toggle">Action</a></td>
+                                    <td>
+                                        <?php if($val->customer_visible == 1){?>
+                                            <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
+                                        <?php } else { if($val->status == 1){?>
+                                            <span class="grencheck" onclick="status_change({{$val->id}},{{$val->status}})"><i class="fa-solid fa-circle-check"></i></span>
+                                            <?php } else {?>
+                                            <span class="grayCheck" onclick="status_change({{$val->id}},{{$val->status}})"><i class="fa-solid fa-circle-check"></i></span>
+                                            
+                                        <?php }}?>
+                                    </td>
+                                    <td>
+                                            <div class="d-inline-flex align-items-center ">
+                                            <div class="nav-item dropdown">
+                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                    Action
+                                                </a>
+                                                <div class="dropdown-menu fade-up m-0">
+                                                    <a href="javascript:void(0)" onclick="get_model_with_id({{$val->id}})" class="dropdown-item">Edit Details</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="javascript:void(0)" onclick="get_flow_model({{$val->id}})" class="dropdown-item">Manage Workflow</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <?php }?>
 
@@ -72,8 +102,454 @@
                         </table>
 
                     </div>   <!-- End off main Table -->
+                    <!-- Job type Modal start here -->
+                    <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content add_Customer">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="customerModalLabel">Job Type-Add</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                    <div class="alert alert-success text-center success_message" style="display:none;height:50px">
+                                        <p id="message"></p>
+                                    </div>
+                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                            <div class="formDtail">
+                                                <form id="form_data" class="customerForm">
+                                                    <input type="hidden" name="id" id="id">
+                                                    <div class="mb-2 row">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Job Type*</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control editInput"
+                                                                id="name" name="name" value="">
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                    <div class="mb-2 row">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Number of days*</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control editInput"
+                                                                id="default_days" name="default_days" value="14">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-2 row">
+                                                        <label class="col-sm-3 col-form-label">Customer Visible</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="checkbox" id="customer_visible"
+                                                                    value="1" checked name="customer_visible">
+                                                                <label class="form-check-label checkboxtext"
+                                                                    for="inlineRadio1">Yes,visible to customer</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    
+                                                    <div class="mb-2 row">
+                                                        <label for="inputProject"
+                                                            class="col-sm-3 col-form-label">Appointment Type</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control editInput selectOptions appointmentType"
+                                                                id="appointment_id" name="appointment_id">
+                                                                <option selected disabled>Select Appointment Type</option>
+                                                                <?php foreach($appointment_type as $type){?>
+                                                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                                                <?php }?>
+                                                            </select>
+                                                            (Planning)
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputProject"
+                                                            class="col-sm-3 col-form-label">Status</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control editInput selectOptions"
+                                                                id="status" name="status">
+                                                                <option value="1" id="status_1">Active</option>
+                                                                <option value="0" id="status_0">Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div> <!-- End row -->
+                                </div>
+                                <div class="modal-footer customer_Form_Popup">
+
+                                    <button type="button" class="profileDrop" onclick="get_save_job_type()">Save</button>
+                                    <button type="button" class="profileDrop" onclick="save_job_typeClose()">Save &
+                                        Close</button>
+                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end here -->
+                     <!-- work flow Modal start here -->
+                     
+ <div class="modal fade" id="workflowModal" tabindex="-1" aria-labelledby="customerModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content add_Customer">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"> Workflow </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                    <div class="alert alert-success text-center success_message" style="display:none;height:50px">
+                                        <p id="message"></p>
+                                    </div>
+                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                            <div class="formDtail">
+                            <form id="flowForm">
+                            @csrf
+                            <input type="hidden" name="home_id" id="home_id" value="{{$home_id}}">
+                        <div class="custom-fieldset">
+                            <div class="custom-legend"><strong>New Job ></strong> Workflow</div>
+                            <input type="hidden" id="job_type_id" name="job_type_id">
+                            <p class="floatLeft redText marginTop8px marginBottom10">
+                                Assigning a workflow to a job type will help your planners follow the correct stages of a Job. These stages can be adjusted at planning should they be required to go outside the normal flow if necessary.<br>
+                                To change the workflow stages in this section once created and saved, will require you not to have any active jobs using this job type in the system – changing the overall workflow stages is deactivated until all jobs have been completed using this job type.<br>
+                                Alternatively you can create a new job type with a new workflow.<br>
+                                <br>Please call your account manager for more information</p>
+                                <a href="javascript:" class="btn btn-primary" style="float:right; margin-bottom: 20px;" onclick="show_hide()">Add Workflow</a>
+                                <table class="table">
+                                    <thead class="header-row flowhead" style="display:none" id="flowhead">
+                                        <th width="3%"></th>
+                                        <th>Job Appointment Types</th>
+                                        <th width="70px">Notify</th>
+                                        <th>&nbsp;</th>
+                                    </thead>
+                                    <tbody id="result_work_flow">
+                                        <tr style="cursor: move; font-weight: bold; color: green;" id="wrokflow_msg">
+                                            <td class="workflowText" style="border-top: none;">
+                                                <p>Please start adding workflow</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                        <div class="noti_button" style="margin-left:60%">
+                            <input type="button" class="btn btn-primary" value="Save" onclick="save_work_flow()"></input>
+                            <a href="javascript:" class="btn btn-primary" onclick="document.getElementById('workflowModal').style.display='none'">Cancel</a>
+                        </div>
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div> <!-- End row -->
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                     <!-- end here -->
+                      <!-- Notification Rules model start here -->
+
+                      <div class="modal fade" id="workflowNotificationModal" tabindex="-1" aria-labelledby="customerModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content add_Customer">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"> Workflow Notification Rule </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                    <div class="alert alert-success text-center success_message" style="display:none;height:50px">
+                                        <p id="message"></p>
+                                    </div>
+                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                            <div class="formDtail">
+                                                <form id="notification_form">
+                                                    @csrf
+                            <input type="hidden" id="job_type_id_noti" name="job_type_id_noti">
+                            <input type="hidden" id="row_id_noti" name="row_id_noti">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Notify When *</label>
+                                <div class="col-lg-9">
+                                    <input type="checkbox" name="notify_when_on_complete" value="" id="notify_when_on_complete"> On Complete <br>
+                                    <input type="checkbox" name="notify_when_on_change" value="" id="notify_when_on_change"> On Change (Declined, Follow On, Abandoned, No Access)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Notify Who? *</label>
+                                <div class="col-lg-9">
+                                <select class="form-select who_noti" name="notify_who[]" id="notify_who" multiselect-search="true" multiselect-select-all="true" multiselect-max-items="4" multiple="multiple">
+                                   
+                                    <?php foreach($customers as $cust){?>
+                                        <option value="{{$cust->id}}">{{$cust->name}}</option>
+                                    <?php }?>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Notify Customer</label>
+                                <div class="col-lg-9">
+                                    <input type="checkbox" name="notify_customer_on_complete" id="notify_customer_on_complete" value="0"> On Complete
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Send As *</label>
+                                <div class="col-lg-9">
+                                    <input type="checkbox" name="sendas" id="sendas" value="0"> Notification (User Only) <br>
+                                    <input type="checkbox" name="sms" id="sms" value="0"> SMS <br>
+                                    <input type="checkbox" name="emailsend" id="emailsend" value="0"> Email <br>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="noti_button">
+                            <a href="javascript:" class="btn btn-primary" onclick="get_save_notification()">Save</a>
+                            <a href="javascript:" class="btn btn-primary">Cancel</a>
+                        </div>
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div> <!-- End row -->
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+        <!-- end here -->
                 </div>
             </di>
         </div>
+        <script src="{{url('public/backEnd/js/multiselect.js')}}"></script>
+        <script>
+            $("#customer_visible").change(function(){
+                if ($('#customer_visible').is(':checked')) {
+                    $("#customer_visible").val(1);
+                }else {
+                    $("#customer_visible").val(0);
+                }
+            });
+            function save_job_typeClose(){
+                var name=$("#name").val();
+                if(name == ''){
+                    $("#name").addClass('addError');
+                    return false;
+                } else {
+                    get_save_job_type();
+                    $("#customerPop").modal('hide');
+                }
+                
+            }
+            function get_save_job_type(){
+                var token='<?php echo csrf_token();?>'
+                var name=$("#name").val();
+                var default_days=$("#default_days").val();
+                var customer_visible=$("#customer_visible").val();
+                var appointment_id=$("#appointment_id").val();
+                var status=$("#status").val();
+                var home_id='<?php echo $home_id;?>'
+                var id=$("#id").val();
+                var message;
+                if(id == ''){
+                    message= "Added Successfully Done";
+                } else {
+                    message= "Editted Successfully Done";
+                }
+                if(name == ''){
+                    $("#name").addClass('addError');
+                    return false;
+                }else {
+                        $.ajax({
+                        type: "POST",
+                        url: "{{url('/job_type_save')}}",
+                        data: {id:id,home_id:home_id,name:name,default_days:default_days,customer_visible:customer_visible,appointment_id:appointment_id,status:status,_token:token},
+                        success: function(data) {
+                            console.log(data);
+                            if($.trim(data.success) == "true"){
+                                $("#message").text(message);
+                                $(".success_message").show();
+                                $("#result").html(data.html_result);
+                                setTimeout(function() {
+                                    $(".alert").hide();
+                                }, 3000);
+                                $("#form_data")[0].reset();
+                            } else {
+                                alert("Something went Wrong");
+                            }
+                        }
+                    });
+                }
+            }
+            function get_model_with_id(id){
+                var token='<?php echo csrf_token();?>'
+                $.ajax({
+                        type: "POST",
+                        url: "{{url('/job_type_edit_form')}}",
+                        data: {id:id,_token:token},
+                        success: function(data) {
+                            console.log(data);
+                            $("#id").val(data.id);
+                            $("#name").val(data.name);
+                            $("#default_days").val(data.default_days);
+                            if (data.customer_visible == 0) {
+                                document.getElementById('customer_visible').checked = false;
+                            }
+                            $(".appointmentType option").each(function() {
+                                if ($(this).val() == data.appointment_id) {
+                                    $(this).prop('selected', true);
+                                }
+                            });
+                            $("#customerPop").modal('show');
+                        }
+                    });
+            }
+            function status_change(id, status){
+            var token='<?php echo csrf_token();?>'
+            var table="job_types";
+            $.ajax({
+                type: "POST",
+                url: "{{url('/status_change')}}",
+                data: {id:id,status:status,table:table,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if($.trim(data)==1){
+                        $("#status_meesage").text("status Changed Successfully Done");
+                        $("#msg").show();
+                        setTimeout(function() {
+                            location.reload();
+                        }, 3000);
+
+                        
+                    }
+                    
+                }
+            });
+        }
+        </script>
+        <script>
+            function get_flow_model(id){
+                // alert(id);
+                $("#flowForm")[0].reset();
+                $("#job_type_id").val(id);
+                var token='<?php echo csrf_token();?>'
+                $.ajax({  
+                    type:"POST",
+                    url:"{{url('workflow_list_job')}}",
+                    data: {id:id,_token:token},
+                    success:function(data)
+                    {
+                        console.log(data);
+                        $('#workflowNotificationModal').modal('hide');
+                        $('#result_work_flow').append(data);
+                        $('.multiselect-dropdown').hide();
+                        MultiselectDropdown();
+                    }
+                }); 
+                $("#workflowModal").modal('show');
+            }
+            var rowCount = 0;
+            function show_hide(){
+                rowCount++;
+                var job_type_id=$('#job_type_id').val();
+                $('.flowhead').show();
+                $('#wrokflow_msg').hide();
+                var token='<?php echo csrf_token();?>'
+                $.ajax({  
+                    type:"POST",
+                    url:"{{url('workflow_list_add')}}",
+                    data: {job_type_id:job_type_id,_token:token},
+                    success:function(data)
+                    {
+                        console.log(data);
+                        $('#workflowNotificationModal').modal('hide');
+                        $('#result_work_flow').append(data);
+                        $('.multiselect-dropdown').hide();
+                        MultiselectDropdown();
+                    }
+                }); 
+                // var data='<tr><input type="hidden" value="'+rowCount+'" name="row_count"><td></td><td><select class="form-select" name="appointment_id[]" multiselect-search="false" multiselect-select-all="true" multiselect-max-items="4" multiple="multiple"><option value="1">Install</option><option value="2">Cold Call</option><option value="3">Maintenance</option></select></td><td><a href="javascript:" class="text-primary" onclick="set_rules('+job_type_id+','+rowCount+')">Set Rule</a></td><td><a href="javascript:" class="text-danger delete-row">X</a></td></tr>';
+                // $('#result_work_flow').append(data);
+                // $('.multiselect-dropdown').hide();
+                //     MultiselectDropdown();
+            }
+            $('#result_work_flow').on('click', '.delete-row', function() {
+                $(this).closest('tr').remove();
+            });
+            function set_rules(job_type_id,row_id){
+                $('#notification_form')[0].reset();
+                $('#job_type_id_noti').val(job_type_id);
+                $('#row_id_noti').val(row_id);
+                $('#workflowNotificationModal').modal('show');
+            }
+            function get_save_notification(){
+                var job_type_id_noti=$('#job_type_id_noti').val();
+                var row_id_noti=$('#row_id_noti').val();
+                // var who_noti=[];
+                // $('.who_noti').each(function(){
+                //     who_noti.push($(this).val());
+                // });
+                // who_noti=who_noti;
+                // console.log(who_noti)
+                if($('#notify_when_on_complete').is(':checked')){
+                    $("#notify_when_on_complete").val(1);
+                }
+                if($('#notify_when_on_change').is(':checked')){
+                    $("#notify_when_on_change").val(1);
+                }
+                if($('#notify_customer_on_complete').is(':checked')){
+                    $("#notify_customer_on_complete").val(1);
+                }
+                if($('#sendas').is(':checked')){
+                    $("#sendas").val(1);
+                }
+                if($('#sms').is(':checked')){
+                    $("#sms").val(1);
+                }
+                if($('#emailsend').is(':checked')){
+                    $("#emailsend").val(1);
+                }
+                var token='<?php echo csrf_token();?>'
+                    $.ajax({  
+                        type:"POST",
+                        url:"{{url('Workflow_notification_save')}}",
+                        data: new FormData($("#notification_form")[0]),
+                        async: false,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success:function(data)
+                        {
+                            console.log(data);
+                            if($.trim(data)==1){
+                                $('#workflowNotificationModal').modal('hide');
+                            }else {
+                                alert("Something went wrong");
+                            }
+                        }
+                    }); 
+            }
+            function save_work_flow(){
+                var token='<?php echo csrf_token();?>'
+                $.ajax({
+                    type: "POST",
+                    url: "{{url('/workflow_save_data')}}",
+                    data: new FormData($("#flowForm")[0]),
+                    async: false,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data) {
+                        console.log(data);
+                        location.reload();
+                       
+                    }
+                });
+            }
+        </script>
     </section>
     @include('frontEnd.jobs.layout.footer')

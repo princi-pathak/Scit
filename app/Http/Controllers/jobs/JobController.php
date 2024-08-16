@@ -17,6 +17,7 @@ use App\Models\Quote_type;
 use App\Models\Job_recurring;
 use App\Models\Product_category;
 use App\Models\Quote_product_detail;
+use App\Models\Workflow_notification;
 use App\Models\Recurrence_pattern_rule;
 use App\Models\Recurring_product_detail;
 use App\Models\Construction_job_appointment;
@@ -62,11 +63,136 @@ class JobController extends Controller
         return view('frontEnd.jobs.job',$data);
     }
     public function job_type(Request $request){
+        $home_id = Auth::user()->home_id;
         $data['job_type']=Job_type::whereNot('status',2)->get();
         $data['access_rights']=$this->access_rights();
+        $data['appointment_type']=Construction_job_appointment_type::where('home_id',$home_id)->get();
+        $data['home_id']=$home_id;
+        $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
+        // $data['work_flows']=Work_flow::where(['home_id'=>1,'job_type_id'=>1,'status'=>1])->get();
         // echo "<pre>";print_r($data['access_rights']);die;
         return view('frontEnd.jobs.job_type',$data);
     }
+    
+    public function job_type_save(Request $request){
+        $home_id = Auth::user()->home_id;
+       $data= Job_type::job_type_save_data($request->all());
+       if($data){
+        $all_data=Job_type::where(['home_id'=>$home_id,'status'=>1])->get();
+        $html = '';
+        foreach($all_data as $key=>$val){
+            $html.='<tr>
+                        <td></td>
+                        <td>'.++$key.'</td>
+                        <td>'.$val->name.'</td>
+                       <td>' . (($val->status == 1) ? "Yes" : "No") . '</td>
+                        <td>'.$val->default_days.'</td>
+                        <td><span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span></td>
+                        <td>-</td>
+                        <td><span class="grencheck"><i class="fa-solid fa-circle-check"></i></span></td>
+                        <td> <div class="d-inline-flex align-items-center ">
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                        Action
+                                    </a>
+                                    <div class="dropdown-menu fade-up m-0">
+                                        <a href="javascript:void(0)" onclick="get_model_with_id('.$val->id.')" class="dropdown-item">Edit Details</a>
+                                        <hr class="dropdown-divider">
+                                        <a href="#!" class="dropdown-item">Manage Workflow</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>';
+
+        }
+        return response()->json(['success'=>'true','message' => "Successfully  Done",'html_result'=>$html], 200);
+       } else {
+        return response()->json(['success'=>'true','message' => "Successfully  Done",'data'=>$html], 200);
+       }
+    }
+    public function job_type_edit_form(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $data=Job_type::find($request->id);
+        return response()->json($data);
+    }
+    public function workflow_save_data(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $data=Work_flow::work_flow_save($request->all());
+        return $data;
+
+    }
+    public function workflow_list_job(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id = Auth::user()->home_id;
+        $data=Work_flow::where(['home_id'=>$home_id, 'job_type_id'=>$request->id,'status'=>1])->get();
+        // echo "<pre>";print_r($data);die;
+        
+        $appointment_type=Construction_job_appointment_type::where('home_id',$home_id)->get();
+        $html='';
+        foreach($data as $val){
+            $html .='<tr>
+                <input type="hidden" value="'.$val->id.'" name="row_count">
+                <td></td>
+                <td>
+                    <select class="form-select" name="appointment_id[]" multiselect-search="false" multiselect-select-all="true" multiselect-max-items="4" multiple="multiple">';
+                    foreach($appointment_type as $type){
+                        if($type->id == $val->appointment_id){
+                            $selected='selected';
+                        }else {
+                            $selected='';
+                        }
+                        $html .='<option value="'.$type->id.'" '.$selected.'>'.$type->name.'</option>';
+                    }
+                    $html .='</select>
+                </td>
+                <td>
+                    <a href="javascript:" class="text-primary" onclick="set_rules('.$request->id.','.$val->id.')">Set Rule</a>
+                </td>
+                <td>
+                    <a href="javascript:" class="text-danger delete-row">X</a>
+                </td>
+                </tr>';
+        }
+        return response()->json($html);
+    }
+    public function workflow_list_add(Request $request){
+        $home_id = Auth::user()->home_id;
+        $data=Work_flow::where(['home_id'=>$home_id, 'job_type_id'=>$request->job_type_id,'status'=>1])->count();
+        
+        $appointment_type=Construction_job_appointment_type::where('home_id',$home_id)->get();
+        if($data == 0){
+            $row_count=1;
+        }else {
+            $row_count=$data+1;
+        }
+        $html='';
+            $html .='<tr>
+                <input type="hidden" value="'.$row_count.'" name="row_count">
+                <td></td>
+                <td>
+                    <select class="form-select" name="appointment_id[]" multiselect-search="false" multiselect-select-all="true" multiselect-max-items="4" multiple="multiple">';
+                    foreach($appointment_type as $type){
+                       
+                        $html .='<option value="'.$type->id.'">'.$type->name.'</option>';
+                    }
+                    $html .='</select>
+                </td>
+                <td>
+                    <a href="javascript:" class="text-primary" onclick="set_rules('.$request->id.','.$row_count.')">Set Rule</a>
+                </td>
+                <td>
+                    <a href="javascript:" class="text-danger delete-row">X</a>
+                </td>
+                </tr>';
+                return response()->json($html);
+    }
+    public function Workflow_notification_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $data=Workflow_notification::work_flow_notification_save($request->all());
+        return $data;
+    }
+    
     public function planner_day(){
         echo "<h1 style='color:red'>It's under working</h1>";die;
     }
