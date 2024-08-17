@@ -5,7 +5,6 @@ namespace App\Http\Controllers\backEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session,DB;
-use App\traits\CountryTrait;
 use App\Customer;
 use App\Models\Job;
 use App\Models\Product;
@@ -26,7 +25,6 @@ use App\Models\Construction_job_rejection_category;
 
 class JobsController extends Controller
 {
-    use CountryTrait;
     public function jobs_list(Request $request){
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
@@ -98,7 +96,7 @@ class JobsController extends Controller
         $data['job_details']=Job::find($key);
         $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1])->get();
         $data['job_type']=Job_type::where('status',1)->get();
-        $data['country']=$this->all_country_trait();
+        $data['country']=Country::all_country_list();
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')->join('product_categories as cat','cat.id','=','pr.cat_id')->get();

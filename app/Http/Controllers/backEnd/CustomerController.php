@@ -68,8 +68,9 @@ class CustomerController extends Controller
         $data['contact']=Constructor_additional_contact::where('customer_id',$key)->get();
         $data['site']=Constructor_customer_site::where('customer_id',$key)->get();
         $data['login']=Construction_customer_login::where('customer_id',$key)->get();
-        $data['country']=Country::where('status',1)->get();
-        // echo "<pre>";print_r($data['login']);die;
+        // $data['country']=Country::where('status',1)->get();
+        $data['country']=Country::all_country_list();
+        // echo "<pre>";print_r($data['country']);die;
         return view('backEnd.jobs_management.customers_form',$data);
     }
     public function customer_type(Request $request){
