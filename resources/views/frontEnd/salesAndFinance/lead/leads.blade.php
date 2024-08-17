@@ -154,8 +154,9 @@
                                                 <a href="#" class="dropdown-item">Send SMS</a>
                                                 <hr class="dropdown-divider">
                                                 <!-- <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CRMHistoryModal">CRM History</a> -->
-                                                <a href="#" class="dropdown-item set-value-on-CRM-model" data-bs-toggle="modal" data-bs-target="#customerPop" data-id="{{ $customer->id }}" data-lead_ref="{{ $customer->contact_name }}" data-lead_ref ="{{ $customer->lead_ref }}">CRM History</a>
-                                                <a href="#" class="dropdown-item open-modal" data-lead_ref="{{ $customer->lead_ref }}" daat-email="{{ $customer->email }}" data-status="{{ $customer->status }}" data-telephone="{{ $customer->telephone }}" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
+                                                <a href="#" id="set_value_on_CRM_model" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#customerPop">CRM History</a>
+
+                                                <a href="#" class="dropdown-item open-modal" data-lead_ref="{{ $customer->lead_ref }}" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
                                                 <a href="{{ url('/leads/authorization').'/'.$customer->id }}" class="dropdown-item">Send for Authorization</a>
                                                 <a href="#" class="dropdown-item">Send to Quote</a>
                                                 <a href="#" class="dropdown-item">Send to Job</a>
@@ -984,7 +985,7 @@
                     <div class="mb-2 row">
                         <label for="calls_telephone" class="col-sm-3 col-form-label">Telephone </label>
                         <div class="col-sm-2">
-                            <select class="form-control editInput selectOptions" required="">
+                            <select class="form-control editInput selectOptions" required="" id="countries">
                                 <option>+444</option>
                                 <option>+91</option>
                             </select>
@@ -996,7 +997,9 @@
                     <div class="mb-2 row">
                         <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control editInput" id="calls_type" name="telephone" placeholder="Type" value="">
+                            <select name="type" class="form-control editInput" id="calls_type">
+                                <option value=""></option>
+                            </select>
                         </div>
                         <div class="col-sm-2">
                         <a href="#!" class="formicon" id="openCrmTypeModel" ><i class="fa-solid fa-square-plus"></i></a>
@@ -1104,74 +1107,8 @@
 
 <!-- ****************End CRM History Modal ****************-->
 <script>
-    
-    const notify_radio1 = document.getElementById('notify_radio1');
-    const notify_radio2 = document.getElementById('notify_radio2');
-    const notification_div = document.getElementById('notification_div');
-
-    // Add event listeners to the radio buttons
-    notify_radio1.addEventListener('change', function() {
-        if (notify_radio1.checked) {
-            notification_div.style.display = 'block';
-        }
-    });
-
-    notify_radio2.addEventListener('change', function() {
-        if (notify_radio2.checked) {
-            notification_div.style.display = 'none';
-        }
-    });
-
-    const openPopupButton2 = document.getElementById('openPopupButton2');
-    const popup2 = document.getElementById('popup2');
-    const closePopup2 = document.getElementById('closePopup');
-
-    openPopupButton2.addEventListener('click', () => {
-        popup2.style.display = 'block';
-        setTimeout(() => {
-            popup2.style.opacity = '1';
-        }, 50); // Delay added for transition effect
-    });
-
-    closePopup2.addEventListener('click', () => {
-        popup2.style.opacity = '0';
-        setTimeout(() => {
-            popup2.style.display = 'none';
-        }, 300); // Ensure the popup is hidden after the transition ends
-    });
-
-    const openPopupButton = document.getElementById('openPopupButton');
-    const popup = document.getElementById('popup');
-    const closePopup = document.getElementById('closePopup');
-
-    openPopupButton.addEventListener('click', () => {
-        popup.style.display = 'block';
-        setTimeout(() => {
-            popup.style.opacity = '1';
-        }, 50); // Delay added for transition effect
-    });
-
-    closePopup.addEventListener('click', () => {
-        popup.style.opacity = '0';
-        setTimeout(() => {
-            popup.style.display = 'none';
-        }, 300); // Ensure the popup is hidden after the transition ends
-    });
 
     $(document).ready(function() {
-
-        $('.set-value-on-CRM-model').on('click', function(){
-            var itemId = $(this).data('id');
-
-            // document.getElementById('calls_contact_name').value = $(this).data('id');  
-            document.getElementById('calls_lead_ref').value = $(this).data('lead_ref');  
-            document.getElementById('calls_contact_name').value = $(this).data('customer_name');  
-            document.getElementById('calls_status').value = $(this).data('status');  
-            document.getElementById('calls_lead_refs').value = $(this).data('lead_ref');  
-            document.getElementById('calls_telephone').value = $(this).data('telephone');  
-            document.getElementById('calls_email').value = $(this).data('email');  
-            
-        });
 
         $.ajaxSetup({
             headers: {
@@ -1179,6 +1116,26 @@
             }
         });
 
+        
+        // Sets the lead values in the Calls Modals 
+        const anchor = document.getElementById('set_value_on_CRM_model');
+        anchor.addEventListener('click', function(event) {
+            console.log("working or not");
+            var itemId = $(this).data('id');
+            console.log(itemId);
+            // // document.getElementById('calls_contact_name').value = $(this).data('id');  
+            // document.getElementById('calls_lead_ref').textContent  = $(this).data('lead_ref');  
+            // document.getElementById('calls_contact_name').textContent  = $(this).data('contact_name');  
+            // document.getElementById('calls_status').textContent  = $(this).data('status');  
+            // document.getElementById('calls_lead_refs').textContent  = $(this).data('lead_ref');  
+            // document.getElementById('calls_telephone').textContent  = $(this).data('telephone');  
+            // document.getElementById('calls_email').textContent  = $(this).data('email');  
+
+        });
+
+
+
+        // Ajax Call for saving CRM section Type
         $('#saveCRMTypes').on('click', function() {
             var formData = $('#crm_section_type_form').serialize();
             $.ajax({
@@ -1195,9 +1152,52 @@
             });
         });
 
+        // Ajax call for getting CRM Section Types
+        $('#calls_type').on('click', function() {
+            $.ajax({
+                url: '{{ route("lead.ajax.getCRMTypeData") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response.Data);
+                    const selectElement = document.getElementById('calls_type');
+                    selectElement.innerHTML = '';
+                    response.Data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.title;
+                        selectElement.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        // Ajax call for getting Country Code and Country Name
+        $('#countries').on('click', function() {
+            $.ajax({
+                url: '{{ route("ajax.getCountriesList") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response.Data);
+                    const selectElement = document.getElementById('countries');
+                    selectElement.innerHTML = '';
+                    response.Data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.code;
+                        option.text = "+"+" "+user.code+" - "+" "+user.name;
+                        selectElement.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
 
         const openCallsModel = document.getElementById('openCallsModel');
-        // const callsModel = document.getElementById('callsModal');
+        const callsModel = document.getElementById('callsModal');
         const closeCallsModel = document.getElementById('closeCallsModels');
 
         // When the user clicks the button, open the modal 
@@ -1212,7 +1212,7 @@
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
-            if (event.target === modal) {
+            if (event.target === callsModel) {
                 $('#callsModal').modal('hide');
                 $('#crmTypeModel').modal('hide');
             }
@@ -1231,7 +1231,6 @@
         closeModalBtn.onclick = function() {
             $('#crmTypeModel').modal('hide');
         }
-
 
         notification_div.style.display = 'none';
 
@@ -1266,6 +1265,7 @@
             $('#lead_ref').val(lead_ref);
         });
 
+        // Ajax Call for adding lead Reject Type
         $('#lead_reject').on('click', function() {
             var formData = $('#lead_reject_type_form_edit').serialize();
 
@@ -1284,9 +1284,9 @@
             });
         });
 
+        // Ajax Call for adding Lead Reject Reasons
         $('#lead_reject_reason').on('click', function() {
             var formData = $('#lead_reject_reason_form').serialize();
-
             $.ajax({
                 url: '{{ route("lead.ajax.saveLeadRejectReasons") }}',
                 method: 'POST',
@@ -1301,10 +1301,65 @@
                 }
             });
         });
-
     });
+    
+    const notify_radio1 = document.getElementById('notify_radio1');
+    const notify_radio2 = document.getElementById('notify_radio2');
+    const notification_div = document.getElementById('notification_div');
+    
+    const openPopupButton2 = document.getElementById('openPopupButton2');
+    const popup2 = document.getElementById('popup2');
+    const closePopup2 = document.getElementById('closePopup');
+
+    const openPopupButton = document.getElementById('openPopupButton');
+    const popup = document.getElementById('popup');
+    const closePopup = document.getElementById('closePopup');
+
+
+    // Add event listeners to the radio buttons
+    notify_radio1.addEventListener('change', function() {
+        if (notify_radio1.checked) {
+            notification_div.style.display = 'block';
+        }
+    });
+
+    notify_radio2.addEventListener('change', function() {
+        if (notify_radio2.checked) {
+            notification_div.style.display = 'none';
+        }
+    });
+
+    openPopupButton2.addEventListener('click', () => {
+        popup2.style.display = 'block';
+        setTimeout(() => {
+            popup2.style.opacity = '1';
+        }, 50); // Delay added for transition effect
+    });
+
+    closePopup2.addEventListener('click', () => {
+        popup2.style.opacity = '0';
+        setTimeout(() => {
+            popup2.style.display = 'none';
+        }, 300); // Ensure the popup is hidden after the transition ends
+    });
+
+    openPopupButton.addEventListener('click', () => {
+        popup.style.display = 'block';
+        setTimeout(() => {
+            popup.style.opacity = '1';
+        }, 50); // Delay added for transition effect
+    });
+
+    closePopup.addEventListener('click', () => {
+        popup.style.opacity = '0';
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 300); // Ensure the popup is hidden after the transition ends
+    });
+
 </script>
 
+<!-- Script For adding CK editor start -->
 <script type="importmap">
     {
         "imports": {
@@ -1313,7 +1368,6 @@
         }
     }
 </script>
-
 <script type="module">
     import {
         ClassicEditor,
@@ -1345,4 +1399,5 @@
             console.error(error);
         });
 </script>
+<!-- Script For adding CK editor End -->
 @include('frontEnd.jobs.layout.footer')
