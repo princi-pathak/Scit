@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     use HasFactory;
+
     protected $table = 'countries';
     public function currencies()
     {
         return $this->hasMany(Construction_currency::class, 'country_id', 'id');
     }
+  
     public static function all_country_list()
     {
         $countries = self::with(['currencies' => function($query) {
@@ -23,5 +25,9 @@ class Country extends Model
 
         return $countries;
 
+    }
+
+    public static function getCountriesNameCode() {
+        return Country::where('status', 1)->select('code', 'name')->get();
     }
 }

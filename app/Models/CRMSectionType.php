@@ -15,11 +15,15 @@ class CRMSectionType extends Model
     protected $fillable = ['home_id','title', 'crm_section', 'color_code', 'status'];
 
     public static function getCRMSectionTypes(){
-        return CRMSectionType::where('deleted_at', null)->get();
+        return CRMSectionType::where('deleted_at', null)->orderBy('created_at', 'desc')->get();
     }
 
     public static function deleteCRMSectionType($id){
         return CRMSectionType::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+    }
+
+    public static function getCRMTypeFromHomeId($home_id){
+        return CRMSectionType::where('deleted_at', null)->where('home_id', $home_id)->select('id', 'title')->orderBy('created_at', 'desc')->get();
     }
 
 }

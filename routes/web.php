@@ -313,6 +313,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('lead/CRM_section_types', 'CRM_section_type')->name('lead.crm_section');
 		Route::post('lead/saveCRMSectionType', 'saveCRMSectionType')->name('lead.ajax.saveCRMSectionType');
 		Route::get('lead/crm_section_type/delete/{id}', 'crm_section_type_delete');
+		Route::get('lead/get_CRM_section_types', 'get_CRM_section_types')->name('lead.ajax.getCRMTypeData');
+
+
+		// Countries List
+		Route::get('lead/getCountriesList', 'getCountriesList')->name('ajax.getCountriesList');
 
 	});
 
