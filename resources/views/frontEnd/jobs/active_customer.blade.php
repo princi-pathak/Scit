@@ -193,11 +193,11 @@
     <script>
         function status_change(id, status){
             var token='<?php echo csrf_token();?>'
-            var table="customers";
+            var model="Customer";
             $.ajax({
                 type: "POST",
                 url: "{{url('/status_change')}}",
-                data: {id:id,status:status,table:table,_token:token},
+                data: {id:id,status:status,model:model,_token:token},
                 success: function(data) {
                     console.log(data);
                     if($.trim(data)==1){

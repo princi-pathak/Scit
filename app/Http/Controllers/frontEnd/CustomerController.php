@@ -5,8 +5,6 @@ namespace App\Http\Controllers\frontEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session,DB,Auth;
-use App\traits\CountryTrait;
-use App\traits\ActionTrait;
 use App\Customer;
 use App\Models\Country;
 use App\Models\Job_title;
@@ -18,7 +16,6 @@ use App\Models\Constructor_additional_contact;
 
 class CustomerController extends Controller
 {
-    use CountryTrait;use ActionTrait;
     public function customer_add_edit(Request $request){
         // echo "<pre>";print_r(Auth::user()->home_id);die;
         $key=base64_decode($request->key);
@@ -36,7 +33,7 @@ class CustomerController extends Controller
         $data['contact']=Constructor_additional_contact::where('customer_id',$key)->get();
         $data['site']=Constructor_customer_site::where('customer_id',$key)->get();
         $data['login']=Construction_customer_login::where('customer_id',$key)->get();
-        $data['country']=$this->all_country_trait();
+        $data['country']=Country::all_country_list();
         $data['home_id']=Auth::user()->home_id;
         // echo "<pre>";print_r($data['customer']);die;
         return view('frontEnd.jobs.add_customer',$data);
@@ -49,7 +46,7 @@ class CustomerController extends Controller
     }
     public function default_address(Request $request){
         // $login_customer_id=$request->login_customer_id;
-        $country=$this->all_country_trait();
+        $country=Country::all_country_list();
         $address_details=Customer::find($request->login_customer_id);
         $result='';
         if($request->check == 1){
@@ -133,11 +130,6 @@ class CustomerController extends Controller
         $data['inactive_customer']=Customer::where(['is_converted'=>1,'status'=>0,'home_id'=>$home_id])->count();
         return view('frontEnd.jobs.active_customer',$data);
     }
-    public function status_change(Request $request){
-       $status= $this->status_change_trait($request->all());
-        echo $status;
-    }
-
     public function add_currency(Request $request){
         $all_country=Country::all();
         foreach($all_country as $val){
