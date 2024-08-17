@@ -252,7 +252,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/save_site','App\Http\Controllers\frontEnd\CustomerController@save_site');
 	Route::post('/save_login','App\Http\Controllers\frontEnd\CustomerController@save_login');
 	Route::get('/customers','App\Http\Controllers\frontEnd\CustomerController@active_customer');
-	Route::post('/status_change','App\Http\Controllers\frontEnd\CustomerController@status_change');
+	Route::post('/status_change','App\Http\Controllers\ActionController@status_change');
 	// end here
 
 

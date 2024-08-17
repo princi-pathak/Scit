@@ -21,7 +21,7 @@
             <div class="row">
 
                 <div class="col-md-8 col-lg-8 col-xl-8 px-3">
-                <?php if($access_rights[315] == 329){?>
+                <?php if (array_key_exists(315, $access_rights)){?>
                     <div class="jobsection">
                         <a href="#!" data-bs-toggle="modal" data-bs-target="#customerPop" class="profileDrop">Add</a>
                     </div>
@@ -62,7 +62,8 @@
                             </thead>
                                                
                             <tbody id="result">
-                            <?php foreach($job_type as $key=>$val){?>
+                            <?php foreach($job_type as $key=>$val){
+                                $workflow=App\Models\Work_flow::where(['home_id'=>$home_id,'job_type_id'=>$val->id])->first();?>
                                 <tr>
                                     <td></td>
                                     <td>{{++$key}}</td>
@@ -70,7 +71,9 @@
                                     <td><?php echo ($val->customer_visible == 1)?"Yes":"No";?></td>
                                     <td>{{$val->default_days}}</td>
                                     <td><span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span></td>
-                                    <td>-</td>
+                                    <td><?php if(isset($workflow) && $workflow->id == $val->id){?>
+                                         <span class="grayCheck"><i style="color:green" class="fa-solid fa-check"></i></span>
+                                         <?php }else{echo "-";}?></td>
                                     <td>
                                         <?php if($val->customer_visible == 1){?>
                                             <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
@@ -213,6 +216,7 @@
                             <form id="flowForm">
                             @csrf
                             <input type="hidden" name="home_id" id="home_id" value="{{$home_id}}">
+                            <input type="hidden" id="delete_ids_array" name="delete_ids_array" class="delete_ids_array">
                         <div class="custom-fieldset">
                             <div class="custom-legend"><strong>New Job ></strong> Workflow</div>
                             <input type="hidden" id="job_type_id" name="job_type_id">
@@ -240,7 +244,7 @@
                         </div>
                         <div class="noti_button" style="margin-left:60%">
                             <input type="button" class="btn btn-primary" value="Save" onclick="save_work_flow()"></input>
-                            <a href="javascript:" class="btn btn-primary" onclick="document.getElementById('workflowModal').style.display='none'">Cancel</a>
+                            <a href="javascript:void(0)" class="btn btn-primary" onclick="document.getElementById('workflowModal').style.display='none'">Cancel</a>
                         </div>
                                             </form>
                                             </div>
@@ -445,7 +449,7 @@
                     {
                         console.log(data);
                         $('#workflowNotificationModal').modal('hide');
-                        $('#result_work_flow').append(data);
+                        $('#result_work_flow').html(data);
                         $('.multiselect-dropdown').hide();
                         MultiselectDropdown();
                     }
@@ -477,7 +481,12 @@
                 // $('.multiselect-dropdown').hide();
                 //     MultiselectDropdown();
             }
+            var delete_ids_array = [];
             $('#result_work_flow').on('click', '.delete-row', function() {
+                var row_count=$("#row_count").val();
+                delete_ids_array.push(row_count);
+                // console.log(delete_ids_array);
+                $("#delete_ids_array").val(delete_ids_array);
                 $(this).closest('tr').remove();
             });
             function set_rules(job_type_id,row_id){
@@ -545,7 +554,7 @@
                     processData: false,
                     success: function(data) {
                         console.log(data);
-                        location.reload();
+                        // location.reload();
                        
                     }
                 });

@@ -379,7 +379,7 @@
                                             Jobs <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                        <?php if ($access_rights[314] == 328) { ?>
+                                        <?php if (array_key_exists(314, $access_rights)) { ?>
                                             <li><a class="dropdown-item" href="{{url('job_type')}}">Job Type </a></li>
                                         <?php }?>
                                             <li><a class="dropdown-item" href="#">Job Appointment Type </a></li>
