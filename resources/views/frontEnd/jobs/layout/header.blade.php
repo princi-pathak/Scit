@@ -450,8 +450,6 @@
                                     <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Quick Setup Wizard</a></li>
                                 </ul>
                             </div>
-
-                          
                         </div>
                     </div>
                 </nav>
