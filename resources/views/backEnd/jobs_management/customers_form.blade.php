@@ -265,9 +265,7 @@
                                             <select class="form-control" id="currency" name="currency">
                                                 <option selected disabled>Select Currency</option>
                                                 <?php foreach ($country as $currency) { ?>
-                                                    <option value="{{$currency->currency_code}}" <?php if (isset($customer) && $customer->currency == $currency->currency_code) {
-                                                                                                        echo "selected";
-                                                                                                    } ?>>{{$currency->name}} ({{$currency->currency_code}})</option>
+                                                    <option value="{{$currency->currency_code}}" <?php if(isset($customer) && $customer->currency == $currency->currency_code){echo "selected";}?>>{{$currency->name}} ({{$currency->currency_code}})</option>
                                                 <?php } ?>
                                             </select>
                                         </div>

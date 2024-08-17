@@ -136,9 +136,12 @@
                                     <a href="#!" class="dropdown-item">Dashboard</a>
                                     <a href="{{url('/jobs_create')}}" class="dropdown-item">New Jobs</a>
                                     <a href="{{url('jobs_list')}}" class="dropdown-item">Active Jobs</a>
-                                    <?php if (array_key_exists(314, $access_rights)) { ?>
-                                        <a href="{{url('job_type')}}" class="dropdown-item">Job Type</a>
-                                    <?php } ?>
+
+                                    <?php 
+                                      if (array_key_exists(314, $access_rights)) { ?>
+                                            <a href="{{url('job_type')}}" class="dropdown-item">Job Type</a>
+                                        <?php } ?>
+
                                     <a href="#!" class="dropdown-item">Action Required Jobs</a>
                                     <a href="#!" class="dropdown-item">Overdue Jobs</a>
                                     <a href="#!" class="dropdown-item">Authorization Jobs</a>

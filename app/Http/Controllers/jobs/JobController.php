@@ -11,6 +11,7 @@ use App\Models\Job;
 use App\Models\Quote;
 use App\Models\Product;
 use App\Models\Project;
+use App\Models\Country;
 use App\Models\Job_type;
 use App\Models\Work_flow;
 use App\Models\Quote_type;
@@ -24,11 +25,9 @@ use App\Models\Construction_job_appointment;
 use App\Models\Construction_jobassign_product;
 use App\Models\Construction_job_appointment_type;
 use DB,Auth,Session,Validator;
-use App\traits\CountryTrait;
 
 class JobController extends Controller
 {
-    use CountryTrait;
     public function index(){
         $data['header_title']="Active Jobs";
         $data['job_type']=Job_type::where('status',1)->get();
@@ -69,8 +68,8 @@ class JobController extends Controller
         $data['appointment_type']=Construction_job_appointment_type::where('home_id',$home_id)->get();
         $data['home_id']=$home_id;
         $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
-        // $data['work_flows']=Work_flow::where(['home_id'=>1,'job_type_id'=>1,'status'=>1])->get();
-        // echo "<pre>";print_r($data['access_rights']);die;
+
+        // echo "<pre>";print_r($data['workflow']);die;
         return view('frontEnd.jobs.job_type',$data);
     }
     
@@ -117,7 +116,16 @@ class JobController extends Controller
         return response()->json($data);
     }
     public function workflow_save_data(Request $request){
-        // echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());
+        $ex=explode(',',$request->delete_ids_array);
+        // print_r(count($ex));die;
+        if($request->delete_ids_array !='' && count($ex) > 0 && count($request->appointment_id) > 0){
+            echo 111;die;
+        } else if(count($ex) > 0) {
+            echo 222;die;
+        } else {
+            echo 333;die;
+        }
         $data=Work_flow::work_flow_save($request->all());
         return $data;
 
@@ -132,7 +140,8 @@ class JobController extends Controller
         $html='';
         foreach($data as $val){
             $html .='<tr>
-                <input type="hidden" value="'.$val->id.'" name="row_count">
+                <input type="hidden" value="'.$val->id.'" name="row_count" id="row_count">
+                
                 <td></td>
                 <td>
                     <select class="form-select" name="appointment_id[]" multiselect-search="false" multiselect-select-all="true" multiselect-max-items="4" multiple="multiple">';
@@ -147,10 +156,10 @@ class JobController extends Controller
                     $html .='</select>
                 </td>
                 <td>
-                    <a href="javascript:" class="text-primary" onclick="set_rules('.$request->id.','.$val->id.')">Set Rule</a>
+                    <a href="javascript:void(0)" class="text-primary" onclick="set_rules('.$request->id.','.$val->id.')">Set Rule</a>
                 </td>
                 <td>
-                    <a href="javascript:" class="text-danger delete-row">X</a>
+                    <a href="javascript:void(0)" class="text-danger delete-row">X</a>
                 </td>
                 </tr>';
         }
@@ -219,7 +228,8 @@ class JobController extends Controller
         $data['job_details']=Job::find($key);
         $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1])->get();
         $data['job_type']=Job_type::where('status',1)->get();
-        $data['country']=$this->all_country_trait();
+        $data['country']=Country::all_country_list();
+        // echo "<pre>";print_r($data['country']);die;
         $home_id = Auth::user()->home_id;
         $user_id=Auth::user()->id;
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')

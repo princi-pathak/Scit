@@ -20,6 +20,7 @@ use App\Models\LeadTaskType;
 use App\Models\LeadNoteType;
 use App\Models\LeadNote;
 use App\Models\CRMSectionType;
+use App\Models\Country;
 
 class LeadController extends Controller
 {
@@ -427,12 +428,11 @@ class LeadController extends Controller
         }
     }
 
-       // CRM Section Type
-       public function CRM_section_type(){
+    // CRM Section Type
+    public function CRM_section_type(){
         $page = "crm_section_type";
         $crm_sections = CRMSectionType::getCRMSectionTypes();
         return view('frontEnd.salesAndFinance.lead.CRM_section_type', compact('page', 'crm_sections'));
-
     }
 
     public function saveCRMSectionType(Request $request){
@@ -458,6 +458,24 @@ class LeadController extends Controller
             return redirect()->route('lead.crm_section')->with('success', "Record deleted successfully");
         } else {
             return redirect()->route('lead.crm_section')->with('error', "Record not found");
+        }
+    }
+
+    public function get_CRM_section_types(){
+        $data = CRMSectionType::getCRMTypeFromHomeId(Auth::user()->home_id);
+        if($data){
+            return response()->json(['success' => true, 'Data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'Data' => 'No Data']);
+        }
+    }
+
+    public function getCountriesList(){
+        $data = Country::getCountriesNameCode();
+        if($data){
+            return response()->json(['success' => true, 'Data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'Data' => 'No Data']);
         }
     }
 }
