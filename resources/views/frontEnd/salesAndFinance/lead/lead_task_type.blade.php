@@ -1,5 +1,13 @@
 @include('frontEnd.jobs.layout.header')
 
+<style>
+.add_Customer .modal-header.terques-bg button {
+    border: navajowhite;
+    background: transparent;
+}
+
+
+</style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
         <div class="row">
@@ -82,34 +90,36 @@
   <!-- popup start -->
   <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="taskTypeModel" class="modal fade">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content add_Customer">
             <div class="modal-header terques-bg">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                <h4 class="modal-title pupTitle">Lead Task Type - Add</h4>
+                <button aria-hidden="true" data-bs-dismiss="modal" class="close" type="button">×</button>
+                <h5 class="modal-title pupTitle">Lead Task Type - Add</h5>
             </div>
             <div class="modal-body">
                 <form action="" id="lead_task_type_form">
                     @csrf
                     <div><span id="error-message" class="error"></span></div>
-                    <div class="form-group">
-                        <label class="col-lg-3 col-sm-3 control-label">Task Type</label>
-                        <div class="col-md-9">
-                        <input type="hidden" name="lead_task_type_id" id="lead_task_type_id">
-                            <input type="text" name="title" class="form-control editInput " placeholder="Task Type" id="title">
+                    <div class="row form-group">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Task Type</label>
+                        <div class="col-lg-9 col-sm-9">
+                            <input type="hidden" name="lead_task_type_id" id="lead_task_type_id">
+                            <input type="text" name="title" class="form-control editInput" placeholder="Task Type" id="title">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 col-sm-3 ">Status</label>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label ">Status</label>
+                        <div class="col-lg-9 col-sm-9">
                         <select name="status" id="status" class="form-control editInput">
                             <option value="1">Active</option>
                             <option value="0">InActive</option>
                         </select>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveChanges">Save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="profileDrop" id="saveChanges">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -146,7 +156,7 @@
             var formData = $('#lead_task_type_form').serialize();
 
             $.ajax({
-                url: '{{ route("leads.ajax.saveLeadTaskType") }}',
+                url: '{{ route("lead.ajax.saveLeadTaskType") }}',
                 method: 'POST',
                 data: formData,
                 success: function(response) {
