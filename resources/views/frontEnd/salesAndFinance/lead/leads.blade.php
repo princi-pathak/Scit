@@ -3,7 +3,6 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
 <style>
     .CRMFullModel .modal-dialog.modal-xl {
         --bs-modal-width: 1750px;
@@ -39,7 +38,6 @@
         z-index: 99999;
         transition: opacity 0.3s ease;
     }
-  
     
 </style>
 <section class="main_section_page px-3">
@@ -154,9 +152,8 @@
                                                 <a href="#" class="dropdown-item">Send SMS</a>
                                                 <hr class="dropdown-divider">
                                                 <!-- <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CRMHistoryModal">CRM History</a> -->
-                                                <a href="#" id="set_value_on_CRM_model" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#customerPop">CRM History</a>
-
-                                                <a href="#" class="dropdown-item open-modal" data-lead_ref="{{ $customer->lead_ref }}" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
+                                                <a href="#" class="dropdown-item set_value_on_CRM_model" data-user-id="{{ $customer->id }}" data-ref="{{ $customer->lead_ref }}" data-contact-name= "{{ $customer->contact_name }}" data-email="{{ $customer->email }}" data-name="{{ $customer->name }}" data-status="{{ $customer->status }}"   data-telephone="{{ $customer->telephone }}"  class="dropdown-item" >CRM History</a>
+                                                <a href="#" class="dropdown-item open-modal" data-lead_ref="{{ $customer->lead_ref }}"  data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
                                                 <a href="{{ url('/leads/authorization').'/'.$customer->id }}" class="dropdown-item">Send for Authorization</a>
                                                 <a href="#" class="dropdown-item">Send to Quote</a>
                                                 <a href="#" class="dropdown-item">Send to Job</a>
@@ -201,8 +198,7 @@
                                                         <div class="mb-3">
                                                             <label for="message-text" class="col-form-label">Reject Reason:</label>
                                                             <textarea name="reject_reason" class="form-control editInput" id=""></textarea>
-                                                            <!-- <textarea class="form-control" id="message-text"></textarea> -->
-                                                        </div>
+                                                         </div>
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
@@ -244,7 +240,6 @@
                                         </div>
                                     </div>
                                     <!--  **************** Reject Model End *****************  -->
-
                                 </td>
                             </tr>
                             @endforeach
@@ -563,10 +558,6 @@
                                                             </div>
                                                             <div class="col-6">
                                                                 <form>
-
-
-
-
                                                                     <!--  -->
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notify ? </label>
@@ -596,13 +587,14 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" class="form-control editInput" id="related_To" value="{{ $customer->lead_ref }}">
+                                                                            <span class="editInput" id="related_To"></span>
+                                                                            <!-- <input type="text" class="form-control editInput" id="related_To" value="{{ $customer->lead_ref }}"> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
                                                                         <div class="col-sm-8">
-                                                                            <textarea name="" class="form-control" rows="2" id=""></textarea>
+                                                                            <textarea name="" class="form-control textareaInput" rows="5" id=""></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -628,14 +620,18 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Timer</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" class="form-control" id="staticEmail" value="">
+                                                                            <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
+                                                                            <span id="timerDisplay">00:00:00</span>
+
+                                                                            <!-- <input type="text" class="form-control" id="staticEmail" value=""> -->
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="mb-3 row">
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" class="form-control editInput" id="related_To" value="{{ $customer->lead_ref }}">
+                                                                            <span class="editInput" id="relatedTo"></span>
+                                                                            <!-- <input type="text" class="form-control editInput" id="relatedTo" value="{{ $customer->lead_ref }}"> -->
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -659,7 +655,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
                                                                         <div class="col-sm-8">
-                                                                            <textarea name="" class="form-control" id=""></textarea>
+                                                                            <textarea rows="5" name="" class="form-control textareaInput" id=""></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -681,31 +677,32 @@
                                 <!-- Third Modal -->
                                 <div class="modal fade" id="thirdModal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <div class="modal-content ">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="thirdModalLabel">Add Task Type</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="">
+                                                <form action="" id="lead_task_type_form">
                                                     <div class="mb-3 row">
-                                                        <label for="inputJobRef" class="col-sm-3 col-form-label">Website</label>
+                                                        <label for="inputJobRef" class="col-sm-3 col-form-label">Task Type <span class="red-text">*</span></label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" name="website" class="form-control editInput" id="inputJobRef" value="{{ (isset($lead->website)) ? $lead->website : '' }}" placeholder="Website">
+                                                            <input type="text" name="title" class="form-control editInput" id="inputJobRef" value="" placeholder="Task Type">
                                                         </div>
                                                     </div>
                                                     <div class="mb-3 row">
-                                                        <label for="inputJobRef" class="col-sm-3 col-form-label">Website</label>
+                                                        <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" name="website" class="form-control editInput" id="inputJobRef" value="{{ (isset($lead->website)) ? $lead->website : '' }}" placeholder="Website">
+                                                            <select id="status" name="status" class="form-control editInput">
+                                                                <option value="1">Active</option>
+                                                                <option value="0">Inactive</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="pageTitleBtn">
-                                                        <a href="#" class="profileDrop p-2 crmNewBtn"> Save</a>
-                                                        <!-- <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a> -->
+                                                        <a href="#" class="profileDrop p-2 crmNewBtn" id="saveTaskType"> Save</a>
                                                         <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                                     </div>
-
                                                 </form>
                                             </div>
                                         </div>
@@ -713,7 +710,6 @@
                                 </div>
 
                                 <!--Start Region Popup -->
-
                                 <div id="openPopupButton3" class="popup2">
                                     <div class="popup-content">
                                         <div class="popupTitle">
@@ -1116,24 +1112,58 @@
             }
         });
 
-        
-        // Sets the lead values in the Calls Modals 
-        const anchor = document.getElementById('set_value_on_CRM_model');
-        anchor.addEventListener('click', function(event) {
-            console.log("working or not");
-            var itemId = $(this).data('id');
-            console.log(itemId);
-            // // document.getElementById('calls_contact_name').value = $(this).data('id');  
-            // document.getElementById('calls_lead_ref').textContent  = $(this).data('lead_ref');  
-            // document.getElementById('calls_contact_name').textContent  = $(this).data('contact_name');  
-            // document.getElementById('calls_status').textContent  = $(this).data('status');  
-            // document.getElementById('calls_lead_refs').textContent  = $(this).data('lead_ref');  
-            // document.getElementById('calls_telephone').textContent  = $(this).data('telephone');  
-            // document.getElementById('calls_email').textContent  = $(this).data('email');  
+        let timerInterval;
+        let elapsedSeconds = 0;
+        let isRunning = false;
 
+        function toggleTimer() {
+            if (isRunning) {
+                // Pause the timer
+                clearInterval(timerInterval);
+                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-play"></i> Start';
+            } else {
+                // Start the timer
+                timerInterval = setInterval(function() {
+                    elapsedSeconds++;
+                    document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+                }, 1000);
+                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
+            }
+            isRunning = !isRunning; // Toggle the running state
+        }
+
+        function formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+        }
+
+        function pad(number) {
+            return number < 10 ? '0' + number : number;
+        }
+
+        document.getElementById('toggleTimerBtn').addEventListener('click', toggleTimer);
+
+
+        document.querySelectorAll('.set_value_on_CRM_model').forEach(function(anchor) {
+            anchor.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Get the user ID from the data-user-id attribute of the anchor tag
+                var userId = anchor.getAttribute('data-user-id');
+                document.getElementById('calls_contact_name').textContent = anchor.getAttribute('data-contact-name');  
+                document.getElementById('calls_lead_ref').textContent  =  anchor.getAttribute('data-ref');  
+                document.getElementById('calls_lead_refs').textContent  =  anchor.getAttribute('data-ref');  
+                document.getElementById('calls_status').textContent  =  anchor.getAttribute('data-status');  
+                document.getElementById('calls_telephone').textContent  =  anchor.getAttribute('data-telephone');  
+                document.getElementById('calls_email').textContent  = anchor.getAttribute('data-email');  
+                document.getElementById('related_To').textContent  =  anchor.getAttribute('data-ref');  
+                document.getElementById('relatedTo').textContent  =  anchor.getAttribute('data-ref');  
+                
+                // Open the modal
+                $('#customerPop').modal('show');
+            });
         });
-
-
 
         // Ajax Call for saving CRM section Type
         $('#saveCRMTypes').on('click', function() {
@@ -1189,6 +1219,24 @@
                         option.text = "+"+" "+user.code+" - "+" "+user.name;
                         selectElement.appendChild(option);
                     });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        // Add Task Type
+        $('#saveTaskType').on('click', function() {
+            var formData = $('#lead_task_type_form').serialize();
+
+            $.ajax({
+                url: '{{ route("lead.ajax.saveLeadTaskType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#thirdModal').modal('hide');
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -1255,7 +1303,7 @@
         mainCheckbox.addEventListener('change', function() {
             if (mainCheckbox.checked) {
                 optionsDiv.style.display = 'block';
-            } else {
+            } else {    
                 optionsDiv.style.display = 'none';
             }
         });
