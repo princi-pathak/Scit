@@ -5,7 +5,7 @@
 
 <style>
     .CRMFullModel .modal-dialog.modal-xl {
-        --bs-modal-width: 1750px;
+        --bs-modal-width: 1600px;
     }
 
     .overdue {
@@ -393,7 +393,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="productDetailTable">
-                                        <table class="table">
+                                        <table class="table" id="crmCallData">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Date</th>
@@ -401,19 +401,13 @@
                                                     <th>Contact</th>
                                                     <th>Type</th>
                                                     <th>Note(s)</th>
-                                                    <th>Status</th>
                                                     <th>Customer Visible</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="7">.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
+                                                 
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -428,7 +422,7 @@
                             <div class="row">
                                 <div class="col-sm-1">
                                     <div class="jobsection  mt-3">
-                                        <a href="#" class="profileDrop p-2 crmNewBtn"> New</a>
+                                        <a href="#" class="profileDrop p-2 crmNewBtn" id="openNewEmail"> New</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -563,7 +557,7 @@
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notify ? </label>
                                                                         <div class="col-sm-8">
                                                                             <div class="form-check form-check-inline">
-                                                                                <input class="form-check-input" type="checkbox" name="inlinecheckOptions" id="checkalrt" value="option1" required="">
+                                                                                <input class="form-check-input" type="checkbox" name="inlinecheckOptions" id="yeson" value="option1" required="">
                                                                                 <label class="form-check-label checkboxtext" for="checkalrt">Yes, On</label>
                                                                             </div>
                                                                             <!-- <input type="checkbox" class="editInput" id="yeson">
@@ -710,7 +704,7 @@
                                 </div>
 
                                 <!--Start Region Popup -->
-                                <div id="openPopupButton3" class="popup2">
+                                <!-- <div id="openPopupButton3" class="popup2">
                                     <div class="popup-content">
                                         <div class="popupTitle">
                                             <span class="">Add
@@ -746,11 +740,9 @@
                                             <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                         </div>
                                     </div>
-                                </div>
-
+                                </div> -->
                                 <!--Start Region Popup -->
-
-                                <div id="popup" class="popup">
+                                <!-- <div id="popup" class="popup">
                                     <div class="popup-content">
                                         <div class="popupTitle">
                                             <span class="">Add
@@ -788,9 +780,10 @@
                                         </div>
                                     </div>
 
-                                </div>
-
+                                </div> -->
                                 <!-- End off region Popup -->
+
+
                                 <!-- ****************************** -->
                                 <div class="col-sm-3">
                                     <form class="searchForm" action="">
@@ -943,7 +936,7 @@
                             </div>
                         </div>
                     </div>
-                </div> <!--   -->
+                </div> 
 
             </div> <!-- End off model body  -->
             <div class="modal-footer customer_Form_Popup">
@@ -959,42 +952,37 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <!-- <h1 class="modal-title fs-5" id="callsModalLabel">Calls </h1> -->
                 <h5 class="modal-title" id="customerModalLabel">Calls</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeCallsModels"></button>
             </div>
             <div class="modal-body">
-                <form action="" class="customerForm" id="calls-form">
+                <form action="" class="customerForm" id="CRM_calls_form">
                     <div class="mb-2 row">
+                        <input type="hidden" name="crm_lead_calls_id" id="crm_lead_calls_id">
                         <label for="calls_telephone" class="col-sm-3 col-form-label">Direction </label>
                         <div class="col-sm-9">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="direction_radio1">
-                            <label class="form-check-label editInput" for="direction_radio1">
-                                Call Out
-                            </label>
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="direction_radio2">
-                            <label class="form-check-label editInput" for="direction_radio2">
-                                Call In
-                            </label>
+                            <input class="form-check-input" type="radio" name="direction" id="direction_radio1" value="0" checked>
+                            <label class="form-check-label editInput" for="direction_radio1"> Call Out </label>
+                            <input class="form-check-input" type="radio" name="direction" id="direction_radio2" value="1">
+                            <label class="form-check-label editInput" for="direction_radio2"> Call In </label>
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="calls_telephone" class="col-sm-3 col-form-label">Telephone </label>
                         <div class="col-sm-2">
-                            <select class="form-control editInput selectOptions" required="" id="countries">
-                                <option>+444</option>
-                                <option>+91</option>
+                            <select class="form-control editInput selectOptions" required="" name="country_code" id="countries">
+                                <option value="">Select</option>
                             </select>
                         </div>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control editInput" id="calls_telephone" name="telephone" placeholder="Telephone" value="">
+                            <input type="text" class="form-control editInput" id="calls_telephone" name="telephone" placeholder="Telephone">
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                         <div class="col-sm-7">
-                            <select name="type" class="form-control editInput" id="calls_type">
-                                <option value=""></option>
+                            <select name="crm_type_id" class="form-control editInput" id="calls_type">
+                                <option value="">Select</option>
                             </select>
                         </div>
                         <div class="col-sm-2">
@@ -1012,52 +1000,53 @@
                     <div class="mb-2 row">
                         <label for="calls_lead_ref" class="col-sm-3 col-form-label">Related To </label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control editInput" name="lead_ref" id="calls_lead_ref" value="">
+                            <span class="editInput" id="call_lead_ref"></span>
+                            <input type="hidden" name="lead_ref" id="call_lead_ref_data">
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
                         <div class="col-sm-9">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="notify_radio1">
-                            <label class="form-check-label editInput" for="flexRadioDefault1"> Yes </label>
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="notify_radio2">
-                            <label class="form-check-label editInput" for="flexRadioDefault2"> No </label>
+                            <input class="form-check-input notify_radio2" type="radio" name="notify_radio" id="notify_radio2" value="0" checked>
+                            <label class="form-check-label editInput" for="notify_radio1"> No </label>
+                            <input class="form-check-input notify_radio1" type="radio" name="notify_radio" id="notify_radio1" value="1">
+                            <label class="form-check-label editInput" for="notify_radio2"> Yes </label>
                         </div>
                     </div>
-                    <div id="notification_div">
+                    <div class="notification_div">
                         <div class="mb-2 row">
-                            <label for="calls_notify_who" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
                             <div class="col-sm-9">
-                                <select name="" class="form-control editInput" id="">
+                                <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
                                     @foreach($users as $value)
-                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option> 
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="calls_notify_who" class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
                             <div class="col-sm-9">
-                                <label for="" class="editInput"> <input type="checkbox" class="" name="user" id="calls_notify_who" value=""> Notification (User Only) </label>
-                                <label for="" class="editInput"> <input type="checkbox" class="" name="user" id="calls_notify_who" value=""> SMS </label>
-                                <label for="" class="editInput"> <input type="checkbox" class="" name="user" id="calls_notify_who" value=""> Email </label>
+                                <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
+                                <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
+                                <label for="calls_notify_who3" class="editInput"><input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email </label>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
                         <div class="col-sm-9">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault1" value="0" checked>
                             <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault2" value="1">
                             <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="profileDrop">Save</button>
+                <button type="button" class="profileDrop" id="saveCRMCallsModelData">Save</button>
                 <button type="button" class="profileDrop" id="closeCallsModels" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
@@ -1101,7 +1090,112 @@
 </div>
 <!-- CRM Types Modal End -->
 
+
+<!-- CRM Add Email Modal Start -->
+<div class="modal fade" id="NewEmailModel" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content add_Customer">
+      <div class="modal-header">
+        <h5 class="modal-title" id="emailModalLabel">Email</h5>
+        <button type="button" class="close" data-dismiss="modal" id="closeCrmModalBtn" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" id="crm_section_type_form">
+            <div class="mb-2 row">
+                <label for="type_title" class="col-sm-3 col-form-label">To <span class="red-text">*</span> </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control editInput" name="title" id="type_title" value="">
+                    <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <label for="type_title" class="col-sm-3 col-form-label">Cc </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control editInput" name="title" id="type_title" value="">
+                    <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <label for="type_title" class="col-sm-3 col-form-label">Subject <span class="red-text">*</span> </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control editInput" name="title" id="type_title" value="">
+                    <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <label for="type_title" class="col-sm-3 col-form-label">Message <span class="red-text">*</span> </label>
+                <div class="col-sm-9">
+                    <textarea name="" id=""></textarea>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <label for="type_title" class="col-sm-3 col-form-label">Attachment <span class="red-text">*</span> </label>
+                <div class="col-sm-9">
+                    <input type="file" class="editInput" name="" id="">
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <label for="type_title" class="col-sm-3 col-form-label">Related To <span class="red-text">*</span> </label>
+                <div class="col-sm-9">
+                    <span class="editInput">Lead Ref</span>
+                </div>
+            </div>
+            <!-- <div class="mb-2 row">
+                <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                <div class="col-sm-9">
+                    <input class="form-check-input notify_radio2" type="radio" name="notify_radio" id="notify_radio2" value="0" checked>
+                    <label class="form-check-label editInput" for="notify_radio1"> No </label>
+                    <input class="form-check-input notify_radio1" type="radio" name="notify_radio" id="notify_radio1" value="1">
+                    <label class="form-check-label editInput" for="notify_radio2"> Yes </label>
+                </div>
+            </div> -->
+            <!-- <div class="notification_div">
+                <div class="mb-2 row">
+                    <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                    <div class="col-sm-9">
+                        <select name="notify_user" class="form-control editInput" id="user_notifiy">
+                            <option value=""></option>
+                            @foreach($users as $value)
+                            <option value="{{ $value->id }}">{{ $value->name }}</option> 
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                    <div class="col-sm-9">
+                        <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
+                        <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
+                        <label for="calls_notify_who3" class="editInput"><input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email </label>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
+                <div class="col-sm-9">
+                    <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault1" value="0" checked>
+                    <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
+                    <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault2" value="1">
+                    <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
+                </div>
+            </div> -->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="profileDrop" id="">Close</button>
+        <button type="button" class="profileDrop" id="saveCRMTypes">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CRM Add Email Modal End -->
+
 <!-- ****************End CRM History Modal ****************-->
+ <!-- Moment js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
 <script>
 
     $(document).ready(function() {
@@ -1112,6 +1206,7 @@
             }
         });
 
+        // start here js for time start and pause
         let timerInterval;
         let elapsedSeconds = 0;
         let isRunning = false;
@@ -1144,7 +1239,81 @@
         }
 
         document.getElementById('toggleTimerBtn').addEventListener('click', toggleTimer);
+        // End js for time start and end
 
+
+        // set the value in cals history table data js Start here
+        document.getElementById('pills-Calls-tab').addEventListener('click', function(){
+            var lead_ref = document.getElementById('calls_lead_refs').textContent;
+            console.log("lead_ref ", lead_ref);
+            $.ajax({
+                url: '{{ route("lead.ajax.getCRMCallsData") }}',
+                method: 'POST',
+                data: {lead_ref: lead_ref},
+                success: function(response) {
+                    console.log(response.data);
+
+                    // Get the table body element
+                    const tableBody = document.querySelector('#crmCallData tbody'); 
+                    tableBody.innerHTML = '';
+
+                    // Function to populate the table
+                    function populateTable(data) {
+                        data.forEach(item => {
+                            // Create a new row
+                            const row = document.createElement('tr');
+
+                            const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+
+                            // Create cells and append them to the row
+                            const dateCell = document.createElement('td');
+                            dateCell.textContent = date;
+                            row.appendChild(dateCell);
+
+                            const nameCell = document.createElement('td');
+                            nameCell.textContent = item.user_id;
+                            row.appendChild(nameCell);
+
+                            const phoneCell = document.createElement('td');
+                            phoneCell.textContent = item.telephone;
+                            row.appendChild(phoneCell);
+
+                            const typeCell = document.createElement('td');
+                            typeCell.textContent = item.title;
+                            row.appendChild(typeCell);
+
+                            const notesCell = document.createElement('td');
+                            notesCell.innerHTML = 'Call Logged from '+lead_ref+'<br> <strong>Notes: </strong> '+item.notes;
+                               
+                            row.appendChild(notesCell);
+
+                            const visibilityCell = document.createElement('td');
+                            if(item.customer_visibility == 0){
+                                visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+                            } else if(item.customer_visibility == 1){
+                                visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+                            }
+                            row.appendChild(visibilityCell);
+
+                            const idCell = document.createElement('td');
+                            idCell.innerHTML = '<i class="fa fa-phone"></i>'+" "+'<i class="fa fa-envelope"></i>'+" "+'<i class="fa fa-list-ul"></i>'+" "+'<i class="fa fa-file"></i>'+" "+'<i class="fa fa-exclamation-triangle"></i>';
+                            row.appendChild(idCell);
+
+                            // Append the row to the table body
+                            tableBody.appendChild(row);
+                        });
+                    }
+
+                    // Call the function to populate the table with the data array
+                    populateTable(response.data);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+        });
+        // set the value in cals history table data js End here
 
         document.querySelectorAll('.set_value_on_CRM_model').forEach(function(anchor) {
             anchor.addEventListener('click', function(event) {
@@ -1159,6 +1328,9 @@
                 document.getElementById('calls_email').textContent  = anchor.getAttribute('data-email');  
                 document.getElementById('related_To').textContent  =  anchor.getAttribute('data-ref');  
                 document.getElementById('relatedTo').textContent  =  anchor.getAttribute('data-ref');  
+                document.getElementById('call_lead_ref').textContent  =  anchor.getAttribute('data-ref');  
+                document.getElementById('call_lead_ref_data').value  =  anchor.getAttribute('data-ref');  
+
                 
                 // Open the modal
                 $('#customerPop').modal('show');
@@ -1226,7 +1398,7 @@
             });
         });
 
-        // Add Task Type
+        // Ajax for Add Task Type
         $('#saveTaskType').on('click', function() {
             var formData = $('#lead_task_type_form').serialize();
 
@@ -1242,75 +1414,6 @@
                     console.error(error);
                 }
             });
-        });
-
-        const openCallsModel = document.getElementById('openCallsModel');
-        const callsModel = document.getElementById('callsModal');
-        const closeCallsModel = document.getElementById('closeCallsModels');
-
-        // When the user clicks the button, open the modal 
-        openCallsModel.onclick = function() {
-            $('#callsModal').modal('show');
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        closeCallsModel.onclick = function() {
-            $('#callsModal').modal('hide');
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target === callsModel) {
-                $('#callsModal').modal('hide');
-                $('#crmTypeModel').modal('hide');
-            }
-        }
-
-        // const modal = document.getElementById('crmTypeModel');
-        const openModalBtn = document.getElementById('openCrmTypeModel');
-        const closeModalBtn = document.getElementById('closeCrmModalBtn');
-
-        // When the user clicks the button, open the modal 
-        openModalBtn.onclick = function() {
-            $('#crmTypeModel').modal('show');
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        closeModalBtn.onclick = function() {
-            $('#crmTypeModel').modal('hide');
-        }
-
-        notification_div.style.display = 'none';
-
-        const mainCheckbox = document.getElementById('yeson');
-        const optionsDiv = document.getElementById('optionsDiv');
-        // Open the second modal without hiding the first one
-        $('#openSecondModal').on('click', function() {
-            optionsDiv.style.display = 'none';
-            $('#secondModal').modal('show');
-        });
-
-        // Open the third modal without hiding the first and second ones
-        $('#openThirdModal').on('click', function() {
-            $('#thirdModal').modal('show');
-
-        });
-        $('#openThirdModal2').on('click', function() {
-            $('#thirdModal').modal('show');
-
-        });
-
-        mainCheckbox.addEventListener('change', function() {
-            if (mainCheckbox.checked) {
-                optionsDiv.style.display = 'block';
-            } else {    
-                optionsDiv.style.display = 'none';
-            }
-        });
-
-        $('.open-modal').on('click', function() {
-            var lead_ref = $(this).data('lead_ref');
-            $('#lead_ref').val(lead_ref);
         });
 
         // Ajax Call for adding lead Reject Type
@@ -1349,22 +1452,97 @@
                 }
             });
         });
+
+        // js start here for calls model open and close
+        const openCallsModel = document.getElementById('openCallsModel');
+        const callsModel = document.getElementById('callsModal');
+        const closeCallsModel = document.getElementById('closeCallsModels');
+
+        // When the user clicks the button, open the modal 
+        openCallsModel.onclick = function() {
+            $('#callsModal').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeCallsModel.onclick = function() {
+            $('#callsModal').modal('hide');
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target === callsModel) {
+                $('#callsModal').modal('hide');
+            }
+        }
+        // js End here for calls model open and close
+
+        // Js Start for CRM Section Type model show
+        const openModalBtn = document.getElementById('openCrmTypeModel');
+        const crmTypeModel = document.getElementById('crmTypeModel');
+        const closeModalBtn = document.getElementById('closeCrmModalBtn');
+
+        // When the user clicks the button, open the modal 
+        openModalBtn.onclick = function() {
+            $('#crmTypeModel').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeModalBtn.onclick = function() {
+            $('#crmTypeModel').modal('hide');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === crmTypeModel) {
+                $('#crmTypeModel').modal('hide');
+            }
+        }
+        // Js End for CRM Section Type model show
+
+
+        notification_div.style.display = 'none';
+
+        const mainCheckbox = document.getElementById('yeson');
+        const optionsDiv = document.getElementById('optionsDiv');
+        // Open the second modal without hiding the first one
+        $('#openSecondModal').on('click', function() {
+            optionsDiv.style.display = 'none';
+            $('#secondModal').modal('show');
+        });
+
+        // Open the third modal without hiding the first and second ones
+        $('#openThirdModal').on('click', function() {
+            $('#thirdModal').modal('show');
+
+        });
+        $('#openThirdModal2').on('click', function() {
+            $('#thirdModal').modal('show');
+
+        });
+
+        mainCheckbox.addEventListener('change', function() {
+            if (mainCheckbox.checked) {
+                optionsDiv.style.display = 'block';
+            } else {    
+                optionsDiv.style.display = 'none';
+            }
+        });
+
+        $('.open-modal').on('click', function() {
+            var lead_ref = $(this).data('lead_ref');
+            $('#lead_ref').val(lead_ref);
+        });
+
+        $('#openNewEmail').on('click', function() {
+            $('#NewEmailModel').modal('show');  
+        });
+
     });
     
-    const notify_radio1 = document.getElementById('notify_radio1');
-    const notify_radio2 = document.getElementById('notify_radio2');
-    const notification_div = document.getElementById('notification_div');
-    
-    const openPopupButton2 = document.getElementById('openPopupButton2');
-    const popup2 = document.getElementById('popup2');
-    const closePopup2 = document.getElementById('closePopup');
+    // notification Div hide show on radio button js start
+    const notify_radio1 = document.getElementsByClassName('notify_radio1');
+    const notify_radio2 = document.getElementsByClassName('notify_radio2');
+    const notification_div = document.getElementsByClassName('notification_div');
 
-    const openPopupButton = document.getElementById('openPopupButton');
-    const popup = document.getElementById('popup');
-    const closePopup = document.getElementById('closePopup');
-
-
-    // Add event listeners to the radio buttons
     notify_radio1.addEventListener('change', function() {
         if (notify_radio1.checked) {
             notification_div.style.display = 'block';
@@ -1376,6 +1554,20 @@
             notification_div.style.display = 'none';
         }
     });
+    // notification Div hide show on radio button js End
+
+    
+    const openPopupButton2 = document.getElementById('openPopupButton2');
+    const popup2 = document.getElementById('popup2');
+    const closePopup2 = document.getElementById('closePopup');
+
+    const openPopupButton = document.getElementById('openPopupButton');
+    const popup = document.getElementById('popup');
+    const closePopup = document.getElementById('closePopup');
+
+
+    // Add event listeners to the radio buttons
+  
 
     openPopupButton2.addEventListener('click', () => {
         popup2.style.display = 'block';
@@ -1405,6 +1597,7 @@
         }, 300); // Ensure the popup is hidden after the transition ends
     });
 
+    
 </script>
 
 <!-- Script For adding CK editor start -->
@@ -1438,10 +1631,27 @@
         })
         .then(editor => {
             window.editor = editor;
-            // When the form is submitted, copy the CKEditor content to the hidden textarea
-            // document.querySelector('form').addEventListener('submit', function() {
-            //     document.getElementById('editor-hidden').value = editor.getData();
-            // });
+            // Add a click event listener to the save button
+            document.getElementById('saveCRMCallsModelData').addEventListener('click', function() {
+
+                // Get the CKEditor content
+                document.getElementById('calls_notes').value = editor.getData();
+                console.log(document.getElementById('calls_notes').value);
+                var formData = $('#CRM_calls_form').serialize();
+
+                $.ajax({
+                    url: '{{ route("lead.ajax.saveCRMLeadData") }}',
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        alert(response.message);
+                        $('#callsModal').modal('hide');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
         })
         .catch(error => {
             console.error(error);
