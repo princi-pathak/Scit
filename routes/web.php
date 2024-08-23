@@ -319,6 +319,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		// Countries List
 		Route::get('lead/getCountriesList', 'getCountriesList')->name('ajax.getCountriesList');
 
+		// Lead CRM 
+		Route::post('lead/saveCRMLeadData', 'saveCRMLeadData')->name('lead.ajax.saveCRMLeadData');
+		Route::post('lead/getCRMCallsData', 'getCRMCallsData')->name('lead.ajax.getCRMCallsData');
+		
+
+		
 	});
 
 
