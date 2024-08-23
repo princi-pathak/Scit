@@ -188,7 +188,7 @@ h6 {
 /* **************End off Header************* */
 .profileDrop {
   background: #0877bd;
-  padding: 6px 10px;
+  padding: 6px 16px;
   border-radius: 4px;
   color: #fff;
   font-size: 13px;
@@ -204,7 +204,7 @@ h6 {
 }
 button.profileDrop{
   background: #0877bd;
-  padding: 6px 10px;
+  padding: 6px 20px;
   border-radius: 4px;
   color: #fff;
   font-size: 13px;
@@ -1682,4 +1682,9 @@ a.crmNewBtn{
 }
 .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
   height: 200px; /* Set your desired height */
+}
+.add_Customer .modal-header.terques-bg button {
+  border: navajowhite;
+  background: transparent;
+  color: #fff;
 }
