@@ -21,6 +21,7 @@ use App\Models\LeadNoteType;
 use App\Models\LeadNote;
 use App\Models\CRMSectionType;
 use App\Models\Country;
+use App\Models\CRMLeadCalls;
 
 class LeadController extends Controller
 {
@@ -476,6 +477,72 @@ class LeadController extends Controller
             return response()->json(['success' => true, 'Data' => $data]);
         } else {
             return response()->json(['success' => false, 'Data' => 'No Data']);
+        }
+    }
+
+    public function saveCRMLeadData(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_ref' => 'required',
+            'crm_type_id' => 'required',
+            'content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        if($request->notify_radio == 1){
+            $validator = Validator::make($request->all(), [
+                'notify_user' => 'required'
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+
+        if(!isset($notification) || !isset($sms) || !isset($email)){
+            $notification = $sms = $email = null;
+        }
+
+
+        $attributes = ['id' => $request->crm_lead_calls_id]; // Assuming each user has their own notification settings
+
+
+        // Data to update or create
+        $values = [
+            'home_id' => Auth::user()->home_id,
+            'lead_id' => $request->lead_ref,
+            'direction' => $request->direction,
+            'telephone' => "+".$request->country_code."-".$request->telephone,
+            'crm_type_id' => $request->crm_type_id,
+            'notes' => $request->content,
+            'notify' => $request->notify_radio,
+            'user_id' => $request->notify_user,
+            'notification' => $notification,
+            'sms' => $sms,
+            'email' => $email,
+            'customer_visibility' => $request->customer_visible
+        ];
+
+        // Update the record if it exists, otherwise create a new one
+        CRMLeadCalls::updateOrCreate($attributes, $values);
+
+        if (isset($request->crm_lead_calls_id)) {
+            return response()->json(['message' => 'Record updated successfully!']);
+        } else {
+            return response()->json(['message' => 'CRM Lead Calls added successfully!']);
+        }
+    }
+
+    public function getCRMCallsData(Request $request){
+        $data = CRMLeadCalls::getCRMLeadCallsData($request->lead_ref, Auth::user()->home_id);
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'ata' => 'No Data']);
         }
     }
 }
