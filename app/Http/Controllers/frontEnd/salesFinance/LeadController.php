@@ -22,6 +22,7 @@ use App\Models\LeadNote;
 use App\Models\CRMSectionType;
 use App\Models\Country;
 use App\Models\CRMLeadCalls;
+use App\Models\CRMLeadEmail;
 
 class LeadController extends Controller
 {
@@ -510,13 +511,19 @@ class LeadController extends Controller
 
         $attributes = ['id' => $request->crm_lead_calls_id]; // Assuming each user has their own notification settings
 
+        if($request->telephone){
+            $phone = "+".$request->country_code."-".$request->telephone;
+        } else {
+            $phone = $request->telephone;
+        }
+
 
         // Data to update or create
         $values = [
             'home_id' => Auth::user()->home_id,
             'lead_id' => $request->lead_ref,
             'direction' => $request->direction,
-            'telephone' => "+".$request->country_code."-".$request->telephone,
+            'telephone' => $phone,
             'crm_type_id' => $request->crm_type_id,
             'notes' => $request->content,
             'notify' => $request->notify_radio,
@@ -542,7 +549,87 @@ class LeadController extends Controller
         if($data){
             return response()->json(['success' => true, 'data' => $data]);
         } else {
-            return response()->json(['success' => false, 'ata' => 'No Data']);
+            return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
+
+    public function saveCRMLeadEmails(Request $request){
+
+        // dd($request->hasFile('attachment'));
+        $validator = Validator::make($request->all(), [
+            'to' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        if($request->notify_email1 == 1){
+            $validator = Validator::make($request->all(), [
+                'notify_user' => 'required'
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+
+        if(!isset($notification) || !isset($sms) || !isset($email)){
+            $notification = $sms = $email = null;
+        }
+
+        // Handle the image upload
+        if ($request->hasFile('attachment')) {
+            // Get the file
+            $image = $request->file('attachment');
+
+            // Store the image
+            $path = $image->store('CRMLeadEmail', 'public'); // Store the file in 'public/images'
+        } else {
+            $path = null;
+        }
+
+        $attributes = ['id' => $request->crm_lead_email_id]; // Assuming each user has their own notification settings
+
+        // Data to update or create
+        $values = [
+            'home_id' => Auth::user()->home_id,
+            'lead_id' => $request->lead_id,
+            'to' => $request->to,
+            'cc' => $request->cc,
+            'subject' => $request->subject,
+            'message' => $request->message,
+            'notify' =>$request->notify,
+            'attachment' => $path,
+            'user_id' => $request->notify_user,
+            'notification' => $notification,
+            'sms' => $sms,
+            'email' => $email,
+            'customer_visible' => $request->customer_visible
+        ];
+
+        // Update the record if it exists, otherwise create a new one
+        CRMLeadEmail::updateOrCreate($attributes, $values);
+
+        if (isset($request->crm_lead_calls_id)) {
+            return response()->json(['message' => 'Record updated successfully!']);
+        } else {
+            return response()->json(['message' => 'CRM Lead Emails added successfully!']);
+        }
+    }
+
+    public function getCRMEmailsData(Request $request){
+        $data = CRMLeadEmail::getCRMLeadEmailsData($request->lead_id, Auth::user()->home_id);
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }
+
+    
 }

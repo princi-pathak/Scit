@@ -149,7 +149,7 @@
             var formData = $('#lead_status_form').serialize();
 
             $.ajax({
-                url: '{{ route("leads.ajax.saveLeadStatus") }}',
+                url: '{{ route("lead.ajax.saveLeadStatus") }}',
                 method: 'POST',
                 data: formData,
                 success: function(response) {
