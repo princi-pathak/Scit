@@ -14,15 +14,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <style>
-        table.dataTable td.select-checkbox:before{
+        table.dataTable td.select-checkbox:before {
             display: none;
         }
     </style>
 </head>
-<?php 
-    $rights = App\User::where('id', Auth::user()->id)->where('is_deleted', 0)->first()->access_rights;
-    $access_rights=explode(',',$rights);
+<?php
+$rights = App\User::where('id', Auth::user()->id)->where('is_deleted', 0)->first()->access_rights;
+$access_rights = explode(',', $rights);
 ?>
+
 <body>
     <header>
 
@@ -38,7 +39,7 @@
                         <?php if (isset($page) && $page == 'job_index') { ?>
                             <div class="d-inline-flex align-items-center me-5 topbaarBtn">
                                 <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> storage</i> My Diary</a>
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> dashboard</i> CRM</a>
+                                <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#CRMHeaderPopup"> <i class="material-symbols-outlined"> dashboard</i> CRM</a>
                                 <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> contact_support </i> Help Desk <span class="notifiNumberRadColor">2</span></a>
                                 <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> mail </i> Messages </a>
                                 <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
@@ -90,7 +91,7 @@
 
                             <div class="nav-item1 dropdown1">
                                 <a class="nav-link dropdown-toggle @if(isset($page)) @if($page == 'quotes') active @endif @endif" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span><i class="material-symbols-outlined"> description </i></span> Quotes
+                                    <span><i class="material-symbols-outlined"> description </i></span> Quotes
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1"><a href="#!" class="dropdown-item">Dashboard</a></li>
@@ -101,10 +102,10 @@
                                     <li class="nav-item1"><a href="#!" class="dropdown-item">Accepted Quote</a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item">Converted Quote</a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item">Search Quote</a></li>
-                                    
+
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Appointment <i class="fa-solid fa-angle-right"></i>
+                                            Appointment <i class="fa-solid fa-angle-right"></i>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -113,7 +114,7 @@
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Recurring Quote <i class="fa-solid fa-angle-right"></i>
+                                            Recurring Quote <i class="fa-solid fa-angle-right"></i>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -137,10 +138,10 @@
                                     <a href="{{url('/jobs_create')}}" class="dropdown-item">New Jobs</a>
                                     <a href="{{url('jobs_list')}}" class="dropdown-item">Active Jobs</a>
 
-                                    <?php 
-                                      if (array_key_exists(314, $access_rights)) { ?>
-                                            <a href="{{url('job_type')}}" class="dropdown-item">Job Type</a>
-                                        <?php } ?>
+                                    <?php
+                                    if (array_key_exists(314, $access_rights)) { ?>
+                                        <a href="{{url('job_type')}}" class="dropdown-item">Job Type</a>
+                                    <?php } ?>
 
                                     <a href="#!" class="dropdown-item">Action Required Jobs</a>
                                     <a href="#!" class="dropdown-item">Overdue Jobs</a>
@@ -211,7 +212,7 @@
                                             </li>
                                             <li class="nav-item1 dropend">
                                                 <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span>Credit Notes</span> <i class="fa-solid fa-angle-right"></i>
+                                                    <span>Credit Notes</span> <i class="fa-solid fa-angle-right"></i>
                                                 </a>
                                                 <ul class="dropdown-menu1">
                                                     <li><a class="dropdown-item" href="#">New Credit Note</a></li>
@@ -226,7 +227,7 @@
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span>Suppliers</span> <i class="fa-solid fa-angle-right"></i>
+                                            <span>Suppliers</span> <i class="fa-solid fa-angle-right"></i>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -382,9 +383,9 @@
                                             Jobs <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                        <?php if (array_key_exists(314, $access_rights)) { ?>
-                                            <li><a class="dropdown-item" href="{{url('job_type')}}">Job Type </a></li>
-                                        <?php }?>
+                                            <?php if (array_key_exists(314, $access_rights)) { ?>
+                                                <li><a class="dropdown-item" href="{{url('job_type')}}">Job Type </a></li>
+                                            <?php } ?>
                                             <li><a class="dropdown-item" href="#">Job Appointment Type </a></li>
                                             <li><a class="dropdown-item" href="#">Appointment Rejection Categories </a></li>
                                         </ul>
@@ -434,7 +435,7 @@
                                             CRM <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{ url('/lead/CRM_section_types') }}"><i class="fa fa-list-ul"></i>   CRM Section Types </a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/CRM_section_types') }}"><i class="fa fa-list-ul"></i> CRM Section Types </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -459,3 +460,78 @@
             </div>
         </div>
     </header>
+
+    <!-- Button trigger modal -->
+
+    <!-- Modal -->
+    <div class="modal CRMFullModel fade" id="CRMHeaderPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content add_Customer">
+                <div class="modal-header terques-bg">
+
+                    <h5 class="modal-title pupTitle" id="CRMHeaderPopupLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                </div>
+                <div class="modal-body crmModelCont">
+                    <div class="jobsection pb-2 hideandshow">
+                        <button class="profileDrop" id="onclickbtnHideShow">Hide/Show</button>
+                    </div>
+                    <div id="showDivCont">
+                    <div class="newJobForm mb-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="">
+                                    <h4 class="contTitle text-center">Contact Details</h4>
+                                </div>
+                                <div class="row pt-3">
+                                    <label class="col-md-4 col-form-label"> <strong>Full Name:</strong></label>
+                                    <div class="col-md-8">
+                                        <span id="calls_contact_name" class="editInput"> Arjun Kumar</span>
+                                    </div>
+                                </div>
+                                <div class="row pt-3">
+                                    <label class="col-md-4 col-form-label"> <strong>Email Address:</strong></label>
+                                    <div class="col-md-8">
+                                        <span id="calls_email" class="editInput">arjun@gmail.com</span>
+                                    </div>
+                                </div>
+                                <div class="row pt-3">
+                                    <label class="col-md-4 col-form-label"> <strong>Telephone:</strong></label>
+                                    <div class="col-md-8">
+                                        <span id="calls_telephone" class="editInput">+91-1234567890</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="">
+                                    <h4 class="contTitle text-center"> <strong>Lead Details</strong></h4>
+                                </div>
+                                <div class="row pt-3">
+                                    <label class="col-md-4 col-form-label"><strong>Lead Ref.:</strong></label>
+                                    <div class="col-md-8">
+                                        <span id="calls_lead_refs" class="editInput">Defoult</span>
+                                        <input type="hidden" id="lead_id_CRM" name="">
+
+                                    </div>
+                                </div>
+                                <div class="row pt-3">
+                                    <label class="col-md-4 col-form-label"> <strong>Lead Status:</strong></label>
+                                    <div class="col-md-8">
+                                        <span id="calls_status" class="editInput">425</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn profileDrop">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>

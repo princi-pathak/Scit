@@ -1688,3 +1688,40 @@ a.crmNewBtn{
   background: transparent;
   color: #fff;
 }
+.viewColor{
+  width: 20px;
+  height: 20px;
+  background-color: #f00;
+  display: inline-block;
+  margin-right: 8px;
+}
+.colorCode{
+  display: inline-block;
+  line-height: 21px;
+}
+
+
+/* *****Bottom fixed Timer *** */
+.saveTimer {
+  position: fixed;
+  right: 28px;
+  bottom: 16px;
+  z-index: 1;
+}
+
+.saveTimer ul.timerlist {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.saveTimer ul.timerlist li {
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  margin-left: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+/* *****End Bottom fixed Timer *** */
