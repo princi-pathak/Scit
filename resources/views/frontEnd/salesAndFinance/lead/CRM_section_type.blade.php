@@ -55,48 +55,54 @@
                         </thead>
                         <tbody>
                             @if(!$crm_sections->isEmpty())
-                                @foreach ($crm_sections as $value)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $value->title }}</td>
-                                        <td>@switch($value->crm_section)
-                                                    @case(1) Calls @break
-                                                    @case(2) Emails @break
-                                                    @case(3) Notes @break
-                                                    @case(4) Complaints @break
-                                                    @case(5) Tasks @break
-                                                    @case(6) Contacts @break
-                                                    @case(7) History @break
-                                                    @default {{-- No output if none of the cases match --}}
-                                                @endswitch
-                                            </td>                                         
-                                            <td>{{ $value->color_code }} </td>
-                                            <td> @switch($value->crm_section)
-                                                    @case(1) <i class="fa fa-phone"></i>   @break
-                                                    @case(2) <i class="fa fa-envelope-o"></i> @break
-                                                    @case(3) <i class="fa fa-file-o"></i> @break
-                                                    @case(4) <i class="fa fa-exclamation-triangle"></i> @break
-                                                    @case(5) <i class="fa fa-list-ul"></i> @break
-                                                    @case(6) <i class="fa fa-user"></i> @break
-                                                    @case(7)  @break
-                                                    @default {{-- No output if none of the cases match --}}
-                                                @endswitch     </td>   
-                                        <td> @if($value->status) <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span> @else <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> @endif </td>
-                                        <td>
-                                            <div class="d-inline-flex align-items-center ">
-                                                <div class="nav-item dropdown">
-                                                    <a href="#" class="nav-link dropdown-toggle profileDrop show" data-bs-toggle="dropdown" aria-expanded="true">Action</a>
-                                                    <div class="dropdown-menu fade-up m-0">
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#statusModel" data-id="{{ $value->id }}" data-title="{{ $value->title }}" data-status="{{ $value->status }}" data-crm-section="{{ $value->crm_section }}" data-color="{{ $value->color_code }}"  class="dropdown-item open-modal">Edit details</a>
-                                                        <a href="{{ url('/lead/crm_section_type/delete').'/'.$value->id }}" class="dropdown-item">Delete</a>
-                                                    </div>
-                                                </div>
+                            @foreach ($crm_sections as $value)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $value->title }}</td>
+                                <td>@switch($value->crm_section)
+                                    @case(1) Calls @break
+                                    @case(2) Emails @break
+                                    @case(3) Notes @break
+                                    @case(4) Complaints @break
+                                    @case(5) Tasks @break
+                                    @case(6) Contacts @break
+                                    @case(7) History @break
+                                    @default {{-- No output if none of the cases match --}}
+                                    @endswitch
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <span class="viewColor"></span> <span class="colorCode">{{ $value->color_code }}</span>
+                                    </div>
+                                </td>
+                                <td> @switch($value->crm_section)
+                                    @case(1) <i class="fa fa-phone"></i> @break
+                                    @case(2) <i class="fa fa-envelope-o"></i> @break
+                                    @case(3) <i class="fa fa-file-o"></i> @break
+                                    @case(4) <i class="fa fa-exclamation-triangle"></i> @break
+                                    @case(5) <i class="fa fa-list-ul"></i> @break
+                                    @case(6) <i class="fa fa-user"></i> @break
+                                    @case(7) @break
+                                    @default {{-- No output if none of the cases match --}}
+                                    @endswitch </td>
+                                <td> @if($value->status) <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span> @else <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> @endif </td>
+                                <td>
+                                    <div class="d-inline-flex align-items-center ">
+                                        <div class="nav-item dropdown">
+                                            <a href="#" class="nav-link dropdown-toggle profileDrop show" data-bs-toggle="dropdown" aria-expanded="true">Action</a>
+                                            <div class="dropdown-menu fade-up m-0">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#statusModel" data-id="{{ $value->id }}" data-title="{{ $value->title }}" data-status="{{ $value->status }}" data-crm-section="{{ $value->crm_section }}" data-color="{{ $value->color_code }}" class="dropdown-item open-modal">Edit details</a>
+                                                <a href="{{ url('/lead/crm_section_type/delete').'/'.$value->id }}" class="dropdown-item">Delete</a>
                                             </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
                             @else
-                                <tr> <td colspan="10" class="text-center"><strong>Sorry, there are no items available..</strong></td></tr>
+                            <tr>
+                                <td colspan="10" class="text-center"><strong>Sorry, there are no items available..</strong></td>
+                            </tr>
                             @endif
                         </tbody>
                     </table>
@@ -105,20 +111,20 @@
         </di>
     </div>
 </section>
-  <!-- popup start -->
-  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="statusModel" class="modal fade">
+<!-- popup start -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="statusModel" class="modal fade">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content add_Customer">
             <div class="modal-header terques-bg">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                <h4 class="modal-title pupTitle">Lead Status - Add</h4>
+                <button aria-hidden="true" data-bs-dismiss="modal" class="close" type="button">×</button>
+                <h5 class="modal-title pupTitle">Lead Status - Add</h5>
             </div>
             <div class="modal-body">
                 <form role="form" id="crm_section_type_form">
                     @csrf
                     <div><span id="error-message" class="error"></span></div>
-                    <div class="form-group">
-                        <label class="col-lg-3 col-sm-3 control-label"> Section * </label>
+                    <div class="row form-group">
+                        <label class="col-lg-3 col-sm-3 col-form-label"> Section * </label>
                         <div class="col-md-9">
                             <input type="hidden" name="section_type_id" id="section_type_id">
                             <select name="crm_section" id="crm_section" class="form-control editInput ">
@@ -132,20 +138,26 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 col-sm-3 ">Type * </label>
-                        <input type="text" name="title" class="form-control editInput " placeholder="CRM Status Type" id="title">
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Type * </label>
+                        <div class="col-md-9">
+                            <input type="text" name="title" class="form-control editInput " placeholder="CRM Status Type" id="title">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 col-sm-3 ">Color Code </label>
-                        <input type="color" name="color_code" class="form-control editInput " placeholder="CRM Status Type" id="color">
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Color Code </label>
+                        <div class="col-md-9">
+                            <input type="color" name="color_code" class="form-control editInput " placeholder="CRM Status Type" id="color">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 col-sm-3 ">Status</label>
-                        <select name="status" id="status" class="form-control editInput">
-                            <option value="1">Active</option>
-                            <option value="0">InActive</option>
-                        </select>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
+                        <div class="col-md-9">
+                            <select name="status" id="status" class="form-control editInput">
+                                <option value="1">Active</option>
+                                <option value="0">InActive</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -166,7 +178,7 @@
             var itemStatus = $(this).data('status');
             var crm_section = $(this).data('crm-section');
             var color = $(this).data('color');
-             
+
             $('#section_type_id').val(itemId);
             $('#title').val(itemTitle);
             $('#status').val(itemStatus);
