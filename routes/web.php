@@ -269,7 +269,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/leads/create','store')->name('lead.store');
 		Route::get('/leads/edit/{id}', 'edit')->name('lead.edit');
 		Route::get('/leads/authorization/{id}', 'sentToAuthorization')->name('lead.authorization');
-
+		
 		// Lead Task Type
 		Route::get('/leads/tasks','task_list')->name('lead.task_list');   
 		Route::get('/lead/task_mark_as_completed/{task}/{lead}', 'task_mark_as_completed')->name('lead.task_mark_as_completed');   
@@ -278,7 +278,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/lead/saveLeadTaskType', 'saveLeadTaskType')->name('lead.ajax.saveLeadTaskType');
 		Route::get('/lead/lead_task_type/delete/{id}', 'lead_task_type_delete');
 		Route::get('/lead/lead_mark_as_completed/{task}/{lead}', 'lead_mark_as_completed');
-
+		Route::get('lead/getLeadTaskType', 'getLeadTaskTypeData')->name('lead.ajax.getLeadTaskType');
+		
 		// Lead Notes Type
 		Route::get('/lead/lead_notes_type', 'lead_notes_type')->name('lead.lead_notes_type');
 		Route::post('/lead/saveLeadNotesType', 'saveLeadNotesType')->name('lead.ajax.saveLeadNoteType');
@@ -322,9 +323,17 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		// Lead CRM 
 		Route::post('lead/saveCRMLeadData', 'saveCRMLeadData')->name('lead.ajax.saveCRMLeadData');
 		Route::post('lead/getCRMCallsData', 'getCRMCallsData')->name('lead.ajax.getCRMCallsData');
+		
 		Route::post('lead/saveCRMLeadEmails', 'saveCRMLeadEmails')->name('lead.ajax.saveCRMLeadEmails');
 		Route::post('lead/getCRMEmailsData', 'getCRMEmailsData')->name('lead.ajax.getCRMEmailsData');
 		
+		Route::post('lead/saveCRMLeadNotes', 'saveCRMLeadNotes')->name('lead.ajax.saveCRMLeadNotes');
+		Route::post('lead/getCRMNotesData', 'getCRMNotesData')->name('lead.ajax.getCRMNotesData');
+
+
+		
+		
+
 	});
 
 
