@@ -528,10 +528,8 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
                                                                         <div class="col-sm-6">
-                                                                            <select class="form-control editInput" name="" id="">
-                                                                                @foreach($leadTask as $value)
-                                                                                <option value="{{ $value->id }}">{{ $value->title }}</option>
-                                                                                @endforeach
+                                                                            <select class="form-control editInput" name="" id="lead_task_types">
+                                                                              
                                                                             </select>
                                                                             <!-- <input type="text"  class="form-control editInput" id="staticEmail" value=""> -->
                                                                         </div>
@@ -808,7 +806,6 @@
                                     <div class="overdue mt-3 ms-3">
                                         <span class="yeloColrbox"></span><label>Overdue</label>
                                     </div>
-
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="pageTitleBtn">
@@ -857,7 +854,7 @@
                             <div class="row">
                                 <div class="col-sm-1">
                                     <div class="jobsection  mt-3">
-                                        <a href="#" class="profileDrop p-2 crmNewBtn"> New</a>
+                                        <a href="#" class="profileDrop p-2 crmNewBtn" id="openNotesModel"> New</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -870,7 +867,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="productDetailTable">
-                                        <table class="table">
+                                        <table class="table" id="crmLeadNotesTable">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Date</th>
@@ -948,7 +945,6 @@
                         </div>
                     </div>
                 </div>
-
             </div> <!-- End off model body  -->
             <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
@@ -1100,7 +1096,6 @@
 </div>
 <!-- CRM Types Modal End -->
 
-
 <!-- CRM Add Email Modal Start -->
 <div class="modal fade" id="NewEmailModel" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -1208,6 +1203,95 @@
 </div>
 <!-- CRM Add Email Modal End -->
 
+<!-- CRM Add Notes Modal Start -->
+<div class="modal fade" id="NewNotesModel" tabindex="-1" role="dialog" aria-labelledby="notesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="emailModalLabel">Notes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCrmNotesBtn" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="crm_lead_notes_form">
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <div class="col-sm-9">
+                            <input type="hidden" class="form-control editInput" name="crm_lead_notes_id" id="">
+                            <select class="form-control editInput" name="crm_section_type_id" id="lead_notes_crm"></select>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                        <div class="col-sm-9">
+                            <div id="NotesEditor">
+                            </div>
+                            <textarea name="notes" id="CRMNotes" style="display: none;"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
+                        <div class="col-sm-9">
+                            <span class="editInput" id="lead_ref_notes"></span>
+                            <input type="hidden" id="lead_id_notes" name="lead_id">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="notify" id="notify_notes1" value="0" checked>
+                            <label class="form-check-label editInput" for="notify_notes1"> No </label>
+                            <input class="form-check-input" type="radio" name="notify" id="notify_notes2" value="1">
+                            <label class="form-check-label editInput" for="notify_notes2"> Yes </label>
+                        </div>  
+                    </div>
+                    <div id="notification_notes_div">
+                        <div class="mb-2 row">
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <select name="user_id" class="form-control editInput" id="user_notifiy">
+                                    <option value=""></option>
+                                    @foreach($users as $value)
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <label for="calls_notify_who1" class="editInput">
+                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) 
+                                </label>
+                                <label for="calls_notify_who2" class="editInput">
+                                    <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS 
+                                </label>
+                                <label for="calls_notify_who3" class="editInput">
+                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email 
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="customer_visibility" id="flexRadioDefault1" value="0" checked>
+                            <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
+                            <input class="form-check-input" type="radio" name="customer_visibility" id="flexRadioDefault2" value="1">
+                            <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" id="">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMLeadNotes">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CRM Add Notes Modal End -->
+
 <!-- ****************End CRM History Modal ****************-->
 <!-- Moment js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
@@ -1263,7 +1347,7 @@
 
             console.log("lead_ref ", lead_ref);
             $.ajax({
-                url: '{{ route("lead.ajax.getCRMCallsData") }}',
+                url: '{{ route("lead.ajax.getCRMNotesData") }}',
                 method: 'POST',
                 data: {
                     lead_ref: lead_id
@@ -1289,8 +1373,12 @@
                             row.appendChild(dateCell);
 
                             const nameCell = document.createElement('td');
-                            nameCell.textContent = item.user_id;
+                            nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
                             row.appendChild(nameCell);
+
+                            // const nameCell = document.createElement('td');
+                            // nameCell.textContent = item.user_id;
+                            // row.appendChild(nameCell);
 
                             const phoneCell = document.createElement('td');
                             phoneCell.textContent = item.telephone;
@@ -1364,8 +1452,12 @@
                             row.appendChild(dateCell);
 
                             const nameCell = document.createElement('td');
-                            nameCell.textContent = item.user_id;
+                            nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
                             row.appendChild(nameCell);
+
+                            // const nameCell = document.createElement('td');
+                            // nameCell.textContent = item.user_id;
+                            // row.appendChild(nameCell);
 
                             const phoneCell = document.createElement('td');
                             phoneCell.textContent = item.telephone;
@@ -1410,6 +1502,83 @@
 
 
 
+        // set the value in CRM Lead Notes table data js Start here
+        document.getElementById('pills-notes-tab').addEventListener('click', function() {
+            var lead_id = document.getElementById('lead_id_CRM').value;
+            var lead_ref = document.getElementById('calls_lead_refs').textContent;
+            $.ajax({
+                url: '{{ route("lead.ajax.getCRMNotesData") }}',
+                method: 'POST',
+                data: {
+                    lead_id: lead_id
+                },
+                success: function(response) {
+                    console.log(response.data);
+
+                    // Get the table body element
+                    const tableBody = document.querySelector('#crmLeadNotesTable tbody');
+                    tableBody.innerHTML = '';
+
+                    // Function to populate the table
+                    function populateTable(data) {
+                        data.forEach(item => {
+                            // Create a new row
+                            const row = document.createElement('tr');
+
+                            const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+
+                            // Create cells and append them to the row
+                            const dateCell = document.createElement('td');
+                            dateCell.textContent = date;
+                            row.appendChild(dateCell);
+
+                            const nameCell = document.createElement('td');
+                            nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
+                            row.appendChild(nameCell);
+
+                            const phoneCell = document.createElement('td');
+                            phoneCell.textContent = item.telephone;
+                            row.appendChild(phoneCell);
+
+                            const typeCell = document.createElement('td');
+                            typeCell.textContent = item.title;
+                            row.appendChild(typeCell);
+
+                            const notesCell = document.createElement('td');
+                            notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.notes;
+
+                            row.appendChild(notesCell);
+
+                            const visibilityCell = document.createElement('td');
+                            if (item.customer_visibility == 0) {
+                                visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+                            } else if (item.customer_visibility == 1) {
+                                visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+                            }
+                            row.appendChild(visibilityCell);
+
+                            const idCell = document.createElement('td');
+                            idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
+                            row.appendChild(idCell);
+
+                            // Append the row to the table body
+                            tableBody.appendChild(row);
+                        });
+                    }
+
+                    // Call the function to populate the table with the data array
+                    populateTable(response.data);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+        });
+        // set the value in CRM Lead Notes table data js End here
+
+       
+
         document.querySelectorAll('.set_value_on_CRM_model').forEach(function(anchor) {
             anchor.addEventListener('click', function(event) {
                 event.preventDefault();
@@ -1427,6 +1596,8 @@
                 document.getElementById('call_lead_ref').textContent = leadRef;
                 document.getElementById('call_lead_ref_data').value = leadId;
                 document.getElementById('lead_ref_email').textContent = leadRef;
+                document.getElementById('lead_ref_notes').textContent = leadRef;
+                document.getElementById('lead_id_notes').value = leadId;
                 document.getElementById('lead_id_email').value = leadId;
                 document.getElementById('lead_id_CRM').value = leadId;
 
@@ -1453,6 +1624,30 @@
             });
         });
 
+        // Ajax Call for saving CRM section Type
+        $('#lead_task_types').on('click', function() {
+            $.ajax({
+                url: '{{ route("lead.ajax.getLeadTaskType") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response.data);
+                    const selectElement = document.getElementById('lead_task_types');
+                    selectElement.innerHTML = '';
+                    response.data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.title;
+                        selectElement.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+        
+
+
         // Ajax call for getting CRM Section Types
         $('#calls_type').on('click', function() {
             $.ajax({
@@ -1461,6 +1656,28 @@
                 success: function(response) {
                     console.log(response.Data);
                     const selectElement = document.getElementById('calls_type');
+                    selectElement.innerHTML = '';
+                    response.Data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.title;
+                        selectElement.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        // Ajax call for getting CRM Section Types for CRM notes 
+        $('#lead_notes_crm').on('click', function() {
+            $.ajax({
+                url: '{{ route("lead.ajax.getCRMTypeData") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response.Data);
+                    const selectElement = document.getElementById('lead_notes_crm');
                     selectElement.innerHTML = '';
                     response.Data.forEach(user => {
                         const option = document.createElement('option');
@@ -1575,7 +1792,29 @@
         }
         // js End here for calls model open and close
 
-        // Js Start for CRM Section Type model show
+        // Js Start for CRM Lead Notes model show
+        const openNotesModel = document.getElementById('openNotesModel');
+        const NewNotesModel = document.getElementById('NewNotesModel');
+        const closeCrmNotesBtn = document.getElementById('closeCrmNotesBtn');
+
+        // When the user clicks the button, open the modal 
+        openNotesModel.onclick = function() {
+            $('#NewNotesModel').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeCrmNotesBtn.onclick = function() {
+            $('#crmTypeModel').modal('hide');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === crmTypeModel) {
+                $('#crmTypeModel').modal('hide');
+            }
+        }
+        // Js End for CRM Lead Notes model show
+
+        // CRM Section Type Js Start for model show
         const openModalBtn = document.getElementById('openCrmTypeModel');
         const crmTypeModel = document.getElementById('crmTypeModel');
         const closeModalBtn = document.getElementById('closeCrmModalBtn');
@@ -1595,9 +1834,7 @@
                 $('#crmTypeModel').modal('hide');
             }
         }
-        // Js End for CRM Section Type model show
-
-
+        // CRM Section Type Js End for model show
 
         const mainCheckbox = document.getElementById('yeson');
         const optionsDiv = document.getElementById('optionsDiv');
@@ -1614,7 +1851,6 @@
         });
         $('#openThirdModal2').on('click', function() {
             $('#thirdModal').modal('show');
-
         });
 
         mainCheckbox.addEventListener('change', function() {
@@ -1674,6 +1910,28 @@
     notify_email2.addEventListener('change', function() {
         if (notify_email2.checked) {
             notification_email_div.style.display = 'block';
+        }
+    });
+    // notification Div hide show on radio button for emails js End
+
+
+    // notification Div hide show on radio button for emails js start
+    const notify_notes1 = document.getElementById('notify_notes1');
+    const notify_notes2 = document.getElementById('notify_notes2');
+    const notification_notes_div = document.getElementById('notification_notes_div');
+
+    // Initially hide the notification_div
+    notification_notes_div.style.display = 'none';
+
+    notify_notes1.addEventListener('change', function() {
+        if (notify_notes1.checked) {
+            notification_notes_div.style.display = 'none';
+        }
+    });
+
+    notify_notes2.addEventListener('change', function() {
+        if (notify_notes2.checked) {
+            notification_notes_div.style.display = 'block';
         }
     });
     // notification Div hide show on radio button for emails js End
@@ -1848,29 +2106,31 @@
         })
         .then(editor => {
             window.editor = editor;
-            var editorData = editor.getData();
-            // Add a click event listener to the save button
-            document.getElementById('saveCRMLeadEmails').addEventListener('click', function() {
 
-                // Get the CKEditor content
-                document.getElementById('emailMessage').value = editor.getData();
-                console.log(document.getElementById('emailMessage').value);
-                var formData = new FormData(document.getElementById('crm_lead_email_form'));
+            // var editorData = editor.getData();
+               // Add a click event listener to the save button
+               document.getElementById('saveCRMLeadEmails').addEventListener('click', function() {
 
-                console.log(formData);
-                $.ajax({
-                    url: '{{ route("lead.ajax.saveCRMLeadEmails") }}',
-                    method: 'POST',
-                    data: formData,
-                    processData: false, // Important: Don't process the data
-                    contentType: false,
-                    success: function(response) {
-                        alert(response.message);
-                        $('#NewEmailModel').modal('hide');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
+                    // Get the CKEditor content
+                    document.getElementById('emailMessage').value = editor.getData();
+                    console.log(document.getElementById('emailMessage').value);
+                    var formData = new FormData(document.getElementById('crm_lead_email_form'));
+
+                    console.log(formData);
+                    $.ajax({
+                        url: '{{ route("lead.ajax.saveCRMLeadEmails") }}',
+                        method: 'POST',
+                        data: formData,
+                        processData: false,  // Important: Don't process the data
+                        contentType: false,  
+                        success: function(response) {
+                            alert(response.message);
+                            $('#NewEmailModel').modal('hide');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
                 });
             });
 
@@ -1878,6 +2138,51 @@
         .catch(error => {
             console.error(error);
         });
+
+
+
+        ClassicEditor
+        .create(document.querySelector('#NotesEditor'), {
+            plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment, PreviewPlugin],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic', 'underline', 'alignment', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'preview'
+            ]
+        })
+        .then(editor => {
+            window.editor = editor;
+            var editorData = editor.getData();
+               // Add a click event listener to the save button
+               document.getElementById('saveCRMLeadNotes').addEventListener('click', function() {
+                    // Get the CKEditor content
+                    document.getElementById('CRMNotes').value = editor.getData();
+                    console.log(document.getElementById('CRMNotes').value);
+                    // var formData = new FormData(document.getElementById('crm_lead_notes_form'));
+                    var formData = $('#crm_lead_notes_form').serialize();
+                    console.log(formData);
+                    $.ajax({
+                        url: '{{ route("lead.ajax.saveCRMLeadNotes") }}',
+                        method: 'POST',
+                        data: formData,
+                        // processData: false,  
+                        // contentType: false,  
+                        success: function(response) {
+                            alert(response.message);
+                            $('#NewNotesModel').modal('hide');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                 
+                });
+
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+
 </script>
 <!-- Email CK Editor End -->
 @include('frontEnd.jobs.layout.footer')

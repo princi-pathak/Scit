@@ -23,6 +23,7 @@ use App\Models\CRMSectionType;
 use App\Models\Country;
 use App\Models\CRMLeadCalls;
 use App\Models\CRMLeadEmail;
+use App\Models\CRMLeadNotes;
 
 class LeadController extends Controller
 {
@@ -631,5 +632,77 @@ class LeadController extends Controller
         }
     }
 
+    public function saveCRMLeadNotes(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required',
+            'crm_section_type_id' => 'required',
+            'notes' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        if($request->notify == 1){
+            $validator = Validator::make($request->all(), [
+                'user_id' => 'required'
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+
+        if(!isset($notification) || !isset($sms) || !isset($email)){
+            $notification = $sms = $email = null;
+        }
+
+        $attributes = ['id' => $request->crm_lead_notes_id]; // Assuming each user has their own notification settings
+
+        // Data to update or create
+        $values = [
+            'home_id' => Auth::user()->home_id,
+            'lead_id' => $request->lead_id,
+            'crm_section_type_id' => $request->crm_section_type_id,
+            'notes' => $request->notes,
+            'notify' => $request->notify,
+            'user_id' => $request->user_id,
+            'notification' => $notification,
+            'sms' => $sms,
+            'email' => $email,
+            'customer_visibility' => $request->customer_visibility
+        ];
+
+        // Update the record if it exists, otherwise create a new one
+        CRMLeadNotes::updateOrCreate($attributes, $values);
+
+        if (isset($request->crm_lead_notes_id)) {
+            return response()->json(['message' => 'Record updated successfully!']);
+        } else {
+            return response()->json(['message' => 'CRM Lead Notes added successfully!']);
+        }
+    }
+
+    public function getCRMNotesData(Request $request){
+        $data = CRMLeadNotes::getCRMLeadNotesData($request->lead_id, Auth::user()->home_id);
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }
+
+    public function getLeadTaskTypeData(){
+        $data = LeadTaskType::getLeadTaskType();
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }
+    
+    
     
 }
