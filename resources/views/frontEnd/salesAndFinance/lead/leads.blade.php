@@ -38,7 +38,19 @@
         z-index: 99999;
         transition: opacity 0.3s ease;
     }
+
+
+   
 </style>
+
+<!-- Bottom fixed Timer -->
+<div class="saveTimer">
+    <ul class="timerlist">
+        <li>00:00:00:17</li>
+        <li>00:00:00:17</li>
+    </ul>
+</div>
+<!-- End Bottom fixed Timer -->
 <section class="main_section_page px-3">
     <div class="container-fluid">
         <div class="row">
@@ -583,7 +595,6 @@
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                         <div class="col-sm-8">
                                                                             <span class="editInput" id="related_To"></span>
-                                                                            <!-- <input type="text" class="form-control editInput" id="related_To" value="{{ $customer->lead_ref }}"> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
@@ -626,7 +637,6 @@
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                         <div class="col-sm-8">
                                                                             <span class="editInput" id="relatedTo"></span>
-                                                                            <!-- <input type="text" class="form-control editInput" id="relatedTo" value="{{ $customer->lead_ref }}"> -->
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -1167,13 +1177,13 @@
                             <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput">
-                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) 
+                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
                                 </label>
                                 <label for="calls_notify_who2" class="editInput">
-                                    <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS 
+                                    <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS
                                 </label>
                                 <label for="calls_notify_who3" class="editInput">
-                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email 
+                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email
                                 </label>
                             </div>
                         </div>
@@ -1323,8 +1333,8 @@
         });
         // set the value in calls history table data js End here
 
-         // set the value in Emails history table data js Start here
-         document.getElementById('pills-emails-tab').addEventListener('click', function() {
+        // set the value in Emails history table data js Start here
+        document.getElementById('pills-emails-tab').addEventListener('click', function() {
             var lead_id = document.getElementById('lead_id_CRM').value;
             var lead_ref = document.getElementById('calls_lead_refs').textContent;
             $.ajax({
@@ -1398,7 +1408,7 @@
         });
         // set the value in Emails history table data js End here
 
-       
+
 
         document.querySelectorAll('.set_value_on_CRM_model').forEach(function(anchor) {
             anchor.addEventListener('click', function(event) {
@@ -1419,8 +1429,8 @@
                 document.getElementById('lead_ref_email').textContent = leadRef;
                 document.getElementById('lead_id_email').value = leadId;
                 document.getElementById('lead_id_CRM').value = leadId;
-                
-                
+
+
                 // Open CRM modal
                 $('#customerPop').modal('show');
             });
@@ -1839,30 +1849,30 @@
         .then(editor => {
             window.editor = editor;
             var editorData = editor.getData();
-               // Add a click event listener to the save button
-               document.getElementById('saveCRMLeadEmails').addEventListener('click', function() {
+            // Add a click event listener to the save button
+            document.getElementById('saveCRMLeadEmails').addEventListener('click', function() {
 
-                    // Get the CKEditor content
-                    document.getElementById('emailMessage').value = editor.getData();
-                    console.log(document.getElementById('emailMessage').value);
-                    var formData = new FormData(document.getElementById('crm_lead_email_form'));
+                // Get the CKEditor content
+                document.getElementById('emailMessage').value = editor.getData();
+                console.log(document.getElementById('emailMessage').value);
+                var formData = new FormData(document.getElementById('crm_lead_email_form'));
 
-                    console.log(formData);
-                    $.ajax({
-                        url: '{{ route("lead.ajax.saveCRMLeadEmails") }}',
-                        method: 'POST',
-                        data: formData,
-                        processData: false,  // Important: Don't process the data
-                        contentType: false,  
-                        success: function(response) {
-                            alert(response.message);
-                            $('#NewEmailModel').modal('hide');
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(error);
-                        }
-                    });
+                console.log(formData);
+                $.ajax({
+                    url: '{{ route("lead.ajax.saveCRMLeadEmails") }}',
+                    method: 'POST',
+                    data: formData,
+                    processData: false, // Important: Don't process the data
+                    contentType: false,
+                    success: function(response) {
+                        alert(response.message);
+                        $('#NewEmailModel').modal('hide');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
                 });
+            });
 
         })
         .catch(error => {
