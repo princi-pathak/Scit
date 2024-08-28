@@ -1725,3 +1725,8 @@ a.crmNewBtn{
   cursor: pointer;
 }
 /* *****End Bottom fixed Timer *** */
+
+
+.CRMFullModel .modal-dialog.modal-xl {
+  --bs-modal-width: 1600px;
+}
