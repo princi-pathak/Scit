@@ -150,7 +150,6 @@
                                                 <a href="{{ url('/leads/edit').'/'.$customer->id }}" class="dropdown-item">Edit Details</a>
                                                 <a href="#" class="dropdown-item">Send SMS</a>
                                                 <hr class="dropdown-divider">
-                                                <!-- <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CRMHistoryModal">CRM History</a> -->
                                                 <a href="#" class="dropdown-item set_value_on_CRM_model" data-user-id="{{ $customer->id }}" data-ref="{{ $customer->lead_ref }}" data-contact-name="{{ $customer->contact_name }}" data-email="{{ $customer->email }}" data-name="{{ $customer->name }}" data-status="{{ $customer->status }}" data-telephone="{{ $customer->telephone }}" class="dropdown-item">CRM History</a>
                                                 <a href="#" class="dropdown-item open-modal" data-lead_ref="{{ $customer->lead_ref }}" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
                                                 <a href="{{ url('/leads/authorization').'/'.$customer->id }}" class="dropdown-item">Send for Authorization</a>
@@ -1574,9 +1573,10 @@
                 // Get the user ID from the data-user-id attribute of the anchor tag
                 var leadId = anchor.getAttribute('data-user-id');
                 var leadRef = anchor.getAttribute('data-ref');
-                document.getElementById('calls_contact_name').textContent = anchor.getAttribute('data-contact-name');
+                // alert(document.getElementById('calls_status').textContent);
+                document.getElementById('calls_contact_name').textContent  = anchor.getAttribute('data-contact-name');
                 document.getElementById('calls_lead_ref').textContent = anchor.getAttribute('data-ref');
-                document.getElementById('calls_lead_refs').textContent = anchor.getAttribute('data-ref');
+                document.getElementById('calls_lead_refs').textContent = leadRef;
                 document.getElementById('calls_status').textContent = anchor.getAttribute('data-status');
                 document.getElementById('calls_telephone').textContent = anchor.getAttribute('data-telephone');
                 document.getElementById('calls_email').textContent = anchor.getAttribute('data-email');
