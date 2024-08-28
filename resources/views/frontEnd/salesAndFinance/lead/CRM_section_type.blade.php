@@ -1,5 +1,10 @@
 @include('frontEnd.jobs.layout.header')
+<style>
+.icon-color span i{
+    font-size: 16px;
 
+}
+</style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
         <div class="row">
@@ -72,21 +77,21 @@
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        <span class="viewColor"></span> <span class="colorCode">{{ $value->color_code }}</span>
+                                        <span class="viewColor" style="background-color: {{ $value->color_code }}"></span> <span class="colorCode"></span>
                                     </div>
                                 </td>
-                                <td> @switch($value->crm_section)
-                                    @case(1) <i class="fa fa-phone"></i> @break
-                                    @case(2) <i class="fa fa-envelope-o"></i> @break
-                                    @case(3) <i class="fa fa-file-o"></i> @break
-                                    @case(4) <i class="fa fa-exclamation-triangle"></i> @break
-                                    @case(5) <i class="fa fa-list-ul"></i> @break
-                                    @case(6) <i class="fa fa-user"></i> @break
+                                <td> <div class="icon-color"> @switch($value->crm_section)
+                                    @case(2) <span style="color: {{ $value->color_code }}"><i class="fa fa-envelope"></i></span> @break
+                                    @case(1) <span style="color: {{ $value->color_code }}"><i class="fa fa-phone"></i></span> @break
+                                    @case(3) <span style="color: {{ $value->color_code }}"><i class="fa fa-file"></i></span> @break
+                                    @case(4) <span style="color: {{ $value->color_code }}"><i class="fa fa-exclamation-triangle"></i></span> @break
+                                    @case(5) <span style="color: {{ $value->color_code }}"><i class="fa fa-list-ul"></i></span> @break
+                                    @case(6) <span style="color: {{ $value->color_code }}"><i class="fa fa-user"></i></span> @break
                                     @case(7) @break
                                     @default {{-- No output if none of the cases match --}}
-                                    @endswitch </td>
+                                    @endswitch </div></td>
                                 <td> @if($value->status) <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span> @else <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> @endif </td>
-                                <td>
+    <td>
                                     <div class="d-inline-flex align-items-center ">
                                         <div class="nav-item dropdown">
                                             <a href="#" class="nav-link dropdown-toggle profileDrop show" data-bs-toggle="dropdown" aria-expanded="true">Action</a>
