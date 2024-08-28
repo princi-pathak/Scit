@@ -472,58 +472,150 @@ $access_rights = explode(',', $rights);
                     <h5 class="modal-title pupTitle" id="CRMHeaderPopupLabel">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                 </div>
-                <div class="modal-body crmModelCont">
+                <div class="modal-body crmModelCont pt-2">
                     <div class="jobsection pb-2 hideandshow">
                         <button class="profileDrop" id="onclickbtnHideShow">Hide/Show</button>
                     </div>
                     <div id="showDivCont">
-                    <div class="newJobForm mb-4">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="">
-                                    <h4 class="contTitle text-center">Contact Details</h4>
-                                </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4 col-form-label"> <strong>Full Name:</strong></label>
-                                    <div class="col-md-8">
-                                        <span id="calls_contact_name" class="editInput"> Arjun Kumar</span>
+                        <div class="newJobForm mb-4 p-1 px-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <h4 class="contTitle text-center">Contact Details</h4>
+                                    </div>
+                                    <div class="row pt-3">
+                                        <label class="col-md-4 col-form-label"> <strong>Full Name:</strong></label>
+                                        <div class="col-md-8">
+                                            <span id="" class="editInput"> Arjun Kumar</span>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-3">
+                                        <label class="col-md-4 col-form-label"> <strong>Email Address:</strong></label>
+                                        <div class="col-md-8">
+                                            <span id="" class="editInput">arjun@gmail.com</span>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-3">
+                                        <label class="col-md-4 col-form-label"> <strong>Telephone:</strong></label>
+                                        <div class="col-md-8">
+                                            <span id="" class="editInput">+91-1234567890</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4 col-form-label"> <strong>Email Address:</strong></label>
-                                    <div class="col-md-8">
-                                        <span id="calls_email" class="editInput">arjun@gmail.com</span>
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <h4 class="contTitle text-center"> <strong>Lead Details</strong></h4>
                                     </div>
-                                </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4 col-form-label"> <strong>Telephone:</strong></label>
-                                    <div class="col-md-8">
-                                        <span id="calls_telephone" class="editInput">+91-1234567890</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="">
-                                    <h4 class="contTitle text-center"> <strong>Lead Details</strong></h4>
-                                </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4 col-form-label"><strong>Lead Ref.:</strong></label>
-                                    <div class="col-md-8">
-                                        <span id="calls_lead_refs" class="editInput">Defoult</span>
-                                        <input type="hidden" id="lead_id_CRM" name="">
+                                    <div class="row pt-3">
+                                        <label class="col-md-4 col-form-label"><strong>Lead Ref.:</strong></label>
+                                        <div class="col-md-8">
+                                            <span id="" class="editInput">Defoult</span>
+                                            <input type="hidden" id="lead_id_CRM" name="">
 
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row pt-3">
-                                    <label class="col-md-4 col-form-label"> <strong>Lead Status:</strong></label>
-                                    <div class="col-md-8">
-                                        <span id="calls_status" class="editInput">425</span>
+                                    <div class="row pt-3">
+                                        <label class="col-md-4 col-form-label"> <strong>Lead Status:</strong></label>
+                                        <div class="col-md-8">
+                                            <span id="" class="editInput">425</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-fullHistory-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-fullHistory" type="button" role="tab" aria-controls="pills-fullHistory" aria-selected="true">Full History</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-Calls-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-Calls" type="button" role="tab" aria-controls="pills-Calls" aria-selected="false" tabindex="-1">Calls</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-emails-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-emails" type="button" role="tab" aria-controls="pills-emails" aria-selected="false" tabindex="-1">Emails</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-tasks-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-tasks" type="button" role="tab" aria-controls="pills-tasks" aria-selected="false" tabindex="-1">Tasks</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-notes-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-notes" type="button" role="tab" aria-controls="pills-notes" aria-selected="false" tabindex="-1">Notes</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-complaints-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-complaints" type="button" role="tab" aria-controls="pills-complaints" aria-selected="false" tabindex="-1">Complaints</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="CRMpills-fullHistory" role="tabpanel" aria-labelledby="pills-fullHistory-tab" tabindex="0">
+                            <div class="newJobForm mt-4">
+                                <label class="upperlineTitle">Full History</label>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <form class="searchForm" action="">
+                                            <div class="input-group mb-3 mt-3">
+                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="productDetailTable">
+                                            <table class="table">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>By</th>
+                                                        <th>Contact</th>
+                                                        <th>Type</th>
+                                                        <th>Note(s)</th>
+                                                        <th>Status</th>
+                                                        <th>Customer Visible</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>08/08/2024 06:16</td>
+                                                        <td>Abhi - (mobappssolutions131@gmail.com) </td>
+                                                        <td>1234567890</td>
+                                                        <td> System</td>
+                                                        <td>New Task 'Swapnil Task add' created for '08/08/2024 00:10'</td>
+                                                        <td>New Task</td>
+                                                        <td>..</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="CRMpills-Calls" role="tabpanel" aria-labelledby="pills-Calls-tab" tabindex="0">
+                            <div class="newJobForm mt-4">
+                                <label class="upperlineTitle">Calls History</label>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="CRMpills-emails" role="tabpanel" aria-labelledby="pills-emails-tab" tabindex="0">
+                            <div class="newJobForm mt-4">
+                                <label class="upperlineTitle">Emails History</label>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="CRMpills-tasks" role="tabpanel" aria-labelledby="pills-tasks-tab" tabindex="0">
+                            <div class="newJobForm mt-4">
+                                <label class="upperlineTitle">Tasks</label>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="CRMpills-notes" role="tabpanel" aria-labelledby="pills-notes-tab" tabindex="0">
+                            <div class="newJobForm mt-4">
+                                <label class="upperlineTitle">Notes</label>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="CRMpills-complaints" role="tabpanel" aria-labelledby="pills-complaints-tab" tabindex="0">
+                            <div class="newJobForm mt-4">
+                                <label class="upperlineTitle">Complaints History</label>
+                                
+                            </div>
+                        </div>
+                    </div>
 
 
 

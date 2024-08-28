@@ -258,7 +258,7 @@
                 <h5 class="modal-title" id="customerModalLabel">CRM Dashboard - <span id="calls_lead_ref"></span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body crmModelCont">
+            <div class="modal-body crmModelCont pt-2">
                 <div class="jobsection pb-2 hideandshow">
                     <button class="profileDrop" id="onclickbtnHideShow">Hide/Show</button>
                 </div>
