@@ -496,34 +496,34 @@
                                                     </div>
                                                 </nav>
                                                 <div class="tab-content p-3 border bg-light" id="nav-tabContent">
-                                                    <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <form>
+                                                    <form id="crm_lead_task_form">
+                                                        <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                            <div class="row">
+                                                                <div class="col-6">
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
                                                                         <div class="col-sm-8">
-                                                                            <select class="form-control editInput" name="" id="">
+                                                                            <input type="hidden" name="task" value="1">
+                                                                            <input type="hidden" name="lead_id" id="crm_lead_id_task">
+                                                                            <input type="hidden" id="crm_lead_task_id" name="crm_lead_task_id">
+                                                                            <select class="form-control editInput" name="user_id" id="">
                                                                                 @foreach($users as $value)
                                                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                                                                 @endforeach
                                                                             </select>
-                                                                            <!-- <input type="text" class="form-control editInput" id="staticEmail" value=""> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" class="form-control editInput" id="staticEmail" value="">
+                                                                            <input type="text" class="form-control editInput" id="staticEmail" name="title" value="">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
                                                                         <div class="col-sm-6">
-                                                                            <select class="form-control editInput" name="" id="lead_task_types">
-                                                                              
+                                                                            <select class="form-control editInput" name="task_type_id" id="lead_task_types">
                                                                             </select>
-                                                                            <!-- <input type="text"  class="form-control editInput" id="staticEmail" value=""> -->
                                                                         </div>
                                                                         <div class="col-sm-2">
                                                                             <a href="#!" class="formicon" id="openThirdModal"><i class="fa-solid fa-square-plus"></i></a>
@@ -532,137 +532,125 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Start Date</label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" id="staticEmail" value="">
+                                                                            <input type="date" class="form-control editInput" name="start_date" id="staticEmail" value="">
                                                                         </div>
                                                                         <div class="col-sm-4">
-                                                                            <input type="time" class="form-control editInput" id="staticEmail" value="">
+                                                                            <input type="time" class="form-control editInput" name="start_time" id="staticEmail" value="">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">End Date</label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" id="staticEmail" value="">
+                                                                            <input type="date" class="form-control editInput" name="end_date" id="staticEmail" value="">
                                                                         </div>
                                                                         <div class="col-sm-4">
-                                                                            <input type="time" class="form-control editInput" id="staticEmail" value="">
+                                                                            <input type="time" class="form-control editInput" name="end_time" id="staticEmail" value="">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 form-check">
-                                                                        <input type="checkbox" class="form-check-input editInput" id="exampleCheck1">
+                                                                        <input type="checkbox" class="form-check-input editInput" value="1" name="is_recurring" id="exampleCheck1">
                                                                         <label class="form-check-label editInput" for="exampleCheck1">Is Reccurring Task ?</label>
                                                                     </div>
-                                                                </form>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <form>
-                                                                    <!--  -->
+                                                                </div>
+                                                                <div class="col-6">
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notify ? </label>
                                                                         <div class="col-sm-8">
                                                                             <div class="form-check form-check-inline">
-                                                                                <input class="form-check-input" type="checkbox" name="inlinecheckOptions" id="yeson" value="option1" required="">
+                                                                                <input class="form-check-input" type="checkbox" name="notify" id="yeson" value="1" required="">
                                                                                 <label class="form-check-label checkboxtext" for="checkalrt">Yes, On</label>
                                                                             </div>
-                                                                            <!-- <input type="checkbox" class="editInput" id="yeson">
-                                                                            <label for="notify" class="col-form-label ps-3">Yes, On</label>                                                                             -->
                                                                             <div id="optionsDiv">
                                                                                 <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email"> Email</label>
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms"> SMS</label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Date & Time</label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" id="notify_date" name="notify_date">
+                                                                            <input type="date" class="form-control editInput" id="notify_date" name="task_date">
                                                                         </div>
                                                                         <div class="col-sm-4">
-                                                                            <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
+                                                                            <input type="time" class="form-control editInput" id="notify_time" name="task_time">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                         <div class="col-sm-8">
                                                                             <span class="editInput" id="related_To"></span>
-                                                                            
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
                                                                         <div class="col-sm-8">
-                                                                            <textarea name="" class="form-control textareaInput" rows="5" id=""></textarea>
+                                                                            <textarea name="notes" class="form-control textareaInput" rows="5" id=""></textarea>
                                                                         </div>
                                                                     </div>
-                                                                </form>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <form>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" class="form-control" id="staticEmail" value="">
+                                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                                            <div class="row">
+                                                                    <div class="col-6">
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
+                                                                            <div class="col-sm-8">
+                                                                            <input type="hidden" name="timer" value="2">
+                                                                                <select class="form-control editInput" name="user_id" id="">
+                                                                                    @foreach($users as $value)
+                                                                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" class="form-control" id="staticEmail" value="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Timer</label>
+                                                                            <div class="col-sm-8">
+                                                                                <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
+                                                                                <span id="timerDisplay">00:00:00</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
+                                                                            <div class="col-sm-8">
+                                                                                <span class="editInput" id="relatedTo"></span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" class="form-control" id="staticEmail" value="">
+                                                                    <div class="col-6">
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
+                                                                            <div class="col-sm-6">
+                                                                                <select class="form-control editInput" name="task_type_id_time" id="lead_task_types_timer">
+                                                                                    <option value="">Select</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                <a href="#!" class="formicon" id="openThirdModal2"><i class="fa-solid fa-square-plus"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
+                                                                            <div class="col-sm-8">
+                                                                                <textarea rows="5" name="" class="form-control textareaInput" id=""></textarea>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Timer</label>
-                                                                        <div class="col-sm-8">
-                                                                            <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
-                                                                            <span id="timerDisplay">00:00:00</span>
-
-                                                                            <!-- <input type="text" class="form-control" id="staticEmail" value=""> -->
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="mb-3 row">
-                                                                        <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
-                                                                        <div class="col-sm-8">
-                                                                            <span class="editInput" id="relatedTo"></span>
-                                                                            
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <form>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
-                                                                        <div class="col-sm-6">
-                                                                            <select class="form-control editInput" name="" id="">
-                                                                                @foreach($leadTask as $value)
-                                                                                <option value="{{ $value->id }}">{{ $value->title }}</option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                            <!-- <input type="text" class="form-control editInput" id="staticEmail" value=""> -->
-                                                                        </div>
-                                                                        <div class="col-sm-2">
-                                                                            <a href="#!" class="formicon" id="openThirdModal2"><i class="fa-solid fa-square-plus"></i></a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
-                                                                        <div class="col-sm-8">
-                                                                            <textarea rows="5" name="" class="form-control textareaInput" id=""></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                    </form>
                                                 <!-- tab -->
                                                 <div class="pageTitleBtn">
-                                                    <a href="#" class="profileDrop p-2 crmNewBtn"> Save</a>
+                                                    <a href="#" class="profileDrop p-2 crmNewBtn" id="saveCRMLeadTaskWithTimer"> Save</a>
                                                     <!-- <a href="#" class="profileDrop p-2 crmNewBtn" > Close</a> -->
                                                     <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                                 </div>
@@ -1130,7 +1118,7 @@
                                 </div>
                                 <textarea name="message" id="emailMessage" style="display: none;"></textarea>
                             </div>
-                            </div>
+                        </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Attachment </label>
@@ -1170,13 +1158,13 @@
                             <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput">
-                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) 
+                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
                                 </label>
                                 <label for="calls_notify_who2" class="editInput">
-                                    <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS 
+                                    <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS
                                 </label>
                                 <label for="calls_notify_who3" class="editInput">
-                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email 
+                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email
                                 </label>
                             </div>
                         </div>
@@ -1193,7 +1181,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="profileDrop" data-bs-dismiss="modal"  id="">Close</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="">Close</button>
                 <button type="button" class="profileDrop" id="saveCRMLeadEmails">Save</button>
             </div>
         </div>
@@ -1243,7 +1231,7 @@
                             <label class="form-check-label editInput" for="notify_notes1"> No </label>
                             <input class="form-check-input" type="radio" name="notify" id="notify_notes2" value="1">
                             <label class="form-check-label editInput" for="notify_notes2"> Yes </label>
-                        </div>  
+                        </div>
                     </div>
                     <div id="notification_notes_div">
                         <div class="mb-2 row">
@@ -1261,13 +1249,13 @@
                             <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput">
-                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) 
+                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
                                 </label>
                                 <label for="calls_notify_who2" class="editInput">
-                                    <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS 
+                                    <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS
                                 </label>
                                 <label for="calls_notify_who3" class="editInput">
-                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email 
+                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email
                                 </label>
                             </div>
                         </div>
@@ -1307,7 +1295,9 @@
                         <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                         <div class="col-sm-9">
                             <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
-                            <select class="form-control editInput" name="crm_section_type_id" id="lead_complaint_crm"><option value="">Select</option></select>
+                            <select class="form-control editInput" name="crm_section_type_id" id="lead_complaint_crm">
+                                <option value="">Select</option>
+                            </select>
                         </div>
                     </div>
                     <div class="mb-2 row">
@@ -1334,7 +1324,7 @@
                             <label class="form-check-label editInput" for="notify_complaint1"> No </label>
                             <input class="form-check-input" type="radio" name="notify" id="notify_complaint2" value="1">
                             <label class="form-check-label editInput" for="notify_complaint2"> Yes </label>
-                        </div>  
+                        </div>
                     </div>
                     <div id="notification_complaint_div">
                         <div class="mb-2 row">
@@ -1352,13 +1342,13 @@
                             <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_complaint_who1" class="editInput">
-                                    <input type="checkbox" name="notification" id="calls_complaint_who1" value="1"> Notification (User Only) 
+                                    <input type="checkbox" name="notification" id="calls_complaint_who1" value="1"> Notification (User Only)
                                 </label>
                                 <label for="calls_complaint_who2" class="editInput">
-                                    <input type="checkbox" name="sms" id="calls_complaint_who2" value="1"> SMS 
+                                    <input type="checkbox" name="sms" id="calls_complaint_who2" value="1"> SMS
                                 </label>
                                 <label for="calls_complaint_who3" class="editInput">
-                                    <input type="checkbox" name="email" id="calls_complaint_who3" value="1"> Email 
+                                    <input type="checkbox" name="email" id="calls_complaint_who3" value="1"> Email
                                 </label>
                             </div>
                         </div>
@@ -1379,8 +1369,7 @@
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 <script>
-
-    function getComplaintDataAjax(){
+    function getComplaintDataAjax() {
         var lead_id = document.getElementById('lead_id_CRM').value;
         var lead_ref = document.getElementById('calls_lead_refs').textContent;
         $.ajax({
@@ -1410,7 +1399,7 @@
                         row.appendChild(dateCell);
 
                         const nameCell = document.createElement('td');
-                        nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
+                        nameCell.innerHTML = "<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>";
                         row.appendChild(nameCell);
 
                         const phoneCell = document.createElement('td');
@@ -1452,7 +1441,7 @@
         });
     }
 
-    function getCallDataAjax(){
+    function getCallDataAjax() {
         var lead_ref = document.getElementById('calls_lead_refs').textContent;
         var lead_id = document.getElementById('lead_id_CRM').value;
         console.log("lead_ref ", lead_id);
@@ -1483,7 +1472,7 @@
                         row.appendChild(dateCell);
 
                         const nameCell = document.createElement('td');
-                        nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
+                        nameCell.innerHTML = "<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>";
                         row.appendChild(nameCell);
 
                         // const nameCell = document.createElement('td');
@@ -1529,7 +1518,7 @@
         });
     }
 
-    function getEmailDataAjaxCall(){
+    function getEmailDataAjaxCall() {
         var lead_id = document.getElementById('lead_id_CRM').value;
         var lead_ref = document.getElementById('calls_lead_refs').textContent;
         $.ajax({
@@ -1559,7 +1548,7 @@
                         row.appendChild(dateCell);
 
                         const nameCell = document.createElement('td');
-                        nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
+                        nameCell.innerHTML = "<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>";
                         row.appendChild(nameCell);
 
                         // const nameCell = document.createElement('td');
@@ -1605,7 +1594,7 @@
         });
     }
 
-    function getNotesDataAjax(){
+    function getNotesDataAjax() {
         var lead_id = document.getElementById('lead_id_CRM').value;
         var lead_ref = document.getElementById('calls_lead_refs').textContent;
         $.ajax({
@@ -1635,7 +1624,7 @@
                         row.appendChild(dateCell);
 
                         const nameCell = document.createElement('td');
-                        nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
+                        nameCell.innerHTML = "<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>";
                         row.appendChild(nameCell);
 
                         const phoneCell = document.createElement('td');
@@ -1751,7 +1740,7 @@
                 var leadId = anchor.getAttribute('data-user-id');
                 var leadRef = anchor.getAttribute('data-ref');
                 // alert(document.getElementById('calls_status').textContent);
-                document.getElementById('calls_contact_name').textContent  = anchor.getAttribute('data-contact-name');
+                document.getElementById('calls_contact_name').textContent = anchor.getAttribute('data-contact-name');
                 document.getElementById('calls_lead_ref').textContent = anchor.getAttribute('data-ref');
                 document.getElementById('calls_lead_refs').textContent = leadRef;
                 document.getElementById('calls_status').textContent = anchor.getAttribute('data-status');
@@ -1767,9 +1756,10 @@
                 document.getElementById('lead_id_email').value = leadId;
                 document.getElementById('lead_id_CRM').value = leadId;
                 document.getElementById('lead_ref_complaint').textContent = leadRef;
-                document.getElementById('lead_id_complaint').value = leadId;                
+                document.getElementById('lead_id_complaint').value = leadId;
+                document.getElementById('crm_lead_id_task').value = leadId;
                 
-                
+
                 // Open CRM modal
                 $('#customerPop').modal('show');
             });
@@ -1813,7 +1803,29 @@
                 }
             });
         });
-        
+
+        // Ajax Call for saving CRM section Type
+        $('#lead_task_types_timer').on('click', function() {
+            $.ajax({
+                url: '{{ route("lead.ajax.getLeadTaskType") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response.data);
+                    const selectElement = document.getElementById('lead_task_types_timer');
+                    selectElement.innerHTML = '';
+                    response.data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.title;
+                        selectElement.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
         // Ajax call for getting CRM Section Types
         $('#calls_type').on('click', function() {
             $.ajax({
@@ -1858,8 +1870,8 @@
             });
         });
 
-         // Ajax call for getting CRM Section Types for CRM Complaint 
-         $('#lead_complaint_crm').on('click', function() {
+        // Ajax call for getting CRM Section Types for CRM Complaint 
+        $('#lead_complaint_crm').on('click', function() {
             $.ajax({
                 url: '{{ route("lead.ajax.getCRMTypeData") }}',
                 method: 'GET',
@@ -1957,6 +1969,25 @@
             });
         });
 
+        // Ajax Call for adding CRM Lead Task and timer
+        $('#saveCRMLeadTaskWithTimer').on('click', function() {
+            var formData = $('#crm_lead_task_form').serialize();
+            $.ajax({
+                url: '{{ route("lead.ajax.saveCRMLeadTaskAndTimer") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#secondModal').modal('hide');
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+        
+
         // js start here for calls model open and close
         const openCallsModel = document.getElementById('openCallsModel');
         const callsModel = document.getElementById('callsModal');
@@ -2046,7 +2077,7 @@
             }
         }
         // CRM Complaint Js End for model show
-        
+
 
         const mainCheckbox = document.getElementById('yeson');
         const optionsDiv = document.getElementById('optionsDiv');
@@ -2340,31 +2371,31 @@
         .then(editor => {
             window.editor = editor;
             // var editorData = editor.getData();
-               // Add a click event listener to the save button
-               document.getElementById('saveCRMLeadEmails').addEventListener('click', function() {
+            // Add a click event listener to the save button
+            document.getElementById('saveCRMLeadEmails').addEventListener('click', function() {
 
-                    // Get the CKEditor content
-                    document.getElementById('emailMessage').value = editor.getData();
-                    console.log(document.getElementById('emailMessage').value);
-                    var formData = new FormData(document.getElementById('crm_lead_email_form'));
+                // Get the CKEditor content
+                document.getElementById('emailMessage').value = editor.getData();
+                console.log(document.getElementById('emailMessage').value);
+                var formData = new FormData(document.getElementById('crm_lead_email_form'));
 
-                    console.log(formData);
-                    $.ajax({
-                        url: '{{ route("lead.ajax.saveCRMLeadEmails") }}',
-                        method: 'POST',
-                        data: formData,
-                        processData: false,  // Important: Don't process the data
-                        contentType: false,  
-                        success: function(response) {
-                            alert(response.message);
-                            $('#NewEmailModel').modal('hide');
-                            getEmailDataAjaxCall();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(error);
-                        }
-                    });
+                console.log(formData);
+                $.ajax({
+                    url: '{{ route("lead.ajax.saveCRMLeadEmails") }}',
+                    method: 'POST',
+                    data: formData,
+                    processData: false, // Important: Don't process the data
+                    contentType: false,
+                    success: function(response) {
+                        alert(response.message);
+                        $('#NewEmailModel').modal('hide');
+                        getEmailDataAjaxCall();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
                 });
+            });
 
         })
         .catch(error => {
@@ -2373,7 +2404,7 @@
 
 
 
-        ClassicEditor
+    ClassicEditor
         .create(document.querySelector('#NotesEditor'), {
             plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment, PreviewPlugin],
             toolbar: [
@@ -2384,31 +2415,31 @@
         .then(editor => {
             window.editor = editor;
             var editorData = editor.getData();
-               // Add a click event listener to the save button
-               document.getElementById('saveCRMLeadNotes').addEventListener('click', function() {
-                    // Get the CKEditor content
-                    document.getElementById('CRMNotes').value = editor.getData();
-                    console.log(document.getElementById('CRMNotes').value);
-                    // var formData = new FormData(document.getElementById('crm_lead_notes_form'));
-                    var formData = $('#crm_lead_notes_form').serialize();
-                    console.log(formData);
-                    $.ajax({
-                        url: '{{ route("lead.ajax.saveCRMLeadNotes") }}',
-                        method: 'POST',
-                        data: formData,
-                        // processData: false,  
-                        // contentType: false,  
-                        success: function(response) {
-                            alert(response.message);
-                            $('#NewNotesModel').modal('hide');
-                            getNotesDataAjax();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(error);
-                        }
-                    });
-                 
+            // Add a click event listener to the save button
+            document.getElementById('saveCRMLeadNotes').addEventListener('click', function() {
+                // Get the CKEditor content
+                document.getElementById('CRMNotes').value = editor.getData();
+                console.log(document.getElementById('CRMNotes').value);
+                // var formData = new FormData(document.getElementById('crm_lead_notes_form'));
+                var formData = $('#crm_lead_notes_form').serialize();
+                console.log(formData);
+                $.ajax({
+                    url: '{{ route("lead.ajax.saveCRMLeadNotes") }}',
+                    method: 'POST',
+                    data: formData,
+                    // processData: false,  
+                    // contentType: false,  
+                    success: function(response) {
+                        alert(response.message);
+                        $('#NewNotesModel').modal('hide');
+                        getNotesDataAjax();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
                 });
+
+            });
 
         })
         .catch(error => {
@@ -2417,7 +2448,7 @@
 
 
 
-        ClassicEditor
+    ClassicEditor
         .create(document.querySelector('#complaintEditor'), {
             plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment, PreviewPlugin],
             toolbar: [
@@ -2428,36 +2459,35 @@
         .then(editor => {
             window.editor = editor;
             var editorData = editor.getData();
-               // Add a click event listener to the save button
-               document.getElementById('saveCRMLeadComplaint').addEventListener('click', function() {
-                    // Get the CKEditor content
-                    document.getElementById('CRMComplaint').value = editor.getData();
-                    console.log(document.getElementById('CRMComplaint').value);
-                    var formData = $('#crm_lead_complaint_form').serialize();
-                    console.log(formData);
-                    $.ajax({
-                        url: '{{ route("lead.ajax.saveCRMLeadComplaint") }}',
-                        method: 'POST',
-                        data: formData,
-                        // processData: false,  
-                        // contentType: false,  
-                        success: function(response) {
-                            alert(response.message);
-                            getComplaintDataAjax();
-                            $('#compliantsModal').modal('hide');
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(error);
-                        }
-                    });
-                 
+            // Add a click event listener to the save button
+            document.getElementById('saveCRMLeadComplaint').addEventListener('click', function() {
+                // Get the CKEditor content
+                document.getElementById('CRMComplaint').value = editor.getData();
+                console.log(document.getElementById('CRMComplaint').value);
+                var formData = $('#crm_lead_complaint_form').serialize();
+                console.log(formData);
+                $.ajax({
+                    url: '{{ route("lead.ajax.saveCRMLeadComplaint") }}',
+                    method: 'POST',
+                    data: formData,
+                    // processData: false,  
+                    // contentType: false,  
+                    success: function(response) {
+                        alert(response.message);
+                        getComplaintDataAjax();
+                        $('#compliantsModal').modal('hide');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
                 });
+
+            });
 
         })
         .catch(error => {
             console.error(error);
         });
-
 </script>
 <!-- Email CK Editor End -->
 @include('frontEnd.jobs.layout.footer')
