@@ -8,7 +8,8 @@ use App\User;
 use App\Lead;
 use Illuminate\Support\Facades\Auth;
 use App\Customer;
-use Validator;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use App\Models\LeadRejectType;
 use App\Models\LeadRejectReason;
 use App\Models\AttachmentType;
@@ -25,6 +26,7 @@ use App\Models\CRMLeadCalls;
 use App\Models\CRMLeadEmail;
 use App\Models\CRMLeadNotes;
 use App\Models\CRMLeadComplaint;
+use App\Models\CRMLeadTask;
 
 class LeadController extends Controller
 {
@@ -109,7 +111,7 @@ class LeadController extends Controller
                 return redirect()->route('lead.index')->with('error', 'Failed to create customer.');
             }
         } catch (\Exception $e) {
-            \Log::error('Error saving lead: ' . $e->getMessage());
+            Log::error('Error saving lead: ' . $e->getMessage());
             return back()->withInput()->withErrors(['error' => 'Failed to save lead. Please try again.']);
         }
     }
@@ -764,6 +766,74 @@ class LeadController extends Controller
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
+    }
+
+    public function saveCRMLeadTaskAndTimer(Request $request){
+        // dd($request);
+
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required',
+            'task_type_id' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        if($request->task === 1){
+            $validator = Validator::make($request->all(), [
+                'start_date' => 'required',
+                'start_time' => 'required',
+                'end_date' => 'required',
+                'end_time' => 'required',
+            ]);
+        } elseif ($request->timer == 2){
+            $validator = Validator::make($request->all(), [
+                'start_time' => 'required',
+            ]);
+        }
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+       
+        if($request->notify == 1){
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+
+        if(!isset($notification) || !isset($sms) || !isset($email)){
+            $notification = $sms = $email = null;
+        }
+
+        // Data to update or create
+        $values = [
+            'home_id' => Auth::user()->home_id,
+            'lead_id' => $request->lead_id,
+            'user_id' => $request->user_id,
+            'title' => $request->title,
+            'task_type_id' => $request->task_type_id ?? $request->task_type_id_time,
+            'start_date' => $request->start_date,
+            'start_time' => $request->start_time,
+            'end_date' => $request->end_date,
+            'end_time' => $request->end_time,
+            'is_recurring' => $request->is_recurring ?? false,
+            'notify' => $request->notify,
+            'notification' => $notification,
+            'sms' => $sms,
+            'email' => $email,
+            'task_date' => $request->task_date, 
+            'task_time' => $request->task_time,
+            'notes' => $request->notes
+        ];
+
+        // Update the record if it exists, otherwise create a new one
+        CRMLeadTask::updateOrCreate(['id' => $request->crm_lead_task_id], $values);
+
+        if (isset($request->crm_lead_notes_id)) {
+            return response()->json(['message' => 'Record updated successfully!']);
+        } else {
+            return response()->json(['message' => 'CRM Lead Task added successfully!']);
+        }
+
     }
     
 }
