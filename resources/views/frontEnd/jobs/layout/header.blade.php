@@ -13,6 +13,10 @@
     <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
+<script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
     <style>
         table.dataTable td.select-checkbox:before {
             display: none;
@@ -526,9 +530,10 @@ $access_rights = explode(',', $rights);
                     </div>
                     <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="pills-fullHistory-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-fullHistory" type="button" role="tab" aria-controls="pills-fullHistory" aria-selected="true">Full History</button>
+                            <button class="nav-link active" id="pills-userCRMfullHistory-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-fullHistory" type="button" role="tab" aria-controls="pills-fullHistory" aria-selected="true">Full History</button>
                         </li>
                         <li class="nav-item" role="presentation">
+
                             <button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#CRMpills-Calls" type="button" role="tab" aria-controls="pills-Calls" aria-selected="false" tabindex="-1">Calls</button>
                         </li>
                         <li class="nav-item" role="presentation">
@@ -545,8 +550,10 @@ $access_rights = explode(',', $rights);
                         </li>
                     </ul>
 
+
+
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="CRMpills-fullHistory" role="tabpanel" aria-labelledby="pills-fullHistory-tab" tabindex="0">
+                        <div class="tab-pane fade show active" id="CRMpills-fullHistory" role="tabpanel" aria-labelledby="pills-userCRMfullHistory-tab" tabindex="0">
                             <div class="newJobForm mt-4">
                                 <label class="upperlineTitle">Full History</label>
                                 <div class="row">
@@ -589,35 +596,260 @@ $access_rights = explode(',', $rights);
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="CRMpills-Calls" role="tabpanel" aria-labelledby="pills-Calls-tab" tabindex="0">
+                        <div class="tab-pane fade" id="CRMpills-Calls" role="tabpanel" aria-labelledby="pills-userCRMCalls-tab" tabindex="0">
                             <div class="newJobForm mt-4">
                                 <label class="upperlineTitle">Calls History</label>
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <div class="jobsection  mt-3">
+                                            <a href="#" class="profileDrop p-2 crmNewBtn" id="userCRMCallsModel"> New</a>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <form class="searchForm" action="">
+                                            <div class="input-group mb-3  mt-3">
+                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="productDetailTable">
+                                            <table class="table" id="">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>By</th>
+                                                        <th>Contact</th>
+                                                        <th>Type</th>
+                                                        <th>Note(s)</th>
+                                                        <th>Customer Visible</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="CRMpills-emails" role="tabpanel" aria-labelledby="pills-emails-tab" tabindex="0">
+                        <div class="tab-pane fade" id="CRMpills-emails" role="tabpanel" aria-labelledby="pills-userCRMemails-tab" tabindex="0">
                             <div class="newJobForm mt-4">
                                 <label class="upperlineTitle">Emails History</label>
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <div class="jobsection  mt-3">
+                                            <a href="#" class="profileDrop p-2 crmNewBtn" id=""> New</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <form class="searchForm" action="">
+                                            <div class="input-group mb-3  mt-3">
+                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="productDetailTable">
+                                            <table class="table" id="">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>By</th>
+                                                        <th>Contact</th>
+                                                        <th>Type</th>
+                                                        <th>Note(s)</th>
+                                                        <th>Status</th>
+                                                        <th>Customer Visible</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="CRMpills-tasks" role="tabpanel" aria-labelledby="pills-tasks-tab" tabindex="0">
+                        <div class="tab-pane fade" id="CRMpills-tasks" role="tabpanel" aria-labelledby="pills-userCRMtasks-tab" tabindex="0">
                             <div class="newJobForm mt-4">
                                 <label class="upperlineTitle">Tasks</label>
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <div class="jobsection  mt-3">
+                                            <a href="#" class="profileDrop p-2 crmNewBtn open-modal" data-target="bd-example-modal-lg" id=""> New</a>
+                                        </div>
+                                    </div>
+                                    <!-- ****************************** -->
+                                    <div class="col-sm-3">
+                                        <form class="searchForm" action="">
+                                            <div class="input-group mb-3  mt-3">
+                                                <input type="text" class="form-control editInput" placeholder="Keywords to search" name="email">
+                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="overdue mt-3 ms-3">
+                                            <span class="yeloColrbox"></span><label>Overdue</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="pageTitleBtn">
+                                            <a href="{{ url('') }}" class="profileDrop p-2 crmNewBtn">All</a>
+                                            <a href="#" class="profileDrop p-2 crmNewBtn">Today</a>
+                                            <a href="#" class="profileDrop p-2 crmNewBtn">This Week</a>
+                                            <a href="#" class="profileDrop p-2 crmNewBtn">Overdue</a>
+                                            <a href="#" class="profileDrop p-2 crmNewBtn">Completed</a>
+                                            <a href="#" class="profileDrop p-2 crmNewBtn">Recurring</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="productDetailTable">
+                                            <table class="table">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>By</th>
+                                                        <th>Contact</th>
+                                                        <th>Type</th>
+                                                        <th>Note(s)</th>
+                                                        <th>Status</th>
+                                                        <th>Customer Visible</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="CRMpills-notes" role="tabpanel" aria-labelledby="pills-notes-tab" tabindex="0">
+                        <div class="tab-pane fade" id="CRMpills-notes" role="tabpanel" aria-labelledby="pills-userCRMnotes-tab" tabindex="0">
                             <div class="newJobForm mt-4">
                                 <label class="upperlineTitle">Notes</label>
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <div class="jobsection  mt-3">
+                                            <a href="#" class="profileDrop p-2 crmNewBtn" id=""> New</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <form class="searchForm" action="">
+                                            <div class="input-group mb-3  mt-3">
+                                                <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="productDetailTable">
+                                            <table class="table" id="">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>By</th>
+                                                        <th>Contact</th>
+                                                        <th>Type</th>
+                                                        <th>Note(s)</th>
+                                                        <th>Status</th>
+                                                        <th>Customer Visible</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="CRMpills-complaints" role="tabpanel" aria-labelledby="pills-complaints-tab" tabindex="0">
+                        <div class="tab-pane fade" id="CRMpills-complaints" role="tabpanel" aria-labelledby="pills-userCRMcomplaints-tab" tabindex="0">
                             <div class="newJobForm mt-4">
                                 <label class="upperlineTitle">Complaints History</label>
-                                
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <div class="jobsection  mt-3">
+                                            <a href="#" class="profileDrop p-2 crmNewBtn" id=""> New</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <form class="searchForm" action="">
+                                            <div class="input-group mb-3  mt-3">
+                                                <input type="text" class="form-control editInput" placeholder="Keyword to search" name="email">
+                                                <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="productDetailTable">
+                                            <table class="table">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>By</th>
+                                                        <th>Contact</th>
+                                                        <th>Type</th>
+                                                        <th>Note(s)</th>
+                                                        <th>Status</th>
+                                                        <th>Customer Visible</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                        <td>.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
 
                 </div>
                 <div class="modal-footer">
@@ -627,3 +859,249 @@ $access_rights = explode(',', $rights);
             </div>
         </div>
     </div>
+
+
+
+    <!-- Calls History new Popup -->
+
+
+<!-- Calls Modal -->
+<div class="modal fade" id="userCallsModal" tabindex="-1" aria-labelledby="callsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerModalLabel">Calls</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeUserCallsModels"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" class="customerForm" id="CRM_calls_form">
+                    <div class="mb-2 row">
+                        <input type="hidden" name="crm_lead_calls_id" id="crm_lead_calls_id">
+                        <label for="calls_telephone" class="col-sm-3 col-form-label">Direction </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="direction" id="direction_radio1" value="0" checked>
+                            <label class="form-check-label editInput" for="direction_radio1"> Call Out </label>
+                            <input class="form-check-input" type="radio" name="direction" id="direction_radio2" value="1">
+                            <label class="form-check-label editInput" for="direction_radio2"> Call In </label>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_telephone" class="col-sm-3 col-form-label">Telephone </label>
+                        <div class="col-sm-2">
+                            <select class="form-control editInput selectOptions" required="" name="country_code" id="countries">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control editInput" id="calls_telephone" name="telephone" placeholder="Telephone">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <div class="col-sm-7">
+                            <select name="crm_type_id" class="form-control editInput" id="calls_type">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <a href="#!" class="formicon" id="userCRMTypeModel"><i class="fa-solid fa-square-plus"></i></a>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                        <div class="col-sm-9">
+                            <div id="UserEditor">
+                            </div>
+                            <textarea name="content" id="calls_notes" style="display: none;"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_lead_ref" class="col-sm-3 col-form-label">Related To </label>
+                        <div class="col-sm-9">
+                            <span class="editInput" id="call_lead_ref"></span>
+                            <input type="hidden" name="lead_ref" id="call_lead_ref_data">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input notify_radio1" type="radio" name="notify_radio" id="" value="0" checked>
+                            <label class="form-check-label editInput" for=""> No </label>
+                            <input class="form-check-input notify_radio2" type="radio" name="notify_radio" id="" value="1">
+                            <label class="form-check-label editInput" for=""> Yes </label>
+                        </div>
+                    </div>
+                    <div class="notification_div">
+                        <div class="mb-2 row">
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <select name="notify_user" class="form-control editInput" id="user_notifiy">
+                                    <option value=""></option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
+                                <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
+                                <label for="calls_notify_who3" class="editInput"><input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault1" value="0" checked>
+                            <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
+                            <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault2" value="1">
+                            <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" id="saveCRMCallsModelData">Save</button>
+                <button type="button" class="profileDrop" id="closeUserCallsModels" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Calls Modal -->
+
+
+<!-- CRM Types Modal Start -->
+<div class="modal fade" id="typeCrmModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCrmModalBtn" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="crm_section_type_form">
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control editInput" name="title" id="type_title" value="">
+                            <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
+                        <div class="col-sm-9">
+                            <input type="color" class="form-control editInput" name="colour_code" id="colour_code" value="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" id="closeCrmModalBtn">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMTypes">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CRM Types Modal End -->
+
+<!-- Script For adding CK editor start -->
+<script type="importmap">
+    {
+        "imports": {
+            "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
+            "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
+        }
+    }
+</script>
+<!-- calls CK editor Js -->
+<script type="module">
+    import {
+        ClassicEditor,
+        Essentials,
+        Paragraph,
+        Bold,
+        Italic,
+        Font,
+        Underline,
+        Alignment
+    } from 'ckeditor5';
+
+    ClassicEditor
+        .create(document.querySelector('#UserEditor'), {
+            plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic', 'underline', 'alignment', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ]
+        })
+        .then(editor => {
+            window.editor = editor;
+            // Add a click event listener to the save button
+            document.getElementById('saveCRMCallsModelData').addEventListener('click', function() {
+
+                // Get the CKEditor content
+                document.getElementById('calls_notes').value = editor.getData();
+                // console.log(document.getElementById('calls_notes').value);
+                // var formData = $('#CRM_calls_form').serialize();
+
+            
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+<!-- Script For adding CK editor End -->
+
+<!-- End Calls History new Popup -->
+
+
+<script>
+
+      // CRM Complaint Js Start for model show
+        const userCRMCallsModel = document.getElementById('userCRMCallsModel');
+        const userCallsModal = document.getElementById('userCallsModal');
+        const closeUserCallsModels = document.getElementById('closeUserCallsModels');
+
+        // When the user clicks the button, open the modal 
+        userCRMCallsModel.onclick = function() {
+            $('#userCallsModal').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeUserCallsModels.onclick = function() {
+            $('#userCallsModal').modal('hide');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === compliantsModal) {
+                $('#userCallsModal').modal('hide');
+            }
+        }
+        // CRM Complaint Js End for model show
+
+
+         // CRM Section Type Js Start for model show
+        const userCRMTypeModel = document.getElementById('userCRMTypeModel');
+        const typeCrmModel = document.getElementById('typeCrmModel');
+        const closeCrmModalBtn = document.getElementById('closeCrmModalBtn');
+
+        // When the user clicks the button, open the modal 
+        userCRMTypeModel.onclick = function() {
+            $('#typeCrmModel').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeCrmModalBtn.onclick = function() {
+            $('#typeCrmModel').modal('hide');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === compliantsModal) {
+                $('#typeCrmModel').modal('hide');
+            }
+        }
+        // CRM Section Type Js End for model show
+</script>

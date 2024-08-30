@@ -585,7 +585,7 @@
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                         <div class="col-sm-8">
                                                                             <span class="editInput" id="related_To"></span>
-                                                                            <!-- <input type="text" class="form-control editInput" id="related_To" value="{{ $customer->lead_ref }}"> -->
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
@@ -628,7 +628,7 @@
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                         <div class="col-sm-8">
                                                                             <span class="editInput" id="relatedTo"></span>
-                                                                            <!-- <input type="text" class="form-control editInput" id="relatedTo" value="{{ $customer->lead_ref }}"> -->
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </form>
