@@ -38,6 +38,11 @@
         z-index: 99999;
         transition: opacity 0.3s ease;
     }
+
+    .col-form-label p {
+        margin: 0;
+        line-height: 15px;
+    }
 </style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
@@ -891,7 +896,7 @@
                             <div class="row">
                                 <div class="col-sm-1">
                                     <div class="jobsection  mt-3">
-                                        <a href="#" class="profileDrop p-2 crmNewBtn"> New</a>
+                                        <a href="#" class="profileDrop p-2 crmNewBtn" id="openComplaintsModel"> New</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
@@ -904,7 +909,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="productDetailTable">
-                                        <table class="table">
+                                        <table class="table" id="crmLeadComplaintsTable">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Date</th>
@@ -988,9 +993,11 @@
                     <div class="mb-2 row">
                         <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
                         <div class="col-sm-9">
-                            <div id="editor">
+                            <div class="col-form-label">
+                                <div id="editor">
+                                </div>
+                                <textarea name="content" id="calls_notes" style="display: none;"></textarea>
                             </div>
-                            <textarea name="content" id="calls_notes" style="display: none;"></textarea>
                         </div>
                     </div>
                     <div class="mb-2 row">
@@ -1118,10 +1125,12 @@
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Message <span class="red-text">*</span> </label>
                         <div class="col-sm-9">
-                            <div id="emailEditor">
+                            <div class="col-form-label">
+                                <div id="emailEditor">
+                                </div>
+                                <textarea name="message" id="emailMessage" style="display: none;"></textarea>
                             </div>
-                            <textarea name="message" id="emailMessage" style="display: none;"></textarea>
-                        </div>
+                            </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Attachment </label>
@@ -1184,7 +1193,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="profileDrop" id="">Close</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal"  id="">Close</button>
                 <button type="button" class="profileDrop" id="saveCRMLeadEmails">Save</button>
             </div>
         </div>
@@ -1197,7 +1206,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title" id="emailModalLabel">Notes</h5>
+                <h5 class="modal-title" id="notesModalLabel">Notes</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCrmNotesBtn" aria-label="Close">
                 </button>
             </div>
@@ -1213,9 +1222,11 @@
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
                         <div class="col-sm-9">
-                            <div id="NotesEditor">
+                            <div class="col-form-label">
+                                <div id="NotesEditor">
+                                </div>
+                                <textarea name="notes" id="CRMNotes" style="display: none;"></textarea>
                             </div>
-                            <textarea name="notes" id="CRMNotes" style="display: none;"></textarea>
                         </div>
                     </div>
                     <div class="mb-2 row">
@@ -1281,11 +1292,391 @@
 </div>
 <!-- CRM Add Notes Modal End -->
 
+<!-- CRM Add compliants Modal Start -->
+<div class="modal fade" id="compliantsModal" tabindex="-1" role="dialog" aria-labelledby="compliantsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="compliantsModalLabel">Complaint</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCrmComplaintBtn" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="crm_lead_complaint_form">
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <div class="col-sm-9">
+                            <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
+                            <select class="form-control editInput" name="crm_section_type_id" id="lead_complaint_crm"><option value="">Select</option></select>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                        <div class="col-sm-9">
+                            <div class="col-form-label">
+                                <div id="complaintEditor">
+                                </div>
+                                <textarea name="compliant" id="CRMComplaint" style="display: none;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
+                        <div class="col-sm-9">
+                            <span class="editInput" id="lead_ref_complaint"></span>
+                            <input type="hidden" id="lead_id_complaint" name="lead_id">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="" class="col-sm-3 col-form-label">Notify? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="notify" id="notify_complaint1" value="0" checked>
+                            <label class="form-check-label editInput" for="notify_complaint1"> No </label>
+                            <input class="form-check-input" type="radio" name="notify" id="notify_complaint2" value="1">
+                            <label class="form-check-label editInput" for="notify_complaint2"> Yes </label>
+                        </div>  
+                    </div>
+                    <div id="notification_complaint_div">
+                        <div class="mb-2 row">
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <select name="user_id" class="form-control editInput" id="user_notifiy">
+                                    <option value=""></option>
+                                    @foreach($users as $value)
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <label for="calls_complaint_who1" class="editInput">
+                                    <input type="checkbox" name="notification" id="calls_complaint_who1" value="1"> Notification (User Only) 
+                                </label>
+                                <label for="calls_complaint_who2" class="editInput">
+                                    <input type="checkbox" name="sms" id="calls_complaint_who2" value="1"> SMS 
+                                </label>
+                                <label for="calls_complaint_who3" class="editInput">
+                                    <input type="checkbox" name="email" id="calls_complaint_who3" value="1"> Email 
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" id="closeCrmComplaintBtn">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMLeadComplaint">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CRM Add compliants Modal End -->
+
 <!-- ****************End CRM History Modal ****************-->
 <!-- Moment js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 <script>
+
+    function getComplaintDataAjax(){
+        var lead_id = document.getElementById('lead_id_CRM').value;
+        var lead_ref = document.getElementById('calls_lead_refs').textContent;
+        $.ajax({
+            url: '{{ route("lead.ajax.getCRMComplaintData") }}',
+            method: 'POST',
+            data: {
+                lead_id: lead_id
+            },
+            success: function(response) {
+                console.log(response.data);
+
+                // Get the table body element
+                const tableBody = document.querySelector('#crmLeadComplaintsTable tbody');
+                tableBody.innerHTML = '';
+
+                // Function to populate the table
+                function populateTable(data) {
+                    data.forEach(item => {
+                        // Create a new row
+                        const row = document.createElement('tr');
+
+                        const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+
+                        // Create cells and append them to the row
+                        const dateCell = document.createElement('td');
+                        dateCell.textContent = date;
+                        row.appendChild(dateCell);
+
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
+                        row.appendChild(nameCell);
+
+                        const phoneCell = document.createElement('td');
+                        phoneCell.textContent = item.telephone;
+                        row.appendChild(phoneCell);
+
+                        const typeCell = document.createElement('td');
+                        typeCell.textContent = item.title;
+                        row.appendChild(typeCell);
+
+                        const notesCell = document.createElement('td');
+                        notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.notes;
+
+                        row.appendChild(notesCell);
+
+                        const visibilityCell = document.createElement('td');
+                        if (item.customer_visibility == 0) {
+                            visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        } else if (item.customer_visibility == 1) {
+                            visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        }
+                        row.appendChild(visibilityCell);
+
+                        const idCell = document.createElement('td');
+                        idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
+                        row.appendChild(idCell);
+
+                        // Append the row to the table body
+                        tableBody.appendChild(row);
+                    });
+                }
+
+                // Call the function to populate the table with the data array
+                populateTable(response.data);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function getCallDataAjax(){
+        var lead_ref = document.getElementById('calls_lead_refs').textContent;
+        var lead_id = document.getElementById('lead_id_CRM').value;
+        console.log("lead_ref ", lead_id);
+        $.ajax({
+            url: '{{ route("lead.ajax.getCRMCallsData") }}',
+            method: 'POST',
+            data: {
+                lead_ref: lead_id
+            },
+            success: function(response) {
+                console.log(response.data);
+
+                // Get the table body element
+                const tableBody = document.querySelector('#crmCallData tbody');
+                tableBody.innerHTML = '';
+
+                // Function to populate the table
+                function populateTable(data) {
+                    data.forEach(item => {
+                        // Create a new row
+                        const row = document.createElement('tr');
+
+                        const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+
+                        // Create cells and append them to the row
+                        const dateCell = document.createElement('td');
+                        dateCell.textContent = date;
+                        row.appendChild(dateCell);
+
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
+                        row.appendChild(nameCell);
+
+                        // const nameCell = document.createElement('td');
+                        // nameCell.textContent = item.user_id;
+                        // row.appendChild(nameCell);
+
+                        const phoneCell = document.createElement('td');
+                        phoneCell.textContent = item.telephone;
+                        row.appendChild(phoneCell);
+
+                        const typeCell = document.createElement('td');
+                        typeCell.textContent = item.title;
+                        row.appendChild(typeCell);
+
+                        const notesCell = document.createElement('td');
+                        notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.notes;
+
+                        row.appendChild(notesCell);
+
+                        const visibilityCell = document.createElement('td');
+                        if (item.customer_visibility == 0) {
+                            visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        } else if (item.customer_visibility == 1) {
+                            visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        }
+                        row.appendChild(visibilityCell);
+
+                        const idCell = document.createElement('td');
+                        idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
+                        row.appendChild(idCell);
+
+                        // Append the row to the table body
+                        tableBody.appendChild(row);
+                    });
+                }
+
+                // Call the function to populate the table with the data array
+                populateTable(response.data);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function getEmailDataAjaxCall(){
+        var lead_id = document.getElementById('lead_id_CRM').value;
+        var lead_ref = document.getElementById('calls_lead_refs').textContent;
+        $.ajax({
+            url: '{{ route("lead.ajax.getCRMEmailsData") }}',
+            method: 'POST',
+            data: {
+                lead_id: lead_id
+            },
+            success: function(response) {
+                console.log(response.data);
+
+                // Get the table body element
+                const tableBody = document.querySelector('#crmEmailData tbody');
+                tableBody.innerHTML = '';
+
+                // Function to populate the table
+                function populateTable(data) {
+                    data.forEach(item => {
+                        // Create a new row
+                        const row = document.createElement('tr');
+
+                        const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+
+                        // Create cells and append them to the row
+                        const dateCell = document.createElement('td');
+                        dateCell.textContent = date;
+                        row.appendChild(dateCell);
+
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
+                        row.appendChild(nameCell);
+
+                        // const nameCell = document.createElement('td');
+                        // nameCell.textContent = item.user_id;
+                        // row.appendChild(nameCell);
+
+                        const phoneCell = document.createElement('td');
+                        phoneCell.textContent = item.telephone;
+                        row.appendChild(phoneCell);
+
+                        const typeCell = document.createElement('td');
+                        typeCell.textContent = item.title;
+                        row.appendChild(typeCell);
+
+                        const notesCell = document.createElement('td');
+                        notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.message;
+
+                        row.appendChild(notesCell);
+
+                        const visibilityCell = document.createElement('td');
+                        if (item.customer_visible == 0) {
+                            visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        } else if (item.customer_visible == 1) {
+                            visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        }
+                        row.appendChild(visibilityCell);
+
+                        const idCell = document.createElement('td');
+                        idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
+                        row.appendChild(idCell);
+
+                        // Append the row to the table body
+                        tableBody.appendChild(row);
+                    });
+                }
+
+                // Call the function to populate the table with the data array
+                populateTable(response.data);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function getNotesDataAjax(){
+        var lead_id = document.getElementById('lead_id_CRM').value;
+        var lead_ref = document.getElementById('calls_lead_refs').textContent;
+        $.ajax({
+            url: '{{ route("lead.ajax.getCRMNotesData") }}',
+            method: 'POST',
+            data: {
+                lead_id: lead_id
+            },
+            success: function(response) {
+                console.log(response.data);
+
+                // Get the table body element
+                const tableBody = document.querySelector('#crmLeadNotesTable tbody');
+                tableBody.innerHTML = '';
+
+                // Function to populate the table
+                function populateTable(data) {
+                    data.forEach(item => {
+                        // Create a new row
+                        const row = document.createElement('tr');
+
+                        const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+
+                        // Create cells and append them to the row
+                        const dateCell = document.createElement('td');
+                        dateCell.textContent = date;
+                        row.appendChild(dateCell);
+
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
+                        row.appendChild(nameCell);
+
+                        const phoneCell = document.createElement('td');
+                        phoneCell.textContent = item.telephone;
+                        row.appendChild(phoneCell);
+
+                        const typeCell = document.createElement('td');
+                        typeCell.textContent = item.title;
+                        row.appendChild(typeCell);
+
+                        const notesCell = document.createElement('td');
+                        notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.notes;
+
+                        row.appendChild(notesCell);
+
+                        const visibilityCell = document.createElement('td');
+                        if (item.customer_visibility == 0) {
+                            visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        } else if (item.customer_visibility == 1) {
+                            visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        }
+                        row.appendChild(visibilityCell);
+
+                        const idCell = document.createElement('td');
+                        idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
+                        row.appendChild(idCell);
+
+                        // Append the row to the table body
+                        tableBody.appendChild(row);
+                    });
+                }
+
+                // Call the function to populate the table with the data array
+                populateTable(response.data);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
     $(document).ready(function() {
 
         $.ajaxSetup({
@@ -1331,241 +1722,27 @@
 
         // set the value in calls history table data js Start here
         document.getElementById('pills-Calls-tab').addEventListener('click', function() {
-            var lead_ref = document.getElementById('calls_lead_refs').textContent;
-            var lead_id = document.getElementById('lead_id_CRM').value;
-
-            console.log("lead_ref ", lead_ref);
-            $.ajax({
-                url: '{{ route("lead.ajax.getCRMNotesData") }}',
-                method: 'POST',
-                data: {
-                    lead_ref: lead_id
-                },
-                success: function(response) {
-                    console.log(response.data);
-
-                    // Get the table body element
-                    const tableBody = document.querySelector('#crmCallData tbody');
-                    tableBody.innerHTML = '';
-
-                    // Function to populate the table
-                    function populateTable(data) {
-                        data.forEach(item => {
-                            // Create a new row
-                            const row = document.createElement('tr');
-
-                            const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
-
-                            // Create cells and append them to the row
-                            const dateCell = document.createElement('td');
-                            dateCell.textContent = date;
-                            row.appendChild(dateCell);
-
-                            const nameCell = document.createElement('td');
-                            nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
-                            row.appendChild(nameCell);
-
-                            // const nameCell = document.createElement('td');
-                            // nameCell.textContent = item.user_id;
-                            // row.appendChild(nameCell);
-
-                            const phoneCell = document.createElement('td');
-                            phoneCell.textContent = item.telephone;
-                            row.appendChild(phoneCell);
-
-                            const typeCell = document.createElement('td');
-                            typeCell.textContent = item.title;
-                            row.appendChild(typeCell);
-
-                            const notesCell = document.createElement('td');
-                            notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.notes;
-
-                            row.appendChild(notesCell);
-
-                            const visibilityCell = document.createElement('td');
-                            if (item.customer_visibility == 0) {
-                                visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
-                            } else if (item.customer_visibility == 1) {
-                                visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
-                            }
-                            row.appendChild(visibilityCell);
-
-                            const idCell = document.createElement('td');
-                            idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
-                            row.appendChild(idCell);
-
-                            // Append the row to the table body
-                            tableBody.appendChild(row);
-                        });
-                    }
-
-                    // Call the function to populate the table with the data array
-                    populateTable(response.data);
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-
+            getCallDataAjax();
         });
         // set the value in calls history table data js End here
 
         // set the value in Emails history table data js Start here
         document.getElementById('pills-emails-tab').addEventListener('click', function() {
-            var lead_id = document.getElementById('lead_id_CRM').value;
-            var lead_ref = document.getElementById('calls_lead_refs').textContent;
-            $.ajax({
-                url: '{{ route("lead.ajax.getCRMEmailsData") }}',
-                method: 'POST',
-                data: {
-                    lead_id: lead_id
-                },
-                success: function(response) {
-                    console.log(response.data);
-
-                    // Get the table body element
-                    const tableBody = document.querySelector('#crmEmailData tbody');
-                    tableBody.innerHTML = '';
-
-                    // Function to populate the table
-                    function populateTable(data) {
-                        data.forEach(item => {
-                            // Create a new row
-                            const row = document.createElement('tr');
-
-                            const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
-
-                            // Create cells and append them to the row
-                            const dateCell = document.createElement('td');
-                            dateCell.textContent = date;
-                            row.appendChild(dateCell);
-
-                            const nameCell = document.createElement('td');
-                            nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
-                            row.appendChild(nameCell);
-
-                            // const nameCell = document.createElement('td');
-                            // nameCell.textContent = item.user_id;
-                            // row.appendChild(nameCell);
-
-                            const phoneCell = document.createElement('td');
-                            phoneCell.textContent = item.telephone;
-                            row.appendChild(phoneCell);
-
-                            const typeCell = document.createElement('td');
-                            typeCell.textContent = item.title;
-                            row.appendChild(typeCell);
-
-                            const notesCell = document.createElement('td');
-                            notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.message;
-
-                            row.appendChild(notesCell);
-
-                            const visibilityCell = document.createElement('td');
-                            if (item.customer_visible == 0) {
-                                visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
-                            } else if (item.customer_visible == 1) {
-                                visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
-                            }
-                            row.appendChild(visibilityCell);
-
-                            const idCell = document.createElement('td');
-                            idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
-                            row.appendChild(idCell);
-
-                            // Append the row to the table body
-                            tableBody.appendChild(row);
-                        });
-                    }
-
-                    // Call the function to populate the table with the data array
-                    populateTable(response.data);
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-
+            getEmailDataAjaxCall();
         });
         // set the value in Emails history table data js End here
 
-
         // set the value in CRM Lead Notes table data js Start here
         document.getElementById('pills-notes-tab').addEventListener('click', function() {
-            var lead_id = document.getElementById('lead_id_CRM').value;
-            var lead_ref = document.getElementById('calls_lead_refs').textContent;
-            $.ajax({
-                url: '{{ route("lead.ajax.getCRMNotesData") }}',
-                method: 'POST',
-                data: {
-                    lead_id: lead_id
-                },
-                success: function(response) {
-                    console.log(response.data);
-
-                    // Get the table body element
-                    const tableBody = document.querySelector('#crmLeadNotesTable tbody');
-                    tableBody.innerHTML = '';
-
-                    // Function to populate the table
-                    function populateTable(data) {
-                        data.forEach(item => {
-                            // Create a new row
-                            const row = document.createElement('tr');
-
-                            const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
-
-                            // Create cells and append them to the row
-                            const dateCell = document.createElement('td');
-                            dateCell.textContent = date;
-                            row.appendChild(dateCell);
-
-                            const nameCell = document.createElement('td');
-                            nameCell.innerHTML = "<?php echo Auth::user()->name."<br>".Auth::user()->email;?>";
-                            row.appendChild(nameCell);
-
-                            const phoneCell = document.createElement('td');
-                            phoneCell.textContent = item.telephone;
-                            row.appendChild(phoneCell);
-
-                            const typeCell = document.createElement('td');
-                            typeCell.textContent = item.title;
-                            row.appendChild(typeCell);
-
-                            const notesCell = document.createElement('td');
-                            notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.notes;
-
-                            row.appendChild(notesCell);
-
-                            const visibilityCell = document.createElement('td');
-                            if (item.customer_visibility == 0) {
-                                visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
-                            } else if (item.customer_visibility == 1) {
-                                visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
-                            }
-                            row.appendChild(visibilityCell);
-
-                            const idCell = document.createElement('td');
-                            idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
-                            row.appendChild(idCell);
-
-                            // Append the row to the table body
-                            tableBody.appendChild(row);
-                        });
-                    }
-
-                    // Call the function to populate the table with the data array
-                    populateTable(response.data);
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-
+            getNotesDataAjax();
         });
         // set the value in CRM Lead Notes table data js End here
 
-       
+        // set the value in CRM Lead Notes table data js Start here
+        document.getElementById('pills-complaints-tab').addEventListener('click', function() {
+            getComplaintDataAjax();
+        });
+        // set the value in CRM Lead Notes table data js End here
 
         document.querySelectorAll('.set_value_on_CRM_model').forEach(function(anchor) {
             anchor.addEventListener('click', function(event) {
@@ -1589,6 +1766,8 @@
                 document.getElementById('lead_id_notes').value = leadId;
                 document.getElementById('lead_id_email').value = leadId;
                 document.getElementById('lead_id_CRM').value = leadId;
+                document.getElementById('lead_ref_complaint').textContent = leadRef;
+                document.getElementById('lead_id_complaint').value = leadId;                
                 
                 
                 // Open CRM modal
@@ -1635,8 +1814,6 @@
             });
         });
         
-
-
         // Ajax call for getting CRM Section Types
         $('#calls_type').on('click', function() {
             $.ajax({
@@ -1667,6 +1844,28 @@
                 success: function(response) {
                     console.log(response.Data);
                     const selectElement = document.getElementById('lead_notes_crm');
+                    selectElement.innerHTML = '';
+                    response.Data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.title;
+                        selectElement.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+         // Ajax call for getting CRM Section Types for CRM Complaint 
+         $('#lead_complaint_crm').on('click', function() {
+            $.ajax({
+                url: '{{ route("lead.ajax.getCRMTypeData") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response.Data);
+                    const selectElement = document.getElementById('lead_complaint_crm');
                     selectElement.innerHTML = '';
                     response.Data.forEach(user => {
                         const option = document.createElement('option');
@@ -1763,6 +1962,7 @@
         const callsModel = document.getElementById('callsModal');
         const closeCallsModel = document.getElementById('closeCallsModels');
 
+
         // When the user clicks the button, open the modal 
         openCallsModel.onclick = function() {
             $('#callsModal').modal('show');
@@ -1824,6 +2024,29 @@
             }
         }
         // CRM Section Type Js End for model show
+
+        // CRM Complaint Js Start for model show
+        const openComplaintsModel = document.getElementById('openComplaintsModel');
+        const compliantsModal = document.getElementById('compliantsModal');
+        const closeCrmComplaintBtn = document.getElementById('closeCrmComplaintBtn');
+
+        // When the user clicks the button, open the modal 
+        openComplaintsModel.onclick = function() {
+            $('#compliantsModal').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeCrmComplaintBtn.onclick = function() {
+            $('#compliantsModal').modal('hide');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === compliantsModal) {
+                $('#compliantsModal').modal('hide');
+            }
+        }
+        // CRM Complaint Js End for model show
+        
 
         const mainCheckbox = document.getElementById('yeson');
         const optionsDiv = document.getElementById('optionsDiv');
@@ -1904,7 +2127,7 @@
     // notification Div hide show on radio button for emails js End
 
 
-    // notification Div hide show on radio button for emails js start
+    // notification Div hide show on radio button for notes js start
     const notify_notes1 = document.getElementById('notify_notes1');
     const notify_notes2 = document.getElementById('notify_notes2');
     const notification_notes_div = document.getElementById('notification_notes_div');
@@ -1923,48 +2146,69 @@
             notification_notes_div.style.display = 'block';
         }
     });
+    // notification Div hide show on radio button for notes js End
+
+
+    // notification Div hide show on radio button for emails js start
+    const notify_complaint1 = document.getElementById('notify_complaint1');
+    const notify_complaint2 = document.getElementById('notify_complaint2');
+    const notification_complaint_div = document.getElementById('notification_complaint_div');
+
+    // Initially hide the notification_div
+    notification_complaint_div.style.display = 'none';
+
+    notify_complaint1.addEventListener('change', function() {
+        if (notify_complaint1.checked) {
+            notification_complaint_div.style.display = 'none';
+        }
+    });
+
+    notify_complaint2.addEventListener('change', function() {
+        if (notify_complaint2.checked) {
+            notification_complaint_div.style.display = 'block';
+        }
+    });
     // notification Div hide show on radio button for emails js End
 
+    // const openPopupButton2 = document.getElementById('openPopupButton2');
+    // const popup2 = document.getElementById('popup2');
+    // const closePopup2 = document.getElementById('closePopup');
 
-    const openPopupButton2 = document.getElementById('openPopupButton2');
-    const popup2 = document.getElementById('popup2');
-    const closePopup2 = document.getElementById('closePopup');
-
-    const openPopupButton = document.getElementById('openPopupButton');
-    const popup = document.getElementById('popup');
-    const closePopup = document.getElementById('closePopup');
+    // const openPopupButton = document.getElementById('openPopupButton');
+    // const popup = document.getElementById('popup');
+    // const closePopup = document.getElementById('closePopup');
 
 
     // Add event listeners to the radio buttons
 
 
-    openPopupButton2.addEventListener('click', () => {
-        popup2.style.display = 'block';
-        setTimeout(() => {
-            popup2.style.opacity = '1';
-        }, 50); // Delay added for transition effect
-    });
+    // openPopupButton2.addEventListener('click', () => {
+    //     popup2.style.display = 'block';
+    //     setTimeout(() => {
+    //         popup2.style.opacity = '1';
+    //     }, 50); // Delay added for transition effect
+    // });
 
-    closePopup2.addEventListener('click', () => {
-        popup2.style.opacity = '0';
-        setTimeout(() => {
-            popup2.style.display = 'none';
-        }, 300); // Ensure the popup is hidden after the transition ends
-    });
+    // closePopup2.addEventListener('click', () => {
+    //     popup2.style.opacity = '0';
+    //     setTimeout(() => {
+    //         popup2.style.display = 'none';
+    //     }, 300); // Ensure the popup is hidden after the transition ends
+    // });
 
-    openPopupButton.addEventListener('click', () => {
-        popup.style.display = 'block';
-        setTimeout(() => {
-            popup.style.opacity = '1';
-        }, 50); // Delay added for transition effect
-    });
+    // openPopupButton.addEventListener('click', () => {
+    //     popup.style.display = 'block';
+    //     setTimeout(() => {
+    //         popup.style.opacity = '1';
+    //     }, 50); // Delay added for transition effect
+    // });
 
-    closePopup.addEventListener('click', () => {
-        popup.style.opacity = '0';
-        setTimeout(() => {
-            popup.style.display = 'none';
-        }, 300); // Ensure the popup is hidden after the transition ends
-    });
+    // closePopup.addEventListener('click', () => {
+    //     popup.style.opacity = '0';
+    //     setTimeout(() => {
+    //         popup.style.display = 'none';
+    //     }, 300); // Ensure the popup is hidden after the transition ends
+    // });
 </script>
 
 <!-- Script For adding CK editor start -->
@@ -2001,7 +2245,6 @@
             window.editor = editor;
             // Add a click event listener to the save button
             document.getElementById('saveCRMCallsModelData').addEventListener('click', function() {
-
                 // Get the CKEditor content
                 document.getElementById('calls_notes').value = editor.getData();
                 console.log(document.getElementById('calls_notes').value);
@@ -2014,6 +2257,7 @@
                     success: function(response) {
                         alert(response.message);
                         $('#callsModal').modal('hide');
+                        getCallDataAjax();
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -2114,6 +2358,7 @@
                         success: function(response) {
                             alert(response.message);
                             $('#NewEmailModel').modal('hide');
+                            getEmailDataAjaxCall();
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -2156,6 +2401,7 @@
                         success: function(response) {
                             alert(response.message);
                             $('#NewNotesModel').modal('hide');
+                            getNotesDataAjax();
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -2169,6 +2415,48 @@
             console.error(error);
         });
 
+
+
+        ClassicEditor
+        .create(document.querySelector('#complaintEditor'), {
+            plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment, PreviewPlugin],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic', 'underline', 'alignment', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'preview'
+            ]
+        })
+        .then(editor => {
+            window.editor = editor;
+            var editorData = editor.getData();
+               // Add a click event listener to the save button
+               document.getElementById('saveCRMLeadComplaint').addEventListener('click', function() {
+                    // Get the CKEditor content
+                    document.getElementById('CRMComplaint').value = editor.getData();
+                    console.log(document.getElementById('CRMComplaint').value);
+                    var formData = $('#crm_lead_complaint_form').serialize();
+                    console.log(formData);
+                    $.ajax({
+                        url: '{{ route("lead.ajax.saveCRMLeadComplaint") }}',
+                        method: 'POST',
+                        data: formData,
+                        // processData: false,  
+                        // contentType: false,  
+                        success: function(response) {
+                            alert(response.message);
+                            getComplaintDataAjax();
+                            $('#compliantsModal').modal('hide');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                 
+                });
+
+        })
+        .catch(error => {
+            console.error(error);
+        });
 
 </script>
 <!-- Email CK Editor End -->

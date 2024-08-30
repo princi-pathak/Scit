@@ -330,8 +330,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('lead/saveCRMLeadNotes', 'saveCRMLeadNotes')->name('lead.ajax.saveCRMLeadNotes');
 		Route::post('lead/getCRMNotesData', 'getCRMNotesData')->name('lead.ajax.getCRMNotesData');
 
-
-		
+		Route::post('lead/saveCRMLeadComplaint', 'saveCRMLeadComplaint')->name('lead.ajax.saveCRMLeadComplaint');
+		Route::post('lead/getCRMComplaintData', 'getCRMComplaintData')->name('lead.ajax.getCRMComplaintData');
 		
 
 	});

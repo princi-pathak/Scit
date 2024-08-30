@@ -513,8 +513,8 @@ $access_rights = explode(',', $rights);
                                     <div class="row pt-3">
                                         <label class="col-md-4 col-form-label"><strong>Lead Ref.:</strong></label>
                                         <div class="col-md-8">
-                                            <span id="" class="editInput">Defoult</span>
-                                            <input type="hidden" id="lead_id_CRM" name="">
+                                            <span id="" class="editInput">Default</span>
+                                            <input type="hidden" id="" name="">
 
                                         </div>
                                     </div>
@@ -533,19 +533,20 @@ $access_rights = explode(',', $rights);
                             <button class="nav-link active" id="pills-userCRMfullHistory-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-fullHistory" type="button" role="tab" aria-controls="pills-fullHistory" aria-selected="true">Full History</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-userCRMCalls-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-Calls" type="button" role="tab" aria-controls="pills-Calls" aria-selected="false" tabindex="-1">Calls</button>
+
+                            <button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#CRMpills-Calls" type="button" role="tab" aria-controls="pills-Calls" aria-selected="false" tabindex="-1">Calls</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-userCRMemails-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-emails" type="button" role="tab" aria-controls="pills-emails" aria-selected="false" tabindex="-1">Emails</button>
+                            <button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#CRMpills-emails" type="button" role="tab" aria-controls="pills-emails" aria-selected="false" tabindex="-1">Emails</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-userCRMtasks-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-tasks" type="button" role="tab" aria-controls="pills-tasks" aria-selected="false" tabindex="-1">Tasks</button>
+                            <button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#CRMpills-tasks" type="button" role="tab" aria-controls="pills-tasks" aria-selected="false" tabindex="-1">Tasks</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-userCRMnotes-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-notes" type="button" role="tab" aria-controls="pills-notes" aria-selected="false" tabindex="-1">Notes</button>
+                            <button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#CRMpills-notes" type="button" role="tab" aria-controls="pills-notes" aria-selected="false" tabindex="-1">Notes</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-userCRMcomplaints-tab" data-bs-toggle="pill" data-bs-target="#CRMpills-complaints" type="button" role="tab" aria-controls="pills-complaints" aria-selected="false" tabindex="-1">Complaints</button>
+                            <button class="nav-link" id="" data-bs-toggle="pill" data-bs-target="#CRMpills-complaints" type="button" role="tab" aria-controls="pills-complaints" aria-selected="false" tabindex="-1">Complaints</button>
                         </li>
                     </ul>
 
