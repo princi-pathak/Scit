@@ -14,12 +14,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
-<script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
         table.dataTable td.select-checkbox:before {
             display: none;
+        }
+        .modal.show .modal-dialog {
+            box-shadow: 0px 0px 10px #34343447;
         }
     </style>
 </head>
@@ -454,7 +457,6 @@ $access_rights = explode(',', $rights);
                                             <li><a class="dropdown-item" href="#">Tags </a></li>
                                         </ul>
                                     </li>
-
                                     <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Quick Setup Wizard</a></li>
                                 </ul>
                             </div>
@@ -472,7 +474,6 @@ $access_rights = explode(',', $rights);
         <div class="modal-dialog modal-xl">
             <div class="modal-content add_Customer">
                 <div class="modal-header terques-bg">
-
                     <h5 class="modal-title pupTitle" id="CRMHeaderPopupLabel">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                 </div>
@@ -647,7 +648,7 @@ $access_rights = explode(',', $rights);
                                 <div class="row">
                                     <div class="col-sm-1">
                                         <div class="jobsection  mt-3">
-                                            <a href="#" class="profileDrop p-2 crmNewBtn" id=""> New</a>
+                                            <a href="#" class="profileDrop p-2 crmNewBtn" id="userNewEmail"> New</a>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -695,10 +696,235 @@ $access_rights = explode(',', $rights);
                                 <div class="row">
                                     <div class="col-sm-1">
                                         <div class="jobsection  mt-3">
-                                            <a href="#" class="profileDrop p-2 crmNewBtn open-modal" data-target="bd-example-modal-lg" id=""> New</a>
+                                            <a href="#" class="profileDrop p-2 crmNewBtn open-modal" data-target="bd-example-modal-lg" id="userNewTaskpop"> New</a>
                                         </div>
                                     </div>
-                                    <!-- ****************************** -->
+                                    <!-- task popup****************************** -->
+
+
+                                    <!-- Second Modal -->
+                                    <div class="modal fade bd-example-modal-lg" id="TasksecondModal" tabindex="-1" aria-labelledby="secondModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="">New Task</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeTaskpopup"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- tab -->
+                                                    <nav>
+                                                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                                            <button class="nav-link active" id="nav-Task-tab" data-bs-toggle="tab" data-bs-target="#nav-Task" type="button" role="tab" aria-controls="nav-Task" aria-selected="true">Task</button>
+                                                            <button class="nav-link" id="nav-Timer-tab" data-bs-toggle="tab" data-bs-target="#nav-Timer" type="button" role="tab" aria-controls="nav-Timer" aria-selected="false">Timer</button>
+                                                        </div>
+                                                    </nav>
+                                                    <div class="tab-content p-3 border bg-light" id="nav-tabContent">
+                                                        <div class="tab-pane fade active show" id="nav-Task" role="tabpanel" aria-labelledby="nav-Task-tab">
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <form>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
+                                                                            <div class="col-sm-8">
+                                                                                <select class="form-control editInput" name="" id="">
+                                                                                    <option>task1</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" class="form-control editInput" id="staticEmail" value="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
+                                                                            <div class="col-sm-6">
+                                                                                <select class="form-control editInput" name="" id="lead_task_types">
+
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                <a href="#!" class="formicon" id="userThirdModal"><i class="fa-solid fa-square-plus"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Start Date</label>
+                                                                            <div class="col-sm-4">
+                                                                                <input type="date" class="form-control editInput" id="staticEmail" value="">
+                                                                            </div>
+                                                                            <div class="col-sm-4">
+                                                                                <input type="time" class="form-control editInput" id="staticEmail" value="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">End Date</label>
+                                                                            <div class="col-sm-4">
+                                                                                <input type="date" class="form-control editInput" id="staticEmail" value="">
+                                                                            </div>
+                                                                            <div class="col-sm-4">
+                                                                                <input type="time" class="form-control editInput" id="staticEmail" value="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 form-check">
+                                                                            <input type="checkbox" class="form-check-input editInput" id="exampleCheck1">
+                                                                            <label class="form-check-label editInput" for="exampleCheck1">Is Reccurring Task ?</label>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <form>
+                                                                        <!--  -->
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Notify ? </label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="form-check form-check-inline">
+                                                                                    <input class="form-check-input" type="checkbox" name="inlinecheckOptions" id="yeson" value="option1" required="">
+                                                                                    <label class="form-check-label checkboxtext" for="checkalrt">Yes, On</label>
+                                                                                </div>
+
+                                                                                <div id="optionsDiv">
+                                                                                    <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
+                                                                                    <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
+                                                                                    <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="related_to" class="col-sm-4 col-form-label">Date & Time</label>
+                                                                            <div class="col-sm-4">
+                                                                                <input type="date" class="form-control editInput" id="notify_date" name="notify_date">
+                                                                            </div>
+                                                                            <div class="col-sm-4">
+                                                                                <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
+                                                                            <div class="col-sm-8">
+                                                                                <span class="editInput" id="related_To"></span>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
+                                                                            <div class="col-sm-8">
+                                                                                <textarea name="" class="form-control textareaInput" rows="5" id=""></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="nav-Timer" role="tabpanel" aria-labelledby="nav-Timer-tab">
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <form>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" class="form-control" id="staticEmail" value="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
+                                                                            <div class="col-sm-8">
+                                                                                <input type="text" class="form-control" id="staticEmail" value="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Timer</label>
+                                                                            <div class="col-sm-8">
+                                                                                <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
+                                                                                <span id="timerDisplay">00:00:00</span>n
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="mb-3 row">
+                                                                            <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
+                                                                            <div class="col-sm-8">
+                                                                                <span class="editInput" id="relatedTo"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <form>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
+                                                                            <div class="col-sm-6">
+                                                                                <select class="form-control editInput" name="" id="">
+                                                                                    <option>tast1</option>
+                                                                                </select>
+
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                <a href="#!" class="formicon" id=""><i class="fa-solid fa-square-plus"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
+                                                                            <div class="col-sm-8">
+                                                                                <textarea rows="5" name="" class="form-control textareaInput" id=""></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- tab -->
+                                                    <div class="pageTitleBtn">
+                                                        <a href="#" class="profileDrop p-2 crmNewBtn"> Save</a>
+                                                        <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeTaskpopup">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end task popup****************************** -->
+
+                                    <!-- ******************************add task third type******************************* -->
+
+                                    <!-- Third Modal -->
+                                    <div class="modal fade" id="third3Modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content ">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="thirdModalLabel">Add Task Type</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close3Taskpopup"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="" id="lead_task_type_form">
+                                                        <div class="mb-3 row">
+                                                            <label for="inputJobRef" class="col-sm-3 col-form-label">Task Type <span class="red-text">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" name="title" class="form-control editInput" id="inputJobRef" value="" placeholder="Task Type">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3 row">
+                                                            <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                                                            <div class="col-sm-9">
+                                                                <select id="status" name="status" class="form-control editInput">
+                                                                    <option value="1">Active</option>
+                                                                    <option value="0">Inactive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="pageTitleBtn">
+                                                            <a href="#" class="profileDrop p-2 crmNewBtn" id="saveTaskType"> Save</a>
+                                                            <button type="button" class="profileDrop" data-bs-dismiss="modal" id="close3Taskpopup">Cancel</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- ******************************End add task third type******************************* -->
+
+
                                     <div class="col-sm-3">
                                         <form class="searchForm" action="">
                                             <div class="input-group mb-3  mt-3">
@@ -759,7 +985,7 @@ $access_rights = explode(',', $rights);
                                 <div class="row">
                                     <div class="col-sm-1">
                                         <div class="jobsection  mt-3">
-                                            <a href="#" class="profileDrop p-2 crmNewBtn" id=""> New</a>
+                                            <a href="#" class="profileDrop p-2 crmNewBtn" id="userNotesModel"> New</a>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -859,208 +1085,396 @@ $access_rights = explode(',', $rights);
             </div>
         </div>
     </div>
-
-
-
     <!-- Calls History new Popup -->
 
+    <!-- Calls Modal -->
+    <div class="modal fade" id="userCallsModal" tabindex="-1" aria-labelledby="callsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="customerModalLabel">Calls</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeUserCallsModels"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="customerForm" id="CRM_calls_form">
+                        <div class="mb-2 row">
+                            <input type="hidden" name="crm_lead_calls_id" id="crm_lead_calls_id">
+                            <label for="calls_telephone" class="col-sm-3 col-form-label">Direction </label>
+                            <div class="col-sm-9">
+                                <input class="form-check-input" type="radio" name="direction" id="direction_radio1" value="0" checked>
+                                <label class="form-check-label editInput" for="direction_radio1"> Call Out </label>
+                                <input class="form-check-input" type="radio" name="direction" id="direction_radio2" value="1">
+                                <label class="form-check-label editInput" for="direction_radio2"> Call In </label>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="calls_telephone" class="col-sm-3 col-form-label">Telephone </label>
+                            <div class="col-sm-2">
+                                <select class="form-control editInput selectOptions" required="" name="country_code" id="countries">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control editInput" id="calls_telephone" name="telephone" placeholder="Telephone">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                            <div class="col-sm-7">
+                                <select name="crm_type_id" class="form-control editInput">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <a href="#!" class="formicon" id="userCRMTypeModel"><i class="fa-solid fa-square-plus"></i></a>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <div id="UserEditor">
+                                </div>
+                                <textarea name="content" id="calls_notes" style="display: none;"></textarea>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="calls_lead_ref" class="col-sm-3 col-form-label">Related To </label>
+                            <div class="col-sm-9">
+                                <span class="editInput">LEAD-0021</span>
+                                <input type="hidden" name="lead_ref">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                            <div class="col-sm-9">
+                                <input class="form-check-input notify_radio1" type="radio" name="notify_radio" id="" value="0" checked>
+                                <label class="form-check-label editInput" for=""> No </label>
+                                <input class="form-check-input notify_radio2" type="radio" name="notify_radio" id="" value="1">
+                                <label class="form-check-label editInput" for=""> Yes </label>
+                            </div>
+                        </div>
+                        <div class="notification_div">
+                            <div class="mb-2 row">
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                                <div class="col-sm-9">
+                                    <select name="notify_user" class="form-control editInput" id="user_notifiy">
+                                        <option value=""></option>
 
-<!-- Calls Modal -->
-<div class="modal fade" id="userCallsModal" tabindex="-1" aria-labelledby="callsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                                <div class="col-sm-9">
+                                    <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
+                                    <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
+                                    <label for="calls_notify_who3" class="editInput"><input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
+                            <div class="col-sm-9">
+                                <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault1" value="0" checked>
+                                <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
+                                <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault2" value="1">
+                                <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="profileDrop" id="saveCRMCallsModelData">Save</button>
+                    <button type="button" class="profileDrop" id="closeUserCallsModels" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end Calls Modal -->
+
+    <!-- CRM Types Modal Start -->
+    <div class="modal fade" id="typeCrmModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCrmModalBtn" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="crm_section_type_form">
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control editInput" name="title" id="type_title" value="">
+                                <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
+                            <div class="col-sm-9">
+                                <input type="color" class="form-control editInput" name="colour_code" id="colour_code" value="">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="profileDrop" id="closeCrmModalBtn">Close</button>
+                    <button type="button" class="profileDrop" id="saveCRMTypes">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CRM Types Modal End -->
+
+    <!-- CRM Add Email Modal Start -->
+    <div class="modal fade" id="userEmailModel" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emailModalLabel">Email</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="closepopupBtn" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="crm_lead_email_form" enctype='multipart/form-data'>
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">To <span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <input type="hidden" class="form-control editInput" name="crm_lead_email_id" id="">
+                                <input type="text" class="form-control editInput" name="to" id="" value="">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">Cc </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control editInput" name="cc" id="">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">Subject <span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control editInput" name="subject" id="">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">Message <span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <div class="col-form-label">
+                                    <div id="emailEditor">
+                                    </div>
+                                    <textarea name="message" id="emailMessage" style="display: none;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">Attachment </label>
+                            <div class="col-sm-9">
+                                <input type="file" class="editInput" name="attachment" id="image">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
+                            <div class="col-sm-9">
+                                <span class="editInput" id="lead_ref_email"></span>
+                                <input type="hidden" id="lead_id_email" name="lead_id">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                            <div class="col-sm-9">
+                                <input class="form-check-input" type="radio" name="notify" id="notify_email1" value="0" checked>
+                                <label class="form-check-label editInput" for="notify_email1"> No </label>
+                                <input class="form-check-input" type="radio" name="notify" id="notify_email2" value="1">
+                                <label class="form-check-label editInput" for="notify_email2"> Yes </label>
+                            </div>
+                        </div>
+                        <div id="notification_email_div">
+                            <div class="mb-2 row">
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                                <div class="col-sm-9">
+                                    <select name="notify_user" class="form-control editInput" id="user_notifiy">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                                <div class="col-sm-9">
+                                    <label for="calls_notify_who1" class="editInput">
+                                        <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
+                                    </label>
+                                    <label for="calls_notify_who2" class="editInput">
+                                        <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS
+                                    </label>
+                                    <label for="calls_notify_who3" class="editInput">
+                                        <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
+                            <div class="col-sm-9">
+                                <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault1" value="0" checked>
+                                <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
+                                <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault2" value="1">
+                                <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closepopupBtn">Close</button>
+                    <button type="button" class="profileDrop" id="saveCRMLeadEmails">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CRM Add Email Modal End -->
+
+    <!-- CRM Add Notes Modal Start -->
+<div class="modal fade" id="NotesCrmModel" tabindex="-1" role="dialog" aria-labelledby="notesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title" id="customerModalLabel">Calls</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeUserCallsModels"></button>
+                <h5 class="modal-title" id="notesModalLabel">Notes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeNotespopup" aria-label="Close">
+                </button>
             </div>
             <div class="modal-body">
-                <form action="" class="customerForm" id="CRM_calls_form">
+                <form action="" id="crm_lead_notes_form">
                     <div class="mb-2 row">
-                        <input type="hidden" name="crm_lead_calls_id" id="crm_lead_calls_id">
-                        <label for="calls_telephone" class="col-sm-3 col-form-label">Direction </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                         <div class="col-sm-9">
-                            <input class="form-check-input" type="radio" name="direction" id="direction_radio1" value="0" checked>
-                            <label class="form-check-label editInput" for="direction_radio1"> Call Out </label>
-                            <input class="form-check-input" type="radio" name="direction" id="direction_radio2" value="1">
-                            <label class="form-check-label editInput" for="direction_radio2"> Call In </label>
+                            <input type="hidden" class="form-control editInput" name="crm_lead_notes_id" id="">
+                            <select class="form-control editInput" name="crm_section_type_id" id="lead_notes_crm"></select>
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="calls_telephone" class="col-sm-3 col-form-label">Telephone </label>
-                        <div class="col-sm-2">
-                            <select class="form-control editInput selectOptions" required="" name="country_code" id="countries">
-                                <option value="">Select</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control editInput" id="calls_telephone" name="telephone" placeholder="Telephone">
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
-                        <div class="col-sm-7">
-                            <select name="crm_type_id" class="form-control editInput" id="calls_type">
-                                <option value="">Select</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-2">
-                            <a href="#!" class="formicon" id="userCRMTypeModel"><i class="fa-solid fa-square-plus"></i></a>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
                         <div class="col-sm-9">
-                            <div id="UserEditor">
+                            <div class="col-form-label">
+                                <div id="NotesEditor">
+                                </div>
+                                <textarea name="notes" id="CRMNotes" style="display: none;"></textarea>
                             </div>
-                            <textarea name="content" id="calls_notes" style="display: none;"></textarea>
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="calls_lead_ref" class="col-sm-3 col-form-label">Related To </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
                         <div class="col-sm-9">
-                            <span class="editInput" id="call_lead_ref"></span>
-                            <input type="hidden" name="lead_ref" id="call_lead_ref_data">
+                            <span class="editInput" id="lead_ref_notes"></span>
+                            <input type="hidden" id="lead_id_notes" name="lead_id">
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
                         <div class="col-sm-9">
-                            <input class="form-check-input notify_radio1" type="radio" name="notify_radio" id="" value="0" checked>
-                            <label class="form-check-label editInput" for=""> No </label>
-                            <input class="form-check-input notify_radio2" type="radio" name="notify_radio" id="" value="1">
-                            <label class="form-check-label editInput" for=""> Yes </label>
-                        </div>
+                            <input class="form-check-input" type="radio" name="notify" id="notify_notes1" value="0" checked>
+                            <label class="form-check-label editInput" for="notify_notes1"> No </label>
+                            <input class="form-check-input" type="radio" name="notify" id="notify_notes2" value="1">
+                            <label class="form-check-label editInput" for="notify_notes2"> Yes </label>
+                        </div>  
                     </div>
-                    <div class="notification_div">
+                    <div id="notification_notes_div">
                         <div class="mb-2 row">
                             <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
                             <div class="col-sm-9">
-                                <select name="notify_user" class="form-control editInput" id="user_notifiy">
-                                    <option value=""></option>
-                                    
+                                <select name="user_id" class="form-control editInput" id="">
+                                    <option>dfgdfg</option>
+                                    <option>dtgerdg</option>
                                 </select>
                             </div>
                         </div>
                         <div class="mb-2 row">
                             <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
                             <div class="col-sm-9">
-                                <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
-                                <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
-                                <label for="calls_notify_who3" class="editInput"><input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email </label>
+                                <label for="calls_notify_who1" class="editInput">
+                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) 
+                                </label>
+                                <label for="calls_notify_who2" class="editInput">
+                                    <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS 
+                                </label>
+                                <label for="calls_notify_who3" class="editInput">
+                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email 
+                                </label>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
                         <div class="col-sm-9">
-                            <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault1" value="0" checked>
+                            <input class="form-check-input" type="radio" name="customer_visibility" id="flexRadioDefault1" value="0" checked>
                             <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
-                            <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault2" value="1">
+                            <input class="form-check-input" type="radio" name="customer_visibility" id="flexRadioDefault2" value="1">
                             <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="profileDrop" id="saveCRMCallsModelData">Save</button>
-                <button type="button" class="profileDrop" id="closeUserCallsModels" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="profileDrop" id="closeNotespopup">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMLeadNotes">Save</button>
             </div>
         </div>
     </div>
 </div>
-<!-- end Calls Modal -->
+<!-- CRM Add Notes Modal End -->
 
-
-<!-- CRM Types Modal Start -->
-<div class="modal fade" id="typeCrmModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content add_Customer">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCrmModalBtn" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" id="crm_section_type_form">
-                    <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control editInput" name="title" id="type_title" value="">
-                            <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
-                        <div class="col-sm-9">
-                            <input type="color" class="form-control editInput" name="colour_code" id="colour_code" value="">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="profileDrop" id="closeCrmModalBtn">Close</button>
-                <button type="button" class="profileDrop" id="saveCRMTypes">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- CRM Types Modal End -->
-
-<!-- Script For adding CK editor start -->
-<script type="importmap">
-    {
+    <!-- Script For adding CK editor start -->
+    <script type="importmap">
+        {
         "imports": {
             "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
             "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
         }
     }
 </script>
-<!-- calls CK editor Js -->
-<script type="module">
-    import {
-        ClassicEditor,
-        Essentials,
-        Paragraph,
-        Bold,
-        Italic,
-        Font,
-        Underline,
-        Alignment
-    } from 'ckeditor5';
+    <!-- calls CK editor Js -->
+    <script type="module">
+        import {
+            ClassicEditor,
+            Essentials,
+            Paragraph,
+            Bold,
+            Italic,
+            Font,
+            Underline,
+            Alignment
+        } from 'ckeditor5';
 
-    ClassicEditor
-        .create(document.querySelector('#UserEditor'), {
-            plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment],
-            toolbar: [
-                'undo', 'redo', '|', 'bold', 'italic', 'underline', 'alignment', '|',
-                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
-            ]
-        })
-        .then(editor => {
-            window.editor = editor;
-            // Add a click event listener to the save button
-            document.getElementById('saveCRMCallsModelData').addEventListener('click', function() {
+        ClassicEditor
+            .create(document.querySelector('#UserEditor'), {
+                plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment],
+                toolbar: [
+                    'undo', 'redo', '|', 'bold', 'italic', 'underline', 'alignment', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                ]
+            })
+            .then(editor => {
+                window.editor = editor;
+                // Add a click event listener to the save button
+                document.getElementById('saveCRMCallsModelData').addEventListener('click', function() {
 
-                // Get the CKEditor content
-                document.getElementById('calls_notes').value = editor.getData();
-                // console.log(document.getElementById('calls_notes').value);
-                // var formData = $('#CRM_calls_form').serialize();
+                    // Get the CKEditor content
+                    document.getElementById('calls_notes').value = editor.getData();
+                    // console.log(document.getElementById('calls_notes').value);
+                    // var formData = $('#CRM_calls_form').serialize();
 
-            
+
+                });
+            })
+            .catch(error => {
+                console.error(error);
             });
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script>
-<!-- Script For adding CK editor End -->
+    </script>
+    <!-- Script For adding CK editor End -->
 
-<!-- End Calls History new Popup -->
+    <!-- End Calls History new Popup -->
 
-
-<script>
-
-      // CRM Complaint Js Start for model show
+    <script>
+        // CRM Complaint Js Start for model show
         const userCRMCallsModel = document.getElementById('userCRMCallsModel');
         const userCallsModal = document.getElementById('userCallsModal');
         const closeUserCallsModels = document.getElementById('closeUserCallsModels');
@@ -1083,7 +1497,7 @@ $access_rights = explode(',', $rights);
         // CRM Complaint Js End for model show
 
 
-         // CRM Section Type Js Start for model show
+        // CRM Section Type Js Start for model show
         const userCRMTypeModel = document.getElementById('userCRMTypeModel');
         const typeCrmModel = document.getElementById('typeCrmModel');
         const closeCrmModalBtn = document.getElementById('closeCrmModalBtn');
@@ -1104,4 +1518,94 @@ $access_rights = explode(',', $rights);
             }
         }
         // CRM Section Type Js End for model show
-</script>
+
+
+        // CRM email Js Start for model show
+        const userNewEmail = document.getElementById('userNewEmail');
+        const userEmailModel = document.getElementById('userEmailModel');
+        const closepopupBtn = document.getElementById('closepopupBtn');
+
+        // When the user clicks the button, open the modal 
+        userNewEmail.onclick = function() {
+            $('#userEmailModel').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closepopupBtn.onclick = function() {
+            $('#userEmailModel').modal('hide');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === compliantsModal) {
+                $('#userEmailModel').modal('hide');
+            }
+        }
+        // CRM email Js End for model show
+
+
+        // CRM task  Js Start for model show
+        const userNewTaskpop = document.getElementById('userNewTaskpop');
+        const TasksecondModal = document.getElementById('TasksecondModal');
+        const closeTaskpopup = document.getElementById('closeTaskpopup');
+
+        // When the user clicks the button, open the modal 
+        userNewTaskpop.onclick = function() {
+            $('#TasksecondModal').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeTaskpopup.onclick = function() {
+            $('#TasksecondModal').modal('hide');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === compliantsModal) {
+                $('#TasksecondModal').modal('hide');
+            }
+        }
+        // CRM task Js End for model show
+
+         // CRM task third Js Start for model show
+         const userThirdModal = document.getElementById('userThirdModal');
+        const third3Modal = document.getElementById('third3Modal');
+        const close3Taskpopup = document.getElementById('close3Taskpopup');
+
+        // When the user clicks the button, open the modal 
+        userThirdModal.onclick = function() {
+            $('#third3Modal').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        close3Taskpopup.onclick = function() {
+            $('#third3Modal').modal('hide');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === compliantsModal) {
+                $('#third3Modal').modal('hide');
+            }
+        }
+        // CRM task third Js End for model show
+
+        // CRM Notes Js Start for model show
+           const userNotesModel = document.getElementById('userNotesModel');
+        const NotesCrmModel = document.getElementById('NotesCrmModel');
+        const closeNotespopup = document.getElementById('closeNotespopup');
+
+        // When the user clicks the button, open the modal 
+        userNotesModel.onclick = function() {
+            $('#NotesCrmModel').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeNotespopup.onclick = function() {
+            $('#NotesCrmModel').modal('hide');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === compliantsModal) {
+                $('#NotesCrmModel').modal('hide');
+            }
+        }
+        // CRM Notes Js End for model show
+    </script>
