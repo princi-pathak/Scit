@@ -119,11 +119,11 @@
                 </a>
              
                 <!-- end here -->
-                <!-- <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="profile-nav alt">
-                        <a data-target="#PoliProcModal" data-toggle="modal" class="MainNavText" >    <!-- #PoliProcModal --
+                        <a data-target="#PoliProcModal" data-toggle="modal" class="MainNavText" >    
                             <section class="panel text-center">
-                                <div class="user-heading alt wdgt-row terques-bg"> <i class="fa fa-book"></i></div>
+                                <div class="user-heading alt wdgt-row terques-bg"> <i class="fa fa-book"></i></div> 
                                 <div class="panel-body">
                                     <div class="wdgt-value">
                                         <h1 class="count">Policies &<br>Procedures</h1>
@@ -133,8 +133,8 @@
                             </section>
                         </a>
                     </div>
-                </div> -->
-                <!-- <a href="{{ url('/staff-management') }}">
+                </div>
+                <a href="{{ url('/staff-management') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <section class="panel text-center">
@@ -148,8 +148,8 @@
                             </section>
                         </div>
                     </div>
-                </a> -->
-                <!-- <a href="{{ url('/system-management') }}">
+                </a>
+                <a href="{{ url('/system-management') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <section class="panel text-center">
@@ -163,9 +163,9 @@
                             </section>
                         </div>
                     </div>
-                </a> -->
+                </a>
 
-                <!-- <a href="{{ url('/view-reports') }}">
+                <a href="{{ url('/view-reports') }}">
                     <div class="col-md-6">
                         <div class="profile-nav alt">
                             <section class="panel text-center">
@@ -179,8 +179,8 @@
                             </section>
                         </div>
                     </div>
-                </a> -->
-                <!-- <a href="{{ url('/general-admin') }}">
+                </a>
+                <a href="{{ url('/general-admin') }}">
                      <div class="col-md-6">
                         <div class="profile-nav alt">
                             <section class="panel text-center">
@@ -194,7 +194,7 @@
                             </section>
                         </div>
                     </div>
-                </a> -->
+                </a>
             </div>
 
             @include('frontEnd.common.sidebar_dashboard')
