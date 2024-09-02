@@ -21,6 +21,7 @@
         table.dataTable td.select-checkbox:before {
             display: none;
         }
+
         .modal.show .modal-dialog {
             box-shadow: 0px 0px 10px #34343447;
         }
@@ -474,7 +475,7 @@ $access_rights = explode(',', $rights);
         <div class="modal-dialog modal-xl">
             <div class="modal-content add_Customer">
                 <div class="modal-header terques-bg">
-                    <h5 class="modal-title pupTitle" id="CRMHeaderPopupLabel">Modal title</h5>
+                    <h5 class="modal-title pupTitle" id="CRMHeaderPopupLabel">CRM View</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                 </div>
                 <div class="modal-body crmModelCont pt-2">
@@ -779,11 +780,11 @@ $access_rights = explode(',', $rights);
                                                                             <label for="staticEmail" class="col-sm-4 col-form-label">Notify ? </label>
                                                                             <div class="col-sm-8">
                                                                                 <div class="form-check form-check-inline">
-                                                                                    <input class="form-check-input" type="checkbox" name="inlinecheckOptions" id="yeson" value="option1" required="">
-                                                                                    <label class="form-check-label checkboxtext" for="checkalrt">Yes, On</label>
+                                                                                    <input class="form-check-input" type="checkbox" name="inlinecheckOptions" id="CRMyeson" value="option1" required="">
+                                                                                    <label class="form-check-label checkboxtext" for="CRMyeson">Yes, On</label>
                                                                                 </div>
 
-                                                                                <div id="optionsDiv">
+                                                                                <div id="CRMoptionsDiv">
                                                                                     <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
                                                                                     <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
                                                                                     <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
@@ -985,7 +986,7 @@ $access_rights = explode(',', $rights);
                                 <div class="row">
                                     <div class="col-sm-1">
                                         <div class="jobsection  mt-3">
-                                            <a href="#" class="profileDrop p-2 crmNewBtn" id="userNotesModel"> New</a>
+                                            <a href="#!" class="profileDrop p-2 crmNewBtn" id="userNotesModel"> New</a>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -1033,7 +1034,7 @@ $access_rights = explode(',', $rights);
                                 <div class="row">
                                     <div class="col-sm-1">
                                         <div class="jobsection  mt-3">
-                                            <a href="#" class="profileDrop p-2 crmNewBtn" id=""> New</a>
+                                            <a href="#" class="profileDrop p-2 crmNewBtn" id="userCompliantsModal"> New</a>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -1334,93 +1335,175 @@ $access_rights = explode(',', $rights);
     <!-- CRM Add Email Modal End -->
 
     <!-- CRM Add Notes Modal Start -->
-<div class="modal fade" id="NotesCrmModel" tabindex="-1" role="dialog" aria-labelledby="notesModalLabel" aria-hidden="true">
+    <div class="modal fade" id="NotesCrmModel" tabindex="-1" role="dialog" aria-labelledby="notesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notesModalLabel">Notes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeNotespopup" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="crm_lead_notes_form">
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <input type="hidden" class="form-control editInput" name="crm_lead_notes_id" id="">
+                                <select class="form-control editInput" name="crm_section_type_id" id="lead_notes_crm"></select>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                            <div class="col-sm-9">
+                                <div class="col-form-label">
+                                    <div id="NotesEditor">
+                                    </div>
+                                    <textarea name="notes" id="CRMNotes" style="display: none;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
+                            <div class="col-sm-9">
+                                <span class="editInput" id="lead_ref_notes"></span>
+                                <input type="hidden" id="lead_id_notes" name="lead_id">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                            <div class="col-sm-9">
+                                <input class="form-check-input" type="radio" name="notify" id="notify_notes1" value="0" checked>
+                                <label class="form-check-label editInput" for="notify_notes1"> No </label>
+                                <input class="form-check-input" type="radio" name="notify" id="notify_notes2" value="1">
+                                <label class="form-check-label editInput" for="notify_notes2"> Yes </label>
+                            </div>
+                        </div>
+                        <div id="notification_notes_div">
+                            <div class="mb-2 row">
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                                <div class="col-sm-9">
+                                    <select name="user_id" class="form-control editInput" id="">
+                                        <option>dfgdfg</option>
+                                        <option>dtgerdg</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                                <div class="col-sm-9">
+                                    <label for="calls_notify_who1" class="editInput">
+                                        <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
+                                    </label>
+                                    <label for="calls_notify_who2" class="editInput">
+                                        <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS
+                                    </label>
+                                    <label for="calls_notify_who3" class="editInput">
+                                        <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
+                            <div class="col-sm-9">
+                                <input class="form-check-input" type="radio" name="customer_visibility" id="flexRadioDefault1" value="0" checked>
+                                <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
+                                <input class="form-check-input" type="radio" name="customer_visibility" id="flexRadioDefault2" value="1">
+                                <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="profileDrop" id="closeNotespopup">Close</button>
+                    <button type="button" class="profileDrop" id="saveCRMLeadNotes">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CRM Add Notes Modal End -->
+
+    <!-- CRM Add compliants Modal Start -->
+<div class="modal fade" id="CompHistoryModal" tabindex="-1" role="dialog" aria-labelledby="compliantsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title" id="notesModalLabel">Notes</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeNotespopup" aria-label="Close">
+                <h5 class="modal-title" id="compliantsModalLabel">Complaint</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeUserComplaintpopup" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" id="crm_lead_notes_form">
+                <form action="" id="crm_lead_complaint_form">
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                         <div class="col-sm-9">
-                            <input type="hidden" class="form-control editInput" name="crm_lead_notes_id" id="">
-                            <select class="form-control editInput" name="crm_section_type_id" id="lead_notes_crm"></select>
+                            <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
+                            <select class="form-control editInput" name="crm_section_type_id" id="lead_complaint_crm">
+                                <option value="">Select</option>
+                            </select>
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
                         <div class="col-sm-9">
                             <div class="col-form-label">
-                                <div id="NotesEditor">
+                                <div id="complaintEditor">
                                 </div>
-                                <textarea name="notes" id="CRMNotes" style="display: none;"></textarea>
+                                <textarea name="compliant" id="CRMComplaint" style="display: none;"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
                         <div class="col-sm-9">
-                            <span class="editInput" id="lead_ref_notes"></span>
-                            <input type="hidden" id="lead_id_notes" name="lead_id">
+                            <span class="editInput" id="lead_ref_complaint"></span>
+                            <input type="hidden" id="lead_id_complaint" name="lead_id">
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                        <label for="" class="col-sm-3 col-form-label">Notify? </label>
                         <div class="col-sm-9">
-                            <input class="form-check-input" type="radio" name="notify" id="notify_notes1" value="0" checked>
-                            <label class="form-check-label editInput" for="notify_notes1"> No </label>
-                            <input class="form-check-input" type="radio" name="notify" id="notify_notes2" value="1">
-                            <label class="form-check-label editInput" for="notify_notes2"> Yes </label>
-                        </div>  
+                            <input class="form-check-input" type="radio" name="notify" id="notify_complaint1" value="0" checked>
+                            <label class="form-check-label editInput" for="notify_complaint1"> No </label>
+                            <input class="form-check-input" type="radio" name="notify" id="notify_complaint2" value="1">
+                            <label class="form-check-label editInput" for="notify_complaint2"> Yes </label>
+                        </div>
                     </div>
-                    <div id="notification_notes_div">
+                    <div id="notification_complaint_div">
                         <div class="mb-2 row">
                             <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
                             <div class="col-sm-9">
-                                <select name="user_id" class="form-control editInput" id="">
-                                    <option>dfgdfg</option>
-                                    <option>dtgerdg</option>
+                                <select name="user_id" class="form-control editInput" id="user_notifiy">
+                                    <option value="">default1</option>
+                                    <option value="">default1</option>
                                 </select>
                             </div>
                         </div>
                         <div class="mb-2 row">
                             <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
                             <div class="col-sm-9">
-                                <label for="calls_notify_who1" class="editInput">
-                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) 
+                                <label for="calls_complaint_who1" class="editInput">
+                                    <input type="checkbox" name="notification" id="calls_complaint_who1" value="1"> Notification (User Only)
                                 </label>
-                                <label for="calls_notify_who2" class="editInput">
-                                    <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS 
+                                <label for="calls_complaint_who2" class="editInput">
+                                    <input type="checkbox" name="sms" id="calls_complaint_who2" value="1"> SMS
                                 </label>
-                                <label for="calls_notify_who3" class="editInput">
-                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email 
+                                <label for="calls_complaint_who3" class="editInput">
+                                    <input type="checkbox" name="email" id="calls_complaint_who3" value="1"> Email
                                 </label>
                             </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
-                        <div class="col-sm-9">
-                            <input class="form-check-input" type="radio" name="customer_visibility" id="flexRadioDefault1" value="0" checked>
-                            <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
-                            <input class="form-check-input" type="radio" name="customer_visibility" id="flexRadioDefault2" value="1">
-                            <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="profileDrop" id="closeNotespopup">Close</button>
-                <button type="button" class="profileDrop" id="saveCRMLeadNotes">Save</button>
+                <button type="button" class="profileDrop" id="closeUserComplaintpopup">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMLeadComplaint">Save</button>
             </div>
         </div>
     </div>
 </div>
-<!-- CRM Add Notes Modal End -->
+<!-- CRM Add compliants Modal End -->
 
     <!-- Script For adding CK editor start -->
     <script type="importmap">
@@ -1565,8 +1648,8 @@ $access_rights = explode(',', $rights);
         }
         // CRM task Js End for model show
 
-         // CRM task third Js Start for model show
-         const userThirdModal = document.getElementById('userThirdModal');
+        // CRM task third Js Start for model show
+        const userThirdModal = document.getElementById('userThirdModal');
         const third3Modal = document.getElementById('third3Modal');
         const close3Taskpopup = document.getElementById('close3Taskpopup');
 
@@ -1588,7 +1671,7 @@ $access_rights = explode(',', $rights);
         // CRM task third Js End for model show
 
         // CRM Notes Js Start for model show
-           const userNotesModel = document.getElementById('userNotesModel');
+        const userNotesModel = document.getElementById('userNotesModel');
         const NotesCrmModel = document.getElementById('NotesCrmModel');
         const closeNotespopup = document.getElementById('closeNotespopup');
 
@@ -1608,4 +1691,57 @@ $access_rights = explode(',', $rights);
             }
         }
         // CRM Notes Js End for model show
+
+
+
+
+         // CRM Complaints History Start for model show
+         const userCompliantsModal = document.getElementById('userCompliantsModal');
+        const CompHistoryModal = document.getElementById('CompHistoryModal');
+        const closeUserComplaintpopup = document.getElementById('closeUserComplaintpopup');
+
+        // When the user clicks the button, open the modal 
+        userCompliantsModal.onclick = function() {
+            $('#CompHistoryModal').modal('show');
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeUserComplaintpopup.onclick = function() {
+            $('#CompHistoryModal').modal('hide');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === compliantsModal) {
+                $('#CompHistoryModal').modal('hide');
+            }
+        }
+        // CRM Complaints History End for model show
+
+
+
+
+        const CRMmainCheckbox = document.getElementById('CRMyeson');
+            const CRMoptionsDiv = document.getElementById('CRMoptionsDiv');
+
+            CRMmainCheckbox.addEventListener('change', function() {
+                if (CRMmainCheckbox.checked) {
+                    CRMoptionsDiv.style.display = 'block';
+                } else {
+                    CRMoptionsDiv.style.display = 'none';
+                }
+        });
+
+        $( document ).ready(function() {
+            const CRMmainCheckbox = document.getElementById('CRMyeson');
+            const CRMoptionsDiv = document.getElementById('CRMoptionsDiv');
+            CRMoptionsDiv.style.display = 'none';
+
+            CRMmainCheckbox.addEventListener('change', function() {
+                if (CRMmainCheckbox.checked) {
+                    CRMoptionsDiv.style.display = 'block';
+                } else {
+                    CRMoptionsDiv.style.display = 'none';
+                }
+        });
+        });
     </script>
