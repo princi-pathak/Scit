@@ -1730,3 +1730,11 @@ a.crmNewBtn{
 .CRMFullModel .modal-dialog.modal-xl {
   --bs-modal-width: 1600px;
 }
+div#CompHistoryModal {
+  --bs-modal-zindex: 1056;
+}
+
+
+.modal-dialog.modal-lg.mediamSizePopup {
+    --bs-modal-width: 1000px;
+}

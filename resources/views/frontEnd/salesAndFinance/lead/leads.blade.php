@@ -349,7 +349,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="productDetailTable">
-                                        <table class="table">
+                                        <table class="table" id="CRMFullHistoryData">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Date</th>
@@ -495,8 +495,8 @@
                                                         <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Timer</button>
                                                     </div>
                                                 </nav>
-                                                <div class="tab-content p-3 border bg-light" id="nav-tabContent">
-                                                    <form id="crm_lead_task_form">
+                                                <form id="crm_lead_task_form">
+                                                    <div class="tab-content p-3 border bg-light" id="nav-tabContent">
                                                         <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                                             <div class="row">
                                                                 <div class="col-6">
@@ -593,61 +593,62 @@
                                                         </div>
                                                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                                             <div class="row">
-                                                                    <div class="col-6">
-                                                                        <div class="mb-3 row">
-                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
-                                                                            <div class="col-sm-8">
+                                                                <div class="col-6">
+                                                                    <div class="mb-3 row">
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
+                                                                        <div class="col-sm-8">
                                                                             <input type="hidden" name="timer" value="2">
-                                                                                <select class="form-control editInput" name="user_id" id="">
-                                                                                    @foreach($users as $value)
-                                                                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-3 row">
-                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
-                                                                            <div class="col-sm-8">
-                                                                                <input type="text" class="form-control" id="staticEmail" value="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-3 row">
-                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Timer</label>
-                                                                            <div class="col-sm-8">
-                                                                                <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
-                                                                                <span id="timerDisplay">00:00:00</span>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-3 row">
-                                                                            <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
-                                                                            <div class="col-sm-8">
-                                                                                <span class="editInput" id="relatedTo"></span>
-                                                                            </div>
+                                                                            <select class="form-control editInput" name="user_id" id="">
+                                                                                @foreach($users as $value)
+                                                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-6">
-                                                                        <div class="mb-3 row">
-                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
-                                                                            <div class="col-sm-6">
-                                                                                <select class="form-control editInput" name="task_type_id_time" id="lead_task_types_timer">
-                                                                                    <option value="">Select</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-sm-2">
-                                                                                <a href="#!" class="formicon" id="openThirdModal2"><i class="fa-solid fa-square-plus"></i></a>
-                                                                            </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" class="form-control editInput" id="staticEmail">
                                                                         </div>
-                                                                        <div class="mb-3 row">
-                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
-                                                                            <div class="col-sm-8">
-                                                                                <textarea rows="5" name="" class="form-control textareaInput" id=""></textarea>
-                                                                            </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Timer</label>
+                                                                        <div class="col-sm-8">
+                                                                            <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
+                                                                            <span id="timerDisplay">00:00:00</span>
+                                                                            <input type="hidden" name="start_time" id="start_time">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
+                                                                        <div class="col-sm-8">
+                                                                            <span class="editInput" id="relatedTo"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="mb-3 row">
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
+                                                                        <div class="col-sm-6">
+                                                                            <select class="form-control editInput" name="task_type_id_time" id="lead_task_types_timer">
+                                                                                <option value="">Select</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <a href="#!" class="formicon" id="openThirdModal2"><i class="fa-solid fa-square-plus"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
+                                                                        <div class="col-sm-8">
+                                                                            <textarea rows="5" name="" class="form-control textareaInput" id=""></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </form>
+                                                    </div>
+                                                </form>
                                                 <!-- tab -->
                                                 <div class="pageTitleBtn">
                                                     <a href="#" class="profileDrop p-2 crmNewBtn" id="saveCRMLeadTaskWithTimer"> Save</a>
@@ -801,16 +802,18 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="productDetailTable">
-                                        <table class="table">
+                                        <table class="table" id="CRMLeadTaskTable">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Date</th>
-                                                    <th>By</th>
+                                                    <th>User</th>
                                                     <th>Contact</th>
                                                     <th>Type</th>
+                                                    <th>Title</th>
                                                     <th>Note(s)</th>
-                                                    <th>Status</th>
-                                                    <th>Customer Visible</th>
+                                                    <th>Related To</th>
+                                                    <th>Created On </th>
+                                                    <th>Created By </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -904,9 +907,10 @@
                                                     <th>By</th>
                                                     <th>Contact</th>
                                                     <th>Type</th>
+                                                    <th>Source Ref</th>
                                                     <th>Note(s)</th>
-                                                    <th>Status</th>
                                                     <th>Customer Visible</th>
+                                                    <th>Actioned</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1410,6 +1414,11 @@
                         typeCell.textContent = item.title;
                         row.appendChild(typeCell);
 
+                        const leadRef = document.createElement('td');
+                        leadRef.textContent = lead_ref;
+                        row.appendChild(lead_ref);
+
+
                         const notesCell = document.createElement('td');
                         notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.notes;
 
@@ -1666,6 +1675,176 @@
         });
     }
 
+    function getTasksDataAjaxCall() {
+        var lead_id = document.getElementById('lead_id_CRM').value;
+        var lead_ref = document.getElementById('calls_lead_refs').textContent;
+        $.ajax({
+            url: '{{ route("lead.ajax.getCRMTasksData") }}',
+            method: 'POST',
+            data: {
+                lead_id: lead_id
+            },
+            success: function(response) {
+                console.log(response.data);
+
+                // Get the table body element
+                const tableBody = document.querySelector('#CRMLeadTaskTable tbody');
+                tableBody.innerHTML = '';
+
+                // Function to populate the table
+                function populateTable(data) {
+                    data.forEach(item => {
+                        // Create a new row
+                        const row = document.createElement('tr');
+
+                        const created_at = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+                        const date = moment(item.start_date).format('DD/MM/YYYY');
+                        const time = moment(item.start_time).format('HH:mm');
+
+                        // Create cells and append them to the row
+                        const dateCell = document.createElement('td');
+                        dateCell.textContent = date+ " " +time;
+                        row.appendChild(dateCell);
+
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = "<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>";
+                        row.appendChild(nameCell);
+
+                        const phoneCell = document.createElement('td');
+                        phoneCell.textContent = item.telephone;
+                        row.appendChild(phoneCell);
+
+                        const lead_task_title = document.createElement('td');
+                        lead_task_title.textContent = item.lead_task_title;
+                        row.appendChild(lead_task_title);
+
+                        const typeCell = document.createElement('td');
+                        typeCell.textContent = item.title;
+                        row.appendChild(typeCell);
+
+                        const notesCell = document.createElement('td');
+                        notesCell.innerHTML = item.notes;
+                        row.appendChild(notesCell);
+
+                        const related = document.createElement('td');
+                        related.innerHTML = lead_ref;
+                        row.appendChild(related);
+
+                        const create_time = document.createElement('td');
+                        create_time.innerHTML = created_at;
+                        row.appendChild(create_time);
+
+                        const created_by = document.createElement('td');
+                        created_by.innerHTML = '<?php echo Auth::user()->name; ?>';
+                        row.appendChild(created_by);
+
+                        const visibilityCell = document.createElement('td');
+                        if (item.customer_visibility == 0) {
+                            visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        } else if (item.customer_visibility == 1) {
+                            visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        }
+                        row.appendChild(visibilityCell);
+
+                        const idCell = document.createElement('td');
+                        idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
+                        row.appendChild(idCell);
+
+                        // Append the row to the table body
+                        tableBody.appendChild(row);
+                    });
+                }
+
+                // Call the function to populate the table with the data array
+                populateTable(response.data);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function getFullHistoryDataAjax() {
+        var lead_id = document.getElementById('lead_id_CRM').value;
+        var lead_ref = document.getElementById('calls_lead_refs').textContent;
+        $.ajax({
+            url: '{{ route("lead.ajax.getCRMAllData") }}',
+            method: 'POST',
+            data: {
+                lead_id: lead_id
+            },
+            success: function(response) {
+                console.log("History response", response.data);
+                console.log("length", (response.data).length);
+
+                // // Get the table body element
+                const tableBody = document.querySelector('#CRMFullHistoryData tbody');
+                tableBody.innerHTML = '';
+
+                // Function to populate the table
+                function populateTable(data) {
+                    console.log('Inside table function ', data);
+                    data.forEach(item => {
+                        // Create a new row
+                        const row = document.createElement('tr');
+
+                        const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+
+                        // Create cells and append them to the row
+                        const dateCell = document.createElement('td');
+                        dateCell.textContent = date;
+                        row.appendChild(dateCell);
+
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = "<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>";
+                        row.appendChild(nameCell);
+
+                        const phoneCell = document.createElement('td');
+                        phoneCell.textContent = item.telephone;
+                        row.appendChild(phoneCell);
+
+                        const typeCell = document.createElement('td');
+                        typeCell.textContent = item.title;
+                        row.appendChild(typeCell);
+
+                        const notesCell = document.createElement('td');
+                        notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.notes;
+
+                        row.appendChild(notesCell);
+
+                        const visibilityCell = document.createElement('td');
+                        if (item.customer_visibility == 0) {
+                            visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        } else if (item.customer_visibility == 1) {
+                            visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+                        }
+                        row.appendChild(visibilityCell);
+
+                        const idCell = document.createElement('td');
+                        idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
+                        row.appendChild(idCell);
+
+                        // Append the row to the table body
+                        tableBody.appendChild(row);
+                    });
+                }
+
+                // Call the function to populate the table with the data array
+
+                for (i = 0; i <= (response.data).length; i++) {
+                    console.log(response.data[i]);
+                    populateTable(response.data[i]);
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
+
     $(document).ready(function() {
 
         $.ajaxSetup({
@@ -1689,6 +1868,7 @@
                 timerInterval = setInterval(function() {
                     elapsedSeconds++;
                     document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+                    document.getElementById('start_time').value = formatTime(elapsedSeconds);
                 }, 1000);
                 document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
             }
@@ -1708,6 +1888,13 @@
 
         document.getElementById('toggleTimerBtn').addEventListener('click', toggleTimer);
         // End js for time start and end
+        CRMFullHistoryData
+
+        // set the value in Full history table data js Start here
+        document.getElementById('pills-fullHistory-tab').addEventListener('click', function() {
+            getFullHistoryDataAjax();
+        });
+        // set the value in Full history table data js End here
 
         // set the value in calls history table data js Start here
         document.getElementById('pills-Calls-tab').addEventListener('click', function() {
@@ -1721,6 +1908,13 @@
         });
         // set the value in Emails history table data js End here
 
+        // set the value in Tasks table data js Start here
+        document.getElementById('pills-tasks-tab').addEventListener('click', function() {
+            getTasksDataAjaxCall();
+        });
+        // set the value in Tasks table data js End here
+
+
         // set the value in CRM Lead Notes table data js Start here
         document.getElementById('pills-notes-tab').addEventListener('click', function() {
             getNotesDataAjax();
@@ -1732,6 +1926,8 @@
             getComplaintDataAjax();
         });
         // set the value in CRM Lead Notes table data js End here
+
+
 
         document.querySelectorAll('.set_value_on_CRM_model').forEach(function(anchor) {
             anchor.addEventListener('click', function(event) {
@@ -1758,7 +1954,7 @@
                 document.getElementById('lead_ref_complaint').textContent = leadRef;
                 document.getElementById('lead_id_complaint').value = leadId;
                 document.getElementById('crm_lead_id_task').value = leadId;
-                
+
 
                 // Open CRM modal
                 $('#customerPop').modal('show');
@@ -1986,7 +2182,7 @@
                 }
             });
         });
-        
+
 
         // js start here for calls model open and close
         const openCallsModel = document.getElementById('openCallsModel');
