@@ -27,6 +27,7 @@ use App\Models\CRMLeadEmail;
 use App\Models\CRMLeadNotes;
 use App\Models\CRMLeadComplaint;
 use App\Models\CRMLeadTask;
+use Illuminate\Support\Collection;
 
 class LeadController extends Controller
 {
@@ -835,5 +836,40 @@ class LeadController extends Controller
         }
 
     }
+
+    public function getCRMTasksData(Request $request){
+        $data = CRMLeadTask::getCRMLeadTaskData($request->lead_id, Auth::user()->home_id);
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }
+
+    public function getCRMAllData(Request $request){
+        $data['0'] = CRMLeadTask::getCRMLeadTaskData($request->lead_id, Auth::user()->home_id);
+        $data['1'] = CRMLeadComplaint::getCRMLeadComplaintData($request->lead_id, Auth::user()->home_id);
+        $data['2'] = CRMLeadNotes::getCRMLeadNotesData($request->lead_id, Auth::user()->home_id);
+        $data['3'] = CRMLeadEmail::getCRMLeadEmailsData($request->lead_id, Auth::user()->home_id);
+        $data['4'] = CRMLeadCalls::getCRMLeadCallsData($request->lead_ref, Auth::user()->home_id);
+
+        // Merge all data into a single collection
+        // $fullHistory = (new Collection())
+        // ->merge($notes)
+        // ->merge($calls)
+        // ->merge($emails)
+        // ->merge($tasks)
+        // ->merge($complaints);
+
+        // $fullHistory = $fullHistory->sortBy('created_at');
+
+        // dd($fullHistory);
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+
+    }       
     
 }
