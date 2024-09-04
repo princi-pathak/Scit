@@ -27,7 +27,6 @@ use App\Models\CRMLeadEmail;
 use App\Models\CRMLeadNotes;
 use App\Models\CRMLeadComplaint;
 use App\Models\CRMLeadTask;
-use Illuminate\Support\Collection;
 
 class LeadController extends Controller
 {
@@ -853,17 +852,6 @@ class LeadController extends Controller
         $data['3'] = CRMLeadEmail::getCRMLeadEmailsData($request->lead_id, Auth::user()->home_id);
         $data['4'] = CRMLeadCalls::getCRMLeadCallsData($request->lead_ref, Auth::user()->home_id);
 
-        // Merge all data into a single collection
-        // $fullHistory = (new Collection())
-        // ->merge($notes)
-        // ->merge($calls)
-        // ->merge($emails)
-        // ->merge($tasks)
-        // ->merge($complaints);
-
-        // $fullHistory = $fullHistory->sortBy('created_at');
-
-        // dd($fullHistory);
         if($data){
             return response()->json(['success' => true, 'data' => $data]);
         } else {
