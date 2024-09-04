@@ -43,6 +43,20 @@
         margin: 0;
         line-height: 15px;
     }
+
+    #showDivContLeads.show {
+        height: 0;
+    }
+
+    #showDivContLeads {
+        height: 176px;
+        transition: .7s;
+        overflow: hidden;
+    }
+
+    .btnActive{
+      background-color: #494949;
+    }
 </style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
@@ -264,9 +278,9 @@
             </div>
             <div class="modal-body crmModelCont pt-2">
                 <div class="jobsection pb-2 hideandshow">
-                    <button class="profileDrop" id="onclickbtnHideShow">Hide/Show</button>
+                    <button class="profileDrop" id="onclickbtnHideShowLeads">Hide/Show</button>
                 </div>
-                <div id="showDivCont">
+                <div id="showDivContLeads">
                     <div class="newJobForm mb-4">
                         <div class="row">
                             <div class="col-md-6">
@@ -608,7 +622,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" class="form-control editInput" id="staticEmail">
+                                                                            <input type="text" class="form-control editInput" name="title" id="staticEmail">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
@@ -630,7 +644,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
                                                                         <div class="col-sm-6">
-                                                                            <select class="form-control editInput" name="task_type_id_time" id="lead_task_types_timer">
+                                                                            <select class="form-control editInput" name="task_type_id" id="lead_task_types_timer">
                                                                                 <option value="">Select</option>
                                                                             </select>
                                                                         </div>
@@ -641,7 +655,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
                                                                         <div class="col-sm-8">
-                                                                            <textarea rows="5" name="" class="form-control textareaInput" id=""></textarea>
+                                                                            <textarea rows="5" name="notes" class="form-control textareaInput" id=""></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -794,7 +808,7 @@
                                     <div class="pageTitleBtn">
                                         <a href="{{ url('') }}" class="profileDrop p-2 crmNewBtn">All</a>
                                         <a href="#" class="profileDrop p-2 crmNewBtn">Today</a>
-                                        <a href="#" class="profileDrop p-2 crmNewBtn">This Week</a>
+                                        <a href="#" class="profileDrop p-2 crmNewBtn btnActive">This Week</a>
                                         <a href="#" class="profileDrop p-2 crmNewBtn">Overdue</a>
                                         <a href="#" class="profileDrop p-2 crmNewBtn">Completed</a>
                                         <a href="#" class="profileDrop p-2 crmNewBtn">Recurring</a>
@@ -814,18 +828,12 @@
                                                     <th>Related To</th>
                                                     <th>Created On </th>
                                                     <th>Created By </th>
+                                                    <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                </tr>
+                                             
                                             </tbody>
                                         </table>
                                     </div>
@@ -860,8 +868,8 @@
                                                     <th>Contact</th>
                                                     <th>Type</th>
                                                     <th>Note(s)</th>
-                                                    <th>Status</th>
                                                     <th>Customer Visible</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -952,7 +960,7 @@
                 <form action="" class="customerForm" id="CRM_calls_form">
                     <div class="mb-2 row">
                         <input type="hidden" name="crm_lead_calls_id" id="crm_lead_calls_id">
-                        <label for="calls_telephone" class="col-sm-3 col-form-label">Direction </label>
+                        <label for="" class="col-sm-3 col-form-label">Direction </label>
                         <div class="col-sm-9">
                             <input class="form-check-input" type="radio" name="direction" id="direction_radio1" value="0" checked>
                             <label class="form-check-label editInput" for="direction_radio1"> Call Out </label>
@@ -961,14 +969,14 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="calls_telephone" class="col-sm-3 col-form-label">Telephone </label>
+                        <label for="" class="col-sm-3 col-form-label">Telephone </label>
                         <div class="col-sm-2">
                             <select class="form-control editInput selectOptions" required="" name="country_code" id="countries">
                                 <option value="">Select</option>
                             </select>
                         </div>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control editInput" id="calls_telephone" name="telephone" placeholder="Telephone">
+                            <input type="text" class="form-control editInput" id="" name="telephone" placeholder="Telephone">
                         </div>
                     </div>
                     <div class="mb-2 row">
@@ -1000,11 +1008,11 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                        <label for="" class="col-sm-3 col-form-label">Notify? </label>
                         <div class="col-sm-9">
-                            <input class="form-check-input notify_radio1" type="radio" name="notify_radio" id="" value="0" checked>
+                            <input class="form-check-input" type="radio" name="notify_radio" id="notify_radio1" value="0" checked>
                             <label class="form-check-label editInput" for=""> No </label>
-                            <input class="form-check-input notify_radio2" type="radio" name="notify_radio" id="" value="1">
+                            <input class="form-check-input" type="radio" name="notify_radio" id="notify_radio2" value="1">
                             <label class="form-check-label editInput" for=""> Yes </label>
                         </div>
                     </div>
@@ -1138,7 +1146,7 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                        <label for="" class="col-sm-3 col-form-label">Notify? </label>
                         <div class="col-sm-9">
                             <input class="form-check-input" type="radio" name="notify" id="notify_email1" value="0" checked>
                             <label class="form-check-label editInput" for="notify_email1"> No </label>
@@ -1229,7 +1237,7 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="calls_telephone" class="col-sm-3 col-form-label">Notify? </label>
+                        <label for="" class="col-sm-3 col-form-label">Notify? </label>
                         <div class="col-sm-9">
                             <input class="form-check-input" type="radio" name="notify" id="notify_notes1" value="0" checked>
                             <label class="form-check-label editInput" for="notify_notes1"> No </label>
@@ -1276,7 +1284,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="profileDrop" id="">Close</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="">Close</button>
                 <button type="button" class="profileDrop" id="saveCRMLeadNotes">Save</button>
             </div>
         </div>
@@ -1360,7 +1368,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="profileDrop" id="closeCrmComplaintBtn">Close</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmComplaintBtn">Close</button>
                 <button type="button" class="profileDrop" id="saveCRMLeadComplaint">Save</button>
             </div>
         </div>
@@ -1416,12 +1424,10 @@
 
                         const leadRef = document.createElement('td');
                         leadRef.textContent = lead_ref;
-                        row.appendChild(lead_ref);
-
+                        row.appendChild(leadRef);
 
                         const notesCell = document.createElement('td');
                         notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.notes;
-
                         row.appendChild(notesCell);
 
                         const visibilityCell = document.createElement('td');
@@ -1438,6 +1444,7 @@
 
                         // Append the row to the table body
                         tableBody.appendChild(row);
+
                     });
                 }
 
@@ -1703,7 +1710,7 @@
 
                         // Create cells and append them to the row
                         const dateCell = document.createElement('td');
-                        dateCell.textContent = date+ " " +time;
+                        dateCell.textContent = date + " " + time;
                         row.appendChild(dateCell);
 
                         const nameCell = document.createElement('td');
@@ -1830,7 +1837,6 @@
                 }
 
                 // Call the function to populate the table with the data array
-
                 for (i = 0; i <= (response.data).length; i++) {
                     console.log(response.data[i]);
                     populateTable(response.data[i]);
@@ -1843,7 +1849,59 @@
         });
     }
 
+    function getLeadTaskType() {
+        $.ajax({
+            url: '{{ route("lead.ajax.getLeadTaskType") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log(response.data);
+                const selectElement = document.getElementById('lead_task_types');
+                const selectElementTimer = document.getElementById('lead_task_types_timer');
 
+                selectElement.innerHTML = '';
+                selectElementTimer.innerHTML = '';
+
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.title;
+                    selectElement.appendChild(option);
+                });
+
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.title;
+                    selectElementTimer.appendChild(option);
+                });
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function getCRMTypeData() {
+        $.ajax({
+            url: '{{ route("lead.ajax.getCRMTypeData") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log(response.Data);
+                const selectElement = document.getElementById('calls_type');
+                selectElement.innerHTML = '';
+                response.Data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.title;
+                    selectElement.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 
     $(document).ready(function() {
 
@@ -1888,7 +1946,7 @@
 
         document.getElementById('toggleTimerBtn').addEventListener('click', toggleTimer);
         // End js for time start and end
-        CRMFullHistoryData
+        // CRMFullHistoryData
 
         // set the value in Full history table data js Start here
         document.getElementById('pills-fullHistory-tab').addEventListener('click', function() {
@@ -1971,6 +2029,7 @@
                 success: function(response) {
                     alert(response.message);
                     $('#crmTypeModel').modal('hide');
+                    getCRMTypeData();
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -1978,137 +2037,6 @@
             });
         });
 
-        // Ajax Call for saving CRM section Type
-        $('#lead_task_types').on('click', function() {
-            $.ajax({
-                url: '{{ route("lead.ajax.getLeadTaskType") }}',
-                method: 'GET',
-                success: function(response) {
-                    console.log(response.data);
-                    const selectElement = document.getElementById('lead_task_types');
-                    selectElement.innerHTML = '';
-                    response.data.forEach(user => {
-                        const option = document.createElement('option');
-                        option.value = user.id;
-                        option.text = user.title;
-                        selectElement.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Ajax Call for saving CRM section Type
-        $('#lead_task_types_timer').on('click', function() {
-            $.ajax({
-                url: '{{ route("lead.ajax.getLeadTaskType") }}',
-                method: 'GET',
-                success: function(response) {
-                    console.log(response.data);
-                    const selectElement = document.getElementById('lead_task_types_timer');
-                    selectElement.innerHTML = '';
-                    response.data.forEach(user => {
-                        const option = document.createElement('option');
-                        option.value = user.id;
-                        option.text = user.title;
-                        selectElement.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Ajax call for getting CRM Section Types
-        $('#calls_type').on('click', function() {
-            $.ajax({
-                url: '{{ route("lead.ajax.getCRMTypeData") }}',
-                method: 'GET',
-                success: function(response) {
-                    console.log(response.Data);
-                    const selectElement = document.getElementById('calls_type');
-                    selectElement.innerHTML = '';
-                    response.Data.forEach(user => {
-                        const option = document.createElement('option');
-                        option.value = user.id;
-                        option.text = user.title;
-                        selectElement.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Ajax call for getting CRM Section Types for CRM notes 
-        $('#lead_notes_crm').on('click', function() {
-            $.ajax({
-                url: '{{ route("lead.ajax.getCRMTypeData") }}',
-                method: 'GET',
-                success: function(response) {
-                    console.log(response.Data);
-                    const selectElement = document.getElementById('lead_notes_crm');
-                    selectElement.innerHTML = '';
-                    response.Data.forEach(user => {
-                        const option = document.createElement('option');
-                        option.value = user.id;
-                        option.text = user.title;
-                        selectElement.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Ajax call for getting CRM Section Types for CRM Complaint 
-        $('#lead_complaint_crm').on('click', function() {
-            $.ajax({
-                url: '{{ route("lead.ajax.getCRMTypeData") }}',
-                method: 'GET',
-                success: function(response) {
-                    console.log(response.Data);
-                    const selectElement = document.getElementById('lead_complaint_crm');
-                    selectElement.innerHTML = '';
-                    response.Data.forEach(user => {
-                        const option = document.createElement('option');
-                        option.value = user.id;
-                        option.text = user.title;
-                        selectElement.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Ajax call for getting Country Code and Country Name
-        $('#countries').on('click', function() {
-            $.ajax({
-                url: '{{ route("ajax.getCountriesList") }}',
-                method: 'GET',
-                success: function(response) {
-                    console.log(response.Data);
-                    const selectElement = document.getElementById('countries');
-                    selectElement.innerHTML = '';
-                    response.Data.forEach(user => {
-                        const option = document.createElement('option');
-                        option.value = user.code;
-                        option.text = "+" + " " + user.code + " - " + " " + user.name;
-                        selectElement.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
 
         // Ajax for Add Task Type
         $('#saveTaskType').on('click', function() {
@@ -2121,6 +2049,7 @@
                 success: function(response) {
                     alert(response.message);
                     $('#thirdModal').modal('hide');
+                    getLeadTaskType();
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -2192,6 +2121,8 @@
 
         // When the user clicks the button, open the modal 
         openCallsModel.onclick = function() {
+            getCountriesList();
+            getCRMTypeData();
             $('#callsModal').modal('show');
         }
 
@@ -2215,6 +2146,7 @@
 
         // When the user clicks the button, open the modal 
         openNotesModel.onclick = function() {
+            getCRMTypeData();
             $('#NewNotesModel').modal('show');
         }
 
@@ -2259,6 +2191,7 @@
 
         // When the user clicks the button, open the modal 
         openComplaintsModel.onclick = function() {
+            getCRMTypeData();
             $('#compliantsModal').modal('show');
         }
 
@@ -2279,6 +2212,7 @@
         const optionsDiv = document.getElementById('optionsDiv');
         // Open the second modal without hiding the first one
         $('#openSecondModal').on('click', function() {
+            getLeadTaskType();
             optionsDiv.style.display = 'none';
             $('#secondModal').modal('show');
         });
@@ -2312,8 +2246,8 @@
     });
 
     // notification Div hide show on radio button for calls js start
-    const notify_radio1 = document.getElementsByClassName('notify_radio1')[0];
-    const notify_radio2 = document.getElementsByClassName('notify_radio2')[0];
+    const notify_radio1 = document.getElementById('notify_radio1');
+    const notify_radio2 = document.getElementById('notify_radio2');
     const notification_div = document.getElementsByClassName('notification_div')[0];
 
     // Initially hide the notification_div
@@ -2395,6 +2329,15 @@
             notification_complaint_div.style.display = 'block';
         }
     });
+
+
+    // CRM JS on leads
+    document.getElementById('onclickbtnHideShowLeads').addEventListener('click', function() {
+        var element = document.getElementById('showDivContLeads');
+        element.classList.toggle('show');
+    });
+    //End  CRM JS on leads
+
     // notification Div hide show on radio button for emails js End
 
     // const openPopupButton2 = document.getElementById('openPopupButton2');
