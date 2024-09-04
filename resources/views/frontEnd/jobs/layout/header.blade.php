@@ -741,7 +741,7 @@ $access_rights = explode(',', $rights);
                                                                         <div class="mb-3 row">
                                                                             <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
                                                                             <div class="col-sm-6">
-                                                                                <select class="form-control editInput" name="" id="lead_task_types">
+                                                                                <select class="form-control editInput" name="" id="">
 
                                                                                 </select>
                                                                             </div>
@@ -789,33 +789,33 @@ $access_rights = explode(',', $rights);
                                                                                         </div>
                                                                                     </div>
 
-                                                                                <div class="col-sm-9">
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-6">
-                                                                                        <input type="date" class="form-control editInput" id="notify_date" name="notify_date">
+                                                                                    <div class="col-sm-9">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <input type="date" class="form-control editInput" id="notify_date" name="notify_date">
+                                                                                            </div>
+                                                                                            <div class="col-sm-6">
+                                                                                                <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div class="col-sm-6">
-                                                                                        <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
-                                                                                    </div>
-                                                                                </div>
-                                                                                </div>
                                                                                 </div>
 
                                                                             </div>
                                                                             <div class="col-sm-3"></div>
                                                                             <div class="col-sm-9">
-                                                                            <div id="CRMoptionsDiv">
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
-                                                                            </div>
+                                                                                <div id="CRMoptionsDiv">
+                                                                                    <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
+                                                                                    <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
+                                                                                    <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                        
+
                                                                         <div class="mb-3 row">
                                                                             <label for="related_to" class="col-sm-3 col-form-label">Related To</label>
                                                                             <div class="col-sm-9">
-                                                                                <span class="editInput" id="related_To"></span>
+                                                                                <span class="editInput" id=""></span>
 
                                                                             </div>
                                                                         </div>
@@ -827,7 +827,7 @@ $access_rights = explode(',', $rights);
                                                                         </div>
                                                                     </form>
                                                                 </div>
-                                                                
+
                                                             </div>
 
                                                             <form class="">
@@ -839,7 +839,7 @@ $access_rights = explode(',', $rights);
                                                                     <div class="col-sm-6">
                                                                         <div class="newJobForm mt-4">
                                                                             <label class="upperlineTitle">Recurrence Pattern</label>
-                                                                            
+
                                                                             <div class="Priority row">
                                                                                 <label class="col-sm-4 col-form-label">Create Task</label>
                                                                                 <div class="col-sm-8">
@@ -849,7 +849,7 @@ $access_rights = explode(',', $rights);
                                                                                                 <option>01</option>
                                                                                                 <option>02</option>
                                                                                             </select>
-                                                                                        </div>                                                                                        
+                                                                                        </div>
                                                                                         <label class="col-sm-8 col-form-label">Days before</label>
                                                                                     </div>
                                                                                 </div>
@@ -881,11 +881,11 @@ $access_rights = explode(',', $rights);
                                                                                                 <option>1</option>
                                                                                                 <option>2</option>
                                                                                             </select>
-                                                                                        </div>                                                   
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                          
+
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
@@ -901,7 +901,7 @@ $access_rights = explode(',', $rights);
                                                                                                 <option>Months</option>
                                                                                                 <option>2</option>
                                                                                             </select>
-                                                                                        </div>                                                   
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -919,7 +919,7 @@ $access_rights = explode(',', $rights);
                                                                                                 <option>01</option>
                                                                                                 <option>02</option>
                                                                                             </select>
-                                                                                        </div>                                                                                        
+                                                                                        </div>
                                                                                         <label class="col-sm-8 col-form-label">off every</label>
                                                                                     </div>
                                                                                 </div>
@@ -930,7 +930,7 @@ $access_rights = explode(',', $rights);
                                                                                                 <option>01</option>
                                                                                                 <option>02</option>
                                                                                             </select>
-                                                                                        </div>                                                                                        
+                                                                                        </div>
                                                                                         <label class="col-sm-8 col-form-label">Months</label>
                                                                                     </div>
                                                                                 </div>
@@ -949,7 +949,7 @@ $access_rights = explode(',', $rights);
                                                                                                 <option>First</option>
                                                                                                 <option>02</option>
                                                                                             </select>
-                                                                                        </div>                                                     
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-sm-3">
@@ -959,7 +959,7 @@ $access_rights = explode(',', $rights);
                                                                                                 <option>Day</option>
                                                                                                 <option>02</option>
                                                                                             </select>
-                                                                                        </div>                                                     
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-sm-3">
@@ -969,7 +969,7 @@ $access_rights = explode(',', $rights);
                                                                                                 <option>01</option>
                                                                                                 <option>02</option>
                                                                                             </select>
-                                                                                        </div>                                                                                        
+                                                                                        </div>
                                                                                         <!-- <label class="col-sm-8 col-form-label">Months</label> -->
                                                                                     </div>
                                                                                 </div>
@@ -993,21 +993,21 @@ $access_rights = explode(',', $rights);
                                                                         <div class="mb-3 row">
                                                                             <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
                                                                             <div class="col-sm-8">
-                                                                                <input type="text" class="form-control" id="staticEmail" value="">
+                                                                                <input type="text" class="form-control" name="" id="staticEmail" value="">
                                                                             </div>
                                                                         </div>
                                                                         <div class="mb-3 row">
                                                                             <label for="staticEmail" class="col-sm-4 col-form-label">Timer</label>
                                                                             <div class="col-sm-8">
-                                                                                <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
-                                                                                <span id="">00:00:00</span>n
+                                                                                <button class="profileDrop" id=""><i class="fa fa-play"></i> Start</button>
+                                                                                <span id="">00:00:00</span>
                                                                             </div>
                                                                         </div>
 
                                                                         <div class="mb-3 row">
                                                                             <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                             <div class="col-sm-8">
-                                                                                <span class="editInput" id="relatedTo"></span>
+                                                                                <span class="editInput" id=""></span>
                                                                             </div>
                                                                         </div>
                                                                     </form>
@@ -1018,7 +1018,7 @@ $access_rights = explode(',', $rights);
                                                                             <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
                                                                             <div class="col-sm-6">
                                                                                 <select class="form-control editInput" name="" id="">
-                                                                                    <option>tast1</option>
+                                                                                    <option>Select</option>
                                                                                 </select>
 
                                                                             </div>
@@ -1059,7 +1059,7 @@ $access_rights = explode(',', $rights);
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close3Taskpopup"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="" id="lead_task_type_form">
+                                                    <form action="" id="">
                                                         <div class="mb-3 row">
                                                             <label for="inputJobRef" class="col-sm-3 col-form-label">Task Type <span class="red-text">*</span></label>
                                                             <div class="col-sm-9">
@@ -1260,7 +1260,7 @@ $access_rights = explode(',', $rights);
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeUserCallsModels"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" class="customerForm" id="CRM_calls_form">
+                    <form action="" class="customerForm" id="">
                         <div class="mb-2 row">
                             <input type="hidden" name="crm_lead_calls_id" id="crm_lead_calls_id">
                             <label for="calls_telephone" class="col-sm-3 col-form-label">Direction </label>
@@ -1274,12 +1274,12 @@ $access_rights = explode(',', $rights);
                         <div class="mb-2 row">
                             <label for="calls_telephone" class="col-sm-3 col-form-label">Telephone </label>
                             <div class="col-sm-2">
-                                <select class="form-control editInput selectOptions" required="" name="country_code" id="countries">
+                                <select class="form-control editInput selectOptions" required="" name="country_code" id="">
                                     <option value="">Select</option>
                                 </select>
                             </div>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control editInput" id="calls_telephone" name="telephone" placeholder="Telephone">
+                                <input type="text" class="form-control editInput" id="" name="telephone" placeholder="Telephone">
                             </div>
                         </div>
                         <div class="mb-2 row">
@@ -1317,7 +1317,7 @@ $access_rights = explode(',', $rights);
                                 <label class="form-check-label editInput" for=""> Yes </label>
                             </div>
                         </div>
-                        <div class="notification_div">
+                        <div class="">
                             <div class="mb-2 row">
                                 <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
                                 <div class="col-sm-9">
@@ -1366,7 +1366,7 @@ $access_rights = explode(',', $rights);
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="crm_section_type_form">
+                    <form action="" id="">
                         <div class="mb-2 row">
                             <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                             <div class="col-sm-9">
@@ -1401,7 +1401,7 @@ $access_rights = explode(',', $rights);
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="crm_lead_email_form" enctype='multipart/form-data'>
+                    <form action="" id="" enctype='multipart/form-data'>
                         <div class="mb-2 row">
                             <label for="type_title" class="col-sm-3 col-form-label">To <span class="red-text">*</span> </label>
                             <div class="col-sm-9">
@@ -1425,9 +1425,9 @@ $access_rights = explode(',', $rights);
                             <label for="type_title" class="col-sm-3 col-form-label">Message <span class="red-text">*</span> </label>
                             <div class="col-sm-9">
                                 <div class="col-form-label">
-                                    <div id="emailEditor">
+                                    <div id="">
                                     </div>
-                                    <textarea name="message" id="emailMessage" style="display: none;"></textarea>
+                                    <textarea name="message" id="" style="display: none;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1440,8 +1440,8 @@ $access_rights = explode(',', $rights);
                         <div class="mb-2 row">
                             <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
                             <div class="col-sm-9">
-                                <span class="editInput" id="lead_ref_email"></span>
-                                <input type="hidden" id="lead_id_email" name="lead_id">
+                                <span class="editInput" id=""></span>
+                                <input type="hidden" id="" name="lead_id">
                             </div>
                         </div>
                         <div class="mb-2 row">
@@ -1453,7 +1453,7 @@ $access_rights = explode(',', $rights);
                                 <label class="form-check-label editInput" for=""> Yes </label>
                             </div>
                         </div>
-                        <div id="notification_email_div">
+                        <div id="user_notification_email_div">
                             <div class="mb-2 row">
                                 <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
                                 <div class="col-sm-9">
@@ -1507,29 +1507,29 @@ $access_rights = explode(',', $rights);
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="crm_lead_notes_form">
+                    <form action="" id="">
                         <div class="mb-2 row">
                             <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="hidden" class="form-control editInput" name="crm_lead_notes_id" id="">
-                                <select class="form-control editInput" name="crm_section_type_id" id="lead_notes_crm"></select>
+                                <select class="form-control editInput" name="crm_section_type_id" id=""></select>
                             </div>
                         </div>
                         <div class="mb-2 row">
                             <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
                             <div class="col-sm-9">
                                 <div class="col-form-label">
-                                    <div id="NotesEditor">
+                                    <div id="userNotesEditor">
                                     </div>
-                                    <textarea name="notes" id="CRMNotes" style="display: none;"></textarea>
+                                    <textarea name="notes" id="userCRMNotes" style="display: none;"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-2 row">
                             <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
                             <div class="col-sm-9">
-                                <span class="editInput" id="lead_ref_notes"></span>
-                                <input type="hidden" id="lead_id_notes" name="lead_id">
+                                <span class="editInput" id=""></span>
+                                <input type="hidden" id="" name="lead_id">
                             </div>
                         </div>
                         <div class="mb-2 row">
@@ -1541,7 +1541,7 @@ $access_rights = explode(',', $rights);
                                 <label class="form-check-label editInput" for=""> Yes </label>
                             </div>
                         </div>
-                        <div id="notification_notes_div">
+                        <div id="user_notification_notes_div">
                             <div class="mb-2 row">
                                 <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
                                 <div class="col-sm-9">
@@ -1587,86 +1587,86 @@ $access_rights = explode(',', $rights);
     <!-- CRM Add Notes Modal End -->
 
     <!-- CRM Add compliants Modal Start -->
-<div class="modal fade" id="CompHistoryModal" tabindex="-1" role="dialog" aria-labelledby="compliantsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content add_Customer">
-            <div class="modal-header">
-                <h5 class="modal-title" id="compliantsModalLabel">Complaint</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeUserComplaintpopup" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" id="crm_lead_complaint_form">
-                    <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
-                        <div class="col-sm-9">
-                            <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
-                            <select class="form-control editInput" name="crm_section_type_id" id="lead_complaint_crm">
-                                <option value="">Select</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
-                        <div class="col-sm-9">
-                            <div class="col-form-label">
-                                <div id="complaintEditor">
-                                </div>
-                                <textarea name="compliant" id="CRMComplaint" style="display: none;"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
-                        <div class="col-sm-9">
-                            <span class="editInput" id="lead_ref_complaint"></span>
-                            <input type="hidden" id="lead_id_complaint" name="lead_id">
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <label for="" class="col-sm-3 col-form-label">Notify? </label>
-                        <div class="col-sm-9">
-                            <input class="form-check-input" type="radio" name="notify" id="" value="0" checked>
-                            <label class="form-check-label editInput" for=""> No </label>
-                            <input class="form-check-input" type="radio" name="notify" id="" value="1">
-                            <label class="form-check-label editInput" for=""> Yes </label>
-                        </div>
-                    </div>
-                    <div id="notification_complaint_div">
+    <div class="modal fade" id="CompHistoryModal" tabindex="-1" role="dialog" aria-labelledby="compliantsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="compliantsModalLabel">Complaint</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeUserComplaintpopup" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                             <div class="col-sm-9">
-                                <select name="user_id" class="form-control editInput" id="user_notifiy">
-                                    <option value="">default1</option>
-                                    <option value="">default1</option>
+                                <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
+                                <select class="form-control editInput" name="crm_section_type_id" id="">
+                                    <option value="">Select</option>
                                 </select>
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
                             <div class="col-sm-9">
-                                <label for="calls_complaint_who1" class="editInput">
-                                    <input type="checkbox" name="notification" id="calls_complaint_who1" value="1"> Notification (User Only)
-                                </label>
-                                <label for="calls_complaint_who2" class="editInput">
-                                    <input type="checkbox" name="sms" id="calls_complaint_who2" value="1"> SMS
-                                </label>
-                                <label for="calls_complaint_who3" class="editInput">
-                                    <input type="checkbox" name="email" id="calls_complaint_who3" value="1"> Email
-                                </label>
+                                <div class="col-form-label">
+                                    <div id="userComplaintEditor">
+                                    </div>
+                                    <textarea name="compliant" id="userCRMComplaint" style="display: none;"></textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="profileDrop" id="closeUserComplaintpopup">Close</button>
-                <button type="button" class="profileDrop" id="">Save</button>
+                        <div class="mb-2 row">
+                            <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
+                            <div class="col-sm-9">
+                                <span class="editInput" id=""></span>
+                                <input type="hidden" id="" name="lead_id">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label for="" class="col-sm-3 col-form-label">Notify? </label>
+                            <div class="col-sm-9">
+                                <input class="form-check-input" type="radio" name="notify" id="" value="0" checked>
+                                <label class="form-check-label editInput" for=""> No </label>
+                                <input class="form-check-input" type="radio" name="notify" id="" value="1">
+                                <label class="form-check-label editInput" for=""> Yes </label>
+                            </div>
+                        </div>
+                        <div id="">
+                            <div class="mb-2 row">
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                                <div class="col-sm-9">
+                                    <select name="user_id" class="form-control editInput" id="user_notifiy">
+                                        <option value="">default1</option>
+                                        <option value="">default1</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                                <div class="col-sm-9">
+                                    <label for="calls_complaint_who1" class="editInput">
+                                        <input type="checkbox" name="notification" id="" value="1"> Notification (User Only)
+                                    </label>
+                                    <label for="calls_complaint_who2" class="editInput">
+                                        <input type="checkbox" name="sms" id="" value="1"> SMS
+                                    </label>
+                                    <label for="calls_complaint_who3" class="editInput">
+                                        <input type="checkbox" name="email" id="" value="1"> Email
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="profileDrop" id="">Close</button>
+                    <button type="button" class="profileDrop" id="">Save</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- CRM Add compliants Modal End -->
+    <!-- CRM Add compliants Modal End -->
 
     <!-- Script For adding CK editor start -->
     <script type="importmap">
@@ -1858,8 +1858,8 @@ $access_rights = explode(',', $rights);
 
 
 
-         // CRM Complaints History Start for model show
-         const userCompliantsModal = document.getElementById('userCompliantsModal');
+        // CRM Complaints History Start for model show
+        const userCompliantsModal = document.getElementById('userCompliantsModal');
         const CompHistoryModal = document.getElementById('CompHistoryModal');
         const closeUserComplaintpopup = document.getElementById('closeUserComplaintpopup');
 
@@ -1899,17 +1899,17 @@ $access_rights = explode(',', $rights);
 
 
         const CRMmainCheckbox = document.getElementById('CRMyeson');
-            const CRMoptionsDiv = document.getElementById('CRMoptionsDiv');
+        const CRMoptionsDiv = document.getElementById('CRMoptionsDiv');
 
-            CRMmainCheckbox.addEventListener('change', function() {
-                if (CRMmainCheckbox.checked) {
-                    CRMoptionsDiv.style.display = 'block';
-                } else {
-                    CRMoptionsDiv.style.display = 'none';
-                }
+        CRMmainCheckbox.addEventListener('change', function() {
+            if (CRMmainCheckbox.checked) {
+                CRMoptionsDiv.style.display = 'block';
+            } else {
+                CRMoptionsDiv.style.display = 'none';
+            }
         });
 
-        $( document ).ready(function() {
+        $(document).ready(function() {
             const CRMmainCheckbox = document.getElementById('CRMyeson');
             const CRMoptionsDiv = document.getElementById('CRMoptionsDiv');
             CRMoptionsDiv.style.display = 'none';
@@ -1920,6 +1920,27 @@ $access_rights = explode(',', $rights);
                 } else {
                     CRMoptionsDiv.style.display = 'none';
                 }
+            });
         });
-        });
+
+        function getCountriesList(){
+            $.ajax({
+                url: '{{ route("ajax.getCountriesList") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response.Data);
+                    const selectElement = document.getElementById('countries');
+                    selectElement.innerHTML = '';
+                    response.Data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.code;
+                        option.text = "+" + " " + user.code + " - " + " " + user.name;
+                        selectElement.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
     </script>
