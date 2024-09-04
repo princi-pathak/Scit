@@ -1323,7 +1323,6 @@ $access_rights = explode(',', $rights);
                                 <div class="col-sm-9">
                                     <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                         <option value=""></option>
-
                                     </select>
                                 </div>
                             </div>
