@@ -812,7 +812,7 @@ class LeadController extends Controller
             'title' => $request->title,
             'task_type_id' => $request->task_type_id ?? $request->task_type_id_time,
             'start_date' => $request->start_date,
-            'start_time' => $request->start_time,
+            // 'start_time' => $request->start_time,
             'end_date' => $request->end_date,
             'end_time' => $request->end_time,
             'is_recurring' => $request->is_recurring ?? false,

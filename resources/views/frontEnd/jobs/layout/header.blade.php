@@ -1298,7 +1298,7 @@ $access_rights = explode(',', $rights);
                             <div class="col-sm-9">
                                 <div id="UserEditor">
                                 </div>
-                                <textarea name="content" id="calls_notes" style="display: none;"></textarea>
+                                <textarea name="content" id="" style="display: none;"></textarea>
                             </div>
                         </div>
                         <div class="mb-2 row">
@@ -1923,7 +1923,7 @@ $access_rights = explode(',', $rights);
             });
         });
 
-        function getCountriesList(){
+        function getCountriesList() {
             $.ajax({
                 url: '{{ route("ajax.getCountriesList") }}',
                 method: 'GET',
