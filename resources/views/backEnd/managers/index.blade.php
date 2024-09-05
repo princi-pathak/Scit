@@ -2,6 +2,7 @@
 @section('title',' Managers')
 @section('content')
 <script type="text/javascript" src="{{ url('public/backEnd/js/sweetalert.min.js')}}"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <style type="text/css">
     .switch {
         position: relative;
@@ -184,6 +185,12 @@
         var manager_id      = $(this).attr('manager_id');
         var status_value    = $(this).attr('status'); // current status
         $('.loader').show();
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            }
+        });
 
         $.ajax({
             type: 'POST',

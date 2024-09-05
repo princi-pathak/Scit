@@ -27,6 +27,7 @@ use App\Models\CRMLeadEmail;
 use App\Models\CRMLeadNotes;
 use App\Models\CRMLeadComplaint;
 use App\Models\CRMLeadTask;
+use Carbon\Carbon;
 
 class LeadController extends Controller
 {
@@ -777,16 +778,17 @@ class LeadController extends Controller
             'user_id' => 'required'
         ]);
 
-        if($request->task === 1){
+        if($request->task == "task_form"){
             $validator = Validator::make($request->all(), [
+                'title' => 'required',
                 'start_date' => 'required',
                 'start_time' => 'required',
                 'end_date' => 'required',
                 'end_time' => 'required',
             ]);
-        } elseif ($request->timer == 2){
+        } elseif ($request->timer == "timer_form"){
             $validator = Validator::make($request->all(), [
-                'start_time' => 'required',
+                'title_timer' => 'required',
             ]);
         }
 
@@ -809,10 +811,10 @@ class LeadController extends Controller
             'home_id' => Auth::user()->home_id,
             'lead_id' => $request->lead_id,
             'user_id' => $request->user_id,
-            'title' => $request->title,
+            'title' => $request->title ?? $request->title_timer,
             'task_type_id' => $request->task_type_id ?? $request->task_type_id_time,
-            'start_date' => $request->start_date,
-            // 'start_time' => $request->start_time,
+            'start_date' => $request->start_date ?? Carbon::now()->toDateString(),
+            'start_time' => $request->start_time ?? Carbon::now()->toTimeString(),
             'end_date' => $request->end_date,
             'end_time' => $request->end_time,
             'is_recurring' => $request->is_recurring ?? false,
@@ -833,7 +835,6 @@ class LeadController extends Controller
         } else {
             return response()->json(['message' => 'CRM Lead Task added successfully!']);
         }
-
     }
 
     public function getCRMTasksData(Request $request){
