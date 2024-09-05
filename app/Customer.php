@@ -59,6 +59,10 @@ class Customer extends Model
         return Customer::where(['is_converted' => '1', 'status' => 1])->where('home_id', $home_id)->count();
     }
 
+    public static function getConvertedCustomers($home_id){
+        return Customer::where(['is_converted' => '1', 'status' => 1])->select('id','contact_name')->where('home_id', $home_id)->get();
+    }
+
     public static function converToCustomer($id){
         return Customer::where('id', $id)->update(['is_converted' => 1]);
     }
