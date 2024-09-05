@@ -44,7 +44,7 @@ $access_rights = explode(',', $rights);
                         </div>
                     </div>
                     <div class="col-lg-9 px-3 text-end toprigihticon">
-                        <?php if (isset($page) && $page == 'job_index') { ?>
+                        <?php //if (isset($page) && $page == 'job_index') { ?>
                             <div class="d-inline-flex align-items-center me-5 topbaarBtn">
                                 <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> storage</i> My Diary</a>
                                 <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#CRMHeaderPopup"> <i class="material-symbols-outlined"> dashboard</i> CRM</a>
@@ -53,15 +53,15 @@ $access_rights = explode(',', $rights);
                                 <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
                                 <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i> Partners </a>
                             </div>
-                        <?php } else { ?>
+                        <?php //} else { ?>
 
-                            <div class="h-100 d-inline-flex align-items-center me-5">
+                            <!-- <div class="h-100 d-inline-flex align-items-center me-5">
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> group</i></a>
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> dns</i></a>
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> mail </i></a>
                                 <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i class="material-symbols-outlined"> notifications </i></a>
-                            </div>
-                        <?php } ?>
+                            </div> -->
+                        <?php //} ?>
                     </div>
                 </div>
             </div>
@@ -102,9 +102,9 @@ $access_rights = explode(',', $rights);
                                     <span><i class="material-symbols-outlined"> description </i></span> Quotes
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                    <li class="nav-item1"><a href="#!" class="dropdown-item">Dashboard</a></li>
-                                    <li class="nav-item1"><a href="#!" class="dropdown-item">New Quote</a></li>
-                                    <li class="nav-item1"><a href="#!" class="dropdown-item">Draft Quote</a></li>
+                                    <li class="nav-item1"><a href="{{ url('/quote/dashboard') }}" class="dropdown-item">Dashboard</a></li>
+                                    <li class="nav-item1"><a href="{{ url('/quote/quotes') }}" class="dropdown-item">New Quote</a></li>
+                                    <li class="nav-item1"><a href="{{ url('/quote/draft') }}" class="dropdown-item">Draft Quote</a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item">Actioned Quote</a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item">Call Back Quote</a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item">Accepted Quote</a></li>
@@ -777,7 +777,6 @@ $access_rights = explode(',', $rights);
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <form>
-                                                                        <!--  -->
                                                                         <div class="mb-3 row">
                                                                             <label for="staticEmail" class="col-sm-3 col-form-label">Notify ? </label>
                                                                             <div class="col-sm-9">
@@ -785,7 +784,7 @@ $access_rights = explode(',', $rights);
                                                                                     <div class="col-sm-3">
                                                                                         <div class="form-check form-check-inline me-0">
                                                                                             <input class="form-check-input" type="checkbox" name="inlinecheckOptions" id="CRMyeson" value="option1" required="">
-                                                                                            <label class="col-form-label" for="CRMyeson">Yes, On</label>
+                                                                                            <label class="col-form-label " for="CRMyeson">Yes, On</label>
                                                                                         </div>
                                                                                     </div>
 
@@ -800,7 +799,6 @@ $access_rights = explode(',', $rights);
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-
                                                                             </div>
                                                                             <div class="col-sm-3"></div>
                                                                             <div class="col-sm-9">
@@ -831,152 +829,7 @@ $access_rights = explode(',', $rights);
                                                             </div>
 
                                                             <form class="">
-                                                                <div class="mb-3 row">
-                                                                    <label class="col-sm-2 col-form-label pe-0">Is Reccurring Task ?</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="checkbox" class="form-check-input" id="">
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="newJobForm mt-4">
-                                                                            <label class="upperlineTitle">Recurrence Pattern</label>
-
-                                                                            <div class="Priority row">
-                                                                                <label class="col-sm-4 col-form-label">Create Task</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-4">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>01</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <label class="col-sm-8 col-form-label">Days before</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="row">
-                                                                                <div class="col-sm-12">
-                                                                                    <div class="form-check form-check-inline">
-                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked="">
-                                                                                        <label class="col-form-label" for="inlineRadio1">End afetr</label>
-                                                                                    </div>
-                                                                                    <div class="form-check form-check-inline">
-                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                                                                        <label class="col-form-label" for="inlineRadio2">End By</label>
-                                                                                    </div>
-                                                                                    <div class="form-check form-check-inline">
-                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-                                                                                        <label class="col-form-label" for="inlineRadio3">No End Date</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="Priority row">
-                                                                                <label class="col-sm-4 col-form-label">No. of Repetitaion</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-4">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>1</option>
-                                                                                                <option>2</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="newJobForm mt-4">
-                                                                            <label class="upperlineTitle">Range of Recurrence</label>
-
-                                                                            <div class="Priority row">
-                                                                                <label class="col-sm-4 col-form-label">Task Frequency</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-6">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>Months</option>
-                                                                                                <option>2</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row py-1">
-                                                                                <div class="col-sm-3">
-                                                                                    <div class="form-check form-check-inline">
-                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioDay" value="day" checked="">
-                                                                                        <label class="col-form-label" for="inlineRadioDay">day</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-5">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-4 px-0">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>01</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <label class="col-sm-8 col-form-label">off every</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-4">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-4 px-0">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>01</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <label class="col-sm-8 col-form-label">Months</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-sm-3">
-                                                                                    <div class="form-check form-check-inline">
-                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioEvery" value="Every" checked="">
-                                                                                        <label class="col-form-label" for="inlineRadioEvery">every</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-3">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-11 px-0">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>First</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-3">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-11 px-0">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>Day</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-3">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-8 px-0">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>01</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <!-- <label class="col-sm-8 col-form-label">Months</label> -->
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                             
                                                             </form>
 
                                                         </div>
@@ -1298,7 +1151,7 @@ $access_rights = explode(',', $rights);
                             <div class="col-sm-9">
                                 <div id="UserEditor">
                                 </div>
-                                <textarea name="content" id="calls_notes" style="display: none;"></textarea>
+                                <textarea name="content" id="" style="display: none;"></textarea>
                             </div>
                         </div>
                         <div class="mb-2 row">
@@ -1323,7 +1176,6 @@ $access_rights = explode(',', $rights);
                                 <div class="col-sm-9">
                                     <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                         <option value=""></option>
-
                                     </select>
                                 </div>
                             </div>
@@ -1923,7 +1775,7 @@ $access_rights = explode(',', $rights);
             });
         });
 
-        function getCountriesList(){
+        function getCountriesList() {
             $.ajax({
                 url: '{{ route("ajax.getCountriesList") }}',
                 method: 'GET',

@@ -54,8 +54,8 @@
         overflow: hidden;
     }
 
-    .btnActive{
-      background-color: #494949;
+    .btnActive {
+        background-color: #494949;
     }
 </style>
 <section class="main_section_page px-3">
@@ -495,7 +495,7 @@
                                 </div>
                                 <!-- Second Modal -->
                                 <div class="modal fade bd-example-modal-lg" id="secondModal" tabindex="-1" aria-labelledby="secondModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-dialog modal-lg mediamSizePopup">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="secondModalLabel">New Task</h5>
@@ -515,9 +515,9 @@
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task User <span class="red-text">*</span></label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="hidden" name="task" value="1">
+                                                                            <input type="hidden" name="form_type" id="form_type" value="">
                                                                             <input type="hidden" name="lead_id" id="crm_lead_id_task">
                                                                             <input type="hidden" id="crm_lead_task_id" name="crm_lead_task_id">
                                                                             <select class="form-control editInput" name="user_id" id="">
@@ -528,13 +528,13 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Title <span class="red-text">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" class="form-control editInput" id="staticEmail" name="title" value="">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task Type <span class="red-text">*</span></label>
                                                                         <div class="col-sm-6">
                                                                             <select class="form-control editInput" name="task_type_id" id="lead_task_types">
                                                                             </select>
@@ -544,62 +544,240 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Start Date</label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Start Date <span class="red-text">*</span></label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" name="start_date" id="staticEmail" value="">
+                                                                            <input type="date" class="form-control editInput" name="start_date" id="">
                                                                         </div>
                                                                         <div class="col-sm-4">
-                                                                            <input type="time" class="form-control editInput" name="start_time" id="staticEmail" value="">
+                                                                            <input type="time" class="form-control editInput" name="start_time" id="">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">End Date</label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">End Date <span class="red-text">*</span></label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" name="end_date" id="staticEmail" value="">
+                                                                            <input type="date" class="form-control editInput" name="end_date" id="" value="">
                                                                         </div>
                                                                         <div class="col-sm-4">
-                                                                            <input type="time" class="form-control editInput" name="end_time" id="staticEmail" value="">
+                                                                            <input type="time" class="form-control editInput" name="end_time" id="" value="">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="mb-3 form-check">
-                                                                        <input type="checkbox" class="form-check-input editInput" value="1" name="is_recurring" id="exampleCheck1">
+                                                                    <!-- <div class="mb-3 form-check">
+                                                                        <input type="checkbox" class="form-check-input editInput"  id="exampleCheck1">
                                                                         <label class="form-check-label editInput" for="exampleCheck1">Is Reccurring Task ?</label>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Notify ? </label>
-                                                                        <div class="col-sm-8">
-                                                                            <div class="form-check form-check-inline">
-                                                                                <input class="form-check-input" type="checkbox" name="notify" id="yeson" value="1" required="">
-                                                                                <label class="form-check-label checkboxtext" for="checkalrt">Yes, On</label>
+                                                                        <label for="staticEmail" class="col-sm-3 col-form-label">Notify ? </label>
+                                                                        <div class="col-sm-9">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-3 pe-0">
+                                                                                    <div class="form-check form-check-inline me-0">
+                                                                                        <input class="form-check-input" type="checkbox" name="notify" id="yeson" value="1" required>
+                                                                                        <label class="col-form-label" for="yeson">Yes, On</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-9">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <input type="date" class="form-control editInput" id="notify_date" name="task_date">
+                                                                                        </div>
+                                                                                        <div class="col-sm-6">
+                                                                                            <input type="time" class="form-control editInput" id="notify_time" name="task_time">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
+                                                                        </div>
+                                                                        <div class="col-sm-3"></div>
+                                                                        <div class="col-sm-9 mt-3">
                                                                             <div id="optionsDiv">
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email"> Email</label>
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms"> SMS</label>
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="notification"> Notification</label>
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="email"> Email</label>
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="sms"> SMS</label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="related_to" class="col-sm-4 col-form-label">Date & Time</label>
-                                                                        <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" id="notify_date" name="task_date">
+
+                                                                    <!-- <div class="mb-3 row">
+                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Notify ? </label>
+                                                                            <div class="col-sm-8">
+                                                                                <div class="form-check form-check-inline">
+                                                                                    <input class="form-check-input" type="checkbox" name="notify" id="yeson" value="1" required="">
+                                                                                    <label class="form-check-label checkboxtext editInput" for="checkalrt">Yes, On</label>
+                                                                                </div>
+                                                                                <div id="optionsDiv">
+                                                                                    <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
+                                                                                    <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email"> Email</label>
+                                                                                    <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms"> SMS</label>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-sm-4">
-                                                                            <input type="time" class="form-control editInput" id="notify_time" name="task_time">
-                                                                        </div>
-                                                                    </div>
+                                                                        <div class="mb-3 row">
+                                                                            <label for="related_to" class="col-sm-4 col-form-label">Date & Time</label>
+                                                                            <div class="col-sm-4">
+                                                                                <input type="date" class="form-control editInput" id="notify_date" name="task_date">
+                                                                            </div>
+                                                                            <div class="col-sm-4">
+                                                                                <input type="time" class="form-control editInput" id="notify_time" name="task_time">
+                                                                            </div>
+                                                                        </div> -->
                                                                     <div class="mb-3 row">
-                                                                        <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
-                                                                        <div class="col-sm-8">
+                                                                        <label for="related_to" class="col-sm-3 col-form-label">Related To</label>
+                                                                        <div class="col-sm-9">
                                                                             <span class="editInput" id="related_To"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
-                                                                        <div class="col-sm-8">
+                                                                        <label for="staticEmail" class="col-sm-3 col-form-label">Notes</label>
+                                                                        <div class="col-sm-9">
                                                                             <textarea name="notes" class="form-control textareaInput" rows="5" id=""></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 row">
+                                                                    <label class="col-sm-2 col-form-label pe-0">Is Reccurring Task ?</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="checkbox" value="1" name="is_recurring" class="form-check-input" id="">
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="newJobForm mt-4">
+                                                                            <label class="upperlineTitle">Recurrence Pattern</label>
+
+                                                                            <div class="Priority row">
+                                                                                <label class="col-sm-4 col-form-label">Create Task</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-4">
+                                                                                            <select class="form-control editInput selectOptions" id="">
+                                                                                                <option>01</option>
+                                                                                                <option>02</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <label class="col-sm-8 col-form-label">Days before</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="row">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="form-check form-check-inline">
+                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked="">
+                                                                                        <label class="col-form-label" for="inlineRadio1">End afetr</label>
+                                                                                    </div>
+                                                                                    <div class="form-check form-check-inline">
+                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                                                                        <label class="col-form-label" for="inlineRadio2">End By</label>
+                                                                                    </div>
+                                                                                    <div class="form-check form-check-inline">
+                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                                                                        <label class="col-form-label" for="inlineRadio3">No End Date</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="Priority row">
+                                                                                <label class="col-sm-4 col-form-label">No. of Repetitaion</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-4">
+                                                                                            <select class="form-control editInput selectOptions" id="">
+                                                                                                <option>1</option>
+                                                                                                <option>2</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="newJobForm mt-4">
+                                                                            <label class="upperlineTitle">Range of Recurrence</label>
+
+                                                                            <div class="Priority row">
+                                                                                <label class="col-sm-4 col-form-label">Task Frequency</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-6">
+                                                                                            <select class="form-control editInput selectOptions" id="">
+                                                                                                <option>Months</option>
+                                                                                                <option>2</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row py-1">
+                                                                                <div class="col-sm-3">
+                                                                                    <div class="form-check form-check-inline">
+                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioDay" value="day" checked="">
+                                                                                        <label class="col-form-label" for="inlineRadioDay">day</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-5">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-4 px-0">
+                                                                                            <select class="form-control editInput selectOptions" id="">
+                                                                                                <option>01</option>
+                                                                                                <option>02</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <label class="col-sm-8 col-form-label">off every</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-4">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-4 px-0">
+                                                                                            <select class="form-control editInput selectOptions" id="">
+                                                                                                <option>01</option>
+                                                                                                <option>02</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <label class="col-sm-8 col-form-label">Months</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-3">
+                                                                                    <div class="form-check form-check-inline">
+                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioEvery" value="Every" checked="">
+                                                                                        <label class="col-form-label" for="inlineRadioEvery">every</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-3">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-11 px-0">
+                                                                                            <select class="form-control editInput selectOptions" id="">
+                                                                                                <option>First</option>
+                                                                                                <option>02</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-3">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-11 px-0">
+                                                                                            <select class="form-control editInput selectOptions" id="">
+                                                                                                <option>Day</option>
+                                                                                                <option>02</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-3">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-8 px-0">
+                                                                                            <select class="form-control editInput selectOptions" id="">
+                                                                                                <option>01</option>
+                                                                                                <option>02</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <!-- <label class="col-sm-8 col-form-label">Months</label> -->
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -609,9 +787,8 @@
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task User</label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task User <span class="red-text">*</span></label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="hidden" name="timer" value="2">
                                                                             <select class="form-control editInput" name="user_id" id="">
                                                                                 @foreach($users as $value)
                                                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -620,9 +797,9 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Title</label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Title <span class="red-text">*</span></label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" class="form-control editInput" name="title" id="staticEmail">
+                                                                            <input type="text" class="form-control editInput" name="title_timer" id="staticEmail">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
@@ -630,7 +807,7 @@
                                                                         <div class="col-sm-8">
                                                                             <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
                                                                             <span id="timerDisplay">00:00:00</span>
-                                                                            <input type="hidden" name="start_time" id="start_time">
+                                                                            <input type="hidden" name="start_time_timer" id="start_time">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
@@ -642,7 +819,7 @@
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task Type</label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task Type <span class="red-text">*</span></label>
                                                                         <div class="col-sm-6">
                                                                             <select class="form-control editInput" name="task_type_id" id="lead_task_types_timer">
                                                                                 <option value="">Select</option>
@@ -655,7 +832,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Notes</label>
                                                                         <div class="col-sm-8">
-                                                                            <textarea rows="5" name="notes" class="form-control textareaInput" id=""></textarea>
+                                                                            <textarea rows="5" name="notes_timer" class="form-control textareaInput" id=""></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -709,88 +886,6 @@
                                     </div>
                                 </div>
 
-                                <!--Start Region Popup -->
-                                <!-- <div id="openPopupButton3" class="popup2">
-                                    <div class="popup-content">
-                                        <div class="popupTitle">
-                                            <span class="">Add
-                                                Region</span>
-                                            <span class="close" id="closePopup2">&times;</span>
-                                        </div>
-                                        <div class="contantbodypopup">
-                                            <form action="" class="customerForm">
-                                                <div class="mb-2 row">
-                                                    <label for="inputCity" class="col-sm-3 col-form-label">Region*</label>
-                                                    <div class="col-sm-7">
-                                                        <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <a href="#!" class="formicon" id="openPopupButton2"><i class="fa-solid fa-square-plus"></i></a>
-                                                        <a href="#" class="profileDrop p-2 crmNewBtn" id="openPopupButton"> New log</a>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-2 row">
-                                                    <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
-                                                    <div class="col-sm-9">
-                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                            <option> None </option>
-                                                            <option> Default </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="popupF  customer_Form_Popup">
-                                            <button type="button" class="profileDrop">Save</button>
-                                            <button type="button" class="profileDrop">Save & Close</button>
-                                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!--Start Region Popup -->
-                                <!-- <div id="popup" class="popup">
-                                    <div class="popup-content">
-                                        <div class="popupTitle">
-                                            <span class="">Add
-                                                Region</span>
-                                            <span class="close" id="closePopup">&times;</span>
-                                        </div>
-                                        <div class="contantbodypopup">
-                                            <form action="" class="customerForm">
-                                                <div class="mb-2 row">
-                                                    <label for="inputCity" class="col-sm-3 col-form-label">Region*</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
-                                                    </div>
-                                                </div>
-                                                <a href="#" class="profileDrop p-2 crmNewBtn" id="openPopupButton3"> New log</a>
-
-                                                <div class="mb-2 row">
-                                                    <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
-                                                    <div class="col-sm-9">
-                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                            <option> None </option>
-                                                            <option> Default </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-
-                                        <div class="popupF  customer_Form_Popup">
-
-                                            <button type="button" class="profileDrop">Save</button>
-                                            <button type="button" class="profileDrop">Save & Close</button>
-                                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
-
-                                        </div>
-                                    </div>
-
-                                </div> -->
-                                <!-- End off region Popup -->
-
-
-                                <!-- ****************************** -->
                                 <div class="col-sm-3">
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
@@ -833,7 +928,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                             
                                             </tbody>
                                         </table>
                                     </div>
@@ -946,6 +1040,7 @@
         </div>
     </div>
 </div>
+<!-- ****************End CRM History Modal ****************-->
 
 
 <!-- Calls Modal -->
@@ -1092,6 +1187,8 @@
 </div>
 <!-- CRM Types Modal End -->
 
+
+
 <!-- CRM Add Email Modal Start -->
 <div class="modal fade" id="NewEmailModel" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -1214,10 +1311,47 @@
                 <form action="" id="crm_lead_notes_form">
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             <input type="hidden" class="form-control editInput" name="crm_lead_notes_id" id="">
                             <select class="form-control editInput" name="crm_section_type_id" id="lead_notes_crm"></select>
                         </div>
+                        <div class="col-sm-1">
+                            <!-- <a href="#!" class="formicon" id="openCrmTypeModelNotes"><i class="fa-solid fa-square-plus"></i></a> -->
+                        </div>
+                        <!-- CRM Types Modal Notes Start -->
+                        <div class="modal fade" id="crmTypeModelNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content add_Customer">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" id="crm_section_type_form">
+                                            <div class="mb-2 row">
+                                                <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput" name="title" id="type_title" value="">
+                                                    <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
+                                                <div class="col-sm-9">
+                                                    <input type="color" class="form-control editInput" name="colour_code" id="colour_code" value="">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
+                                        <button type="button" class="profileDrop" id="saveCRMTypes">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- CRM Types Modal Notes End -->
                     </div>
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
@@ -1305,12 +1439,49 @@
                 <form action="" id="crm_lead_complaint_form">
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
                             <select class="form-control editInput" name="crm_section_type_id" id="lead_complaint_crm">
                                 <option value="">Select</option>
                             </select>
                         </div>
+                        <div class="col-sm-1">
+                            <!-- <a href="#!" class="formicon" id="openCrmTypeModelComplaints"><i class="fa-solid fa-square-plus"></i></a> -->
+                        </div>
+                         <!-- CRM Types Modal Notes Start -->
+                         <div class="modal fade" id="crmTypeModelComplaint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content add_Customer">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" id="crm_section_type_form">
+                                            <div class="mb-2 row">
+                                                <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput" name="title" id="type_title" value="">
+                                                    <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
+                                                <div class="col-sm-9">
+                                                    <input type="color" class="form-control editInput" name="colour_code" id="colour_code" value="">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
+                                        <button type="button" class="profileDrop" id="saveCRMTypes">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- CRM Types Modal Notes End -->
                     </div>
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
@@ -1376,7 +1547,6 @@
 </div>
 <!-- CRM Add compliants Modal End -->
 
-<!-- ****************End CRM History Modal ****************-->
 <!-- Moment js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
@@ -1705,8 +1875,8 @@
                         const row = document.createElement('tr');
 
                         const created_at = moment(item.created_at).format('DD/MM/YYYY HH:mm');
-                        const date = moment(item.start_date).format('DD/MM/YYYY');
-                        const time = moment(item.start_time).format('HH:mm');
+                        const date = moment(item.start_date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                        const time = moment(item.start_time, 'HH:mm:ss').format('HH:mm');
 
                         // Create cells and append them to the row
                         const dateCell = document.createElement('td');
@@ -1816,8 +1986,11 @@
 
                         const notesCell = document.createElement('td');
                         notesCell.innerHTML = 'Call Logged from ' + lead_ref + '<br> <strong>Notes: </strong> ' + item.notes;
-
                         row.appendChild(notesCell);
+
+                        const status = document.createElement('td');
+                        status.innerHTML = 'status';
+                        row.appendChild(status);
 
                         const visibilityCell = document.createElement('td');
                         if (item.customer_visibility == 0) {
@@ -1827,9 +2000,9 @@
                         }
                         row.appendChild(visibilityCell);
 
-                        const idCell = document.createElement('td');
-                        idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
-                        row.appendChild(idCell);
+                        // const idCell = document.createElement('td');
+                        // idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
+                        // row.appendChild(idCell);
 
                         // Append the row to the table body
                         tableBody.appendChild(row);
@@ -1889,13 +2062,34 @@
             success: function(response) {
                 console.log(response.Data);
                 const selectElement = document.getElementById('calls_type');
+                const lead_notes_crm = document.getElementById('lead_notes_crm');
+                const lead_complaint_crm = document.getElementById('lead_complaint_crm');
+
                 selectElement.innerHTML = '';
+                lead_notes_crm.innerHTML = '';
+                lead_complaint_crm.innerHTML = '';
+
                 response.Data.forEach(user => {
                     const option = document.createElement('option');
                     option.value = user.id;
                     option.text = user.title;
                     selectElement.appendChild(option);
                 });
+
+                response.Data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.title;
+                    lead_notes_crm.appendChild(option);
+                });
+
+                response.Data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.title;
+                    lead_complaint_crm.appendChild(option);
+                });
+
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -1946,7 +2140,6 @@
 
         document.getElementById('toggleTimerBtn').addEventListener('click', toggleTimer);
         // End js for time start and end
-        // CRMFullHistoryData
 
         // set the value in Full history table data js Start here
         document.getElementById('pills-fullHistory-tab').addEventListener('click', function() {
@@ -2013,7 +2206,7 @@
                 document.getElementById('lead_id_complaint').value = leadId;
                 document.getElementById('crm_lead_id_task').value = leadId;
 
-
+                getFullHistoryDataAjax();
                 // Open CRM modal
                 $('#customerPop').modal('show');
             });
@@ -2036,7 +2229,6 @@
                 }
             });
         });
-
 
         // Ajax for Add Task Type
         $('#saveTaskType').on('click', function() {
@@ -2096,6 +2288,12 @@
 
         // Ajax Call for adding CRM Lead Task and timer
         $('#saveCRMLeadTaskWithTimer').on('click', function() {
+            const formTypeInput = document.getElementById('form_type');
+            if (document.getElementById('nav-home').classList.contains('active')) {
+                formTypeInput.value = 'task_form';
+            } else if (document.getElementById('nav-profile').classList.contains('active')) {
+                formTypeInput.value = 'timer_form';
+            }
             var formData = $('#crm_lead_task_form').serialize();
             $.ajax({
                 url: '{{ route("lead.ajax.saveCRMLeadTaskAndTimer") }}',
@@ -2104,7 +2302,8 @@
                 success: function(response) {
                     alert(response.message);
                     $('#secondModal').modal('hide');
-                    location.reload();
+                    // location.reload();
+                    getTasksDataAjaxCall();
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -2161,6 +2360,39 @@
             }
         }
         // Js End for CRM Lead Notes model show
+
+        // CRM Section Type ADD model in Complaints Js Start for model  show
+        const openCrmTypeModelNotes = document.getElementById('openCrmTypeModelNotes');
+        const crmTypeModelNotes = document.getElementById('crmTypeModelNotes');
+
+        openCrmTypeModelNotes.onclick = function() {
+            $('#crmTypeModelNotes').modal('show');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === crmTypeModelNotes) {
+                $('#crmTypeModelNotes').modal('hide');
+            }
+        }
+        // CRM Section Type ADD model in Complaints Js End for model  show
+
+
+        
+        // CRM Section Type ADD model in notes Js Start for model  show
+        const openCrmTypeModelComplaints = document.getElementById('openCrmTypeModelComplaints');
+        const crmTypeModelComplaint = document.getElementById('crmTypeModelComplaint');
+
+        // When the user clicks the button, open the modal 
+        openCrmTypeModelComplaints.onclick = function() {
+            $('#crmTypeModelComplaint').modal('show');
+        }
+
+        window.onclick = function(event) {
+            if (event.target === crmTypeModelComplaint) {
+                $('#crmTypeModelComplaint').modal('hide');
+            }
+        }
+        // CRM Section Type ADD model in notes Js End for model  show
 
         // CRM Section Type Js Start for model show
         const openModalBtn = document.getElementById('openCrmTypeModel');

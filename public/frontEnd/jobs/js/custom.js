@@ -1,21 +1,46 @@
 //   Data Table Js
-
+// $(document).ready(function() {
+//   $('#exampleOne').DataTable( {
+//       columnDefs: [ {
+//           orderable: false,
+//           className: 'select-checkbox',
+//           targets:   0
+//       } ],
+//       select: {
+//           style:    'os',
+//           selector: 'td:first-child'
+//       },
+//       order: [[ 1, 'asc' ]]
+//   } );
+// } );
 
 $(document).ready(function() {
-  $('#exampleOne').DataTable( {
-      columnDefs: [ {
+  $('#exampleOne').DataTable({
+      columnDefs: [{
           orderable: false,
           className: 'select-checkbox',
-          targets:   0
-      } ],
+          targets: 0
+      }],
       select: {
-          style:    'os',
+          style: 'os',
           selector: 'td:first-child'
       },
-      order: [[ 1, 'asc' ]]
-  } );
-} );
-
+      order: [[1, 'asc']],
+      language: {
+          paginate: {
+              previous: "Previous", // Change this text
+              next: "Next"          // Change this text
+          },
+          info: "Showing _START_ to _END_ of _TOTAL_ entries", // This text can be adjusted as needed
+          infoEmpty: "No entries available",
+          infoFiltered: "(filtered from _MAX_ total entries)",
+          lengthMenu: "Show _MENU_ entries",
+          search: "Search:",
+          zeroRecords: "No matching records found"
+      },
+      paging: true, 
+  });
+});
 
 
 // CRM JS
