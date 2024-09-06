@@ -353,7 +353,7 @@ $access_rights = explode(',', $rights);
                             </div>
 
                             <div class="nav-item1 dropdown1">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle @if(isset($page)) @if($page == 'setting') active @endif @endif" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span><i class="material-symbols-outlined"> construction</i></span> Settings
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -369,11 +369,11 @@ $access_rights = explode(',', $rights);
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="#">Lead Settings</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_sources') }}">Lead Sources</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_status') }}">Lead Status</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_task_type') }}">Lead Task Types</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_reject_types') }}">Lead Reject Types</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_notes_type') }}">Lead Notes Type</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_sources') }}"> <i class="fa fa-list-ul"></i> Lead Sources</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_status') }}"><i class="fa fa-list-ul"></i>Lead Status</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_task_type') }}"><i class="fa fa-list-ul"></i>Lead Task Types</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_reject_types') }}"><i class="fa fa-list-ul"></i>Lead Reject Types</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_notes_type') }}"><i class="fa fa-list-ul"></i>Lead Notes Type</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -381,9 +381,9 @@ $access_rights = explode(',', $rights);
                                             Quotes <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">Quote Type </a></li>
-                                            <li><a class="dropdown-item" href="#">Quote Source </a></li>
-                                            <li><a class="dropdown-item" href="#">Quote Reject Type </a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/quote/quote_type') }}"><i class="fa fa-list-ul"></i>Quote Type </a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/quote/quote_sources') }}"><i class="fa fa-list-ul"></i>Quote Source </a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/quote/quote_reject_types') }}"><i class="fa fa-list-ul"></i>Quote Reject Type </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">

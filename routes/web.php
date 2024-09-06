@@ -344,11 +344,32 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 
 	Route::controller(FrontendQuoteController::class)->group(function(){
+
 		Route::get('/quote/dashboard','dashboard')->name('quote.dashboard');
 		Route::get('/quote/quotes','create')->name('quote.quotes');
 		Route::get('/quote/draft','index')->name('quote.draft');
 		
+		// Add Quote Types
+		Route::get('/quote/quote_type','quote_type')->name('quote.quote_type');
+		Route::post('/quote/saveQuoteType','saveQuoteType')->name('quote.ajax.saveQuoteType');
+		Route::post('/quote/deleteQuoteType','deleteQuoteType')->name('quote.ajax.deleteQuoteType');
 
+		
+
+		// Add Quote Sources
+		Route::get('/quote/quote_sources','quote_sources')->name('quote.quote_sources');
+		Route::post('/quote/saveQuoteSources','saveQuoteSources')->name('quote.ajax.saveQuoteSources');
+		Route::post('/quote/deleteQuoteSource','deleteQuoteSource')->name('quote.ajax.deleteQuoteSource');
+
+
+		// Add Quote Reject Type
+		Route::get('/quote/quote_reject_types','quote_reject_type')->name('quote.quote_reject_type');
+		Route::post('/quote/saveQuoteRejectType','saveQuoteRejectType')->name('quote.ajax.saveQuoteRejectType');
+		Route::post('/quote/deleteQuoteRejectType','deleteQuoteRejectType')->name('quote.ajax.deleteQuoteRejectType');
+		
+		
+
+		
 	});
 
 
