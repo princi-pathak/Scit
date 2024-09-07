@@ -499,8 +499,6 @@ if (isset($lead)) {
                                                                         Action
                                                                     </a>
                                                                     <div class="dropdown-menu fade-up m-0">
-                                                                        <!-- <a href="{{ url('/lead/task_mark_as_completed', ['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Mark As Completed</a>
-                                                                            <hr class="dropdown-divider"> -->
                                                                         <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
                                                                         <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
                                                                     </div>

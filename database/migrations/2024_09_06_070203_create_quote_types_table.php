@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('quote_types', function (Blueprint $table) {
             $table->id();
             $table->string('home_id')->nullable();
-            $table->string('name')->nullable();
-            $table->boolean('status')->default(1)->comment('0 for In-active, 1 for Active, 2 for Delete');
+            $table->string('title');
+            $table->integer('number_of_days')->nullable();
+            $table->boolean('status')->default(1)->comment('1-active, 0-inActive');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
