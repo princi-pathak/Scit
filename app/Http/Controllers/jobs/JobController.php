@@ -15,6 +15,7 @@ use App\Models\Country;
 use App\Models\Job_type;
 use App\Models\Work_flow;
 use App\Models\Quote_type;
+use App\Models\QuoteType;
 use App\Models\Job_recurring;
 use App\Models\Product_category;
 use App\Models\Quote_product_detail;
@@ -40,7 +41,7 @@ class JobController extends Controller
         $data['project']=Project::where('status',1)->get();
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')->join('product_categories as cat','cat.id','=','pr.cat_id')->get();
         $data['job_recurring']=Job_recurring::where('status',1)->get();
-        $data['quote_type']=Quote_type::where('status',1)->get();
+        $data['quote_type']=QuoteType::where('status',1)->get();
         // echo "<pre>";print_r($data['product_details']);die;
         // for listing
         $data['job_type_list']=Job_type::whereNot('status',2)->get();
@@ -51,7 +52,7 @@ class JobController extends Controller
         $data['project_list']=Project::whereNot('status',2)->get();
         $data['job_recurring_list']=Job_recurring::whereNot('status',2)->get();
         $data['job_list']=Job::whereNot('status',2)->get();
-        $data['quote_type_list']=Quote_type::whereNot('status',2)->get();
+        $data['quote_type_list']=QuoteType::whereNot('status',2)->get();
         $data['page']="job_index";
         return view('frontEnd.jobs.index',$data);
     }

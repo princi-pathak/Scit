@@ -561,10 +561,6 @@
                                                                             <input type="time" class="form-control editInput" name="end_time" id="" value="">
                                                                         </div>
                                                                     </div>
-                                                                    <!-- <div class="mb-3 form-check">
-                                                                        <input type="checkbox" class="form-check-input editInput"  id="exampleCheck1">
-                                                                        <label class="form-check-label editInput" for="exampleCheck1">Is Reccurring Task ?</label>
-                                                                    </div> -->
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="mb-3 row">
@@ -599,30 +595,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <!-- <div class="mb-3 row">
-                                                                            <label for="staticEmail" class="col-sm-4 col-form-label">Notify ? </label>
-                                                                            <div class="col-sm-8">
-                                                                                <div class="form-check form-check-inline">
-                                                                                    <input class="form-check-input" type="checkbox" name="notify" id="yeson" value="1" required="">
-                                                                                    <label class="form-check-label checkboxtext editInput" for="checkalrt">Yes, On</label>
-                                                                                </div>
-                                                                                <div id="optionsDiv">
-                                                                                    <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
-                                                                                    <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email"> Email</label>
-                                                                                    <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms"> SMS</label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-3 row">
-                                                                            <label for="related_to" class="col-sm-4 col-form-label">Date & Time</label>
-                                                                            <div class="col-sm-4">
-                                                                                <input type="date" class="form-control editInput" id="notify_date" name="task_date">
-                                                                            </div>
-                                                                            <div class="col-sm-4">
-                                                                                <input type="time" class="form-control editInput" id="notify_time" name="task_time">
-                                                                            </div>
-                                                                        </div> -->
-                                                                    <div class="mb-3 row">
+                                                                   <div class="mb-3 row">
                                                                         <label for="related_to" class="col-sm-3 col-form-label">Related To</label>
                                                                         <div class="col-sm-9">
                                                                             <span class="editInput" id="related_To"></span>
@@ -663,7 +636,7 @@
                                                                                 <div class="col-sm-12">
                                                                                     <div class="form-check form-check-inline">
                                                                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked="">
-                                                                                        <label class="col-form-label" for="inlineRadio1">End afetr</label>
+                                                                                        <label class="col-form-label" for="inlineRadio1">End after</label>
                                                                                     </div>
                                                                                     <div class="form-check form-check-inline">
                                                                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
@@ -677,17 +650,30 @@
                                                                             </div>
 
                                                                             <div class="Priority row">
-                                                                                <label class="col-sm-4 col-form-label">No. of Repetitaion</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-4">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>1</option>
-                                                                                                <option>2</option>
-                                                                                            </select>
+                                                                                <div>
+                                                                                    <label class="col-sm-4 col-form-label">No. of Repetitaion</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-4">
+                                                                                                <select class="form-control editInput selectOptions" id="">
+                                                                                                    <option>1</option>
+                                                                                                    <option>2</option>
+                                                                                                </select>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <div>
+                                                                                    <label class="col-sm-4 col-form-label">Task End Date</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-4">
+                                                                                                <input type="date" class="form-control editInput">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
                                                                             </div>
 
                                                                         </div>
@@ -702,8 +688,10 @@
                                                                                     <div class="row">
                                                                                         <div class="col-sm-6">
                                                                                             <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>Months</option>
-                                                                                                <option>2</option>
+                                                                                                <option>Daily</option>
+                                                                                                <option>Weekly</option>
+                                                                                                <option>Monthly</option>
+                                                                                                <option>Yearly</option>
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
@@ -988,7 +976,7 @@
                             <label class="upperlineTitle">Complaints History</label>
                             <div class="row">
                                 <div class="col-sm-1">
-                                    <div class="jobsection  mt-3">
+                                    <div class="jobsection mt-3">
                                         <a href="#" class="profileDrop p-2 crmNewBtn" id="openComplaintsModel"> New</a>
                                     </div>
                                 </div>
@@ -1049,7 +1037,7 @@
         <div class="modal-content add_Customer">
             <div class="modal-header">
                 <h5 class="modal-title" id="customerModalLabel">Calls</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeCallsModels"></button>
+                <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal" id="closeCallsModels1"></button>
             </div>
             <div class="modal-body">
                 <form action="" class="customerForm" id="CRM_calls_form">
@@ -1145,7 +1133,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="profileDrop" id="saveCRMCallsModelData">Save</button>
-                <button type="button" class="profileDrop" id="closeCallsModels" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCallsModels2" >Close</button>
             </div>
         </div>
     </div>
@@ -1316,7 +1304,7 @@
                             <select class="form-control editInput" name="crm_section_type_id" id="lead_notes_crm"></select>
                         </div>
                         <div class="col-sm-1">
-                            <!-- <a href="#!" class="formicon" id="openCrmTypeModelNotes"><i class="fa-solid fa-square-plus"></i></a> -->
+                            <a href="#!" class="formicon" id="openCrmTypeModelNotes"><i class="fa-solid fa-square-plus"></i></a>
                         </div>
                         <!-- CRM Types Modal Notes Start -->
                         <div class="modal fade" id="crmTypeModelNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1446,7 +1434,7 @@
                             </select>
                         </div>
                         <div class="col-sm-1">
-                            <!-- <a href="#!" class="formicon" id="openCrmTypeModelComplaints"><i class="fa-solid fa-square-plus"></i></a> -->
+                            <a href="#!" class="formicon" id="openCrmTypeModelComplaints"><i class="fa-solid fa-square-plus"></i></a>
                         </div>
                          <!-- CRM Types Modal Notes Start -->
                          <div class="modal fade" id="crmTypeModelComplaint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -2165,7 +2153,6 @@
         });
         // set the value in Tasks table data js End here
 
-
         // set the value in CRM Lead Notes table data js Start here
         document.getElementById('pills-notes-tab').addEventListener('click', function() {
             getNotesDataAjax();
@@ -2178,8 +2165,7 @@
         });
         // set the value in CRM Lead Notes table data js End here
 
-
-
+        // on CRM model open set the value for models
         document.querySelectorAll('.set_value_on_CRM_model').forEach(function(anchor) {
             anchor.addEventListener('click', function(event) {
                 event.preventDefault();
@@ -2211,6 +2197,7 @@
                 $('#customerPop').modal('show');
             });
         });
+        // on CRM model open set the value for models
 
         // Ajax Call for saving CRM section Type
         $('#saveCRMTypes').on('click', function() {
@@ -2233,7 +2220,6 @@
         // Ajax for Add Task Type
         $('#saveTaskType').on('click', function() {
             var formData = $('#lead_task_type_form').serialize();
-
             $.ajax({
                 url: '{{ route("lead.ajax.saveLeadTaskType") }}',
                 method: 'POST',
@@ -2252,7 +2238,6 @@
         // Ajax Call for adding lead Reject Type
         $('#lead_reject').on('click', function() {
             var formData = $('#lead_reject_type_form_edit').serialize();
-
             $.ajax({
                 url: '{{ route("lead.ajax.saveLeadRejectTypes") }}',
                 method: 'POST',
@@ -2312,132 +2297,65 @@
         });
 
 
-        // js start here for calls model open and close
+        // Calls model open and close 
         const openCallsModel = document.getElementById('openCallsModel');
         const callsModel = document.getElementById('callsModal');
-        const closeCallsModel = document.getElementById('closeCallsModels');
-
-
-        // When the user clicks the button, open the modal 
         openCallsModel.onclick = function() {
             getCountriesList();
             getCRMTypeData();
             $('#callsModal').modal('show');
         }
+        // calls model open and close
 
-        // When the user clicks on <span> (x), close the modal
-        closeCallsModel.onclick = function() {
-            $('#callsModal').modal('hide');
+        // Email model open and close
+        const openNewEmail = document.getElementById('openNewEmail');
+        const NewEmailModel = document.getElementById('NewEmailModel');
+        openNewEmail.onclick = function() {
+            $('#NewEmailModel').modal('show');
         }
+        // Email model open and close
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target === callsModel) {
-                $('#callsModal').modal('hide');
-            }
-        }
-        // js End here for calls model open and close
-
-        // Js Start for CRM Lead Notes model show
+        // Notes model show and hide
         const openNotesModel = document.getElementById('openNotesModel');
         const NewNotesModel = document.getElementById('NewNotesModel');
-        const closeCrmNotesBtn = document.getElementById('closeCrmNotesBtn');
-
-        // When the user clicks the button, open the modal 
         openNotesModel.onclick = function() {
             getCRMTypeData();
             $('#NewNotesModel').modal('show');
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        closeCrmNotesBtn.onclick = function() {
-            $('#crmTypeModel').modal('hide');
-        }
-
-        window.onclick = function(event) {
-            if (event.target === crmTypeModel) {
-                $('#crmTypeModel').modal('hide');
-            }
-        }
-        // Js End for CRM Lead Notes model show
-
-        // CRM Section Type ADD model in Complaints Js Start for model  show
-        const openCrmTypeModelNotes = document.getElementById('openCrmTypeModelNotes');
-        const crmTypeModelNotes = document.getElementById('crmTypeModelNotes');
-
-        openCrmTypeModelNotes.onclick = function() {
-            $('#crmTypeModelNotes').modal('show');
-        }
-
-        window.onclick = function(event) {
-            if (event.target === crmTypeModelNotes) {
-                $('#crmTypeModelNotes').modal('hide');
-            }
-        }
-        // CRM Section Type ADD model in Complaints Js End for model  show
-
-
-        
-        // CRM Section Type ADD model in notes Js Start for model  show
-        const openCrmTypeModelComplaints = document.getElementById('openCrmTypeModelComplaints');
-        const crmTypeModelComplaint = document.getElementById('crmTypeModelComplaint');
-
-        // When the user clicks the button, open the modal 
-        openCrmTypeModelComplaints.onclick = function() {
-            $('#crmTypeModelComplaint').modal('show');
-        }
-
-        window.onclick = function(event) {
-            if (event.target === crmTypeModelComplaint) {
-                $('#crmTypeModelComplaint').modal('hide');
-            }
-        }
-        // CRM Section Type ADD model in notes Js End for model  show
+        }        
+        // Notes model show
 
         // CRM Section Type Js Start for model show
         const openModalBtn = document.getElementById('openCrmTypeModel');
         const crmTypeModel = document.getElementById('crmTypeModel');
-        const closeModalBtn = document.getElementById('closeCrmModalBtn');
-
-        // When the user clicks the button, open the modal 
         openModalBtn.onclick = function() {
             $('#crmTypeModel').modal('show');
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        closeModalBtn.onclick = function() {
-            $('#crmTypeModel').modal('hide');
-        }
-
-        window.onclick = function(event) {
-            if (event.target === crmTypeModel) {
-                $('#crmTypeModel').modal('hide');
-            }
         }
         // CRM Section Type Js End for model show
 
         // CRM Complaint Js Start for model show
         const openComplaintsModel = document.getElementById('openComplaintsModel');
         const compliantsModal = document.getElementById('compliantsModal');
-        const closeCrmComplaintBtn = document.getElementById('closeCrmComplaintBtn');
-
-        // When the user clicks the button, open the modal 
         openComplaintsModel.onclick = function() {
             getCRMTypeData();
             $('#compliantsModal').modal('show');
         }
-
-        // When the user clicks on <span> (x), close the modal
-        closeCrmComplaintBtn.onclick = function() {
-            $('#compliantsModal').modal('hide');
-        }
-
-        window.onclick = function(event) {
-            if (event.target === compliantsModal) {
-                $('#compliantsModal').modal('hide');
-            }
-        }
         // CRM Complaint Js End for model show
+
+        // CRM Section Type ADD model in Complaints Js Start for model  show
+        const openCrmTypeModelNotes = document.getElementById('openCrmTypeModelNotes');
+        const crmTypeModelNotes = document.getElementById('crmTypeModelNotes');
+        openCrmTypeModelNotes.onclick = function() {
+            $('#crmTypeModelNotes').modal('show');
+        }
+        // CRM Section Type ADD model in Complaints Js End for model  show
+
+        // // CRM Section Type ADD model in notes Js Start for model  show
+        const openCrmTypeModelComplaints = document.getElementById('openCrmTypeModelComplaints');
+        const crmTypeModelComplaint = document.getElementById('crmTypeModelComplaint');
+        openCrmTypeModelComplaints.onclick = function() {
+            $('#crmTypeModelComplaint').modal('show');
+        }
+        // // CRM Section Type ADD model in notes Js End for model  show
 
 
         const mainCheckbox = document.getElementById('yeson');
@@ -2471,96 +2389,11 @@
             $('#lead_ref').val(lead_ref);
         });
 
-        $('#openNewEmail').on('click', function() {
-            $('#NewEmailModel').modal('show');
-        });
+      
 
     });
 
-    // notification Div hide show on radio button for calls js start
-    const notify_radio1 = document.getElementById('notify_radio1');
-    const notify_radio2 = document.getElementById('notify_radio2');
-    const notification_div = document.getElementsByClassName('notification_div')[0];
 
-    // Initially hide the notification_div
-    notification_div.style.display = 'none';
-
-    notify_radio1.addEventListener('change', function() {
-        if (notify_radio1.checked) {
-            notification_div.style.display = 'none';
-        }
-    });
-
-    notify_radio2.addEventListener('change', function() {
-        if (notify_radio2.checked) {
-            notification_div.style.display = 'block';
-        }
-    });
-    // notification Div hide show on radio button for calls js End
-
-    // notification Div hide show on radio button for emails js start
-    const notify_email1 = document.getElementById('notify_email1');
-    const notify_email2 = document.getElementById('notify_email2');
-    const notification_email_div = document.getElementById('notification_email_div');
-
-    // Initially hide the notification_div
-    notification_email_div.style.display = 'none';
-
-    notify_email1.addEventListener('change', function() {
-        if (notify_email1.checked) {
-            notification_email_div.style.display = 'none';
-        }
-    });
-
-    notify_email2.addEventListener('change', function() {
-        if (notify_email2.checked) {
-            notification_email_div.style.display = 'block';
-        }
-    });
-    // notification Div hide show on radio button for emails js End
-
-
-    // notification Div hide show on radio button for notes js start
-    const notify_notes1 = document.getElementById('notify_notes1');
-    const notify_notes2 = document.getElementById('notify_notes2');
-    const notification_notes_div = document.getElementById('notification_notes_div');
-
-    // Initially hide the notification_div
-    notification_notes_div.style.display = 'none';
-
-    notify_notes1.addEventListener('change', function() {
-        if (notify_notes1.checked) {
-            notification_notes_div.style.display = 'none';
-        }
-    });
-
-    notify_notes2.addEventListener('change', function() {
-        if (notify_notes2.checked) {
-            notification_notes_div.style.display = 'block';
-        }
-    });
-    // notification Div hide show on radio button for notes js End
-
-
-    // notification Div hide show on radio button for emails js start
-    const notify_complaint1 = document.getElementById('notify_complaint1');
-    const notify_complaint2 = document.getElementById('notify_complaint2');
-    const notification_complaint_div = document.getElementById('notification_complaint_div');
-
-    // Initially hide the notification_div
-    notification_complaint_div.style.display = 'none';
-
-    notify_complaint1.addEventListener('change', function() {
-        if (notify_complaint1.checked) {
-            notification_complaint_div.style.display = 'none';
-        }
-    });
-
-    notify_complaint2.addEventListener('change', function() {
-        if (notify_complaint2.checked) {
-            notification_complaint_div.style.display = 'block';
-        }
-    });
 
 
     // CRM JS on leads
@@ -2572,45 +2405,45 @@
 
     // notification Div hide show on radio button for emails js End
 
-    // const openPopupButton2 = document.getElementById('openPopupButton2');
-    // const popup2 = document.getElementById('popup2');
-    // const closePopup2 = document.getElementById('closePopup');
+    const openPopupButton2 = document.getElementById('openPopupButton2');
+    const popup2 = document.getElementById('popup2');
+    const closePopup2 = document.getElementById('closePopup');
 
-    // const openPopupButton = document.getElementById('openPopupButton');
-    // const popup = document.getElementById('popup');
-    // const closePopup = document.getElementById('closePopup');
+    const openPopupButton = document.getElementById('openPopupButton');
+    const popup = document.getElementById('popup');
+    const closePopup = document.getElementById('closePopup');
 
 
     // Add event listeners to the radio buttons
 
 
-    // openPopupButton2.addEventListener('click', () => {
-    //     popup2.style.display = 'block';
-    //     setTimeout(() => {
-    //         popup2.style.opacity = '1';
-    //     }, 50); // Delay added for transition effect
-    // });
+    openPopupButton2.addEventListener('click', () => {
+        popup2.style.display = 'block';
+        setTimeout(() => {
+            popup2.style.opacity = '1';
+        }, 50); // Delay added for transition effect
+    });
 
-    // closePopup2.addEventListener('click', () => {
-    //     popup2.style.opacity = '0';
-    //     setTimeout(() => {
-    //         popup2.style.display = 'none';
-    //     }, 300); // Ensure the popup is hidden after the transition ends
-    // });
+    closePopup2.addEventListener('click', () => {
+        popup2.style.opacity = '0';
+        setTimeout(() => {
+            popup2.style.display = 'none';
+        }, 300); // Ensure the popup is hidden after the transition ends
+    });
 
-    // openPopupButton.addEventListener('click', () => {
-    //     popup.style.display = 'block';
-    //     setTimeout(() => {
-    //         popup.style.opacity = '1';
-    //     }, 50); // Delay added for transition effect
-    // });
+    openPopupButton.addEventListener('click', () => {
+        popup.style.display = 'block';
+        setTimeout(() => {
+            popup.style.opacity = '1';
+        }, 50); // Delay added for transition effect
+    });
 
-    // closePopup.addEventListener('click', () => {
-    //     popup.style.opacity = '0';
-    //     setTimeout(() => {
-    //         popup.style.display = 'none';
-    //     }, 300); // Ensure the popup is hidden after the transition ends
-    // });
+    closePopup.addEventListener('click', () => {
+        popup.style.opacity = '0';
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 300); // Ensure the popup is hidden after the transition ends
+    });
 </script>
 
 <!-- Script For adding CK editor start -->

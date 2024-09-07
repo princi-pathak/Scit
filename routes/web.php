@@ -304,7 +304,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('lead/saveLeadStatus', 'saveLeadStatus')->name('lead.ajax.saveLeadStatus');
 		// Route::get('/lead_status/delete/{id}', 'lead_status_delete');
 
-
 		// Lead reject type or resons
 		Route::get('/lead/lead_reject_types', 'lead_reject_type')->name('lead.lead_reject_types');
 		Route::post('/lead/saveLeadRejectTypes', 'saveLeadRejectType')->name('lead.ajax.saveLeadRejectTypes');
@@ -316,7 +315,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('lead/saveCRMSectionType', 'saveCRMSectionType')->name('lead.ajax.saveCRMSectionType');
 		Route::get('lead/crm_section_type/delete/{id}', 'crm_section_type_delete');
 		Route::get('lead/get_CRM_section_types', 'get_CRM_section_types')->name('lead.ajax.getCRMTypeData');
-
 
 		// Countries List
 		Route::get('lead/getCountriesList', 'getCountriesList')->name('ajax.getCountriesList');
@@ -333,11 +331,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		Route::post('lead/saveCRMLeadComplaint', 'saveCRMLeadComplaint')->name('lead.ajax.saveCRMLeadComplaint');
 		Route::post('lead/getCRMComplaintData', 'getCRMComplaintData')->name('lead.ajax.getCRMComplaintData');
-
 		Route::post('lead/saveCRMLeadTaskAndTimer', 'saveCRMLeadTaskAndTimer')->name('lead.ajax.saveCRMLeadTaskAndTimer');
-
 		Route::post('lead/getCRMTasksData', 'getCRMTasksData')->name('lead.ajax.getCRMTasksData');
-
 		Route::post('lead/getCRMAllData', 'getCRMAllData')->name('lead.ajax.getCRMAllData');
 		
 

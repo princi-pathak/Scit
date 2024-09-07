@@ -1588,7 +1588,7 @@ $access_rights = explode(',', $rights);
         }
 
         window.onclick = function(event) {
-            if (event.target === compliantsModal) {
+            if (event.target === userCallsModal) {
                 $('#userCallsModal').modal('hide');
             }
         }
@@ -1611,7 +1611,7 @@ $access_rights = explode(',', $rights);
         }
 
         window.onclick = function(event) {
-            if (event.target === compliantsModal) {
+            if (event.target === typeCrmModel) {
                 $('#typeCrmModel').modal('hide');
             }
         }
@@ -1634,7 +1634,7 @@ $access_rights = explode(',', $rights);
         }
 
         window.onclick = function(event) {
-            if (event.target === compliantsModal) {
+            if (event.target === userEmailModel) {
                 $('#userEmailModel').modal('hide');
             }
         }
@@ -1657,7 +1657,7 @@ $access_rights = explode(',', $rights);
         }
 
         window.onclick = function(event) {
-            if (event.target === compliantsModal) {
+            if (event.target === TasksecondModal) {
                 $('#TasksecondModal').modal('hide');
             }
         }
@@ -1701,7 +1701,7 @@ $access_rights = explode(',', $rights);
         }
 
         window.onclick = function(event) {
-            if (event.target === compliantsModal) {
+            if (event.target === NotesCrmModel) {
                 $('#NotesCrmModel').modal('hide');
             }
         }
