@@ -133,13 +133,9 @@
                         <div class="col-md-9">
                             <input type="hidden" name="section_type_id" id="section_type_id">
                             <select name="crm_section" id="crm_section" class="form-control editInput ">
-                                <option value="1">Calls</option>
-                                <option value="2">Emails</option>
-                                <option value="3">Notes</option>
-                                <option value="4">Complaints</option>
-                                <option value="5">Tasks</option>
-                                <option value="6">Contacts</option>
-                                <option value="7">History</option>
+                                @foreach($crmSec as $value)
+                                    <option value="{{ $value->id}}">{{ $value->title}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

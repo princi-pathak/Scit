@@ -101,7 +101,6 @@
                         <input type="hidden" name="section_type_id" id="section_type_id">
                         <label class="col-lg-3 col-sm-3 ">Section* </label>
                         <select name="crm_section" id="crm_section" class="form-control">
-                            <option value="1">Calls</option>
                             <option value="2">Emails</option>
                             <option value="3">Notes</option>
                             <option value="4">Complaints</option>
