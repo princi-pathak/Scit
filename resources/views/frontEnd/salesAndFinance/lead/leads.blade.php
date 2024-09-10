@@ -611,158 +611,156 @@
                                                                 <div class="mb-3 row">
                                                                     <label class="col-sm-2 col-form-label pe-0">Is Reccurring Task ?</label>
                                                                     <div class="col-sm-10">
-                                                                        <input type="checkbox" value="1" name="is_recurring" class="form-check-input" id="">
+                                                                        <input type="checkbox" value="1" name="is_recurring" class="form-check-input" id="isRecurring">
                                                                     </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="newJobForm mt-4">
-                                                                            <label class="upperlineTitle">Recurrence Pattern</label>
+                                                                    <div class="row" id="recurrence_div" style="display:none;">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="newJobForm mt-4">
+                                                                                <label class="upperlineTitle">Recurrence Pattern</label>
 
-                                                                            <div class="Priority row">
-                                                                                <label class="col-sm-4 col-form-label">Create Task</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-4">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>01</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <label class="col-sm-8 col-form-label">Days before</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="row">
-                                                                                <div class="col-sm-12">
-                                                                                    <div class="form-check form-check-inline">
-                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked="">
-                                                                                        <label class="col-form-label" for="inlineRadio1">End after</label>
-                                                                                    </div>
-                                                                                    <div class="form-check form-check-inline">
-                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                                                                        <label class="col-form-label" for="inlineRadio2">End By</label>
-                                                                                    </div>
-                                                                                    <div class="form-check form-check-inline">
-                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-                                                                                        <label class="col-form-label" for="inlineRadio3">No End Date</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="Priority row">
-                                                                                <div>
-                                                                                    <label class="col-sm-4 col-form-label">No. of Repetitaion</label>
+                                                                                <div class="Priority row">
+                                                                                    <label class="col-sm-4 col-form-label">Create Task</label>
                                                                                     <div class="col-sm-8">
                                                                                         <div class="row">
                                                                                             <div class="col-sm-4">
                                                                                                 <select class="form-control editInput selectOptions" id="">
-                                                                                                    <option>1</option>
-                                                                                                    <option>2</option>
+                                                                                                    <option>0</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <label class="col-sm-8 col-form-label">Days before</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-12">
+                                                                                        <div class="form-check form-check-inline">
+                                                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" checked>
+                                                                                            <label class="col-form-label" for="inlineRadio1">End after</label>
+                                                                                        </div>
+                                                                                        <div class="form-check form-check-inline">
+                                                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+                                                                                            <label class="col-form-label" for="inlineRadio2">End By</label>
+                                                                                        </div>
+                                                                                        <div class="form-check form-check-inline">
+                                                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+                                                                                            <label class="col-form-label" for="inlineRadio3">No End Date</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="Priority row">
+                                                                                    <div class="row" id="repetitation">
+                                                                                        <label class="col-sm-4 col-form-label">No. of Repetitaion</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="text" class="form-control editInput" name="repetitation">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row" id="task_end_date" >
+                                                                                        <label class="col-sm-4 col-form-label">Task End Date</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-8">
+                                                                                                    <input type="date" class="form-control editInput">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="newJobForm mt-4">
+                                                                                <label class="upperlineTitle">Range of Recurrence</label>
+
+                                                                                <div class="Priority row">
+                                                                                    <label class="col-sm-4 col-form-label">Task Frequency</label>
+                                                                                    <div class="col-sm-8">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <select class="form-control editInput selectOptions" id="">
+                                                                                                    <option>Daily</option>
+                                                                                                    <option>Weekly</option>
+                                                                                                    <option>Monthly</option>
+                                                                                                    <option>Yearly</option>
                                                                                                 </select>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div>
-                                                                                    <label class="col-sm-4 col-form-label">Task End Date</label>
-                                                                                    <div class="col-sm-8">
+                                                                                <div class="row py-1">
+                                                                                    <div class="col-sm-3">
+                                                                                        <div class="form-check form-check-inline">
+                                                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioDay" value="day" checked="">
+                                                                                            <label class="col-form-label" for="inlineRadioDay">day</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-5">
                                                                                         <div class="row">
-                                                                                            <div class="col-sm-4">
-                                                                                                <input type="date" class="form-control editInput">
+                                                                                            <div class="col-sm-4 px-0">
+                                                                                                <select class="form-control editInput selectOptions" id="">
+                                                                                                    <option>01</option>
+                                                                                                    <option>02</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <label class="col-sm-8 col-form-label">off every</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-4">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-4 px-0">
+                                                                                                <select class="form-control editInput selectOptions" id="">
+                                                                                                    <option>01</option>
+                                                                                                    <option>02</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <label class="col-sm-8 col-form-label">Months</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-3">
+                                                                                        <div class="form-check form-check-inline">
+                                                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioEvery" value="Every" checked="">
+                                                                                            <label class="col-form-label" for="inlineRadioEvery">every</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-3">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-11 px-0">
+                                                                                                <select class="form-control editInput selectOptions" id="">
+                                                                                                    <option>First</option>
+                                                                                                    <option>02</option>
+                                                                                                </select>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="newJobForm mt-4">
-                                                                            <label class="upperlineTitle">Range of Recurrence</label>
-
-                                                                            <div class="Priority row">
-                                                                                <label class="col-sm-4 col-form-label">Task Frequency</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-6">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>Daily</option>
-                                                                                                <option>Weekly</option>
-                                                                                                <option>Monthly</option>
-                                                                                                <option>Yearly</option>
-                                                                                            </select>
+                                                                                    <div class="col-sm-3">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-11 px-0">
+                                                                                                <select class="form-control editInput selectOptions" id="">
+                                                                                                    <option>Day</option>
+                                                                                                    <option>02</option>
+                                                                                                </select>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row py-1">
-                                                                                <div class="col-sm-3">
-                                                                                    <div class="form-check form-check-inline">
-                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioDay" value="day" checked="">
-                                                                                        <label class="col-form-label" for="inlineRadioDay">day</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-5">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-4 px-0">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>01</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
+                                                                                    <div class="col-sm-3">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-8 px-0">
+                                                                                                <select class="form-control editInput selectOptions" id="">
+                                                                                                    <option>01</option>
+                                                                                                    <option>02</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <!-- <label class="col-sm-8 col-form-label">Months</label> -->
                                                                                         </div>
-                                                                                        <label class="col-sm-8 col-form-label">off every</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-4">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-4 px-0">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>01</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <label class="col-sm-8 col-form-label">Months</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-sm-3">
-                                                                                    <div class="form-check form-check-inline">
-                                                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioEvery" value="Every" checked="">
-                                                                                        <label class="col-form-label" for="inlineRadioEvery">every</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-3">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-11 px-0">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>First</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-3">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-11 px-0">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>Day</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-3">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-8 px-0">
-                                                                                            <select class="form-control editInput selectOptions" id="">
-                                                                                                <option>01</option>
-                                                                                                <option>02</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <!-- <label class="col-sm-8 col-form-label">Months</label> -->
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1316,25 +1314,25 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="" id="crm_section_type_form">
+                                        <form action="" id="crm_section_type_notes_form">
                                             <div class="mb-2 row">
                                                 <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" name="title" id="type_title" value="">
-                                                    <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
+                                                    <input type="text" class="form-control editInput" name="title" id="type_title_notes">
+                                                    <input type="hidden" class="form-control editInput" name="crm_section" id="crm_section_notes" value="3">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
                                                 <div class="col-sm-9">
-                                                    <input type="color" class="form-control editInput" name="colour_code" id="colour_code" value="">
+                                                    <input type="color" class="form-control editInput" name="colour_code" id="colour_code_notes" value="">
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
-                                        <button type="button" class="profileDrop" id="saveCRMTypes">Save</button>
+                                        <button type="button" class="profileDrop" id="saveCRMTypesNotes">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -1436,7 +1434,7 @@
                         <div class="col-sm-1">
                             <a href="#!" class="formicon" id="openCrmTypeModelComplaints"><i class="fa-solid fa-square-plus"></i></a>
                         </div>
-                         <!-- CRM Types Modal Notes Start -->
+                         <!-- CRM Types Modal Complaint Start -->
                          <div class="modal fade" id="crmTypeModelComplaint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content add_Customer">
@@ -1450,26 +1448,26 @@
                                             <div class="mb-2 row">
                                                 <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" name="title" id="type_title" value="">
-                                                    <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
+                                                    <input type="text" class="form-control editInput" name="title" id="type_title_complaint" value="">
+                                                    <input type="hidden" class="form-control editInput" name="crm_section_complaint" id="crm_section_complaint" value="4">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
                                                 <div class="col-sm-9">
-                                                    <input type="color" class="form-control editInput" name="colour_code" id="colour_code" value="">
+                                                    <input type="color" class="form-control editInput" name="colour_code" id="colour_code_complaint" value="">
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
-                                        <button type="button" class="profileDrop" id="saveCRMTypes">Save</button>
+                                        <button type="button" class="profileDrop" id="saveCRMTypesComplaint">Save</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- CRM Types Modal Notes End -->
+                        <!-- CRM Types Modal Complaint End -->
                     </div>
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
@@ -2199,6 +2197,57 @@
         });
         // on CRM model open set the value for models
 
+        function addCRMTypes(formData, type){
+            $.ajax({
+                url: '{{ route("lead.ajax.saveCRMSectionType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    if(type === 3){
+                        $('#crmTypeModelNotes').modal('hide');
+                    } else if(type === 4){
+                        $('#crmTypeModelComplaint').modal('hide');
+                    }
+                    getCRMTypeData();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        // Ajax Call for saving CRM section Type for notes
+        $('#saveCRMTypesNotes').on('click', function() {
+            var title = $('#type_title_notes').val();
+            var colourCode = $('#colour_code_notes').val();
+            var crmSection = $('#crm_section_notes').val();
+
+            var formData = {
+                title: title,
+                colour_code: colourCode,
+                crm_section: crmSection
+            };
+            console.log(formData);
+            addCRMTypes(formData, 3);
+        });
+
+        $('#saveCRMTypesComplaint').on('click', function() {
+            var title = $('#type_title_complaint').val();
+            var colourCode = $('#colour_code_complaint').val();
+            var crmSection = $('#crm_section_complaint').val();
+
+            var formData = {
+                title: title,
+                colour_code: colourCode,
+                crm_section: crmSection
+            };
+            console.log(formData);
+            addCRMTypes(formData, 4);
+        });
+        
+
+
         // Ajax Call for saving CRM section Type
         $('#saveCRMTypes').on('click', function() {
             var formData = $('#crm_section_type_form').serialize();
@@ -2216,6 +2265,8 @@
                 }
             });
         });
+
+
 
         // Ajax for Add Task Type
         $('#saveTaskType').on('click', function() {
@@ -2392,9 +2443,6 @@
       
 
     });
-
-
-
 
     // CRM JS on leads
     document.getElementById('onclickbtnHideShowLeads').addEventListener('click', function() {

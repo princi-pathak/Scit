@@ -84,3 +84,32 @@
             notification_complaint_div.style.display = 'block';
         }
     });
+
+
+    $(document).ready(function() {
+        $('#isRecurring').on('change', function() {
+            if ($(this).is(':checked')) {
+                $('#recurrence_div').show();
+            } else {
+                $('#recurrence_div').hide();
+            }
+        });
+
+        $('input[name="inlineRadioOptions"]').on('change', function() {
+            var value = $(this).val();
+            
+            // Hide both divs initially
+            $('#repetitation').hide();
+            $('#task_end_date').hide();
+            
+            // Show the appropriate div based on the selected radio button
+            if (value === '1') {
+                $('#repetitation').show();
+            } else if (value === '2') {
+                $('#task_end_date').show();
+            }
+            // For value '3', both divs are hidden by default
+        });
+
+    });
+    

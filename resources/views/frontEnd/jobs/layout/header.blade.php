@@ -70,13 +70,11 @@ $access_rights = explode(',', $rights);
         <div class="menubaar">
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg navbar-light sticky-top px-3">
-
                     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav ml-auto p-4 p-lg-0">
-
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-item nav-link dropdown-toggle @if(isset($page)) @if($page == 'leads') active @endif @endif" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> keep_public </i></span>
@@ -133,9 +131,6 @@ $access_rights = explode(',', $rights);
                                 </ul>
                             </div>
 
-
-
-
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle @if(isset($page)) @if($page == 'jobs') active @endif @endif" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined">work </i></span>
@@ -158,7 +153,6 @@ $access_rights = explode(',', $rights);
                                     <a href="#!" class="dropdown-item">Search Jobs</a>
                                     <a href="#!" class="dropdown-item">Appointments</a>
                                     <a href="#!" class="dropdown-item">Recurring Jobs</a>
-
                                 </div>
                             </div>
 
@@ -277,7 +271,6 @@ $access_rights = explode(',', $rights);
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Suppliers <i class="fa-solid fa-angle-right"></i>
                                         </a>
-
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="#">New Customers</a></li>
                                             <li><a class="dropdown-item" href="#">Active Customers</a></li>
@@ -299,8 +292,6 @@ $access_rights = explode(',', $rights);
                                     <a href="#!" class="dropdown-item">Catalogues</a>
                                 </div>
                             </div>
-
-
 
                             <a href="#" class="nav-item nav-link">
                                 <span><i class="material-symbols-outlined"> calculate </i></span>
