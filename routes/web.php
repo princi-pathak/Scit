@@ -223,7 +223,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	// Ram 14/06/2024 path for jobs create
 	Route::get('/jobs_list','App\Http\Controllers\jobs\JobController@job_list');
 	Route::post('/job_save_all','App\Http\Controllers\jobs\JobController@job_save_all');
-	Route::post('/status_change','App\Http\Controllers\jobs\JobController@status_change');
+	// Route::post('/status_change','App\Http\Controllers\jobs\JobController@status_change');
 	Route::post('/delete_function','App\Http\Controllers\jobs\JobController@delete_function');
 	Route::post('/edit_job','App\Http\Controllers\jobs\JobController@edit_job');
 	Route::post('/search_value','App\Http\Controllers\jobs\JobController@search_value');
@@ -244,6 +244,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/save_job_product','App\Http\Controllers\jobs\JobController@save_job_product');
 	Route::post('/get_save_appointment','App\Http\Controllers\jobs\JobController@get_save_appointment');
 	Route::post('/new_appointment_add_section','App\Http\Controllers\jobs\JobController@new_appointment_add_section');
+	Route::get('/job_appointment_type_list','App\Http\Controllers\jobs\JobController@job_appointment_type_list');
+	Route::post('/job_type_appointment_save','App\Http\Controllers\jobs\JobController@job_type_appointment_save');
+	Route::post('/job_appointment_type_edit_form','App\Http\Controllers\jobs\JobController@job_appointment_type_edit_form');
+	Route::get('/appointment_rejection_cat_list','App\Http\Controllers\jobs\JobController@appointment_rejection_cat_list');
+	Route::post('/appointment_rejection_cat_save','App\Http\Controllers\jobs\JobController@appointment_rejection_cat_save');
+	Route::post('/job_appointment_rejection_edit_form','App\Http\Controllers\jobs\JobController@job_appointment_rejection_edit_form');
 	// Customer
 	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit_save');
