@@ -385,8 +385,8 @@ $access_rights = explode(',', $rights);
                                             <?php if (array_key_exists(314, $access_rights)) { ?>
                                                 <li><a class="dropdown-item" href="{{url('job_type')}}">Job Type </a></li>
                                             <?php } ?>
-                                            <li><a class="dropdown-item" href="#">Job Appointment Type </a></li>
-                                            <li><a class="dropdown-item" href="#">Appointment Rejection Categories </a></li>
+                                            <li><a class="dropdown-item" href="{{url('job_appointment_type_list')}}">Job Appointment Type </a></li>
+                                            <li><a class="dropdown-item" href="{{url('appointment_rejection_cat_list')}}">Appointment Rejection Categories </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
