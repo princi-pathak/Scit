@@ -1417,37 +1417,37 @@
                                         <form action="" class="customerForm">
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Customer
-                                                    Name*</label>
+                                                    Name <span class="red-text">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputName" value="John Smith">
+                                                        id="" value="">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="inputCustomer"
                                                     class="col-sm-3 col-form-label">Customer
-                                                    Type*</label>
+                                                    Type <span class="red-text">*</span></label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control editInput selectOptions"
+                                                    <select class="form-control editInput selectOptions get_customer_result"
                                                         id="inputCustomer">
-                                                        <option>Genrale Customer
-                                                        </option>
-                                                        <option>Analytical Customer
-                                                        </option>
+                                                        <option selected disabled>None</option>
+                                                        <?php foreach($customer_types as $cust_type){?>
+                                                            <option value="{{$cust_type->id}}">{{$cust_type->name}}</option>
+                                                        <?php }?>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <a href="#!" class="formicon"><i
+                                                    <a href="#!" class="formicon" onclick="get_modal(1)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div><!-- End off Customer -->
 
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Conatact
-                                                    Name*</label>
+                                                    Name <span class="red-text">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputName" value="John Smith">
+                                                        id="inputName" value="">
                                                 </div>
                                             </div>
 
@@ -1851,6 +1851,41 @@
                 </div>
             </div>
             <!-- end here -->
+<!-- Customer type add Modal -->
+<div class="modal fade" id="cutomer_type_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thirdModalLabel">Add Customer Type</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="customer_type_form">
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer Type <span class="red-text">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" name="customer_type_name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Type">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-9">
+                                <select id="customer_type_status" name="customer_type_status" class="form-control editInput">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pageTitleBtn">
+                            <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_customer_type()"> Save</a>
+                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end here -->
 
         </div>
     </div>
@@ -2333,7 +2368,47 @@
         }, 300); // Ensure the popup is hidden after the transition ends
     });
 </script>
+<!-- Modal code -->
+ <script>
+    function get_modal(modal){  
+        if(modal == 1){
+            $("#customer_type_form")[0].reset();
+            $("#cutomer_type_modal").modal('show');
+        }
+    }
+ </script>
 
-
+<!-- end here -->
+<script>
+    function save_customer_type(){
+       var token='<?php echo csrf_token();?>'
+       var name=$("#customer_type_name").val();
+       var status=$("#customer_type_status").val();
+       var home_id=$("#home_id").val();
+       if(name == ''){
+        $("#customer_type_name").addClass('invalid-input');
+        return false;
+       }else {
+            $.ajax({
+                type: "POST",
+                url: "{{url('/save_customer_type')}}",
+                data: {name:name,status:status,home_id:home_id,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    // return false;
+                    if($.trim(data) == 'error'){
+                        alert("Something went wrong");
+                    }else{
+                        $("#cutomer_type_modal").modal('hide');
+                        $('.get_customer_result').append(data);
+                        // window.location.reload();
+                    }
+                    
+                }
+            });
+       }
+       
+    }
+</script>
 
 @include('frontEnd.jobs.layout.footer')

@@ -16,6 +16,7 @@ use App\Models\Job_type;
 use App\Models\Work_flow;
 use App\Models\QuoteType;
 use App\Models\Job_recurring;
+use App\Models\Customer_type;
 use App\Models\Product_category;
 use App\Models\Quote_product_detail;
 use App\Models\Workflow_notification;
@@ -239,7 +240,8 @@ class JobController extends Controller
         $data['home_id']=$home_id;
         $data['users']=User::where('is_deleted',0)->get();
         $data['appointment_type']=Construction_job_appointment_type::where('home_id',$home_id)->get();
-        // echo "<pre>";print_r($data['users']);die;
+        $data['customer_types']=Customer_type::where('home_id',$home_id)->get();
+        // echo "<pre>";print_r($data['customer_types']);die;
         return view('frontEnd.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){

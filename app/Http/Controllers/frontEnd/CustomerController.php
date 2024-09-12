@@ -130,6 +130,30 @@ class CustomerController extends Controller
         $data['inactive_customer']=Customer::where(['is_converted'=>1,'status'=>0,'home_id'=>$home_id])->count();
         return view('frontEnd.jobs.active_customer',$data);
     }
+    public function save_customer_type(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id = Auth::user()->home_id;
+        
+        $insert='';
+        $table=new Customer_type;
+        try {
+            $insert=$table::updateOrCreate(
+                ['id' => $request->id ?? null],
+                $request->all(),
+            );
+        } catch (\Exception $e) {
+            // return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+            $error=$e->getMessage();
+        }
+        // echo "<pre>";print_r($insert);die;
+        // $customer_types=Customer_type::where('home_id',$home_id)->get();
+        if($insert){
+                echo '<option value="'.$insert->id.'">'.$insert->name.'</option>';
+            
+        }else{
+            echo "error";
+        }
+    }
     public function add_currency(Request $request){
         $all_country=Country::all();
         foreach($all_country as $val){
