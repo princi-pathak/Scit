@@ -86,7 +86,11 @@
     });
 
 
-    $(document).ready(function() {
+    $(document).ready(function() {  
+        document.getElementById('weekly').style.display = 'none';
+        document.getElementById('monthly').style.display = 'none';
+        document.getElementById('task_end_date').style.display = 'none';
+        
         $('#isRecurring').on('change', function() {
             if ($(this).is(':checked')) {
                 $('#recurrence_div').show();
@@ -95,21 +99,37 @@
             }
         });
 
-        $('input[name="inlineRadioOptions"]').on('change', function() {
-            var value = $(this).val();
+        $('input[name="task_end_repe_date"]').on('change', function() {
             
             // Hide both divs initially
             $('#repetitation').hide();
             $('#task_end_date').hide();
             
+            var value = $(this).val();
             // Show the appropriate div based on the selected radio button
             if (value === '1') {
                 $('#repetitation').show();
             } else if (value === '2') {
                 $('#task_end_date').show();
             }
-            // For value '3', both divs are hidden by default
         });
+
+        document.getElementById('task_frequency').addEventListener('change', function() {
+            document.getElementById('daily').style.display = 'none';
+            document.getElementById('weekly').style.display = 'none';
+            document.getElementById('monthly').style.display = 'none';
+            
+            var selectedValue = this.value;
+            // Show the appropriate div based on the selected option
+            if (selectedValue == 1) {
+                document.getElementById('daily').style.display = 'block';
+            } else if (selectedValue == 2) {
+                document.getElementById('weekly').style.display = 'block';
+            } else if (selectedValue == 3) {
+                document.getElementById('monthly').style.display = 'block';
+            }
+        });
+        
 
     });
     
