@@ -148,7 +148,9 @@ class CustomerController extends Controller
         // echo "<pre>";print_r($insert);die;
         // $customer_types=Customer_type::where('home_id',$home_id)->get();
         if($insert){
+            if($insert->status ==1){
                 echo '<option value="'.$insert->id.'">'.$insert->name.'</option>';
+            }
             
         }else{
             echo "error";
