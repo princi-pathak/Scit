@@ -14,7 +14,6 @@ use App\Models\Project;
 use App\Models\Country;
 use App\Models\Job_type;
 use App\Models\Work_flow;
-// use App\Models\Quote_type;
 use App\Models\QuoteType;
 use App\Models\Job_recurring;
 use App\Models\Product_category;
@@ -25,6 +24,7 @@ use App\Models\Recurring_product_detail;
 use App\Models\Construction_job_appointment;
 use App\Models\Construction_jobassign_product;
 use App\Models\Construction_job_appointment_type;
+use App\Models\construction_appointment_rejection_category;
 use DB,Auth,Session,Validator;
 
 class JobController extends Controller
@@ -504,7 +504,59 @@ class JobController extends Controller
         
         return $html;
     }
-    
+    public function job_appointment_type_list(Request $request){
+        $home_id = Auth::user()->home_id;
+        $data['appointment_type']=Construction_job_appointment_type::where('home_id',$home_id)->get();
+        // echo "<pre>";print_r($data['appointment_type']);die;
+        $data['home_id']=$home_id;
+        $data['users']=User::all();
+        // echo "<pre>";print_r($data['users']);die;
+        return view('frontEnd.jobs.job_appointment_type',$data);
+    }
+    public function job_type_appointment_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        if(isset($request->notify) && $request->notify == 1){
+            $data=[
+                'id'=>$request->id,
+                'document'=>$request->document,
+                'notify'=>$request->notify,
+                'on_complete'=>$request->on_complete,
+                'on_change'=>$request->on_change,
+                'notify_who'=>implode(',',$request->notify_who),
+                'notification'=>$request->notification,
+                'sms'=>$request->sms,
+                'email'=>$request->email,
+                'notify_customer'=>$request->notify_customer
+            ];
+            // echo "<pre>";print_r($data);die;
+            echo $result=Construction_job_appointment_type::SaveJobAppointmentType($data);
+        }else {
+            echo $result=Construction_job_appointment_type::SaveJobAppointmentType($request->all());
+        }
+        
+    }
+    public function job_appointment_type_edit_form(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $data=Construction_job_appointment_type::find($request->id);
+        return response()->json($data);
+    }
+    public function appointment_rejection_cat_list(){
+        $data['rejection']=construction_appointment_rejection_category::whereNot('status',2)->get();
+        $home_id = Auth::user()->home_id;
+        $data['home_id']=$home_id;
+        // echo "<pre>";print_r($data['rejection']);die;
+        return view('frontEnd.jobs.appointment_rejection_cat',$data);
+        
+    }
+    public function appointment_rejection_cat_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        echo construction_appointment_rejection_category::SaveAppointmentRejectionCategory($request->all());
+    }
+    public function job_appointment_rejection_edit_form(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $data=construction_appointment_rejection_category::find($request->id);
+        return response()->json($data);
+    }
     public function job_save_all(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $form_id=$request->form_id;
@@ -927,9 +979,9 @@ class JobController extends Controller
         } else if($form_id == 10){
             $type_name=$request->type_name;
             if($request->type_id == ''){
-                $table_quote_type = new Quote_type;
+                $table_quote_type = new QuoteType;
             } else {
-                $table_quote_type = Quote_type::find($request->type_id);
+                $table_quote_type = QuoteType::find($request->type_id);
             }
             $table_quote_type->name=$type_name;
             $table_quote_type->save();
@@ -938,7 +990,7 @@ class JobController extends Controller
         }
     }
     public function status_change(Request $request){
-        // echo "<pre>";print_r($request->all());die;
+        echo "<pre>";print_r($request->all());die;
         $form_id=$request->form_id;
         if($form_id == 1){
             $table = Job::find($request->id);
@@ -957,7 +1009,7 @@ class JobController extends Controller
         } else if($form_id == 9){
             $table=Job_recurring::find($request->id);
         } else if($form_id == 10){
-            $table=Quote_type::find($request->id);
+            $table=QuoteType::find($request->id);
         }
         // echo "<pre>";print_r($table);die;
         $table->status=$request->status;
@@ -984,7 +1036,7 @@ class JobController extends Controller
         } else if($form_id == 9){
             $table=Job_recurring::find($request->id);
         } else if($form_id == 10){
-            $table=Quote_type::find($request->id);
+            $table=QuoteType::find($request->id);
         }
         // echo "<pre>";print_r($table);die;
         $table->status=2;
@@ -1086,7 +1138,7 @@ class JobController extends Controller
             return response()->json($val_data);
 
         } else if($form_id == 10){
-            $table=Quote_type::find($request->id);
+            $table=QuoteType::find($request->id);
             $table['form_id']=$form_id;
         }
         return response()->json($table);

@@ -27,6 +27,7 @@ use App\Models\CRMLeadEmail;
 use App\Models\CRMLeadNotes;
 use App\Models\CRMLeadComplaint;
 use App\Models\CRMLeadTask;
+use App\Models\CRMSection;
 use Carbon\Carbon;
 
 class LeadController extends Controller
@@ -439,7 +440,8 @@ class LeadController extends Controller
     public function CRM_section_type(){
         $page = "crm_section_type";
         $crm_sections = CRMSectionType::getCRMSectionTypes();
-        return view('frontEnd.salesAndFinance.lead.CRM_section_type', compact('page', 'crm_sections'));
+        $crmSec = CRMSection::getCRMSectionData();
+        return view('frontEnd.salesAndFinance.lead.CRM_section_type', compact('page', 'crm_sections', 'crmSec'));
     }
 
     public function saveCRMSectionType(Request $request){
