@@ -27,4 +27,8 @@ class CRMLeadTaskReccurence extends Model
         'every_monthly_month',
         'every_month_of_month'
     ];
+
+    public static function getRecurrenceDataFromTaskType($id){
+        return CRMLeadTaskReccurence::where('crm_lead_task_id', $id)->get();
+    }
 }

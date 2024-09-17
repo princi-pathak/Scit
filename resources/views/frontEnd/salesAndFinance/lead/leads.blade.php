@@ -530,10 +530,8 @@
                                                                             <input type="hidden" name="form_type" id="form_type" value="">
                                                                             <input type="hidden" name="lead_id" id="crm_lead_id_task">
                                                                             <input type="hidden" id="crm_lead_task_id" name="crm_lead_task_id">
-                                                                            <select class="form-control editInput" name="user_id" id="">
-                                                                                @foreach($users as $value)
-                                                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                                                                @endforeach
+                                                                            <select class="form-control editInput" name="user_id" id="getUserList">
+                                                                                <option value="">Select</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -967,7 +965,7 @@
                                     </form>
                                 </div>
                                 <div class="col-sm-2">
-                                    <div class="overdue mt-3 ms-3">
+                                    <div class="overdue mt-3 ms-3" id="notShowOnComplete">
                                         <span class="yeloColrbox"></span><label>Overdue</label>
                                     </div>
                                 </div>
@@ -986,6 +984,7 @@
                                         <table class="table" id="CRMLeadTaskTable">
                                             <thead class="table-light">
                                                 <tr>
+                                                    <th></th>
                                                     <th>Date</th>
                                                     <th>User</th>
                                                     <th>Contact</th>
@@ -1623,22 +1622,106 @@
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 <script>
+    function SetCSSForButtonInTaskModel(element) {
+        var buttons = document.querySelectorAll('.crmNewBtn');
+        buttons.forEach(function(btn) {
+            btn.classList.remove('btnActive');
+        });
+
+        // Add 'btnActive' to the clicked button
+        element.classList.add('btnActive');
+    }
+
+    // Function to populate the table
+    function populateTable(data, lead_ref) {
+
+        // Get the table body element
+        const tableBody = document.querySelector('#CRMLeadTaskTable tbody');
+        tableBody.innerHTML = '';
+
+        data.forEach(item => {
+            // Create a new row
+            const row = document.createElement('tr');
+
+            const listCell = document.createElement('td');
+            listCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="summary"><i class="fa fa-list-ul"></i></a>`;
+            row.appendChild(listCell);
+
+            const created_at = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+            const date = moment(item.start_date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+            const time = moment(item.start_time, 'HH:mm:ss').format('HH:mm');
+
+            // Create cells and append them to the row
+            const dateCell = document.createElement('td');
+            dateCell.textContent = date + " " + time;
+            row.appendChild(dateCell);
+
+            const nameCell = document.createElement('td');
+            nameCell.innerHTML = "<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>";
+            row.appendChild(nameCell);
+
+            const phoneCell = document.createElement('td');
+            phoneCell.textContent = item.telephone;
+            row.appendChild(phoneCell);
+
+            const lead_task_title = document.createElement('td');
+            lead_task_title.textContent = item.lead_task_title;
+            row.appendChild(lead_task_title);
+
+            const typeCell = document.createElement('td');
+            typeCell.textContent = item.title;
+            row.appendChild(typeCell);
+
+            const notesCell = document.createElement('td');
+            notesCell.innerHTML = item.notes;
+            row.appendChild(notesCell);
+
+            const related = document.createElement('td');
+            related.innerHTML = lead_ref;
+            row.appendChild(related);
+
+            const create_time = document.createElement('td');
+            create_time.innerHTML = created_at;
+            row.appendChild(create_time);
+
+            const created_by = document.createElement('td');
+            created_by.innerHTML = '<?php echo Auth::user()->name; ?>';
+            row.appendChild(created_by);
+
+            const visibilityCell = document.createElement('td');
+            if (item.customer_visibility == 0) {
+                visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+            } else if (item.customer_visibility == 1) {
+                visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+            }
+            row.appendChild(visibilityCell);
+
+            const idCell = document.createElement('td');
+            idCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="edit"><i class="fa fa-edit"></i></a>  <i class="fa fa-times"></i>`;
+            row.appendChild(idCell);
+
+            // Append the row to the table body
+            tableBody.appendChild(row);
+        });
+    }
+
+
+
+
     function ShowTaskOnDate(element, value) {
 
+        var notShowOnComplete = document.getElementById('notShowOnComplete');
+        var lead_id = document.getElementById('lead_id_CRM').value;
+        var lead_ref = document.getElementById('calls_lead_refs').textContent;
 
-        if (value == "today") {
-            alert("today function run");
+        if (value == "all") {
+            notShowOnComplete.style.display = "flex";
 
-            var buttons = document.querySelectorAll('.crmNewBtn');
-            buttons.forEach(function(btn) {
-                btn.classList.remove('btnActive');
-            });
-
-            // Add 'btnActive' to the clicked button
-            element.classList.add('btnActive');
-
-            var lead_id = document.getElementById('lead_id_CRM').value;
-            var lead_ref = document.getElementById('calls_lead_refs').textContent;
+            SetCSSForButtonInTaskModel(element);
+            getTasksDataAjaxCall();
+        } else if (value == "today") {
+            notShowOnComplete.style.display = "flex";
+            SetCSSForButtonInTaskModel(element);
             $.ajax({
                 url: '{{ route("lead.ajax.getCRMTaskDataToday") }}',
                 method: 'POST',
@@ -1648,83 +1731,94 @@
                 success: function(response) {
                     console.log(response.data);
 
-                    // Get the table body element
-                    const tableBody = document.querySelector('#CRMLeadTaskTable tbody');
-                    tableBody.innerHTML = '';
-
-                    // Function to populate the table
-                    function populateTable(data) {
-                        data.forEach(item => {
-                            // Create a new row
-                            const row = document.createElement('tr');
-
-                            const created_at = moment(item.created_at).format('DD/MM/YYYY HH:mm');
-                            const date = moment(item.start_date, 'YYYY-MM-DD').format('DD/MM/YYYY');
-                            const time = moment(item.start_time, 'HH:mm:ss').format('HH:mm');
-
-                            // Create cells and append them to the row
-                            const dateCell = document.createElement('td');
-                            dateCell.textContent = date + " " + time;
-                            row.appendChild(dateCell);
-
-                            const nameCell = document.createElement('td');
-                            nameCell.innerHTML = "<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>";
-                            row.appendChild(nameCell);
-
-                            const phoneCell = document.createElement('td');
-                            phoneCell.textContent = item.telephone;
-                            row.appendChild(phoneCell);
-
-                            const lead_task_title = document.createElement('td');
-                            lead_task_title.textContent = item.lead_task_title;
-                            row.appendChild(lead_task_title);
-
-                            const typeCell = document.createElement('td');
-                            typeCell.textContent = item.title;
-                            row.appendChild(typeCell);
-
-                            const notesCell = document.createElement('td');
-                            notesCell.innerHTML = item.notes;
-                            row.appendChild(notesCell);
-
-                            const related = document.createElement('td');
-                            related.innerHTML = lead_ref;
-                            row.appendChild(related);
-
-                            const create_time = document.createElement('td');
-                            create_time.innerHTML = created_at;
-                            row.appendChild(create_time);
-
-                            const created_by = document.createElement('td');
-                            created_by.innerHTML = '<?php echo Auth::user()->name; ?>';
-                            row.appendChild(created_by);
-
-                            const visibilityCell = document.createElement('td');
-                            if (item.customer_visibility == 0) {
-                                visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
-                            } else if (item.customer_visibility == 1) {
-                                visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
-                            }
-                            row.appendChild(visibilityCell);
-
-                            const idCell = document.createElement('td');
-                            idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
-                            row.appendChild(idCell);
-
-                            // Append the row to the table body
-                            tableBody.appendChild(row);
-                        });
-                    }
-
                     // Call the function to populate the table with the data array
-                    populateTable(response.data);
+                    populateTable(response.data, lead_ref);
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
                 }
             });
 
+        } else if (value == "week") {
+            notShowOnComplete.style.display = "flex";
 
+            SetCSSForButtonInTaskModel(element);
+            $.ajax({
+                url: '{{ route("lead.ajax.getCRMTaskDataWeek") }}',
+                method: 'POST',
+                data: {
+                    lead_id: lead_id
+                },
+                success: function(response) {
+                    console.log(response.data);
+
+                    // Call the function to populate the table with the data array
+                    populateTable(response.data, lead_ref);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        } else if (value == "overdue") {
+            notShowOnComplete.style.display = "flex";
+
+            SetCSSForButtonInTaskModel(element);
+            $.ajax({
+                url: '{{ route("lead.ajax.getCRMTaskDataOverdue") }}',
+                method: 'POST',
+                data: {
+                    lead_id: lead_id
+                },
+                success: function(response) {
+                    console.log(response.data);
+
+                    // Call the function to populate the table with the data array
+                    populateTable(response.data, lead_ref);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        } else if (value == "complete") {
+            notShowOnComplete.style.display = "none";
+
+            SetCSSForButtonInTaskModel(element);
+            $.ajax({
+                url: '{{ route("lead.ajax.getCRMTaskDataComplete") }}',
+                method: 'POST',
+                data: {
+                    lead_id: lead_id
+                },
+                success: function(response) {
+                    console.log(response.data);
+
+                    // Call the function to populate the table with the data array
+                    populateTable(response.data, lead_ref);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        } else if (value == "recurring") {
+            notShowOnComplete.style.display = "flex";
+
+            SetCSSForButtonInTaskModel(element);
+            $.ajax({
+                url: '{{ route("lead.ajax.getCRMTaskDataRecurring") }}',
+                method: 'POST',
+                data: {
+                    lead_id: lead_id
+                },
+                success: function(response) {
+                    console.log(response.data);
+
+                    // Call the function to populate the table with the data array
+                    populateTable(response.data, lead_ref);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         }
     }
 
@@ -2051,6 +2145,10 @@
                         // Create a new row
                         const row = document.createElement('tr');
 
+                        const listCell = document.createElement('td');
+                        listCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="summary"><i class="fa fa-list-ul" title="Call"></i></a>`;
+                        row.appendChild(listCell);
+
                         const created_at = moment(item.created_at).format('DD/MM/YYYY HH:mm');
                         const date = moment(item.start_date, 'YYYY-MM-DD').format('DD/MM/YYYY');
                         const time = moment(item.start_time, 'HH:mm:ss').format('HH:mm');
@@ -2101,7 +2199,7 @@
                         row.appendChild(visibilityCell);
 
                         const idCell = document.createElement('td');
-                        idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
+                        idCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="edit"><i class="fa fa-edit"></i></a> <i class="fa fa-times"></i>`;
                         row.appendChild(idCell);
 
                         // Append the row to the table body
@@ -2177,10 +2275,6 @@
                         }
                         row.appendChild(visibilityCell);
 
-                        // const idCell = document.createElement('td');
-                        // idCell.innerHTML = '<i class="fa fa-phone"></i>' + " " + '<i class="fa fa-envelope"></i>' + " " + '<i class="fa fa-list-ul"></i>' + " " + '<i class="fa fa-file"></i>' + " " + '<i class="fa fa-exclamation-triangle"></i>';
-                        // row.appendChild(idCell);
-
                         // Append the row to the table body
                         tableBody.appendChild(row);
                     });
@@ -2232,6 +2326,31 @@
         });
     }
 
+    function getUserList(){
+
+        $.ajax({
+            url: '{{ route("lead.ajax.getUserList") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log(response.data);
+                const selectElement = document.getElementById('getUserList');
+
+                selectElement.innerHTML = '';
+
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.name;
+                    selectElement.appendChild(option);
+                });
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
     function getCRMTypeData() {
         $.ajax({
             url: '{{ route("lead.ajax.getCRMTypeData") }}',
@@ -2274,7 +2393,38 @@
         });
     }
 
+    function openModal(type, id) {
+        console.log(id);
+        getLeadTaskType();
+
+        if(id != null){
+
+            $.ajax({
+                url: '{{ route("lead.ajax.getLeadDataWithRecurrence") }}',
+                method: 'POST',
+                data: {id: id},
+                success: function(response) {
+                    alert(response.data);
+                   
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        if(type == "summary" ){
+            $('.modal-title').text('Summary');
+        } else if (type == "add"){
+            $('.modal-title').text('New Task');
+        } else if(type == "edit"){
+            $('.modal-title').text('Edit Task');
+        }
+        $('#secondModal').modal('show');
+    }
+
     $(document).ready(function() {
+
         document.getElementById('inlineRadio1').checked = true;
         $.ajaxSetup({
             headers: {
@@ -2437,8 +2587,6 @@
             addCRMTypes(formData, 4);
         });
 
-
-
         // Ajax Call for saving CRM section Type
         $('#saveCRMTypes').on('click', function() {
             var formData = $('#crm_section_type_form').serialize();
@@ -2456,8 +2604,6 @@
                 }
             });
         });
-
-
 
         // Ajax for Add Task Type
         $('#saveTaskType').on('click', function() {
@@ -2538,6 +2684,30 @@
             });
         });
 
+        $('#getUserList').on('click', function() {
+            getUserList();
+        });
+        
+
+        // Using event delegation to listen for clicks on the dynamically created .openAddNewTaskModel button
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.closest('.openAddNewTaskModel')) {
+                e.preventDefault();
+
+                const button = e.target.closest('.openAddNewTaskModel');
+                const taskId = button.getAttribute('data-id');
+                const tasktype = button.getAttribute('data-type');
+                console.log(taskId);
+                if (tasktype == "edit") {
+                    openModal("edit", taskId);
+                } else {
+                    openModal("summary", taskId);
+                }
+            }
+        });
+
+
+
 
         // Calls model open and close 
         const openCallsModel = document.getElementById('openCallsModel');
@@ -2599,14 +2769,13 @@
         }
         // // CRM Section Type ADD model in notes Js End for model  show
 
-
         const mainCheckbox = document.getElementById('yeson');
         const optionsDiv = document.getElementById('optionsDiv');
         // Open the second modal without hiding the first one
         $('#openSecondModal').on('click', function() {
-            getLeadTaskType();
             optionsDiv.style.display = 'none';
-            $('#secondModal').modal('show');
+            openModal("add", id = null);
+            // $('#secondModal').modal('show');
         });
 
         // Open the third modal without hiding the first and second ones
@@ -2844,8 +3013,6 @@
         .catch(error => {
             console.error(error);
         });
-
-
 
     ClassicEditor
         .create(document.querySelector('#NotesEditor'), {
