@@ -8,6 +8,7 @@ use App\User;
 use App\Lead;
 use Illuminate\Support\Facades\Auth;
 use App\Customer;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\LeadRejectType;
@@ -28,7 +29,8 @@ use App\Models\CRMLeadNotes;
 use App\Models\CRMLeadComplaint;
 use App\Models\CRMLeadTask;
 use App\Models\CRMSection;
-use Carbon\Carbon;
+use App\Models\CRMLeadTaskReccurence;
+use App\Models\Week;
 
 class LeadController extends Controller
 {
@@ -42,9 +44,8 @@ class LeadController extends Controller
         $leadTask = LeadTaskType::getLeadTaskType();
         $customers = Customer::getCustomerWithLeads($lastSegment, Auth::user()->home_id);
         $leadRejectTypes = LeadRejectType::getLeadRejectType();
-        // dd($customers);
-
-        return view('frontEnd.salesAndFinance.lead.leads', compact('customers', 'page', 'lastSegment', 'users', 'leadTask', 'leadRejectTypes'));
+        $weeks = Week::getWeeklist();
+        return view('frontEnd.salesAndFinance.lead.leads', compact('customers', 'page', 'lastSegment', 'users', 'leadTask', 'leadRejectTypes', 'weeks'));
     }
     public function create()
     {
@@ -133,9 +134,34 @@ class LeadController extends Controller
         $lead_notes_data = LeadNote::getLeadNoteFromleadNoteType($id);
         $lead_task_open =  LeadTask::getLeadTaskTypeUser($lead->lead_ref, 0);
         $lead_task_close =  LeadTask::getLeadTaskTypeUser($lead->lead_ref, 1);
-        // dd($lead_task_close);
         $lead_attachment = LeadAttachment::getLeadAttachments($id);
         return view('frontEnd.salesAndFinance.lead.lead_form', compact('lead', 'users', 'page', 'sources', 'status', 'notes_type', 'lead_notes_data', 'leadTask', 'lead_task_open', 'lead_task_close', 'attachment_type', 'lead_attachment'));
+    }
+
+    public function getUserList(){
+        $users = User::getHomeUsers(Auth::user()->home_id);
+        if($users){
+            return response()->json(['success' => true, 'data' => $users]);
+        } else {
+            return response()->json(['success' => false, 'Data' => 'No Data']);
+        }
+    }
+
+    public function getLeadDataWithRecurrence(Request $request){
+        $data = CRMLeadTask::getLeadDataWithRecurrence($request->id);
+        foreach($data as $value){
+            if($value->is_recurring === true ){
+                $recurrence = CRMLeadTaskReccurence::getRecurrenceDataFromTaskType($value->id);
+                $arrayRecord[] = array_merge($data, $recurrence);
+            } else {
+                $arrayRecord[] = $value;
+            }
+        }
+        if($arrayRecord){
+        return response()->json(['success' => true, 'data' => $arrayRecord]);
+        } else {
+            return response()->json(['success' => false, 'Data' => 'No Data']);
+        }
     }
 
     // Lead Note Types start
@@ -198,6 +224,7 @@ class LeadController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
         LeadTask::updateOrCreate(['id' => $request->lead_task_id], $request->all());
+
         if (isset($request->lead_task_id)) {
             return response()->json(['success' => true, 'message' => 'Record updated successfully!']);
         } else {
@@ -207,7 +234,7 @@ class LeadController extends Controller
     public function lead_task_delete($taskId, $leadId)
     {
         if (LeadTask::deleteLeadTask($taskId)) {
-            return redirect()->route('lead.edit', ['id' => $leadId])->with('success', 'Lead Taks deleted successfully');
+            return redirect()->route('lead.edit', ['id' => $leadId])->with('success', 'Lead Task deleted successfully');
         } else {
             return redirect()->route('lead.edit', ['id' => $leadId])->with('fails', 'Error in Lead task deletion');
         }
@@ -585,7 +612,7 @@ class LeadController extends Controller
             $email = $request->has('email') ? 1 : 0;
         }
 
-        if(!isset($notification) || !isset($sms) || !isset($email)){
+        if(!isset($notification) || !isset($sms) || !isset($email)){ 
             $notification = $sms = $email = null;
         }
 
@@ -830,7 +857,11 @@ class LeadController extends Controller
         ];
 
         // Update the record if it exists, otherwise create a new one
-        CRMLeadTask::updateOrCreate(['id' => $request->crm_lead_task_id], $values);
+        $CRMleadTask = CRMLeadTask::updateOrCreate(['id' => $request->crm_lead_task_id], $values);
+
+        $data = CRMLeadTaskReccurence::create(array_merge($request->all(), ['crm_lead_task_id' =>  $CRMleadTask->id] ));
+
+        Log::info('User logged in', ['user_id' => $data]);
 
         if (isset($request->crm_lead_notes_id)) {
             return response()->json(['message' => 'Record updated successfully!']);
@@ -848,6 +879,51 @@ class LeadController extends Controller
         }
     }
 
+    public function getCRMTaskDataToday(Request $request){
+        $data = CRMLeadTask::getCRMTaskDataToday($request->lead_id, Auth::user()->home_id);
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }
+
+    public function getCRMTaskDataWeek(Request $request){
+        $data = CRMLeadTask::getCRMTaskDataWeek($request->lead_id, Auth::user()->home_id);
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }
+
+    public function getCRMTaskDataOverdue(Request $request){
+        $data = CRMLeadTask::getCRMTaskDataOverdue($request->lead_id, Auth::user()->home_id);
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }
+
+    public function getCRMTaskDataComplete(Request $request){
+        $data = CRMLeadTask::getCRMTaskDataComplete($request->lead_id, Auth::user()->home_id);
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }
+
+    public function getCRMTaskDataRecurring(Request $request){
+        $data = CRMLeadTask::getCRMTaskDataRecurring($request->lead_id, Auth::user()->home_id);
+        if($data){
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }    
+    
     public function getCRMAllData(Request $request){
         $data['0'] = CRMLeadTask::getCRMLeadTaskData($request->lead_id, Auth::user()->home_id);
         $data['1'] = CRMLeadComplaint::getCRMLeadComplaintData($request->lead_id, Auth::user()->home_id);
