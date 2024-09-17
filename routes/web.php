@@ -250,6 +250,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/appointment_rejection_cat_list','App\Http\Controllers\jobs\JobController@appointment_rejection_cat_list');
 	Route::post('/appointment_rejection_cat_save','App\Http\Controllers\jobs\JobController@appointment_rejection_cat_save');
 	Route::post('/job_appointment_rejection_edit_form','App\Http\Controllers\jobs\JobController@job_appointment_rejection_edit_form');
+	Route::post('/save_job_title','App\Http\Controllers\jobs\JobController@save_job_title');
+	Route::post('/save_region','App\Http\Controllers\jobs\JobController@save_region');
 	// Customer
 	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit_save');
@@ -260,6 +262,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/save_login','App\Http\Controllers\frontEnd\CustomerController@save_login');
 	Route::get('/customers','App\Http\Controllers\frontEnd\CustomerController@active_customer');
 	Route::post('/status_change','App\Http\Controllers\ActionController@status_change');
+	Route::post('/save_customer_type','App\Http\Controllers\frontEnd\CustomerController@save_customer_type');
 	// end here
 
 
