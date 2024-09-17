@@ -45,6 +45,7 @@ class JobController extends Controller
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')->join('product_categories as cat','cat.id','=','pr.cat_id')->get();
         $data['job_recurring']=Job_recurring::where('status',1)->get();
         $data['quote_type']=QuoteType::where('status',1)->get();
+        // echo "<pre>";print_r($data['product_details']);die;
         // for listing
         $data['job_type_list']=Job_type::whereNot('status',2)->get();
         $data['work_flow_list']=Work_flow::whereNot('status',2)->get();
