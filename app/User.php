@@ -31,7 +31,7 @@ class User extends Authenticatable
     ];
 
     public static function getHomeUsers($home_id){
-        return User::where('home_id', $home_id)->where('is_deleted', 0)->get();
+        return User::where('home_id', $home_id)->select('id', 'name')->where('is_deleted', 0)->get();
     } 
 
     public function access_level() {
