@@ -15,8 +15,11 @@ use App\Models\Country;
 use App\Models\Job_type;
 use App\Models\Work_flow;
 use App\Models\QuoteType;
+use App\Models\Job_title;
 use App\Models\Job_recurring;
+use App\Models\Customer_type;
 use App\Models\Product_category;
+use App\Models\Constructor_region;
 use App\Models\Quote_product_detail;
 use App\Models\Workflow_notification;
 use App\Models\Recurrence_pattern_rule;
@@ -42,6 +45,7 @@ class JobController extends Controller
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')->join('product_categories as cat','cat.id','=','pr.cat_id')->get();
         $data['job_recurring']=Job_recurring::where('status',1)->get();
         $data['quote_type']=QuoteType::where('status',1)->get();
+        // echo "<pre>";print_r($data['product_details']);die;
         // for listing
         $data['job_type_list']=Job_type::whereNot('status',2)->get();
         $data['work_flow_list']=Work_flow::whereNot('status',2)->get();
@@ -239,7 +243,10 @@ class JobController extends Controller
         $data['home_id']=$home_id;
         $data['users']=User::where('is_deleted',0)->get();
         $data['appointment_type']=Construction_job_appointment_type::where('home_id',$home_id)->get();
-        // echo "<pre>";print_r($data['users']);die;
+        $data['customer_types']=Customer_type::where(['home_id'=>$home_id,'status'=>1])->get();
+        $data['job_title']=Job_title::where(['home_id'=>$home_id,'status'=>1])->get();
+        $data['region']=Constructor_region::where(['home_id'=>$home_id,'status'=>1])->get();
+        // echo "<pre>";print_r($data['customer_types']);die;
         return view('frontEnd.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
@@ -556,6 +563,49 @@ class JobController extends Controller
         $data=construction_appointment_rejection_category::find($request->id);
         return response()->json($data);
     }
+    public function save_job_title(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $insert='';
+        $table=new job_title;
+        try {
+            $insert=$table::updateOrCreate(
+                ['id' => $request->id ?? null],
+                $request->all(),
+            );
+        } catch (\Exception $e) {
+            // return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+            $error=$e->getMessage();
+        }
+        if($insert){
+            if($insert->status ==1){
+                echo '<option value="'.$insert->id.'">'.$insert->name.'</option>';
+            }
+        }else{
+            echo "error";
+        }
+    }
+    public function save_region(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $insert='';
+        $table=new Constructor_region;
+        try {
+            $insert=$table::updateOrCreate(
+                ['id' => $request->id ?? null],
+                $request->all(),
+            );
+        } catch (\Exception $e) {
+            // return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+            $error=$e->getMessage();
+        }
+        if($insert){
+            if($insert->status ==1){
+                echo '<option value="'.$insert->id.'">'.$insert->name.'</option>';
+            }
+        }else{
+            echo "error";
+        }
+    }
+
     public function job_save_all(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $form_id=$request->form_id;

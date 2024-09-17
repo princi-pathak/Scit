@@ -131,7 +131,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <a href="#!" class="formicon" id="openPopupButton"><i
+                                            <a href="#!" class="formicon" id="" onclick="get_modal(4)"><i
                                                     class="fa-solid fa-square-plus"></i></a>
                                         </div>
                                     </div>
@@ -145,7 +145,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <a href="#!" class="formicon" id="openPopupButton"><i
+                                            <a href="#!" class="formicon" id="" onclick="get_modal(5)"><i
                                                     class="fa-solid fa-square-plus"></i></a>
                                         </div>
                                     </div>
@@ -205,7 +205,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row field">
-                                        <label for="inputCounty" class="col-sm-3 col-form-label">County</label>
+                                        <label for="inputCounty" class="col-sm-3 col-form-label">Country</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control editInput" id="country" name="country" required>
                                         </div>
@@ -349,7 +349,7 @@
                                             <select class="form-control editInput selectOptions" id="site_country_id" name="site_country_id" required>
                                                 <option selected disabled>Select Country</option>
                                                 <?php foreach ($country as $country_v) { ?>
-                                                    <option value="{{$country_v->id}}" class="country_code">{{$country_v->name}}</option>
+                                                    <option value="{{$country_v->id}}">{{$country_v->name}}</option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -1417,37 +1417,37 @@
                                         <form action="" class="customerForm">
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Customer
-                                                    Name*</label>
+                                                    Name <span class="red-text">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputName" value="John Smith">
+                                                        id="customer_name">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="inputCustomer"
                                                     class="col-sm-3 col-form-label">Customer
-                                                    Type*</label>
+                                                    Type <span class="red-text">*</span></label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
-                                                        <option>Genrale Customer
-                                                        </option>
-                                                        <option>Analytical Customer
-                                                        </option>
+                                                    <select class="form-control editInput selectOptions get_customer_result"
+                                                        id="customer_type_id">
+                                                        <option selected disabled>None</option>
+                                                        <?php foreach($customer_types as $cust_type){?>
+                                                            <option value="{{$cust_type->id}}">{{$cust_type->name}}</option>
+                                                        <?php }?>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <a href="#!" class="formicon"><i
+                                                    <a href="#!" class="formicon" onclick="get_modal(1)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div><!-- End off Customer -->
 
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Conatact
-                                                    Name*</label>
+                                                    Name <span class="red-text">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputName" value="John Smith">
+                                                        id="customer_contact_name">
                                                 </div>
                                             </div>
 
@@ -1455,15 +1455,17 @@
                                                 <label for="inputProject" class="col-sm-3 col-form-label">Job
                                                     Title (Position)</label>
                                                 <div class="col-sm-4">
-                                                    <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
-                                                        <option>Please Select
+                                                    <select class="form-control editInput selectOptions get_job_title_result"
+                                                        id="customer_job_titile_id">
+                                                        <option selected disabled>Please Select
                                                         </option>
-                                                        <option>Supervisor</option>
+                                                        <?php foreach($job_title as $val_title){?>
+                                                            <option value="{{$val_title->id}}">{{$val_title->name}}</option>
+                                                            <?php }?>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon"><i
+                                                    <a href="#!" class="formicon" onclick="get_modal(2)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
@@ -1473,7 +1475,7 @@
                                                     class="col-sm-3 col-form-label">Email</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputEmail" value="roxy.scits@gmail.com">
+                                                        id="customer_email">
                                                 </div>
                                             </div>
 
@@ -1482,7 +1484,7 @@
                                                     class="col-sm-3 col-form-label">Telephone</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputTelephone" value="14000883788">
+                                                        id="customer_phone">
                                                 </div>
                                             </div>
 
@@ -1491,7 +1493,7 @@
                                                     class="col-sm-3 col-form-label">Mobile</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputMobile" value="Type No.">
+                                                        id="customer_mobile">
                                                 </div>
                                             </div>
 
@@ -1500,7 +1502,7 @@
                                                     class="col-sm-3 col-form-label">Fax</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputCity" value="">
+                                                        id="customer_fax">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -1508,7 +1510,7 @@
                                                     class="col-sm-3 col-form-label">Website</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputCity" value="Port Elizabeth">
+                                                        id="customer_website">
                                                 </div>
                                             </div>
 
@@ -1518,17 +1520,12 @@
                                                     Terms</label>
                                                 <div class="col-sm-7">
                                                     <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
-                                                        <option>Defoult (21)
+                                                        id="customer_payment_terms">
+                                                        <option value="21">Defoult (21)
                                                         </option>
-                                                        <option>0</option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                        <option>6</option>
-                                                        <option>7</option>
+                                                        <?php for($i=1;$i<21;$i++){?>
+                                                        <option value="{{$i}}">{{$i}}</option>
+                                                        <?php }?>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
@@ -1541,21 +1538,20 @@
                                             <div class="mb-2 row">
                                                 <label for="inputProject"
                                                     class="col-sm-3 col-form-label">Currency</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
-                                                        <option>British Pound - GBP
-                                                        </option>
-                                                        <option>0</option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                        <option>6</option>
-                                                        <option>7</option>
-                                                    </select>
-                                                </div>
+                                                    <div class="col-sm-9">
+                                                    <!-- British Pound - GBP -->
+                                                        <select class="form-control editInput selectOptions" id="customer_currency_id">
+                                                            <option selected disabled>Please Select</option>
+                                                            <?php foreach($country as $countryItem): ?>
+                                                                <?php foreach($countryItem->currencies as $currency): ?>
+                                                                    <option value="<?php echo $currency->currency_code; ?>">
+                                                                        <?php echo $countryItem->name; ?> (<?php echo $currency->currency_code; ?>)
+                                                                    </option>
+                                                                <?php endforeach; ?>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
+                                                
                                             </div>
 
 
@@ -1564,40 +1560,44 @@
                                                     Limit</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputCounty" value="$: 0">
+                                                        id="customer_credit_limit">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="inputPincode"
                                                     class="col-sm-3 col-form-label">Discount</label>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputPincode" value="6001">
+                                                        id="customer_discount">
                                                 </div>
-                                                <div class="col-sm-5">
-                                                    <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
-                                                        <option>Persontage</option>
-                                                        <option>Flat</option>
-                                                        <option>1</option>
-                                                    </select>
-                                                </div>
+                                                
                                             </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputProject" class="col-sm-3 col-form-label">Discount Type</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control editInput selectOptions" id="customer_percentage">
+                                                            <option selected disabled>Please Select</option>
+                                                            <option value="1">Persontage</option>
+                                                            <option value="2">Flat</option>
+                                                        </select>
+                                                    </div>
+                                            </div>
+                                            
+                                            
                                             <div class="mb-2 row">
                                                 <label for="inputCountry" class="col-sm-3 col-form-label">VAT
                                                     / Tax No.</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputCountry" value="">
+                                                        id="customer_vat">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="inputProject"
-                                                    class="col-sm-3 col-form-label">Default
-                                                    Catalogue</label>
+                                                    class="col-sm-3 col-form-label">Default Catalogue</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
+                                                        id="customer_catalogue">
                                                         <option>None</option>
                                                         <option>ABCD</option>
                                                     </select>
@@ -1608,9 +1608,9 @@
                                                     class="col-sm-3 col-form-label">Status</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
-                                                        <option>Active</option>
-                                                        <option>Inactive</option>
+                                                        id="customer_status">
+                                                        <option value='1'>Active</option>
+                                                        <option value='0'>Inactive</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1625,21 +1625,23 @@
                                                 <label for="inputProject"
                                                     class="col-sm-3 col-form-label">Region</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
+                                                    <select class="form-control editInput selectOptions get_region_result"
+                                                        id="customer_region">
                                                         <option>None</option>
-                                                        <option>Default</option>
+                                                        <?php foreach($region as $region_val){?>
+                                                            <option value="{{$region_val->id}}">{{$region_val->name}}</option>
+                                                        <?php }?>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" id="openPopupButton"><i
+                                                    <a href="#!" class="formicon" id="openPopupButton" onclick="get_modal(3)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
 
 
                                                 <!--Start Region Popup -->
 
-                                                <div id="popup" class="popup">
+                                                <!-- <div id="popup" class="popup">
                                                     <div class="popup-content">
                                                         <div class="popupTitle">
                                                             <span class="">Add
@@ -1685,7 +1687,7 @@
                                                         </div>
                                                     </div>
 
-                                                </div>
+                                                </div> -->
 
                                                 <!-- End off region Popup -->
 
@@ -1697,8 +1699,7 @@
                                                 <label for="inputAddress"
                                                     class="col-sm-3 col-form-label">Address</label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" rows="3"
-                                                        placeholder="75 Cope Road Mall Park USA"></textarea>
+                                                    <textarea class="form-control textareaInput" id="cuatomer_address" rows="3"></textarea>
                                                 </div>
                                             </div>
 
@@ -1707,7 +1708,7 @@
                                                     class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputCity" value="Port Elizabeth">
+                                                        id="customer_city">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -1715,7 +1716,7 @@
                                                     class="col-sm-3 col-form-label">County</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputCounty" placeholder="Site County">
+                                                        id="customer_country_input">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -1723,7 +1724,7 @@
                                                     class="col-sm-3 col-form-label">Pincode</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputPincode" value="6001">
+                                                        id="customer_pincode">
                                                 </div>
                                             </div>
 
@@ -1732,11 +1733,11 @@
                                                     class="col-sm-3 col-form-label">Country</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
-                                                        <option>United kingdom (+44)
-                                                        </option>
-                                                        <option>United kingdom (+44)
-                                                        </option>
+                                                        id="customer_country_id">
+                                                        <option selected disabled>Select Coutry</option>
+                                                        <?php foreach($country as $countryval){?>
+                                                        <option value="{{$countryval->code}}">{{$countryval->name}} ({{$countryval->code}})</option>
+                                                        <?php }?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1745,8 +1746,7 @@
                                                 <label for="inputAddress" class="col-sm-3 col-form-label">Site
                                                     Notes</label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" rows="3"
-                                                        placeholder="Site Notes"></textarea>
+                                                    <textarea class="form-control textareaInput" rows="3" id="customer_site_note"></textarea>
                                                 </div>
                                             </div>
 
@@ -1755,7 +1755,7 @@
                                                     Ref.</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="inputName" value="">
+                                                        id="customer_sage_ref" >
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -1764,16 +1764,12 @@
                                                 <div class="col-sm-9">
 
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="inlineRadioOptions" id="inlineRadio1"
-                                                            value="option1" checked>
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="customer_yes" checked>
                                                         <label class="form-check-label checkboxtext"
                                                             for="inlineRadio1">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="inlineRadioOptions" id="inlineRadio2"
-                                                            value="option2">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="custoemr_no">
                                                         <label class="form-check-label checkboxtext"
                                                             for="inlineRadio2">No</label>
                                                     </div>
@@ -1784,9 +1780,7 @@
                                                 <label for="inputAddress"
                                                     class="col-sm-3 col-form-label">Notes</label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput"
-                                                        rows="3"
-                                                        placeholder="Site Notes"></textarea>
+                                                    <textarea class="form-control textareaInput" rows="3" id="customer_note"></textarea>
                                                 </div>
                                             </div>
 
@@ -1798,8 +1792,8 @@
                         </div>
                         <div class="modal-footer customer_Form_Popup">
 
-                            <button type="button" class="profileDrop">Save</button>
-                            <button type="button" class="profileDrop">Save &
+                            <button type="button" class="profileDrop" onclick="save_customer()">Save</button>
+                            <button type="button" class="profileDrop" onclick="save_customerClose()">Save &
                                 Close</button>
                             <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                         </div>
@@ -1851,6 +1845,182 @@
                 </div>
             </div>
             <!-- end here -->
+<!-- Customer type add Modal -->
+<div class="modal fade" id="cutomer_type_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thirdModalLabel">Add Customer Type</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="customer_type_form">
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer Type <span class="red-text">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" name="customer_type_name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Type">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-9">
+                                <select id="customer_type_status" name="customer_type_status" class="form-control editInput">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pageTitleBtn">
+                            <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_customer_type()"> Save</a>
+                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end here -->
+     <!-- Job title Modal start -->
+     <div class="modal fade" id="job_title_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thirdModalLabel">Job Title - Add</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="job_title_form">
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="red-text">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" name="job_title_name" class="form-control editInput" id="job_title_name" value="" placeholder="Job Title">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-9">
+                                <select id="job_title_status" name="job_title_status" class="form-control editInput">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pageTitleBtn">
+                            <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_job_title()"> Save</a>
+                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- end here -->
+      <!-- Region Modal start here -->
+      <div class="modal fade" id="region_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thirdModalLabel">Add Region</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="region_form">
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="red-text">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" name="region_name" class="form-control editInput" id="region_name" value="" placeholder="Region">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-9">
+                                <select id="region_status" name="region_status" class="form-control editInput">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pageTitleBtn">
+                            <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_region()"> Save</a>
+                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+      <!-- end here -->
+       <!-- Project Modal start here -->
+       <div class="modal fade" id="project_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thirdModalLabel">Add Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="project_form">
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Ref</label>
+                            <div class="col-sm-9">
+                                <p>Project Ref ###</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer</label>
+                            <div class="col-sm-9">
+                            <p id="project_customer_name">Ram</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Name <span class="red-text">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control editInput" value="" id="project_name">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Start Date <span class="red-text">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control editInput"  id="project_start_date">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">End Date <span class="red-text">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control editInput" id="project_end_date">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Value </label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control editInput" id="project_end_date">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-9">
+                                <textarea name="project_description" id="project_description" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-9">
+                                <select id="project_status" name="project_status" class="form-control editInput">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pageTitleBtn">
+                            <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_project()"> Save</a>
+                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+       <!-- end here -->
 
         </div>
     </div>
@@ -2333,7 +2503,177 @@
         }, 300); // Ensure the popup is hidden after the transition ends
     });
 </script>
+<!-- Modal code -->
+ <script>
+    function get_modal(modal){  
+        alert(modal)
+        var customer_select_check=$("#customer_id").val();
+        alert(customer_select_check)
+        if(customer_select_check == null && (modal == 4 || modal == 5)){
+            alert("Please select customer");
+            return false;
+        }else{
+            if(modal == 1){
+            $("#customer_type_form")[0].reset();
+            $("#cutomer_type_modal").modal('show');
+            }else if(modal == 2){
+                $("#job_title_form")[0].reset();
+                $("#job_title_modal").modal('show');
+            }else if(modal == 3){
+                $("#region_form")[0].reset();
+                $("#region_modal").modal('show');
+            }else if(modal == 4){
+                $("#project_form")[0].reset();
+                $("#project_modal").modal('show');
+            }else if(modal == 5){
 
+            }
+        }
+        
+    }
+ </script>
 
+<!-- end here -->
+<script>
+    function save_customer_type(){
+       var token='<?php echo csrf_token();?>'
+       var name=$("#customer_type_name").val();
+       var status=$("#customer_type_status").val();
+       var home_id=$("#home_id").val();
+       if(name == ''){
+        $("#customer_type_name").addClass('invalid-input');
+        return false;
+       }else {
+            $.ajax({
+                type: "POST",
+                url: "{{url('/save_customer_type')}}",
+                data: {name:name,status:status,home_id:home_id,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if($.trim(data) == 'error'){
+                        alert("Something went wrong");
+                        return false;
+                    }else{
+                        $("#cutomer_type_modal").modal('hide');
+                        $('.get_customer_result').append(data);
+                        // window.location.reload();
+                    }
+                    $("#cutomer_type_modal").modal('hide');
+                    
+                }
+            });
+       }
+       
+    }
+    function save_job_title(){
+        var token='<?php echo csrf_token();?>'
+        var name=$("#job_title_name").val();
+        var status=$("#job_title_status").val();
+        var home_id=$("#home_id").val();
+        if(name == ''){
+        $("#job_title_name").addClass('invalid-input');
+        return false;
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "{{url('/save_job_title')}}",
+                data: {name:name,status:status,home_id:home_id,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if($.trim(data) == 'error'){
+                        alert("Something went wrong");
+                        return false;
+                    }else{
+                        $("#job_title_modal").modal('hide');
+                        $('.get_job_title_result').append(data);
+                        // window.location.reload();
+                    }
+                    $("#job_title_modal").modal('hide');
+                }
+            });
+        }
+    }
+    function save_region(){
+        var token='<?php echo csrf_token();?>'
+        var name=$("#region_name").val();
+        var status=$("#region_status").val();
+        var home_id=$("#home_id").val();
+        if(name == ''){
+        $("#region_name").addClass('invalid-input');
+        return false;
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "{{url('/save_region')}}",
+                data: {name:name,status:status,home_id:home_id,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    // return false;
+                    if($.trim(data) == 'error'){
+                        alert("Something went wrong");
+                        return false;
+                    }else{
+                        $("#region_modal").modal('hide');
+                        $('.get_region_result').append(data);
+                        // window.location.reload();
+                    }
+                    $("#region_modal").modal('hide');
+                }
+            });
+        }
+    }
+    function save_customerClose(){
+        save_customer();
+        // $("#customerPop").modal('hide');
+
+    }
+    function save_customer(){
+        var token='<?php echo csrf_token();?>'
+        var name=$("#customer_name").val();
+        var home_id=$("#home_id").val();
+        var customer_type_id=$("#customer_type_id").val();
+        var contact_name=$("#customer_contact_name").val();
+        var job_title=$("#customer_job_titile_id").val();
+        var email=$("#customer_email").val();
+        var telephone=$("#customer_phone").val();
+        var mobile=$("#customer_mobile").val();
+        var fax=$("#customer_fax").val();
+        var website=$("#customer_website").val();
+        var catalogue_id=$("#customer_catalogue").val();
+        var region=$("#customer_region").val();
+        var address=$("#cuatomer_address").val();
+        var city=$("#customer_city").val();
+        var country=$("#customer_country_input").val();
+        var postal_code=$("#customer_pincode").val();
+        var country_code=$("#customer_country_id").val();
+        var currency=$("#customer_currency_id").val();
+        var credit_limit=$("#customer_credit_limit").val();
+        var discount=$("#customer_discount").val();
+        var discount_type=$("#customer_percentage").val();
+        var saga_ref=$("#customer_sage_ref").val();
+        
+        var site_notes=$("#customer_site_note").val();
+        var vat_tax_no=$("#customer_vat").val();
+        var payment_terms=$("#customer_payment_terms").val();
+        var assigned_product=0;
+        if($("#customer_yes").is(':checked')){
+            assigned_product=1;
+        }
+        var notes=$("#customer_note").val();
+        var is_converted=1;
+        var status=$("#customer_status").val();
+
+        $.ajax({
+            type: "POST",
+            url: "{{url('/customer_add_edit_save')}}",
+            data: {status:status,is_converted:is_converted,notes:notes,assigned_product:assigned_product,payment_terms:payment_terms,vat_tax_no:vat_tax_no,site_notes:site_notes,saga_ref:saga_ref,discount_type:discount_type,discount:discount,credit_limit:credit_limit,currency:currency,country_code:country_code,postal_code:postal_code,country:country,city:city,address:address,region:region,catalogue_id:catalogue_id,website:website,fax:fax,mobile:mobile,telephone:telephone,email:email,name:name,status:status,home_id:home_id,customer_type_id:customer_type_id,contact_name:contact_name,job_title:job_title,_token:token},
+            success: function(data) {
+                console.log(data);
+                window.location.reload();
+            }
+        });
+
+    }
+</script>
 
 @include('frontEnd.jobs.layout.footer')

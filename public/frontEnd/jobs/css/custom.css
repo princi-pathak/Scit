@@ -121,6 +121,10 @@ h6 {
 }
 .menubaar a.dropdown-item i{
   line-height: 21px;
+  padding-right: 10px;
+}
+li.nav-item1 ul.dropdown-menu1 li a.dropdown-item {
+  display: block;
 }
 .menubaar .dropdown-item.active,
 .menubaar .dropdown-item:active {

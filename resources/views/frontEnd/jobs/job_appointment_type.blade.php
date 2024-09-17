@@ -131,14 +131,14 @@
                                                     <div class="mb-2 row">
                                                         <label for="inputName" class="col-sm-3 col-form-label">Default Duration</label>
                                                         <div class="col-sm-9">
-                                                        <select name="hours" id="hours">
+                                                        <select name="hours" id="hours" class="hours">
                                                                 <option value="01">01</option>
                                                                 <option value="02">02</option>
                                                                 <option value="03">03</option>
                                                                 <option value="04">04</option>
                                                                 <option value="05">05+</option>
                                                             </select>
-                                                            <select name="minutes" id="minutes">
+                                                            <select name="minutes" id="minutes" class="minutes">
                                                                 <?php for($i=0;$i<60;$i++){
                                                                     $time=str_pad($i, 2, '0', STR_PAD_LEFT);?>
                                                                     <option value="{{$time}}"><?php echo $time; ?></option>
@@ -356,12 +356,22 @@
                         url: "{{url('/job_appointment_type_edit_form')}}",
                         data: {id:id,_token:token},
                         success: function(data) {
-                            console.log(data.auth);
+                            console.log(data);
                             // return false;
                             $("#id").val(data.id);
                             $("#name").val(data.name);
                             $("#hours").val(data.default_days);
                             $("#minutes").val(data.default_days);
+                            $(".hours option").each(function() {
+                                if ($(this).val() == data.hours) {
+                                    $(this).prop('selected', true);
+                                }
+                            });
+                            $(".minutes option").each(function() {
+                                if ($(this).val() == data.minute) {
+                                    $(this).prop('selected', true);
+                                }
+                            });
                             if (data.auth == 1) {
                                 document.getElementById('yes').checked = true;
                                 document.getElementById('no').checked = false;
