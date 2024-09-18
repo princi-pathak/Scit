@@ -264,6 +264,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/status_change','App\Http\Controllers\ActionController@status_change');
 	Route::post('/save_customer_type','App\Http\Controllers\frontEnd\CustomerController@save_customer_type');
 	// end here
+	Route::post('/project_save','App\Http\Controllers\jobs\JobController@project_save');
+	Route::post('/contact_save','App\Http\Controllers\jobs\JobController@contact_save');
+	Route::post('/site_save','App\Http\Controllers\jobs\JobController@site_save');
 
 
 	Route::controller(FrontendLeadController::class)->group(function(){
