@@ -239,13 +239,13 @@
                                     <div class="mb-2 row field">
                                         <label for="inputProject" class="col-sm-3 col-form-label">Site</label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" required
+                                            <select class="form-control editInput selectOptions get_site_result" required
                                                 disabled id="site_id" name="site_id">
                                                 <option selected>Default</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <a href="#!" class="formicon" id="openPopupButton"><i
+                                            <a href="#!" class="formicon" id="openPopupButton" onclick="get_modal(6)"><i
                                                     class="fa-solid fa-square-plus"></i></a>
                                         </div>
                                     </div>
@@ -254,8 +254,10 @@
                                         <label for="inputProject" class="col-sm-3 col-form-label">Region</label>
                                         <div class="col-sm-7">
                                             <select class="form-control editInput selectOptions" id="region" name="region" required>
-                                                <option value="1">India</option>
-                                                <option value="2">Canada</option>
+                                                <option selected disabled>Select Region</option>
+                                                <?php foreach($region as $site_region){?>
+                                                    <option value="{{$site_region->id}}">{{$site_region->name}}</option>
+                                                <?php }?>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
@@ -1880,33 +1882,72 @@
         </div>
     </div>
     <!-- end here -->
-     <!-- Job title Modal start -->
-     <div class="modal fade" id="job_title_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+    
+      
+       <!-- Project Modal start here -->
+       <div class="modal fade" id="project_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content add_Customer">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="thirdModalLabel">Job Title - Add</h5>
+                    <h5 class="modal-title" id="thirdModalLabel">Add Project</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="job_title_form">
+                    <form id="project_form">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Ref</label>
                             <div class="col-sm-9">
-                                <input type="text" name="job_title_name" class="form-control editInput" id="job_title_name" value="" placeholder="Job Title">
+                                <p>Project Ref ###</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer</label>
+                            <div class="col-sm-9">
+                            <p id="project_customer_name"></p>
+                            </div>
+                        </div>
+                        <input type="hidden" id="project_customer_id">
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Name <span class="red-text">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control editInput" value="" id="project_name">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Start Date <span class="red-text">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control editInput"  id="project_start_date">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">End Date <span class="red-text">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control editInput" id="project_end_date">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Value </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control editInput" id="project_value">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-9">
+                                <textarea name="project_description" id="project_description" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
                             <div class="col-sm-9">
-                                <select id="job_title_status" name="job_title_status" class="form-control editInput">
+                                <select id="project_status" name="project_status" class="form-control editInput">
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
                             </div>
                         </div>
                         <div class="pageTitleBtn">
-                            <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_job_title()"> Save</a>
+                            <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_project()"> Save</a>
                             <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </form>
@@ -1914,8 +1955,426 @@
             </div>
         </div>
     </div>
-     <!-- end here -->
-      <!-- Region Modal start here -->
+       <!-- end here -->
+        <!-- Contact Modal start here -->
+        <div class="modal fade" id="contact_modal" tabindex="-1" aria-labelledby="customerModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content add_Customer">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="customerModalLabel">Add Customer Contact</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="formDtail">
+                                        <form id="contact_form">
+                                            <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                                <div class="col-sm-9">
+                                                    <p id="contact_customer_name"></p>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="contact_customer_id">
+                                            
+                                            <div class="mb-2 row">
+                                                <label class="col-sm-3 col-form-label">Assign
+                                                    Products</label>
+                                                <div class="col-sm-9">
+
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="contact_radio" id="contact_default_yes">
+                                                        <label class="form-check-label checkboxtext"
+                                                            for="inlineRadio1">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="contact_radio" id="contact_default_no" checked>
+                                                        <label class="form-check-label checkboxtext"
+                                                            for="inlineRadio2">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">Conatact
+                                                    Name <span class="red-text">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_contact_name">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputProject" class="col-sm-3 col-form-label">Job
+                                                    Title (Position)</label>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control editInput selectOptions get_job_title_result"
+                                                        id="contact_job_titile_id">
+                                                        <option selected disabled>Please Select
+                                                        </option>
+                                                        <?php foreach($job_title as $con_val_title){?>
+                                                            <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
+                                                            <?php }?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <a href="#!" class="formicon" onclick="get_modal(2)"><i
+                                                            class="fa-solid fa-square-plus"></i></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputEmail"
+                                                    class="col-sm-3 col-form-label">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_email">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputTelephone"
+                                                    class="col-sm-3 col-form-label">Telephone</label>
+                                                    <div class="col-sm-2">
+                                                    <select class="form-control editInput selectOptions">
+                                                        <option>+444</option>
+                                                        <option>+91</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_phone">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputMobile"
+                                                    class="col-sm-3 col-form-label">Mobile</label>
+                                                    <div class="col-sm-2">
+                                                        <select class="form-control editInput selectOptions">
+                                                            <option>+444</option>
+                                                            <option>+91</option>
+                                                        </select>
+                                                    </div>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_mobile">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputAddress"
+                                                    class="col-sm-3 col-form-label">Fax</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_fax">
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="formDtail">
+                                        <form action="" class="">
+                                        <div class="mb-2 row">
+                                            <label class="col-sm-3 col-form-label">Address Details</label>
+                                            <div class="col-sm-9">
+
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="contact_default_address" onchange="default_address()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputAddress"
+                                                    class="col-sm-3 col-form-label">Address <span class="red-text">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <textarea class="form-control textareaInput" id="contact_address" rows="3"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputCity"
+                                                    class="col-sm-3 col-form-label">City</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_city">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputCounty"
+                                                    class="col-sm-3 col-form-label">County</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_country_input">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputPincode"
+                                                    class="col-sm-3 col-form-label">Pincode</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_pincode">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputCountry"
+                                                    class="col-sm-3 col-form-label">Country</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control editInput selectOptions"
+                                                        id="contact_country_id">
+                                                        <option selected disabled>Select Coutry</option>
+                                                        <?php foreach($country as $countryval){?>
+                                                        <option value="{{$countryval->id}}" class="contact_country_id">{{$countryval->name}} ({{$countryval->code}})</option>
+                                                        <?php }?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div> <!-- End row -->
+
+                        </div>
+                        <div class="modal-footer customer_Form_Popup">
+
+                            <button type="button" class="profileDrop" onclick="save_contact()">Save</button>
+                            <button type="button" class="profileDrop" onclick="save_contactClose()">Save &
+                                Close</button>
+                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- end here -->
+         <!-- Site Modal start here -->
+         <div class="modal fade" id="site_modal" tabindex="-1" aria-labelledby="customerModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content add_Customer">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="customerModalLabel">Add Site Address</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="formDtail">
+                                        <form id="site_form">
+                                            <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                                <div class="col-sm-9">
+                                                    <p id="site_customer_name"></p>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="site_customer_id">
+                                            
+                                            
+
+                                            <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">Site
+                                                    Name <span class="red-text">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="site_name">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">Contact
+                                                    Name <span class="red-text">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="site_contact_name">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputProject" class="col-sm-3 col-form-label">Job
+                                                    Title (Position)</label>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control editInput selectOptions get_job_title_result"
+                                                        id="site_job_titile_id">
+                                                        <option selected disabled>Please Select
+                                                        </option>
+                                                        <?php foreach($job_title as $site_val_title){?>
+                                                            <option value="{{$site_val_title->id}}">{{$site_val_title->name}}</option>
+                                                            <?php }?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <a href="#!" class="formicon" onclick="get_modal(2)"><i
+                                                            class="fa-solid fa-square-plus"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">Company
+                                                    Name</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="site_company_name">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputEmail"
+                                                    class="col-sm-3 col-form-label">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="site_email">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputTelephone"
+                                                    class="col-sm-3 col-form-label">Telephone</label>
+                                                    <div class="col-sm-2">
+                                                    <select class="form-control editInput selectOptions">
+                                                        <option>+444</option>
+                                                        <option>+91</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="site_phone">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputMobile"
+                                                    class="col-sm-3 col-form-label">Mobile</label>
+                                                    <div class="col-sm-2">
+                                                        <select class="form-control editInput selectOptions">
+                                                            <option>+444</option>
+                                                            <option>+91</option>
+                                                        </select>
+                                                    </div>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="site_mobile">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputAddress"
+                                                    class="col-sm-3 col-form-label">Fax</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="site_fax">
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="formDtail">
+                                        <form action="" class="">
+                                            <div class="mb-2 row">
+                                                <label for="inputProject"
+                                                    class="col-sm-3 col-form-label">Region</label>
+                                                <div class="col-sm-7">
+                                                    <select class="form-control editInput selectOptions get_region_result"
+                                                        id="site_region">
+                                                        <option selected disabled>None</option>
+                                                        <?php foreach($region as $siteregion_val){?>
+                                                            <option value="{{$siteregion_val->id}}">{{$siteregion_val->name}}</option>
+                                                        <?php }?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <a href="#!" class="formicon" id="openPopupButton" onclick="get_modal(3)"><i
+                                                            class="fa-solid fa-square-plus"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputAddress"
+                                                    class="col-sm-3 col-form-label">Address <span class="red-text">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <textarea class="form-control textareaInput" id="site_address" rows="3"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputCity"
+                                                    class="col-sm-3 col-form-label">City</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="site_city">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputCounty"
+                                                    class="col-sm-3 col-form-label">County</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="site_country_input">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputPincode"
+                                                    class="col-sm-3 col-form-label">Pincode</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="site_pincode">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputCountry"
+                                                    class="col-sm-3 col-form-label">Country</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control editInput selectOptions"
+                                                        id="site_modal_country_id">
+                                                        <option selected disabled>Select Coutry</option>
+                                                        <?php foreach($country as $sitecountryval){?>
+                                                        <option value="{{$sitecountryval->id}}" class="site_modal_country_id">{{$sitecountryval->name}} ({{$sitecountryval->code}})</option>
+                                                        <?php }?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputCountry"
+                                                    class="col-sm-3 col-form-label">Default Catalogue</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control editInput selectOptions"
+                                                        id="site_catalogue_id">
+                                                        <option selected disabled>None</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="mb-2 row">
+                                        <label for="inputCountry"
+                                            class="col-sm-3 col-form-label">Default Catalogue</label>
+                                        <div class="col-sm-12">
+                                            <textarea name="" id="site_notes" class="form-control" rows="10" cols="15"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- End row -->
+
+                        </div>
+                        <div class="modal-footer customer_Form_Popup">
+
+                            <button type="button" class="profileDrop" onclick="save_site()">Save</button>
+                            <button type="button" class="profileDrop" onclick="save_siteClose()">Save &
+                                Close</button>
+                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         <!-- end here -->
+          <!-- Region Modal start here -->
       <div class="modal fade" id="region_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content add_Customer">
@@ -1950,69 +2409,33 @@
         </div>
     </div>
       <!-- end here -->
-       <!-- Project Modal start here -->
-       <div class="modal fade" id="project_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+          <!-- Job title Modal start -->
+     <div class="modal fade" id="job_title_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content add_Customer">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="thirdModalLabel">Add Project</h5>
+                    <h5 class="modal-title" id="thirdModalLabel">Job Title - Add</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="project_form">
+                    <form id="job_title_form">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Ref</label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="red-text">*</span></label>
                             <div class="col-sm-9">
-                                <p>Project Ref ###</p>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer</label>
-                            <div class="col-sm-9">
-                            <p id="project_customer_name">Ram</p>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Name <span class="red-text">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control editInput" value="" id="project_name">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Start Date <span class="red-text">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control editInput"  id="project_start_date">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">End Date <span class="red-text">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control editInput" id="project_end_date">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Value </label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control editInput" id="project_end_date">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Description</label>
-                            <div class="col-sm-9">
-                                <textarea name="project_description" id="project_description" class="form-control"></textarea>
+                                <input type="text" name="job_title_name" class="form-control editInput" id="job_title_name" value="" placeholder="Job Title">
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
                             <div class="col-sm-9">
-                                <select id="project_status" name="project_status" class="form-control editInput">
+                                <select id="job_title_status" name="job_title_status" class="form-control editInput">
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
                             </div>
                         </div>
                         <div class="pageTitleBtn">
-                            <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_project()"> Save</a>
+                            <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_job_title()"> Save</a>
                             <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </form>
@@ -2020,7 +2443,7 @@
             </div>
         </div>
     </div>
-       <!-- end here -->
+     <!-- end here -->
 
         </div>
     </div>
@@ -2173,6 +2596,12 @@
                     $("#site_pincode").val(customerData.postal_code);
                     $("#company").val(customerData.name)
                     $("#contact").val(customerData.mobile);
+                    $("#project_customer_name").text(customerData.contact_name);
+                    $("#contact_customer_name").text(customerData.contact_name);
+                    $("#site_customer_name").text(customerData.contact_name);
+                    $("#project_customer_id").val(customerData.id);
+                    $("#contact_customer_id").val(customerData.id);
+                    $("#site_customer_id").val(customerData.id);
                     $("#profession_name").val(customerData.contact_name + " (" + customerData.customer_profession.name + ")");
                     var project = '<option value="0" selected>Select Project</option>';
                     if (customerData.customer_project && Array.isArray(customerData.customer_project)) {
@@ -2196,7 +2625,7 @@
                             site += '<option value="' + customerData.sites[i].id + '">' + customerData.sites[i].site_name + '</option>';
                         }
                     }
-                    // document.getElementById('site_id').innerHTML = site;
+                    document.getElementById('site_id').innerHTML = site;
                     $(".country_code").each(function() {
                         if ($(this).val() === customerData.country_code) {
                             $(this).prop('selected', true);
@@ -2415,10 +2844,7 @@
             },
             success: function(data) {
                 console.log(data);
-                // Append the new appointment row at the end of the table
                 $("#appointment_table tbody").last().append(data);
-
-                // Increment the count number for the next appointment
                 count_number++;
                 $('#count_number').val(count_number);
             },
@@ -2506,16 +2932,15 @@
 <!-- Modal code -->
  <script>
     function get_modal(modal){  
-        alert(modal)
+        // alert(modal)
         var customer_select_check=$("#customer_id").val();
-        alert(customer_select_check)
         if(customer_select_check == null && (modal == 4 || modal == 5)){
             alert("Please select customer");
             return false;
         }else{
             if(modal == 1){
-            $("#customer_type_form")[0].reset();
-            $("#cutomer_type_modal").modal('show');
+                $("#customer_type_form")[0].reset();
+                $("#cutomer_type_modal").modal('show');
             }else if(modal == 2){
                 $("#job_title_form")[0].reset();
                 $("#job_title_modal").modal('show');
@@ -2526,7 +2951,12 @@
                 $("#project_form")[0].reset();
                 $("#project_modal").modal('show');
             }else if(modal == 5){
-
+                $("#contact_form")[0].reset();
+                $("#contact_modal").modal('show');
+            }else if(modal == 6){
+                
+                $("#site_form")[0].reset();
+                $("#site_modal").modal('show');
             }
         }
         
@@ -2672,6 +3102,186 @@
                 window.location.reload();
             }
         });
+
+    }
+    function save_project(){
+        var token='<?php echo csrf_token();?>'
+        var project_name=$("#project_name").val();
+        var home_id=$("#home_id").val();
+        var start_date=$("#project_start_date").val();
+        var end_date=$("#project_end_date").val();
+        var project_value=$("#project_value").val();
+        var description=$("#project_description").val();
+        var status=$("#project_status").val();
+        var customer_name=$("#project_customer_id").val();
+        if(project_name == ''){
+            $('#project_name').css('border','1px solid red');
+            // $(window).scrollTop($('#project_name').position().top);
+            return false;
+        }else if(start_date == ''){
+            $('#project_name').css('border','');
+            $("#project_start_date").css('border','1px solid red');
+            return false;
+        }else if(end_date == ''){
+            $("#project_start_date").css('border','');
+            $("#project_end_date").css('border','1px solid red');
+            return false;
+        }else {
+            $("#project_end_date").css('border','');
+            $.ajax({
+                type: "POST",
+                url: "{{url('/project_save')}}",
+                data: {customer_name:customer_name,description:description,project_value:project_value,end_date:end_date,start_date:start_date,home_id:home_id,project_name:project_name,status:status,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    $("#project_modal").modal('hide');
+                    $("#project_id").append(data);
+                }
+            });
+        }
+    }
+    function default_address(){
+        if ($('#contact_default_address').is(':checked')) {
+            var customer_id = $("#customer_id").val();
+            var token = '<?php echo csrf_token(); ?>'
+            $.ajax({
+                type: "POST",
+                url: "{{url('get_customer_details_front')}}",
+                data: {
+                    customer_id: customer_id,
+                    _token: token
+                },
+                success: function(data) {
+                    console.log(data);
+                    data.forEach(contactData => {
+                    $("#name").val(contactData.name);
+                    $("#email").val(contactData.email);
+                    $("#telephone").val(contactData.telephone);
+                    $("#mobile").val(contactData.mobile);
+                    $("#contact_address").val(contactData.address);
+                    $("#contact_city").val(contactData.city);
+                    $("#contact_country_input").val(contactData.country);
+                    $("#contact_pincode").val(contactData.postal_code);
+                    
+                    $(".contact_country_id").each(function() {
+                        if ($(this).val() === contactData.country_code) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+            });  
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }else {
+            $("#name").val('');
+            $("#email").val('');
+            $("#telephone").val('');
+            $("#mobile").val('');
+            $("#contact_address").val('');
+            $("#contact_city").val('');
+            $("#contact_country_input").val('');
+            $("#contact_pincode").val('');
+            $("#contact_country_id").val('');
+        }
+    }
+    function save_contactClose(){
+        save_contact();
+        $("#contact_modal").modal('hide');
+    }
+    function save_contact(){
+        var token='<?php echo csrf_token();?>'
+        var default_billing; 
+        if ($('#contact_default_yes').is(':checked')) {
+            default_billing=1;
+        }else {
+            default_billing=0;
+        }
+        var customer_id=$("#contact_customer_id").val();
+        var contact_name=$("#contact_contact_name").val();
+        // alert(contact_name)
+        var job_title_id=$("#contact_job_titile_id").val();
+        var email=$("#contact_email").val();
+        var telephone=$("#contact_phone").val();
+        var mobile=$("#contact_mobile").val();
+        var fax=$("#contact_fax").val();
+        var address=$("#contact_address").val();
+        var city=$("#contact_city").val();
+        var country=$("#contact_country_input").val();
+        var postcode=$("#contact_pincode").val();
+        var country_id=$("#contact_country_id").val();
+        
+        if(contact_name == ''){
+            $('#contact_contact_name').css('border','1px solid red');
+            return false;
+        }else if(address == ''){
+            $('#contact_contact_name').css('border','');
+            $("#contact_address").css('border','1px solid red');
+            return false;
+        }else {
+            $("#project_end_date").css('border','');
+            $.ajax({
+                type: "POST",
+                url: "{{url('/contact_save')}}",
+                data: {country_id:country_id,postcode:postcode,country:country,city:city,address:address,fax:fax,mobile:mobile,telephone:telephone,email:email,job_title_id:job_title_id,contact_name:contact_name,customer_id:customer_id,default_billing:default_billing,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    $("#contact_modal").modal('hide');
+                    $("#contact_id").append(data);
+                }
+            });
+        }
+    }
+    function save_siteClose(){
+        save_site();
+        $("#site_modal").modal('hide');
+    }
+    function save_site(){
+        var token='<?php echo csrf_token();?>'
+        var site_name=$("#site_name").val();
+        var contact_name=$("#site_contact_name").val();
+        var title_id=$("#site_job_titile_id").val();
+        var email=$("#site_email").val();
+        var telephone=$("#site_phone").val();
+        var mobile=$("#site_mobile").val();
+        var fax=$("#site_fax").val();
+        var region=$("#site_region").val();
+        var address=$("#site_address").val();
+        var city=$("#site_city").val();
+        var country=$("#site_country_input").val();
+        var post_code=$("#site_pincode").val();
+        var country_id=$("#site_modal_country_id").val();
+        var catalogue=$("#site_catalogue_id").val();
+        var notes=$("#site_notes").val();
+        var site_customer_name=$("#site_customer_name").text();
+        var site_company_name=$("#site_company_name").val();
+        var customer_id=$("#site_customer_id").val();
+        if(site_name == ''){
+            $('#site_name').css('border','1px solid red');
+            return false;
+        }else if(contact_name == ''){
+            $('#site_name').css('border','');
+            $("#site_contact_name").css('border','1px solid red');
+            return false;
+        }else if(address == ''){
+            $('#site_contact_name').css('border','');
+            $("#site_address").css('border','1px solid red');
+            return false;
+        }else {
+            $("#site_address").css('border','');
+            $.ajax({
+                type: "POST",
+                url: "{{url('/site_save')}}",
+                data: {customer_id:customer_id,site_company_name:site_company_name,site_customer_name:site_customer_name,notes:notes,catalogue:catalogue,country_id:country_id,post_code:post_code,country:country,city:city,address:address,region:region,fax:fax,mobile:mobile,telephone:telephone,email:email,title_id:title_id,contact_name:contact_name,site_name:site_name,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    $("#site_modal").modal('hide');
+                    $("#site_id").append(data);
+                }
+            });
+        }
+
 
     }
 </script>

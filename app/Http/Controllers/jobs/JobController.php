@@ -24,8 +24,10 @@ use App\Models\Quote_product_detail;
 use App\Models\Workflow_notification;
 use App\Models\Recurrence_pattern_rule;
 use App\Models\Recurring_product_detail;
+use App\Models\Constructor_customer_site;
 use App\Models\Construction_job_appointment;
 use App\Models\Construction_jobassign_product;
+use App\Models\Constructor_additional_contact;
 use App\Models\Construction_job_appointment_type;
 use App\Models\construction_appointment_rejection_category;
 use DB,Auth,Session,Validator;
@@ -246,7 +248,8 @@ class JobController extends Controller
         $data['customer_types']=Customer_type::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['job_title']=Job_title::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['region']=Constructor_region::where(['home_id'=>$home_id,'status'=>1])->get();
-        // echo "<pre>";print_r($data['customer_types']);die;
+        // $data['site']=Constructor_customer_site::where('customer_id',$user_id)->get();
+        // echo "<pre>";print_r($data['site']);die;
         return view('frontEnd.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
@@ -600,6 +603,43 @@ class JobController extends Controller
         if($insert){
             if($insert->status ==1){
                 echo '<option value="'.$insert->id.'">'.$insert->name.'</option>';
+            }
+        }else{
+            echo "error";
+        }
+    }
+
+    public function project_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        
+        $insert=Project::saveProject($request->all());
+        if($insert){
+            if($insert->status ==1){
+                echo '<option value="'.$insert->id.'">'.$insert->project_name.'</option>';
+            }
+        }else{
+            echo "error";
+        }
+    }
+    public function contact_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $insert=Constructor_additional_contact::saveCustomerAdditional($request->all());
+        $data=Constructor_additional_contact::find($insert);
+        if($data){
+            if($data->status ==1){
+                echo '<option value="'.$data->id.'">'.$data->contact_name.'</option>';
+            }
+        }else{
+            echo "error";
+        }
+    }
+    public function site_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $result=Constructor_customer_site::saveCustomerAdditional($request->all());
+        $data=Constructor_customer_site::find($result);
+        if($data){
+            if($data->status ==1){
+                echo '<option value="'.$data->id.'">'.$data->site_name.'</option>';
             }
         }else{
             echo "error";
