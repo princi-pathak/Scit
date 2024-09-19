@@ -138,27 +138,67 @@ class LeadController extends Controller
         return view('frontEnd.salesAndFinance.lead.lead_form', compact('lead', 'users', 'page', 'sources', 'status', 'notes_type', 'lead_notes_data', 'leadTask', 'lead_task_open', 'lead_task_close', 'attachment_type', 'lead_attachment'));
     }
 
-    public function getUserList(){
+    public function getUserList()
+    {
         $users = User::getHomeUsers(Auth::user()->home_id);
-        if($users){
+        if ($users) {
             return response()->json(['success' => true, 'data' => $users]);
         } else {
             return response()->json(['success' => false, 'Data' => 'No Data']);
         }
     }
 
-    public function getLeadDataWithRecurrence(Request $request){
+    public function getLeadDataWithRecurrence(Request $request)
+    {
+
         $data = CRMLeadTask::getLeadDataWithRecurrence($request->id);
-        foreach($data as $value){
-            if($value->is_recurring === true ){
+        $arrayRecord = [];
+        foreach ($data as $value) {
+            $record = [
+                'id' => $value->id,
+                'user_id' => $value->id,
+                'title' => $value->title,
+                'task_type_id' => $value->task_type_id,
+                'start_date' => $value->start_date,
+                'start_time' => $value->start_time,
+                'end_date' => $value->end_date,
+                'end_time' => $value->end_time,
+                'is_recurring' => $value->is_recurring,
+                'notify' => $value->notify,
+                'notification' => $value->notify,
+                'email' => $value->email,
+                'task_date' => $value->task_date,
+                'task_time' => $value->task_time,
+                'notes' => $value->notes,
+                'is_completed' => $value->is_completed,
+                'created_at' => $value->created_at,
+            ];
+                if ($value->is_recurring == 1) {
                 $recurrence = CRMLeadTaskReccurence::getRecurrenceDataFromTaskType($value->id);
-                $arrayRecord[] = array_merge($data, $recurrence);
-            } else {
-                $arrayRecord[] = $value;
+                //    print_r($recurrence); 
+                //    die;
+                foreach ($recurrence as $recData) {
+                    $record['task_end_repe_date'] = $recData->task_end_repe_date;
+                    $record['no_of_repetitations'] = $recData->no_of_repetitations;
+                    $record['task_end_date'] = $recData->task_end_date;
+                    $record['task_frequency'] = $recData->task_frequency;
+                    $record['daily_days'] = $recData->daily_days;
+                    $record['daily_weekday'] = $recData->daily_weekday;
+                    $record['weekly_days'] = $recData->weekly_days;
+                    $record['weekly_weekday'] = $recData->weekly_weekday;
+                    $record['weekly_weeks'] = $recData->weekly_weeks;
+                    $record['monthly_days'] = $recData->monthly_days;
+                    $record['monthly_month'] = $recData->monthly_month;
+                    $record['every_month_day'] = $recData->every_month_day;
+                    $record['every_monthly_month'] = $recData->every_monthly_month;
+                    $record['every_month_of_month'] = $recData->every_month_of_month;
+                    $record['recurrence_created_at'] = $recData->created_at;
+                }
             }
+            array_push($arrayRecord, $record);
         }
-        if($arrayRecord){
-        return response()->json(['success' => true, 'data' => $arrayRecord]);
+        if ($arrayRecord) {
+            return response()->json(['success' => true, 'data' => $arrayRecord]);
         } else {
             return response()->json(['success' => false, 'Data' => 'No Data']);
         }
@@ -464,14 +504,16 @@ class LeadController extends Controller
     }
 
     // CRM Section Type
-    public function CRM_section_type(){
+    public function CRM_section_type()
+    {
         $page = "crm_section_type";
         $crm_sections = CRMSectionType::getCRMSectionTypes();
         $crmSec = CRMSection::getCRMSectionData();
         return view('frontEnd.salesAndFinance.lead.CRM_section_type', compact('page', 'crm_sections', 'crmSec'));
     }
 
-    public function saveCRMSectionType(Request $request){
+    public function saveCRMSectionType(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'crm_section' => 'required',
@@ -480,42 +522,46 @@ class LeadController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        CRMSectionType::updateOrCreate(['id' => $request->section_type_id],  array_merge($request->all() , ['home_id' => Auth::user()->home_id]));
-        if ( isset($request->section_type_id)) {
+        CRMSectionType::updateOrCreate(['id' => $request->section_type_id],  array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
+        if (isset($request->section_type_id)) {
             return response()->json(['success' => true, 'message' => 'CRM Section updated successfully']);
         } else {
             return response()->json(['success' => true, 'message' => 'CRM Section Type added successfully.']);
         }
     }
 
-    public function crm_section_type_delete($id){
+    public function crm_section_type_delete($id)
+    {
         $data = CRMSectionType::deleteCRMSectionType($id);
-        if($data){
+        if ($data) {
             return redirect()->route('lead.crm_section')->with('success', "Record deleted successfully");
         } else {
             return redirect()->route('lead.crm_section')->with('error', "Record not found");
         }
     }
 
-    public function get_CRM_section_types(){
+    public function get_CRM_section_types()
+    {
         $data = CRMSectionType::getCRMTypeFromHomeId(Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'Data' => $data]);
         } else {
             return response()->json(['success' => false, 'Data' => 'No Data']);
         }
     }
 
-    public function getCountriesList(){
+    public function getCountriesList()
+    {
         $data = Country::getCountriesNameCode();
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'Data' => $data]);
         } else {
             return response()->json(['success' => false, 'Data' => 'No Data']);
         }
     }
 
-    public function saveCRMLeadData(Request $request){
+    public function saveCRMLeadData(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'lead_ref' => 'required',
             'crm_type_id' => 'required',
@@ -525,11 +571,11 @@ class LeadController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        if($request->notify_radio == 1){
+        if ($request->notify_radio == 1) {
             $validator = Validator::make($request->all(), [
                 'notify_user' => 'required'
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
@@ -538,15 +584,15 @@ class LeadController extends Controller
             $email = $request->has('email') ? 1 : 0;
         }
 
-        if(!isset($notification) || !isset($sms) || !isset($email)){
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
             $notification = $sms = $email = null;
         }
 
 
         $attributes = ['id' => $request->crm_lead_calls_id]; // Assuming each user has their own notification settings
 
-        if($request->telephone){
-            $phone = "+".$request->country_code."-".$request->telephone;
+        if ($request->telephone) {
+            $phone = "+" . $request->country_code . "-" . $request->telephone;
         } else {
             $phone = $request->telephone;
         }
@@ -578,16 +624,18 @@ class LeadController extends Controller
         }
     }
 
-    public function getCRMCallsData(Request $request){
+    public function getCRMCallsData(Request $request)
+    {
         $data = CRMLeadCalls::getCRMLeadCallsData($request->lead_ref, Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
 
-    public function saveCRMLeadEmails(Request $request){
+    public function saveCRMLeadEmails(Request $request)
+    {
 
         // dd($request->hasFile('attachment'));
         $validator = Validator::make($request->all(), [
@@ -599,11 +647,11 @@ class LeadController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        if($request->notify_email1 == 1){
+        if ($request->notify_email1 == 1) {
             $validator = Validator::make($request->all(), [
                 'notify_user' => 'required'
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
@@ -612,7 +660,7 @@ class LeadController extends Controller
             $email = $request->has('email') ? 1 : 0;
         }
 
-        if(!isset($notification) || !isset($sms) || !isset($email)){ 
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
             $notification = $sms = $email = null;
         }
 
@@ -637,7 +685,7 @@ class LeadController extends Controller
             'cc' => $request->cc,
             'subject' => $request->subject,
             'message' => $request->message,
-            'notify' =>$request->notify,
+            'notify' => $request->notify,
             'attachment' => $path,
             'user_id' => $request->notify_user,
             'notification' => $notification,
@@ -656,16 +704,18 @@ class LeadController extends Controller
         }
     }
 
-    public function getCRMEmailsData(Request $request){
+    public function getCRMEmailsData(Request $request)
+    {
         $data = CRMLeadEmail::getCRMLeadEmailsData($request->lead_id, Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
 
-    public function saveCRMLeadNotes(Request $request){
+    public function saveCRMLeadNotes(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'lead_id' => 'required',
             'crm_section_type_id' => 'required',
@@ -675,11 +725,11 @@ class LeadController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        if($request->notify == 1){
+        if ($request->notify == 1) {
             $validator = Validator::make($request->all(), [
                 'user_id' => 'required'
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
@@ -688,7 +738,7 @@ class LeadController extends Controller
             $email = $request->has('email') ? 1 : 0;
         }
 
-        if(!isset($notification) || !isset($sms) || !isset($email)){
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
             $notification = $sms = $email = null;
         }
 
@@ -718,25 +768,28 @@ class LeadController extends Controller
         }
     }
 
-    public function getCRMNotesData(Request $request){
+    public function getCRMNotesData(Request $request)
+    {
         $data = CRMLeadNotes::getCRMLeadNotesData($request->lead_id, Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
 
-    public function getLeadTaskTypeData(){
+    public function getLeadTaskTypeData()
+    {
         $data = LeadTaskType::getLeadTaskType();
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
-    
-    public function saveCRMLeadComplaint(Request $request){
+
+    public function saveCRMLeadComplaint(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'lead_id' => 'required',
             'crm_section_type_id' => 'required',
@@ -746,11 +799,11 @@ class LeadController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        if($request->notify == 1){
+        if ($request->notify == 1) {
             $validator = Validator::make($request->all(), [
                 'user_id' => 'required'
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
@@ -759,7 +812,7 @@ class LeadController extends Controller
             $email = $request->has('email') ? 1 : 0;
         }
 
-        if(!isset($notification) || !isset($sms) || !isset($email)){
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
             $notification = $sms = $email = null;
         }
 
@@ -786,19 +839,20 @@ class LeadController extends Controller
         } else {
             return response()->json(['message' => 'CRM Lead Complaint added successfully!']);
         }
-
     }
 
-    public function getCRMComplaintData(Request $request){
+    public function getCRMComplaintData(Request $request)
+    {
         $data = CRMLeadComplaint::getCRMLeadComplaintData($request->lead_id, Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
 
-    public function saveCRMLeadTaskAndTimer(Request $request){
+    public function saveCRMLeadTaskAndTimer(Request $request)
+    {
         // dd($request);
 
         $validator = Validator::make($request->all(), [
@@ -807,7 +861,7 @@ class LeadController extends Controller
             'user_id' => 'required'
         ]);
 
-        if($request->task == "task_form"){
+        if ($request->task == "task_form") {
             $validator = Validator::make($request->all(), [
                 'title' => 'required',
                 'start_date' => 'required',
@@ -815,7 +869,7 @@ class LeadController extends Controller
                 'end_date' => 'required',
                 'end_time' => 'required',
             ]);
-        } elseif ($request->timer == "timer_form"){
+        } elseif ($request->timer == "timer_form") {
             $validator = Validator::make($request->all(), [
                 'title_timer' => 'required',
             ]);
@@ -824,14 +878,14 @@ class LeadController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-       
-        if($request->notify == 1){
+
+        if ($request->notify == 1) {
             $notification = $request->has('notification') ? 1 : 0;
             $sms = $request->has('sms') ? 1 : 0;
             $email = $request->has('email') ? 1 : 0;
         }
 
-        if(!isset($notification) || !isset($sms) || !isset($email)){
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
             $notification = $sms = $email = null;
         }
 
@@ -851,7 +905,7 @@ class LeadController extends Controller
             'notification' => $notification,
             'sms' => $sms,
             'email' => $email,
-            'task_date' => $request->task_date, 
+            'task_date' => $request->task_date,
             'task_time' => $request->task_time,
             'notes' => $request->notes
         ];
@@ -859,7 +913,7 @@ class LeadController extends Controller
         // Update the record if it exists, otherwise create a new one
         $CRMleadTask = CRMLeadTask::updateOrCreate(['id' => $request->crm_lead_task_id], $values);
 
-        $data = CRMLeadTaskReccurence::create(array_merge($request->all(), ['crm_lead_task_id' =>  $CRMleadTask->id] ));
+        $data = CRMLeadTaskReccurence::create(array_merge($request->all(), ['crm_lead_task_id' =>  $CRMleadTask->id]));
 
         Log::info('User logged in', ['user_id' => $data]);
 
@@ -870,73 +924,78 @@ class LeadController extends Controller
         }
     }
 
-    public function getCRMTasksData(Request $request){
+    public function getCRMTasksData(Request $request)
+    {
         $data = CRMLeadTask::getCRMLeadTaskData($request->lead_id, Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
 
-    public function getCRMTaskDataToday(Request $request){
+    public function getCRMTaskDataToday(Request $request)
+    {
         $data = CRMLeadTask::getCRMTaskDataToday($request->lead_id, Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
 
-    public function getCRMTaskDataWeek(Request $request){
+    public function getCRMTaskDataWeek(Request $request)
+    {
         $data = CRMLeadTask::getCRMTaskDataWeek($request->lead_id, Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
 
-    public function getCRMTaskDataOverdue(Request $request){
+    public function getCRMTaskDataOverdue(Request $request)
+    {
         $data = CRMLeadTask::getCRMTaskDataOverdue($request->lead_id, Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
 
-    public function getCRMTaskDataComplete(Request $request){
+    public function getCRMTaskDataComplete(Request $request)
+    {
         $data = CRMLeadTask::getCRMTaskDataComplete($request->lead_id, Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
 
-    public function getCRMTaskDataRecurring(Request $request){
+    public function getCRMTaskDataRecurring(Request $request)
+    {
         $data = CRMLeadTask::getCRMTaskDataRecurring($request->lead_id, Auth::user()->home_id);
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
-    }    
-    
-    public function getCRMAllData(Request $request){
+    }
+
+    public function getCRMAllData(Request $request)
+    {
         $data['0'] = CRMLeadTask::getCRMLeadTaskData($request->lead_id, Auth::user()->home_id);
         $data['1'] = CRMLeadComplaint::getCRMLeadComplaintData($request->lead_id, Auth::user()->home_id);
         $data['2'] = CRMLeadNotes::getCRMLeadNotesData($request->lead_id, Auth::user()->home_id);
         $data['3'] = CRMLeadEmail::getCRMLeadEmailsData($request->lead_id, Auth::user()->home_id);
         $data['4'] = CRMLeadCalls::getCRMLeadCallsData($request->lead_ref, Auth::user()->home_id);
 
-        if($data){
+        if ($data) {
             return response()->json(['success' => true, 'data' => $data]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
-
-    }       
-    
+    }
 }
