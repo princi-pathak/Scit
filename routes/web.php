@@ -969,6 +969,7 @@ Route::match(['get', 'post'], '/system-admin/home/payment/success/{system_admin_
 Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function () {
 	//download form  As PDF 
 	Route::match(['get', 'post'], '/DownloadFormpdf/{id}', 'App\Http\Controllers\backEnd\superAdmin\UserController@DownloadFormpdf');
+	
 
 	Route::get('/', 'App\Http\Controllers\backEnd\AdminController@dashboard');
 	// 	Route::get('/dashboard', 'App\Http\Controllers\backEnd\AdminController@dashboard');
@@ -1277,6 +1278,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::match(['get', 'post'], '/homelist/home-admin/edit/{home_admin_id}', 'App\Http\Controllers\backEnd\homeManage\AdminController@edit');
 	Route::match(['get', 'post'], '/homelist/home-admin/delete/{home_admin_id}', 'App\Http\Controllers\backEnd\homeManage\AdminController@delete');
 	Route::match(['get', 'post'], '/homelist/home-admin/send-set-pass-link/{home_admin_id}', 'App\Http\Controllers\backEnd\homeManage\AdminController@send_set_password_link_mail');
+
 
 	//access rights
 	Route::get('users/access-rights/{user_id}', 'App\Http\Controllers\backEnd\AccessRightController@index');
@@ -1607,7 +1609,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 //super admin path
 Route::group(['prefix' => 'super-admin', 'middleware' => 'CheckAdminAuth'], function () {
-
+	
 	//service user migration
 	Route::get('/migrations', 'App\Http\Controllers\backEnd\superAdmin\MigrationController@index');
 	Route::get('/migration/view/{migration_id}', 'App\Http\Controllers\backEnd\superAdmin\MigrationController@view');
