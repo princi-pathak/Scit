@@ -253,7 +253,7 @@
                                     <div class="mb-3 row field">
                                         <label for="inputProject" class="col-sm-3 col-form-label">Region</label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" id="region" name="region" required>
+                                            <select class="form-control editInput selectOptions get_region_result" id="region" name="region" required>
                                                 <option selected disabled>Select Region</option>
                                                 <?php foreach($region as $site_region){?>
                                                     <option value="{{$site_region->id}}">{{$site_region->name}}</option>
@@ -261,7 +261,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <a href="#!" class="formicon"><i
+                                            <a href="#!" class="formicon" onclick="get_modal(3)"><i
                                                     class="fa-solid fa-square-plus"></i></a>
                                         </div>
                                     </div>
@@ -414,7 +414,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <a href="#!" class="formicon"><i
+                                            <a href="#!" class="formicon" onclick="get_modal(7)"><i
                                                     class="fa-solid fa-square-plus"></i></a>
                                         </div>
                                     </div>
@@ -510,7 +510,7 @@
                                                     </div>
                                                     <div class="col-sm-7">
                                                         <div class="plusandText">
-                                                            <a href="#!" class="formicon"><i
+                                                            <a href="#!" class="formicon" onclick="get_modal(7)"><i
                                                                     class="fa-solid fa-square-plus"></i>
                                                             </a>
                                                             <span class="afterPlusText"> (Type to view product
@@ -2152,6 +2152,213 @@
                 </div>
             </div>
         <!-- end here -->
+         <!-- Add Product Modal start here -->
+         <div class="modal fade" id="add_product_modal" tabindex="-1" aria-labelledby="customerModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content add_Customer">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="customerModalLabel">Add Product</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="formDtail">
+                                        <form id="add_product_form">
+                                        <div class="col-sm-9">
+
+                                        <div class="form-check form-check-inline">
+                                        <label class="form-check-label checkboxtext"
+                                        for="inlineRadio1">This Customer Only</label>
+                                            <input class="form-check-input" type="radio" name="product_yes" id="product_yes">
+                                            <label class="form-check-label checkboxtext"
+                                                for="inlineRadio1">Yes, display only for this customer</label>
+                                        </div>
+                                        <div class="mb-2 row">
+                                                <label for="inputProject" class="col-sm-3 col-form-label">Product Category</label>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control editInput selectOptions get_product_category_result"
+                                                        id="contact_job_titile_id">
+                                                        <option selected disabled>Please Select
+                                                        </option>
+                                                        <?php foreach($job_title as $con_val_title){?>
+                                                            <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
+                                                            <?php }?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <a href="#!" class="formicon" onclick="get_modal(9)"><i
+                                                            class="fa-solid fa-square-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <!-- <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">Product Name <span class="red-text">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <p id="contact_customer_name"></p>
+                                                </div>
+                                            </div> -->
+                                            <input type="hidden" id="product_customer_id">
+                                            
+                                            
+                                            <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">Product Name <span class="red-text">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="product_name">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputProject" class="col-sm-3 col-form-label">Product Type</label>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control editInput selectOptions "
+                                                        id="contact_job_titile_id">
+                                                        <option selected disabled>Please Select
+                                                        </option>
+                                                        <?php foreach($job_title as $con_val_title){?>
+                                                            <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
+                                                            <?php }?>
+                                                    </select>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">Product Code</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="product_name">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputEmail"
+                                                    class="col-sm-3 col-form-label">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_email">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputTelephone"
+                                                    class="col-sm-3 col-form-label">Telephone</label>
+                                                    <div class="col-sm-2">
+                                                    <select class="form-control editInput selectOptions">
+                                                        <option>+444</option>
+                                                        <option>+91</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_phone">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputMobile"
+                                                    class="col-sm-3 col-form-label">Mobile</label>
+                                                    <div class="col-sm-2">
+                                                        <select class="form-control editInput selectOptions">
+                                                            <option>+444</option>
+                                                            <option>+91</option>
+                                                        </select>
+                                                    </div>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_mobile">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputAddress"
+                                                    class="col-sm-3 col-form-label">Fax</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_fax">
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="formDtail">
+                                        <form action="" class="">
+                                        <div class="mb-2 row">
+                                            <label class="col-sm-3 col-form-label">Address Details</label>
+                                            <div class="col-sm-9">
+
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="contact_default_address" onchange="default_address()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputAddress"
+                                                    class="col-sm-3 col-form-label">Address <span class="red-text">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <textarea class="form-control textareaInput" id="contact_address" rows="3"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputCity"
+                                                    class="col-sm-3 col-form-label">City</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_city">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputCounty"
+                                                    class="col-sm-3 col-form-label">County</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_country_input">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputPincode"
+                                                    class="col-sm-3 col-form-label">Pincode</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_pincode">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputCountry"
+                                                    class="col-sm-3 col-form-label">Country</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control editInput selectOptions"
+                                                        id="contact_country_id">
+                                                        <option selected disabled>Select Coutry</option>
+                                                        <?php foreach($country as $countryval){?>
+                                                        <option value="{{$countryval->id}}" class="contact_country_id">{{$countryval->name}} ({{$countryval->code}})</option>
+                                                        <?php }?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div> <!-- End row -->
+
+                        </div>
+                        <div class="modal-footer customer_Form_Popup">
+
+                            <button type="button" class="profileDrop" onclick="save_contact()">Save</button>
+                            <button type="button" class="profileDrop" onclick="save_contactClose()">Save &
+                                Close</button>
+                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         <!-- end here -->
          <!-- Site Modal start here -->
          <div class="modal fade" id="site_modal" tabindex="-1" aria-labelledby="customerModalLabel"
                 aria-hidden="true">
@@ -2374,6 +2581,64 @@
                 </div>
             </div>
          <!-- end here -->
+          <!-- Job Type Modal start here -->
+          <div class="modal fade" id="job_type_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content add_Customer">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="thirdModalLabel">Add Job Type</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="job_type_form">
+                            <div class="mb-3 row">
+                                <label for="inputJobRef" class="col-sm-3 col-form-label">Job Type <span class="red-text">*</span></label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="job_type_name" class="form-control editInput" id="job_type_name" value="" placeholder="Job Type">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="inputJobRef" class="col-sm-3 col-form-label">Number of Days</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="no_of_days" class="form-control editInput" id="no_of_days" value="14">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="inputJobRef" class="col-sm-3 col-form-label">Customer Visible</label>
+                                <div class="col-sm-9">
+                                    <input type="checkbox" name="customer_visible" class="" id="customer_visible" checked> Yes, visible to customer
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="inputJobRef" class="col-sm-3 col-form-label">Appointment Type</label>
+                                <div class="col-sm-9">
+                                    <select id="Job_appointment_type" name="Job_appointment_type" class="form-control editInput">
+                                        <?php foreach($appointment_type as $job_app){?>
+                                            <option value="{{$job_app->id}}">{{$job_app->name}}</option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                                <div class="col-sm-9">
+                                    <select id="job_type_status" name="Job_type_status" class="form-control editInput">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="pageTitleBtn">
+                                <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_job_type()"> Save</a>
+                                <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_close_job_type()"> Save & Close</a>
+                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <!-- end here -->
           <!-- Region Modal start here -->
       <div class="modal fade" id="region_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -2954,9 +3219,13 @@
                 $("#contact_form")[0].reset();
                 $("#contact_modal").modal('show');
             }else if(modal == 6){
-                
                 $("#site_form")[0].reset();
                 $("#site_modal").modal('show');
+            }else if(modal == 7){
+                $("#job_type_form")[0].reset();
+                $("#job_type_modal").modal('show');
+            }else if(modal == 8){
+
             }
         }
         
@@ -3283,6 +3552,38 @@
         }
 
 
+    }
+    function save_close_job_type(){
+        save_job_type();
+        $("#job_type_modal").modal('hide');
+    }
+    function save_job_type(){
+        var token='<?php echo csrf_token();?>'
+        var name=$("#job_type_name").val();
+        var home_id=$("#home_id").val();
+        var default_days=$("#no_of_days").val();
+        var customer_visible=0;
+        if ($('#customer_visible').is(':checked')) {
+            customer_visible=1;
+        }
+        var appointment_id=$("#Job_appointment_type").val();
+        var status=$("#job_type_status").val();
+        if(name == ''){
+            $('#name').css('border','1px solid red');
+            return false;
+        }else {
+            $("#name").css('border','');
+            $.ajax({
+                type: "POST",
+                url: "{{url('/job_type_save?key=from_job')}}",
+                data: {status:status,appointment_id:appointment_id,customer_visible:customer_visible,default_days:default_days,home_id:home_id,name:name,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    $("#job_type_modal").modal('hide');
+                    $("#job_type").append(data);
+                }
+            });
+        }
     }
 </script>
 

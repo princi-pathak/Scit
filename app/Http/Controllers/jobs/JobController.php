@@ -80,38 +80,45 @@ class JobController extends Controller
     }
     
     public function job_type_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
         $home_id = Auth::user()->home_id;
        $data= Job_type::job_type_save_data($request->all());
        if($data){
-        $all_data=Job_type::where(['home_id'=>$home_id,'status'=>1])->get();
-        $html = '';
-        foreach($all_data as $key=>$val){
-            $html.='<tr>
-                        <td></td>
-                        <td>'.++$key.'</td>
-                        <td>'.$val->name.'</td>
-                       <td>' . (($val->status == 1) ? "Yes" : "No") . '</td>
-                        <td>'.$val->default_days.'</td>
-                        <td><span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span></td>
-                        <td>-</td>
-                        <td><span class="grencheck"><i class="fa-solid fa-circle-check"></i></span></td>
-                        <td> <div class="d-inline-flex align-items-center ">
-                                <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                        Action
-                                    </a>
-                                    <div class="dropdown-menu fade-up m-0">
-                                        <a href="javascript:void(0)" onclick="get_model_with_id('.$val->id.')" class="dropdown-item">Edit Details</a>
-                                        <hr class="dropdown-divider">
-                                        <a href="#!" class="dropdown-item">Manage Workflow</a>
+        if(isset($request->key) && $request->key != ''){
+            $result=Job_type::find($data);
+            $html='<option value="'.$result->id.'">'.$result->name.'</option>';
+            return $html;
+        }else{
+            $all_data=Job_type::where(['home_id'=>$home_id,'status'=>1])->get();
+            $html = '';
+            foreach($all_data as $key=>$val){
+                $html.='<tr>
+                            <td></td>
+                            <td>'.++$key.'</td>
+                            <td>'.$val->name.'</td>
+                        <td>' . (($val->status == 1) ? "Yes" : "No") . '</td>
+                            <td>'.$val->default_days.'</td>
+                            <td><span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span></td>
+                            <td>-</td>
+                            <td><span class="grencheck"><i class="fa-solid fa-circle-check"></i></span></td>
+                            <td> <div class="d-inline-flex align-items-center ">
+                                    <div class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                            Action
+                                        </a>
+                                        <div class="dropdown-menu fade-up m-0">
+                                            <a href="javascript:void(0)" onclick="get_model_with_id('.$val->id.')" class="dropdown-item">Edit Details</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="#!" class="dropdown-item">Manage Workflow</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>';
+                            </td>
+                        </tr>';
 
+            }
+            return response()->json(['success'=>'true','message' => "Successfully  Done",'html_result'=>$html], 200);
         }
-        return response()->json(['success'=>'true','message' => "Successfully  Done",'html_result'=>$html], 200);
        } else {
         return response()->json(['success'=>'true','message' => "Successfully  Done",'data'=>$html], 200);
        }
