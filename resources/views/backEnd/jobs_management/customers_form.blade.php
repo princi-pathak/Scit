@@ -58,7 +58,9 @@
                 <form class="form-horizontal" role="form" enctype="multipart/form-data" id="form_data">
                     @csrf
                     <input type="hidden" name="home_id" value="{{$home_id}}">
-                    <input type="hidden" name="id" id="id" value="<?php if(isset($customer)){echo $customer->id;}?>">
+                    <input type="hidden" name="id" id="id" value="<?php if (isset($customer)) {
+                                                                        echo $customer->id;
+                                                                    } ?>">
                     <!-- <input type="hidden" name="status" value="2"> -->
                     <div class="from_outside_border">
                         <div class="row">
@@ -68,7 +70,9 @@
                                     <div class="form-group">
                                         <label for="name" class="col-lg-4 col-sm-4 control-label">Customer Name *</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php if(isset($customer)){echo $customer->name;}?>">
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php if (isset($customer)) {
+                                                                                                                                        echo $customer->name;
+                                                                                                                                    } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -77,7 +81,9 @@
                                             <select class="form-control" name="customer_type_id" id="customer_type_id">
                                                 <option selected disabled>Customer Type</option>
                                                 <?php foreach ($customer_type as $type) { ?>
-                                                    <option value="{{$type->id}}" <?php if(isset($customer) && $customer->customer_type_id == $type->id){echo "selected";}?>>{{$type->name}}</option>
+                                                    <option value="{{$type->id}}" <?php if (isset($customer) && $customer->customer_type_id == $type->id) {
+                                                                                        echo "selected";
+                                                                                    } ?>>{{$type->name}}</option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -88,7 +94,9 @@
                                     <div class="form-group">
                                         <label for="contact_name" class="col-lg-4 col-sm-4 control-label">Contact Name *</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="contact_name" name="contact_name" placeholder="Contact Name" value="<?php if(isset($customer)){echo $customer->contact_name;}?>">
+                                            <input type="email" class="form-control" id="contact_name" name="contact_name" placeholder="Contact Name" value="<?php if (isset($customer)) {
+                                                                                                                                                                    echo $customer->contact_name;
+                                                                                                                                                                } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -97,7 +105,9 @@
                                             <select class="form-control" name="job_title" id="job_title">
                                                 <option selected disabled>Job Title</option>
                                                 <?php foreach ($job_title as $title) { ?>
-                                                    <option value="{{$title->id}}" <?php if(isset($customer) && $customer->job_title == $title->id){echo "selected";}?>>{{$title->name}}</option>
+                                                    <option value="{{$title->id}}" <?php if (isset($customer) && $customer->job_title == $title->id) {
+                                                                                        echo "selected";
+                                                                                    } ?>>{{$title->name}}</option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -108,39 +118,53 @@
                                     <div class="form-group">
                                         <label for="email" class="col-lg-4 col-sm-4 control-label">Email</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php if(isset($customer)){echo $customer->email;}?>">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php if (isset($customer)) {
+                                                                                                                                            echo $customer->email;
+                                                                                                                                        } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="telephone" class="col-lg-4 col-sm-4 control-label">Telephone</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="telephone" name="telephone" placeholder="Telephone" value="<?php if(isset($customer)){echo $customer->telephone;}?>">
+                                            <input type="email" class="form-control" id="telephone" name="telephone" placeholder="Telephone" value="<?php if (isset($customer)) {
+                                                                                                                                                        echo $customer->telephone;
+                                                                                                                                                    } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="mobile" class="col-lg-4 col-sm-4 control-label">Mobile</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value="<?php if(isset($customer)){echo $customer->mobile;}?>">
+                                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value="<?php if (isset($customer)) {
+                                                                                                                                                echo $customer->mobile;
+                                                                                                                                            } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="fax" class="col-lg-4 col-sm-4 control-label">Fax</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="fax" name="fax" placeholder="Fax" value="<?php if(isset($customer)){echo $customer->fax;}?>">
+                                            <input type="text" class="form-control" id="fax" name="fax" placeholder="Fax" value="<?php if (isset($customer)) {
+                                                                                                                                        echo $customer->fax;
+                                                                                                                                    } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="website" class="col-lg-4 col-sm-4 control-label">Website</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="website" name="website" placeholder="Website" value="<?php if(isset($customer)){echo $customer->website;}?>">
+                                            <input type="text" class="form-control" id="website" name="website" placeholder="Website" value="<?php if (isset($customer)) {
+                                                                                                                                                    echo $customer->website;
+                                                                                                                                                } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Default Catalogue</label>
                                         <div class="col-lg-8">
                                             <select class="form-control" id="catalogue_id" name="catalogue_id">
-                                                <option value="1" <?php if(isset($customer) && $customer->catalogue_id == 1){echo "selected";}?>>General Customer</option>
-                                                <option value="2" <?php if(isset($customer) && $customer->catalogue_id == 2){echo "selected";}?>>General Customer</option>
+                                                <option value="1" <?php if (isset($customer) && $customer->catalogue_id == 1) {
+                                                                        echo "selected";
+                                                                    } ?>>General Customer</option>
+                                                <option value="2" <?php if (isset($customer) && $customer->catalogue_id == 2) {
+                                                                        echo "selected";
+                                                                    } ?>>General Customer</option>
                                             </select>
                                         </div>
                                     </div>
@@ -161,34 +185,44 @@
                                     <div class="form-group">
                                         <label for="region" class="col-lg-4 col-sm-4 control-label">Region </label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="region" name="region" placeholder="Region" value="<?php if(isset($customer)){echo $customer->region;}?>">
+                                            <input type="text" class="form-control" id="region" name="region" placeholder="Region" value="<?php if (isset($customer)) {
+                                                                                                                                                echo $customer->region;
+                                                                                                                                            } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Address *</label>
                                         <div class="col-lg-8">
                                             <textarea class="form-control" rows="8" cols="70" id="address" name="address">
-                                            <?php if(isset($customer)){echo $customer->address;}?>
+                                            <?php if (isset($customer)) {
+                                                echo $customer->address;
+                                            } ?>
                                             </textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="city" class="col-lg-4 col-sm-4 control-label">City</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="city" name="city" placeholder="City" value="<?php if(isset($customer)){echo $customer->city;}?>">
+                                            <input type="email" class="form-control" id="city" name="city" placeholder="City" value="<?php if (isset($customer)) {
+                                                                                                                                            echo $customer->city;
+                                                                                                                                        } ?>">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="country" class="col-lg-4 col-sm-4 control-label">County</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="country" name="country" placeholder="County" value="<?php if(isset($customer)){echo $customer->country;}?>">
+                                            <input type="email" class="form-control" id="country" name="country" placeholder="County" value="<?php if (isset($customer)) {
+                                                                                                                                                    echo $customer->country;
+                                                                                                                                                } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="postal_code" class="col-lg-4 col-sm-4 control-label">Postcode</label>
                                         <div class="col-lg-6">
-                                            <input type="email" class="form-control" id="postal_code" name="postal_code" placeholder="Postcode" value="<?php if(isset($customer)){echo $customer->postal_code;}?>">
+                                            <input type="email" class="form-control" id="postal_code" name="postal_code" placeholder="Postcode" value="<?php if (isset($customer)) {
+                                                                                                                                                            echo $customer->postal_code;
+                                                                                                                                                        } ?>">
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
                                             <a href="#!"><i class="fa fa-search"></i></a>
@@ -203,7 +237,9 @@
                                             <select class="form-control" id="country_code" name="country_code">
                                                 <option selected disabled>Select Country</option>
                                                 <?php foreach ($country as $con) { ?>
-                                                    <option value="{{$con->code}}" <?php if(isset($customer) && $customer->country_code == $con->code){echo "selected";}?>>{{$con->name}} ({{$con->code}})</option>
+                                                    <option value="{{$con->code}}" <?php if (isset($customer) && $customer->country_code == $con->code) {
+                                                                                        echo "selected";
+                                                                                    } ?>>{{$con->name}} ({{$con->code}})</option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -212,7 +248,9 @@
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Site Notes</label>
                                         <div class="col-lg-8">
                                             <textarea class="form-control" rows="4" cols="70" id="site_notes" name="site_notes">
-                                            <?php if(isset($customer)){echo $customer->site_notes;}?>
+                                            <?php if (isset($customer)) {
+                                                echo $customer->site_notes;
+                                            } ?>
                                             </textarea>
                                         </div>
                                     </div>
@@ -235,21 +273,29 @@
                                     <div class="form-group">
                                         <label for="credit_limit" class="col-lg-4 col-sm-4 control-label">Credit Limit</label>
                                         <div class="col-lg-6">
-                                            <input type="email" class="form-control" id="credit_limit" name="credit_limit" placeholder="Credit Limit" value="<?php if(isset($customer)){echo $customer->credit_limit;}?>">
+                                            <input type="email" class="form-control" id="credit_limit" name="credit_limit" placeholder="Credit Limit" value="<?php if (isset($customer)) {
+                                                                                                                                                                    echo $customer->credit_limit;
+                                                                                                                                                                } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="discount" class="col-lg-4 col-sm-4 control-label">Discount</label>
                                         <div class="col-lg-4">
-                                            <input type="email" class="form-control" id="discount" name="discount" placeholder="Discount" value="<?php if(isset($customer)){echo $customer->discount;}?>">
+                                            <input type="email" class="form-control" id="discount" name="discount" placeholder="Discount" value="<?php if (isset($customer)) {
+                                                                                                                                                        echo $customer->discount;
+                                                                                                                                                    } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Discount Type</label>
                                         <div class="col-lg-8">
                                             <select class="form-control" id="discount_type" name="discount_type">
-                                                <option value="1" <?php if(isset($customer) && $customer->discount_type == 1){echo "selected";}?>>Percentage</option>
-                                                <option value="2" <?php if(isset($customer) && $customer->discount_type == 2){echo "selected";}?>>Flat</option>
+                                                <option value="1" <?php if (isset($customer) && $customer->discount_type == 1) {
+                                                                        echo "selected";
+                                                                    } ?>>Percentage</option>
+                                                <option value="2" <?php if (isset($customer) && $customer->discount_type == 2) {
+                                                                        echo "selected";
+                                                                    } ?>>Flat</option>
                                             </select>
                                         </div>
 
@@ -257,19 +303,25 @@
                                     <div class="form-group">
                                         <label for="saga_ref" class="col-lg-4 col-sm-4 control-label">Sage Ref.</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="saga_ref" name="saga_ref" placeholder="Sage Ref." value="<?php if(isset($customer)){echo $customer->saga_ref;}?>">
+                                            <input type="email" class="form-control" id="saga_ref" name="saga_ref" placeholder="Sage Ref." value="<?php if (isset($customer)) {
+                                                                                                                                                        echo $customer->saga_ref;
+                                                                                                                                                    } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="company_reg" class="col-lg-4 col-sm-4 control-label">Company Reg</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="company_reg" name="company_reg" placeholder="Company Reg" value="<?php if(isset($customer)){echo $customer->company_reg;}?>">
+                                            <input type="email" class="form-control" id="company_reg" name="company_reg" placeholder="Company Reg" value="<?php if (isset($customer)) {
+                                                                                                                                                                echo $customer->company_reg;
+                                                                                                                                                            } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="vat_tax_no" class="col-lg-4 col-sm-4 control-label">VAT / Tax No.</label>
                                         <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="vat_tax_no" name="vat_tax_no" placeholder="VAT / Tax No." value="<?php if(isset($customer)){echo $customer->vat_tax_no;}?>">
+                                            <input type="email" class="form-control" id="vat_tax_no" name="vat_tax_no" placeholder="VAT / Tax No." value="<?php if (isset($customer)) {
+                                                                                                                                                                echo $customer->vat_tax_no;
+                                                                                                                                                            } ?>">
                                         </div>
                                     </div>
 
@@ -277,7 +329,9 @@
                                     <div class="form-group">
                                         <label for="payment_terms" class="col-lg-4 col-sm-4 control-label">Payment Terms</label>
                                         <div class="col-lg-4">
-                                            <input type="text" class="form-control" id="payment_terms" name="payment_terms" placeholder="Payment Terms" value="<?php if(isset($customer)){echo $customer->payment_terms;}?>">
+                                            <input type="text" class="form-control" id="payment_terms" name="payment_terms" placeholder="Payment Terms" value="<?php if (isset($customer)) {
+                                                                                                                                                                    echo $customer->payment_terms;
+                                                                                                                                                                } ?>">
                                         </div>
                                         <div class="col-lg-3">
                                             <span class="afterInputText">
@@ -290,10 +344,14 @@
                                         <div class="col-sm-8">
 
                                             <label class="radio-inline">
-                                                <input type="radio" id="assigned_product1" class="assigned_product" <?php if(isset($customer) && $customer->assigned_product ==1){echo "checked";}?>> Yes
+                                                <input type="radio" id="assigned_product1" class="assigned_product" <?php if (isset($customer) && $customer->assigned_product == 1) {
+                                                                                                                        echo "checked";
+                                                                                                                    } ?>> Yes
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" id="assigned_product2" class="assigned_product" <?php if(isset($customer)  && $customer->assigned_product ==2){echo "checked";}?>> No
+                                                <input type="radio" id="assigned_product2" class="assigned_product" <?php if (isset($customer)  && $customer->assigned_product == 2) {
+                                                                                                                        echo "checked";
+                                                                                                                    } ?>> No
                                             </label>
                                             <input type="hidden" value="" name="assigned_product" id="assigned_product">
 
@@ -304,7 +362,9 @@
                                         <label for="inputEmail1" class="col-lg-4 col-sm-4 control-label">Notes</label>
                                         <div class="col-lg-8">
                                             <textarea class="form-control" rows="4" cols="70" id="notes" name="notes">
-                                            <?php if(isset($customer)){echo $customer->notes;}?>
+                                            <?php if (isset($customer)) {
+                                                echo $customer->notes;
+                                            } ?>
                                             </textarea>
                                         </div>
                                     </div>
@@ -313,8 +373,12 @@
                                         <label for="product_tax" class="col-lg-4 col-sm-4 control-label">Dflt Products Tax</label>
                                         <div class="col-lg-8">
                                             <select class="form-control" id="product_tax" name="product_tax">
-                                                <option value="1" <?php if(isset($customer) && $customer->product_tax == 1){echo "selected";}?>>General Customer</option>
-                                                <option value="2" <?php if(isset($customer) && $customer->product_tax == 2){echo "selected";}?>>General Customer</option>
+                                                <option value="1" <?php if (isset($customer) && $customer->product_tax == 1) {
+                                                                        echo "selected";
+                                                                    } ?>>General Customer</option>
+                                                <option value="2" <?php if (isset($customer) && $customer->product_tax == 2) {
+                                                                        echo "selected";
+                                                                    } ?>>General Customer</option>
                                             </select>
                                         </div>
                                     </div>
@@ -322,8 +386,12 @@
                                         <label for="service_tax" class="col-lg-4 col-sm-4 control-label">Dflt Services Tax</label>
                                         <div class="col-lg-8">
                                             <select class="form-control" id="service_tax" name="service_tax">
-                                                <option value="1" <?php if(isset($customer) && $customer->service_tax == 1){echo "selected";}?>>General Customer</option>
-                                                <option value="2" <?php if(isset($customer) && $customer->service_tax == 2){echo "selected";}?>>General Customer</option>
+                                                <option value="1" <?php if (isset($customer) && $customer->service_tax == 1) {
+                                                                        echo "selected";
+                                                                    } ?>>General Customer</option>
+                                                <option value="2" <?php if (isset($customer) && $customer->service_tax == 2) {
+                                                                        echo "selected";
+                                                                    } ?>>General Customer</option>
                                             </select>
                                         </div>
                                     </div>
@@ -341,7 +409,13 @@
                                 <label for="show_msg" class="col-lg-2 col-sm-2 control-label">Show Message</label>
                                 <div class="col-sm-10">
                                     <label class="radio-inline">
-                                        <input type="checkbox" name="show_msg" id="show_msg" <?php if(isset($customer) && $customer->show_msg == 1){echo "checked";}?> value="<?php if(isset($customer) && $customer->show_msg == 1){echo "1";}else{echo "0";}?>"> Yes, show the message
+                                        <input type="checkbox" name="show_msg" id="show_msg" <?php if (isset($customer) && $customer->show_msg == 1) {
+                                                                                                    echo "checked";
+                                                                                                } ?> value="<?php if (isset($customer) && $customer->show_msg == 1) {
+                                                                                                                echo "1";
+                                                                                                            } else {
+                                                                                                                echo "0";
+                                                                                                            } ?>"> Yes, show the message
                                     </label>
                                 </div>
                             </div>
@@ -349,7 +423,9 @@
                             <div class="form-group padd0">
                                 <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Message</label>
                                 <div class="col-lg-10">
-                                    <textarea class="form-control" rows="4" cols="70" id="msg" name="msg"><?php if(isset($customer) && $customer->show_msg == 1){echo $customer->msg;}?></textarea>
+                                    <textarea class="form-control" rows="4" cols="70" id="msg" name="msg"><?php if (isset($customer) && $customer->show_msg == 1) {
+                                                                                                                echo $customer->msg;
+                                                                                                            } ?></textarea>
                                 </div>
                             </div>
 
@@ -357,9 +433,15 @@
                                 <label for="section_id" class="col-lg-2 col-sm-2 control-label">Section</label>
                                 <div class="col-lg-4">
                                     <select class="form-control" id="section_id" name="section_id[]">
-                                        <option value="1" <?php if(isset($customer) && $customer->section_id == 1){echo "selected";}?>>Quote</option>
-                                        <option value="2" <?php if(isset($customer) && $customer->section_id == 2){echo "selected";}?>>Job</option>
-                                        <option value="3" <?php if(isset($customer) && $customer->section_id == 3){echo "selected";}?>>Invoice</option>
+                                        <option value="1" <?php if (isset($customer) && $customer->section_id == 1) {
+                                                                echo "selected";
+                                                            } ?>>Quote</option>
+                                        <option value="2" <?php if (isset($customer) && $customer->section_id == 2) {
+                                                                echo "selected";
+                                                            } ?>>Job</option>
+                                        <option value="3" <?php if (isset($customer) && $customer->section_id == 3) {
+                                                                echo "selected";
+                                                            } ?>>Invoice</option>
                                     </select>
                                 </div>
                             </div>
@@ -410,25 +492,25 @@
                                         </tr>
                                     </thead>
                                     <tbody id="contact_result">
-                                        <?php foreach($contact as $conv){
-                                            $job_title_details=App\Models\Job_title::find($conv->job_title_id);
+                                        <?php foreach ($contact as $conv) {
+                                            $job_title_details = App\Models\Job_title::find($conv->job_title_id);
                                             // echo "<pre>";print_r($job_title->name);die;
-                                            ?>
-                                        <tr>
-                                            <td><input type="checkbox" class="checkboxContactId" value="{{$conv->id}}"></td>
-                                            <td>{{$conv->contact_name}}</td>
-                                            <td>{{$job_title_details->name}}</td>
-                                            <td>{{$conv->email}}</td>
-                                            <td>{{$conv->telephone}}</td>
-                                            <td>{{$conv->mobile}}</td>
-                                            <td>{{$conv->address}}</td>
-                                            <td>{{$conv->city}}</td>
-                                            <td>{{$conv->country}}</td>
-                                            <td>{{$conv->postcode}}</td>
-                                            <td><?php echo ($conv->default_billing == 1)?"Yes":"No";?></td>
+                                        ?>
+                                            <tr>
+                                                <td><input type="checkbox" class="checkboxContactId" value="{{$conv->id}}"></td>
+                                                <td>{{$conv->contact_name}}</td>
+                                                <td>{{$job_title_details->name}}</td>
+                                                <td>{{$conv->email}}</td>
+                                                <td>{{$conv->telephone}}</td>
+                                                <td>{{$conv->mobile}}</td>
+                                                <td>{{$conv->address}}</td>
+                                                <td>{{$conv->city}}</td>
+                                                <td>{{$conv->country}}</td>
+                                                <td>{{$conv->postcode}}</td>
+                                                <td><?php echo ($conv->default_billing == 1) ? "Yes" : "No"; ?></td>
 
-                                        </tr>
-                                        <?php }?>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -480,9 +562,9 @@
                                         </tr>
                                     </thead>
                                     <tbody id="site_result">
-                                        <?php foreach($site as $sitev){
-                                            $job_title_detail=App\Models\Job_title::find($sitev->title_id);
-                                            ?>
+                                        <?php foreach ($site as $sitev) {
+                                            $job_title_detail = App\Models\Job_title::find($sitev->title_id);
+                                        ?>
                                             <tr>
                                                 <td><input type="checkbox" value="{{$sitev->id}}"></td>
                                                 <td>{{$sitev->contact_name}}</td>
@@ -495,8 +577,8 @@
                                                 <td>{{$sitev->country}}</td>
                                                 <td>{{$sitev->post_code}}</td>
                                                 <td></td>
-                                        </tr>
-                                        <?php }?>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -528,7 +610,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="login_result">
-                                        <?php foreach($login as $k=>$logv){?>
+                                        <?php foreach ($login as $k => $logv) { ?>
                                             <tr>
                                                 <td>{{++$k}}</td>
                                                 <td>{{$logv->name}}</td>
@@ -536,9 +618,9 @@
                                                 <td>{{$logv->email}}</td>
                                                 <td>{{$logv->telephone}}</td>
                                                 <td></td>
-                                                <td><?php echo($logv->status == 1)?"Active":"In-active";?></td>
-                                        </tr>
-                                        <?php }?>
+                                                <td><?php echo ($logv->status == 1) ? "Active" : "In-active"; ?></td>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -553,354 +635,354 @@
                 </form>
                 <!-- page end-->
             </div>
-           
+
 
         </section>
         <!-- page end-->
         <!-- Modal additionl_contact_model start here -->
         <div class="modal fade in" id="additionl_contact_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"> Add Customer Contact </h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">  
-                    <div class="foor-box-wrap foor-plan">
-                        <div class="custom-fieldset">
-                            <div class="custom-legend"><strong>Customer Contact</strong></div>
-                            <form id="contact_form">
-                            @csrf
-                            <input type="hidden" value="" name="customer_id" id="customer_id">
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Default Billing</label>
-                                <div class="col-lg-9">
-                                    <input type="radio" name="r" id="yes" class="billing"> Yes
-                                    <input type="radio" name="r" id="no" class="billing"> No
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Contact Name</label>
-                                <div class="col-lg-9">
-                                    <input type="text" name="customer_name" id="customer_name" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Job Title(Position)</label>
-                                <div class="col-lg-9">
-                                <select class="form-control who_noti" name="customer_job_titleid" id="customer_job_titleid">
-                                    <option selected disabled>Select Job Title</option>
-                                    <?php foreach($job_title as $titleval){?>
-                                    <option value="{{$titleval->id}}">{{$titleval->name}}</option>
-                                    <?php }?>
-                                </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Email</label>
-                                <div class="col-lg-9">
-                                    <input type="email" name="customer_email" id="customer_email" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Telephone</label>
-                                <div class="col-lg-9">
-                                    <input type="text" id="customer_telephone" name="customer_telephone" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Mobile</label>
-                                <div class="col-lg-9">
-                                <input type="text" id="customer_mobile" name="customer_mobile" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Fax</label>
-                                <div class="col-lg-9">
-                                <input type="text" id="customer_fax" name="customer_fax" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Address Details</label>
-                                <div class="col-lg-9">Same as Default
-                                <input type="checkbox" id="check" name="check">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Address</label>
-                                <div class="col-lg-9">
-                                <textarea name="customer_address" class="form-control" id="customer_address" rows="10" cols="10"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">City</label>
-                                <div class="col-lg-9">
-                                    <input type="text" id="customer_city" name="customer_city" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Country</label>
-                                <div class="col-lg-9">
-                                    <input type="text" id="customer_country" name="customer_country" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Post Code</label>
-                                <div class="col-lg-9">
-                                    <input type="text" id="customer_post_code" name="customer_post_code" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Country</label>
-                                <div class="col-lg-9">
-                                    <select id="customer_country_id" name="customer_country_id" class="form-control">
-                                        <option selected disabled>Select Country</option>
-                                        <?php foreach($country as $valc){?>
-                                            <option value="{{$valc->id}}">{{$valc->name}}</option>
-                                        <?php }?>
-                                    </select>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> Add Customer Contact </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="from_outside_border">
+                                    <div class="custom-legend"><strong>Customer Contact</strong></div>
+                                    <form id="contact_form">
+                                        @csrf
+                                        <input type="hidden" value="" name="customer_id" id="customer_id">
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Default Billing</label>
+                                            <div class="col-lg-9">
+                                                <input type="radio" name="r" id="yes" class="billing"> Yes
+                                                <input type="radio" name="r" id="no" class="billing"> No
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Contact Name</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="customer_name" id="customer_name" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Job Title(Position)</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control who_noti" name="customer_job_titleid" id="customer_job_titleid">
+                                                    <option selected disabled>Select Job Title</option>
+                                                    <?php foreach ($job_title as $titleval) { ?>
+                                                        <option value="{{$titleval->id}}">{{$titleval->name}}</option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Email</label>
+                                            <div class="col-lg-9">
+                                                <input type="email" name="customer_email" id="customer_email" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Telephone</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="customer_telephone" name="customer_telephone" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Mobile</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="customer_mobile" name="customer_mobile" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Fax</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="customer_fax" name="customer_fax" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Address Details</label>
+                                            <div class="col-lg-9">Same as Default
+                                                <input type="checkbox" id="check" name="check">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Address</label>
+                                            <div class="col-lg-9">
+                                                <textarea name="customer_address" class="form-control" id="customer_address" rows="3" cols="6"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">City</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="customer_city" name="customer_city" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Country</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="customer_country" name="customer_country" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Post Code</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="customer_post_code" name="customer_post_code" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Country</label>
+                                            <div class="col-lg-9">
+                                                <select id="customer_country_id" name="customer_country_id" class="form-control">
+                                                    <option selected disabled>Select Country</option>
+                                                    <?php foreach ($country as $valc) { ?>
+                                                        <option value="{{$valc->id}}">{{$valc->name}}</option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="noti_button">
+                                            <a href="javascript:" class="btn btn-primary" onclick="get_save_contact()">Save</a>
+                                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="noti_button">
-                            <a href="javascript:" class="btn btn-primary" onclick="get_save_contact()">Save</a>
-                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
-                        </div>
-                                            </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- Modal add site start here -->
-<div class="modal fade in" id="customer_site" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"> Add Customer Site </h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">  
-                    <div class="foor-box-wrap foor-plan">
-                        <div class="custom-fieldset">
-                            <!-- <div class="custom-legend"><strong>Customer Site</strong></div> -->
-                            <form id="site_form">
-                            @csrf
-                            <input type="hidden" value="" name="site_customer_id" id="site_customer_id">
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Site Name</label>
-                                <div class="col-lg-9">
-                                    <input type="text" name="site_name" id="site_name" class="form-control">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Contact Name</label>
-                                <div class="col-lg-9">
-                                    <input type="text" name="site_contact_name" id="site_contact_name" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Job Title(Position)</label>
-                                <div class="col-lg-9">
-                                <select class="form-control who_noti" name="site_title_id" id="site_title_id">
-                                    <option selected disabled>Select Job Title</option>
-                                    <?php foreach($job_title as $titleval){?>
-                                    <option value="{{$titleval->id}}">{{$titleval->name}}</option>
-                                    <?php }?>
-                                </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Company Name</label>
-                                <div class="col-lg-9">
-                                    <input type="text" name="company_name" id="company_name" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Email</label>
-                                <div class="col-lg-9">
-                                    <input type="email" name="site_email" id="site_email" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Telephone</label>
-                                <div class="col-lg-9">
-                                    <input type="text" id="site_telephone" name="site_telephone" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Mobile</label>
-                                <div class="col-lg-9">
-                                <input type="text" id="site_mobile" name="site_mobile" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Fax</label>
-                                <div class="col-lg-9">
-                                <input type="text" id="site_fax" name="site_fax" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Region</label>
-                                <div class="col-lg-9">
-                                <select class="form-control" name="site_region" id="site_region">
-                                    <option selected disabled>Select Region</option>
-                                   <option value="1">India</option>
-                                   <option value="2">Pakistan</option>
-                                   <option value="3">Afganistan</option>
-                                   <option value="4">China</option>
-                                   <option value="5">Korea</option>
-                                </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Address</label>
-                                <div class="col-lg-9">
-                                <textarea name="site_address" class="form-control" id="site_address" rows="10" cols="10"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">City</label>
-                                <div class="col-lg-9">
-                                    <input type="text" id="site_city" name="site_city" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Country</label>
-                                <div class="col-lg-9">
-                                    <input type="text" id="site_country" name="site_country" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Post Code</label>
-                                <div class="col-lg-9">
-                                    <input type="text" id="site_post_code" name="site_post_code" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Country</label>
-                                <div class="col-lg-9">
-                                    <select id="site_country_id" name="site_country_id" class="form-control">
-                                        <option selected disabled>Select Country</option>
-                                        <?php foreach($country as $valc){?>
-                                            <option value="{{$valc->id}}">{{$valc->name}}</option>
-                                        <?php }?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Default Catalogue</label>
-                                <div class="col-lg-9">
-                                    <select id="site_catalogue" name="site_catalogue" class="form-control">
-                                        <option selected disabled>Select Catalogue</option>
-                                        <option value="1">General</option>
-                                    </select>
-                                </div>
-                            </div>
+        <!-- Modal add site start here -->
+        <div class="modal fade in" id="customer_site" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> Add Customer Site </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="from_outside_border">
+                                    <!-- <div class="custom-legend"><strong>Customer Site</strong></div> -->
+                                    <form id="site_form">
+                                        @csrf
+                                        <input type="hidden" value="" name="site_customer_id" id="site_customer_id">
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Site Name</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="site_name" id="site_name" class="form-control">
+                                            </div>
+                                        </div>
 
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Notes</label>
-                                <div class="col-lg-9">
-                                <textarea name="customer_site_notes" class="form-control" id="customer_site_notes" rows="10" cols="10"></textarea>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Contact Name</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="site_contact_name" id="site_contact_name" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Job Title(Position)</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control who_noti" name="site_title_id" id="site_title_id">
+                                                    <option selected disabled>Select Job Title</option>
+                                                    <?php foreach ($job_title as $titleval) { ?>
+                                                        <option value="{{$titleval->id}}">{{$titleval->name}}</option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Company Name</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="company_name" id="company_name" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Email</label>
+                                            <div class="col-lg-9">
+                                                <input type="email" name="site_email" id="site_email" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Telephone</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="site_telephone" name="site_telephone" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Mobile</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="site_mobile" name="site_mobile" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Fax</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="site_fax" name="site_fax" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Region</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control" name="site_region" id="site_region">
+                                                    <option selected disabled>Select Region</option>
+                                                    <option value="1">India</option>
+                                                    <option value="2">Pakistan</option>
+                                                    <option value="3">Afganistan</option>
+                                                    <option value="4">China</option>
+                                                    <option value="5">Korea</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Address</label>
+                                            <div class="col-lg-9">
+                                                <textarea name="site_address" class="form-control" id="site_address" rows="3" cols="6"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">City</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="site_city" name="site_city" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Country</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="site_country" name="site_country" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Post Code</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="site_post_code" name="site_post_code" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Country</label>
+                                            <div class="col-lg-9">
+                                                <select id="site_country_id" name="site_country_id" class="form-control">
+                                                    <option selected disabled>Select Country</option>
+                                                    <?php foreach ($country as $valc) { ?>
+                                                        <option value="{{$valc->id}}">{{$valc->name}}</option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Default Catalogue</label>
+                                            <div class="col-lg-9">
+                                                <select id="site_catalogue" name="site_catalogue" class="form-control">
+                                                    <option selected disabled>Select Catalogue</option>
+                                                    <option value="1">General</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Notes</label>
+                                            <div class="col-lg-9">
+                                                <textarea name="customer_site_notes" class="form-control" id="customer_site_notes" rows="3" cols="6"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="noti_button">
+                                            <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="noti_button">
-                            <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
-                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
-                        </div>
-                                            </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- Customer Login add Modal start here -->
-<div class="modal fade in" id="customer_login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"> Add Customer Login </h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">  
-                    <div class="foor-box-wrap foor-plan">
-                        <div class="custom-fieldset">
-                            <!-- <div class="custom-legend"><strong>Customer Site</strong></div> -->
-                            <form id="login_form">
-                            @csrf
-                            <input type="hidden" value="" name="login_customer_id" id="login_customer_id">
-                            
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Email</label>
-                                <div class="col-lg-9">
-                                    <input type="email" name="login_email" id="login_email" class="form-control">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Password Type</label>
-                                <div class="col-lg-9">
-                                    <input type="radio" id="pass1" name="pass"> Generate Now
-                                    <input type="radio" id="pass2" name="pass" checked> Email Password
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Name</label>
-                                <div class="col-lg-9">
-                                    <input type="email" name="login_name" id="login_name" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Telephone</label>
-                                <div class="col-lg-9">
-                                <input type="text" id="login_telephone" name="login_telephone" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Access Right</label>
-                                <div class="col-lg-9">
-                                    <input type="checkbox" id="login_check" name="login_check" value="1" class="login_check"> Quotes
-                                    <input type="checkbox" id="login_check" name="login_check" value="2" class="login_check"> Jobs
-                                    <input type="checkbox" id="login_check" name="login_check" value="3" class="login_check"> Invoices
-                                    <input type="checkbox" id="login_check" name="login_check" value="4" class="login_check"> File Manager
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Projects</label>
-                                <div class="col-lg-9">
-                                <input type="radio" id="pro" class="pro" name="pro" checked> All
-                                <input type="radio" id="pro1" class="pro" name="pro"> Customise
-                                </div>
-                            </div>
-                            
 
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Notes</label>
-                                <div class="col-lg-9">
-                                <textarea name="login_notes" class="form-control" id="login_notes" rows="10" cols="10"></textarea>
+        <!-- Customer Login add Modal start here -->
+        <div class="modal fade in" id="customer_login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> Add Customer Login </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="from_outside_border">
+                                    <!-- <div class="custom-legend"><strong>Customer Site</strong></div> -->
+                                    <form id="login_form">
+                                        @csrf
+                                        <input type="hidden" value="" name="login_customer_id" id="login_customer_id">
+
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Email</label>
+                                            <div class="col-lg-9">
+                                                <input type="email" name="login_email" id="login_email" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Password Type</label>
+                                            <div class="col-lg-9">
+                                                <input type="radio" id="pass1" name="pass"> Generate Now
+                                                <input type="radio" id="pass2" name="pass" checked> Email Password
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Name</label>
+                                            <div class="col-lg-9">
+                                                <input type="email" name="login_name" id="login_name" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Telephone</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" id="login_telephone" name="login_telephone" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Access Right</label>
+                                            <div class="col-lg-9">
+                                                <input type="checkbox" id="login_check" name="login_check" value="1" class="login_check"> Quotes
+                                                <input type="checkbox" id="login_check" name="login_check" value="2" class="login_check"> Jobs
+                                                <input type="checkbox" id="login_check" name="login_check" value="3" class="login_check"> Invoices
+                                                <input type="checkbox" id="login_check" name="login_check" value="4" class="login_check"> File Manager
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Projects</label>
+                                            <div class="col-lg-9">
+                                                <input type="radio" id="pro" class="pro" name="pro" checked> All
+                                                <input type="radio" id="pro1" class="pro" name="pro"> Customise
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Notes</label>
+                                            <div class="col-lg-9">
+                                                <textarea name="login_notes" class="form-control" id="login_notes" rows="3" cols="6"></textarea>
+                                            </div>
+                                        </div>
+                              
+                                        <div class="noti_button">
+                                            <a href="javascript:" class="btn btn-primary" onclick="get_save_login()">Save</a>
+                                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="noti_button">
-                            <a href="javascript:" class="btn btn-primary" onclick="get_save_login()">Save</a>
-                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
-                        </div>
-                                            </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
         <!-- end here -->
     </section>
 </section>
@@ -966,13 +1048,13 @@
     }
 
     function open_additional_contact_model(id) {
-        if(id == 1){
+        if (id == 1) {
             $('#contact_form')[0].reset();
             $("#additionl_contact_model").modal('show');
-        }else if(id == 2){ 
+        } else if (id == 2) {
             $('#site_form')[0].reset();
             $("#customer_site").modal('show');
-        }else if(id == 3){
+        } else if (id == 3) {
             $('#login_form')[0].reset();
             $("#customer_login").modal('show');
         }
@@ -1025,16 +1107,17 @@
             }
         });
     }
-    function get_save_site(){
+
+    function get_save_site() {
         var token = '<?php echo csrf_token(); ?>'
         var customer_id = $("#site_customer_id").val();
-        var site_name=$("#site_name").val();
+        var site_name = $("#site_name").val();
         var contact_name = $("#site_contact_name").val();
         var title_id = $("#site_title_id").val();
-        var company_name=$("#company_name").val();
-        var region=$("#site_region").val();
-        var catalogue=$("#site_catalogue").val();
-        var notes=$("#customer_site_notes").val();
+        var company_name = $("#company_name").val();
+        var region = $("#site_region").val();
+        var catalogue = $("#site_catalogue").val();
+        var notes = $("#customer_site_notes").val();
         var email = $("#site_email").val();
         var telephone = $("#site_telephone").val();
         var mobile = $("#site_mobile").val();
@@ -1063,10 +1146,10 @@
                 country: country,
                 post_code: post_code,
                 country_id: country_id,
-                region:region,
-                notes:notes,
-                catalogue:catalogue,
-                company_name:company_name
+                region: region,
+                notes: notes,
+                catalogue: catalogue,
+                company_name: company_name
             },
             success: function(data) {
                 console.log(data);
@@ -1075,40 +1158,49 @@
             }
         });
     }
-    function get_save_login(){
+
+    function get_save_login() {
         var token = '<?php echo csrf_token(); ?>'
-        var email=$('#login_email').val();
-        var customer_id=$("#login_customer_id").val();
+        var email = $('#login_email').val();
+        var customer_id = $("#login_customer_id").val();
         var password_type;
         if ($('#pass1').is(':checked')) {
             password_type = 1;
         } else {
             password_type = 2;
         }
-        var name=$("#login_name").val();
-        var telephone=$("#login_telephone").val();
-       
-        var access_rights=[];
-        $('.login_check').each(function(){
+        var name = $("#login_name").val();
+        var telephone = $("#login_telephone").val();
+
+        var access_rights = [];
+        $('.login_check').each(function() {
             if ($(this).is(':checked')) {
                 access_rights.push($(this).val());
-            } 
+            }
         });
-        access_rights=access_rights;
+        access_rights = access_rights;
         var projects;
         if ($('#pro').is(':checked')) {
             projects = 1;
         } else {
             projects = 2;
         }
-        var notes=$("#login_notes").val();
+        var notes = $("#login_notes").val();
         // console.log(access_rights);
         // return false;
         $.ajax({
             type: "POST",
             url: "{{url('admin/customer_login_save')}}",
             data: {
-                _token: token,email:email,customer_id:customer_id,password_type:password_type,name:name,telephone:telephone,access_rights:access_rights,projects:projects,notes:notes
+                _token: token,
+                email: email,
+                customer_id: customer_id,
+                password_type: password_type,
+                name: name,
+                telephone: telephone,
+                access_rights: access_rights,
+                projects: projects,
+                notes: notes
             },
             success: function(data) {
                 console.log(data);

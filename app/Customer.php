@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Project;
+use App\Models\Job_title;
+use App\Models\Constructor_customer_site;
+use App\Models\Constructor_additional_contact;
 
 class Customer extends Model
 {
@@ -51,8 +55,12 @@ class Customer extends Model
         'status',
     ];
 
-    public static function getConvertedCustomersCount(){
-        return Customer::where(['is_converted' => '1', 'status' => 1])->count();
+    public static function getConvertedCustomersCount($home_id){
+        return Customer::where(['is_converted' => '1', 'status' => 1])->where('home_id', $home_id)->count();
+    }
+
+    public static function getConvertedCustomers($home_id){
+        return Customer::where(['is_converted' => '1', 'status' => 1])->select('id','contact_name')->where('home_id', $home_id)->get();
     }
 
     public static function converToCustomer($id){
@@ -63,10 +71,15 @@ class Customer extends Model
         if (isset($data['section_id'])) {
             $data['section_id'] = implode(',',$data['section_id']);
         }
-        $insert=self::updateOrCreate(
-            ['id' => $data['id'] ?? null],
-            $data
-        );
+        // echo "<pre>";print_r($data);die;
+        try {
+            $insert=self::updateOrCreate(
+                ['id' => $data['id'] ?? null],
+                $data
+            );
+        } catch (\Exception $e) {
+            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+        }
         $data=['id'=>$insert->id,'name'=>$insert->name];
         return $data;
     }
@@ -74,22 +87,33 @@ class Customer extends Model
 
         $query = DB::table('customers')
         ->join('leads', 'customers.id', '=', 'leads.customer_id')
-        ->select('customers.*', 'leads.*')
+        ->join('lead_statuses', 'lead_statuses.id', 'leads.status')
+        ->select('customers.*', 'leads.*', 'lead_statuses.title as status', 'lead_statuses.id as status_id')
         ->orderBy('leads.created_at', 'desc')
         ->where('leads.home_id', $home_id);
    
-        if($lastSegment ===  "leads") {
-            return $query->whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6'])->whereNotIn('leads.authorization_status', [1])->get();
-        } else if($lastSegment === "unassigned"){
+        if ($lastSegment ===  "leads") {
+            return $query->whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->get();
+        } else if ($lastSegment === "unassigned"){
             return $query->where('assign_to', 0)->get();
-        } else if($lastSegment === "rejected"){
+        } else if ($lastSegment === "rejected"){
             return $query->where('leads.status', '6')->get();
-        } else if($lastSegment === "converted"){
+        } else if ($lastSegment === "converted"){
             return $query->where('customers.is_converted', 1)->where('customers.status', 1)->get();
         } else if ($lastSegment === "myLeads"){
-            return $query->where('user_id', Auth::user()->id)->get();
-        }else if($lastSegment === "authorization"){
-            return $query->where('leads.authorization_status', 1)->get();
+            return $query->where('user_id', Auth::user()->id)->whereNotIn('leads.status', [7])->get();
+        } else if ($lastSegment === "authorization"){
+            return $query->where('leads.status', 7)->get();
+        } else if ($lastSegment === "actioned") {
+            return DB::table('customers')
+                ->join('leads', 'leads.customer_id', '=','customers.id')
+                ->join('lead_tasks', 'lead_tasks.lead_ref', '=', 'leads.lead_ref')
+                ->join('lead_statuses', 'lead_statuses.id', 'leads.status')
+                ->select('leads.lead_ref', 'customers.contact_name', 'customers.name', 'customers.email', 'customers.telephone', 'customers.mobile', 'leads.assign_to', 'lead_statuses.title as status', 'lead_statuses.id as status_id','customers.website','customers.address', 'customers.city', 'customers.country', 'customers.postal_code', 'leads.id as id', 'Customers.id as customer_id', 'leads.authorization_status')
+                ->orderBy('leads.created_at', 'desc')
+                ->where('leads.home_id', $home_id)
+                ->distinct()
+                ->get();    
         }
     }
 
@@ -100,5 +124,24 @@ class Customer extends Model
         ->where('leads.id', $id)
         ->first();
     }
-    
+    public static function get_customer_list_Attribute($home_id,$list_mode){
+        $status = ($list_mode == 'ACTIVE') ? 1 : 0;
+        return Customer::where(['is_converted' => '1', 'status' => $status,'home_id'=>$home_id])->get();
+    }
+
+    public function sites()
+    {
+        return $this->hasMany(Constructor_customer_site::class, 'customer_id');
+    }
+    public function additional_contact()
+    {
+        return $this->hasMany(Constructor_additional_contact::class, 'customer_id');
+    }
+    public function customer_project()
+    {
+        return $this->hasMany(Project::class, 'customer_name');
+    }
+    public function customer_profession(){
+        return $this->hasOne(Job_title::class, 'id');
+    }
 }

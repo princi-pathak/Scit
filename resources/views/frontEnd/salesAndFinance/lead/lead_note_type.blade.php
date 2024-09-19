@@ -82,34 +82,36 @@
   <!-- popup start -->
   <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="histroyTypeModel" class="modal fade">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content add_Customer">
             <div class="modal-header terques-bg">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                <h4 class="modal-title pupTitle">History Type - Add</h4>
+                <button aria-hidden="true" data-bs-dismiss="modal" class="close" type="button">×</button>
+                <h5 class="modal-title pupTitle">History Type - Add</h5>
             </div>
             <div class="modal-body">
                 <form action="" id="lead_notes_type_form">
                     @csrf
                     <div><span id="error-message" class="error"></span></div>
-                    <div class="form-group">
-                        <label class="col-lg-3 col-sm-3 control-label">Histroy Type</label>
+                    <div class="row form-group">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Histroy Type</label>
                         <div class="col-md-9">
                             <input type="hidden" name="lead_notes_type_id" id="lead_notes_type_id">
                             <input type="text" name="title" class="form-control editInput " placeholder="History Type" id="title">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 col-sm-3 ">Status</label>
-                        <select name="status" id="status" class="form-control editInput">
-                            <option value="1">Active</option>
-                            <option value="0">InActive</option>
-                        </select>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
+                        <div class="col-md-9">
+                            <select name="status" id="status" class="form-control editInput">
+                                <option value="1">Active</option>
+                                <option value="0">InActive</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveChanges">Save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn profileDrop" id="saveChanges">Save</button>
+                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

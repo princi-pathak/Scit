@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session,DB;
+use App\Customer;
 use App\Models\Job;
 use App\Models\Product;
 use App\Models\Project;
@@ -95,9 +96,12 @@ class JobsController extends Controller
         $data['job_details']=Job::find($key);
         $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1])->get();
         $data['job_type']=Job_type::where('status',1)->get();
-        // echo "<pre>";print_r($data['job_details']);die;
+        $data['country']=Country::all_country_list();
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')->join('product_categories as cat','cat.id','=','pr.cat_id')->get();
-        // echo "<pre>";print_r($data['product_details1']);die;
+        $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
+        // echo "<pre>";print_r($data['customers']);die;
         return view('backEnd.jobs_management.job_form',$data);
     }
     public function search_value(Request $request){
@@ -169,8 +173,10 @@ class JobsController extends Controller
             $table->customer_notes=$request->customer_notes;
             $table->internal_notes=$request->internal_notes;
             $table->attachments=$imageName;
-            $table->save();
+            $table->site_country_id=$request->site_country_code;
+            $table->country_id=$request->country_code;
             // echo "<pre>";print_r($table);die;
+            $table->save();
             $product_detail_id=$request->product_detail_id;
             for($i=0;$i<count($product_detail_id);$i++){
                 $table1=new Construction_jobassign_product;
@@ -221,6 +227,8 @@ class JobsController extends Controller
             $table->customer_notes=$request->customer_notes;
             $table->internal_notes=$request->internal_notes;
             $table->attachments=$imageName;
+            $table->site_country_id=$request->site_country_id;
+            $table->country_id=$request->country_code;
             $table->save();
             // echo "<pre>";print_r($table);die;
             $product_detail_id=$request->product_detail_id;
@@ -979,6 +987,9 @@ class JobsController extends Controller
         $data['task']=$task;
         $data['page']='project_list';
         $data['del_status']=0;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
         return view('backEnd.jobs_management.project_form',$data);
     }
     public function project_save_data(Request $request){
@@ -1332,6 +1343,13 @@ class JobsController extends Controller
         $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
+    }
+    public function get_customer_details(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $customer_id=$request->customer_id;
+        $customers = Customer::with('sites','additional_contact','customer_project')->where('id', $customer_id)->get();
+        // echo "<pre>";print_r($customers);die;
+        return response()->json($customers);
     }
     
 }

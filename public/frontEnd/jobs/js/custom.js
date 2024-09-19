@@ -1,23 +1,77 @@
-
+//   Data Table Js
+// $(document).ready(function() {
+//   $('#exampleOne').DataTable( {
+//       columnDefs: [ {
+//           orderable: false,
+//           className: 'select-checkbox',
+//           targets:   0
+//       } ],
+//       select: {
+//           style:    'os',
+//           selector: 'td:first-child'
+//       },
+//       order: [[ 1, 'asc' ]]
+//   } );
+// } );
 
 $(document).ready(function() {
-  $('#exampleOne').DataTable( {
-      columnDefs: [ {
+  $('#exampleOne').DataTable({
+      columnDefs: [{
           orderable: false,
           className: 'select-checkbox',
-          targets:   0
-      } ],
+          targets: 0
+      }],
       select: {
-          style:    'os',
+          style: 'os',
           selector: 'td:first-child'
       },
-      order: [[ 1, 'asc' ]]
-  } );
-} );
+      order: [[1, 'asc']],
+      language: {
+          paginate: {
+              previous: "Previous", // Change this text
+              next: "Next"          // Change this text
+          },
+          info: "Showing _START_ to _END_ of _TOTAL_ entries", // This text can be adjusted as needed
+          infoEmpty: "No entries available",
+          infoFiltered: "(filtered from _MAX_ total entries)",
+          lengthMenu: "Show _MENU_ entries",
+          search: "Search:",
+          zeroRecords: "No matching records found"
+      },
+      paging: true, 
+  });
+});
+
+
+// CRM JS
+
+document.getElementById('onclickbtnHideShow').addEventListener('click', function(){
+  var element = document.getElementById('showDivCont');
+  element.classList.toggle('show');
+});
+
+//End  CRM JS
 
 
 
+// search leads show search Filter
+function hideShowDiv() {
+  let div = document.getElementById("divTohide");
 
+  if (div.style.display === 'none' || div.style.opacity === '0') {
+      div.style.display = 'block';
+      div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
+      div.style.opacity = '1';
+  } else {
+      div.style.height = '0px';
+      div.style.opacity = '0';
+      // Use a timeout to set display to none after the transition
+      setTimeout(() => {
+          div.style.display = 'none';
+      }, 500); // 500ms matches the CSS transition duration
+  }
+}
+// end search leads show search Filter js
 
 // *******************PaiChart
 
@@ -267,6 +321,9 @@ zingchart.render({
 
     // ************************************************************************************************
 
+
+
+
 $(window).scroll(function () {
     if ($(this).scrollTop() > 250) {
         $('.sticky-top').addClass('sticky-nav').css('top', '0px');
@@ -274,10 +331,6 @@ $(window).scroll(function () {
         $('.sticky-top').removeClass('sticky-nav').css('top', '-100px');
     }
   });
-
-
-//   Data Table Js
-
 
 
 
