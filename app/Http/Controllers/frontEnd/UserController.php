@@ -16,10 +16,11 @@ class UserController extends Controller
 			return redirect('/');
 		}
 		if($request->isMethod('post')){
+			// dd($request);
 			$data 		  = $request->input();
-			 $username 	  = $data['username']; 
-			  $hme_id 	  = $data['home']; 
-			 $current_date = date('m/d/Y');
+			$username 	  = $data['username']; 
+			$hme_id 	  = $data['home']; 
+			$current_date = date('m/d/Y');
 			
 			// $current_date = '10/03/2018';
 			// echo "<pre>"; print_r($current_date);  
@@ -45,8 +46,7 @@ class UserController extends Controller
 									// echo "<pre>"; print_r($user_info); die; 
 									$new_home_ids = $hme_id.','.$user_info->home_id;
 							    	$new_home_ids = implode(',',array_unique(explode(',', $new_home_ids)));
-							    	$update_home_id = User::where('user_name',$username)
-							    						->update(['home_id'=> $new_home_ids]);
+							    	$update_home_id = User::where('user_name',$username)->update(['home_id'=> $new_home_ids]);
 									//$monolog = \Log::getMonolog();
 									//echo '<pre>'; print_r($monolog); die;
 									//saving log start
@@ -127,20 +127,20 @@ class UserController extends Controller
 									return redirect()->back()->with('error','Incorrect email or password combination.'); 
 								}
 							}	
-							else { 
+							else {  //echo "string4"; die;
 								return redirect()->back()->with('error','Incorrect email or password combination.'); 
 							}
 						}
 					}
-					else {    
-						return redirect()->back()->with('error','Incorrect email or password combination.'); 
+					else {   // echo "string5"; die;
+						// return redirect()->back()->with('error','Incorrect email or password combination.'); 
+						return redirect()->back()->with('error','You are not authorized to acces this home.'); 
 					}
 				}else{ 
 					if((!empty($user_info->login_date)) && ($user_info->login_date != NULL)){
 						
 						if($current_date == $user_info->login_date){
 							if(Auth::attempt(['user_name'=>$data['username'], 'password'=>$data['password'], 'login_home_id'=>$user_info->login_home_id ])) { 
-								
 								//check is user already logged in
 								$logged_in = Auth::user()->logged_in;
 								if($logged_in == '1'){

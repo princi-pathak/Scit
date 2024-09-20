@@ -192,10 +192,15 @@ class ManagerController extends Controller
             $data = $request->input();
             $company_ids = implode(',', $data['company_id']);
             // echo "<pre>"; print_r($data['company_id']);
-            if(!empty($company_ids)){
-                $home_ids = Home::select('id')->whereIn('admin_id',$data['company_id'])->get()->toArray();
-                $home_ids = array_map(function($v){ return $v['id'];  }, $home_ids);
-                $home_ids = implode(',', $home_ids);
+
+            if(isset($request->allHome)){
+                if(!empty($company_ids)){
+                    $home_ids = Home::select('id')->whereIn('admin_id',$data['company_id'])->get()->toArray();
+                    $home_ids = array_map(function($v){ return $v['id'];  }, $home_ids);
+                    $home_ids = implode(',', $home_ids);
+                }
+            } else {
+                $home_ids = implode(',', $request->homes);
             }
 
             $user = User::find($user_id);
