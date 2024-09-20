@@ -13,8 +13,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
-    <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css"> -->
+    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script> -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
