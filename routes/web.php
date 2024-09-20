@@ -5,6 +5,7 @@ use App\Http\Controllers\backEnd\salesfinance\LeadController as BackendLeadContr
 use App\Http\Controllers\backEnd\salesfinance\GeneralController;
 use App\Http\Controllers\frontEnd\salesFinance\LeadController as FrontendLeadController;
 use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteController;
+use App\Http\Controllers\backEnd\superAdmin\HomeController;
 
 
 Route::get('clear', function () {
@@ -968,11 +969,17 @@ Route::match('get', 'admin/set-password/{system_admin_id}/{security_code}', 'App
 Route::match(['get', 'post'], 'admin/system-admin/set-password', 'App\Http\Controllers\backEnd\superAdmin\AdminController@set_password_system_admin');
 //paypal
 Route::match(['get', 'post'], '/system-admin/home/payment/success/{system_admin_id}', 'App\Http\Controllers\backEnd\superAdmin\HomeController@success');
+
+Route::post('/admin/getHomeList', [HomeController::class, 'getHomeList'])->name('admin.getHomeList');
+
+// Route::post('/admin/getHomeList', 'App\Http\Controllers\backEnd\superAdmin\HomeController@getHomeList');
 //paypal
 Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function () {
 	//download form  As PDF 
 	Route::match(['get', 'post'], '/DownloadFormpdf/{id}', 'App\Http\Controllers\backEnd\superAdmin\UserController@DownloadFormpdf');
 	
+	
+
 
 	Route::get('/', 'App\Http\Controllers\backEnd\AdminController@dashboard');
 	// 	Route::get('/dashboard', 'App\Http\Controllers\backEnd\AdminController@dashboard');

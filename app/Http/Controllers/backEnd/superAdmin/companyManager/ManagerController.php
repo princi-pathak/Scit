@@ -59,15 +59,20 @@ class ManagerController extends Controller
         $home_id = $admin->home_id; 
         //$del_status = '0';
         if($request->isMethod('post')) {
+            // dd($request);
             
             $data = $request->input();
             // echo "<pre>"; print_r($data); die;
             $company_ids = implode(',', $data['company_id']);
-            
-            if(!empty($company_ids)){
-                $home_ids = Home::select('id')->whereIn('admin_id',$data['company_id'])->get()->toArray();
-                $home_ids = array_map(function($v){ return $v['id'];  }, $home_ids);
-                $home_ids = implode(',', $home_ids);
+
+            if(isset($request->allHome)){
+                if(!empty($company_ids)){
+                    $home_ids = Home::select('id')->whereIn('admin_id',$data['company_id'])->get()->toArray();
+                    $home_ids = array_map(function($v){ return $v['id'];  }, $home_ids);
+                    $home_ids = implode(',', $home_ids);
+                }
+            } else {
+                $home_ids = implode(',', $request->homes);
             }
             
 
