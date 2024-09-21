@@ -28,7 +28,7 @@ class Job_type extends Model
         } catch (\Exception $e) {
             return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
         }
-        return true;
+        return $insert->id;
     }
     
 }

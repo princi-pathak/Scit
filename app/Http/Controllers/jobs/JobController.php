@@ -80,38 +80,45 @@ class JobController extends Controller
     }
     
     public function job_type_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
         $home_id = Auth::user()->home_id;
        $data= Job_type::job_type_save_data($request->all());
        if($data){
-        $all_data=Job_type::where(['home_id'=>$home_id,'status'=>1])->get();
-        $html = '';
-        foreach($all_data as $key=>$val){
-            $html.='<tr>
-                        <td></td>
-                        <td>'.++$key.'</td>
-                        <td>'.$val->name.'</td>
-                       <td>' . (($val->status == 1) ? "Yes" : "No") . '</td>
-                        <td>'.$val->default_days.'</td>
-                        <td><span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span></td>
-                        <td>-</td>
-                        <td><span class="grencheck"><i class="fa-solid fa-circle-check"></i></span></td>
-                        <td> <div class="d-inline-flex align-items-center ">
-                                <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                        Action
-                                    </a>
-                                    <div class="dropdown-menu fade-up m-0">
-                                        <a href="javascript:void(0)" onclick="get_model_with_id('.$val->id.')" class="dropdown-item">Edit Details</a>
-                                        <hr class="dropdown-divider">
-                                        <a href="#!" class="dropdown-item">Manage Workflow</a>
+        if(isset($request->key) && $request->key != ''){
+            $result=Job_type::find($data);
+            $html='<option value="'.$result->id.'">'.$result->name.'</option>';
+            return $html;
+        }else{
+            $all_data=Job_type::where(['home_id'=>$home_id,'status'=>1])->get();
+            $html = '';
+            foreach($all_data as $key=>$val){
+                $html.='<tr>
+                            <td></td>
+                            <td>'.++$key.'</td>
+                            <td>'.$val->name.'</td>
+                        <td>' . (($val->status == 1) ? "Yes" : "No") . '</td>
+                            <td>'.$val->default_days.'</td>
+                            <td><span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span></td>
+                            <td>-</td>
+                            <td><span class="grencheck"><i class="fa-solid fa-circle-check"></i></span></td>
+                            <td> <div class="d-inline-flex align-items-center ">
+                                    <div class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                            Action
+                                        </a>
+                                        <div class="dropdown-menu fade-up m-0">
+                                            <a href="javascript:void(0)" onclick="get_model_with_id('.$val->id.')" class="dropdown-item">Edit Details</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="#!" class="dropdown-item">Manage Workflow</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>';
+                            </td>
+                        </tr>';
 
+            }
+            return response()->json(['success'=>'true','message' => "Successfully  Done",'html_result'=>$html], 200);
         }
-        return response()->json(['success'=>'true','message' => "Successfully  Done",'html_result'=>$html], 200);
        } else {
         return response()->json(['success'=>'true','message' => "Successfully  Done",'data'=>$html], 200);
        }
@@ -248,25 +255,33 @@ class JobController extends Controller
         $data['customer_types']=Customer_type::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['job_title']=Job_title::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['region']=Constructor_region::where(['home_id'=>$home_id,'status'=>1])->get();
+        $data['product_count']=Product::count();
         // $data['site']=Constructor_customer_site::where('customer_id',$user_id)->get();
-        // echo "<pre>";print_r($data['site']);die;
+        // echo "<pre>";print_r($data['last_job_id']);die;
         return view('frontEnd.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
+        $home_id=$request->home_id;
+
         if ($request->hasFile('attachments')) {
             $imageName = time().'.'.$request->attachments->extension();      
             $request->attachments->move(public_path('images/jobs'), $imageName);
-
-            $data=[
-                'id'=>$request->id,
-                'last_job_id'=>$request->last_job_id,
-                'attachments'=>$imageName,
-            ];
-            $job_id=Job::job_save($data);
+            $requestData = $request->all();
+            $requestData['attachments'] = $imageName;
         } else {
-            $job_id=Job::job_save($request->all());
+            $requestData = $request->all();
         }
+        $job_id=Job::job_save($requestData);
+        // echo "<pre>";print_r($job_id);die;
+        if(isset($request->quantity) && $request->quantity !=''){
+            $job_product= $this->save_job_product($job_id,$request->all());
+        }
+        
+        if(isset($request->Appointmentuser_id) && $request->Appointmentuser_id !=''){
+            $appointment=$this->get_save_appointment($job_id,$request->all());
+        }
+        // echo "<pre>";print_r($job_product);die;
         
         return response()->json($job_id);
 
@@ -315,43 +330,45 @@ class JobController extends Controller
                 <td><button type="button" class="btn btn-danger" onclick="removeRow('.$product_details->id.')">Delete<input type="hidden" value="'.$product_details->id.'" name="product_detail_id[]" id="product_detail_id"></button></td>
             ';
     }
-    public function save_job_product(Request $request){
-        // echo "<pre>";print_r($request->all());die;
-        $quantity=$request->quantity;
+    public function save_job_product($job_detail,$data){
+        // echo "<pre>";print_r($job_detail);die;
+        $quantity=$data['quantity'];
         for($i=0;$i<count($quantity);$i++){
             $table=new Construction_jobassign_product;
-            $table->job_id=$request->id;
-            $table->product_id=$request->product_detail_id[$i];
-            $table->qty=$request->quantity[$i];
+            $table->job_id=$job_detail['id'];
+            $table->product_id=$data['product_detail_id'][$i];
+            $table->qty=$data['quantity'][$i];
             $table->save();
         }
         
-        $job_table=Job::find($request->id);
-        $job_table->pay_amount=$request->final_amount;
-        $job_table->save();
-        echo "done";
+        // $job_table=Job::find($request->id);
+        // $job_table->pay_amount=$request->final_amount;
+        // $job_table->save();
+        // echo "done";
+        return true;
     }
-    public function get_save_appointment(Request $request){
-        // echo "<pre>";print_r($request->all());die;
-        $data=[
-            'user_id'=>$request->user_id,
-            'home_id'=>$request->home_id,
-            'job_id'=>$request->last_job_id,
-            'appointment_type_id'=>$request->appointment_type_id,
-            'start_date'=>$request->appointment_start_date,
-            'start_time'=>$request->start_time,
-            'end_date'=>$request->end_date,
-            'end_time'=>$request->end_time,
-            'appointment_checkbox'=>$request->appointment_checkbox,
-            'appointment_status'=>$request->appointment_status,
-            'appointment_time'=>$request->appointment_time,
-            'priority'=>$request->priority,
-            'alert_by'=>$request->alert_by,
-            'notes'=>$request->appointment_notes
-        ];
+    public function get_save_appointment($job_detail,$data){
         // echo "<pre>";print_r($data);die;
-        $result= Construction_job_appointment::save_appointement($data);
-        return response()->json($result);
+        $array_data=[
+            'user_id'=>$data['Appointmentuser_id'],
+            'home_id'=>$data['home_id'],
+            'job_id'=>$job_detail['id'],
+            'appointment_type_id'=>$data['appointment_type_id'],
+            'start_date'=>$data['appointment_start_date'],
+            'start_time'=>$data['start_time'],
+            'end_date'=>$data['end_date'],
+            'end_time'=>$data['end_time'],
+            'appointment_checkbox'=>$data['appointment_checkbox'],
+            'appointment_status'=>$data['appointment_status'],
+            'appointment_time'=>$data['appointment_time'],
+            'priority'=>$data['priority'],
+            'alert_by'=>$data['alert_by'],
+            'notes'=>$data['appointment_notes']
+        ];
+        // echo "<pre>";print_r($array_data);die;
+        $result= Construction_job_appointment::save_appointement($array_data);
+        return true;
+        // return response()->json($result);
         
     }
     public function new_appointment_add_section(Request $request){
