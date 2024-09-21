@@ -62,12 +62,12 @@ class Job extends Model
         'status',
     ];
     public static function job_save($data){
-        // echo "<pre>";print_r($data);die;
+        // echo "<pre>";print_r($data['attachments']);die;
         $last_id=$data['last_job_id'];
         if($last_id == ''){
             $job_ref="JOB-1";    
         }else {
-            if($data['id'] == '') {
+            if($data['id'] != '') {
                 $job_ref="JOB-".$data['last_job_id'];
                 
             }else {
@@ -75,7 +75,15 @@ class Job extends Model
             }
             
         }
+        if(isset($data['attachments'])){
+            $data['attachments']=$data['attachments'];
+        }
+       
         $data['job_ref'] = $job_ref;
+        if(isset($data['final_amount'])){
+            $data['pay_amount']=$data['final_amount'];
+        }
+        
         try {
             $insert=self::updateOrCreate(
                 ['id' => $data['id'] ?? null],
@@ -84,7 +92,7 @@ class Job extends Model
         } catch (\Exception $e) {
             return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
         }
-            $data=['id'=>$insert->id,'name'=>$insert->name];
+            $data=['id'=>$insert->id,'name'=>$insert->name,'job_ref'=>$insert->job_ref];
             return $data;
     }
     
