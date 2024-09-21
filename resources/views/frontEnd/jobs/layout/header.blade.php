@@ -13,8 +13,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
-    <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css"> -->
+    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script> -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
@@ -1698,9 +1698,7 @@ $access_rights = explode(',', $rights);
         }
         // CRM Notes Js End for model show
 
-
-
-
+        
         // CRM Complaints History Start for model show
         const userCompliantsModal = document.getElementById('userCompliantsModal');
         const CompHistoryModal = document.getElementById('CompHistoryModal');
@@ -1737,9 +1735,6 @@ $access_rights = explode(',', $rights);
             setZIndexForBackdrop(1055); // Adjust this value as necessary
         }
         // CRM Complaints History End for model show
-
-
-
 
         const CRMmainCheckbox = document.getElementById('CRMyeson');
         const CRMoptionsDiv = document.getElementById('CRMoptionsDiv');

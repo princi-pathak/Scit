@@ -156,7 +156,7 @@ class LeadController extends Controller
         foreach ($data as $value) {
             $record = [
                 'id' => $value->id,
-                'user_id' => $value->id,
+                'user_id' => $value->user_id,
                 'title' => $value->title,
                 'task_type_id' => $value->task_type_id,
                 'start_date' => $value->start_date,
@@ -857,8 +857,8 @@ class LeadController extends Controller
 
         $validator = Validator::make($request->all(), [
             'lead_id' => 'required',
-            'task_type_id' => 'required',
-            'user_id' => 'required'
+            'task_type_id' => 'required'
+            // 'user_id' => 'required'
         ]);
 
         if ($request->task == "task_form") {
@@ -868,11 +868,14 @@ class LeadController extends Controller
                 'start_time' => 'required',
                 'end_date' => 'required',
                 'end_time' => 'required',
+                'user_id' => 'required'
             ]);
         } elseif ($request->timer == "timer_form") {
             $validator = Validator::make($request->all(), [
                 'title_timer' => 'required',
+                'user_id_timer' => 'required'
             ]);
+
         }
 
         if ($validator->fails()) {
@@ -893,7 +896,7 @@ class LeadController extends Controller
         $values = [
             'home_id' => Auth::user()->home_id,
             'lead_id' => $request->lead_id,
-            'user_id' => $request->user_id,
+            'user_id' => $request->user_id ?? $request->user_id_timer,
             'title' => $request->title ?? $request->title_timer,
             'task_type_id' => $request->task_type_id ?? $request->task_type_id_time,
             'start_date' => $request->start_date ?? Carbon::now()->toDateString(),

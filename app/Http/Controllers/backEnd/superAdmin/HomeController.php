@@ -503,4 +503,13 @@ class HomeController extends Controller
         }
     }
 
+    public function getHomeList(Request $request){
+        $data = Home::getHomeFromConpany($request->companyId);
+        if ($data) {
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'Data' => 'No Data']);
+        }
+    }
+
 }
