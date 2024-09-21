@@ -36,7 +36,8 @@ class CRMLeadTask extends Model
     public static function getCRMLeadTaskData($lead_id, $home_id){
         return DB::table('crm_lead_tasks')
         ->join('lead_tasks', 'lead_tasks.id', '=', 'crm_lead_tasks.task_type_id')
-        ->select('crm_lead_tasks.*', 'lead_tasks.title as lead_task_title')
+        ->join('user', 'user.id','=','crm_lead_tasks.user_id')
+        ->select('crm_lead_tasks.*', 'lead_tasks.title as lead_task_title','user.name as userName')
         ->where(['crm_lead_tasks.lead_id'=> $lead_id, 'crm_lead_tasks.home_id' => $home_id])
         ->get();
 
@@ -84,7 +85,7 @@ class CRMLeadTask extends Model
         ->where([
             ['crm_lead_tasks.lead_id', '=', $lead_id],
             ['crm_lead_tasks.home_id', '=', $home_id],
-            ['crm_lead_tasks.is_completed', '=', 0]
+            ['crm_lead_tasks.is_completed', '=', 1]
         ])
         ->get();
     }

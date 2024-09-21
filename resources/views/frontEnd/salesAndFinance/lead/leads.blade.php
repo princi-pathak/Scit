@@ -538,7 +538,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Title <span class="red-text">*</span></label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" class="form-control editInput" id="staticEmail" name="title" value="">
+                                                                            <input type="text" class="form-control editInput" id="taskTitle" name="title" value="">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
@@ -859,7 +859,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task User <span class="red-text">*</span></label>
                                                                         <div class="col-sm-8">
-                                                                            <select class="form-control editInput" name="user_id" id="">
+                                                                            <select class="form-control editInput" name="user_id_timer" id="">
                                                                                 @foreach($users as $value)
                                                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                                                                 @endforeach
@@ -1705,9 +1705,6 @@
         });
     }
 
-
-
-
     function ShowTaskOnDate(element, value) {
 
         var notShowOnComplete = document.getElementById('notShowOnComplete');
@@ -2159,7 +2156,7 @@
                         row.appendChild(dateCell);
 
                         const nameCell = document.createElement('td');
-                        nameCell.innerHTML = "<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>";
+                        nameCell.innerHTML =item.userName;
                         row.appendChild(nameCell);
 
                         const phoneCell = document.createElement('td');
@@ -2396,7 +2393,7 @@
     function openModal(type, id) {
         console.log(id);
         getLeadTaskType();
-
+        getUserList();
         if(id != null){
 
             $.ajax({
@@ -2404,7 +2401,24 @@
                 method: 'POST',
                 data: {id: id},
                 success: function(response) {
-                    alert(response.data);
+                    // alert(response.data);
+                    document.getElementById('taskTitle').value = response.data[0]['title'];
+                    // alert(response.data[0]['is_recurring']);
+                    if(response.data[0]['is_recurring'] === true){
+                        alert("chekc");
+                        document.getElementById('isRecurring').checked = true;
+                    }
+                  
+                    var user_id = response.data[0]['user_id']; // Assuming this contains the ID you want to select
+                    const getUserList = document.getElementById('getUserList'); // Select the <select> element
+
+                    // Loop through the options in the select element
+                    Array.from(getUserList.options).forEach(function(option) {
+                        if (option.value == user_id) {
+                            option.selected = true; // Set the option as selected
+                        }
+                    });
+
                    
                 },
                 error: function(xhr, status, error) {
@@ -2684,9 +2698,9 @@
             });
         });
 
-        $('#getUserList').on('click', function() {
-            getUserList();
-        });
+        // $('#getUserList').on('click', function() {
+        //     getUserList();
+        // });
         
 
         // Using event delegation to listen for clicks on the dynamically created .openAddNewTaskModel button
@@ -2705,9 +2719,6 @@
                 }
             }
         });
-
-
-
 
         // Calls model open and close 
         const openCallsModel = document.getElementById('openCallsModel');
