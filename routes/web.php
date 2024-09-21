@@ -5,6 +5,7 @@ use App\Http\Controllers\backEnd\salesfinance\LeadController as BackendLeadContr
 use App\Http\Controllers\backEnd\salesfinance\GeneralController;
 use App\Http\Controllers\frontEnd\salesFinance\LeadController as FrontendLeadController;
 use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteController;
+use App\Http\Controllers\backEnd\superAdmin\HomeController;
 
 
 Route::get('clear', function () {
@@ -347,6 +348,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('lead/getCRMTasksData', 'getCRMTasksData')->name('lead.ajax.getCRMTasksData');
 		Route::post('lead/getCRMTaskDataToday', 'getCRMTaskDataToday')->name('lead.ajax.getCRMTaskDataToday');
 		Route::post('lead/getCRMAllData', 'getCRMAllData')->name('lead.ajax.getCRMAllData');
+		
 		Route::post('lead/getCRMTaskDataWeek', 'getCRMTaskDataWeek')->name('lead.ajax.getCRMTaskDataWeek');
 		Route::post('lead/getCRMTaskDataOverdue', 'getCRMTaskDataOverdue')->name('lead.ajax.getCRMTaskDataOverdue');
 		Route::post('lead/getCRMTaskDataComplete', 'getCRMTaskDataComplete')->name('lead.ajax.getCRMTaskDataComplete');
@@ -968,11 +970,17 @@ Route::match('get', 'admin/set-password/{system_admin_id}/{security_code}', 'App
 Route::match(['get', 'post'], 'admin/system-admin/set-password', 'App\Http\Controllers\backEnd\superAdmin\AdminController@set_password_system_admin');
 //paypal
 Route::match(['get', 'post'], '/system-admin/home/payment/success/{system_admin_id}', 'App\Http\Controllers\backEnd\superAdmin\HomeController@success');
+
+Route::post('/admin/getHomeList', [HomeController::class, 'getHomeList'])->name('admin.getHomeList');
+
+// Route::post('/admin/getHomeList', 'App\Http\Controllers\backEnd\superAdmin\HomeController@getHomeList');
 //paypal
 Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function () {
 	//download form  As PDF 
 	Route::match(['get', 'post'], '/DownloadFormpdf/{id}', 'App\Http\Controllers\backEnd\superAdmin\UserController@DownloadFormpdf');
 	
+	
+
 
 	Route::get('/', 'App\Http\Controllers\backEnd\AdminController@dashboard');
 	// 	Route::get('/dashboard', 'App\Http\Controllers\backEnd\AdminController@dashboard');

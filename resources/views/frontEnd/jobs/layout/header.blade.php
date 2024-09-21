@@ -1698,9 +1698,7 @@ $access_rights = explode(',', $rights);
         }
         // CRM Notes Js End for model show
 
-
-
-
+        
         // CRM Complaints History Start for model show
         const userCompliantsModal = document.getElementById('userCompliantsModal');
         const CompHistoryModal = document.getElementById('CompHistoryModal');
@@ -1737,9 +1735,6 @@ $access_rights = explode(',', $rights);
             setZIndexForBackdrop(1055); // Adjust this value as necessary
         }
         // CRM Complaints History End for model show
-
-
-
 
         const CRMmainCheckbox = document.getElementById('CRMyeson');
         const CRMoptionsDiv = document.getElementById('CRMoptionsDiv');
