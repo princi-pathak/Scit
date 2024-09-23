@@ -22,13 +22,16 @@ use App\Models\Product_category;
 use App\Models\Constructor_region;
 use App\Models\Quote_product_detail;
 use App\Models\Workflow_notification;
+use App\Models\Construction_tax_rate;
 use App\Models\Recurrence_pattern_rule;
 use App\Models\Recurring_product_detail;
 use App\Models\Constructor_customer_site;
+use App\Models\Construction_account_code;
 use App\Models\Construction_job_appointment;
 use App\Models\Construction_jobassign_product;
 use App\Models\Constructor_additional_contact;
 use App\Models\Construction_job_appointment_type;
+use App\Models\Construction_product_supplier_list;
 use App\Models\construction_appointment_rejection_category;
 use DB,Auth,Session,Validator;
 
@@ -256,6 +259,9 @@ class JobController extends Controller
         $data['job_title']=Job_title::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['region']=Constructor_region::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['product_count']=Product::count();
+        $data['category']=Product_category::with('parent', 'children')->where('status',1)->get();
+        $data['account_code']=Construction_account_code::where(['home_id'=>$home_id,'status'=>1])->get();
+        $data['sales_tax']=Construction_tax_rate::where(['home_id'=>$home_id,'status'=>1])->get();
         // $data['site']=Constructor_customer_site::where('customer_id',$user_id)->get();
         // echo "<pre>";print_r($data['last_job_id']);die;
         return view('frontEnd.jobs.add_job',$data);
@@ -292,25 +298,30 @@ class JobController extends Controller
         // echo "<pre>";print_r($customers);die;
         return response()->json($customers);
     }
-    public function search_value_front(Request $request){
-        $search_value = $request->search_value;
-        $data = Product::where('product_name', 'like', "%{$search_value}%")->get();  
-        foreach($data as $val){
-            $cat_name=Product_category::find($val->cat_id);
-            echo '<tr onclick="selectProduct(this)">
-                            <td>'.$val->id.'</td>
-                            <td>'.$cat_name->name.'</td>
-                            <td>'.$val->product_name.'</td>
-                            <td>'.$val->description.'</td>
-                        </tr>';
-        }
-    }
+    // public function search_value_front(Request $request){
+    //     $search_value = $request->search_value;
+    //     $data = Product::where('product_name', 'like', "%{$search_value}%")->get();  
+    //     foreach($data as $val){
+    //         $cat_name=Product_category::find($val->cat_id);
+    //         echo '<tr onclick="selectProduct(this)">
+    //                         <td>'.$val->id.'</td>
+    //                         <td>'.$cat_name->name.'</td>
+    //                         <td>'.$val->product_name.'</td>
+    //                         <td>'.$val->description.'</td>
+    //                     </tr>';
+    //     }
+    // }
     public function result_product_calculation(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $html='';
         $home_id = Auth::user()->home_id;
         $user_id=Auth::user()->id;
+        $previous_ids=$request->previous_id;
+        $calculation=$this->calculation($previous_ids);
+        // echo "<pre>";print_r($calculation);die;
         $product_details=Product::product_detail($request->id);
         $tax=Product::tax_detail($home_id);
-        echo '
+        $html.= '<tr>
                 <td>'.$product_details->product_code.'</td>
                 <td>'.$product_details->product_name.'</td>
                 <td>'.$product_details->description.'</td>
@@ -319,16 +330,30 @@ class JobController extends Controller
                 <td>'.$product_details->price.'</td>
                 <td><input type="text" class="" value="0" name="discount[]"></td>';
 
-        echo '<td>';
+        $html.= '<td><select id="" name="">';
         foreach($tax as $taxv){
-        echo '<select id="" name="">
-                    <option value="'.$taxv->id.'">'.$taxv->name.'</option>  
-               </select>';
+        $html.= '<option value="'.$taxv->id.'">'.$taxv->name.'</option>';
         }
-        echo '</td>
+        $html.= '</select></td>
                 <td id="pre_total_amount">'.$product_details->price.'<input type="hidden" name="final_amount" id="final_amount" value="'.$product_details->price.'"></td>
                 <td><button type="button" class="btn btn-danger" onclick="removeRow('.$product_details->id.')">Delete<input type="hidden" value="'.$product_details->id.'" name="product_detail_id[]" id="product_detail_id"></button></td>
-            ';
+            </tr>';
+        return $data=['calculation'=>$calculation,'html'=>$html];
+
+        $calculation;
+       
+    }
+    private function calculation($data){
+        // echo "<pre>";print_r($data);die;
+        $cost_price=0;
+        $total_amount_assign=0;
+        for($i=0;$i<count($data);$i++){
+            $product_details=Product::find($data[$i]);
+            $cost_price=$cost_price+$product_details->cost_price;
+            $total_amount_assign=$total_amount_assign+$product_details->price;
+        }
+       return $data=['cost_price'=>$cost_price,'total_amount_assign'=>$total_amount_assign];
+        
     }
     public function save_job_product($job_detail,$data){
         // echo "<pre>";print_r($job_detail);die;
@@ -662,7 +687,126 @@ class JobController extends Controller
             echo "error";
         }
     }
+    public function supplier_result(){
+        $data=['Ram','Deena','Harsh'];
+        $res= '<tr>
+                <td>
+                    <select id="supplier_id" name="supplier_id[]" class="form-control">
+                        <option selected disabled>Select Supplier</option>';
+                    $inc=1;
+                    for($i=0;$i<count($data);$i++){
+                       $res.='<option value="'.$inc.'">'.$data[$i].'</option>'; 
+                       $inc++;
+                    }
+                   $res.='</select>
+                </td>
+                <td><input type="text" id="part_number" name="part_number[]"></td>
+                <td><span class="currency">£</span><input type="text" id="cost_price_supplier" name="cost_price_supplier[]" value="0.0000"></td>
+                <td class="delete_row">X</td>
+            </tr>';
+        echo $res;
+    }
+    public function product_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        if ($request->hasFile('product_attachments')) {
+            $imageName = time().'.'.$request->product_attachments->extension();      
+            $request->product_attachments->move(public_path('images/jobs'), $imageName);
+        } else {
+            $imageName=$request->old_image; 
+        }
+        $product_data=[
+            'home_id'=>Auth::user()->home_id,
+            'adder_id'=>Auth::user()->id,
+            'customer_only'=>$request->product_yes,
+            'cat_id'=>$request->product_category_id,
+            'product_name'=>$request->product_name,
+            'cost_price'=>$request->product_cost_price,
+            'margin'=>$request->product_markup,
+            'price'=>$request->product_price,
+            'tax_rate'=>$request->purchase_tax_rate,
+            'description'=>$request->product_description,
+            'product_code'=>$request->product_postal_code,
+            'show_temp'=>$request->showontemplate,
+            'bar_code'=>$request->bar_code,
+            'tax_id'=>$request->sales_tax_rate,
+            'nominal_code'=>$request->nominal_code,
+            'sales_acc_code'=>$request->sales_account_code,
+            'purchase_acc_code'=>$request->purchase_account_code,
+            'expense_acc_code'=>$request->expense_account_code,
+            'location'=>$request->product_location,
+            'attachment'=>$imageName,
+            'status'=>$request->product_status
+        ];
 
+        $insert='';
+        $table=new Product;
+        try {
+            $insert=$table::updateOrCreate(
+                ['id' => $request->id ?? null],
+                $product_data,
+            );
+        } catch (\Exception $e) {
+           return $e->getMessage();
+        }
+        if(isset($request->supplier_id) && count($request->supplier_id) >0){
+            for($i=0;$i<count($request->supplier_id);$i++){
+                $table_insert=new Construction_product_supplier_list;
+                $table_insert->product_id=$insert->id;
+                $table_insert->supplier_id=$request->supplier_id[$i];
+                $table_insert->part_number=$request->part_number[$i];
+                $table_insert->cost_price_supplier=$request->cost_price_supplier[$i];
+                $table_insert->save();
+            }
+        }
+        echo "done";
+       
+    }
+
+    public function save_product_category(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $insert='';
+        $table=new Product_category;
+        try {
+            $insert=$table::updateOrCreate(
+                ['id' => $request->id ?? null],
+                $request->all(),
+            );
+        } catch (\Exception $e) {
+            // return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+            $error=$e->getMessage();
+        }
+        if($insert){
+            $category=Product_category::with('parent', 'children')->where('status',1)->get();
+            foreach($category as $val){
+                echo '<option value="'.$val->id.'">'.$val->full_category.'</option>';
+            }
+        }else{
+            echo "error";
+        }
+    }
+    public function save_tax_rate(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $insert='';
+        $table=new Construction_tax_rate;
+        try {
+            $insert=$table::updateOrCreate(
+                ['id' => $request->id ?? null],
+                $request->all(),
+            );
+        } catch (\Exception $e) {
+            // return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+            $error=$e->getMessage();
+        }
+        if($insert){
+            
+            if($insert->status == 1){
+                echo '<option value="'.$insert->id.'">'.$insert->name.'</option>';
+            }
+        }else{
+            echo "error";
+        }
+    }
+    
     public function job_save_all(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $form_id=$request->form_id;
@@ -1255,7 +1399,21 @@ class JobController extends Controller
         $data = Product::where('product_name', 'like', "%{$search_value}%")->get();  
         foreach($data as $val){
             $cat_name=Product_category::find($val->cat_id);
-            echo '<tr onclick="selectProduct(this)">
+            echo '<tr onclick="selectProduct('.$val->id.')">
+                            <td>'.$val->id.'</td>
+                            <td>'.$cat_name->name.'</td>
+                            <td>'.$val->product_name.'</td>
+                            <td>'.$val->description.'</td>
+                        </tr>';
+        }
+    }
+    public function product_modal_list(Request $request){
+        $home_id=Auth::user()->home_id;
+        $data = Product::where(['home_id'=>$home_id,'status'=>1])->get();
+        // echo "<pre>";print_r($data);die;
+        foreach($data as $val){
+            $cat_name=Product_category::find($val->cat_id);
+            echo '<tr onclick="selectProduct('.$val->id.')">
                             <td>'.$val->id.'</td>
                             <td>'.$cat_name->name.'</td>
                             <td>'.$val->product_name.'</td>

@@ -10,6 +10,9 @@ use App\Models\Construction_tax_rate;
 class Product extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'home_id', 'adder_id', 'customer_only', 'cat_id', 'product_name', 'cost_price', 'margin', 'price', 'tax_rate', 'qty', 'description', 'product_code', 'show_temp', 'bar_code', 'tax_id', 'nominal_code', 'sales_acc_code', 'purchase_acc_code', 'expense_acc_code', 'location', 'attachment', 'status'
+    ];
     public static function product_detail($id){
         $data=DB::table('products as pr')
         ->select('pr.*','cat.id as cat_id','cat.name')

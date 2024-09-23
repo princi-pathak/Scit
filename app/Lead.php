@@ -43,7 +43,7 @@ class Lead extends Model
     }
 
     public static function getLeadByUser(){
-        return Lead::where('user_id', Auth::user()->id)->where('home_id', Auth::user()->home_id)->count();
+        return Lead::where('assign_to', Auth::user()->id)->where('home_id', Auth::user()->home_id)->whereNotIn('status', [7])->count();
     } 
 
     public static function getAuthorizationCount(){
