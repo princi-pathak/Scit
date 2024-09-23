@@ -268,6 +268,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/project_save','App\Http\Controllers\jobs\JobController@project_save');
 	Route::post('/contact_save','App\Http\Controllers\jobs\JobController@contact_save');
 	Route::post('/site_save','App\Http\Controllers\jobs\JobController@site_save');
+	Route::post('/product_save','App\Http\Controllers\jobs\JobController@product_save');
+	Route::post('/supplier_result','App\Http\Controllers\jobs\JobController@supplier_result');
+	Route::post('/save_product_category','App\Http\Controllers\jobs\JobController@save_product_category');
+	Route::post('/save_tax_rate','App\Http\Controllers\jobs\JobController@save_tax_rate');
+	Route::post('/product_modal_list','App\Http\Controllers\jobs\JobController@product_modal_list');
 
 
 	Route::controller(FrontendLeadController::class)->group(function(){
@@ -1083,7 +1088,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/search_value','App\Http\Controllers\backEnd\JobsController@search_value');
 	Route::post('/get_customer_details','App\Http\Controllers\backEnd\JobsController@get_customer_details');
 	Route::post('/get_delete_jobproduct','App\Http\Controllers\backEnd\JobsController@get_delete_jobproduct');
-	Route::post('/search_value_front','App\Http\Controllers\backEnd\JobsController@search_value_front');
+	// Route::post('/search_value_front','App\Http\Controllers\backEnd\JobsController@search_value_front');
 	// Job Recurring Start
 	Route::match(['get','post'],'/job_recurring_list','App\Http\Controllers\backEnd\JobsController@job_recurring_list');
 

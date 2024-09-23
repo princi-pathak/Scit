@@ -1,4 +1,14 @@
 @include('frontEnd.jobs.layout.header')
+<style>
+    .currency {
+    padding: 2px 3px 2px 5px;
+    line-height: 17px;
+    text-shadow: 0 1px 0 #ffffff;
+    border: 1px solid #ccc;
+    background-color: #efefef;
+    margin-right: 5px;
+}
+</style>
         <section class="main_section_page px-3">
             <div class="container-fluid">
                 <div class="row">
@@ -7,7 +17,13 @@
                             <h3 class="header_text">New Jobs</h3>
                         </div>
                     </div>
-                    <div class="col-md-8 col-lg-8 col-xl-8 px-3">
+                    <div class="col-md-4 col-lg-4 col-xl-4">
+                        <div class="alert alert-primary mt-1 mb-0 text-center" id="message_save" style="display:none">
+                            <span>Job Added Successfully Done!</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xl-4 px-3">
+                    
                         <div class="pageTitleBtn">
                             <a href="javascript:void(0)" class="profileDrop" onclick="save_all_data()"><i class="fa-solid fa-floppy-disk"></i> Save</a>
                             <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
@@ -65,7 +81,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" onclick="get_modal(4)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(4)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
@@ -79,7 +95,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" onclick="get_modal(5)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(5)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
@@ -178,7 +194,7 @@
                                                     <!-- <input type="text"  id="staticEmail"> -->
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <a href="#!" class="formicon" onclick="get_modal(6)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(6)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
 
@@ -196,7 +212,7 @@
                                                 </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" onclick="get_modal(3)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(3)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
@@ -347,7 +363,7 @@
                                                 </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" onclick="get_modal(7)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(7)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
@@ -460,12 +476,12 @@
                                     <div class="mb-3 row">
                                         <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control editInput" id="inputCountry"
+                                            <input type="text" class="form-control editInput" id="search_value"
                                                 placeholder="Type to add product" onkeyup="get_search()">
                                         </div>
                                         <div class="col-sm-7">
                                             <div class="plusandText">
-                                                <a href="#!" class="formicon" onclick="get_modal(8)"><i class="fa-solid fa-square-plus"></i>
+                                                <a href="javascript:void(0)" class="formicon" onclick="get_modal(8)"><i class="fa-solid fa-square-plus"></i>
                                                 </a>
                                                 <span class="afterPlusText"> (Type to view product or <a href="Javascript:void(0)" onclick="show_product_model()">Click
                                                         here</a> to view all assets)</span>
@@ -498,9 +514,11 @@
                                                     <th>Amount Assigned To </th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr id="product_result"></tr>
-                                                <tr>
+                                            <tbody id="product_result">
+                                                <tr></tr>
+                                                
+                                            </tbody>
+                                            <tr>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -511,7 +529,6 @@
                                                     <td></td>
                                                     <td id="total_amount">£0.00</td>
                                                 </tr>
-                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -896,7 +913,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <a href="#!" class="formicon" onclick="get_modal(1)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(1)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div><!-- End off Customer -->
@@ -924,7 +941,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" onclick="get_modal(2)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(2)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
@@ -1093,7 +1110,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" id="openPopupButton" onclick="get_modal(3)"><i
+                                                    <a href="javascript:void(0)" class="formicon" id="openPopupButton" onclick="get_modal(3)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
 
@@ -1283,14 +1300,7 @@
                                             </tr>
                                         </thead>
                                         <tbody id="search_result">
-                                            @foreach($product_details1 as $details1)
-                                            <tr onclick="selectProduct({{$details1->id}})">
-                                                <td>{{$details1->product_code}}</td>
-                                                <td>{{$details1->name}}</td>
-                                                <td>{{$details1->product_name}}</td>
-                                                <td>{{$details1->description}}</td>
-                                            </tr>
-                                            @endforeach
+                                            
 
                                         </tbody>
                                     </table>
@@ -1477,7 +1487,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" onclick="get_modal(2)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(2)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
@@ -1620,16 +1630,17 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                        <form id="add_product_form">
                             <div class="row">
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <div class="formDtail">
-                                        <form id="add_product_form">
                                        
+                                       @csrf
                                         <div class="mb-2 row">
                                             <label class="col-sm-3 col-form-label" for="inlineRadio1">This Customer Only</label>
                                             <div class="col-sm-9">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" name="product_yes" id="product_yes">
+                                                    <input class="form-check-input" type="checkbox" name="product_yes" id="product_yes" value="0">
                                                     <label class="col-form-label" for="inlineRadio1">Yes, display only for this customer</label>
                                                 </div>
                                             </div>
@@ -1638,33 +1649,25 @@
                                                 <label for="inputProject" class="col-sm-3 col-form-label">Product Category</label>
                                                 <div class="col-sm-7">
                                                     <select class="form-control editInput selectOptions get_product_category_result"
-                                                        id="contact_job_titile_id">
+                                                        id="product_category_id" name="product_category_id">
                                                         <option selected disabled>Please Select
                                                         </option>
-                                                        <?php foreach($job_title as $con_val_title){?>
-                                                            <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
-                                                            <?php }?>
+                                                        <?php foreach($category as $val){?>
+                                                            <option value="{{$val->id}}">{{ $val->full_category }}</option>
+                                                        <?php }?>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" onclick="get_modal(9)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(9)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                         </div>
-                                            <!-- <div class="mb-2 row">
-                                                <label for="inputName" class="col-sm-3 col-form-label">Product Name <span class="red-text">*</span></label>
-                                                <div class="col-sm-9">
-                                                    <p id="contact_customer_name"></p>
-                                                </div>
-                                            </div> -->
-                                            <input type="hidden" id="product_customer_id">
-                                            
                                             
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Product Name <span class="red-text">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="product_name">
+                                                        id="product_name" name="product_name">
                                                 </div>
                                             </div>
 
@@ -1672,12 +1675,10 @@
                                                 <label for="inputProject" class="col-sm-3 col-form-label">Product Type</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control editInput selectOptions "
-                                                        id="contact_job_titile_id">
-                                                        <option selected disabled>Please Select
-                                                        </option>
-                                                        <?php foreach($job_title as $con_val_title){?>
-                                                            <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
-                                                            <?php }?>
+                                                        id="product_type_id" name="product_type_id">
+                                                       
+                                                            <option value="1">Product</option>
+                                                            
                                                     </select>
                                                 </div>
                                             </div>
@@ -1685,7 +1686,7 @@
                                                 <label for="inputName" class="col-sm-3 col-form-label">Product Code</label>
                                                 <div class="col-sm-4">
                                                     <input type="text" class="form-control editInput"
-                                                        id="product_postal_code">
+                                                        id="product_postal_code" name="product_postal_code">
                                                 </div>
                                                 <div class="col-sm-5">
                                                     <a href="javascript:void(0)" class="profileDrop" id="generate_code" onclick="generate_code()">Generate</a>
@@ -1696,7 +1697,7 @@
                                                     class="col-sm-3 col-form-label">Cost Price</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="product_cost_price">
+                                                        id="product_cost_price" name="product_cost_price">
                                                 </div>
                                             </div>
 
@@ -1705,7 +1706,7 @@
                                                     class="col-sm-3 col-form-label">Markup</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="product_markup">
+                                                        id="product_markup" name="product_markup">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -1713,14 +1714,14 @@
                                                     class="col-sm-3 col-form-label">Price<span class="red-text">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="product_price">
+                                                        id="product_price" name="product_price">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="inputAddress"
                                                     class="col-sm-3 col-form-label">Description</label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" id="product_description" rows="3"></textarea>
+                                                    <textarea class="form-control textareaInput" id="product_description" name="product_description" rows="3"></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -1728,57 +1729,55 @@
                                                 <div class="col-sm-9">
 
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="showontemplate" checked>
+                                                        <input class="form-check-input" type="checkbox" name="showontemplate" id="showontemplate" checked value="1">
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <div class="formDtail">
-                                        <form action="" class="">
                                         <div class="mb-2 row">
                                                 <label for="inputEmail"
                                                     class="col-sm-3 col-form-label">Bar Code</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="bar_code">
+                                                        id="bar_code" name="bar_code">
                                                 </div>
                                             </div>
                                             
                                             <div class="mb-2 row">
                                                     <label for="inputProject" class="col-sm-3 col-form-label">Sales Tax Rate</label>
                                                     <div class="col-sm-7">
-                                                        <select class="form-control editInput selectOptions get_product_category_result"
-                                                            id="contact_job_titile_id">
+                                                        <select class="form-control editInput selectOptions get_product_sales_tax_result"
+                                                            id="sales_tax_rate" name="sales_tax_rate">
                                                             <option selected disabled>Please Select
                                                             </option>
-                                                            <?php foreach($job_title as $con_val_title){?>
-                                                                <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
+                                                            <?php foreach($sales_tax as $tax1){?>
+                                                                <option value="{{$tax1->id}}">{{$tax1->name}}</option>
                                                                 <?php }?>
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-2">
-                                                        <a href="#!" class="formicon" onclick="get_modal(9)"><i
+                                                        <a href="javascript:void(0)" class="formicon" onclick="get_modal(10)"><i
                                                                 class="fa-solid fa-square-plus"></i></a>
                                                     </div>
                                             </div>
                                             <div class="mb-2 row">
                                                     <label for="inputProject" class="col-sm-3 col-form-label">Purchase Tax Rate</label>
                                                     <div class="col-sm-7">
-                                                        <select class="form-control editInput selectOptions get_product_category_result"
-                                                            id="contact_job_titile_id">
+                                                        <select class="form-control editInput selectOptions get_product_sales_tax_result"
+                                                            id="purchase_tax_rate" name="purchase_tax_rate">
                                                             <option selected disabled>Please Select
                                                             </option>
-                                                            <?php foreach($job_title as $con_val_title){?>
-                                                                <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
+                                                            <?php foreach($sales_tax as $tax2){?>
+                                                                <option value="{{$tax2->id}}">{{$tax2->name}}</option>
                                                                 <?php }?>
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-2">
-                                                        <a href="#!" class="formicon" onclick="get_modal(9)"><i
+                                                        <a href="javascript:void(0)" class="formicon" onclick="get_modal(10)"><i
                                                                 class="fa-solid fa-square-plus"></i></a>
                                                     </div>
                                             </div>
@@ -1787,59 +1786,50 @@
                                                     class="col-sm-3 col-form-label">Nominal Code</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="nominal_code">
+                                                        id="nominal_code" name="nominal_code">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                     <label for="inputProject" class="col-sm-3 col-form-label">Sales Account Code</label>
                                                     <div class="col-sm-7">
-                                                        <select class="form-control editInput selectOptions get_product_category_result"
-                                                            id="contact_job_titile_id">
+                                                        <select class="form-control editInput selectOptions"
+                                                            id="sales_account_code" name="sales_account_code">
                                                             <option selected disabled>Please Select
                                                             </option>
-                                                            <?php foreach($job_title as $con_val_title){?>
-                                                                <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
+                                                            <?php foreach($account_code as $acc_code1){?>
+                                                                <option value="{{$acc_code1->id}}">{{$acc_code1->name}}</option>
                                                                 <?php }?>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-2">
-                                                        <a href="#!" class="formicon" onclick="get_modal(9)"><i
-                                                                class="fa-solid fa-square-plus"></i></a>
-                                                    </div>
+                                                    
                                             </div>
                                             <div class="mb-2 row">
                                                     <label for="inputProject" class="col-sm-3 col-form-label">Purchase Account Code</label>
                                                     <div class="col-sm-7">
-                                                        <select class="form-control editInput selectOptions get_product_category_result"
-                                                            id="contact_job_titile_id">
+                                                        <select class="form-control editInput selectOptions"
+                                                            id="purchase_account_code" name="purchase_account_code">
                                                             <option selected disabled>Please Select
                                                             </option>
-                                                            <?php foreach($job_title as $con_val_title){?>
-                                                                <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
+                                                            <?php foreach($account_code as $acc_code2){?>
+                                                                <option value="{{$acc_code2->id}}">{{$acc_code2->name}}</option>
                                                                 <?php }?>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-2">
-                                                        <a href="#!" class="formicon" onclick="get_modal(9)"><i
-                                                                class="fa-solid fa-square-plus"></i></a>
-                                                    </div>
+                                                   
                                             </div>
                                             <div class="mb-2 row">
                                                     <label for="inputProject" class="col-sm-3 col-form-label">Expense Account Code</label>
                                                     <div class="col-sm-7">
-                                                        <select class="form-control editInput selectOptions get_product_category_result"
-                                                            id="contact_job_titile_id">
+                                                        <select class="form-control editInput selectOptions "
+                                                            id="expense_account_code" name="expense_account_code">
                                                             <option selected disabled>Please Select
                                                             </option>
-                                                            <?php foreach($job_title as $con_val_title){?>
-                                                                <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
+                                                            <?php foreach($account_code as $acc_code3){?>
+                                                                <option value="{{$acc_code3->id}}">{{$acc_code3->name}}</option>
                                                                 <?php }?>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-2">
-                                                        <a href="#!" class="formicon" onclick="get_modal(9)"><i
-                                                                class="fa-solid fa-square-plus"></i></a>
-                                                    </div>
+                                                    
                                             </div>
 
                                             <div class="mb-2 row">
@@ -1847,7 +1837,7 @@
                                                     class="col-sm-3 col-form-label">Location</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
-                                                        id="product_location">
+                                                        id="product_location" name="product_location">
                                                 </div>
                                             </div>
 
@@ -1856,7 +1846,7 @@
                                                     class="col-sm-3 col-form-label">Status</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control editInput selectOptions"
-                                                        id="product_status">
+                                                        id="product_status" name="product_status">
                                                         <option value="1">Active</option>
                                                         <option value="0">In-Active</option>
                                                        
@@ -1868,19 +1858,52 @@
                                                     class="col-sm-3 col-form-label">Attachment</label>
                                                 <div class="col-sm-9">
                                                     <input type="file" class="form-control editInput"
-                                                        id="product_location">
+                                                        id="product_attachments" name="product_attachments">
                                                 </div>
                                             </div>
-                                        </form>
+                                            <div class="mb-2 row productDetailTable">
+                                                <table class="table">
+                                                    <thead class="table-light">
+                                                        <th>Supplier</th>
+                                                        <th>Part Number</th>
+                                                        <th>Cost Price</th>
+                                                        
+                                                        <th>
+                                                            <div class="col-sm-2">
+                                                                <a href="#!" class="formicon" onclick="suplier_row()"><i
+                                                                        class="fa-solid fa-square-plus"></i></a>
+                                                            </div>
+                                                        </th>
+                                                    </thead>
+                                                    <tbody id="supplier_result">
+                                                    <!-- <tr>
+                                                        <td>
+                                                            <select id="supplier_id" name="supplier_id[]" class="form-control">
+                                                                <option selected disabled>Select Supplier</option>
+                                                                
+                                                                    <option value="1">Ram</option>
+                                                                    <option value="2">Deena</option>
+                                                                    <option value="3">Harsh</option>
+                                                                    
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="text" id="part_number" class="" name="part_number[]" value=""></td>
+                                                        <td><span class="currency">£</span><input type="text" id="cost_price_supplier" class="" name="cost_price_supplier[]" value=""></td>
+                                                        <td class="delete_row">X</td>
+                                                    </tr> -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        
                                     </div>
                                 </div>
                             </div> <!-- End row -->
-
+                            </form>
                         </div>
                         <div class="modal-footer customer_Form_Popup">
 
-                            <button type="button" class="profileDrop" onclick="save_contact()">Save</button>
-                            <button type="button" class="profileDrop" onclick="save_contactClose()">Save &
+                            <button type="button" class="profileDrop" onclick="save_product()">Save</button>
+                            <button type="button" class="profileDrop" onclick="save_productClose()">Save &
                                 Close</button>
                             <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                         </div>
@@ -1888,6 +1911,109 @@
                 </div>
             </div>
          <!-- end here -->
+          <!-- Product Category Modal Start here -->
+          <div class="modal fade" id="product_category_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content add_Customer">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="thirdModalLabel">Product Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="product_category_form">
+                            <div class="mb-3 row">
+                                <label for="inputJobRef" class="col-sm-3 col-form-label">Product Category<span class="red-text">*</span></label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="product_category_name" class="form-control editInput" id="product_category_name" value="">
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <label for="inputProject" class="col-sm-3 col-form-label">Product Category</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control editInput selectOptions "
+                                        id="parent_category_id">
+                                        <option selected disabled></option>
+                                        <?php foreach($category as $val){?>
+                                            <option value="{{$val->id}}">{{ $val->full_category }}</option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                                <div class="col-sm-9">
+                                    <select id="product_category_status" name="product_category_status" class="form-control editInput">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="pageTitleBtn">
+                                <a href="javascript:void(0)" class="profileDrop p-2 crmNewBtn" onclick="save_product_category()"> Save</a>
+                                <a href="javascript:void(0)" class="profileDrop p-2 crmNewBtn" onclick="save_productClose_category()"> Save & Close</a>
+                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+           <!-- end here -->
+        <!-- Tax Modal start here -->
+        <div class="modal fade" id="product_tax_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content add_Customer">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="thirdModalLabel">Add Tax Rate</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="product_tax_form">
+                            <div class="mb-3 row">
+                                <label for="inputJobRef" class="col-sm-3 col-form-label">Tax Rate Name<span class="red-text">*</span></label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="tax_rate_name" class="form-control editInput" id="tax_rate_name" value="">
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <label for="inputProject" class="col-sm-3 col-form-label">Tax Rate<span class="red-text">*</span></label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="tax_rate" class="form-control editInput" id="tax_rate" value="">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                                <div class="col-sm-9">
+                                    <select id="tax_status" name="tax_status" class="form-control editInput">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <label for="inputProject" class="col-sm-3 col-form-label">External Tax Code</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="external_tax_code" class="form-control editInput" id="external_tax_code">
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <label for="inputProject" class="col-sm-3 col-form-label">Expiry Date</label>
+                                <div class="col-sm-9">
+                                    <input type="date" name="expiry_date" class="form-control editInput" id="expiry_date">
+                                </div>
+                            </div>
+                            <div class="pageTitleBtn">
+                                <a href="javascript:void(0)" class="profileDrop p-2 crmNewBtn" onclick="save_tax_rate()"> Save</a>
+                                <a href="javascript:void(0)" class="profileDrop p-2 crmNewBtn" onclick="save_taxClose_rate()"> Save & Close</a>
+                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
          <!-- Site Modal start here -->
          <div class="modal fade" id="site_modal" tabindex="-1" aria-labelledby="customerModalLabel"
                 aria-hidden="true">
@@ -1944,7 +2070,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" onclick="get_modal(2)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(2)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
@@ -2024,7 +2150,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon" id="openPopupButton" onclick="get_modal(3)"><i
+                                                    <a href="javascript:void(0)" class="formicon" id="openPopupButton" onclick="get_modal(3)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
@@ -2383,7 +2509,8 @@ const openPopupButton = document.getElementById('openPopupButton');
     function get_modal(modal){  
         // alert(modal)
         var customer_select_check=$("#customer_id").val();
-        if(customer_select_check == null && (modal == 4 || modal == 5)){
+        // if(customer_select_check == null && (modal == 4 || modal == 5)){
+        if(customer_select_check == null){
             alert("Please select customer");
             return false;
         }else{
@@ -2411,6 +2538,12 @@ const openPopupButton = document.getElementById('openPopupButton');
             }else if(modal == 8){
                 $("#add_product_form")[0].reset();
                 $("#add_product_modal").modal('show');
+            }else if(modal == 9){
+                $("#product_category_form")[0].reset();
+                $("#product_category_modal").modal('show');
+            }else if(modal == 10){
+                $("#product_tax_form")[0].reset();
+                $("#product_tax_modal").modal('show');
             }
         }
         
@@ -2545,15 +2678,30 @@ const openPopupButton = document.getElementById('openPopupButton');
         var is_converted=1;
         var status=$("#customer_status").val();
 
-        $.ajax({
-            type: "POST",
-            url: "{{url('/customer_add_edit_save')}}",
-            data: {status:status,is_converted:is_converted,notes:notes,assigned_product:assigned_product,payment_terms:payment_terms,vat_tax_no:vat_tax_no,site_notes:site_notes,saga_ref:saga_ref,discount_type:discount_type,discount:discount,credit_limit:credit_limit,currency:currency,country_code:country_code,postal_code:postal_code,country:country,city:city,address:address,region:region,catalogue_id:catalogue_id,website:website,fax:fax,mobile:mobile,telephone:telephone,email:email,name:name,status:status,home_id:home_id,customer_type_id:customer_type_id,contact_name:contact_name,job_title:job_title,_token:token},
-            success: function(data) {
-                console.log(data);
-                window.location.reload();
-            }
-        });
+        if(name == ''){
+            $('#customer_name').css('border','1px solid red');
+            return false;
+        }else if(customer_type_id == null){
+            $('#customer_name').css('border','');
+            $('#customer_type_id').css('border','1px solid red');
+            return false;
+        }else if(contact_name == ''){
+            $('#customer_type_id').css('border','');
+            $('#customer_contact_name').css('border','1px solid red');
+            return false;
+        }else {
+            $('#customer_contact_name').css('border','');
+                $.ajax({
+                type: "POST",
+                url: "{{url('/customer_add_edit_save')}}",
+                data: {status:status,is_converted:is_converted,notes:notes,assigned_product:assigned_product,payment_terms:payment_terms,vat_tax_no:vat_tax_no,site_notes:site_notes,saga_ref:saga_ref,discount_type:discount_type,discount:discount,credit_limit:credit_limit,currency:currency,country_code:country_code,postal_code:postal_code,country:country,city:city,address:address,region:region,catalogue_id:catalogue_id,website:website,fax:fax,mobile:mobile,telephone:telephone,email:email,name:name,status:status,home_id:home_id,customer_type_id:customer_type_id,contact_name:contact_name,job_title:job_title,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    window.location.reload();
+                }
+            });
+        }
+        
 
     }
     function save_project(){
@@ -2768,6 +2916,97 @@ const openPopupButton = document.getElementById('openPopupButton');
             });
         }
     }
+    function save_productClose(){
+        save_product();
+        $("#add_product_modal").modal('hide');
+    }
+    function save_product(){
+        $.ajax({
+            type: "POST",
+            url: "{{url('/product_save')}}",
+            data: new FormData($("#add_product_form")[0]),
+            async: false,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                console.log(data);
+                // $("#id").val(data.id);
+                // $(".header_text").text(data.job_ref)
+            }
+        });
+    }
+    function save_productClose_category(){
+        save_product_category();
+        $("#product_category_modal").modal('hide');
+    }
+    function save_product_category(){
+        var token = '<?php echo csrf_token(); ?>'
+        var name=$("#product_category_name").val();
+        var cat_id=$("#parent_category_id").val();
+        var status=$("#product_category_status").val();
+        var home_id=$("#home_id").val();
+
+        if(name == ''){
+            $('#product_category_name').css('border','1px solid red');
+            return false;
+        }else {
+            $("#product_category_name").css('border','');
+            $.ajax({
+                type: "POST",
+                url: "{{url('save_product_category')}}",
+                data: {
+                    name: name,cat_id:cat_id,status:status,home_id:home_id,
+                    _token: token
+                },
+                success: function(data) {
+                    console.log(data);
+                    // 
+                    // $("#product_model").modal('show');
+                    $('#product_category_id').html(data);
+
+                }
+            });
+        }
+    }
+    function save_taxClose_rate(){
+        save_tax_rate();
+        $("#product_tax_modal").modal('hide');
+    }
+    function save_tax_rate(){
+       var token = '<?php echo csrf_token(); ?>'
+       var name=$("#tax_rate_name").val();
+       var home_id=$("#home_id").val();
+       var tax_rate=$("#tax_rate").val();
+       var status=$("#tax_status").val();
+       var tax_code=$("#external_tax_code").val();
+       var exp_date=$("#expiry_date").val();
+       if(name == ''){
+            $('#tax_rate_name').css('border','1px solid red');
+            return false;
+        }else if(tax_rate == ''){
+            $("#tax_rate_name").css('border','');
+            $('#tax_rate').css('border','1px solid red');
+            return false;
+        } else {
+            $("#tax_rate").css('border','');
+            $.ajax({
+                type: "POST",
+                url: "{{url('save_tax_rate')}}",
+                data: {
+                    name: name,tax_rate:tax_rate,status:status,home_id:home_id,tax_code:tax_code,exp_date:exp_date,
+                    _token: token
+                },
+                success: function(data) {
+                    console.log(data);
+                    // 
+                    // $("#product_model").modal('show');
+                    $('.get_product_sales_tax_result').append(data);
+
+                }
+            });
+        }
+    }
 </script>
 <script>
     function get_search() {
@@ -2776,7 +3015,7 @@ const openPopupButton = document.getElementById('openPopupButton');
         if (search_value.length > 2) {
             $.ajax({
                 type: "POST",
-                url: "{{url('search_value_front')}}",
+                url: "{{url('search_value')}}",
                 data: {
                     search_value: search_value,
                     _token: token
@@ -2793,22 +3032,38 @@ const openPopupButton = document.getElementById('openPopupButton');
     }
 
     function show_product_model() {
+        var token = '<?php echo csrf_token(); ?>'
+            $.ajax({
+                type: "POST",
+                url: "{{url('product_modal_list')}}",
+                data: {_token: token},
+                success: function(data) {
+                    console.log(data);
+                    // 
+                    $("#product_model").modal('show');
+                    $('#search_result').html(data);
+
+                }
+            });
+        
         $('#product_model').modal('show');
     }
-
+    var previous_id=[];
     function selectProduct(id) {
-        // alert(id)
+        previous_id.push(id);
         var token = '<?php echo csrf_token(); ?>'
         $.ajax({
             type: "POST",
             url: "{{url('result_product_calculation')}}",
             data: {
-                id: id,
+                id: id,previous_id:previous_id,
                 _token: token
             },
             success: function(data) {
                 console.log(data);
-                $("#product_result").html(data);
+                $("#product_result").append(data.html);
+                $("#pro_cost_price").text(data.calculation.cost_price);
+                $("#total_amount").text(data.calculation.total_amount_assign)
 
             }
         });
@@ -2896,25 +3151,87 @@ const openPopupButton = document.getElementById('openPopupButton');
         for (var instance in CKEDITOR.instances) {
             CKEDITOR.instances[instance].updateElement();
         }
-        $.ajax({
-            type: "POST",
-            url: "{{url('/job_add_edit_save')}}",
-            data: new FormData($("#all_data")[0]),
-            async: false,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-                console.log(data);
-                $("#id").val(data.id);
-                $(".header_text").text(data.job_ref)
-            }
-        });
+        var customer_id=$("#customer_id").val();
+        var name=$("#name").val();
+        var address=$("#address").val();
+        var site_address=$("#site_address").val();
+        var job_type=$("#job_type").val();
+        var start_date=$("#start_date").val();
+        var complete_by=$("#complete_by").val();
+        var short_decinc=$("#short_decinc").val();
+        // alert(customer_id)
+        if(customer_id == null){
+            $('#customer_id').css('border','1px solid red');
+            $(window).scrollTop($('#customer_id').position().top);
+            return false;
+        }else if(name == ''){
+            $('#customer_id').css('border','');
+            $('#name').css('border','1px solid red');
+            $(window).scrollTop($('#name').position().top);
+            return false;
+        }else if(address == ''){
+            $('#name').css('border','');
+            $('#address').css('border','1px solid red');
+            $(window).scrollTop($('#address').position().top);
+            return false;
+        }else if(site_address == ''){
+            $('#address').css('border','');
+            $('#site_address').css('border','1px solid red');
+            $(window).scrollTop($('#site_address').position().top);
+            return false;
+        }else if(job_type == null){
+            $('#customer_id').css('border','');
+            $('#site_address').css('border','');
+            $('#job_type').css('border','1px solid red');
+            $(window).scrollTop($('#job_type').position().top);
+            return false;
+        }else if(start_date == ''){
+            $('#customer_id').css('border','');
+            $('#job_type').css('border','');
+            $('#start_date').css('border','1px solid red');
+            $(window).scrollTop($('#start_date').position().top);
+            return false;
+        }else if(complete_by == ''){
+            $('#customer_id').css('border','');
+            $('#job_type').css('border','');
+            $('#start_date').css('border','');
+            $('#complete_by').css('border','1px solid red');
+            $(window).scrollTop($('#complete_by').position().top);
+            return false;
+        }else if(short_decinc == ''){
+            $('#customer_id').css('border','');
+            $('#job_type').css('border','');
+            $('#complete_by').css('border','');
+            $('#short_decinc').css('border','1px solid red');
+            $(window).scrollTop($('#short_decinc').position().top);
+            return false;
+        }else{
+            $('#short_decinc').css('border','');
+                $.ajax({
+                type: "POST",
+                url: "{{url('/job_add_edit_save')}}",
+                data: new FormData($("#all_data")[0]),
+                async: false,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data);
+                    $(window).scrollTop(0);
+                    $("#message_save").show();
+                    setTimeout(() => {
+                        $("#message_save").hide();
+                    }, 300);
+                    $("#id").val(data.id);
+                    $(".header_text").text(data.job_ref)
+                }
+            });
+        }
+        
     }
 </script>
 <script>
     function generate_code(){
-        alert()
         var product_count='<?php echo $product_count+1;?>'
         var name=$("#product_name").val();
         if(name == ''){
@@ -2925,6 +3242,39 @@ const openPopupButton = document.getElementById('openPopupButton');
         $("#product_postal_code").val(""+firstTwoLetters+"-000"+product_count);
         $("#generate_code").hide();
     }
+    $("#product_yes").on('change',function(){
+        var check;
+        if ($('#product_yes').is(':checked')) {
+            check=1;
+        }else{
+            check=0;
+        }
+        $("#product_yes").val(check);
+    });
+    $("#showontemplate").on('chnage',function(){
+        var show;
+        if ($('#showontemplate').is(':checked')) {
+            show=1;
+        }else{
+            show=0;
+        }
+        $("#showontemplate").val(show);
+    });
+    function suplier_row(){
+    var token='<?php echo csrf_token();?>'
+        $.ajax({
+                type: "POST",
+                url: "{{url('/supplier_result')}}",
+                data: {_token:token},
+                success: function(data) {
+                    console.log(data);
+                    $('#supplier_result').append(data);
+                }
+            });
+    }
+    $('#supplier_result').on('click', '.delete_row', function() {
+        $(this).closest('tr').remove();
+    });
 </script>
 
 @include('frontEnd.jobs.layout.footer')
