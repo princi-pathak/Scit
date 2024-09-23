@@ -554,19 +554,19 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Start Date <span class="red-text">*</span></label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" name="start_date" id="">
+                                                                            <input type="date" class="form-control editInput" name="start_date" id="TaskStartDate">
                                                                         </div>
                                                                         <div class="col-sm-4">
-                                                                            <input type="time" class="form-control editInput" name="start_time" id="">
+                                                                            <input type="time" class="form-control editInput" name="start_time" id="TaskStartTime">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">End Date <span class="red-text">*</span></label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" name="end_date" id="" value="">
+                                                                            <input type="date" class="form-control editInput" name="end_date" id="TaskEndDate" value="">
                                                                         </div>
                                                                         <div class="col-sm-4">
-                                                                            <input type="time" class="form-control editInput" name="end_time" id="" value="">
+                                                                            <input type="time" class="form-control editInput" name="end_time" id="TaskEndTime" value="">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -612,7 +612,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-3 col-form-label">Notes</label>
                                                                         <div class="col-sm-9">
-                                                                            <textarea name="notes" class="form-control textareaInput" rows="5" id=""></textarea>
+                                                                            <textarea name="notes" class="form-control textareaInput" rows="5" id="TaskNotesText"></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1258,8 +1258,6 @@
 </div>
 <!-- CRM Types Modal End -->
 
-
-
 <!-- CRM Add Email Modal Start -->
 <div class="modal fade" id="NewEmailModel" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -1389,40 +1387,7 @@
                         <div class="col-sm-1">
                             <a href="#!" class="formicon" id="openCrmTypeModelNotes"><i class="fa-solid fa-square-plus"></i></a>
                         </div>
-                        <!-- CRM Types Modal Notes Start -->
-                        <div class="modal fade" id="crmTypeModelNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content add_Customer">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="" id="crm_section_type_notes_form">
-                                            <div class="mb-2 row">
-                                                <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" name="title" id="type_title_notes">
-                                                    <input type="hidden" class="form-control editInput" name="crm_section" id="crm_section_notes" value="3">
-                                                </div>
-                                            </div>
-                                            <div class="mb-2 row">
-                                                <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
-                                                <div class="col-sm-9">
-                                                    <input type="color" class="form-control editInput" name="colour_code" id="colour_code_notes" value="">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
-                                        <button type="button" class="profileDrop" id="saveCRMTypesNotes">Save</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- CRM Types Modal Notes End -->
+
                     </div>
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
@@ -1495,6 +1460,42 @@
         </div>
     </div>
 </div>
+
+<!-- CRM Types Modal Notes Start -->
+<div class="modal fade" id="crmTypeModelNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="crm_section_type_notes_form">
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control editInput" name="title" id="type_title_notes">
+                            <input type="hidden" class="form-control editInput" name="crm_section" id="crm_section_notes" value="3">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
+                        <div class="col-sm-9">
+                            <input type="color" class="form-control editInput" name="colour_code" id="colour_code_notes" value="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMTypesNotes">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CRM Types Modal Notes End -->
+
 <!-- CRM Add Notes Modal End -->
 
 <!-- CRM Add compliants Modal Start -->
@@ -1519,40 +1520,7 @@
                         <div class="col-sm-1">
                             <a href="#!" class="formicon" id="openCrmTypeModelComplaints"><i class="fa-solid fa-square-plus"></i></a>
                         </div>
-                        <!-- CRM Types Modal Complaint Start -->
-                        <div class="modal fade" id="crmTypeModelComplaint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content add_Customer">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="" id="crm_section_type_form">
-                                            <div class="mb-2 row">
-                                                <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" name="title" id="type_title_complaint" value="">
-                                                    <input type="hidden" class="form-control editInput" name="crm_section_complaint" id="crm_section_complaint" value="4">
-                                                </div>
-                                            </div>
-                                            <div class="mb-2 row">
-                                                <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
-                                                <div class="col-sm-9">
-                                                    <input type="color" class="form-control editInput" name="colour_code" id="colour_code_complaint" value="">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
-                                        <button type="button" class="profileDrop" id="saveCRMTypesComplaint">Save</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- CRM Types Modal Complaint End -->
+
                     </div>
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
@@ -1616,6 +1584,40 @@
         </div>
     </div>
 </div>
+<!-- CRM Types Modal Complaint Start -->
+<div class="modal fade" id="crmTypeModelComplaint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="crm_section_type_form">
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control editInput" name="title" id="type_title_complaint" value="">
+                            <input type="hidden" class="form-control editInput" name="crm_section_complaint" id="crm_section_complaint" value="4">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
+                        <div class="col-sm-9">
+                            <input type="color" class="form-control editInput" name="colour_code" id="colour_code_complaint" value="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMTypesComplaint">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CRM Types Modal Complaint End -->
 <!-- CRM Add compliants Modal End -->
 
 <!-- Moment js CDN -->
@@ -2156,7 +2158,7 @@
                         row.appendChild(dateCell);
 
                         const nameCell = document.createElement('td');
-                        nameCell.innerHTML =item.userName;
+                        nameCell.innerHTML = item.userName;
                         row.appendChild(nameCell);
 
                         const phoneCell = document.createElement('td');
@@ -2323,7 +2325,7 @@
         });
     }
 
-    function getUserList(){
+    function getUserList() {
 
         $.ajax({
             url: '{{ route("lead.ajax.getUserList") }}',
@@ -2394,32 +2396,54 @@
         console.log(id);
         getLeadTaskType();
         getUserList();
-        if(id != null){
+        if (id != null) {
 
             $.ajax({
                 url: '{{ route("lead.ajax.getLeadDataWithRecurrence") }}',
                 method: 'POST',
-                data: {id: id},
+                data: {
+                    id: id
+                },
                 success: function(response) {
-                    // alert(response.data);
                     document.getElementById('taskTitle').value = response.data[0]['title'];
-                    // alert(response.data[0]['is_recurring']);
-                    if(response.data[0]['is_recurring'] === true){
-                        alert("chekc");
+                    if (response.data[0]['is_recurring'] === true) {
                         document.getElementById('isRecurring').checked = true;
                     }
-                  
-                    var user_id = response.data[0]['user_id']; // Assuming this contains the ID you want to select
-                    const getUserList = document.getElementById('getUserList'); // Select the <select> element
+                    document.getElementById('TaskNotesText').innerHTML = response.data[0]['notes'];
+                    document.getElementById('TaskStartDate').value = response.data[0]['start_date'];
+                    document.getElementById('TaskStartTime').value = response.data[0]['start_time'];
+                    document.getElementById('TaskEndDate').value = response.data[0]['end_date'];
+                    document.getElementById('TaskEndTime').value = response.data[0]['end_time'];
+                    document.getElementById('notify_date').value = response.data[0]['task_date'];
+                    document.getElementById('notify_time').value = response.data[0]['task_time'];
 
-                    // Loop through the options in the select element
+
+                    if (response.data[0]['notify'] === true) {
+                        document.getElementById('notify').checked = true;
+                    }
+
+                    if (response.data[0]['notification'] === true) {
+                        document.getElementById('notification').checked = true;
+                    }
+
+                    if (response.data[0]['sms'] === true) {
+                        document.getElementById('sms').checked = true;
+                    }
+
+                    if (response.data[0]['email'] === true) {
+                        document.getElementById('email').checked = true;
+                    }
+
+
+                    var user_id = response.data[0]['user_id'];
+                    const getUserList = document.getElementById('getUserList');
                     Array.from(getUserList.options).forEach(function(option) {
                         if (option.value == user_id) {
                             option.selected = true; // Set the option as selected
                         }
                     });
 
-                   
+
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -2427,12 +2451,12 @@
             });
         }
 
-        if(type == "summary" ){
-            $('.modal-title').text('Summary');
-        } else if (type == "add"){
-            $('.modal-title').text('New Task');
-        } else if(type == "edit"){
-            $('.modal-title').text('Edit Task');
+        if (type == "summary") {
+            $('#secondModalLabel').text('Summary');
+        } else if (type == "add") {
+            $('#secondModalLabel').text('New Task');
+        } else if (type == "edit") {
+            $('#secondModalLabel').text('Edit Task');
         }
         $('#secondModal').modal('show');
     }
@@ -2701,7 +2725,7 @@
         // $('#getUserList').on('click', function() {
         //     getUserList();
         // });
-        
+
 
         // Using event delegation to listen for clicks on the dynamically created .openAddNewTaskModel button
         document.addEventListener('click', function(e) {

@@ -101,7 +101,7 @@ class Customer extends Model
         } else if ($lastSegment === "converted"){
             return $query->where('customers.is_converted', 1)->where('customers.status', 1)->get();
         } else if ($lastSegment === "myLeads"){
-            return $query->where('user_id', Auth::user()->id)->whereNotIn('leads.status', [7])->get();
+            return $query->where('leads.assign_to', Auth::user()->id)->whereNotIn('leads.status', [7])->get();
         } else if ($lastSegment === "authorization"){
             return $query->where('leads.status', 7)->get();
         } else if ($lastSegment === "actioned") {
