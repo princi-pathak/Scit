@@ -212,7 +212,7 @@
                                                 </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(3)"><i
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(0)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
@@ -919,7 +919,7 @@
                                             </div><!-- End off Customer -->
 
                                             <div class="mb-2 row">
-                                                <label for="inputName" class="col-sm-3 col-form-label">Conatact
+                                                <label for="inputName" class="col-sm-3 col-form-label">Contact
                                                     Name <span class="red-text">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
@@ -1053,7 +1053,7 @@
                                                     <div class="col-sm-9">
                                                         <select class="form-control editInput selectOptions" id="customer_percentage">
                                                             <option selected disabled>Please Select</option>
-                                                            <option value="1">Persontage</option>
+                                                            <option value="1">Percentage</option>
                                                             <option value="2">Flat</option>
                                                         </select>
                                                     </div>
@@ -1113,60 +1113,6 @@
                                                     <a href="javascript:void(0)" class="formicon" id="openPopupButton" onclick="get_modal(3)"><i
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
-
-
-                                                <!--Start Region Popup -->
-
-                                                <!-- <div id="popup" class="popup">
-                                                    <div class="popup-content">
-                                                        <div class="popupTitle">
-                                                            <span class="">Add
-                                                                Region</span>
-                                                            <span class="close" id="closePopup">&times;</span>
-                                                        </div>
-                                                        <div class="contantbodypopup">
-                                                            <form action="" class="customerForm">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">Region*</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity"
-                                                                            value="Port Elizabeth">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">Status</label>
-                                                                    <div class="col-sm-9">
-                                                                        <select
-                                                                            class="form-control editInput selectOptions"
-                                                                            id="inputCustomer">
-                                                                            <option> None </option>
-                                                                            <option> Default </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-
-                                                        <div class="popupF  customer_Form_Popup">
-
-                                                            <button type="button"
-                                                                class="profileDrop">Save</button>
-                                                            <button type="button" class="profileDrop">Save &
-                                                                Close</button>
-                                                            <button type="button" class="profileDrop"
-                                                                data-bs-dismiss="modal">Cancel</button>
-
-                                                        </div>
-                                                    </div>
-
-                                                </div> -->
-
-                                                <!-- End off region Popup -->
-
 
 
                                             </div>
@@ -1465,7 +1411,7 @@
                                             </div>
 
                                             <div class="mb-2 row">
-                                                <label for="inputName" class="col-sm-3 col-form-label">Conatact
+                                                <label for="inputName" class="col-sm-3 col-form-label">Contact
                                                     Name <span class="red-text">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
@@ -2425,66 +2371,83 @@ const openPopupButton = document.getElementById('openPopupButton');
                 $('#project_id').removeAttr('disabled');
                 $('#contact_id').removeAttr('disabled');
                 $('#site_id').removeAttr('disabled');
-                data.forEach(customerData => {
-                    $("#name").val(customerData.name);
-                    $("#email").val(customerData.email);
-                    $("#telephone").val(customerData.telephone);
-                    $("#mobile").val(customerData.mobile);
-                    $("#address").val(customerData.address);
-                    $("#city").val(customerData.city);
-                    $("#country").val(customerData.country);
-                    $("#pincode").val(customerData.postal_code);
-                    $("#conatact_name").val(customerData.contact_name);
-                    $("#site_email").val(customerData.email);
-                    $("#site_telephone").val(customerData.telephone);
-                    $("#site_mobile").val(customerData.mobile);
-                    $("#site_address").val(customerData.address);
-                    $("#site_city").val(customerData.city);
-                    $("#site_country").val(customerData.country);
-                    $("#site_pincode").val(customerData.postal_code);
-                    $("#company").val(customerData.name)
-                    $("#contact").val(customerData.mobile);
-                    $("#project_customer_name").text(customerData.contact_name);
-                    $("#contact_customer_name").text(customerData.contact_name);
-                    $("#site_customer_name").text(customerData.contact_name);
-                    $("#project_customer_id").val(customerData.id);
-                    $("#contact_customer_id").val(customerData.id);
-                    $("#site_customer_id").val(customerData.id);
-                    $("#profession_name").val(customerData.contact_name + " (" + customerData.customer_profession.name + ")");
-                    var project = '<option value="0" selected>Select Project</option>';
-                    if (customerData.customer_project && Array.isArray(customerData.customer_project)) {
-                        for (let i = 0; i < customerData.customer_project.length; i++) {
-                            project += '<option value="' + customerData.customer_project[i].id + '">' + customerData.customer_project[i].project_name + '</option>';
-                        }
-                    }
-                    document.getElementById('project_id').innerHTML = project;
+                if (data.customers && data.customers.length > 0) {
+                var customerData = data.customers[0]; // Fetch first customer
 
-                    var contact = '<option value="0" selected>Default</option>';
-                    if (customerData.additional_contact && Array.isArray(customerData.additional_contact)) {
-                        for (let i = 0; i < customerData.additional_contact.length; i++) {
-                            contact += '<option value="' + customerData.additional_contact[i].id + '">' + customerData.additional_contact[i].contact_name + '</option>';
-                        }
-                    }
-                    document.getElementById('contact_id').innerHTML = contact;
+                $("#name").val(customerData.name);
+                $("#email").val(customerData.email);
+                $("#telephone").val(customerData.telephone);
+                $("#mobile").val(customerData.mobile);
+                $("#address").val(customerData.address);
+                $("#city").val(customerData.city);
+                $("#country").val(customerData.country);
+                $("#pincode").val(customerData.postal_code);
+                $("#contact_name").val(customerData.contact_name);
+                $("#site_email").val(customerData.email);
+                $("#site_telephone").val(customerData.telephone);
+                $("#site_mobile").val(customerData.mobile);
+                $("#site_address").val(customerData.address);
+                $("#site_city").val(customerData.city);
+                $("#site_country").val(customerData.country);
+                $("#site_pincode").val(customerData.postal_code);
+                $("#company").val(customerData.name);
+                $("#contact").val(customerData.mobile);
+                $("#project_customer_name").text(customerData.contact_name);
+                $("#contact_customer_name").text(customerData.contact_name);
+                $("#site_customer_name").text(customerData.contact_name);
+                $("#project_customer_id").val(customerData.id);
+                $("#contact_customer_id").val(customerData.id);
+                $("#site_customer_id").val(customerData.id);
 
-                    var site = '<option value="default" selected>Select Site</option>';
-                    if (customerData.sites && Array.isArray(customerData.sites)) {
-                        for (let i = 0; i < customerData.sites.length; i++) {
-                            site += '<option value="' + customerData.sites[i].id + '">' + customerData.sites[i].site_name + '</option>';
-                        }
+                // Assuming data.customer_profession is not null
+                if (data.customer_profession) {
+                    $("#profession_name").val(customerData.contact_name + " (" + data.customer_profession.name + ")");
+                }
+
+                // Populate project options
+                var project = '<option value="0" selected>Select Project</option>';
+                if (customerData.customer_project && Array.isArray(customerData.customer_project)) {
+                    for (let i = 0; i < customerData.customer_project.length; i++) {
+                        project += '<option value="' + customerData.customer_project[i].id + '">' + customerData.customer_project[i].project_name + '</option>';
                     }
-                    document.getElementById('site_id').innerHTML = site;
-                    $(".country_code").each(function() {
-                        if ($(this).val() === customerData.country_code) {
-                            $(this).prop('selected', true);
-                        }
-                    });
-                    $(".site_country_code").each(function() {
-                        if ($(this).val() === customerData.country_code) {
-                            $(this).prop('selected', true);
-                        }
-                    });
+                }
+                document.getElementById('project_id').innerHTML = project;
+
+                // Populate contact options
+                var contact = '<option value="0" selected>Default</option>';
+                if (customerData.additional_contact && Array.isArray(customerData.additional_contact)) {
+                    for (let i = 0; i < customerData.additional_contact.length; i++) {
+                        contact += '<option value="' + customerData.additional_contact[i].id + '">' + customerData.additional_contact[i].contact_name + '</option>';
+                    }
+                }
+                document.getElementById('contact_id').innerHTML = contact;
+
+                // Populate site options
+                var site = '<option value="default" selected>Select Site</option>';
+                if (customerData.sites && Array.isArray(customerData.sites)) {
+                    for (let i = 0; i < customerData.sites.length; i++) {
+                        site += '<option value="' + customerData.sites[i].id + '">' + customerData.sites[i].site_name + '</option>';
+                    }
+                }
+                document.getElementById('site_id').innerHTML = site;
+
+                // Handle country code selection
+                $(".country_code").each(function() {
+                    if ($(this).val() === customerData.country_code) {
+                        $(this).prop('selected', true);
+                    }
                 });
+                $(".site_country_code").each(function() {
+                    if ($(this).val() === customerData.country_code) {
+                        $(this).prop('selected', true);
+                    }
+                });
+
+                // Enable the relevant fields
+                $('#project_id').removeAttr('disabled');
+                $('#contact_id').removeAttr('disabled');
+                $('#site_id').removeAttr('disabled');
+            }
 
 
 
@@ -2509,8 +2472,8 @@ const openPopupButton = document.getElementById('openPopupButton');
     function get_modal(modal){  
         // alert(modal)
         var customer_select_check=$("#customer_id").val();
-        // if(customer_select_check == null && (modal == 4 || modal == 5)){
-        if(customer_select_check == null){
+        var modal_array=[0,4,5,6,7,8];
+        if(customer_select_check == null && modal_array.includes(modal)){
             alert("Please select customer");
             return false;
         }else{
@@ -2520,7 +2483,7 @@ const openPopupButton = document.getElementById('openPopupButton');
             }else if(modal == 2){
                 $("#job_title_form")[0].reset();
                 $("#job_title_modal").modal('show');
-            }else if(modal == 3){
+            }else if(modal == 3 || modal == 0){
                 $("#region_form")[0].reset();
                 $("#region_modal").modal('show');
             }else if(modal == 4){

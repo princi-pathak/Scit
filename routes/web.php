@@ -385,6 +385,16 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/quote_reject_types','quote_reject_type')->name('quote.quote_reject_type');
 		Route::post('/quote/saveQuoteRejectType','saveQuoteRejectType')->name('quote.ajax.saveQuoteRejectType');
 		Route::post('/quote/deleteQuoteRejectType','deleteQuoteRejectType')->name('quote.ajax.deleteQuoteRejectType');
+
+		// Add Quote
+		Route::post('/quote/saveCustomerType','saveCustomerType')->name('quote.ajax.saveCustomerType');
+		Route::get('/quote/getCustomerType','getCustomerType')->name('quote.ajax.getCustomerType');
+		Route::post('/quote/saveRegion','saveRegion')->name('quote.ajax.saveRegion');
+		Route::get('/quote/getRegions','getRegions')->name('quote.ajax.getRegions');
+		
+		
+		
+		
 		
 	});
 

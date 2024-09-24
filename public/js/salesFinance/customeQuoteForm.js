@@ -9,3 +9,4 @@ if (inputField.value.trim() !== '') {
 } else {
     hiddenDiv.style.display = 'none'; // Hide the div if input is empty
 }
+
