@@ -141,7 +141,7 @@ class Customer extends Model
     {
         return $this->hasMany(Project::class, 'customer_name');
     }
-    public function customer_profession(){
-        return $this->hasOne(Job_title::class, 'id');
-    }
+    // public function customer_profession(){
+    //     return $this->hasOne(Job_title::class, 'id');
+    // }
 }

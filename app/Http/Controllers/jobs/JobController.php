@@ -294,9 +294,15 @@ class JobController extends Controller
     }
     public function get_customer_details_front(Request $request){
         $customer_id=$request->customer_id;
-        $customers = Customer::with('sites','additional_contact','customer_project','customer_profession')->where('id', $customer_id)->get();
-        // echo "<pre>";print_r($customers);die;
-        return response()->json($customers);
+        $title_id=Customer::find($customer_id);
+        $customers = Customer::with('sites','additional_contact','customer_project')->where('id', $customer_id)->get();
+        $customer_profession=Job_title::find($title_id->job_title);
+        // echo "<pre>";print_r($customer_profession);die;
+        $data=[
+            'customers'=>$customers,
+            'customer_profession'=>$customer_profession,
+        ];
+        return response()->json($data);
     }
     // public function search_value_front(Request $request){
     //     $search_value = $request->search_value;
