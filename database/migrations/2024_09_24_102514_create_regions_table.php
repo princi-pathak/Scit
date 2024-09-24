@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('constructor_regions', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->string('home_id')->nullable();
-            $table->string('user_id')->nullable();
-            $table->string('name')->nullable();
-            $table->boolean('status')->default(1)->comment('0 for Inactive, 1 for active');
+            $table->string('home_id');
+            $table->string('title');
+            $table->boolean('status')->default(1)->comment('0-inactive, 1-active');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('constructor_regions');
+        Schema::dropIfExists('regions');
     }
 };
