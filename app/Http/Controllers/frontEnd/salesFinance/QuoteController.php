@@ -10,6 +10,8 @@ use App\Customer;
 use App\Models\QuoteType;
 use App\Models\QuoteSource;
 use App\Models\QuoteRejectType;
+use App\Models\Customer_type;
+use App\Models\Region;
 
 class QuoteController extends Controller
 {
@@ -130,4 +132,56 @@ class QuoteController extends Controller
             return response()->json(['success' => false, 'message' => 'Record not found']);
         }
     }
+
+    public function saveCustomerType(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $saveData = Customer_type::create(array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
+        if ($saveData) {
+            return response()->json(['success' => true, 'message' => 'Customer Type added successfully.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Error in customer Creation.']);
+        }
+    } 
+
+    public function getCustomerType(){
+        $data = Customer_type::getCustomerType(Auth::user()->home_id);
+        if ($data) {
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }
+
+    public function saveRegion(Request $request){
+        $validator = Validator::make($request->all(), [
+            'title' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $saveData = Region::create(array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
+        if ($saveData) {
+            return response()->json(['success' => true, 'message' => 'Region added successfully.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Error in region add.']);
+        }
+    }
+
+    public function getRegions(){
+        $data = Region::getRegions(Auth::user()->home_id);
+        if ($data) {
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
+    }
+    
 }

@@ -2453,9 +2453,12 @@
 
         if (type == "summary") {
             $('#secondModalLabel').text('Summary');
+            $('#saveCRMLeadTaskWithTimer').hide();
         } else if (type == "add") {
+            $('#saveCRMLeadTaskWithTimer').show();
             $('#secondModalLabel').text('New Task');
         } else if (type == "edit") {
+            $('#saveCRMLeadTaskWithTimer').show();
             $('#secondModalLabel').text('Edit Task');
         }
         $('#secondModal').modal('show');
