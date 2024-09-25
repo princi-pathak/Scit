@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\frontEnd;
+namespace App\Http\Controllers\frontEnd\salesFinance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -36,7 +36,7 @@ class CustomerController extends Controller
         $data['country']=Country::all_country_list();
         $data['home_id']=Auth::user()->home_id;
         // echo "<pre>";print_r($data['customer']);die;
-        return view('frontEnd.jobs.add_customer',$data);
+        return view('frontEnd.salesAndFinance.jobs.add_customer',$data);
     }
     public function customer_add_edit_save(Request $request){
         
@@ -128,7 +128,18 @@ class CustomerController extends Controller
         $data['list_mode']=$request->list_mode;
         $data['active_customer']=Customer::getConvertedCustomersCount($home_id);
         $data['inactive_customer']=Customer::where(['is_converted'=>1,'status'=>0,'home_id'=>$home_id])->count();
-        return view('frontEnd.jobs.active_customer',$data);
+        return view('frontEnd.salesAndFinance.jobs.active_customer',$data);
+    }
+    public function customer_type(){
+        $home_id=Auth::user()->home_id;
+        $data['customer_type']=Customer_type::whereNUll('deleted_at')->get();
+        $data['home_id']=$home_id;
+        // echo "<pre>";print_r($customer_type);die;
+        return view('frontEnd.salesAndFinance.jobs.customer_type',$data);
+    }
+    public function customer_type_edit_form(Request $request){
+        $data=Customer_type::find($request->id);
+        return $data;
     }
     public function save_customer_type(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -142,14 +153,12 @@ class CustomerController extends Controller
                 $request->all(),
             );
         } catch (\Exception $e) {
-            // return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
-            $error=$e->getMessage();
+            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
         }
         // echo "<pre>";print_r($insert);die;
-        // $customer_types=Customer_type::where('home_id',$home_id)->get();
         if($insert){
             if($insert->status ==1){
-                echo '<option value="'.$insert->id.'">'.$insert->name.'</option>';
+                echo '<option value="'.$insert->id.'">'.$insert->title.'</option>';
             }
             
         }else{

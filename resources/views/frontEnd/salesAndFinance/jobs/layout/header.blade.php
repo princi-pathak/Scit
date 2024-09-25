@@ -189,63 +189,64 @@ $access_rights = explode(',', $rights);
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Customers <i class="fa-solid fa-angle-right"></i>
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-floppy-o"></i>
+                                            Invoices <i class="fa-solid fa-angle-right"></i>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                                            <li><a class="dropdown-item" href="#">New Invoice</a></li>
-                                            <li><a class="dropdown-item" href="#">Draft Invoices</a></li>
-                                            <li><a class="dropdown-item" href="#">Outstanding Invoices</a></li>
-                                            <li><a class="dropdown-item" href="#">Overdue Invoices</a></li>
-                                            <li><a class="dropdown-item" href="#">Paid Invoices</a></li>
-                                            <li><a class="dropdown-item" href="#">Search Invoices</a></li>
-                                            <li><a class="dropdown-item" href="#">Account Statements</a></li>
-                                            <li><a class="dropdown-item" href="#">Reminders</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-columns"></i>Dashboard</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-plus"></i>New Invoice</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-file"></i>Draft Invoices</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clock"></i>Outstanding Invoices</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-stopwatch"></i>Overdue Invoices</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-thumbs-up"></i>Paid Invoices</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-search"></i>Search Invoices</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Account Statements</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-stopwatch"></i>Reminders</a></li>
                                             <li class="nav-item1 dropend">
                                                 <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span>Recurring Invoices</span> <i class="fa-solid fa-angle-right"></i>
+                                                    <span><i class="fa fa-rotate-right"></i>Recurring Invoices</span> <i class="fa-solid fa-angle-right"></i>
                                                 </a>
                                                 <ul class="dropdown-menu1">
-                                                    <li><a class="dropdown-item" href="#">New Recurring Invoice</a></li>
-                                                    <li><a class="dropdown-item" href="#">Recurring Invoices</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>New Recurring Invoice</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Recurring Invoices</a></li>
                                                 </ul>
                                             </li>
                                             <li class="nav-item1 dropend">
                                                 <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span>Credit Notes</span> <i class="fa-solid fa-angle-right"></i>
+                                                    <span><i class="fa fa-list"></i>Credit Notes</span> <i class="fa-solid fa-angle-right"></i>
                                                 </a>
                                                 <ul class="dropdown-menu1">
-                                                    <li><a class="dropdown-item" href="#">New Credit Note</a></li>
-                                                    <li><a class="dropdown-item" href="#">Draft Credit Notes</a></li>
-                                                    <li><a class="dropdown-item" href="#">Awaiting Approval Credit Notes</a></li>
-                                                    <li><a class="dropdown-item" href="#">Approval Credit Notes</a></li>
-                                                    <li><a class="dropdown-item" href="#">Paid Credit Notes</a></li>
-                                                    <li><a class="dropdown-item" href="#">Cancelled Credit Notes</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>New Credit Note</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Draft Credit Notes</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Awaiting Approval Credit Notes</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Approval Credit Notes</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Paid Credit Notes</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Cancelled Credit Notes</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span>Suppliers</span> <i class="fa-solid fa-angle-right"></i>
+                                            <span><i class="fa fa-file"></i>Purchase Orders</span> <i class="fa-solid fa-angle-right"></i>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                                            <li><a class="dropdown-item" href="#">New Purchase Order</a></li>
-                                            <li><a class="dropdown-item" href="#">Draft Purchase Orders</a></li>
-                                            <li><a class="dropdown-item" href="#">Awaiting Approval Purchase Orders</a></li>
-                                            <li><a class="dropdown-item" href="#">Approved Purchase Orders </a></li>
-                                            <li><a class="dropdown-item" href="#">Active Customers</a></li>
-                                            <li><a class="dropdown-item" href="#">Rejected Purchase Orders </a></li>
-                                            <li><a class="dropdown-item" href="#">Paid Purchase Orders</a></li>
-                                            <li><a class="dropdown-item" href="#">Actioned Purchase Orders</a></li>
-                                            <li><a class="dropdown-item" href="#">Invoices Received</a></li>
-                                            <li><a class="dropdown-item" href="#">Purchase Orders Statements</a></li>
-                                            <li><a class="dropdown-item" href="#">Recurring Purchase Orders</a></li>
-                                            <li><a class="dropdown-item" href="#">Credit Notes</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-columns"></i>Dashboard</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-plus"></i>New Purchase Order</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Draft Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-hourglass"></i>Awaiting Approval Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-check"></i>Approved Purchase Orders </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-check"></i>Rejected Purchase Orders </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-check"></i>Actioned Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-thumbs-up"></i>Paid Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-search"></i>Search Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-file"></i>Invoices Received</a></li>
+                                            <!-- <li><a class="dropdown-item" href="#">Active Customers</a></li> -->
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-file"></i>Purchase Orders Statements</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-rotate-right"></i>Recurring Purchase Orders</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Credit Notes</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -257,24 +258,24 @@ $access_rights = explode(',', $rights);
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Customers <i class="fa-solid fa-angle-right"></i>
+                                        <i class="fa fa-list"></i>Customers <i class="fa-solid fa-angle-right"></i>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('customer_add_edit')}}">New Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=ACTIVE') }}">Active Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=INACTIVE') }}">Inactive Customers</a></li>
-                                            <li><a class="dropdown-item" href="#">Customers Logins</a></li>
+                                            <li><a class="dropdown-item" href="{{url('customer_add_edit')}}"><i class="fa fa-list"></i>New Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=ACTIVE') }}"><i class="fa fa-list"></i>Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=INACTIVE') }}"><i class="fa fa-list"></i>Inactive Customers</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Customers Logins</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Suppliers <i class="fa-solid fa-angle-right"></i>
+                                        <i class="fa fa-list"></i> Suppliers <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">New Customers</a></li>
-                                            <li><a class="dropdown-item" href="#">Active Customers</a></li>
-                                            <li><a class="dropdown-item" href="#">Inactive Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{url('supplier_add')}}"><i class="fa fa-list"></i>New Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{url('suppliers?list_mode=Active')}}"><i class="fa fa-list"></i>Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{url('suppliers?list_mode=INActive')}}"><i class="fa fa-list"></i>Inactive Customers</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -282,14 +283,14 @@ $access_rights = explode(',', $rights);
 
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                    <span><i class="material-symbols-outlined"> production_quantity_limits</i></span>
+                                    <span><i class="material-symbols-outlined"> <i class="fa fa-list"></i>production_quantity_limits</i></span>
                                     Items
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#!" class="dropdown-item">Product Categories</a>
-                                    <a href="#!" class="dropdown-item">Products</a>
-                                    <a href="#!" class="dropdown-item">Product Groups</a>
-                                    <a href="#!" class="dropdown-item">Catalogues</a>
+                                    <a href="#!" class="dropdown-item"><i class="fa fa-list"></i>Product Categories</a>
+                                    <a href="#!" class="dropdown-item"><i class="fa fa-list"></i>Products</a>
+                                    <a href="#!" class="dropdown-item"><i class="fa fa-list"></i>Product Groups</a>
+                                    <a href="#!" class="dropdown-item"><i class="fa fa-list"></i>Catalogues</a>
                                 </div>
                             </div>
 
@@ -348,14 +349,14 @@ $access_rights = explode(',', $rights);
                                     <span><i class="material-symbols-outlined"> construction</i></span> Settings
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> General Settings</a></li>
-                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Digital Doc. Manager</a></li>
-                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Questionnaires</a></li>
-                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Template Editor</a></li>
-                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Custom Field Management</a></li>
-                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Triggers</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><i class="fa fa-gear"></i> General Settings</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><i class="fa fa-file-text"></i> Digital Doc. Manager</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><i class="fa fa-question-circle-o"></i> Questionnaires</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><i class="fa fa-edit"></i> Template Editor</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><i class="fa fa-table"></i> Custom Field Management</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><i class="fa fa-terminal"></i> Triggers</a></li>
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bullhorn"></i>
                                             Leads <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -368,7 +369,7 @@ $access_rights = explode(',', $rights);
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-file-text"></i>
                                             Quotes <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -378,59 +379,59 @@ $access_rights = explode(',', $rights);
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-road"></i>
                                             Jobs <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <?php if (array_key_exists(314, $access_rights)) { ?>
-                                                <li><a class="dropdown-item" href="{{url('job_type')}}">Job Type </a></li>
+                                                <li><a class="dropdown-item" href="{{url('job_type')}}"><i class="fa fa-list"></i>Job Type </a></li>
                                             <?php } ?>
-                                            <li><a class="dropdown-item" href="{{url('job_appointment_type_list')}}">Job Appointment Type </a></li>
-                                            <li><a class="dropdown-item" href="{{url('appointment_rejection_cat_list')}}">Appointment Rejection Categories </a></li>
+                                            <li><a class="dropdown-item" href="{{url('job_appointment_type_list')}}"><i class="fa fa-list"></i>Job Appointment Type </a></li>
+                                            <li><a class="dropdown-item" href="{{url('appointment_rejection_cat_list')}}"><i class="fa fa-list"></i>Appointment Rejection Categories </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-floppy-o"></i>
                                             Invoices <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">Account Codes </a></li>
-                                            <li><a class="dropdown-item" href="#">Tax Rate </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Account Codes </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Tax Rate </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-file"></i>
                                             Purchase Orders <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">Departments </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Departments </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-users"></i>
                                             Customers <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">Customer Type </a></li>
-                                            <li><a class="dropdown-item" href="#">Customer Job Title </a></li>
-                                            <li><a class="dropdown-item" href="#">Complaint Type </a></li>
+                                            <li><a class="dropdown-item" href="{{url('customer_type')}}"><i class="fa fa-list"></i>Customer Type </a></li>
+                                            <li><a class="dropdown-item" href="{{url('job_titles')}}"><i class="fa fa-list"></i>Customer Job Title </a></li>
+                                            <li><a class="dropdown-item" href="{{url('complaint_type')}}"><i class="fa fa-list"></i>Complaint Type </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-user"></i>
                                             Users <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">User Type </a></li>
-                                            <li><a class="dropdown-item" href="#">User Profiles </a></li>
-                                            <li><a class="dropdown-item" href="#">User Working Areas </a></li>
-                                            <li><a class="dropdown-item" href="#">Personal Time Type </a></li>
-                                            <li><a class="dropdown-item" href="#">User Contractors </a></li>
-                                            <li><a class="dropdown-item" href="#">User Location </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Type </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Profiles </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Working Areas </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Personal Time Type </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Contractors </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Location </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-comments"></i>
                                             CRM <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -438,18 +439,18 @@ $access_rights = explode(',', $rights);
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-list"></i>
                                             General <i class="fa-solid fa-angle-right"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#">Attachment Types </a></li>
-                                            <li><a class="dropdown-item" href="#">Payment Types </a></li>
-                                            <li><a class="dropdown-item" href="#">Regions </a></li>
-                                            <li><a class="dropdown-item" href="#">Task Types </a></li>
-                                            <li><a class="dropdown-item" href="#">Tags </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-paperclip"></i>Attachment Types </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-money"></i>Payment Types </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-globe"></i>Regions </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list-ul"></i>Task Types </a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fa fa-tags"></i>Tags </a></li>
                                         </ul>
                                     </li>
-                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"> Quick Setup Wizard</a></li>
+                                    <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><i class="fa fa-check-circle"></i> Quick Setup Wizard</a></li>
                                 </ul>
                             </div>
                         </div>

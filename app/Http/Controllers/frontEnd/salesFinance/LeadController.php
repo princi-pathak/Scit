@@ -532,12 +532,18 @@ class LeadController extends Controller
 
     public function crm_section_type_delete($id)
     {
+        $url= str_replace(url('/'), '', url()->previous());
         $data = CRMSectionType::deleteCRMSectionType($id);
-        if ($data) {
-            return redirect()->route('lead.crm_section')->with('success', "Record deleted successfully");
-        } else {
-            return redirect()->route('lead.crm_section')->with('error', "Record not found");
+        if($url == '/complaint_type' && $data){
+            return redirect('/complaint_type')->with('success', "Record deleted successfully");
+        }else{
+            if ($data) {
+                return redirect()->route('lead.crm_section')->with('success', "Record deleted successfully");
+            } else {
+                return redirect()->route('lead.crm_section')->with('error', "Record not found");
+            }
         }
+        
     }
 
     public function get_CRM_section_types()
