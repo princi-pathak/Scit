@@ -4,7 +4,9 @@ namespace App\Http\Controllers\frontEnd;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Session,DB,Auth;
+use Session,DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Customer;
 use App\Models\Country;
 use App\Models\Job_title;
@@ -167,5 +169,37 @@ class CustomerController extends Controller
         $currecny=Construction_currency::all();
         echo "<pre>";print_r($currecny);die;
 
+    }
+
+    public function SaveCustomerData(Request $request ){
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'contact_name' => 'required',
+            'address' => 'required',
+            'email' => 'required',
+            'telephone' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Call the model's method to save customer data
+        $saveData = Customer::saveCustomerData($request->all(), $request->customer_id);
+
+        // Return the appropriate response
+        return response()->json([
+            'success' => (bool) $saveData,
+            'message' => $saveData ? 'Customer added successfully.' : 'Customer could not be created.'
+        ]);
+    }
+
+    public function getCustomerList(){
+       $data =  Customer::getCustomerList();
+
+       return response()->json([
+        'success' => (bool) $data,
+        'data' => $data ? $data : 'No data.'
+    ]);
     }
 }
