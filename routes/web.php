@@ -6,6 +6,7 @@ use App\Http\Controllers\backEnd\salesfinance\GeneralController;
 use App\Http\Controllers\frontEnd\salesFinance\LeadController as FrontendLeadController;
 use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteController;
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
+use App\Http\Controllers\frontEnd\CustomerController;
 
 
 Route::get('clear', function () {
@@ -253,6 +254,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/job_appointment_rejection_edit_form','App\Http\Controllers\jobs\JobController@job_appointment_rejection_edit_form');
 	Route::post('/save_job_title','App\Http\Controllers\jobs\JobController@save_job_title');
 	Route::post('/save_region','App\Http\Controllers\jobs\JobController@save_region');
+
 	// Customer
 	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save','App\Http\Controllers\frontEnd\CustomerController@customer_add_edit_save');
@@ -365,6 +367,18 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		
 	});
 
+	
+	Route::controller(CustomerController::class)->group(function(){
+
+		Route::prefix('customers')->group(function () {
+			Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
+			Route::get('/getCustomerList', 'getCustomerList')->name('customer.ajax.getCustomerList');
+
+			
+		});
+
+	});
+
 	Route::controller(FrontendQuoteController::class)->group(function(){
 
 		Route::get('/quote/dashboard','dashboard')->name('quote.dashboard');
@@ -391,6 +405,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/getCustomerType','getCustomerType')->name('quote.ajax.getCustomerType');
 		Route::post('/quote/saveRegion','saveRegion')->name('quote.ajax.saveRegion');
 		Route::get('/quote/getRegions','getRegions')->name('quote.ajax.getRegions');
+		Route::post('/quote/saveQuoteCustomer','saveQuoteCustomer')->name('quote.ajax.saveQuoteCustomer');
 		
 		
 		
@@ -1558,6 +1573,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		});
 
 	});
+
+
+	
 
 	Route::controller(BackendLeadController::class)->group(function(){
 

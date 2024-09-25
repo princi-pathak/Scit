@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Customer;
 use App\Models\QuoteType;
 use App\Models\QuoteSource;
 use App\Models\QuoteRejectType;
@@ -22,7 +21,7 @@ class QuoteController extends Controller
     }
     public function create(){
         $data['page'] = "quotes";
-        $data['customers'] = Customer::getConvertedCustomers(Auth::user()->home_id);
+        // $data['customers'] = Customer::getConvertedCustomers(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }
     public function index(){
@@ -183,5 +182,6 @@ class QuoteController extends Controller
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
+
     
 }
