@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 @section('title',' Add Leads')
 <link rel="stylesheet" href="{{ url('public/css/salesFinance/custom_lead.css') }}" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -380,13 +380,13 @@ if (isset($lead)) {
                                                                         <label for="notify" class="col-form-label ps-3">Yes, On</label>
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <input type="date" class="form-control editInput" id="notify_date" name="notify_date">
+                                                                        <input type="date" class="form-control editInput" id="notifyDate" name="notify_date">
                                                                     </div>
                                                                     <div class="col-sm-1 text-center">
                                                                         <i class="fa fa-calendar-days"></i>
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
+                                                                        <input type="time" class="form-control editInput" id="notifyTime" name="notify_time">
                                                                     </div>
                                                                     <div id="optionsDiv">
                                                                         <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
@@ -659,5 +659,5 @@ if (isset($lead)) {
     var addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
     var saveLeadAttachmentUrl = '{{ route("lead.ajax.saveLeadAttachment") }}';
 </script>
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>
