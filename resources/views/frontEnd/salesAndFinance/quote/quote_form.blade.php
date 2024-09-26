@@ -38,11 +38,8 @@
                                             <span class="radStar">*</span>
                                         </label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                            <select class="form-control editInput selectOptions" id="getCustomerList">
                                                 <option>-Not Assigned-</option>
-                                                @foreach($customers as $customer)
-                                                <option value="{{ $customer->id}}">{{ $customer->contact_name }}</option>
-                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
@@ -69,15 +66,11 @@
                                         <div class="col-sm-7">
                                             <select class="form-control editInput selectOptions" id="inputCustomer">
                                                 <option>-Not Assigned-</option>
-                                                <option>Customer-2</option>
-                                                <option>Customer-3</option>
-                                                <option>Customer-4</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i>
-                                                </a>
+                                                <a href="#!" id="OpenAddCustomerContact" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -88,8 +81,6 @@
                                             <input type="text" class="form-control editInput" id="inputEmail" placeholder="Company Name">
                                         </div>
                                     </div>
-
-
                                     <div class="mb-3 row">
                                         <label for="inputAddress" class="col-sm-3 col-form-label">Address <span
                                                 class="radStar">*</span></label>
@@ -623,7 +614,7 @@
 </section>
 
 <!-- Add Customer Modal Start -->
-<div class="modal fade" id="QuotecustomerPop" tabindex="-1" aria-labelledby="customerModalLabel"aria-hidden="true">
+<div class="modal fade" id="QuotecustomerPop" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content add_Customer">
             <div class="modal-header">
@@ -631,10 +622,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6 col-lg-6 col-xl-6">
-                        <div class="formDtail">
-                            <form action="" class="add_customer_form">
+                <form action="" id="add_customer_form" class="add_customer_form">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="formDtail">
                                 <div class="mb-2 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Customer Name <span class="red-text">*</span></label>
                                     <div class="col-sm-9">
@@ -651,15 +642,13 @@
                                     <div class="col-sm-1">
                                         <a href="javascript:void(0)" class="formicon" id="OpenCustomerTypeModel"><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
-                                </div><!-- End off Customer -->
-
+                                </div>
                                 <div class="mb-2 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Contact Name <span class="red-text">*</span></label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control editInput" name="contact_name" id="customer_contact_name">
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-3 col-form-label">Job Title (Position)</label>
                                     <div class="col-sm-4">
@@ -668,27 +657,24 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
-                                    <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                                    <label for="inputEmail" class="col-sm-3 col-form-label">Email <span class="red-text">*</span> </label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control editInput" name="email" id="customer_email">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
-                                    <label for="inputTelephone" class="col-sm-3 col-form-label">Telephone</label>
+                                    <label for="inputTelephone" class="col-sm-3 col-form-label">Telephone <span class="red-text">*</span> </label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control editInput" name="telephone" id="customer_phone">
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control editInput" name="mobile" id="customer_mobile">
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputAddress" class="col-sm-3 col-form-label">Fax</label>
                                     <div class="col-sm-9">
@@ -701,7 +687,6 @@
                                         <input type="text" class="form-control editInput" name="website" id="customer_website">
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-3 col-form-label">Payment Terms</label>
                                     <div class="col-sm-7">
@@ -716,7 +701,6 @@
                                         <span class="afterInputText"> Days </span>
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-3 col-form-label">Currency</label>
                                     <div class="col-sm-9">
@@ -726,8 +710,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-
                                 <div class="mb-2 row">
                                     <label for="inputCounty" class="col-sm-3 col-form-label">Credit Limit</label>
                                     <div class="col-sm-9">
@@ -740,7 +722,6 @@
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control editInput" name="discount" id="customer_discount">
                                     </div>
-
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-3 col-form-label">Discount Type</label>
@@ -752,7 +733,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputCountry" class="col-sm-3 col-form-label">VAT / Tax No.</label>
                                     <div class="col-sm-9">
@@ -778,12 +758,10 @@
                                         </select>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-6">
-                        <div class="formDtail">
-                            <form action="" class="">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="formDtail">
                                 <div class="mb-2 row">
                                     <label for="inputProject"
                                         class="col-sm-3 col-form-label">Region</label>
@@ -800,10 +778,9 @@
                                     <label for="inputAddress"
                                         class="col-sm-3 col-form-label">Address <span class="red-text">*</span></label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control textareaInput" name="adddress" id="cuatomer_address" rows="3"></textarea>
+                                        <textarea class="form-control textareaInput" name="address" id="cuatomer_address" rows="3"></textarea>
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputCity"
                                         class="col-sm-3 col-form-label">City</label>
@@ -824,7 +801,6 @@
                                         <input type="text" class="form-control editInput" nmae="pincode" id="customer_pincode">
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputCountry"
                                         class="col-sm-3 col-form-label">Country</label>
@@ -834,14 +810,12 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputAddress" class="col-sm-3 col-form-label">Site Notes</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control textareaInput" rows="3" name="site_notes" id="customer_site_note"></textarea>
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Sage Ref.</label>
                                     <div class="col-sm-9">
@@ -852,26 +826,25 @@
                                     <label class="col-sm-3 col-form-label">Assign Products</label>
                                     <div class="col-sm-9">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="assigned_product" id="customer_yes" checked>
+                                            <input class="form-check-input" type="radio" value="1" name="assigned_product" id="customer_yes" checked>
                                             <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="assigned_product" id="custoemr_no">
+                                            <input class="form-check-input" type="radio" value="2" name="assigned_product" id="custoemr_no">
                                             <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="mb-2 row">
                                     <label for="inputAddress" class="col-sm-3 col-form-label">Notes</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control textareaInput" name="notes" rows="3" id="customer_note"></textarea>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
-                </div> <!-- End row -->
+                    </div> <!-- End row -->
+                </form>
             </div>
             <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="profileDrop" id="SaveCustomerData">Save</button>
@@ -955,6 +928,134 @@
 </div>
 <!-- Add Customer Regions Modal End -->
 
+<!-- Add Customer Contact Modal Start -->
+<div class="modal fade" id="add_customer_contact_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerModalLabel">Add Customer Contact</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="add_customer_form" class="add_customer_form">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="formDtail">
+                                <div class="mb-2 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Customer <span class="red-text">*</span></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="name" class="form-control editInput">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Default Billing </label>
+                                    <div class="col-sm-7">
+                                    <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="1" name="assigned_product" id="customer_yes" checked>
+                                            <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="2" name="assigned_product" id="custoemr_no">
+                                            <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Contact Name <span class="red-text">*</span></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="contact_name" id="customer_contact_name">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputProject" class="col-sm-3 col-form-label">Job Title (Position)</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control editInput selectOptions get_job_title_result" name="job_title" id="customer_job_titile_id">
+                                            <option>Please Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a href="javascript:void(0)" class="formicon" id="OpenCustomerTypeModel"><i class="fa-solid fa-square-plus"></i></a>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputEmail" class="col-sm-3 col-form-label">Email <span class="red-text">*</span> </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="email" id="customer_email">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputTelephone" class="col-sm-3 col-form-label">Telephone <span class="red-text">*</span> </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="telephone" id="customer_phone">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="mobile" id="customer_mobile">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputAddress" class="col-sm-3 col-form-label">Fax</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="fax" id="customer_fax">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="formDtail">
+                                <div class="mb-2 row">
+                                    <label for="inputAddress" class="col-sm-3 col-form-label">Address Details<span class="red-text">*</span></label>
+                                    <div class="col-sm-9">
+                                        <label for="inputAddress" class="col-form-label">Same as Default <input type="checkbox" name ="address_default"></label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputAddress" class="col-sm-3 col-form-label">Address <span class="red-text">*</span></label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control textareaInput" name="address" id="cuatomer_address" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCity" class="col-sm-3 col-form-label">City</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="city" id="customer_city">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCounty" class="col-sm-3 col-form-label">County</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" name="country" id="customer_country_input">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputPincode" class="col-sm-3 col-form-label">Pincode</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control editInput" nmae="pincode" id="customer_pincode">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCountry" class="col-sm-3 col-form-label">Country</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control editInput selectOptions" name="country_code" id="customer_country">
+                                            <option selected disabled>Select Country</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- End row -->
+                </form>
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+                <button type="button" class="profileDrop" id="SaveCustomerData">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Customer Contact Modal End -->
 
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customeQuoteForm.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
@@ -1010,7 +1111,7 @@
         });
     }
 
-    function getRegions(){
+    function getRegions() {
         $.ajax({
             url: '{{ route("quote.ajax.getRegions") }}',
             success: function(response) {
@@ -1030,7 +1131,55 @@
         });
     }
 
+    function getCustomerList() {
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerList") }}',
+            success: function(response) {
+                console.log(response.message);
+                const get_customer_type = document.getElementById('getCustomerList');
+                get_customer_type.innerHTML = '';
+
+                const option = document.createElement('option');
+                option.value = '';
+                option.text = "-Not Assigned-";
+                get_customer_type.appendChild(option);
+
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.contact_name;
+                    get_customer_type.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function getCountriesListCustomer() {
+            $.ajax({
+                url: '{{ route("ajax.getCountriesList") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response.Data);
+                    const selectElement = document.getElementById('customer_country');
+                    selectElement.innerHTML = '';
+                    response.Data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.code;
+                        option.text = "+" + " " + user.code + " - " + " " + user.name;
+                        selectElement.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
     $(document).ready(function() {
+        getCustomerList();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1056,7 +1205,6 @@
             });
         });
 
-
         // Ajax Call for saving Customer Type
         $('#saveRegionsData').on('click', function() {
             var formData = $('#add_region_form').serialize();
@@ -1074,8 +1222,27 @@
                 }
             });
         });
-        
+
+        $('#SaveCustomerData').on('click', function() {
+            var formData = $('#add_customer_form').serialize();
+            $.ajax({
+                url: '{{ route("customer.ajax.SaveCustomerData") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    getCustomerList();
+                    $('#QuotecustomerPop').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
     });
+
+
 
     window.onload = function() {
         var buttons = document.querySelectorAll('.hide-on-load');
@@ -1114,5 +1281,15 @@
     }
     // js for Add Regions modal
 
+
+    // js for Add Customer Contact modal
+    const OpenAddCustomerContact = document.getElementById('OpenAddCustomerContact');
+    const add_customer_contact_modal = document.getElementById('add_customer_contact_modal');
+
+    OpenAddCustomerContact.onclick = function() {
+        getCountriesListCustomer();
+        $('#add_customer_contact_modal').modal('show');
+    }
+    // js for Add Customer Contact modal
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

@@ -144,4 +144,15 @@ class Customer extends Model
     // public function customer_profession(){
     //     return $this->hasOne(Job_title::class, 'id');
     // }
+
+    public static function saveCustomerData(array $data, $customerId = null)
+    {
+        $data['home_id'] = Auth::user()->home_id;
+        $data['is_converted'] = 1;
+        return self::updateOrCreate(['id' => $customerId], $data);
+    }
+
+    public static function getCustomerList(){
+        return self::where('is_converted', 1)->where('status', 1)->get();
+    }
 }

@@ -380,13 +380,13 @@ if (isset($lead)) {
                                                                         <label for="notify" class="col-form-label ps-3">Yes, On</label>
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <input type="date" class="form-control editInput" id="notify_date" name="notify_date">
+                                                                        <input type="date" class="form-control editInput" id="notifyDate" name="notify_date">
                                                                     </div>
                                                                     <div class="col-sm-1 text-center">
                                                                         <i class="fa fa-calendar-days"></i>
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
+                                                                        <input type="time" class="form-control editInput" id="notifyTime" name="notify_time">
                                                                     </div>
                                                                     <div id="optionsDiv">
                                                                         <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
