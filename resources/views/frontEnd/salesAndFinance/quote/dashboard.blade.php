@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 
 
 <section class="home_section_cont px-3 ">
@@ -252,4 +252,4 @@
 
 <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')

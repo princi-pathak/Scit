@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 
     <div class="main_wrapper">
     <section class="home_section_cont px-3 ">
@@ -572,4 +572,4 @@
             </div>
         </div>
     </section>
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')

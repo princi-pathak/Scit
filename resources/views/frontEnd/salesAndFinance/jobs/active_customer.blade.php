@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 <style>
     <?php if($list_mode == 'ACTIVE'){?>
     #active {
@@ -215,4 +215,4 @@
     </script>
 </section>
 
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')

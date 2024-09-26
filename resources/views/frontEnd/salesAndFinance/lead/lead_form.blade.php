@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 @section('title',' Add Leads')
 <link rel="stylesheet" href="{{ url('public/css/salesFinance/custom_lead.css') }}" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -659,5 +659,5 @@ if (isset($lead)) {
     var addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
     var saveLeadAttachmentUrl = '{{ route("lead.ajax.saveLeadAttachment") }}';
 </script>
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>

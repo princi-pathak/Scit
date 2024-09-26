@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\jobs;
+namespace App\Http\Controllers\frontEnd\salesFinance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -62,13 +62,13 @@ class JobController extends Controller
         $data['job_list']=Job::whereNot('status',2)->get();
         $data['quote_type_list']=QuoteType::whereNot('status',2)->get();
         $data['page']="job_index";
-        return view('frontEnd.jobs.index',$data);
+        return view('frontEnd.salesAndFinance.jobs.index',$data);
     }
     public function job_list(){
         $data['job']=Job::where('status',1)->get();
         $data['access_rights']=$this->access_rights();
         // echo "<pre>";print_r($data['access_rights']);die;
-        return view('frontEnd.jobs.job',$data);
+        return view('frontEnd.salesAndFinance.jobs.job',$data);
     }
     public function job_type(Request $request){
         $home_id = Auth::user()->home_id;
@@ -79,9 +79,14 @@ class JobController extends Controller
         $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
 
         // echo "<pre>";print_r($data['workflow']);die;
-        return view('frontEnd.jobs.job_type',$data);
+        return view('frontEnd.salesAndFinance.jobs.job_type',$data);
     }
-    
+    public function job_titles(){
+        $home_id = Auth::user()->home_id;
+        $data['job_title']=Job_title::whereNull('deleted_at')->get();
+        $data['home_id']=$home_id;
+        return view('frontEnd.salesAndFinance.jobs.job_titles',$data);
+    }
     public function job_type_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $home_id = Auth::user()->home_id;
@@ -264,7 +269,7 @@ class JobController extends Controller
         $data['sales_tax']=Construction_tax_rate::where(['home_id'=>$home_id,'status'=>1])->get();
         // $data['site']=Constructor_customer_site::where('customer_id',$user_id)->get();
         // echo "<pre>";print_r($data['last_job_id']);die;
-        return view('frontEnd.jobs.add_job',$data);
+        return view('frontEnd.salesAndFinance.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -568,7 +573,7 @@ class JobController extends Controller
         $data['home_id']=$home_id;
         $data['users']=User::all();
         // echo "<pre>";print_r($data['users']);die;
-        return view('frontEnd.jobs.job_appointment_type',$data);
+        return view('frontEnd.salesAndFinance.jobs.job_appointment_type',$data);
     }
     public function job_type_appointment_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -602,17 +607,19 @@ class JobController extends Controller
         $home_id = Auth::user()->home_id;
         $data['home_id']=$home_id;
         // echo "<pre>";print_r($data['rejection']);die;
-        return view('frontEnd.jobs.appointment_rejection_cat',$data);
+        return view('frontEnd.salesAndFinance.jobs.appointment_rejection_cat',$data);
         
     }
     public function appointment_rejection_cat_save(Request $request){
-        // echo "<pre>";print_r($request->all());die;
         echo construction_appointment_rejection_category::SaveAppointmentRejectionCategory($request->all());
     }
     public function job_appointment_rejection_edit_form(Request $request){
-        // echo "<pre>";print_r($request->all());die;
         $data=construction_appointment_rejection_category::find($request->id);
         return response()->json($data);
+    }
+    public function job_title_edit_form(Request $request){
+        $data=job_title::find($request->id);
+        return $data;
     }
     public function save_job_title(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -623,16 +630,11 @@ class JobController extends Controller
                 ['id' => $request->id ?? null],
                 $request->all(),
             );
-        } catch (\Exception $e) {
-            // return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
-            $error=$e->getMessage();
-        }
-        if($insert){
             if($insert->status ==1){
                 echo '<option value="'.$insert->id.'">'.$insert->name.'</option>';
             }
-        }else{
-            echo "error";
+        } catch (\Exception $e) {
+            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
         }
     }
     public function save_region(Request $request){
