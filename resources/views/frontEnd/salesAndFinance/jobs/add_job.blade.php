@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 <style>
     .currency {
     padding: 2px 3px 2px 5px;
@@ -908,7 +908,7 @@
                                                         id="customer_type_id">
                                                         <option selected disabled>None</option>
                                                         <?php foreach($customer_types as $cust_type){?>
-                                                            <option value="{{$cust_type->id}}">{{$cust_type->name}}</option>
+                                                            <option value="{{$cust_type->id}}">{{$cust_type->title}}</option>
                                                         <?php }?>
                                                     </select>
                                                 </div>
@@ -1307,16 +1307,16 @@
                 </div>
                 <div class="modal-body">
                     <form id="project_form">
-                        <div class="mb-3 row">
+                        <div class="row">
                             <label for="inputJobRef" class="col-sm-3 col-form-label">Project Ref</label>
                             <div class="col-sm-9">
-                                <p class="editInput">Project Ref ###</p>
+                                <p class="editInput mb-0">Project Ref ###</p>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputJobRef" class="col-sm-3 col-form-label">Customer</label>
                             <div class="col-sm-9">
-                            <p id="project_customer_name" class="editInput"></p>
+                            <p id="project_customer_name" class="editInput mb-0"></p>
                             </div>
                         </div>
                         <input type="hidden" id="project_customer_id">
@@ -2515,17 +2515,17 @@ const openPopupButton = document.getElementById('openPopupButton');
  <script>
     function save_customer_type(){
        var token='<?php echo csrf_token();?>'
-       var name=$("#customer_type_name").val();
+       var title=$("#customer_type_name").val();
        var status=$("#customer_type_status").val();
        var home_id=$("#home_id").val();
-       if(name == ''){
+       if(title == ''){
         $("#customer_type_name").addClass('invalid-input');
         return false;
        }else {
             $.ajax({
                 type: "POST",
                 url: "{{url('/save_customer_type')}}",
-                data: {name:name,status:status,home_id:home_id,_token:token},
+                data: {title:title,status:status,home_id:home_id,_token:token},
                 success: function(data) {
                     console.log(data);
                     if($.trim(data) == 'error'){
@@ -2558,15 +2558,14 @@ const openPopupButton = document.getElementById('openPopupButton');
                 data: {name:name,status:status,home_id:home_id,_token:token},
                 success: function(data) {
                     console.log(data);
-                    if($.trim(data) == 'error'){
-                        alert("Something went wrong");
-                        return false;
-                    }else{
-                        $("#job_title_modal").modal('hide');
-                        $('.get_job_title_result').append(data);
-                        // window.location.reload();
-                    }
+                    
                     $("#job_title_modal").modal('hide');
+                    $('.get_job_title_result').append(data);
+                    // window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
                 }
             });
         }
@@ -2716,22 +2715,23 @@ const openPopupButton = document.getElementById('openPopupButton');
                 },
                 success: function(data) {
                     console.log(data);
-                    data.forEach(contactData => {
-                    $("#name").val(contactData.name);
-                    $("#email").val(contactData.email);
-                    $("#telephone").val(contactData.telephone);
-                    $("#mobile").val(contactData.mobile);
-                    $("#contact_address").val(contactData.address);
-                    $("#contact_city").val(contactData.city);
-                    $("#contact_country_input").val(contactData.country);
-                    $("#contact_pincode").val(contactData.postal_code);
-                    
-                    $(".contact_country_id").each(function() {
-                        if ($(this).val() === contactData.country_code) {
-                            $(this).prop('selected', true);
-                        }
-                    });
-            });  
+                    if (data.customers && data.customers.length > 0) {
+                        var contactData = data.customers[0];
+                        $("#name").val(contactData.name);
+                        $("#email").val(contactData.email);
+                        $("#telephone").val(contactData.telephone);
+                        $("#mobile").val(contactData.mobile);
+                        $("#contact_address").val(contactData.address);
+                        $("#contact_city").val(contactData.city);
+                        $("#contact_country_input").val(contactData.country);
+                        $("#contact_pincode").val(contactData.postal_code);
+                        
+                        $(".contact_country_id").each(function() {
+                            if ($(this).val() === contactData.country_code) {
+                                $(this).prop('selected', true);
+                            }
+                        });  
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.log(error);
@@ -3240,4 +3240,4 @@ const openPopupButton = document.getElementById('openPopupButton');
     });
 </script>
 
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')

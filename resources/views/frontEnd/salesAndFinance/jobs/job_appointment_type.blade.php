@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 <style>
     .addError {
         border:1px solid red;
@@ -528,4 +528,4 @@
             }
         </script>
     </section>
-    @include('frontEnd.jobs.layout.footer')
+    @include('frontEnd.salesAndFinance.jobs.layout.footer')

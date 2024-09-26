@@ -1,12 +1,16 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
-<meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+.icon-color span i{
+    font-size: 16px;
 
+}
+</style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>Quote Type</h3>
+                    <h3>CRM Section Type</h3>
                 </div>
             </div>
         </div>
@@ -46,27 +50,55 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Quote Type</th>
-                                <th>Default Expiration Date</th>
+                                <th>Type</th>
+                                <th>CRM Section</th>
+                                <th>Color Code</th>
+                                <th>Icon Preview</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if(!$quote_type->isEmpty())
-                            @foreach ($quote_type as $value)
+                            @if(!$crm_sections->isEmpty())
+                            @foreach ($crm_sections as $value)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $value->title }}</td>
-                                <td>{{ $value->number_of_days }}</td>
-                                <td> @if($value->status) <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span> @else <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> @endif </td>
+                                <td>@switch($value->crm_section)
+                                    @case(1) Calls @break
+                                    @case(2) Emails @break
+                                    @case(3) Notes @break
+                                    @case(4) Complaints @break
+                                    @case(5) Tasks @break
+                                    @case(6) Contacts @break
+                                    @case(7) History @break
+                                    @default {{-- No output if none of the cases match --}}
+                                    @endswitch
+                                </td>
                                 <td>
+                                    <div class="d-flex">
+                                        <span class="viewColor" style="background-color: {{ $value->color_code }}"></span> <span class="colorCode"></span>
+                                    </div>
+                                </td>
+                                <td> <div class="icon-color"> @switch($value->crm_section)
+                                    @case(2) <span style="color: {{ $value->color_code }}"><i class="fa fa-envelope"></i></span> @break
+                                    @case(1) <span style="color: {{ $value->color_code }}"><i class="fa fa-phone"></i></span> @break
+                                    @case(3) <span style="color: {{ $value->color_code }}"><i class="fa fa-file"></i></span> @break
+                                    @case(4) <span style="color: {{ $value->color_code }}"><i class="fa fa-exclamation-triangle"></i></span> @break
+                                    @case(5) <span style="color: {{ $value->color_code }}"><i class="fa fa-list-ul"></i></span> @break
+                                    @case(6) <span style="color: {{ $value->color_code }}"><i class="fa fa-user"></i></span> @break
+                                    @case(7) @break
+                                    @default {{-- No output if none of the cases match --}}
+                                    @endswitch </div></td>
+                                <td> @if($value->status) <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span> @else <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> @endif </td>
+    <td>
                                     <div class="d-inline-flex align-items-center ">
                                         <div class="nav-item dropdown">
                                             <a href="#" class="nav-link dropdown-toggle profileDrop show" data-bs-toggle="dropdown" aria-expanded="true">Action</a>
                                             <div class="dropdown-menu fade-up m-0">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#statusModel" data-id="{{ $value->id }}" data-title="{{ $value->title }}" data-status="{{ $value->status }}" data-number_of_days="{{ $value->number_of_days}}" class="dropdown-item open-modal">Edit details</a>
-                                                <a href="javascript:void(0);" class="dropdown-item" onclick="confirmDelete('{{ $value->id }}')">Delete</a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#statusModel" data-id="{{ $value->id }}" data-title="{{ $value->title }}" data-status="{{ $value->status }}" data-crm-section="{{ $value->crm_section }}" data-color="{{ $value->color_code }}" class="dropdown-item open-modal">Edit details</a>
+                                                <hr class="dropdown-divider">
+                                                <a href="{{ url('/lead/crm_section_type/delete').'/'.$value->id }}" class="dropdown-item">Delete</a>
                                             </div>
                                         </div>
                                     </div>
@@ -91,23 +123,33 @@
         <div class="modal-content add_Customer">
             <div class="modal-header terques-bg">
                 <button aria-hidden="true" data-bs-dismiss="modal" class="close" type="button">×</button>
-                <h5 class="modal-title pupTitle">Quote Type - Add</h5>
+                <h5 class="modal-title pupTitle">Lead Status - Add</h5>
             </div>
             <div class="modal-body">
-                <form role="form" id="quote_type_form">
+                <form role="form" id="crm_section_type_form">
                     @csrf
                     <div><span id="error-message" class="error"></span></div>
                     <div class="row form-group">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Quote Type <span class="red-text">*</span></label>
+                        <label class="col-lg-3 col-sm-3 col-form-label"> Section <span class="red-text">*</span> </label>
                         <div class="col-md-9">
-                            <input type="hidden" name="quote_type_id" id="quote_type_id">
-                            <input type="text" name="title" class="form-control editInput " placeholder="" id="title">
+                            <input type="hidden" name="section_type_id" id="section_type_id">
+                            <select name="crm_section" id="crm_section" class="form-control editInput ">
+                                @foreach($crmSec as $value)
+                                    <option value="{{ $value->id}}">{{ $value->title}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row form-group mt-3">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Number of days</label>
+                        <label class="col-lg-3 col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
                         <div class="col-md-9">
-                            <input type="number" name="number_of_days" class="form-control editInput " placeholder="" id="number_of_days">
+                            <input type="text" name="title" class="form-control editInput " placeholder="CRM Status Type" id="title">
+                        </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Color Code </label>
+                        <div class="col-md-9">
+                            <input type="color" name="color_code" class="form-control editInput " placeholder="CRM Status Type" id="color">
                         </div>
                     </div>
                     <div class="row form-group mt-3">
@@ -122,8 +164,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn profileDrop" id="saveChanges">Save</button>
-                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="profileDrop" id="saveChanges">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -136,42 +178,45 @@
             var itemId = $(this).data('id');
             var itemTitle = $(this).data('title');
             var itemStatus = $(this).data('status');
-            var number_of_days = $(this).data('number_of_days');
+            var crm_section = $(this).data('crm-section');
+            var color = $(this).data('color');
 
-            $('#quote_type_id').val(itemId);
+            $('#section_type_id').val(itemId);
             $('#title').val(itemTitle);
             $('#status').val(itemStatus);
-            $('#number_of_days').val(number_of_days);
+            $('#crm_section').val(crm_section);
+            $('#color').val(color);
+
             if (itemId) {
                 // Editing existing record
-                $('#quote_type_id').val(itemId);
+                $('#section_type_id').val(itemId);
                 $('#title').val(itemTitle);
                 $('#status').val(itemStatus);
-                $('#number_of_days').val(number_of_days);
-                $('.modal-title').text('Quote Type - Edit');
+                $('.modal-title').text('Edit CRM Section Type');
                 $('#saveChanges').text('Save Changes');
             } else {
                 // Adding new record (clear form fields if needed)
-                $('#quote_type_id').val('');
+                $('#section_type_id').val('');
                 $('#title').val('');
-                $('#number_of_days').val();
+                $('#crm_section').val();
+                $('#color').val();
                 $('#status').val(1); // Default to Active
-                $('.modal-title').text('Quote Type - Add');
+                $('.modal-title').text('Add CRM Section Types');
                 $('#saveChanges').text('Add');
             }
         });
 
         $('#saveChanges').on('click', function() {
-            var formData = $('#quote_type_form').serialize();
+            var formData = $('#crm_section_type_form').serialize();
 
             $.ajax({
-                url: '{{ route("quote.ajax.saveQuoteType") }}',
+                url: '{{ route("lead.ajax.saveCRMSectionType") }}',
                 method: 'POST',
                 data: formData,
                 success: function(response) {
                     alert(response.message);
                     $('#secondModal').modal('hide');
-                    window.location.reload();
+                    location.reload();
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -179,45 +224,4 @@
             });
         });
     });
-
-    function confirmDelete(id) {
-        let confirmation = confirm("Are you sure you want to delete this record?");
-
-        if (confirmation) {
-            deleteRow(id);
-        } else {
-            console.log("Delete action canceled.");
-        }
-    }
-
-    function deleteRow(id) {
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            }
-        });
-        console.log("Deleting row with ID:", id);
-        // You can perform an AJAX request here to delete the record from the backend
-        $.ajax({
-            url: '{{ route("quote.ajax.deleteQuoteType") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                if (data.success) {
-                    console.log('Record soft deleted successfully');
-                    location.reload();
-
-                } else {
-                    console.error('Error deleting record');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-        // Code to delete the row
-    }
 </script>

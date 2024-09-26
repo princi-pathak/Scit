@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <section class="main_section_page px-3 pt-0">
@@ -1292,4 +1292,4 @@
     }
     // js for Add Customer Contact modal
 </script>
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')

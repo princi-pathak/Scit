@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 <style>
     .addError {
         border:1px solid red;
@@ -413,12 +413,13 @@
                     });
             }
             function status_change(id, status){
+                alert()
             var token='<?php echo csrf_token();?>'
-            var table="job_types";
+            var model="Job_type";
             $.ajax({
                 type: "POST",
                 url: "{{url('/status_change')}}",
-                data: {id:id,status:status,table:table,_token:token},
+                data: {id:id,status:status,model:model,_token:token},
                 success: function(data) {
                     console.log(data);
                     if($.trim(data)==1){
@@ -561,4 +562,4 @@
             }
         </script>
     </section>
-    @include('frontEnd.jobs.layout.footer')
+    @include('frontEnd.salesAndFinance.jobs.layout.footer')

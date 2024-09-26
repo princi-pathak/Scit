@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 <style>
 .icon-color span i{
     font-size: 16px;
@@ -170,7 +170,7 @@
     </div>
 </div>
 <!-- end Popup  -->
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script>
     $(document).ready(function() {
         $('.open-modal').on('click', function() {
