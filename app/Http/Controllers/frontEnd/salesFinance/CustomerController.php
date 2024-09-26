@@ -4,7 +4,7 @@ namespace App\Http\Controllers\frontEnd\salesFinance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Session,DB;
+use Session, DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Customer;
@@ -18,169 +18,181 @@ use App\Models\Constructor_additional_contact;
 
 class CustomerController extends Controller
 {
-    public function customer_add_edit(Request $request){
+    public function customer_add_edit(Request $request)
+    {
         // echo "<pre>";print_r(Auth::user()->home_id);die;
-        $key=base64_decode($request->key);
-        if($key){
-            $task='Edited';
-        }else{
-            $task='Added';
+        $key = base64_decode($request->key);
+        if ($key) {
+            $task = 'Edited';
+        } else {
+            $task = 'Added';
         }
-        $data['customer']=Customer::find($key);
-        $data['task']=$task;
-        $data['page']='customers';
-        $data['del_status']=0;
-        $data['customer_type']=Customer_type::where('status',1)->get();
-        $data['job_title']=Job_title::where('status',1)->get();
-        $data['contact']=Constructor_additional_contact::where('customer_id',$key)->get();
-        $data['site']=Constructor_customer_site::where('customer_id',$key)->get();
-        $data['login']=Construction_customer_login::where('customer_id',$key)->get();
-        $data['country']=Country::all_country_list();
-        $data['home_id']=Auth::user()->home_id;
+        $data['customer'] = Customer::find($key);
+        $data['task'] = $task;
+        $data['page'] = 'customers';
+        $data['del_status'] = 0;
+        $data['customer_type'] = Customer_type::where('status', 1)->get();
+        $data['job_title'] = Job_title::where('status', 1)->get();
+        $data['contact'] = Constructor_additional_contact::where('customer_id', $key)->get();
+        $data['site'] = Constructor_customer_site::where('customer_id', $key)->get();
+        $data['login'] = Construction_customer_login::where('customer_id', $key)->get();
+        $data['country'] = Country::all_country_list();
+        $data['home_id'] = Auth::user()->home_id;
         // echo "<pre>";print_r($data['customer']);die;
-        return view('frontEnd.salesAndFinance.jobs.add_customer',$data);
+        return view('frontEnd.salesAndFinance.jobs.add_customer', $data);
     }
-    public function customer_add_edit_save(Request $request){
-        
+    public function customer_add_edit_save(Request $request)
+    {
+
         // echo "<pre>";print_r($request->all());die;
         $customer = Customer::saveCustomer($request->all());
         return response()->json($customer);
     }
-    public function default_address(Request $request){
+    public function default_address(Request $request)
+    {
         // $login_customer_id=$request->login_customer_id;
-        $country=Country::all_country_list();
-        $address_details=Customer::find($request->login_customer_id);
-        $result='';
-        if($request->check == 1){
-            $result.='<option value="" selected disabled>None</option>';
-                    foreach($country as $country_codev){
-                        $select=($country_codev->id == $address_details->country_code)?"selected":"";
-                        $result.='<option value="'.$country_codev->code.'" '.$select.'>'.$country_codev->name.' ('.$country_codev->code.')</option>';
-                    }
-        }else {
-            $result.='<option value="" selected disabled>None</option>';
-                    foreach($country as $country_codev){
-                        $result.='<option value="'.$country_codev->code.'">'.$country_codev->name.' ('.$country_codev->code.')</option>';
-                    }
+        $country = Country::all_country_list();
+        $address_details = Customer::find($request->login_customer_id);
+        $result = '';
+        if ($request->check == 1) {
+            $result .= '<option value="" selected disabled>None</option>';
+            foreach ($country as $country_codev) {
+                $select = ($country_codev->id == $address_details->country_code) ? "selected" : "";
+                $result .= '<option value="' . $country_codev->code . '" ' . $select . '>' . $country_codev->name . ' (' . $country_codev->code . ')</option>';
+            }
+        } else {
+            $result .= '<option value="" selected disabled>None</option>';
+            foreach ($country as $country_codev) {
+                $result .= '<option value="' . $country_codev->code . '">' . $country_codev->name . ' (' . $country_codev->code . ')</option>';
+            }
         }
-        $data['reslut']=$result;
-        $data['details']=$address_details;
+        $data['reslut'] = $result;
+        $data['details'] = $address_details;
         return response()->json($data);
     }
-    public function save_contact(Request $request){
-        $customer=Constructor_additional_contact::saveCustomerAdditional($request->all());
+    public function save_contact(Request $request)
+    {
+        $customer = Constructor_additional_contact::saveCustomerAdditional($request->all());
         // echo "<pre>";print_r($customer);die;
-        $data=Constructor_additional_contact::find($customer);
-        $job_title=Job_title::find($data->job_title_id);
-        $result='<tr class="active">
-                    <td><input type="checkbox" value="'.$data->id.'" class="checkboxContactId"></td>
-                    <td>'.$data->contact_name.'</td>
-                    <td>'.$job_title->name.'</td>
-                    <td>'.$data->email.'</td>
-                    <td>'.$data->telephone.'</td>
-                    <td>'.$data->mobile.'</td>
-                    <td>'.$data->address.'</td>
-                    <td>'.$data->city.'</td>
-                    <td>'.$data->country.'</td>
-                    <td>'.$data->postcode.'</td>
+        $data = Constructor_additional_contact::find($customer);
+        $job_title = Job_title::find($data->job_title_id);
+        $result = '<tr class="active">
+                    <td><input type="checkbox" value="' . $data->id . '" class="checkboxContactId"></td>
+                    <td>' . $data->contact_name . '</td>
+                    <td>' . $job_title->name . '</td>
+                    <td>' . $data->email . '</td>
+                    <td>' . $data->telephone . '</td>
+                    <td>' . $data->mobile . '</td>
+                    <td>' . $data->address . '</td>
+                    <td>' . $data->city . '</td>
+                    <td>' . $data->country . '</td>
+                    <td>' . $data->postcode . '</td>
                     <td>Yes </td>
 
                 </tr>';
         echo $result;
     }
-    public function save_site(Request $request){
-        $customer=Constructor_customer_site::saveCustomerAdditional($request->all());
-        $data=Constructor_customer_site::find($customer);
-        $job_title=Job_title::find($data->title_id);
-        $result='<tr class="active">
-                    <td><input type="checkbox" value="'.$data->id.'" class="checkboxContactId"></td>
-                    <td>'.$data->site_name.'</td>
-                    <td>'.$job_title->name.'</td>
-                    <td>'.$data->email.'</td>
-                    <td>'.$data->telephone.'</td>
-                    <td>'.$data->mobile.'</td>
-                    <td>'.$data->address.'</td>
-                    <td>'.$data->city.'</td>
-                    <td>'.$data->country.'</td>
-                    <td>'.$data->post_code.'</td>
+    public function save_site(Request $request)
+    {
+        $customer = Constructor_customer_site::saveCustomerAdditional($request->all());
+        $data = Constructor_customer_site::find($customer);
+        $job_title = Job_title::find($data->title_id);
+        $result = '<tr class="active">
+                    <td><input type="checkbox" value="' . $data->id . '" class="checkboxContactId"></td>
+                    <td>' . $data->site_name . '</td>
+                    <td>' . $job_title->name . '</td>
+                    <td>' . $data->email . '</td>
+                    <td>' . $data->telephone . '</td>
+                    <td>' . $data->mobile . '</td>
+                    <td>' . $data->address . '</td>
+                    <td>' . $data->city . '</td>
+                    <td>' . $data->country . '</td>
+                    <td>' . $data->post_code . '</td>
                     <td>Yes </td>
 
                 </tr>';
         echo $result;
     }
-    public function save_login(Request $request){
-        $customer=Construction_customer_login::saveCustomerAdditional($request->all());
-        $data=Construction_customer_login::find($customer);
-        $job_title=Job_title::find($data->title_id);
-                $result = '<tr class="active">
+    public function save_login(Request $request)
+    {
+        $customer = Construction_customer_login::saveCustomerAdditional($request->all());
+        $data = Construction_customer_login::find($customer);
+        $job_title = Job_title::find($data->title_id);
+        $result = '<tr class="active">
                 <td>#</td>
-                <td>'.$data->name.'</td>
-                <td>'.$data->email.'</td>
-                <td>'.$data->email.'</td>
-                <td>'.$data->telephone.'</td>
+                <td>' . $data->name . '</td>
+                <td>' . $data->email . '</td>
+                <td>' . $data->email . '</td>
+                <td>' . $data->telephone . '</td>
                 <td>29/07/2024</td>
                 <td>Active</td>
             </tr>';
 
         echo $result;
     }
-    public function active_customer(Request $request){
-        $home_id=Auth::user()->home_id;
-        $data['customer']=Customer::get_customer_list_Attribute($home_id,$request->list_mode);
-        $data['list_mode']=$request->list_mode;
-        $data['active_customer']=Customer::getConvertedCustomersCount($home_id);
-        $data['inactive_customer']=Customer::where(['is_converted'=>1,'status'=>0,'home_id'=>$home_id])->count();
-        return view('frontEnd.salesAndFinance.jobs.active_customer',$data);
+    public function active_customer(Request $request)
+    {
+        $home_id = Auth::user()->home_id;
+        $data['customer'] = Customer::get_customer_list_Attribute($home_id, $request->list_mode);
+        $data['list_mode'] = $request->list_mode;
+        $data['active_customer'] = Customer::getConvertedCustomersCount($home_id);
+        $data['inactive_customer'] = Customer::where(['is_converted' => 1, 'status' => 0, 'home_id' => $home_id])->count();
+        return view('frontEnd.salesAndFinance.jobs.active_customer', $data);
     }
-    public function customer_type(){
-        $home_id=Auth::user()->home_id;
-        $data['customer_type']=Customer_type::whereNUll('deleted_at')->get();
-        $data['home_id']=$home_id;
+    public function customer_type()
+    {
+        $home_id = Auth::user()->home_id;
+        $data['customer_type'] = Customer_type::whereNUll('deleted_at')->get();
+        $data['home_id'] = $home_id;
         // echo "<pre>";print_r($customer_type);die;
-        return view('frontEnd.salesAndFinance.jobs.customer_type',$data);
+        return view('frontEnd.salesAndFinance.jobs.customer_type', $data);
     }
-    public function customer_type_edit_form(Request $request){
-        $data=Customer_type::find($request->id);
+    public function customer_type_edit_form(Request $request)
+    {
+        $data = Customer_type::find($request->id);
         return $data;
     }
-    public function save_customer_type(Request $request){
+    public function save_customer_type(Request $request)
+    {
         // echo "<pre>";print_r($request->all());die;
         $home_id = Auth::user()->home_id;
-        
-        $insert='';
-        $table=new Customer_type;
+
+        $insert = '';
+        $table = new Customer_type;
         try {
-            $insert=$table::updateOrCreate(
+            $insert = $table::updateOrCreate(
                 ['id' => $request->id ?? null],
                 $request->all(),
             );
         } catch (\Exception $e) {
-            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+            return response()->json(['success' => 'false', 'message' => $e->getMessage()], 500);
         }
         // echo "<pre>";print_r($insert);die;
-        if($insert){
-            if($insert->status ==1){
-                echo '<option value="'.$insert->id.'">'.$insert->title.'</option>';
+        if ($insert) {
+            if ($insert->status == 1) {
+                echo '<option value="' . $insert->id . '">' . $insert->title . '</option>';
             }
-            
-        }else{
+        } else {
             echo "error";
         }
     }
-    public function add_currency(Request $request){
-        $all_country=Country::all();
-        foreach($all_country as $val){
-            $table= new Construction_currency;
-            $table->country_id=$val->id;
-            $table->currency_code=$val->currency_code;
+    public function add_currency(Request $request)
+    {
+        $all_country = Country::all();
+        foreach ($all_country as $val) {
+            $table = new Construction_currency;
+            $table->country_id = $val->id;
+            $table->currency_code = $val->currency_code;
             $table->save();
         }
-        $currecny=Construction_currency::all();
-        echo "<pre>";print_r($currecny);die;
-
+        $currecny = Construction_currency::all();
+        echo "<pre>";
+        print_r($currecny);
+        die;
     }
 
-    public function SaveCustomerData(Request $request ){
+    public function SaveCustomerData(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -203,12 +215,23 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function getCustomerList(){
-       $data =  Customer::getCustomerList();
+    public function getCustomerList()
+    {
+        $data =  Customer::getCustomerList();
 
-       return response()->json([
-        'success' => (bool) $data,
-        'data' => $data ? $data : 'No data.'
-    ]);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function getCustomerDetails(Request $request){
+
+        $data =  Customer::getCustomerDetails($request->id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
     }
 }
