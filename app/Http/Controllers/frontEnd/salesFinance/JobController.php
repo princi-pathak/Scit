@@ -33,6 +33,7 @@ use App\Models\Constructor_additional_contact;
 use App\Models\Construction_job_appointment_type;
 use App\Models\Construction_product_supplier_list;
 use App\Models\construction_appointment_rejection_category;
+use App\Models\Region;
 use DB,Auth,Session,Validator;
 
 class JobController extends Controller
@@ -262,13 +263,13 @@ class JobController extends Controller
         $data['appointment_type']=Construction_job_appointment_type::where('home_id',$home_id)->get();
         $data['customer_types']=Customer_type::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['job_title']=Job_title::where(['home_id'=>$home_id,'status'=>1])->get();
-        $data['region']=Constructor_region::where(['home_id'=>$home_id,'status'=>1])->get();
+        $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
         $data['product_count']=Product::count();
         $data['category']=Product_category::with('parent', 'children')->where('status',1)->get();
         $data['account_code']=Construction_account_code::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['sales_tax']=Construction_tax_rate::where(['home_id'=>$home_id,'status'=>1])->get();
         // $data['site']=Constructor_customer_site::where('customer_id',$user_id)->get();
-        // echo "<pre>";print_r($data['last_job_id']);die;
+        // echo "<pre>";print_r($data['region']);die;
         return view('frontEnd.salesAndFinance.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
@@ -640,7 +641,7 @@ class JobController extends Controller
     public function save_region(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $insert='';
-        $table=new Constructor_region;
+        $table=new Region;
         try {
             $insert=$table::updateOrCreate(
                 ['id' => $request->id ?? null],
@@ -652,7 +653,7 @@ class JobController extends Controller
         }
         if($insert){
             if($insert->status ==1){
-                echo '<option value="'.$insert->id.'">'.$insert->name.'</option>';
+                echo '<option value="'.$insert->id.'">'.$insert->title.'</option>';
             }
         }else{
             echo "error";
