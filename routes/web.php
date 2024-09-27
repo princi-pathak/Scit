@@ -10,6 +10,7 @@ use App\Http\Controllers\frontEnd\salesFinance\CrmSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\SupplierController;
 use App\Http\Controllers\frontEnd\salesFinance\GeneralSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
+use App\Http\Controllers\frontEnd\salesFinance\InvoiceController;
 
 Route::get('clear', function () {
 	Artisan::call('cache:clear');
@@ -294,8 +295,22 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(GeneralSectionController::class)->group(function(){
 		Route::get('/attachments_types','attachments_types');
 		Route::post('/save_attachment_type','save_attachment_type');
+		Route::get('/Payment_type','Payment_type');
+		Route::post('/save_payment_type','save_payment_type');
+		Route::get('/regions','regions');
+		Route::get('/task_types','task_types');
+		Route::post('/save_task_type','save_task_type');
+		Route::get('/tags','tags');
+		Route::post('/save_tag','save_tag');
 	});
   
+	// Invoice Section 
+	Route::controller(InvoiceController::class)->group(function(){
+		Route::get('/account_codes','account_codes');
+		Route::post('/save_account_code','save_account_code');
+		Route::get('/tax_rate','tax_rate');
+		Route::post('/save_tax_rate','save_tax_rate');
+	});
   
   	Route::controller(CustomerController::class)->group(function(){
       Route::prefix('customers')->group(function () {

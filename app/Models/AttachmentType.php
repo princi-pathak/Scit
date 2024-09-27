@@ -41,7 +41,7 @@ class AttachmentType extends Model
         return $AttachmentType;
     }
     public static function getAllAttachmentType(){
-        $data = AttachmentType::where('deleted_at', null)->get();
+        $data = self::whereNull('deleted_at')->get();
         return $data;
     }
 

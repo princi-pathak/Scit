@@ -397,8 +397,8 @@ $access_rights = explode(',', $rights);
                                         Invoices</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Account Codes </a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Tax Rate </a></li>
+                                            <li><a class="dropdown-item" href="{{url('/account_codes')}}"><i class="fa fa-list"></i>Account Codes </a></li>
+                                            <li><a class="dropdown-item" href="{{url('/tax_rate')}}"><i class="fa fa-list"></i>Tax Rate </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -446,10 +446,10 @@ $access_rights = explode(',', $rights);
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{url('/attachments_types')}}"><i class="fa fa-paperclip"></i>Attachment Types </a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-money"></i>Payment Types </a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-globe"></i>Regions </a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list-ul"></i>Task Types </a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-tags"></i>Tags </a></li>
+                                            <li><a class="dropdown-item" href="{{url('/Payment_type')}}"><i class="nav-icon fas fa-money-bill-alt"></i>Payment Types </a></li>
+                                            <li><a class="dropdown-item" href="{{url('/regions')}}"><i class="fa fa-globe"></i>Regions </a></li>
+                                            <li><a class="dropdown-item" href="{{url('/task_types')}}"><i class="fa fa-list-ul"></i>Task Types </a></li>
+                                            <li><a class="dropdown-item" href="{{url('/tags')}}"><i class="fa fa-tags"></i>Tags </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><span><i class="fa fa-check-circle"></i> Quick Setup Wizard</span></a></li>

@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-4 col-lg-4 col-xl-4 ">
                     <div class="pageTitle">
-                        <h3>Attachment Types</h3>
+                        <h3>Task Types</h3>
                     </div>
                 </div>
                 <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -51,14 +51,14 @@
                                 <tr>
                                     <th></th>
                                     <th>#</th>
-                                    <th>Attachment Type </th>
+                                    <th>Task Type </th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                                                
                             <tbody id="result">
-                            <?php foreach($attachmentType as $key=>$val){?>
+                            <?php foreach($task_type as $key=>$val){?>
                                 <tr>
                                     <td></td>
                                     <td>{{++$key}}</td>
@@ -71,6 +71,7 @@
                                             
                                         <?php }?>
                                     </td>
+                                    
                                     <td>
                                         <div class="d-inline-flex align-items-center ">
                                             <div class="nav-item dropdown">
@@ -96,7 +97,7 @@
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="customerModalLabel">Attachment Type - Add</h5>
+                                    <h5 class="modal-title" id="customerModalLabel">Task Type - Add</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -110,7 +111,7 @@
                                                 <form id="form_data" class="customerForm">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Attachment Type<span class="red-text">*</span></label>
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Task Type<span class="red-text">*</span></label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
                                                                 id="name" name="title" value="">
@@ -135,8 +136,8 @@
                                 <div class="modal-footer customer_Form_Popup">
 
                                     <button type="button" class="profileDrop" id="save_data">Save</button>
-                                    <button type="button" class="profileDrop" id="save_dataClose">Save &
-                                        Close</button>
+                                    <!-- <button type="button" class="profileDrop" id="save_dataClose">Save &
+                                        Close</button> -->
                                     <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
@@ -179,28 +180,35 @@
                     message = "Edited Successfully Done";
                 }
 
-                if (title == '') {
+                if (home_id == '') {
                     $("#name").addClass('addError');
                     return false;
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: "{{url('/save_attachment_type')}}",
+                        url: '{{ url("/save_task_type") }}',
                         data: {id: id, home_id: home_id, title: title, status: status, _token: token},
                         success: function(data) {
                             console.log(data);
-                            $("#message").text(message);
-                            $(".success_message").show();
-                            setTimeout(function() {
-                                $(".alert").hide();
-                                location.reload();
-                            }, 3000);
-                            $("#form_data")[0].reset();
-                        },
-                        error: function(xhr, status, error) {
-                            var errorMessage = xhr.status + ': ' + xhr.statusText;
-                            alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                            if(data.vali_error){
+                                alert(data.vali_error);
+                                return false;
+                            }else if(data.data && data.data.original && data.data.original.error){
+                                alert(data.data.original.error);
+                                return false;
+                            }else{
+                                $("#message").text(message);
+                                $(".success_message").show();
+                                setTimeout(function() {
+                                    $(".alert").hide();
+                                    location.reload();
+                                    // $("#form_data")[0].reset();
+                                }, 3000);
+                                
+                            }
+                            
                         }
+                        
                     });
                 }
             }
@@ -215,7 +223,7 @@
             });
             function status_change(id, status){
             var token='<?php echo csrf_token();?>'
-            var model="AttachmentType";
+            var model="Task_type";
             $.ajax({
                 type: "POST",
                 url: "{{url('/status_change')}}",

@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-4 col-lg-4 col-xl-4 ">
                     <div class="pageTitle">
-                        <h3>Attachment Types</h3>
+                        <h3>Account Codes</h3>
                     </div>
                 </div>
                 <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -51,18 +51,20 @@
                                 <tr>
                                     <th></th>
                                     <th>#</th>
-                                    <th>Attachment Type </th>
+                                    <th>Account Code Name</th>
+                                    <th>Account Code</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                                                
                             <tbody id="result">
-                            <?php foreach($attachmentType as $key=>$val){?>
+                            <?php foreach($account_codes as $key=>$val){?>
                                 <tr>
                                     <td></td>
                                     <td>{{++$key}}</td>
-                                    <td>{{$val->title}}</td>
+                                    <td>{{$val->name}}</td>
+                                    <td>{{$val->departmental_code}}</td>
                                     <td>
                                         <?php if($val->status == 1){?>
                                             <span class="grencheck" onclick="status_change({{$val->id}},{{$val->status}})"><i class="fa-solid fa-circle-check"></i></span>
@@ -71,6 +73,7 @@
                                             
                                         <?php }?>
                                     </td>
+                                    
                                     <td>
                                         <div class="d-inline-flex align-items-center ">
                                             <div class="nav-item dropdown">
@@ -78,7 +81,7 @@
                                                     Action
                                                 </a>
                                                 <div class="dropdown-menu fade-up m-0">
-                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-title="{{ $val->title }}" data-status="{{ $val->status }}">Edit Details</a>
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-title="{{ $val->name }}" data-departmental_code="{{$val->departmental_code}}" data-status="{{ $val->status }}">Edit Details</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -96,7 +99,7 @@
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="customerModalLabel">Attachment Type - Add</h5>
+                                    <h5 class="modal-title" id="customerModalLabel">Departmental Code - Add</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -105,15 +108,25 @@
                                     <div class="alert alert-success text-center success_message" style="display:none;height:50px">
                                         <p id="message"></p>
                                     </div>
+                                    <div class="alert alert-danger text-center error_message" style="display:none;height:50px">
+                                        <p id="error_message"></p>
+                                    </div>
                                         <div class="col-md-6 col-lg-6 col-xl-6">
                                             <div class="formDtail">
                                                 <form id="form_data" class="customerForm">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Attachment Type<span class="red-text">*</span></label>
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Name<span class="red-text">*</span></label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
-                                                                id="name" name="title" value="">
+                                                                id="name" name="name" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Departmental Code</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control editInput"
+                                                                id="departmental_code" name="departmental_code" value="">
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
@@ -135,8 +148,8 @@
                                 <div class="modal-footer customer_Form_Popup">
 
                                     <button type="button" class="profileDrop" id="save_data">Save</button>
-                                    <button type="button" class="profileDrop" id="save_dataClose">Save &
-                                        Close</button>
+                                    <!-- <button type="button" class="profileDrop" id="save_dataClose">Save &
+                                        Close</button> -->
                                     <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
@@ -167,7 +180,8 @@
 
             function saveData() {
                 var token = '<?php echo csrf_token();?>';
-                var title = $("#name").val();
+                var name = $("#name").val();
+                var departmental_code=$("#departmental_code").val();
                 var status = $.trim($('#statusModal option:selected').val());
                 var home_id = '<?php echo $home_id;?>';
                 var id = $("#id").val();
@@ -178,29 +192,40 @@
                 } else {
                     message = "Edited Successfully Done";
                 }
-
-                if (title == '') {
+                 if (name == '') {
                     $("#name").addClass('addError');
                     return false;
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: "{{url('/save_attachment_type')}}",
-                        data: {id: id, home_id: home_id, title: title, status: status, _token: token},
+                        url: '{{ url("/save_account_code") }}',
+                        data: {id: id, home_id: home_id, name: name,departmental_code:departmental_code, status: status, _token: token},
                         success: function(data) {
                             console.log(data);
-                            $("#message").text(message);
-                            $(".success_message").show();
-                            setTimeout(function() {
-                                $(".alert").hide();
-                                location.reload();
-                            }, 3000);
-                            $("#form_data")[0].reset();
-                        },
-                        error: function(xhr, status, error) {
-                            var errorMessage = xhr.status + ': ' + xhr.statusText;
-                            alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                            if(data.vali_error){
+                                $("#error_message").text(data.vali_error);
+                                $(".error_message").show();
+                                setTimeout(function() {
+                                    $(".error_message").hide();
+                                    $("#form_data")[0].reset();
+                                }, 3000);
+                                return false;
+                            }else if(data.data && data.data.original && data.data.original.error){
+                                alert(data.data.original.error);
+                                return false;
+                            }else{
+                                $("#message").text(message);
+                                $(".success_message").show();
+                                setTimeout(function() {
+                                    $(".alert").hide();
+                                    location.reload();
+                                    // $("#form_data")[0].reset();
+                                }, 3000);
+                                
+                            }
+                            
                         }
+                        
                     });
                 }
             }
@@ -208,14 +233,16 @@
                 var id = $(this).data('id');
                 var title = $(this).data('title');
                 var status = $(this).data('status');
+                var departmental_code = $(this).data('departmental_code');
 
                 $('#id').val(id);
                 $('#name').val(title);
+                $("#departmental_code").val(departmental_code);
                 $('#statusModal').val(status);
             });
             function status_change(id, status){
             var token='<?php echo csrf_token();?>'
-            var model="AttachmentType";
+            var model="Construction_account_code";
             $.ajax({
                 type: "POST",
                 url: "{{url('/status_change')}}",
