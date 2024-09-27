@@ -1,4 +1,4 @@
-@include('frontEnd.salesAndFinancejobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 <style>
     .addError {
         border:1px solid red;

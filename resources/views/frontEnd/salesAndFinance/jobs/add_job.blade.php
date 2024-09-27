@@ -207,7 +207,7 @@
                                                 <select class="form-control editInput selectOptions get_region_result" id="region" name="region" required>
                                                     <option selected disabled>Select Region</option>
                                                     <?php foreach($region as $site_region){?>
-                                                        <option value="{{$site_region->id}}">{{$site_region->name}}</option>
+                                                        <option value="{{$site_region->id}}">{{$site_region->title}}</option>
                                                     <?php }?>
                                                 </select>
                                                 </div>
@@ -1105,7 +1105,7 @@
                                                         id="customer_region">
                                                         <option>None</option>
                                                         <?php foreach($region as $region_val){?>
-                                                            <option value="{{$region_val->id}}">{{$region_val->name}}</option>
+                                                            <option value="{{$region_val->id}}">{{$region_val->title}}</option>
                                                         <?php }?>
                                                     </select>
                                                 </div>
@@ -2572,17 +2572,17 @@ const openPopupButton = document.getElementById('openPopupButton');
     }
     function save_region(){
         var token='<?php echo csrf_token();?>'
-        var name=$("#region_name").val();
+        var title=$("#region_name").val();
         var status=$("#region_status").val();
         var home_id=$("#home_id").val();
-        if(name == ''){
+        if(title == ''){
         $("#region_name").addClass('invalid-input');
         return false;
         }else{
             $.ajax({
                 type: "POST",
                 url: "{{url('/save_region')}}",
-                data: {name:name,status:status,home_id:home_id,_token:token},
+                data: {title:title,status:status,home_id:home_id,_token:token},
                 success: function(data) {
                     console.log(data);
                     // return false;

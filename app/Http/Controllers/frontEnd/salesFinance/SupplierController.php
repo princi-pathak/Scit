@@ -12,6 +12,6 @@ class SupplierController extends Controller
     }
     public function supplier_add(Request $request){
 
-        return view('frontEnd.jobs.add_supplier');
+        return view('frontEnd.salesAndFinance.jobs.add_supplier');
     }
 }

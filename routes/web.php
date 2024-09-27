@@ -8,6 +8,7 @@ use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteC
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
 use App\Http\Controllers\frontEnd\salesFinance\CrmSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\SupplierController;
+use App\Http\Controllers\frontEnd\salesFinance\GeneralSectionController;
 
 
 Route::get('clear', function () {
@@ -287,6 +288,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(SupplierController::class)->group(function(){
 		Route::get('/suppliers','index');
 		Route::get('/supplier_add','supplier_add');
+	});
+
+	// General section Front 
+	Route::controller(GeneralSectionController::class)->group(function(){
+		Route::get('/attachments_types','attachments_types');
+		Route::post('/save_attachment_type','save_attachment_type');
 	});
 
 	Route::controller(FrontendLeadController::class)->group(function(){
