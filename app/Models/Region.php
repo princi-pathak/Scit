@@ -18,4 +18,9 @@ class Region extends Model
     public static function getRegions($home_id){
         return Region::where('home_id', $home_id)->where('status', 1)->get();
     }
+
+    public static function getAllRegion($home_id){
+        $data = self::whereNull('deleted_at')->where('home_id',$home_id)->get();
+        return $data;
+    }
 }
