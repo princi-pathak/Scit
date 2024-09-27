@@ -22,7 +22,7 @@ class QuoteController extends Controller
     }
     public function create(){
         $data['page'] = "quotes";
-        // $data['customers'] = Customer::getConvertedCustomers(Auth::user()->home_id);
+        $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
         $data['countries'] = Country::getCountriesNameCode();
         return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }

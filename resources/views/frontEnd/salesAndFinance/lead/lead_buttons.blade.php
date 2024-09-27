@@ -9,7 +9,7 @@
             <a href="{{ url('/lead/rejected') }}" class="profileDrop">Rejected<span>({{ App\Lead::getRejectedCount() }})</span></a>
             <a href="{{ url('/lead/authorization') }}" class="profileDrop">Authorization<span>({{ App\Lead::getAuthorizationCount() }})</span></a>
             <a href="{{ url('/leads/converted') }}" class="profileDrop">Converted <span>({{ App\Customer::getConvertedCustomersCount(Auth::user()->home_id) }})</span></a>
-            <a href="#" class="profileDrop">Search Leads</a>
+            <a href="{{ url('/lead/searchLead') }}" class="profileDrop">Search Leads</a>
             <a href="{{ url('/leads/tasks') }}" class="profileDrop">Task</a>
         </div>
     </div>
