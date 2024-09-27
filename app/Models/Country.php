@@ -28,6 +28,6 @@ class Country extends Model
     }
 
     public static function getCountriesNameCode() {
-        return Country::where('status', 1)->select('code', 'name')->get();
+        return Country::where('status', 1)->select('id','code', 'name')->get();
     }
 }
