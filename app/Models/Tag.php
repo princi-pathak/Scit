@@ -6,19 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
-
-class Construction_account_code extends Model
+class Tag extends Model
 {
     use HasFactory;
-    protected $table="construction_account_codes";
-    protected $fillable=['home_id','name','departmental_code','status'];
+    protected $table="tags";
+    protected $fillable=['home_id','title','status'];
 
-    public static function getAllAccount_Codes($home_id){
+    public static function getAllTag($home_id){
         $data = self::whereNull('deleted_at')->where('home_id',$home_id)->get();
         return $data;
     }
 
-    public static function saveAccount_Codes($data){
+    public static function saveTag($data){
         try {
             $Task_type=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
             return $Task_type;
@@ -27,4 +26,5 @@ class Construction_account_code extends Model
             return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
         }
     }
+
 }

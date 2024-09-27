@@ -9,7 +9,8 @@ use App\Http\Controllers\backEnd\superAdmin\HomeController;
 use App\Http\Controllers\frontEnd\salesFinance\CrmSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\SupplierController;
 use App\Http\Controllers\frontEnd\salesFinance\GeneralSectionController;
-
+use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
+use App\Http\Controllers\frontEnd\salesFinance\InvoiceController;
 
 Route::get('clear', function () {
 	Artisan::call('cache:clear');
@@ -294,7 +295,30 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(GeneralSectionController::class)->group(function(){
 		Route::get('/attachments_types','attachments_types');
 		Route::post('/save_attachment_type','save_attachment_type');
+		Route::get('/Payment_type','Payment_type');
+		Route::post('/save_payment_type','save_payment_type');
+		Route::get('/regions','regions');
+		Route::get('/task_types','task_types');
+		Route::post('/save_task_type','save_task_type');
+		Route::get('/tags','tags');
+		Route::post('/save_tag','save_tag');
 	});
+  
+	// Invoice Section 
+	Route::controller(InvoiceController::class)->group(function(){
+		Route::get('/account_codes','account_codes');
+		Route::post('/save_account_code','save_account_code');
+		Route::get('/tax_rate','tax_rate');
+		Route::post('/save_tax_rate','save_tax_rate');
+	});
+  
+  	Route::controller(CustomerController::class)->group(function(){
+      Route::prefix('customers')->group(function () {
+        Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
+        Route::get('/getCustomerList', 'getCustomerList')->name('customer.ajax.getCustomerList');
+        Route::post('/getCustomerDetails', 'getCustomerDetails')->name('customer.ajax.getCustomerDetails');
+			});
+		});
 
 	Route::controller(FrontendLeadController::class)->group(function(){
 		//Leads 
@@ -309,6 +333,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/leads/create','store')->name('lead.store');
 		Route::get('/leads/edit/{id}', 'edit')->name('lead.edit');
 		Route::get('/leads/authorization/{id}', 'sentToAuthorization')->name('lead.authorization');
+		Route::get('/lead/searchLead','searchLead');
 		
 		// Lead Task Type
 		Route::get('/leads/tasks','task_list')->name('lead.task_list');   
@@ -382,8 +407,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('lead/getUserList', 'getUserList')->name('lead.ajax.getUserList');
 		Route::post('lead/getLeadDataWithRecurrence', 'getLeadDataWithRecurrence')->name('lead.ajax.getLeadDataWithRecurrence');
 		
-		
-		
 	});
 
 	Route::controller(FrontendQuoteController::class)->group(function(){
@@ -412,10 +435,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/getCustomerType','getCustomerType')->name('quote.ajax.getCustomerType');
 		Route::post('/quote/saveRegion','saveRegion')->name('quote.ajax.saveRegion');
 		Route::get('/quote/getRegions','getRegions')->name('quote.ajax.getRegions');
-		
-		
-		
-		
 		
 	});
 

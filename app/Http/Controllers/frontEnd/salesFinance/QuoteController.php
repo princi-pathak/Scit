@@ -11,6 +11,7 @@ use App\Models\QuoteSource;
 use App\Models\QuoteRejectType;
 use App\Models\Customer_type;
 use App\Models\Region;
+use App\Models\Country;
 
 class QuoteController extends Controller
 {
@@ -21,7 +22,8 @@ class QuoteController extends Controller
     }
     public function create(){
         $data['page'] = "quotes";
-        // $data['customers'] = Customer::getConvertedCustomers(Auth::user()->home_id);
+        $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
+        $data['countries'] = Country::getCountriesNameCode();
         return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }
     public function index(){
@@ -166,7 +168,7 @@ class QuoteController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $saveData = Region::create(array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
+        $saveData = Region::updateOrCreate(['id'=>$request->id ?? null],array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
         if ($saveData) {
             return response()->json(['success' => true, 'message' => 'Region added successfully.']);
         } else {
