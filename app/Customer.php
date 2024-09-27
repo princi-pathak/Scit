@@ -155,4 +155,8 @@ class Customer extends Model
     public static function getCustomerList(){
         return self::where('is_converted', 1)->where('status', 1)->get();
     }
+
+    public static function getCustomerDetails($id){
+        return self::where('id', $id)->get();
+    }
 }

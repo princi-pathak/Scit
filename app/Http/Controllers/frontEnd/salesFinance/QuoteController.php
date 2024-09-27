@@ -11,6 +11,7 @@ use App\Models\QuoteSource;
 use App\Models\QuoteRejectType;
 use App\Models\Customer_type;
 use App\Models\Region;
+use App\Models\Country;
 
 class QuoteController extends Controller
 {
@@ -22,6 +23,7 @@ class QuoteController extends Controller
     public function create(){
         $data['page'] = "quotes";
         // $data['customers'] = Customer::getConvertedCustomers(Auth::user()->home_id);
+        $data['countries'] = Country::getCountriesNameCode();
         return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }
     public function index(){
