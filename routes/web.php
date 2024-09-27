@@ -333,6 +333,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/leads/create','store')->name('lead.store');
 		Route::get('/leads/edit/{id}', 'edit')->name('lead.edit');
 		Route::get('/leads/authorization/{id}', 'sentToAuthorization')->name('lead.authorization');
+		Route::get('/lead/searchLead','searchLead');
 		
 		// Lead Task Type
 		Route::get('/leads/tasks','task_list')->name('lead.task_list');   
@@ -406,8 +407,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('lead/getUserList', 'getUserList')->name('lead.ajax.getUserList');
 		Route::post('lead/getLeadDataWithRecurrence', 'getLeadDataWithRecurrence')->name('lead.ajax.getLeadDataWithRecurrence');
 		
-		
-		
 	});
 
 	Route::controller(FrontendQuoteController::class)->group(function(){
@@ -436,10 +435,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/getCustomerType','getCustomerType')->name('quote.ajax.getCustomerType');
 		Route::post('/quote/saveRegion','saveRegion')->name('quote.ajax.saveRegion');
 		Route::get('/quote/getRegions','getRegions')->name('quote.ajax.getRegions');
-		
-		
-		
-		
 		
 	});
 

@@ -12,6 +12,11 @@ class QuoteSource extends Model
     protected $fillable = ['title' ,'status', 'home_id'];
 
     public static function getAllQuoteSources(){
-        return QuoteSource::where('deleted_at', null)->get();
+        return self::where('deleted_at', null)->get();
     }
+
+    public static function getAllQuoteSourcesHome($home_id){
+        return self::where('deleted_at', null)->where('status', 1)->where('home_id', $home_id)->get();
+    }
+
 }

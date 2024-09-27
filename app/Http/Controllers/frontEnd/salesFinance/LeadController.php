@@ -1007,4 +1007,9 @@ class LeadController extends Controller
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
+
+    public function searchLead(){
+        $page = "Lead";
+        return view('frontEnd.salesAndFinance.lead.search_leads', compact('page'));
+    }
 }
