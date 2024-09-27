@@ -8,8 +8,8 @@ use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteC
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
 use App\Http\Controllers\frontEnd\salesFinance\CrmSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\SupplierController;
+use App\Http\Controllers\frontEnd\salesFinance\GeneralSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
-
 
 Route::get('clear', function () {
 	Artisan::call('cache:clear');
@@ -290,16 +290,20 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/supplier_add','supplier_add');
 	});
 
-	Route::controller(CustomerController::class)->group(function(){
-		Route::prefix('customers')->group(function () {
-			Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
-			Route::get('/getCustomerList', 'getCustomerList')->name('customer.ajax.getCustomerList');
-			Route::post('/getCustomerDetails', 'getCustomerDetails')->name('customer.ajax.getCustomerDetails');
-
-			
-			
-		});
+	// General section Front 
+	Route::controller(GeneralSectionController::class)->group(function(){
+		Route::get('/attachments_types','attachments_types');
+		Route::post('/save_attachment_type','save_attachment_type');
 	});
+  
+  
+  	Route::controller(CustomerController::class)->group(function(){
+      Route::prefix('customers')->group(function () {
+        Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
+        Route::get('/getCustomerList', 'getCustomerList')->name('customer.ajax.getCustomerList');
+        Route::post('/getCustomerDetails', 'getCustomerDetails')->name('customer.ajax.getCustomerDetails');
+			});
+		});
 
 	Route::controller(FrontendLeadController::class)->group(function(){
 		//Leads 

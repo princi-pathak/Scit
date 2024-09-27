@@ -34,6 +34,17 @@ class AttachmentType extends Model
         return round($size, $precision) . ' ' . $units[$index];
     }
 
+    public static function saveAttachment($data)
+    {
+        
+        $AttachmentType=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
+        return $AttachmentType;
+    }
+    public static function getAllAttachmentType(){
+        $data = AttachmentType::where('deleted_at', null)->get();
+        return $data;
+    }
+
 }
 
 
