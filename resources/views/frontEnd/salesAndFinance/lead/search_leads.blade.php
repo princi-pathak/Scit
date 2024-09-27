@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
         <section class="main_section_page px-3">
             <div class="container-fluid">
                 <div class="row">
@@ -8,25 +8,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-8 col-lg-8 col-xl-8 px-3">
-                        <div class="jobsection">
-                            <a href="#" class="profileDrop">New Job</a>
-                            <a href="#" class="profileDrop">Active <span>(5)</span></a>
-                            <a href="#" class="profileDrop">Unassigned<span>(8)</span></a>
-                            <a href="#" class="profileDrop">Action Required<span>(15)</span></a>
-                            <a href="#" class="profileDrop">Overdue<span>(76)</span></a>
-                            <a href="#" class="profileDrop">authorization<span>(32)</span></a>
-                            <a href="#" class="profileDrop">On Hold<span>(2)</span></a>
-                            <a href="#" class="profileDrop">Recursing Jobs</a>
-                            <label class="incluteCheck">
-                                <input type="checkbox" id="checb">
-                                <label for="checb">Include Quote Jobs</label>
-                            </label>
-                        </div>
-                    </div>
-
-                </div>
+                @include('frontEnd.salesAndFinance.lead.lead_buttons')
                 <di class="row">
                     <div class="col-lg-12">
                         <div class="maimTable">
@@ -209,4 +191,4 @@
 
 
 
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')
