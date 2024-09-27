@@ -168,7 +168,7 @@ class QuoteController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $saveData = Region::create(array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
+        $saveData = Region::updateOrCreate(['id'=>$request->id ?? null],array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
         if ($saveData) {
             return response()->json(['success' => true, 'message' => 'Region added successfully.']);
         } else {

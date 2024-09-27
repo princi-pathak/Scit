@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-4 col-lg-4 col-xl-4 ">
                     <div class="pageTitle">
-                        <h3>Attachment Types</h3>
+                        <h3>Payment Types</h3>
                     </div>
                 </div>
                 <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -51,14 +51,15 @@
                                 <tr>
                                     <th></th>
                                     <th>#</th>
-                                    <th>Attachment Type </th>
+                                    <th>Payment Type </th>
                                     <th>Status</th>
+                                    <th>Mobile User Visible</th>
                                     <th></th>
                                 </tr>
                             </thead>
                                                
                             <tbody id="result">
-                            <?php foreach($attachmentType as $key=>$val){?>
+                            <?php foreach($payment_type as $key=>$val){?>
                                 <tr>
                                     <td></td>
                                     <td>{{++$key}}</td>
@@ -72,13 +73,21 @@
                                         <?php }?>
                                     </td>
                                     <td>
+                                        <?php if($val->mobile_visible == 1){?>
+                                            <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
+                                            <?php } else {?>
+                                            <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>
+                                            
+                                        <?php }?>
+                                    </td>
+                                    <td>
                                         <div class="d-inline-flex align-items-center ">
                                             <div class="nav-item dropdown">
                                                 <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
                                                     Action
                                                 </a>
                                                 <div class="dropdown-menu fade-up m-0">
-                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-title="{{ $val->title }}" data-status="{{ $val->status }}">Edit Details</a>
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-title="{{ $val->title }}" data-mobile_visible="{{ $val->mobile_visible }}" data-status="{{ $val->status }}">Edit Details</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -96,7 +105,7 @@
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="customerModalLabel">Attachment Type - Add</h5>
+                                    <h5 class="modal-title" id="customerModalLabel">New Payment Type - Add</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -110,10 +119,24 @@
                                                 <form id="form_data" class="customerForm">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Attachment Type<span class="red-text">*</span></label>
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Payment Type<span class="red-text">*</span></label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
                                                                 id="name" name="title" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label class="col-sm-3 col-form-label">Mobile User Visible</label>
+                                                        <div class="col-sm-9">
+
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="mobile_visible_1">
+                                                                <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="mobile_visible_0" checked>
+                                                                <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
@@ -135,8 +158,8 @@
                                 <div class="modal-footer customer_Form_Popup">
 
                                     <button type="button" class="profileDrop" id="save_data">Save</button>
-                                    <button type="button" class="profileDrop" id="save_dataClose">Save &
-                                        Close</button>
+                                    <!-- <button type="button" class="profileDrop" id="save_dataClose">Save &
+                                        Close</button> -->
                                     <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
@@ -171,6 +194,10 @@
                 var status = $.trim($('#statusModal option:selected').val());
                 var home_id = '<?php echo $home_id;?>';
                 var id = $("#id").val();
+                mobile_visible=0;
+                if ($('#mobile_visible_1').is(':checked')) {
+                    mobile_visible=1;
+                }
                 var message;
 
                 if (id == '') {
@@ -185,22 +212,28 @@
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: "{{url('/save_attachment_type')}}",
-                        data: {id: id, home_id: home_id, title: title, status: status, _token: token},
+                        url: "{{url('/save_region')}}",
+                        data: {id: id, home_id: home_id, title: title,mobile_visible:mobile_visible, status: status, _token: token},
                         success: function(data) {
                             console.log(data);
-                            $("#message").text(message);
-                            $(".success_message").show();
-                            setTimeout(function() {
-                                $(".alert").hide();
-                                location.reload();
-                            }, 3000);
-                            $("#form_data")[0].reset();
-                        },
-                        error: function(xhr, status, error) {
-                            var errorMessage = xhr.status + ': ' + xhr.statusText;
-                            alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                            if(data.vali_error){
+                                alert(data.vali_error);
+                                return false;
+                            }else if(data.data && data.data.original && data.data.original.error){
+                                alert(data.data.original.error);
+                                return false;
+                            }else{
+                                $("#message").text(message);
+                                $(".success_message").show();
+                                setTimeout(function() {
+                                    $(".alert").hide();
+                                    location.reload();
+                                }, 3000);
+                                $("#form_data")[0].reset();
+                            }
+                            
                         }
+                        
                     });
                 }
             }
@@ -208,9 +241,11 @@
                 var id = $(this).data('id');
                 var title = $(this).data('title');
                 var status = $(this).data('status');
+                var mobile_visible= $(this).data('mobile_visible');
 
                 $('#id').val(id);
                 $('#name').val(title);
+                $("#mobile_visible_"+mobile_visible).prop('checked',true);
                 $('#statusModal').val(status);
             });
             function status_change(id, status){

@@ -6,19 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
-
-class Construction_account_code extends Model
+class Task_type extends Model
 {
     use HasFactory;
-    protected $table="construction_account_codes";
-    protected $fillable=['home_id','name','departmental_code','status'];
+    protected $table="task_types";
+    protected $fillable=['home_id','title','status'];
 
-    public static function getAllAccount_Codes($home_id){
+    public static function getAllTask_type($home_id){
         $data = self::whereNull('deleted_at')->where('home_id',$home_id)->get();
         return $data;
     }
 
-    public static function saveAccount_Codes($data){
+    public static function saveTask_type($data){
         try {
             $Task_type=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
             return $Task_type;
