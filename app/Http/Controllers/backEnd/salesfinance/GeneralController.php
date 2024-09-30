@@ -8,6 +8,7 @@ use App\Models\AttachmentType;
 use Illuminate\Support\Facades\Session;
 use Validator;
 use Carbon\Carbon;
+use App\Models\Payment_type;
 
 class GeneralController extends Controller
 {
@@ -42,6 +43,12 @@ class GeneralController extends Controller
         } else {
             return redirect()->route('attachment_types.view')->with('error', "Record not found");
         }
+    }
+
+    public function payment_types(){
+        $data['page'] = 'Payment_types';
+        $data['attachment_types'] = Payment_type::whereNull('deleted_at')->get();
+        return view('backEnd/salesFinance/general/payment_types', $data);
     }
 
 }
