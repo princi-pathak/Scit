@@ -226,125 +226,131 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/add-incident-report', 'App\Http\Controllers\frontEnd\DashboardController@add_incident_report');
 
 	// Ram 14/06/2024 path for jobs create
-	Route::get('/jobs_list','App\Http\Controllers\frontEnd\salesFinance\JobController@job_list');
-	Route::post('/job_save_all','App\Http\Controllers\frontEnd\salesFinance\JobController@job_save_all');
+	Route::get('/jobs_list', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_list');
+	Route::post('/job_save_all', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_save_all');
 	// Route::post('/status_change','App\Http\Controllers\frontEnd\salesFinance\JobController@status_change');
-	Route::post('/delete_function','App\Http\Controllers\frontEnd\salesFinance\JobController@delete_function');
-	Route::post('/edit_job','App\Http\Controllers\frontEnd\salesFinance\JobController@edit_job');
-	Route::post('/search_value','App\Http\Controllers\frontEnd\salesFinance\JobController@search_value');
-	Route::post('/save_get_ajax','App\Http\Controllers\frontEnd\salesFinance\JobController@save_get_ajax');
-	Route::get('/job_type','App\Http\Controllers\frontEnd\salesFinance\JobController@job_type');
-	Route::post('/job_type_save','App\Http\Controllers\frontEnd\salesFinance\JobController@job_type_save');
-	Route::post('/job_type_edit_form','App\Http\Controllers\frontEnd\salesFinance\JobController@job_type_edit_form');
-	Route::post('/workflow_save_data','App\Http\Controllers\frontEnd\salesFinance\JobController@workflow_save_data');
-	Route::post('/Workflow_notification_save','App\Http\Controllers\frontEnd\salesFinance\JobController@Workflow_notification_save');
-	Route::post('/workflow_list_job','App\Http\Controllers\frontEnd\salesFinance\JobController@workflow_list_job');
-	Route::post('/workflow_list_add','App\Http\Controllers\frontEnd\salesFinance\JobController@workflow_list_add');
-	Route::get('/jobs_index','App\Http\Controllers\frontEnd\salesFinance\JobController@index');
-	Route::get('/planner_day','App\Http\Controllers\frontEnd\salesFinance\JobController@planner_day');
-	Route::get('/jobs_create','App\Http\Controllers\frontEnd\salesFinance\JobController@jobs_create');
-	Route::post('/job_add_edit_save','App\Http\Controllers\frontEnd\salesFinance\JobController@job_add_edit_save');
-	Route::post('/get_customer_details_front','App\Http\Controllers\frontEnd\salesFinance\JobController@get_customer_details_front');
-	Route::post('/result_product_calculation','App\Http\Controllers\frontEnd\salesFinance\JobController@result_product_calculation');
-	Route::post('/save_job_product','App\Http\Controllers\frontEnd\salesFinance\JobController@save_job_product');
-	Route::post('/get_save_appointment','App\Http\Controllers\frontEnd\salesFinance\JobController@get_save_appointment');
-	Route::post('/new_appointment_add_section','App\Http\Controllers\frontEnd\salesFinance\JobController@new_appointment_add_section');
-	Route::get('/job_appointment_type_list','App\Http\Controllers\frontEnd\salesFinance\JobController@job_appointment_type_list');
-	Route::post('/job_type_appointment_save','App\Http\Controllers\frontEnd\salesFinance\JobController@job_type_appointment_save');
-	Route::post('/job_appointment_type_edit_form','App\Http\Controllers\frontEnd\salesFinance\JobController@job_appointment_type_edit_form');
-	Route::get('/appointment_rejection_cat_list','App\Http\Controllers\frontEnd\salesFinance\JobController@appointment_rejection_cat_list');
-	Route::post('/appointment_rejection_cat_save','App\Http\Controllers\frontEnd\salesFinance\JobController@appointment_rejection_cat_save');
-	Route::post('/job_appointment_rejection_edit_form','App\Http\Controllers\frontEnd\salesFinance\JobController@job_appointment_rejection_edit_form');
-	Route::get('/job_titles','App\Http\Controllers\frontEnd\salesFinance\JobController@job_titles');
-	Route::post('/save_job_title','App\Http\Controllers\frontEnd\salesFinance\JobController@save_job_title');
-	Route::post('/job_title_edit_form','App\Http\Controllers\frontEnd\salesFinance\JobController@job_title_edit_form');
-	Route::post('/save_region','App\Http\Controllers\frontEnd\salesFinance\JobController@save_region');
+	Route::post('/delete_function', 'App\Http\Controllers\frontEnd\salesFinance\JobController@delete_function');
+	Route::post('/edit_job', 'App\Http\Controllers\frontEnd\salesFinance\JobController@edit_job');
+	Route::post('/search_value', 'App\Http\Controllers\frontEnd\salesFinance\JobController@search_value');
+	Route::post('/save_get_ajax', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_get_ajax');
+	Route::get('/job_type', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_type');
+	Route::post('/job_type_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_type_save');
+	Route::post('/job_type_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_type_edit_form');
+	Route::post('/workflow_save_data', 'App\Http\Controllers\frontEnd\salesFinance\JobController@workflow_save_data');
+	Route::post('/Workflow_notification_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@Workflow_notification_save');
+	Route::post('/workflow_list_job', 'App\Http\Controllers\frontEnd\salesFinance\JobController@workflow_list_job');
+	Route::post('/workflow_list_add', 'App\Http\Controllers\frontEnd\salesFinance\JobController@workflow_list_add');
+	Route::get('/jobs_index', 'App\Http\Controllers\frontEnd\salesFinance\JobController@index');
+	Route::get('/planner_day', 'App\Http\Controllers\frontEnd\salesFinance\JobController@planner_day');
+	Route::get('/jobs_create', 'App\Http\Controllers\frontEnd\salesFinance\JobController@jobs_create');
+	Route::post('/job_add_edit_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_add_edit_save');
+	Route::post('/get_customer_details_front', 'App\Http\Controllers\frontEnd\salesFinance\JobController@get_customer_details_front');
+	Route::post('/result_product_calculation', 'App\Http\Controllers\frontEnd\salesFinance\JobController@result_product_calculation');
+	Route::post('/save_job_product', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_job_product');
+	Route::post('/get_save_appointment', 'App\Http\Controllers\frontEnd\salesFinance\JobController@get_save_appointment');
+	Route::post('/new_appointment_add_section', 'App\Http\Controllers\frontEnd\salesFinance\JobController@new_appointment_add_section');
+	Route::get('/job_appointment_type_list', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_appointment_type_list');
+	Route::post('/job_type_appointment_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_type_appointment_save');
+	Route::post('/job_appointment_type_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_appointment_type_edit_form');
+	Route::get('/appointment_rejection_cat_list', 'App\Http\Controllers\frontEnd\salesFinance\JobController@appointment_rejection_cat_list');
+	Route::post('/appointment_rejection_cat_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@appointment_rejection_cat_save');
+	Route::post('/job_appointment_rejection_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_appointment_rejection_edit_form');
+	Route::get('/job_titles', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_titles');
+	Route::post('/save_job_title', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_job_title');
+	Route::post('/job_title_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_title_edit_form');
+	Route::post('/save_region', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_region');
 	// Customer
-	Route::get('/customer_add_edit','App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit');
-	Route::post('/customer_add_edit_save','App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit_save');
-	Route::get('/add_currency','App\Http\Controllers\frontEnd\salesFinance\CustomerController@add_currency');
-	Route::post('/default_address','App\Http\Controllers\frontEnd\salesFinance\CustomerController@default_address');
-	Route::post('/save_contact','App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_contact');
-	Route::post('/save_site','App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_site');
-	Route::post('/save_login','App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_login');
-	Route::get('/customers','App\Http\Controllers\frontEnd\salesFinance\CustomerController@active_customer');
-	Route::post('/status_change','App\Http\Controllers\ActionController@status_change');
-	Route::get('/customer_type','App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_type');
-	Route::post('/save_customer_type','App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_customer_type');
-	Route::post('/customer_type_edit_form','App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_type_edit_form');
+	Route::get('/customer_add_edit', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit');
+	Route::post('/customer_add_edit_save', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit_save');
+	Route::get('/add_currency', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@add_currency');
+	Route::post('/default_address', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@default_address');
+	Route::post('/save_contact', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_contact');
+	Route::post('/save_site', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_site');
+	Route::post('/save_login', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_login');
+	Route::get('/customers', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@active_customer');
+	Route::post('/status_change', 'App\Http\Controllers\ActionController@status_change');
+	Route::get('/customer_type', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_type');
+	Route::post('/save_customer_type', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_customer_type');
+	Route::post('/customer_type_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_type_edit_form');
 	// end here
-	Route::post('/project_save','App\Http\Controllers\frontEnd\salesFinance\JobController@project_save');
-	Route::post('/contact_save','App\Http\Controllers\frontEnd\salesFinance\JobController@contact_save');
-	Route::post('/site_save','App\Http\Controllers\frontEnd\salesFinance\JobController@site_save');
-	Route::post('/product_save','App\Http\Controllers\frontEnd\salesFinance\JobController@product_save');
-	Route::post('/supplier_result','App\Http\Controllers\frontEnd\salesFinance\JobController@supplier_result');
-	Route::post('/save_product_category','App\Http\Controllers\frontEnd\salesFinance\JobController@save_product_category');
-	Route::post('/save_tax_rate','App\Http\Controllers\frontEnd\salesFinance\JobController@save_tax_rate');
-	Route::post('/product_modal_list','App\Http\Controllers\frontEnd\salesFinance\JobController@product_modal_list');
+	Route::post('/project_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@project_save');
+	Route::post('/contact_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@contact_save');
+	Route::post('/site_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@site_save');
+	Route::post('/product_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@product_save');
+	Route::post('/supplier_result', 'App\Http\Controllers\frontEnd\salesFinance\JobController@supplier_result');
+	Route::post('/save_product_category', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_product_category');
+	Route::post('/save_tax_rate', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_tax_rate');
+	Route::post('/product_modal_list', 'App\Http\Controllers\frontEnd\salesFinance\JobController@product_modal_list');
 
 	// CRM Section Controller
-	Route::get('/complaint_type',[CrmSectionController::class,'complaint_type']);
+	Route::get('/complaint_type', [CrmSectionController::class, 'complaint_type']);
 
 	// Supplier Section
-	Route::controller(SupplierController::class)->group(function(){
-		Route::get('/suppliers','index');
-		Route::get('/supplier_add','supplier_add');
+	Route::controller(SupplierController::class)->group(function () {
+		Route::get('/suppliers', 'index');
+		Route::get('/supplier_add', 'supplier_add');
 	});
 
 	// General section Front 
-	Route::controller(GeneralSectionController::class)->group(function(){
-		Route::get('/attachments_types','attachments_types');
-		Route::post('/save_attachment_type','save_attachment_type');
-		Route::get('/Payment_type','Payment_type');
-		Route::post('/save_payment_type','save_payment_type');
-		Route::get('/regions','regions');
-		Route::get('/task_types','task_types');
-		Route::post('/save_task_type','save_task_type');
-		Route::get('/tags','tags');
-		Route::post('/save_tag','save_tag');
+	Route::controller(GeneralSectionController::class)->group(function () {
+		Route::get('/attachments_types', 'attachments_types');
+		Route::post('/save_attachment_type', 'save_attachment_type');
+		Route::get('/Payment_type', 'Payment_type');
+		Route::post('/save_payment_type', 'save_payment_type');
+		Route::get('/regions', 'regions');
+		Route::get('/task_types', 'task_types');
+		Route::post('/save_task_type', 'save_task_type');
+		Route::get('/tags', 'tags');
+		Route::post('/save_tag', 'save_tag');
 	});
-  
-	// Invoice Section 
-	Route::controller(InvoiceController::class)->group(function(){
-		Route::get('/account_codes','account_codes');
-		Route::post('/save_account_code','save_account_code');
-		Route::get('/tax_rate','tax_rate');
-		Route::post('/save_tax_rate','save_tax_rate');
-	});
-  
-  	Route::controller(CustomerController::class)->group(function(){
-      Route::prefix('customers')->group(function () {
-        Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
-        Route::get('/getCustomerList', 'getCustomerList')->name('customer.ajax.getCustomerList');
-        Route::post('/getCustomerDetails', 'getCustomerDetails')->name('customer.ajax.getCustomerDetails');
-			});
-		});
 
-	Route::controller(FrontendLeadController::class)->group(function(){
+	// Invoice Section 
+	Route::controller(InvoiceController::class)->group(function () {
+		Route::get('/account_codes', 'account_codes');
+		Route::post('/save_account_code', 'save_account_code');
+		Route::get('/tax_rate', 'tax_rate');
+		Route::post('/save_tax_rate', 'save_tax_rate');
+	});
+
+	Route::controller(CustomerController::class)->group(function () {
+		Route::prefix('customers')->group(function () {
+			Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
+			Route::get('/getCustomerList', 'getCustomerList')->name('customer.ajax.getCustomerList');
+			Route::post('/getCustomerDetails', 'getCustomerDetails')->name('customer.ajax.getCustomerDetails');
+			Route::post('/SaveCustomerContactData', 'SaveCustomerContactData')->name('customer.ajax.SaveCustomerContactData');
+			Route::get('/getCustomerJobTitle', 'getCustomerJobTitle')->name('customer.ajax.getCustomerJobTitle');
+			Route::post('/saveJobTitle', 'saveJobTitle')->name('customer.ajax.saveJobTitle');
+
+			
+			
+		});
+	});
+
+	Route::controller(FrontendLeadController::class)->group(function () {
 		//Leads 
-		Route::get('/leads/leads','index')->name('lead.index');
-		Route::get('/lead/myLeads','index')->name('lead.myleads');
-		Route::get('/lead/authorization','index')->name('lead.authorization');
-		Route::get('/leads/unassigned','index')->name('lead.unassigned');
-		Route::get('/lead/rejected','index')->name('lead.rejected');
-		Route::get('/lead/actioned','index')->name('lead.actioned');
-		Route::get('/leads/converted','index')->name('lead.converted');
-		Route::get('/leads/add','create');
-		Route::post('/leads/create','store')->name('lead.store');
+		Route::get('/leads/leads', 'index')->name('lead.index');
+		Route::get('/lead/myLeads', 'index')->name('lead.myleads');
+		Route::get('/lead/authorization', 'index')->name('lead.authorization');
+		Route::get('/leads/unassigned', 'index')->name('lead.unassigned');
+		Route::get('/lead/rejected', 'index')->name('lead.rejected');
+		Route::get('/lead/actioned', 'index')->name('lead.actioned');
+		Route::get('/leads/converted', 'index')->name('lead.converted');
+		Route::get('/leads/add', 'create');
+		Route::post('/leads/create', 'store')->name('lead.store');
 		Route::get('/leads/edit/{id}', 'edit')->name('lead.edit');
 		Route::get('/leads/authorization/{id}', 'sentToAuthorization')->name('lead.authorization');
-		Route::get('/lead/searchLead','searchLead');
-		
+		Route::get('/lead/searchLead', 'searchLead');
+
 		// Lead Task Type
-		Route::get('/leads/tasks','task_list')->name('lead.task_list');   
-		Route::get('/lead/task_mark_as_completed/{task}/{lead}', 'task_mark_as_completed')->name('lead.task_mark_as_completed');   
+		Route::get('/leads/tasks', 'task_list')->name('lead.task_list');
+		Route::get('/lead/task_mark_as_completed/{task}/{lead}', 'task_mark_as_completed')->name('lead.task_mark_as_completed');
 		Route::get('/lead/lead_task_delete/{id}', 'lead_task_list_delete');
 		Route::get('/lead/lead_task_type', 'lead_task_type')->name('leads.lead_task_type');
 		Route::post('/lead/saveLeadTaskType', 'saveLeadTaskType')->name('lead.ajax.saveLeadTaskType');
 		Route::get('/lead/lead_task_type/delete/{id}', 'lead_task_type_delete');
 		Route::get('/lead/lead_mark_as_completed/{task}/{lead}', 'lead_mark_as_completed');
 		Route::get('lead/getLeadTaskType', 'getLeadTaskTypeData')->name('lead.ajax.getLeadTaskType');
-		
+
 		// Lead Notes Type
 		Route::get('/lead/lead_notes_type', 'lead_notes_type')->name('lead.lead_notes_type');
 		Route::post('/lead/saveLeadNotesType', 'saveLeadNotesType')->name('lead.ajax.saveLeadNoteType');
@@ -386,10 +392,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		// Lead CRM 
 		Route::post('lead/saveCRMLeadData', 'saveCRMLeadData')->name('lead.ajax.saveCRMLeadData');
 		Route::post('lead/getCRMCallsData', 'getCRMCallsData')->name('lead.ajax.getCRMCallsData');
-		
+
 		Route::post('lead/saveCRMLeadEmails', 'saveCRMLeadEmails')->name('lead.ajax.saveCRMLeadEmails');
 		Route::post('lead/getCRMEmailsData', 'getCRMEmailsData')->name('lead.ajax.getCRMEmailsData');
-		
+
 		Route::post('lead/saveCRMLeadNotes', 'saveCRMLeadNotes')->name('lead.ajax.saveCRMLeadNotes');
 		Route::post('lead/getCRMNotesData', 'getCRMNotesData')->name('lead.ajax.getCRMNotesData');
 
@@ -399,43 +405,41 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('lead/getCRMTasksData', 'getCRMTasksData')->name('lead.ajax.getCRMTasksData');
 		Route::post('lead/getCRMTaskDataToday', 'getCRMTaskDataToday')->name('lead.ajax.getCRMTaskDataToday');
 		Route::post('lead/getCRMAllData', 'getCRMAllData')->name('lead.ajax.getCRMAllData');
-		
+
 		Route::post('lead/getCRMTaskDataWeek', 'getCRMTaskDataWeek')->name('lead.ajax.getCRMTaskDataWeek');
 		Route::post('lead/getCRMTaskDataOverdue', 'getCRMTaskDataOverdue')->name('lead.ajax.getCRMTaskDataOverdue');
 		Route::post('lead/getCRMTaskDataComplete', 'getCRMTaskDataComplete')->name('lead.ajax.getCRMTaskDataComplete');
 		Route::post('lead/getCRMTaskDataRecurring', 'getCRMTaskDataRecurring')->name('lead.ajax.getCRMTaskDataRecurring');
 		Route::get('lead/getUserList', 'getUserList')->name('lead.ajax.getUserList');
 		Route::post('lead/getLeadDataWithRecurrence', 'getLeadDataWithRecurrence')->name('lead.ajax.getLeadDataWithRecurrence');
-		
 	});
 
-	Route::controller(FrontendQuoteController::class)->group(function(){
+	Route::controller(FrontendQuoteController::class)->group(function () {
 
-		Route::get('/quote/dashboard','dashboard')->name('quote.dashboard');
-		Route::get('/quote/quotes','create')->name('quote.quotes');
-		Route::get('/quote/draft','index')->name('quote.draft');
-		
+		Route::get('/quote/dashboard', 'dashboard')->name('quote.dashboard');
+		Route::get('/quote/quotes', 'create')->name('quote.quotes');
+		Route::get('/quote/draft', 'index')->name('quote.draft');
+
 		// Add Quote Types
-		Route::get('/quote/quote_type','quote_type')->name('quote.quote_type');
-		Route::post('/quote/saveQuoteType','saveQuoteType')->name('quote.ajax.saveQuoteType');
-		Route::post('/quote/deleteQuoteType','deleteQuoteType')->name('quote.ajax.deleteQuoteType');
+		Route::get('/quote/quote_type', 'quote_type')->name('quote.quote_type');
+		Route::post('/quote/saveQuoteType', 'saveQuoteType')->name('quote.ajax.saveQuoteType');
+		Route::post('/quote/deleteQuoteType', 'deleteQuoteType')->name('quote.ajax.deleteQuoteType');
 
 		// Add Quote Sources
-		Route::get('/quote/quote_sources','quote_sources')->name('quote.quote_sources');
-		Route::post('/quote/saveQuoteSources','saveQuoteSources')->name('quote.ajax.saveQuoteSources');
-		Route::post('/quote/deleteQuoteSource','deleteQuoteSource')->name('quote.ajax.deleteQuoteSource');
+		Route::get('/quote/quote_sources', 'quote_sources')->name('quote.quote_sources');
+		Route::post('/quote/saveQuoteSources', 'saveQuoteSources')->name('quote.ajax.saveQuoteSources');
+		Route::post('/quote/deleteQuoteSource', 'deleteQuoteSource')->name('quote.ajax.deleteQuoteSource');
 
 		// Add Quote Reject Type
-		Route::get('/quote/quote_reject_types','quote_reject_type')->name('quote.quote_reject_type');
-		Route::post('/quote/saveQuoteRejectType','saveQuoteRejectType')->name('quote.ajax.saveQuoteRejectType');
-		Route::post('/quote/deleteQuoteRejectType','deleteQuoteRejectType')->name('quote.ajax.deleteQuoteRejectType');
+		Route::get('/quote/quote_reject_types', 'quote_reject_type')->name('quote.quote_reject_type');
+		Route::post('/quote/saveQuoteRejectType', 'saveQuoteRejectType')->name('quote.ajax.saveQuoteRejectType');
+		Route::post('/quote/deleteQuoteRejectType', 'deleteQuoteRejectType')->name('quote.ajax.deleteQuoteRejectType');
 
 		// Add Quote
-		Route::post('/quote/saveCustomerType','saveCustomerType')->name('quote.ajax.saveCustomerType');
-		Route::get('/quote/getCustomerType','getCustomerType')->name('quote.ajax.getCustomerType');
-		Route::post('/quote/saveRegion','saveRegion')->name('quote.ajax.saveRegion');
-		Route::get('/quote/getRegions','getRegions')->name('quote.ajax.getRegions');
-		
+		Route::post('/quote/saveCustomerType', 'saveCustomerType')->name('quote.ajax.saveCustomerType');
+		Route::get('/quote/getCustomerType', 'getCustomerType')->name('quote.ajax.getCustomerType');
+		Route::post('/quote/saveRegion', 'saveRegion')->name('quote.ajax.saveRegion');
+		Route::get('/quote/getRegions', 'getRegions')->name('quote.ajax.getRegions');
 	});
 
 
@@ -1033,8 +1037,8 @@ Route::post('/admin/getHomeList', [HomeController::class, 'getHomeList'])->name(
 Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function () {
 	//download form  As PDF 
 	Route::match(['get', 'post'], '/DownloadFormpdf/{id}', 'App\Http\Controllers\backEnd\superAdmin\UserController@DownloadFormpdf');
-	
-	
+
+
 
 
 	Route::get('/', 'App\Http\Controllers\backEnd\AdminController@dashboard');
@@ -1092,86 +1096,86 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::match(['get', 'post'], '/users/send-set-pass-link/{user_id}', 'App\Http\Controllers\backEnd\UserController@send_user_set_pass_link_mail');
 
 	// Ram 04/07/2024 here paths for Job Manageent
-	Route::match(['get', 'post'],'jobs_list','App\Http\Controllers\backEnd\JobsController@jobs_list');
-	Route::post('/job_status_change','App\Http\Controllers\backEnd\JobsController@job_status_change');
-	Route::post('/job_delete','App\Http\Controllers\backEnd\JobsController@job_delete');
-	Route::get('/job_add','App\Http\Controllers\backEnd\JobsController@job_add');
-	Route::post('/job_save_data','App\Http\Controllers\backEnd\JobsController@job_save_data');
-	Route::match(['get','post'],'/jobs_type_list','App\Http\Controllers\backEnd\JobsController@jobs_type_list');
-	Route::post('/job_type_status_change','App\Http\Controllers\backEnd\JobsController@job_type_status_change');
-	Route::post('/job_type_delete','App\Http\Controllers\backEnd\JobsController@job_type_delete');
-	Route::get('/job_type_add','App\Http\Controllers\backEnd\JobsController@job_type_add');
-	Route::post('/job_type_save_data','App\Http\Controllers\backEnd\JobsController@job_type_save_data');
-	Route::match(['get','post'],'/work_flow_list','App\Http\Controllers\backEnd\JobsController@work_flow_list');
-	Route::post('/wrok_flow_status_change','App\Http\Controllers\backEnd\JobsController@wrok_flow_status_change');
-	Route::post('/wrok_flow_delete','App\Http\Controllers\backEnd\JobsController@wrok_flow_delete');
-	Route::get('/work_flow_add','App\Http\Controllers\backEnd\JobsController@work_flow_add');
-	Route::post('/workflow_save_data','App\Http\Controllers\backEnd\JobsController@workflow_save_data');
-	Route::post('/Workflow_notification_save','App\Http\Controllers\backEnd\JobsController@Workflow_notification_save');
-	Route::match(['get','post'],'/product_category','App\Http\Controllers\backEnd\JobsController@product_category');
-	Route::post('/product_cat_status_change','App\Http\Controllers\backEnd\JobsController@product_cat_status_change');
-	Route::post('/product_cat_delete','App\Http\Controllers\backEnd\JobsController@product_cat_delete');
-	Route::get('/product_category_add','App\Http\Controllers\backEnd\JobsController@product_category_add');
-	Route::post('/product_cat_save_data','App\Http\Controllers\backEnd\JobsController@product_cat_save_data');
-	Route::match(['get','post'],'/product_list','App\Http\Controllers\backEnd\JobsController@product_list');
-	Route::post('/product_status_change','App\Http\Controllers\backEnd\JobsController@product_status_change');
-	Route::post('/product_delete','App\Http\Controllers\backEnd\JobsController@product_delete');
-	Route::match(['get','post'],'/account_codes','App\Http\Controllers\backEnd\JobsController@account_codes');
-	Route::get('/account_code_add','App\Http\Controllers\backEnd\JobsController@account_code_add');
-	Route::post('/account_save_data','App\Http\Controllers\backEnd\JobsController@account_save_data');
-	Route::post('/account_status_change','App\Http\Controllers\backEnd\JobsController@account_status_change');
-	Route::post('/account_delete','App\Http\Controllers\backEnd\JobsController@account_delete');
-	Route::match(['get','post'],'/tax_rate','App\Http\Controllers\backEnd\JobsController@tax_rate');
-	Route::get('/tax_add','App\Http\Controllers\backEnd\JobsController@tax_add');
-	Route::post('/tax_save_data','App\Http\Controllers\backEnd\JobsController@tax_save_data');
-	Route::post('/tax_status_change','App\Http\Controllers\backEnd\JobsController@tax_status_change');
-	Route::post('/tax_delete','App\Http\Controllers\backEnd\JobsController@tax_delete');
-	Route::get('/product_add','App\Http\Controllers\backEnd\JobsController@product_add');
-	Route::post('/product_save_data','App\Http\Controllers\backEnd\JobsController@product_save_data');
-	Route::post('/supplier_result','App\Http\Controllers\backEnd\JobsController@supplier_result');
-	Route::match(['get','post'],'/customer_list','App\Http\Controllers\backEnd\JobsController@customer_list');
-	Route::match(['get','post'],'/project_list','App\Http\Controllers\backEnd\JobsController@project_list');
-	Route::get('/project_add','App\Http\Controllers\backEnd\JobsController@project_add');
-	Route::post('/project_save_data','App\Http\Controllers\backEnd\JobsController@project_save_data');
-	Route::post('/project_status_change','App\Http\Controllers\backEnd\JobsController@project_status_change');
-	Route::post('/project_delete','App\Http\Controllers\backEnd\JobsController@project_delete');
-	Route::post('/search_value','App\Http\Controllers\backEnd\JobsController@search_value');
-	Route::post('/get_customer_details','App\Http\Controllers\backEnd\JobsController@get_customer_details');
-	Route::post('/get_delete_jobproduct','App\Http\Controllers\backEnd\JobsController@get_delete_jobproduct');
+	Route::match(['get', 'post'], 'jobs_list', 'App\Http\Controllers\backEnd\JobsController@jobs_list');
+	Route::post('/job_status_change', 'App\Http\Controllers\backEnd\JobsController@job_status_change');
+	Route::post('/job_delete', 'App\Http\Controllers\backEnd\JobsController@job_delete');
+	Route::get('/job_add', 'App\Http\Controllers\backEnd\JobsController@job_add');
+	Route::post('/job_save_data', 'App\Http\Controllers\backEnd\JobsController@job_save_data');
+	Route::match(['get', 'post'], '/jobs_type_list', 'App\Http\Controllers\backEnd\JobsController@jobs_type_list');
+	Route::post('/job_type_status_change', 'App\Http\Controllers\backEnd\JobsController@job_type_status_change');
+	Route::post('/job_type_delete', 'App\Http\Controllers\backEnd\JobsController@job_type_delete');
+	Route::get('/job_type_add', 'App\Http\Controllers\backEnd\JobsController@job_type_add');
+	Route::post('/job_type_save_data', 'App\Http\Controllers\backEnd\JobsController@job_type_save_data');
+	Route::match(['get', 'post'], '/work_flow_list', 'App\Http\Controllers\backEnd\JobsController@work_flow_list');
+	Route::post('/wrok_flow_status_change', 'App\Http\Controllers\backEnd\JobsController@wrok_flow_status_change');
+	Route::post('/wrok_flow_delete', 'App\Http\Controllers\backEnd\JobsController@wrok_flow_delete');
+	Route::get('/work_flow_add', 'App\Http\Controllers\backEnd\JobsController@work_flow_add');
+	Route::post('/workflow_save_data', 'App\Http\Controllers\backEnd\JobsController@workflow_save_data');
+	Route::post('/Workflow_notification_save', 'App\Http\Controllers\backEnd\JobsController@Workflow_notification_save');
+	Route::match(['get', 'post'], '/product_category', 'App\Http\Controllers\backEnd\JobsController@product_category');
+	Route::post('/product_cat_status_change', 'App\Http\Controllers\backEnd\JobsController@product_cat_status_change');
+	Route::post('/product_cat_delete', 'App\Http\Controllers\backEnd\JobsController@product_cat_delete');
+	Route::get('/product_category_add', 'App\Http\Controllers\backEnd\JobsController@product_category_add');
+	Route::post('/product_cat_save_data', 'App\Http\Controllers\backEnd\JobsController@product_cat_save_data');
+	Route::match(['get', 'post'], '/product_list', 'App\Http\Controllers\backEnd\JobsController@product_list');
+	Route::post('/product_status_change', 'App\Http\Controllers\backEnd\JobsController@product_status_change');
+	Route::post('/product_delete', 'App\Http\Controllers\backEnd\JobsController@product_delete');
+	Route::match(['get', 'post'], '/account_codes', 'App\Http\Controllers\backEnd\JobsController@account_codes');
+	Route::get('/account_code_add', 'App\Http\Controllers\backEnd\JobsController@account_code_add');
+	Route::post('/account_save_data', 'App\Http\Controllers\backEnd\JobsController@account_save_data');
+	Route::post('/account_status_change', 'App\Http\Controllers\backEnd\JobsController@account_status_change');
+	Route::post('/account_delete', 'App\Http\Controllers\backEnd\JobsController@account_delete');
+	Route::match(['get', 'post'], '/tax_rate', 'App\Http\Controllers\backEnd\JobsController@tax_rate');
+	Route::get('/tax_add', 'App\Http\Controllers\backEnd\JobsController@tax_add');
+	Route::post('/tax_save_data', 'App\Http\Controllers\backEnd\JobsController@tax_save_data');
+	Route::post('/tax_status_change', 'App\Http\Controllers\backEnd\JobsController@tax_status_change');
+	Route::post('/tax_delete', 'App\Http\Controllers\backEnd\JobsController@tax_delete');
+	Route::get('/product_add', 'App\Http\Controllers\backEnd\JobsController@product_add');
+	Route::post('/product_save_data', 'App\Http\Controllers\backEnd\JobsController@product_save_data');
+	Route::post('/supplier_result', 'App\Http\Controllers\backEnd\JobsController@supplier_result');
+	Route::match(['get', 'post'], '/customer_list', 'App\Http\Controllers\backEnd\JobsController@customer_list');
+	Route::match(['get', 'post'], '/project_list', 'App\Http\Controllers\backEnd\JobsController@project_list');
+	Route::get('/project_add', 'App\Http\Controllers\backEnd\JobsController@project_add');
+	Route::post('/project_save_data', 'App\Http\Controllers\backEnd\JobsController@project_save_data');
+	Route::post('/project_status_change', 'App\Http\Controllers\backEnd\JobsController@project_status_change');
+	Route::post('/project_delete', 'App\Http\Controllers\backEnd\JobsController@project_delete');
+	Route::post('/search_value', 'App\Http\Controllers\backEnd\JobsController@search_value');
+	Route::post('/get_customer_details', 'App\Http\Controllers\backEnd\JobsController@get_customer_details');
+	Route::post('/get_delete_jobproduct', 'App\Http\Controllers\backEnd\JobsController@get_delete_jobproduct');
 	// Route::post('/search_value_front','App\Http\Controllers\backEnd\JobsController@search_value_front');
 	// Job Recurring Start
-	Route::match(['get','post'],'/job_recurring_list','App\Http\Controllers\backEnd\JobsController@job_recurring_list');
+	Route::match(['get', 'post'], '/job_recurring_list', 'App\Http\Controllers\backEnd\JobsController@job_recurring_list');
 
 	// end here
-	Route::match(['get','post'],'/job_title','App\Http\Controllers\backEnd\JobsController@job_title');
-	Route::get('/job_title_add','App\Http\Controllers\backEnd\JobsController@job_title_add');
-	Route::post('/job_title_save','App\Http\Controllers\backEnd\JobsController@job_title_save');
-	Route::post('/job_title_status_change','App\Http\Controllers\backEnd\JobsController@job_title_status_change');
-	Route::post('/job_title_delete','App\Http\Controllers\backEnd\JobsController@job_title_delete');
-	Route::match(['get','post'],'/job_appointment_type','App\Http\Controllers\backEnd\JobsController@job_appointment_type');
-	Route::get('/job_appointment_type_add','App\Http\Controllers\backEnd\JobsController@job_appointment_type_add');
-	Route::post('/job_appointment_type_save','App\Http\Controllers\backEnd\JobsController@job_appointment_type_save');
-	Route::post('/job_appointment_type_status_change','App\Http\Controllers\backEnd\JobsController@job_appointment_type_status_change');
-	Route::post('/job_appointment_type_delete','App\Http\Controllers\backEnd\JobsController@job_appointment_type_delete');
-	Route::match(['get','post'],'/job_rejection_categories','App\Http\Controllers\backEnd\JobsController@job_rejection_categories');
-	Route::get('/job_rejection_category_add','App\Http\Controllers\backEnd\JobsController@job_rejection_category_add');
-	Route::post('/job_rejection_category_save','App\Http\Controllers\backEnd\JobsController@job_rejection_category_save');
-	Route::post('/job_rejection_category_status_change','App\Http\Controllers\backEnd\JobsController@job_rejection_category_status_change');
-	Route::post('/job_rejection_category_delete','App\Http\Controllers\backEnd\JobsController@job_rejection_category_delete');
+	Route::match(['get', 'post'], '/job_title', 'App\Http\Controllers\backEnd\JobsController@job_title');
+	Route::get('/job_title_add', 'App\Http\Controllers\backEnd\JobsController@job_title_add');
+	Route::post('/job_title_save', 'App\Http\Controllers\backEnd\JobsController@job_title_save');
+	Route::post('/job_title_status_change', 'App\Http\Controllers\backEnd\JobsController@job_title_status_change');
+	Route::post('/job_title_delete', 'App\Http\Controllers\backEnd\JobsController@job_title_delete');
+	Route::match(['get', 'post'], '/job_appointment_type', 'App\Http\Controllers\backEnd\JobsController@job_appointment_type');
+	Route::get('/job_appointment_type_add', 'App\Http\Controllers\backEnd\JobsController@job_appointment_type_add');
+	Route::post('/job_appointment_type_save', 'App\Http\Controllers\backEnd\JobsController@job_appointment_type_save');
+	Route::post('/job_appointment_type_status_change', 'App\Http\Controllers\backEnd\JobsController@job_appointment_type_status_change');
+	Route::post('/job_appointment_type_delete', 'App\Http\Controllers\backEnd\JobsController@job_appointment_type_delete');
+	Route::match(['get', 'post'], '/job_rejection_categories', 'App\Http\Controllers\backEnd\JobsController@job_rejection_categories');
+	Route::get('/job_rejection_category_add', 'App\Http\Controllers\backEnd\JobsController@job_rejection_category_add');
+	Route::post('/job_rejection_category_save', 'App\Http\Controllers\backEnd\JobsController@job_rejection_category_save');
+	Route::post('/job_rejection_category_status_change', 'App\Http\Controllers\backEnd\JobsController@job_rejection_category_status_change');
+	Route::post('/job_rejection_category_delete', 'App\Http\Controllers\backEnd\JobsController@job_rejection_category_delete');
 
-	Route::match(['get','post'],'/customers','App\Http\Controllers\backEnd\CustomerController@customers');
-	Route::get('customer_add','App\Http\Controllers\backEnd\CustomerController@customer_add');
-	Route::match(['get','post'],'/customer_type','App\Http\Controllers\backEnd\CustomerController@customer_type');
-	Route::get('/customer_type_add','App\Http\Controllers\backEnd\CustomerController@customer_type_add');
-	Route::post('/customer_type_save','App\Http\Controllers\backEnd\CustomerController@customer_type_save');
-	Route::post('/customer_type_status_change','App\Http\Controllers\backEnd\CustomerController@customer_type_status_change');
-	Route::post('/customer_type_delete','App\Http\Controllers\backEnd\CustomerController@customer_type_delete');
-	Route::post('/customer_save','App\Http\Controllers\backEnd\CustomerController@customer_save');
-	Route::post('/customer_contact_save','App\Http\Controllers\backEnd\CustomerController@customer_contact_save');
-	Route::post('/customer_site_save','App\Http\Controllers\backEnd\CustomerController@customer_site_save');
-	Route::post('/customer_login_save','App\Http\Controllers\backEnd\CustomerController@customer_login_save');
-	Route::post('/customer_status_change','App\Http\Controllers\backEnd\CustomerController@customer_status_change');
-	Route::post('/customer_delete','App\Http\Controllers\backEnd\CustomerController@customer_delete');
+	Route::match(['get', 'post'], '/customers', 'App\Http\Controllers\backEnd\CustomerController@customers');
+	Route::get('customer_add', 'App\Http\Controllers\backEnd\CustomerController@customer_add');
+	Route::match(['get', 'post'], '/customer_type', 'App\Http\Controllers\backEnd\CustomerController@customer_type');
+	Route::get('/customer_type_add', 'App\Http\Controllers\backEnd\CustomerController@customer_type_add');
+	Route::post('/customer_type_save', 'App\Http\Controllers\backEnd\CustomerController@customer_type_save');
+	Route::post('/customer_type_status_change', 'App\Http\Controllers\backEnd\CustomerController@customer_type_status_change');
+	Route::post('/customer_type_delete', 'App\Http\Controllers\backEnd\CustomerController@customer_type_delete');
+	Route::post('/customer_save', 'App\Http\Controllers\backEnd\CustomerController@customer_save');
+	Route::post('/customer_contact_save', 'App\Http\Controllers\backEnd\CustomerController@customer_contact_save');
+	Route::post('/customer_site_save', 'App\Http\Controllers\backEnd\CustomerController@customer_site_save');
+	Route::post('/customer_login_save', 'App\Http\Controllers\backEnd\CustomerController@customer_login_save');
+	Route::post('/customer_status_change', 'App\Http\Controllers\backEnd\CustomerController@customer_status_change');
+	Route::post('/customer_delete', 'App\Http\Controllers\backEnd\CustomerController@customer_delete');
 
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');
@@ -1537,7 +1541,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::get('sales-finance/customers/add', 'App\Http\Controllers\backEnd\salesfinance\CustomerController@create')->name('customers.create');
 	Route::get('sales-finance/customers/create', 'App\Http\Controllers\backEnd\salesfinance\CustomerController@store')->name('customers.store');
 
-	Route::controller(BackendLeadController::class)->group(function(){
+	Route::controller(BackendLeadController::class)->group(function () {
 
 		Route::prefix('sales-finance/leads')->group(function () {
 			// Admin leads
@@ -1559,17 +1563,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			// Lead Task 
 			Route::post('/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
 			Route::get('/lead_task/delete/{task}/{lead}', 'lead_task_delete');
-			
+
 			// Lead Status
 			Route::get('/lead_status', 'lead_status')->name('leads.lead_status');
 			Route::post('/saveLeadStatus', 'saveLeadStatus')->name('leads.ajax.saveLeadStatus');
 			Route::get('/lead_status/delete/{id}', 'lead_status_delete');
-		
+
 			// Lead Sources
 			Route::get('/lead_sources', 'lead_sources')->name('leads.lead_sources');
 			Route::post('/saveLeadSource', 'saveLeadSource')->name('leads.ajax.saveLeadSource');
 			Route::get('/lead_source/delete/{id}', 'lead_source_delete');
-		
+
 			// Lead Task Type
 			Route::get('/lead_task_type', 'lead_task_type')->name('leads.lead_task_type');
 			Route::post('/saveLeadTaskType', 'saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
@@ -1580,13 +1584,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/lead_notes_type', 'lead_notes_type')->name('leads.lead_notes_type');
 			Route::post('/saveLeadNotesType', 'saveLeadNotesType')->name('leads.ajax.saveLeadNoteType');
 			Route::get('/lead_note_type/delete/{id}', 'lead_note_type_delete');
-		
+
 			// Lead reject type or resons
 			Route::get('/lead_reject_type', 'lead_reject_type')->name('leads.lead_reject_type');
 			Route::post('/saveLeadRejectType', 'saveLeadRejectType')->name('leads.ajax.saveLeadRejectType');
 			Route::get('/lead_reject_type/delete/{id}', 'lead_reject_type_delete');
 			Route::post('/saveLeadRejectReason', 'saveLeadRejectReason')->name('leads.ajax.saveLeadRejectReason');
-		
+
 			// Lead Attachment 
 			Route::post('/saveLeadAttachment', 'saveLeadAttachment')->name('leads.ajax.saveLeadAttachment');
 			Route::get('/lead_attachments/delete/{attachment}/{lead}', 'lead_attachments_delete');
@@ -1596,10 +1600,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('/saveCRMSectionType', 'saveCRMSectionType')->name('leads.ajax.saveCRMSectionType');
 			Route::get('/crm_section_type/delete/{id}', 'crm_section_type_delete');
 		});
-
 	});
 
-	Route::controller(BackendLeadController::class)->group(function(){
+	Route::controller(BackendLeadController::class)->group(function () {
 
 		Route::prefix('sales-finance/leads')->group(function () {
 			// Admin leads
@@ -1621,17 +1624,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			// Lead Task 
 			Route::post('/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
 			Route::get('/lead_task/delete/{task}/{lead}', 'lead_task_delete');
-			
+
 			// Lead Status
 			Route::get('/lead_status', 'lead_status')->name('leads.lead_status');
 			Route::post('/saveLeadStatus', 'saveLeadStatus')->name('leads.ajax.saveLeadStatus');
 			Route::get('/lead_status/delete/{id}', 'lead_status_delete');
-		
+
 			// Lead Sources
 			Route::get('/lead_sources', 'lead_sources')->name('leads.lead_sources');
 			Route::post('/saveLeadSource', 'saveLeadSource')->name('leads.ajax.saveLeadSource');
 			Route::get('/lead_source/delete/{id}', 'lead_source_delete');
-		
+
 			// Lead Task Type
 			Route::get('/lead_task_type', 'lead_task_type')->name('leads.lead_task_type');
 			Route::post('/saveLeadTaskType', 'saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
@@ -1642,13 +1645,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/lead_notes_type', 'lead_notes_type')->name('leads.lead_notes_type');
 			Route::post('/saveLeadNotesType', 'saveLeadNotesType')->name('leads.ajax.saveLeadNoteType');
 			Route::get('/lead_note_type/delete/{id}', 'lead_note_type_delete');
-		
+
 			// Lead reject type or resons
 			Route::get('/lead_reject_type', 'lead_reject_type')->name('leads.lead_reject_type');
 			Route::post('/saveLeadRejectType', 'saveLeadRejectType')->name('leads.ajax.saveLeadRejectType');
 			Route::get('/lead_reject_type/delete/{id}', 'lead_reject_type_delete');
 			Route::post('/saveLeadRejectReason', 'saveLeadRejectReason')->name('leads.ajax.saveLeadRejectReason');
-		
+
 			// Lead Attachment 
 			Route::post('/saveLeadAttachment', 'saveLeadAttachment')->name('leads.ajax.saveLeadAttachment');
 			Route::get('/lead_attachments/delete/{attachment}/{lead}', 'lead_attachments_delete');
@@ -1658,24 +1661,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::post('/saveCRMSectionType', 'saveCRMSectionType')->name('leads.ajax.saveCRMSectionType');
 			Route::get('/crm_section_type/delete/{id}', 'crm_section_type_delete');
 		});
-
 	});
 
-	Route::controller(GeneralController::class)->group(function(){
+	Route::controller(GeneralController::class)->group(function () {
 
 		Route::prefix('general')->group(function () {
 			Route::get('/attachment_types', 'attachment_types_index')->name('attachment_types.view');
 			Route::post('/saveAttachmentType', 'saveAttachmentType')->name('general.ajax.saveAttachmentType');
 			Route::get('/attachment_type/delete/{id}', 'delete_attachment_type');
-		
 		});
-
 	});
 });
 
 //super admin path
 Route::group(['prefix' => 'super-admin', 'middleware' => 'CheckAdminAuth'], function () {
-	
+
 	//service user migration
 	Route::get('/migrations', 'App\Http\Controllers\backEnd\superAdmin\MigrationController@index');
 	Route::get('/migration/view/{migration_id}', 'App\Http\Controllers\backEnd\superAdmin\MigrationController@view');

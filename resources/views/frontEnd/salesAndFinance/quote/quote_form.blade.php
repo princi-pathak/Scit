@@ -157,20 +157,20 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="plusandText">
-                                            <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                            <a href="#!" id="openCustomerSiteAddress" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Name </label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput textareaInput" id="customerSiteName" placeholder="City">
+                                        <input type="text" class="form-control editInput textareaInput" id="customerSiteName" placeholder="Name">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Company </label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputCustomer" placeholder="City">
+                                        <input type="text" class="form-control editInput textareaInput" id="inputCustomer" placeholder="Company">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -857,7 +857,7 @@
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-3 col-form-label">Job Title (Position)</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control editInput selectOptions get_job_title_result" name="job_title" id="customer_job_titile_id">
+                                        <select class="form-control editInput selectOptions get_job_title_result" name="job_title" id="customer_job_title_id">
                                             <option selected disabled>Please Select</option>
                                         </select>
                                     </div>
@@ -1133,6 +1133,149 @@
 </div>
 <!-- Add Customer Regions Modal End -->
 
+
+<!-- Add Site Address Modal Start -->
+<div class="modal fade" id="add_site_address_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerModalLabel">Add Site Address</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="add_customer_contact_form" class="add_customer_form">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="formDtail">
+                                <div class="mb-2 row">
+                                    <label for="inputName" class="col-sm-4 col-form-label">Customer </label>
+                                    <div class="col-sm-8">
+                                        <label for="inputAddress" class="col-form-label"><span id="setSiteAddress"></span> </label>
+                                        <input type="hidden" name="customer_id" id="customer_contact_id">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputName" class="col-sm-4 col-form-label">Site Name <span class="red-text">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="contact_name" id="customer_contact_name">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputName" class="col-sm-4 col-form-label">Contact Name <span class="red-text">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="contact_name" id="customer_contact_name">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputProject" class="col-sm-4 col-form-label">Job Title (Position)</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control editInput selectOptions get_job_title_result" name="job_title" id="customer_job_titile_id">
+                                            <option>Please Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a href="javascript:void(0)" class="formicon" id="OpenCustomerJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputName" class="col-sm-4 col-form-label">Company Name <span class="red-text">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="contact_name" id="customer_contact_name">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputEmail" class="col-sm-4 col-form-label">Email <span class="red-text">*</span> </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="email" id="customer_email">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputTelephone" class="col-sm-4 col-form-label">Telephone <span class="red-text">*</span> </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="telephone" id="customer_phone">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputMobile" class="col-sm-4 col-form-label">Mobile</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="mobile" id="customer_mobile">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputAddress" class="col-sm-4 col-form-label">Fax</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="fax" id="customer_fax">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="formDtail">
+                                <div class="mb-2 row">
+                                    <label for="inputProject" class="col-sm-4 col-form-label">Region</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control editInput selectOptions get_job_title_result" name="job_title" id="customer_job_titile_id">
+                                            <option>Please Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a href="javascript:void(0)" class="formicon" id="OpenCustomerJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputAddress" class="col-sm-4 col-form-label">Address <span class="red-text">*</span></label>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-control textareaInput" name="address" id="cuatomer_address" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCity" class="col-sm-4 col-form-label">City</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="city" id="customer_city">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCounty" class="col-sm-4 col-form-label">County</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="country" id="customer_country_input">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputPincode" class="col-sm-4 col-form-label">Pincode</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" nmae="pincode" id="customer_pincode">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCountry" class="col-sm-4 col-form-label">Country</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control editInput selectOptions" name="country_code" id="customer_country">
+                                            <option selected disabled>Select Country</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCountry" class="col-sm-4 col-form-label">Default Catalogue</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control editInput selectOptions" name="country_code" id="customer_country">
+                                            <option>None</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- End row -->
+                </form>
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+                <button type="button" class="profileDrop" id="saveCustomerContactData">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Site Address Modal End -->
+
 <!-- Add Customer Contact Modal Start -->
 <div class="modal fade" id="add_customer_contact_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -1142,14 +1285,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" id="add_customer_form" class="add_customer_form">
+                <form action="" id="add_customer_contact_form" class="add_customer_form">
                     <div class="row">
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="formDtail">
                                 <div class="mb-2 row">
                                     <label for="inputName" class="col-sm-4 col-form-label">Customer <span class="red-text">*</span></label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="name" class="form-control editInput">
+                                        <label for="inputAddress" class="col-form-label"><span id="setCustomerName"></span> </label>
+                                        <input type="hidden" name="customer_id" id="customer_contact_id">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1157,11 +1301,11 @@
                                     <div class="col-sm-8">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" value="1" name="assigned_product" id="customer_yes" checked>
-                                            <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
+                                            <label class="form-check-label checkboxtext editInput" for="inlineRadio1">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" value="2" name="assigned_product" id="custoemr_no">
-                                            <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
+                                            <label class="form-check-label checkboxtext editInput" for="inlineRadio2">No</label>
                                         </div>
                                     </div>
                                 </div>
@@ -1254,7 +1398,7 @@
                 </form>
             </div>
             <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="profileDrop" id="SaveCustomerData">Save</button>
+                <button type="button" class="profileDrop" id="saveCustomerContactData">Save</button>
                 <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -1275,7 +1419,8 @@
                     <div class="mb-3 row">
                         <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="red-text">*</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="title" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Job Title">
+                            <input type="hidden" name="job_title_id" id="job_title_id">
+                            <input type="text" name="name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Job Title">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -1288,8 +1433,7 @@
                         </div>
                     </div>
                     <div class="pageTitleBtn">
-                        <!-- <a href="#" class="profileDrop p-2 crmNewBtn" > Save</a> -->
-                        <button type="button" class="profileDrop" id="saveAddCustomerType">Save</button>
+                        <button type="button" class="profileDrop" id="saveJobTitle">Save</button>
                         <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
@@ -1415,6 +1559,28 @@
         });
     }
 
+    function getCustomerJobTitle() {
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerJobTitle") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log("jxcnjfjnfnk", response.data);
+                const jobTitle = document.getElementById('customer_job_titile_id');
+                jobTitle.innerHTML = '';
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.name;
+                    jobTitle.appendChild(option);
+                    // console.log(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
     $(document).ready(function() {
 
         document.getElementById('hideQuoteDiv').style.display = "none";
@@ -1449,6 +1615,10 @@
                     option2.value = response.data[0].id;
                     option2.text = response.data[0].name;
                     billingDetailContact.appendChild(option2);
+
+                    document.getElementById('customer_contact_id').value = response.data[0].id;
+                    document.getElementById('setCustomerName').textContent = response.data[0].name;
+                    document.getElementById('setSiteAddress').textContent = response.data[0].name;
 
                     document.getElementById('billingDetailsAddress').value = response.data[0].address;
                     document.getElementById('billingDetailsEmail').value = response.data[0].email;
@@ -1491,6 +1661,27 @@
 
 
         // Ajax Call for saving Customer Type
+        $('#saveJobTitle').on('click', function() {
+            var formData = $('#add_job_title_form').serialize();
+            console.log(formData);
+            $.ajax({
+                url: '{{ route("customer.ajax.saveJobTitle") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#customer_job_title_modal').modal('hide');
+                    getCustomerJobTitle();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+
+
+        // Ajax Call for saving Customer Type
         $('#saveAddCustomerType').on('click', function() {
             var formData = $('#add_customer_type_form').serialize();
             $.ajax({
@@ -1526,6 +1717,7 @@
             });
         });
 
+        // Save Customer Data
         $('#SaveCustomerData').on('click', function() {
             var formData = $('#add_customer_form').serialize();
             $.ajax({
@@ -1542,8 +1734,26 @@
                 }
             });
         });
-
     });
+
+    // Save Customer Data
+    $('#saveCustomerContactData').on('click', function() {
+        var formData = $('#add_customer_contact_form').serialize();
+        $.ajax({
+            url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
+            method: 'POST',
+            data: formData,
+            success: function(response) {
+                alert(response.message);
+                // getCustomerList();
+                $('#add_customer_contact_modal').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
 
     window.onload = function() {
         var buttons = document.querySelectorAll('.hide-on-load');
@@ -1589,6 +1799,7 @@
 
     OpenAddCustomerContact.onclick = function() {
         getCountriesListCustomer();
+        getCustomerJobTitle();
         $('#add_customer_contact_modal').modal('show');
     }
     // js for Add Customer Contact modal
@@ -1602,5 +1813,15 @@
         $('#customer_job_title_modal').modal('show');
     }
     // js for Add Job Title modal
+
+    // js for Add Site Address modal
+    const openCustomerSiteAddress = document.getElementById('openCustomerSiteAddress');
+    const add_site_address_modal = document.getElementById('add_site_address_modal');
+
+    openCustomerSiteAddress.onclick = function() {
+        // getCountriesListCustomer();
+        $('#add_site_address_modal').modal('show');
+    }
+    // js for Add Site Address modal
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

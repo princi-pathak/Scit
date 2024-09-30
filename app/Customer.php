@@ -159,4 +159,8 @@ class Customer extends Model
     public static function getCustomerDetails($id){
         return self::where('id', $id)->get();
     }
+
+    public static function saveCustomerContactDetails(array $data){
+        return self::updateOrCreate(['id' => $data['customer_id']], $data);
+    }
 }
