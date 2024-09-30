@@ -273,7 +273,7 @@
                             </a>
                             <ul class="sub pdlft">
                                 <li class="{{ ($page == 'attachment_types') ? 'active' : '' }}"><a href="{{ url('admin/general/attachment_types') }}"> <i class="fa fa-paperclip"></i> Attachment Types </a></li>
-                                <li class="{{ ($page == 'payment_types') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/quotes') }}"><i class="fa fa-money"></i> Payment Types </a></li>
+                                <li class="{{ ($page == 'payment_types') ? 'active' : '' }}"><a href="{{ url('admin/general/payment_types') }}"><i class="fa fa-money"></i> Payment Types </a></li>
                                 <li class="{{ ($page == 'regions') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}"><i class="fa fa-globe"></i> Regions </a></li>
                                 <li class="{{ ($page == 'task_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}"><i class="fa fa-list-ul"></i> Task Type </a></li>
                                 <li class="{{ ($page == 'tags') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}"><i class="fa fa-tags"></i> Tags </a></li>

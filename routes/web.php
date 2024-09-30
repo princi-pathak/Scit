@@ -11,6 +11,7 @@ use App\Http\Controllers\frontEnd\salesFinance\SupplierController;
 use App\Http\Controllers\frontEnd\salesFinance\GeneralSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 use App\Http\Controllers\frontEnd\salesFinance\InvoiceController;
+use App\Http\Controllers\frontEnd\salesFinance\Purchase_orderController;
 
 Route::get('clear', function () {
 	Artisan::call('cache:clear');
@@ -310,6 +311,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/save_account_code','save_account_code');
 		Route::get('/tax_rate','tax_rate');
 		Route::post('/save_tax_rate','save_tax_rate');
+	});
+	
+	// Purchase Order
+	Route::controller(Purchase_orderController::class)->group(function(){
+		Route::get('/departments','departments');
+		Route::post('/save_department','save_department');
 	});
   
   	Route::controller(CustomerController::class)->group(function(){
@@ -1667,6 +1674,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/attachment_types', 'attachment_types_index')->name('attachment_types.view');
 			Route::post('/saveAttachmentType', 'saveAttachmentType')->name('general.ajax.saveAttachmentType');
 			Route::get('/attachment_type/delete/{id}', 'delete_attachment_type');
+			Route::get('/payment_types','payment_types');
 		
 		});
 
