@@ -15,4 +15,12 @@ class Job_title extends Model
         'name',
         'status',
     ];
+
+    public static function getCustomerJobTitle(){
+        return self::where('deleted_at', null)->where('status', 1)->get();
+    } 
+
+    public static function saveJobTitle(array $data, $home_id){
+        return self::updateOrCreate(['id' => $data['job_title_id'] ], array_merge($data, ['home_id' =>  $home_id]));
+    }
 }

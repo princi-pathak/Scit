@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
     const hiddenDiv = document.getElementById('hiddenDiv');
     hiddenDiv.style.display = 'none';
 });

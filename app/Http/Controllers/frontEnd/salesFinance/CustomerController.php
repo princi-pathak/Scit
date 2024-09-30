@@ -234,4 +234,40 @@ class CustomerController extends Controller
             'data' => $data ? $data : 'No data.'
         ]);
     }
+
+    public function SaveCustomerContactData(Request $request) {
+
+        $data =  Customer::saveCustomerContactDetails($request->all());
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? "Customer Contact added successfully" : 'Customer contact could not be added.'
+        ]);
+    }
+
+    public function getCustomerJobTitle(){
+        $data =  Job_title::getCustomerJobTitle();
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function saveJobTitle(Request $request){
+        $data = Job_title::saveJobTitle($request->all(),  Auth::user()->home_id);
+
+        if($request->job_title_id == null){ 
+            return response()->json([
+                'success' => (bool) $data,
+                'message' => $data ? "Job Title added successfully" : 'Job Title could not be added.'
+            ]); 
+        } else {
+            return response()->json([
+                'success' => (bool) $data,
+                'message' => $data ? "Job Title edited successfully" : 'Job Title could not be edited.'
+            ]);  
+        }
+    }
+   
 }

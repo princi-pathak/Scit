@@ -406,7 +406,7 @@ $access_rights = explode(',', $rights);
                                         Purchase Orders</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Departments </a></li>
+                                            <li><a class="dropdown-item" href="{{url('departments')}}"><i class="fa fa-list"></i>Departments </a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
