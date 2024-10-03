@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                            <label class="col-md-5 m-t-10">Change Service user Earning Target</label>
+                            <label class="col-md-5 m-t-10">Change Child Earning Target</label>
                             <div class="col-md-5">
                                 <div class="select-style medium-select">
                                     <select name="target">

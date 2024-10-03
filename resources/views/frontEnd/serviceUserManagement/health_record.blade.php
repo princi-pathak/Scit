@@ -111,7 +111,7 @@ function time_diff_string($from, $to, $full = false) {
             
             <div class="col-md-2 col-lg-2">                
                 <select class="form-control" name="service_user" id="service_user" <?php if(isset($service_user_id)){ echo "disabled"; } ?>>
-                    <option value="">Select Service user</option>
+                    <option value="">Select Child</option>
                     @foreach($service_users as $val)
                         <option <?php if(isset($service_user_id)){ if($service_user_id==$val->id){ echo "Selected"; } } ?> value="{{$val->id}}">{{$val->name}}</option>
                     @endforeach

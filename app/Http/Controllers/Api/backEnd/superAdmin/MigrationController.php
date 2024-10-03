@@ -78,7 +78,7 @@ class MigrationController extends Controller
                 $service_user_id = $migration->service_user_id;
                 $new_status = $data['new_status'];
 
-                //if status is accepted update the service user home id and then the migration request
+                //if status is accepted update the Child home id and then the migration request
                 if($new_status == 'A'){
 
                     $service_user = ServiceUser::where('id',$service_user_id)->first();            

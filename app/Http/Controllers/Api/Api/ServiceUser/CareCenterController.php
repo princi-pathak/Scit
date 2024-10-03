@@ -23,7 +23,7 @@ Class CareCenterController extends Controller
             return json_encode(array(
                 'result' => array(
                     'response' => true,
-                    'message' => "Service User's Staff List",
+                    'message' => "Child's Staff List",
                     'data' => $staff_list
                 )
             ));

@@ -1,5 +1,5 @@
 @extends('frontEnd.layouts.master')
-@section('title','Service User Management')
+@section('title','Child Management')
 @section('content')
 
 
@@ -225,7 +225,7 @@
 <script >
     //show popups of links
     $('.su-set-btn').click(function(){
-        //saving the current selected service user id in a temporary location
+        //saving the current selected Child id in a temporary location
         var su_id = $(this).attr('su_id');
         //alert(su_id);
         $('.selected_su_id').val(su_id);

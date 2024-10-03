@@ -43,7 +43,7 @@
                                 <div class="col-lg-6">
                                     <form method='get' action="{{ url('admin/general-admin/allowance/weekly') }}">
                                         <div class="dataTables_filter" id="editable-sample_filter">
-                                            <label>Search: <input name="search" type="text" value="{{ $search }}" aria-controls="editable-sample" class="form-control medium" maxlength="255" placeholder="Enter Service User Name"></label>
+                                            <label>Search: <input name="search" type="text" value="{{ $search }}" aria-controls="editable-sample" class="form-control medium" maxlength="255" placeholder="Enter Child Name"></label>
                                         </div>
                                     </form>
                                 </div>
@@ -53,7 +53,7 @@
                                 <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                     <thead>
                                     <tr>
-                                        <th>Service User</th>
+                                        <th>Child</th>
                                         <th>Amount</th>
                                         <th>Status</th>
                                         <th>Date</th>

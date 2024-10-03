@@ -53,7 +53,7 @@ class UserController extends Controller
                                     "wish"          => $wish,
                                     "image"         => $user_detail->image,
                                     "su_image_ur"   => serviceUserProfileImagePath,
-                                    "user_type"     => "Service User"
+                                    "user_type"     => "Child"
                                 );
                     return json_encode(array(
                         'result' => array(
@@ -255,7 +255,7 @@ class UserController extends Controller
                 ));     
             }
             
-            if($data['user_type'] == "Service User"){
+            if($data['user_type'] == "Child"){
                 $user = ServiceUser::where('id',$data['user_id'])->first();
                 if($data['password'] == $data['confirm_password'] && Hash::check($data['old_password'],$user->password) && !empty($user)){
                         $password = Hash::make($data['password']);

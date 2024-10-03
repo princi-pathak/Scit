@@ -64,7 +64,7 @@ $google_slug="https://plus.google.com/share?url=http://www.socialcareitsolutions
 			<tr style="color:#1f88b5;" class="table-active">
 				<th style="width: 10%; padding:5px">Id</th>
 				<th style="width: 25%; padding:5px">Staff Name</th>
-				<th style="width: 25%; padding:5px">Service User</th>
+				<th style="width: 25%; padding:5px">Child</th>
 				<th style="width: 25%; padding:5px">Category</th>
 				<th style="width: 25%; padding:5px">Title</th>
 				<th style="width: 40%; padding:5px">Details</th>

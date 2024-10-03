@@ -166,10 +166,10 @@ class EarningScheme extends Model
             $scores['mfc'] = $earn_area_percent->mfc;
         }
           
-        //service user daily % target to score to get points  // get latest targte set for su
+        //Child daily % target to score to get points  // get latest targte set for su
         $su_earn_target = ServiceUserEarningTarget::getEarningTarget($service_user_id);
 
-        //service user's today all records points obtained 
+        //Child's today all records points obtained 
         $total_su_score = $scores['daily_record'] + $scores['education_record'] + $scores['living_skill'] + $scores['mfc'];
 
         if($total_su_score < $su_earn_target){

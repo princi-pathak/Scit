@@ -94,7 +94,7 @@
 <script >
     autosize($("textarea"));
     $('.staff-set-btn').click(function(){
-        //saving the current selected service user id in a temporary location
+        //saving the current selected Child id in a temporary location
         var staff_id = $(this).attr('staff_id');
         $('.selected_staff_id').val(staff_id);
         $('.add-new-btn').click();

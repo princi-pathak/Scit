@@ -31,7 +31,7 @@
 									<p style="color:rgb(51, 51, 51);">A new Risk Management Plan plan has been initiated.</p>
 									<p style="color:rgb(51, 51, 51);">Details are shown below:</p>
 									
-									<p style="color:rgb(51, 51, 51);"><b>Service User:</b> {{ $service_user_name }}</p>
+									<p style="color:rgb(51, 51, 51);"><b>Child:</b> {{ $service_user_name }}</p>
 									<p style="color:rgb(51, 51, 51);"><b>Plan Title:</b> {{ $plan_title }}</p>
 									<p style="color:rgb(51, 51, 51);"><b>Plan Date:</b> {{ $plan_date }}</p>
 									<p style="color:rgb(51, 51, 51);"><b>Plan Details:</b> {{ $plan_details }}</p>

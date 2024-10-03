@@ -300,7 +300,7 @@ class EducationRecordController extends ServiceUserManagementController
                             }
                         }
                         if(!empty($data['su_task_amount'][$key])){
-                            //here service user gets his task amount
+                            //here Child gets his task amount
                             $su_record_id = ServiceUserMoney::where('su_record_id',$su_edu_rec_id)->value('su_record_id');
                             // echo "<pre>"; print_r($su_record_id); die;
                             if(!empty($su_record_id)){
@@ -316,7 +316,7 @@ class EducationRecordController extends ServiceUserManagementController
                                 $service_usermoney->txn_type        = 'D';
                                 $service_usermoney->txn_amount      =  0;
 
-                                //here we get balance amount of service user 
+                                //here we get balance amount of Child 
                                 $balance       = ServiceUserMoney::where('service_user_id',$service_user_id)->orderBy('id','desc')->value("balance");
                                 $total_balance = $balance + $data['su_task_amount'][$key];  
 

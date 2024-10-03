@@ -13,14 +13,14 @@
                 <div class="row">
                     <form method="post" id="">    
                         <label class=" col-md-10 col-sm-12 col-xs-12 p-t-7 m-b-15"> 
-                            Service user is going outside, Please enter info about his wears.
+                            Child is going outside, Please enter info about his wears.
                             <!-- ucfirst($patient->name)  is going outside, Please enter info about his wears. --> 
                         </label>
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Details: </label>
                             <div class="col-md-9 col-sm-9 col-xs-9 ">
                                 <div class="select-bi">
-                                    <textarea name="log_detail" class="form-control detail-info-txt" rows="5" maxlength="1000" placeholder="Enter service user's wears"></textarea>
+                                    <textarea name="log_detail" class="form-control detail-info-txt" rows="5" maxlength="1000" placeholder="Enter Child's wears"></textarea>
                                 </div>
                             </div>
                         </div>
