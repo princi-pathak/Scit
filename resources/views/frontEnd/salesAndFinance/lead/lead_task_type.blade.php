@@ -24,6 +24,9 @@
                 </div>
             </div>
         </div>
+        <div class="alert alert-success text-center" id="msg" style="display:none;height:50px">
+            <p id="status_meesage"></p>
+        </div>
         <di class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
@@ -52,6 +55,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>Lead Status</th>
                                 <th>Status</th>
@@ -62,9 +66,17 @@
                             @if(!$lead_task_type->isEmpty())
                                 @foreach ($lead_task_type as $value)
                                     <tr>
+                                        <td></td>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $value->title }}</td>
-                                        <td> @if($value->status) <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span> @else <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> @endif </td>
+                                        <td> 
+                                            <?php if($value->status == 1){?>
+                                                <span class="grencheck" onclick="status_change({{$value->id}},{{$value->status}})"><i class="fa-solid fa-circle-check"></i></span>
+                                                <?php } else {?>
+                                                <span class="grayCheck" onclick="status_change({{$value->id}},{{$value->status}})"><i class="fa-solid fa-circle-check"></i></span>
+                                                
+                                            <?php }?>
+                                        </td>
                                         <td>
                                             <div class="d-inline-flex align-items-center ">
                                                 <div class="nav-item dropdown">
@@ -109,7 +121,7 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label ">Status</label>
                         <div class="col-lg-9 col-sm-9">
-                        <select name="status" id="status" class="form-control editInput">
+                        <select name="status" id="modale_status" class="form-control editInput">
                             <option value="1">Active</option>
                             <option value="0">InActive</option>
                         </select>
@@ -125,6 +137,30 @@
     </div>
 </div>
 <!-- end Popup  -->
+ <script>
+    function status_change(id, status){
+            var token='<?php echo csrf_token();?>'
+            var model="LeadTaskType";
+            $.ajax({
+                type: "POST",
+                url: "{{url('/status_change')}}",
+                data: {id:id,status:status,model:model,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if($.trim(data)==1){
+                        $("#status_meesage").text("status Changed Successfully Done");
+                        $("#msg").show();
+                        setTimeout(function() {
+                            location.reload();
+                        }, 3000);
+
+                        
+                    }
+                    
+                }
+            });
+        }
+ </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script>
     $(document).ready(function() {
@@ -136,7 +172,7 @@
              // Set form fields
             $('#lead_task_type_id').val(itemId);
             $('#title').val(itemTitle);
-            $('#status').val(itemStatus);
+            $('#modale_status').val(itemStatus);
 
             // Set modal title and button text
             if (itemId != null) {
@@ -147,7 +183,7 @@
                 $('#saveChanges').text('Add');
                 $('#lead_task_type_id').val('');
                 $('#title').val('');
-                $('#status').val('1'); // Default to Active
+                $('#modale_status').val('1'); // Default to Active
             }
 
         });

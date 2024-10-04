@@ -173,7 +173,7 @@
                                                             class="col-sm-3 col-form-label">Status</label>
                                                         <div class="col-sm-9">
                                                             <select class="form-control editInput selectOptions"
-                                                                id="status" name="status">
+                                                                id="modal_status" name="status">
                                                                 <option value="1" id="status_1">Active</option>
                                                                 <option value="0" id="status_0">Inactive</option>
                                                             </select>
@@ -355,7 +355,7 @@
                 var default_days=$("#default_days").val();
                 var customer_visible=$("#customer_visible").val();
                 var appointment_id=$("#appointment_id").val();
-                var status=$("#status").val();
+                var status=$("#modal_status").val();
                 var home_id='<?php echo $home_id;?>'
                 var id=$("#id").val();
                 var message;
@@ -377,9 +377,10 @@
                             if($.trim(data.success) == "true"){
                                 $("#message").text(message);
                                 $(".success_message").show();
-                                $("#result").html(data.html_result);
+                                // $("#result").html(data.html_result);
                                 setTimeout(function() {
                                     $(".alert").hide();
+                                    location.reload();
                                 }, 3000);
                                 $("#form_data")[0].reset();
                             } else {
@@ -400,8 +401,12 @@
                             $("#id").val(data.id);
                             $("#name").val(data.name);
                             $("#default_days").val(data.default_days);
+                            // $("#modal_status").
+                            $("#modal_status").val(data.status);
+                            
                             if (data.customer_visible == 0) {
                                 document.getElementById('customer_visible').checked = false;
+                                document.getElementById('customer_visible').value=0;
                             }
                             $(".appointmentType option").each(function() {
                                 if ($(this).val() == data.appointment_id) {
@@ -413,7 +418,6 @@
                     });
             }
             function status_change(id, status){
-                alert()
             var token='<?php echo csrf_token();?>'
             var model="Job_type";
             $.ajax({

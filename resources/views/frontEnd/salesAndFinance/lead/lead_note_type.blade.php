@@ -44,6 +44,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>History Type</th>
                                 <th>Status</th>
@@ -54,6 +55,7 @@
                             @if(!$lead_notes_type->isEmpty())
                                 @foreach ($lead_notes_type as $value)
                                     <tr>
+                                        <td></td>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $value->title }}</td>
                                         <td> @if($value->status) <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span> @else <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> @endif </td>
@@ -101,7 +103,7 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
                         <div class="col-md-9">
-                            <select name="status" id="status" class="form-control editInput">
+                            <select name="status" id="modale_status" class="form-control editInput">
                                 <option value="1">Active</option>
                                 <option value="0">InActive</option>
                             </select>
@@ -126,7 +128,7 @@
                 var itemStatus = $(this).data('status');
                 $('#lead_notes_type_id').val('');
                 $('#title').val('');
-                $('#status').val(1);
+                $('#modale_status').val(1);
                 $('.modal-title').text('');
                 $('#saveChanges').text('');
 
@@ -134,7 +136,7 @@
                     // Editing existing record
                     $('#lead_notes_type_id').val(itemId);
                     $('#title').val(itemTitle);
-                    $('#status').val(itemStatus);
+                    $('#modale_status').val(itemStatus);
                     $('.modal-title').text('Edit Notes Type');
                     $('#saveChanges').text('Save Changes');
                 } else {

@@ -164,7 +164,7 @@
                                                             class="col-sm-3 col-form-label">Status</label>
                                                         <div class="col-sm-9">
                                                             <select class="form-control editInput selectOptions"
-                                                                id="status" name="status">
+                                                                id="modal_status" name="status">
                                                                 <option value="1" id="status_1">Active</option>
                                                                 <option value="0" id="status_0">Inactive</option>
                                                             </select>
@@ -315,7 +315,7 @@
                 }else {
                     auth=0;
                 }
-                var status=$("#status").val();
+                var status=$("#modal_status").val();
                 var home_id='<?php echo $home_id;?>'
                 var id=$("#id").val();
                 var message;

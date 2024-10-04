@@ -27,7 +27,7 @@ if (isset($lead)) {
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>New Leads</h3>
+                    <h3>New Lead</h3>
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@ if (isset($lead)) {
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputName" class="col-sm-3 col-form-label">Preferred date call</label>
+                                        <label for="inputName" class="col-sm-3 col-form-label">Preferred date to call</label>
                                         <div class="col-sm-3">
                                             <input type="date" name="prefer_date" class="form-control editInput" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}" id="">
                                         </div>

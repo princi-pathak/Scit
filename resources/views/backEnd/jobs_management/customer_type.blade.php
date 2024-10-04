@@ -137,7 +137,7 @@ thead#flowhead {
 
                                         <tr >
                                             <td>{{++$key}}</td>
-                                            <td class="user_name">{{ ucfirst($val->name) }}</td>
+                                            <td class="user_name">{{ ucfirst($val->title) }}</td>
                                             <td>
                                                 @if($val->status == 1)
                                                     <a href="javascript:void(0)" onclick="status_change('{{base64_encode($val->id)}}',0)" class="btn btn-success">Active</a>
