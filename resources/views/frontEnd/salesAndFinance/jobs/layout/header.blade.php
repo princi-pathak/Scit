@@ -167,8 +167,8 @@ $access_rights = explode(',', $rights);
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-clock"></i> Time Planner</span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-briefcase"></i> Project Planner</span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-globe"></i> Geo Planner</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Vehicle Tracking</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Mobile Tracking</span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-truck"></i> Vehicle Tracking</span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-mobile"></i> Mobile Tracking</span></a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
@@ -177,10 +177,10 @@ $access_rights = explode(',', $rights);
                                     Projects
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> New Project</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Active Projects</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Inactive Projects</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Completed Projects</span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-plus"></i> New Project</span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-briefcase"></i> Active Projects</span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-briefcase"></i> Inactive Projects</span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-briefcase"></i> Completed Projects</span></a>
                                 </div>
                             </div>
 
@@ -258,24 +258,24 @@ $access_rights = explode(',', $rights);
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span><i class="fa fa-list"></i>Customers</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                        <span><i class="fa fa-users"></i>Customers</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('customer_add_edit')}}"><i class="fa fa-list"></i>New Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=ACTIVE') }}"><i class="fa fa-list"></i>Active Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=INACTIVE') }}"><i class="fa fa-list"></i>Inactive Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{url('customer_add_edit')}}"><i class="fa fa-plus"></i>New Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=ACTIVE') }}"><i class="fa fa-check-circle"></i>Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=INACTIVE') }}"><i class="fa fa-times-circle"></i>Inactive Customers</a></li>
                                             <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Customers Logins</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span><i class="fa fa-list"></i> Suppliers</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                            <span><i class="fa fa-users"></i> Suppliers</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('supplier_add')}}"><i class="fa fa-list"></i>New Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{url('suppliers?list_mode=Active')}}"><i class="fa fa-list"></i>Active Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{url('suppliers?list_mode=INActive')}}"><i class="fa fa-list"></i>Inactive Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{url('supplier_add')}}"><i class="fa fa-plus"></i>New Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{url('suppliers?list_mode=Active')}}"><i class="fa fa-check-circle"></i>Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="{{url('suppliers?list_mode=INActive')}}"><i class="fa fa-times-circle"></i>Inactive Customers</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -287,10 +287,10 @@ $access_rights = explode(',', $rights);
                                     Items
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i>Product Categories</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i>Products</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i>Product Groups</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i>Catalogues</span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-inbox"></i>Product Categories</span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-shopping-cart"></i>Products</span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i>Product Groups</span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list-ol"></i>Catalogues</span></a>
                                 </div>
                             </div>
 
@@ -304,9 +304,9 @@ $access_rights = explode(',', $rights);
                                     Users
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i>Users  </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i>Team Members </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i>Timeoff  </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-user"></i>Users  </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-users"></i>Team Members </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-clock"></i>Timeoff  </span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i>Lone Worker Active List </span></a>
                                 </div>
                             </div>
@@ -316,17 +316,17 @@ $access_rights = explode(',', $rights);
                                     Reports
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Customers </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Quote </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Jobs </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Invoices </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Users </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-users"></i> Customers </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Quote </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-road"></i> Jobs </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-file"></i> Invoices </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-users"></i> Users </span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Purchase Orders </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Products </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Vehicle Tracking </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> SMS Report </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Email Report </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Reminder Report </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-shopping-cart"></i> Products </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-truck"></i> Vehicle Tracking </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-comment"></i> SMS Report </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-envelope"></i> Email Report </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-bell"></i> Reminder Report </span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Task Report </span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Report Builder </span></a>
 
@@ -335,11 +335,11 @@ $access_rights = explode(',', $rights);
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> bookmark_manager</i></span>
-                                    FileManager
+                                    File Manager
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#!" class="dropdown-item"> <span><i class="fa fa-list"></i> Attachments </span></a>
-                                    <a href="#!" class="dropdown-item"> <span><i class="fa fa-list"></i> Digital Documents</span></a>
+                                    <a href="#!" class="dropdown-item"> <span><i class="fa fa-paperclip"></i> Attachments </span></a>
+                                    <a href="#!" class="dropdown-item"> <span><i class="fa fa-print"></i> Digital Documents</span></a>
                                     <a href="#!" class="dropdown-item"> <span><i class="fa fa-list"></i> Completed Questionnaires</span> </a>
                                 </div>
                             </div>
