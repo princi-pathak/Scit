@@ -4,7 +4,9 @@ namespace App\Http\Controllers\backEnd;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Session,DB;
+use Session,DB,Validator;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use App\Customer;
 use App\Models\Country;
 use App\Models\Job_title;
@@ -19,7 +21,7 @@ class CustomerController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Customer::whereNot('status',2)->where('is_converted', 1)->orderBy('id','DESC');
+            $query=Customer::whereNull('deleted_at')->where('is_converted', 1)->orderBy('id','DESC');
 
             $search = '';
 
@@ -77,7 +79,7 @@ class CustomerController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Customer_type::whereNot('status',2)->orderBy('id','DESC');
+            $query=Customer_type::whereNull('deleted_at')->orderBy('id','DESC');
 
             $search = '';
 
@@ -126,7 +128,20 @@ class CustomerController extends Controller
     }
     public function customer_type_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        Customer_type::updateOrCreate(['id' => $request->id], $request->all());
+        $validator = Validator::make($request->all(), [
+            'title' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+
+        try {
+            Customer_type::updateOrCreate(['id' => $request->id], $request->all());
+        }catch (\Exception $e) {
+            Log::error('Error saving Payment Type: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
+        }
+        
         if(isset($request->id)){
             Session::flash('success','Updated Successfully Done');
         } else {
@@ -146,9 +161,10 @@ class CustomerController extends Controller
     }
     public function customer_type_delete(Request $request){
         $id=base64_decode($request->id);
-        $table=Customer_type::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Customer_type::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Customer_type::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
     }
@@ -230,9 +246,10 @@ class CustomerController extends Controller
     public function customer_delete(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $id=base64_decode($request->id);
-        $table=Customer::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Customer::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Customer::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
     }
