@@ -1219,7 +1219,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="OpenCustomerJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" id="OpenCustomerRegionModel"><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1265,6 +1265,12 @@
                             </div>
                         </div>
                     </div> <!-- End row -->
+                    <div class="mb-2 row">
+                        <label for="inputName" class="col-sm-2 col-form-label">Notes </label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control textareaInput" name="" id="" rows="3"></textarea>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer customer_Form_Popup">
@@ -1421,6 +1427,44 @@
                         <div class="col-sm-9">
                             <input type="hidden" name="job_title_id" id="job_title_id">
                             <input type="text" name="name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Job Title">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                        <div class="col-sm-9">
+                            <select id="customer_type_status" name="status" class="form-control editInput">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="pageTitleBtn">
+                        <button type="button" class="profileDrop" id="saveJobTitle">Save</button>
+                        <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Job Title Modal End -->
+
+
+<!-- Add Regions Modal Start -->
+<div class="modal fade" id="customer_regions_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="thirdModalLabel">Add Region</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add_regions_form">
+                    <div class="mb-3 row">
+                        <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="red-text">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="hidden" name="region_id" id="region_id">
+                            <input type="text" name="name" class="form-control editInput" id="customer_type_name" value="" placeholder="Regions">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -1653,6 +1697,9 @@
         });
 
 
+
+
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1798,9 +1845,14 @@
     const add_customer_contact_modal = document.getElementById('add_customer_contact_modal');
 
     OpenAddCustomerContact.onclick = function() {
-        getCountriesListCustomer();
-        getCustomerJobTitle();
-        $('#add_customer_contact_modal').modal('show');
+        var customer = document.getElementById('getCustomerList').value;
+        if (customer === "") {
+            alert('Please select the customer');
+        } else {
+            getCountriesListCustomer();
+            getCustomerJobTitle();
+            $('#add_customer_contact_modal').modal('show');
+        }
     }
     // js for Add Customer Contact modal
 
@@ -1819,9 +1871,25 @@
     const add_site_address_modal = document.getElementById('add_site_address_modal');
 
     openCustomerSiteAddress.onclick = function() {
-        // getCountriesListCustomer();
-        $('#add_site_address_modal').modal('show');
+        var customer = document.getElementById('getCustomerList').value;
+        if (customer === "") {
+            alert('Please select the customer');
+        } else {
+            getCountriesListCustomer();
+            getCustomerJobTitle();
+            $('#add_site_address_modal').modal('show');
+        }
     }
     // js for Add Site Address modal
+
+
+    // js for Add Regions modal
+    const OpenCustomerRegionModel = document.getElementById('OpenCustomerRegionModel');
+    const customer_regions_modal = document.getElementById('customer_regions_modal');
+
+    OpenCustomerRegionModel.onclick = function() {
+        $('#customer_regions_modal').modal('show');
+    }
+    // js for Add Region modal
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
