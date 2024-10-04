@@ -396,7 +396,7 @@ class EarningSchemeController extends Controller
     }
     /*------- MFC Records End --------*/
 
-    /*---------Add Label in service user-------------------*/
+    /*---------Add Label in Child-------------------*/
     public function add_earning_scheme_label(Request $request,$service_user_id,$earning_scheme_label_id){
         
         //echo "<pre>"; print_r($service_user_id); die;

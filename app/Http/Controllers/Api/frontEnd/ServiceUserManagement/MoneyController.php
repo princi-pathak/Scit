@@ -297,7 +297,7 @@ class MoneyController extends ServiceUserManagementController
                     // return redirect('/general-admin')->with('success','Shopping Budget has been added successfully.');
                 } //else {
                     
-                //     return redirect('/general-admin')->with('error','Please select service user and fill the amount field');
+                //     return redirect('/general-admin')->with('error','Please select Child and fill the amount field');
                 // }
             }
             return redirect('/general-admin')->with('success','Shopping Budget has been added successfully.');

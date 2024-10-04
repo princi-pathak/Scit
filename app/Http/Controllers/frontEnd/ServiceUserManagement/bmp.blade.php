@@ -46,7 +46,7 @@
 
                                         <select name="service_user_id" class="su_n_id" >
 
-                                            <option value="0"> Select Service User </option>
+                                            <option value="0"> Select Child </option>
 
                                             @foreach($service_users as $value)
 

@@ -123,7 +123,7 @@ class LogBookController extends Controller
         );
         $columns = array('Id', 'Staff Name', 'Category', 'Title', 'Details', 'Date', 'Late');
         if(isset($logBooks[0]->service_user_name)) {
-            $columns[] = 'Service User';
+            $columns[] = 'Child';
         }
 
         $file = fopen('php://output', 'w');

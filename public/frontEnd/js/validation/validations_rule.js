@@ -756,7 +756,7 @@ $('#edit_user_formnotused').formValidation({
     }  
 });
 
-/* service users */
+/* Childs */
 $('#add_service_user_formnotused').formValidation({
     framework: 'bootstrap',
     excluded: [':disabled'],

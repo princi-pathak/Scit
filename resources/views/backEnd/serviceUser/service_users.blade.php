@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.master')
 
-@section('title',' Service Users')
+@section('title',' Childs')
 
 @section('content')
 
@@ -29,7 +29,7 @@
                             <div class="btn-group">
                                 <a href="service-users/add">
                                     <button id="editable-sample_new" class="btn btn-primary">
-                                        Add Service User <i class="fa fa-plus"></i>
+                                        Add Child <i class="fa fa-plus"></i>
                                     </button>
                                 </a>
                             </div>
@@ -100,7 +100,7 @@
                                     if($service_users->isEmpty()) { ?>
                                         <?php
                                             echo '<tr style="text-align:center">
-                                                  <td colspan="4">No Service User found.</td>
+                                                  <td colspan="4">No Child found.</td>
                                                   </tr>';
                                         ?>
                                     <?php 

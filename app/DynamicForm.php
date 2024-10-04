@@ -1821,7 +1821,7 @@ class DynamicForm extends Model //FormBuilder
         // if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
         //     Mail::send('emails.dynamic_form_send_mail',['name'=>$name,'su_name'=> $su_name, 'd_form_name' => $d_form_name], function($message) use ($email,$company_name)
         //     {
-        //         $message->to($email,$company_name)->subject('Service User Mail');
+        //         $message->to($email,$company_name)->subject('Child Mail');
         //     });
         // }
         

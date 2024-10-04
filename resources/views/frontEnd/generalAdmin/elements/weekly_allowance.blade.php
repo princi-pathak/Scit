@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Set weekly allowance for service users</h4>
+                <h4 class="modal-title">Set weekly allowance for Childs</h4>
             </div>
             
             <div class="modal-body">
@@ -15,7 +15,7 @@
                         {{ csrf_field() }}
                         <div class="form-group col-md-12 col-sm-12 col-xs-12">          
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <h3 class="m-tb-10 clr-blue fnt-20"> Service User's List </h3>
+                                <h3 class="m-tb-10 clr-blue fnt-20"> Child's List </h3>
                             </div>
                             <div class="service-list-serv">
                                 <?php
@@ -71,7 +71,7 @@
                                 </ul>
                                 </div>
                             </div>
-                            <label class="col-md-12 m-t-10"> Note: This money will be automatically added to all selected service user's My money on every week.</label>
+                            <label class="col-md-12 m-t-10"> Note: This money will be automatically added to all selected Child's My money on every week.</label>
 
                             <div class="modal-footer recent-task-sec p-b-5">
                                 <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>

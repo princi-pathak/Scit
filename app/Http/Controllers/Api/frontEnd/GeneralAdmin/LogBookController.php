@@ -224,7 +224,7 @@ class LogBookController extends GeneralAdminController
                                 ->select('id', 'name', 'user_name')->get();
         // echo "<pre>"; print_r($serviceuserlist); die;
 
-        echo '<label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Service User: </label>
+        echo '<label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child: </label>
                     <div class="col-md-6 col-sm-9 col-xs-10">
                         <div class="select-bi" style="width:100%;float:left;">
                             

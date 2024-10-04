@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.master')
 
-@section('title',' Service User Care History Form')
+@section('title',' Child Care History Form')
 
 @section('content')
 

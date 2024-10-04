@@ -214,7 +214,7 @@
     $(document).ready(function(){
         var report_type = $('#report_type_select').val();
         if(report_type == 'ALL') {
-            $('select[name=\'user_type\']').html("<option value='SERVICE_USER'> Service User </option>"+"<option value='STAFF' > Staff </option>");
+            $('select[name=\'user_type\']').html("<option value='SERVICE_USER'> Child </option>"+"<option value='STAFF' > Staff </option>");
             $('select[name=\'select_user_id\']').attr('disabled', true);
             // $('#confirm_btn').hide();
         }
@@ -222,12 +222,12 @@
         $('#report_type_select').change(function(){
             var report_type = $('#report_type_select').val();
             if(report_type == 'ALL') { 
-                $('select[name=\'user_type\']').html("<option value='SERVICE_USER'> Service User </option>"+"<option value='STAFF' > Staff </option>");
+                $('select[name=\'user_type\']').html("<option value='SERVICE_USER'> Child </option>"+"<option value='STAFF' > Staff </option>");
                 $('select[name=\'select_user_id\']').html("<option value=''> Select </option>");
                 $('select[name=\'select_user_id\']').attr('disabled', true);
                 // $('#confirm_btn').hide();
             } else {
-                $('select[name=\'user_type\']').html("<option value=''>Select</option>"+"<option value='SERVICE_USER'> Service User </option>"+"<option value='STAFF'> Staff </option>");
+                $('select[name=\'user_type\']').html("<option value=''>Select</option>"+"<option value='SERVICE_USER'> Child </option>"+"<option value='STAFF'> Staff </option>");
                 $('select[name=\'select_user_id\']').attr('disabled', false);
                 // $('#confirm_btn').show();
             }
@@ -240,7 +240,7 @@
                 $('select[name=\'select_user_id\']').html("<option value=''>Select</option>");
                 return false;
             } else if(user_type_id == 'SERVICE_USER') {
-                $('select[name=\'select_user_id\']').html("<option value=''>Select Service User</option>");
+                $('select[name=\'select_user_id\']').html("<option value=''>Select Child</option>");
             } else {
                 $('select[name=\'select_user_id\']').html("<option value=''>Select Staff</option>");
             }
@@ -258,7 +258,7 @@
                     }
                     if(resp != '') {
                         if(user_type_id == 'SERVICE_USER') {
-                            $('#select_user').html('<option value="0">Select Service User</option>'+resp);
+                            $('#select_user').html('<option value="0">Select Child</option>'+resp);
                         } else {
                             $('#select_user').html('<option value="0">Select Staff</option>'+resp);
                         }

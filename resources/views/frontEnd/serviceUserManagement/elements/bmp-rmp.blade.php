@@ -23,7 +23,7 @@
                                 <div class="col-md-11 col-sm-11 col-xs-12">
                                     <div class="select-style">
                                         <select name="service_user_id" class="su_n_id" disabled="" >
-                                            <option value="0"> Select Service User </option>
+                                            <option value="0"> Select Child </option>
                                             @foreach($service_users as $value)
                                                 <option value="{{ $value['id'] }}" {{ ($service_user_id == $value['id']) ? 'selected' : '' }}>{{ ucfirst($value['name']) }}</option>
                                             @endforeach

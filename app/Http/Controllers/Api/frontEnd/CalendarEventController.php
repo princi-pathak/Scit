@@ -179,7 +179,7 @@ class CalendarEventController extends Controller
 			                        <label class="col-sm-2 col-xs-12 color-themecolor p-0 text-right p-t-5 r-p-0"> Event Type: </label>
 			                        <div class="col-sm-10 r-p-0">
 			                            <div class="input-group">
-			                                <input name="su_event_type" class="form-control" value="Service User Note" type="text" disabled="disabled">
+			                                <input name="su_event_type" class="form-control" value="Child Note" type="text" disabled="disabled">
 			                            </div>
 			                        </div>
 			                    </div>

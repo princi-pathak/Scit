@@ -1,5 +1,5 @@
 @extends('frontEnd.layouts.master')
-@section('title','Service User Location History')
+@section('title','Child Location History')
 @section('content')
 
 <style type="text/css">

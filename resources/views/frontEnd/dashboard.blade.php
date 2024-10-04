@@ -29,7 +29,7 @@
                                 <div class="user-heading alt wdgt-row bg-yellow"> <i class="fa fa-briefcase"></i> </div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
-                                        <h1 class="count">Service User Management</h1>
+                                        <h1 class="count">Child Management</h1>
                                         <p></p>
                                     </div>
                                 </div>

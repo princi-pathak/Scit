@@ -40,7 +40,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                 <div class="col-md-11 col-sm-11 col-xs-12">
                                     <div class="select-style">
                                         <select name="service_user_id" class="su_n_id">
-                                            <option value=""> Service User </option>
+                                            <option value=""> Child </option>
                                             @foreach($service_users as $value)
                                             <option value="{{ $value['id'] }}" {{ ($service_user_id==$value['id'])
                                                 ? 'selected' : '' }}>{{ ucfirst($value['name']) }}</option>
@@ -222,7 +222,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <div class="col-md-11 col-sm-11 col-xs-12">
                                 <div class="select-style">
                                     <select name="service_user_id" class="su_id" disabled="">
-                                        <option value="0"> N/A Service User </option>
+                                        <option value="0"> N/A Child </option>
                                         @foreach($service_users as $value)
                                         <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
                                         @endforeach
@@ -283,19 +283,19 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#dynmicFormModal" class="close" style="padding-right:6px"> <i class="fa fa-arrow-left"></i></a>
-                <h4 class="modal-title"> Add Record To Service User's Daily Log</h4>
+                <h4 class="modal-title"> Add Record To Child's Daily Log</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="add-new-box risk-tabs custm-tabs">
                         <form method="post" action="" id="">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Service User:
+                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child:
                                 </label>
                                 <div class="col-md-6 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
                                         <select name="s_user_id" class="select-field form-control" required id="records_list" style="width:100%;">
-                                            <option value="0"> Select Service User </option>
+                                            <option value="0"> Select Child </option>
                                             @foreach($service_users as $value)
                                             <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
                                             @endforeach
@@ -974,7 +974,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         $('.popup_error').show();
 
                     } else if (res == '1') {
-                        $('span.popup_success_txt').text('Record has been added to Service User dailylog successfully.');
+                        $('span.popup_success_txt').text('Record has been added to Child dailylog successfully.');
                         $('.popup_success').show();
                         setTimeout(function() {
                             $('.popup_success').fadeOut()
