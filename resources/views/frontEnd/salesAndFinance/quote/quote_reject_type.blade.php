@@ -103,7 +103,7 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
                         <div class="col-md-9">
-                            <select name="status" id="status" class="form-control editInput">
+                            <select name="status" id="modale_status" class="form-control editInput">
                                 <option value="1">Active</option>
                                 <option value="0">InActive</option>
                             </select>
@@ -128,20 +128,20 @@
             var itemStatus = $(this).data('status');
             $('#quote_reject_type_id').val(itemId);
             $('#title').val(itemTitle);
-            $('#status').val(itemStatus);
+            $('#modale_status').val(itemStatus);
 
             if (itemId) {
                 // Editing existing record
                 $('#quote_reject_type_id').val(itemId);
                 $('#title').val(itemTitle);
-                $('#status').val(itemStatus);
+                $('#modale_status').val(itemStatus);
                 $('.modal-title').text('Quote Reject Type - Edit');
                 $('#saveChanges').text('Save Changes');
             } else {
                 // Adding new record (clear form fields if needed)
                 $('#quote_reject_type_id').val('');
                 $('#title').val('');
-                $('#status').val(1); // Default to Active
+                $('#modale_status').val(1); // Default to Active
                 $('.modal-title').text('Quote Reject Type - Add');
                 $('#saveChanges').text('Add');
             }
