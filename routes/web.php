@@ -1686,8 +1686,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/attachment_types', 'attachment_types_index')->name('attachment_types.view');
 			Route::post('/saveAttachmentType', 'saveAttachmentType')->name('general.ajax.saveAttachmentType');
 			Route::get('/attachment_type/delete/{id}', 'delete_attachment_type');
-
 			Route::get('/payment_types','payment_types');
+			Route::post('/savePaymentType', 'SavePaymentType');
+			Route::get('/payment_type/delete','payment_type_delete');
+			Route::get('/regins','regins');
+			Route::post('/saveRegion','saveRegion');
+			Route::get('/region/delete','region_delete');
+			Route::get('/task_types','task_types');
+			Route::post('saveTaskType','saveTaskType');
+			Route::get('task_type/delete','task_type_delete');
+			Route::get('/tags','tags');
+			Route::post('/saveTag','saveTag');
+			Route::get('/tags/delete','tags_delete');
 		
 
 		});

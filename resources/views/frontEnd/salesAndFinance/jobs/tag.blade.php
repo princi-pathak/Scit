@@ -97,7 +97,7 @@
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="customerModalLabel">Task Type - Add</h5>
+                                    <h5 class="modal-title" id="customerModalLabel">Tag - Add</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -114,7 +114,7 @@
                                                 <form id="form_data" class="customerForm">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Task Type<span class="red-text">*</span></label>
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Tag<span class="red-text">*</span></label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
                                                                 id="name" name="title" value="">
