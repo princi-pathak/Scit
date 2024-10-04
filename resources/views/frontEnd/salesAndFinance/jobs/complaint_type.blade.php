@@ -49,6 +49,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>Type</th>
                                 <th>CRM Section</th>
@@ -62,6 +63,7 @@
                             @if(!$crm_sections->isEmpty())
                             @foreach ($crm_sections as $value)
                             <tr>
+                                <td></td>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $value->title }}</td>
                                 <td>@switch($value->crm_section)
@@ -155,7 +157,7 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
                         <div class="col-md-9">
-                            <select name="status" id="status" class="form-control editInput">
+                            <select name="status" id="modal_status" class="form-control editInput">
                                 <option value="1">Active</option>
                                 <option value="0">InActive</option>
                             </select>
@@ -183,7 +185,7 @@
 
             $('#section_type_id').val(itemId);
             $('#title').val(itemTitle);
-            $('#status').val(itemStatus);
+            $('#modal_status').val(itemStatus);
             $('#crm_section').val(crm_section);
             $('#color').val(color);
 
@@ -191,7 +193,7 @@
                 // Editing existing record
                 $('#section_type_id').val(itemId);
                 $('#title').val(itemTitle);
-                $('#status').val(itemStatus);
+                $('#modal_status').val(itemStatus);
                 $('.modal-title').text('Edit CRM Section Type');
                 $('#saveChanges').text('Save Changes');
             } else {
@@ -200,7 +202,7 @@
                 $('#title').val('');
                 $('#crm_section').val();
                 $('#color').val();
-                $('#status').val(1); // Default to Active
+                $('#modal_status').val(1); // Default to Active
                 $('.modal-title').text('Add CRM Section Types');
                 $('#saveChanges').text('Add');
             }

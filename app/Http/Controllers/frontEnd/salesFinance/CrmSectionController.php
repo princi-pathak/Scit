@@ -13,7 +13,7 @@ class CrmSectionController extends Controller
         $data['page'] = "crm_section_type";
         $data['crm_sections'] = CRMSectionType::getCRMSectionTypes();
         $data['crmSec'] = CRMSection::getCRMSectionData();
-        return view('frontEnd.jobs.complaint_type',$data);
+        return view('frontEnd.salesAndFinance.jobs.complaint_type',$data);
         // return view('frontEnd.jobs.lead.CRM_section_type', compact('page', 'crm_sections', 'crmSec'));
     }
 }

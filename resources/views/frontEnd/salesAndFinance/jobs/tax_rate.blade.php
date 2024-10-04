@@ -131,7 +131,7 @@
                                                         <label for="inputName" class="col-sm-3 col-form-label">Tax Rate<span class="red-text">*</span></label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
-                                                                id="tax_rate" name="tax_rate" value="">
+                                                                id="tax_rate" name="tax_rate" value="" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 46">
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
@@ -149,7 +149,7 @@
                                                         <label for="inputName" class="col-sm-3 col-form-label">External Tax Code</label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
-                                                                id="tax_code" name="tax_code" value="">
+                                                                id="tax_code" name="tax_code" value="" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 46">
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
