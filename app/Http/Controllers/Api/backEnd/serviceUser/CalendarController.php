@@ -159,7 +159,7 @@ class CalendarController extends Controller
                 $calender_notes[$key] = array_merge($calender_notes[$key],$booking_response);
             }
 
-            //service user log records
+            //Child log records
             $su_log_books = ServiceUserLogBook::select('su_log_book.id as su_log_book_id','lb.title as log_title','su_log_book.service_user_id','lb.id as log_book_id')
                                         ->join('log_book as lb','lb.id','su_log_book.log_book_id')
                                         ->where(['lb.added_to_calendar'=>'1', 'lb.is_deleted'=>'0'])
@@ -328,7 +328,7 @@ class CalendarController extends Controller
                                     <label class="col-sm-2 col-xs-12 color-themecolor r-p-0 p-t-5 p-0 text-right"> Event Type: </label>
                                     <div class="col-sm-10 r-p-0">
                                         <div class="input-group">
-                                            <input name="su_event_type" class="form-control" value="Service User Note" type="text" disabled="disabled">
+                                            <input name="su_event_type" class="form-control" value="Child Note" type="text" disabled="disabled">
                                         </div>
                                     </div>
                                 </div>

@@ -234,6 +234,15 @@ class User extends Authenticatable
     public static function getLeadAssignUserName($id){
         return User::where('id', $id)->value('name');
     }
+
+    public static function updateManagerStatus($id, $status){
+
+        return User::where('id', $id)->update(['status' => $status]);
+    }
+
+    public static function countManager($id){
+        return User::where('id', $id)->count();
+    }
     /*
     Note: User(manager/staff) - set password functionality
         1. Super admin will create a new user

@@ -7,7 +7,7 @@
                 <a class="close view-all-logs mdl-back-btn" href="" data-toggle="modal" data-dismiss="modal" data-target="">
                     <i class="fa fa-arrow-left" title=""></i>
                 </a>
-                <h4 class="modal-title"> Add Log To Service User's Daily Log</h4>
+                <h4 class="modal-title"> Add Log To Child's Daily Log</h4>
             </div>
             <div class="modal-body" >
                 <div class="row">
@@ -104,7 +104,7 @@
                     $('.popup_error').show();
 
                 } else if(resp == '1') {
-                    $('span.popup_success_txt').text('Log has been added to Service User log successfully.');
+                    $('span.popup_success_txt').text('Log has been added to Child log successfully.');
                     $('.popup_success').show();
                     setTimeout(function(){$('.popup_success').fadeOut()},5000);
                     $('.logged-btn').click();

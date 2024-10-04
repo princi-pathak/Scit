@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.master')
 
-@section('title',' Migration Form Service User')
+@section('title',' Migration Form Child')
 
 @section('content')
 <?php //echo '<pre>'; print_r($migration); die; ?>
@@ -10,7 +10,7 @@
 			<div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                       Service user migaration
+                       Child migaration
                     </header>
                     <div class="panel-body">
                         <div class="position-center">

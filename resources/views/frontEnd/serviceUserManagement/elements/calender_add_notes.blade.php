@@ -20,11 +20,11 @@
                     <div class="row">
 
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7">Service User: </label>
+                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7">Child: </label>
                             <div class="col-md-11 col-sm-11 col-xs-12">
                                 <div class="select-style">
                                     <select name="su_id">
-                                        <option value="0">Select Service User</option>
+                                        <option value="0">Select Child</option>
                                         <?php
                                         foreach ($service_users as $key=>$value) { ?>
                                         <option value="{{ $value->id }}"                                         

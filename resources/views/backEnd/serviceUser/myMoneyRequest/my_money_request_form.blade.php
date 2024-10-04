@@ -1,5 +1,5 @@
 @extends('backEnd.layouts.master')
-@section('title',':Service User My Money Request')
+@section('title',':Child My Money Request')
 @section('content')
 
 <section id="main-content" class="">

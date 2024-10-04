@@ -52,7 +52,7 @@
                                 <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                     <thead>
                                     <tr>
-                                        <th>Service User</th>
+                                        <th>Child</th>
                                         <th>From (Home)</th>
                                         <th>To (Home)</th>
                                         <th>Request Made On</th>

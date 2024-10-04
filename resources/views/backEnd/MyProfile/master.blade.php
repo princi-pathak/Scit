@@ -204,7 +204,7 @@
    <script>
 function PrintDivwithvalue() {
    
-  var divContents = document.getElementById("formioView").innerHTML;  
+      var divContents = document.getElementById("formioView").innerHTML;  
       // console.log(divContents);
        var printWindow = window.open('', '', 'height=600,width=600');  
        printWindow.document.write('<html><head><title>Print DIV Content</title>');

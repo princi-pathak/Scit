@@ -329,7 +329,7 @@ class FileController extends ServiceUserManagementController
                 
                 Mail::send('emails.file_manager_mail',['member_name'=>$member_name, 'member_email'=>$member_email, 'staff_name' => $staff_name, 'yp_name' => $yp_name,'service_user_id'=>$service_user_id, 'file_attached' => $file_attached,'file_info'=> $file_info ], function($message) use ($member_email,$company_name,$file_info,$service_user_id)
                 {
-                    $message->to($member_email, $company_name)->subject('Service User File Notification');
+                    $message->to($member_email, $company_name)->subject('Child File Notification');
                     $message->from('mobappssolutions153@gmail.com', $company_name);
                     // $pathToFile = url(ServiceUserFileBasePath.'/'.$service_user_id.'/'.$file_info);
                     // $file_ext   = pathinfo($pathToFile);
