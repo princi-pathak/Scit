@@ -212,7 +212,7 @@
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: "{{url('/save_region')}}",
+                        url: "{{url('/save_payment_type')}}",
                         data: {id: id, home_id: home_id, title: title,mobile_visible:mobile_visible, status: status, _token: token},
                         success: function(data) {
                             console.log(data);
@@ -250,7 +250,7 @@
             });
             function status_change(id, status){
             var token='<?php echo csrf_token();?>'
-            var model="AttachmentType";
+            var model="Payment_type";
             $.ajax({
                 type: "POST",
                 url: "{{url('/status_change')}}",

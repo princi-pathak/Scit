@@ -424,7 +424,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Set weekly allowance of service user</h4>
+                <h4 class="modal-title">Set weekly allowance of Child</h4>
             </div>
             <form id="deposit_weekly_amount" method="post" action="{{ url('weekly-allowance/update') }}">
                 {{ csrf_field() }}
@@ -437,7 +437,7 @@
                                     <input type="text" name="amount_add" value="{{ $weekly_allowance }}" class="form-control">
                                 </div>
                             </div>
-                            <label class="col-md-12 m-t-10"> Note: This money will be automatically added to all the service user's account in every week.</label>
+                            <label class="col-md-12 m-t-10"> Note: This money will be automatically added to all the Child's account in every week.</label>
                             <div class="modal-footer recent-task-sec p-b-5">
                                 <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
                                 <button class="btn btn-warning" type="submit"> Confirm</button>

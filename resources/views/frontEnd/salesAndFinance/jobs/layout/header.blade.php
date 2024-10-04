@@ -52,6 +52,7 @@ $access_rights = explode(',', $rights);
                                 <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> mail </i> Messages </a>
                                 <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
                                 <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i> Partners </a>
+                                <a href="{{url('/')}}" class="profileDrop"> <i class="fa fa-home"> </i> Home </a>
                             </div>
                         <?php //} else { ?>
 

@@ -28,10 +28,10 @@
 							</tr>
 							<tr>
 								<td style="padding:0 20px;">
-									<p style="color:rgb(51, 51, 51);">A Service User has entered in prohibited area.</p>
+									<p style="color:rgb(51, 51, 51);">A Child has entered in prohibited area.</p>
 									<p style="color:rgb(51, 51, 51);">Details are shown below:</p>
 									
-									<p style="color:rgb(51, 51, 51);"><b>Service User:</b> {{ $service_user_name }}</p>
+									<p style="color:rgb(51, 51, 51);"><b>Child:</b> {{ $service_user_name }}</p>
 									<p style="color:rgb(51, 51, 51);"><b>Location:</b> {{ $location_name }}</p>
 									<a href="{{$location_url}}" style="text-align:center;">View Location</a>
 								</td>

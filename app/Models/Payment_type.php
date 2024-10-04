@@ -20,8 +20,8 @@ class Payment_type extends Model
     public static function savePayment_type($data)
     {
         try {
-            $AttachmentType=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
-            return $AttachmentType;
+            $payment_type=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
+            return $payment_type;
         }catch (\Exception $e) {
             Log::error('Error saving Payment Type: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);

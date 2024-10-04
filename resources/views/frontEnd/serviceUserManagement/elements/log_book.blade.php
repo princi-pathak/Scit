@@ -187,7 +187,7 @@
                     <div class="add-new-box risk-tabs custm-tabs">
                                 
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
-                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Service User: </label>
+                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Child: </label>
                             <div class="col-md-10 col-sm-10 col-xs-10 p-l-30">
                                 <div class="select-style">
                                     <select name="service_user_id" disabled="disabled" class='su_name'/>
@@ -498,7 +498,7 @@
         });
 
 
-        // View Log Record from Service User Logged Records
+        // View Log Record from Child Logged Records
         $(document).on('click', '.view-su-log-book', function(){
 
             var log_book_id     = $(this).attr('log_book_id');

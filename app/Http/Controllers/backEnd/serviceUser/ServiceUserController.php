@@ -139,7 +139,7 @@ class ServiceUserController extends Controller
                         }                         
                     }
                 }
-                return redirect('admin/service-users')->with('success', 'Service user added successfully.');
+                return redirect('admin/service-users')->with('success', 'Child added successfully.');
             } else {
                 return redirect()->back()->with('error', 'Some error occurred. Please try after sometime.');
             }
@@ -268,12 +268,12 @@ class ServiceUserController extends Controller
                     }
 
 
-                   return redirect('admin/service-users')->with('success','Service user  updated successfully.'); 
+                   return redirect('admin/service-users')->with('success','Child  updated successfully.'); 
                } else {
                    return redirect()->back()->with('error','Some error occurred. Please try after sometime.'); 
                } 
             } else {
-                   return redirect('admin/')->with('error','Sorry, Service User does not exists');
+                   return redirect('admin/')->with('error','Sorry, Child does not exists');
             } 
         }
 
@@ -286,7 +286,7 @@ class ServiceUserController extends Controller
                 return redirect('admin/')->with('error',UNAUTHORIZE_ERR);
             }
         } else {
-                return redirect('admin/')->with('error','Sorry, Service User does not exists');
+                return redirect('admin/')->with('error','Sorry, Child does not exists');
         }
         $social_app = SocialApp::select('id','name')->where('is_deleted','0')->get()->toArray();
 
@@ -333,12 +333,12 @@ class ServiceUserController extends Controller
             $updated = DB::table('service_user')->where('id', $user_id)->where('home_id', $home_id)->update(['is_deleted' => '1']);
 
             if(!empty($updated)) {
-                return redirect('admin/service-users')->with('success','Service User deleted Successfully.'); 
+                return redirect('admin/service-users')->with('success','Child deleted Successfully.'); 
             } else{
                 return redirect('admin/')->with('error',UNAUTHORIZE_ERR); 
             }
         } else {
-                return redirect('admin/')->with('error','Sorry, Service User does not exists'); 
+                return redirect('admin/')->with('error','Sorry, Child does not exists'); 
         }
     }
 
@@ -364,7 +364,7 @@ class ServiceUserController extends Controller
        if(!empty($user_id))
        {
         ServiceUser::where('id', $user_id)->delete();
-        return redirect('admin/service-users')->with('success','Service user deleted Successfully.'); 
+        return redirect('admin/service-users')->with('success','Child deleted Successfully.'); 
         }
     }*/
     public function check_serviceuser_email_exists(Request $request) {

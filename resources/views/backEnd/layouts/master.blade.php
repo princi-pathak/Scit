@@ -173,11 +173,12 @@
     }, 200);
 
     function PrintDiv() {
-      var imagelocalpath = "<?php echo adminImgPath ?>";
+      // var imagelocalpath = "<?php echo adminImgPath ?>";
+      var imagelocalpath = "{{ url('/public/images/admin') }}";
       let imagewithser = $('#image_id').val();
-
+      console.log(imagelocalpath);
       var finalpath = imagelocalpath + '/' + imagewithser;
-      // console.log(finalpath);
+      console.log(finalpath);
       $('.formcomponents').css('display', 'none');
       $('.formarea').css('flex', "140%");
       $('.formarea').css('width', "140%");

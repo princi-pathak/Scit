@@ -234,7 +234,7 @@ class ReportController extends ServiceUserManagementController
             if(!empty($report_detail)){
                 
                 echo '<div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Service User: </label>
+                            <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> Child: </label>
                             <div class="col-md-10 col-sm-10 col-xs-10 p-l-30">
                                 <div class="select-style">
                                     <select name="r_service_user_id" class=""/ disabled="disabled">

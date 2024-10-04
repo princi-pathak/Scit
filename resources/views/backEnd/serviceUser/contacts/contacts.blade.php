@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.master')
 
-@section('title',':Service User Contacts')
+@section('title',':Child Contacts')
 
 @section('content')
 
