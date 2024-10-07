@@ -161,6 +161,7 @@ class QuoteController extends Controller
     }
 
     public function saveRegion(Request $request){
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'title' => 'required'
         ]);

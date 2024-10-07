@@ -269,7 +269,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="plusandText">
-                                                    <a href="#!" id="OpenAddCustomerModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                    <a href="#!" id="" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1053,7 +1053,6 @@
             </div>
             <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="profileDrop" id="SaveCustomerData">Save</button>
-                <!-- <button type="button" class="profileDrop" onclick="save_customerClose()">Save & Close</button> -->
                 <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -1133,7 +1132,6 @@
 </div>
 <!-- Add Customer Regions Modal End -->
 
-
 <!-- Add Site Address Modal Start -->
 <div class="modal fade" id="add_site_address_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -1169,12 +1167,12 @@
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-4 col-form-label">Job Title (Position)</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control editInput selectOptions get_job_title_result" name="job_title" id="customer_job_titile_id">
+                                        <select class="form-control editInput selectOptions get_job_title_result" name="job_title" id="siteJobTitle">
                                             <option>Please Select</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="OpenCustomerJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" id="OpenSiteAddressJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1214,7 +1212,7 @@
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-4 col-form-label">Region</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control editInput selectOptions get_job_title_result" name="job_title" id="customer_job_titile_id">
+                                        <select class="form-control editInput selectOptions get_job_title_result" name="job_title" id="getSiteAddressRegion">
                                             <option>Please Select</option>
                                         </select>
                                     </div>
@@ -1257,7 +1255,7 @@
                                 <div class="mb-2 row">
                                     <label for="inputCountry" class="col-sm-4 col-form-label">Default Catalogue</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control editInput selectOptions" name="country_code" id="customer_country">
+                                        <select class="form-control editInput selectOptions" name="country_code" id="">
                                             <option>None</option>
                                         </select>
                                     </div>
@@ -1296,7 +1294,7 @@
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="formDtail">
                                 <div class="mb-2 row">
-                                    <label for="inputName" class="col-sm-4 col-form-label">Customer <span class="red-text">*</span></label>
+                                    <label for="inputName" class="col-sm-4 col-form-label">Customer </label>
                                     <div class="col-sm-8">
                                         <label for="inputAddress" class="col-form-label"><span id="setCustomerName"></span> </label>
                                         <input type="hidden" name="customer_id" id="customer_contact_id">
@@ -1393,7 +1391,7 @@
                                 <div class="mb-2 row">
                                     <label for="inputCountry" class="col-sm-4 col-form-label">Country</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control editInput selectOptions" name="country_code" id="customer_country">
+                                        <select class="form-control editInput selectOptions" name="country_code" id="getCountryList">
                                             <option selected disabled>Select Country</option>
                                         </select>
                                     </div>
@@ -1426,7 +1424,7 @@
                         <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="red-text">*</span></label>
                         <div class="col-sm-9">
                             <input type="hidden" name="job_title_id" id="job_title_id">
-                            <input type="text" name="name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Job Title">
+                            <input type="text" name="name" class="form-control editInput" id="customer_type_name" value="" placeholder="Job Title">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -1448,44 +1446,28 @@
     </div>
 </div>
 <!-- Add Job Title Modal End -->
-
 
 <!-- Add Regions Modal Start -->
-<div class="modal fade" id="customer_regions_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content add_Customer">
-            <div class="modal-header">
-                <h5 class="modal-title" id="thirdModalLabel">Add Region</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="add_regions_form">
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="red-text">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="hidden" name="region_id" id="region_id">
-                            <input type="text" name="name" class="form-control editInput" id="customer_type_name" value="" placeholder="Regions">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
-                        <div class="col-sm-9">
-                            <select id="customer_type_status" name="status" class="form-control editInput">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="pageTitleBtn">
-                        <button type="button" class="profileDrop" id="saveJobTitle">Save</button>
-                        <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Add Job Title Modal End -->
+<x-region-model
+    modalId="siteDetailregion"
+    modalTitle="Add Region"
+    formId="add_site_details_region_form"
+    inputId="region"
+    statusId="status"
+    saveButtonId="saveSiteDetailsRegion"
+    placeholderText="Region" />
+<!-- Add Regions Modal End -->
+
+<!-- Include the modal component -->
+<x-job-title-model
+    modalId="siteDetailJobTitle"
+    modalTitle="Job Title - Add"
+    formId="add_site_details_job_title_form"
+    inputId="JobTitle"
+    statusId="status"
+    saveButtonId="saveSiteDetailsJobTitle"
+    placeholderText="Job Title" />
+
 
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customeQuoteForm.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
@@ -1541,12 +1523,12 @@
         });
     }
 
-    function getRegions() {
+    function getRegions(get_customer_type) {
         $.ajax({
             url: '{{ route("quote.ajax.getRegions") }}',
             success: function(response) {
                 console.log(response.message);
-                const get_customer_type = document.getElementById('customerRegion');
+                // const get_customer_type = document.getElementById('customerRegion');
                 get_customer_type.innerHTML = '';
                 response.data.forEach(user => {
                     const option = document.createElement('option');
@@ -1582,13 +1564,13 @@
         });
     }
 
-    function getCountriesListCustomer() {
+    function getCountriesListCustomer(selectElement) {
         $.ajax({
             url: '{{ route("ajax.getCountriesList") }}',
             method: 'GET',
             success: function(response) {
                 console.log(response.Data);
-                const selectElement = document.getElementById('customer_country');
+                // const selectElement = document.getElementById('customer_country');
                 selectElement.innerHTML = '';
                 response.Data.forEach(user => {
                     const option = document.createElement('option');
@@ -1603,20 +1585,18 @@
         });
     }
 
-    function getCustomerJobTitle() {
+    function getCustomerJobTitle(jobTitle) {
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerJobTitle") }}',
             method: 'GET',
             success: function(response) {
                 console.log("jxcnjfjnfnk", response.data);
-                const jobTitle = document.getElementById('customer_job_titile_id');
                 jobTitle.innerHTML = '';
                 response.data.forEach(user => {
                     const option = document.createElement('option');
                     option.value = user.id;
                     option.text = user.name;
                     jobTitle.appendChild(option);
-                    // console.log(option);
                 });
             },
             error: function(xhr, status, error) {
@@ -1624,6 +1604,28 @@
             }
         });
     }
+
+    function saveFormData(formId, saveUrl, modalId, callback, callBackValue = null) {
+        var formData = $('#' + formId).serialize();
+        console.log(formData);
+
+        $.ajax({
+            url: saveUrl,
+            method: 'POST',
+            data: formData,
+            success: function(response) {
+                alert(response.message);
+                $('#' + modalId).modal('hide');
+                if (callback && typeof callback === 'function') {
+                    callback(callBackValue);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
 
     $(document).ready(function() {
 
@@ -1696,37 +1698,68 @@
             }
         });
 
-
-
-
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
+        // Ajax Call for saving Customer Type 
 
-        // Ajax Call for saving Customer Type
+        // ajax call for saving customer contact on billing details
         $('#saveJobTitle').on('click', function() {
-            var formData = $('#add_job_title_form').serialize();
-            console.log(formData);
+            var customer_job_titile_id = document.getElementById('customer_job_titile_id');
+            saveFormData(
+                'add_job_title_form', // formId
+                '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
+                'customer_job_title_modal', // modalId
+                getCustomerJobTitle, // callback function after success
+                customer_job_titile_id
+            );
+        });
+
+        // ajax call for saving customer contact on billing details
+        $('#saveSiteDetailsJobTitle').on('click', function() {
+            var customer_job_titile_id = document.getElementById('siteJobTitle');
+            saveFormData(
+                'add_site_details_job_title_form', // formId
+                '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
+                'siteDetailJobTitle', // modalId
+                getCustomerJobTitle, // callback function after success
+                customer_job_titile_id
+            );
+        });
+
+        // ajax call for saving Region on Customer Site details
+        $('#saveSiteDetailsRegion').on('click', function() {
+            var getSiteAddressRegion = document.getElementById('getSiteAddressRegion');
+            saveFormData(
+                'add_site_details_region_form', // formId
+                '{{ route("quote.ajax.saveRegion") }}', // saveUrl
+                'siteDetailregion', // modalId
+                getRegions, // callback function after success
+                getSiteAddressRegion
+            );
+        });
+        
+        // Ajax Call for saving Customer Type
+        $('#saveRegionsData').on('click', function() {
+            var formData = $('#add_region_form').serialize();
             $.ajax({
-                url: '{{ route("customer.ajax.saveJobTitle") }}',
+                url: '{{ route("quote.ajax.saveRegion") }}',
                 method: 'POST',
                 data: formData,
                 success: function(response) {
                     alert(response.message);
-                    $('#customer_job_title_modal').modal('hide');
-                    getCustomerJobTitle();
+                    var customerRegion = document.getElementById('customerRegion');
+                    getRegions(customerRegion);
+                    $('#quote_region_modal').modal('hide');
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
                 }
             });
         });
-
-
 
         // Ajax Call for saving Customer Type
         $('#saveAddCustomerType').on('click', function() {
@@ -1746,23 +1779,7 @@
             });
         });
 
-        // Ajax Call for saving Customer Type
-        $('#saveRegionsData').on('click', function() {
-            var formData = $('#add_region_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveRegion") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    $('#quote_region_modal').modal('hide');
-                    getRegions();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
+      
 
         // Save Customer Data
         $('#SaveCustomerData').on('click', function() {
@@ -1781,25 +1798,26 @@
                 }
             });
         });
-    });
 
-    // Save Customer Data
-    $('#saveCustomerContactData').on('click', function() {
-        var formData = $('#add_customer_contact_form').serialize();
-        $.ajax({
-            url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
-            method: 'POST',
-            data: formData,
-            success: function(response) {
-                alert(response.message);
-                // getCustomerList();
-                $('#add_customer_contact_modal').modal('hide');
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
+        // Save Customer Data
+        $('#saveCustomerContactData').on('click', function() {
+            var formData = $('#add_customer_contact_form').serialize();
+            $.ajax({
+                url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#add_customer_contact_modal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
     });
+
+
 
 
     window.onload = function() {
@@ -1814,82 +1832,76 @@
     const QuotecustomerPop = document.getElementById('QuotecustomerPop');
 
     OpenAddCustomerModal.onclick = function() {
-        getRegions();
+        var customerRegion = document.getElementById('customerRegion');
+        getRegions(customerRegion);
         getCustomerType();
+        var customer_job_title_id =  document.getElementById('customer_job_title_id');
+        getCustomerJobTitle(customer_job_title_id);
         $('#QuotecustomerPop').modal('show');
     }
     // js for Add Customer modal open
 
-
     // js for Add customer Type modal
-    const OpenCustomerTypeModel = document.getElementById('OpenCustomerTypeModel');
-    const quote_cutomer_type_modal = document.getElementById('quote_cutomer_type_modal');
-
-    OpenCustomerTypeModel.onclick = function() {
+    $('#OpenCustomerTypeModel').on('click', function() {
         $('#quote_cutomer_type_modal').modal('show');
-    }
-    // js for Add customer Type modal
+    });
 
     // js for Add Regions modal
-    const openRegionsModal = document.getElementById('openRegionsModal');
-    const quote_region_modal = document.getElementById('quote_region_modal');
-
-    openRegionsModal.onclick = function() {
+    $('#openRegionsModal').on('click', function() {
         $('#quote_region_modal').modal('show');
-    }
-    // js for Add Regions modal
-
+    });
 
     // js for Add Customer Contact modal
     const OpenAddCustomerContact = document.getElementById('OpenAddCustomerContact');
     const add_customer_contact_modal = document.getElementById('add_customer_contact_modal');
-
+    var customer_job_titile_id = document.getElementById('customer_job_titile_id');
     OpenAddCustomerContact.onclick = function() {
         var customer = document.getElementById('getCustomerList').value;
         if (customer === "") {
             alert('Please select the customer');
         } else {
-            getCountriesListCustomer();
-            getCustomerJobTitle();
+            var getCountryList = document.getElementById('getCountryList'); 
+            getCountriesListCustomer(getCountryList);
+            getCustomerJobTitle(customer_job_titile_id);
             $('#add_customer_contact_modal').modal('show');
         }
     }
     // js for Add Customer Contact modal
 
     // js for Add Job Title modal
-    const OpenCustomerJobTitleModel = document.getElementById('OpenCustomerJobTitleModel');
-    const customer_job_title_modal = document.getElementById('customer_job_title_modal');
-
-    OpenCustomerJobTitleModel.onclick = function() {
+    $('#OpenCustomerJobTitleModel').on('click', function() {
         getCountriesListCustomer();
         $('#customer_job_title_modal').modal('show');
-    }
-    // js for Add Job Title modal
+    });
 
     // js for Add Site Address modal
-    const openCustomerSiteAddress = document.getElementById('openCustomerSiteAddress');
-    const add_site_address_modal = document.getElementById('add_site_address_modal');
-
-    openCustomerSiteAddress.onclick = function() {
+    $('#openCustomerSiteAddress').on('click', function() {
         var customer = document.getElementById('getCustomerList').value;
+        var siteJobTitle = document.getElementById('siteJobTitle');
         if (customer === "") {
             alert('Please select the customer');
         } else {
-            getCountriesListCustomer();
-            getCustomerJobTitle();
+            var getSiteAddressRegion = document.getElementById('getSiteAddressRegion'); 
+            var customer_country = document.getElementById('customer_country');
+            getRegions(getSiteAddressRegion);
+            getCountriesListCustomer(customer_country
+
+
+            
+            );
+            getCustomerJobTitle(siteJobTitle);
             $('#add_site_address_modal').modal('show');
         }
-    }
-    // js for Add Site Address modal
+    });
 
+    // js for Add Regions modal on site address
+    $('#OpenCustomerRegionModel').on('click', function() {
+        $('#siteDetailregion').modal('show');
+    });
 
-    // js for Add Regions modal
-    const OpenCustomerRegionModel = document.getElementById('OpenCustomerRegionModel');
-    const customer_regions_modal = document.getElementById('customer_regions_modal');
-
-    OpenCustomerRegionModel.onclick = function() {
-        $('#customer_regions_modal').modal('show');
-    }
-    // js for Add Region modal
+    // js for Add job Title in site Details modal
+    $('#OpenSiteAddressJobTitleModel').on('click', function() {
+        $('#siteDetailJobTitle').modal('show');
+    });
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
