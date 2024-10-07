@@ -14,8 +14,37 @@
 //   } );
 // } );
 
+// $(document).ready(function() {
+//   $('#exampleOne').DataTable({
+//       columnDefs: [{
+//           orderable: false,
+//           className: 'select-checkbox',
+//           targets: 0
+//       }],
+//       select: {
+//           style: 'os',
+//           selector: 'td:first-child'
+//       },
+//       order: [[1, 'asc']],
+//       language: {
+//           paginate: {
+//               previous: "Previous", // Change this text
+//               next: "Next"          // Change this text
+//           },
+//           info: "Showing _START_ to _END_ of _TOTAL_ entries", // This text can be adjusted as needed
+//           infoEmpty: "No entries available",
+//           infoFiltered: "(filtered from _MAX_ total entries)",
+//           lengthMenu: "Show _MENU_ entries",
+//           search: "Search:",
+//           zeroRecords: "No matching records found"
+//       },
+//       paging: true, 
+//   });
+// });
+//*******************************DataTable */
+
 $(document).ready(function() {
-  $('#exampleOne').DataTable({
+  var table = $('#exampleOne').DataTable({
       columnDefs: [{
           orderable: false,
           className: 'select-checkbox',
@@ -40,9 +69,16 @@ $(document).ready(function() {
       },
       paging: true, 
   });
+
+  // Delete button functionality
+  $('#deleteSelectedRows').click(function() {
+      var selectedRows = table.rows({ selected: true }).remove().draw();
+      if (selectedRows.count() === 0) {
+          alert('No rows selected!');
+      }
+  });
 });
-
-
+//*******************************End DataTable */
 // CRM JS
 
 document.getElementById('onclickbtnHideShow').addEventListener('click', function(){
