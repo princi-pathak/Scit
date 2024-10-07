@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
-use App\Models\Job_title;
 use App\Models\Constructor_customer_site;
 use App\Models\Constructor_additional_contact;
 
@@ -160,7 +159,5 @@ class Customer extends Model
         return self::where('id', $id)->get();
     }
 
-    public static function saveCustomerContactDetails(array $data){
-        return self::updateOrCreate(['id' => $data['customer_id']], $data);
-    }
+  
 }

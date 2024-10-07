@@ -16,6 +16,7 @@ use App\Models\Construction_currency;
 use App\Models\Constructor_customer_site;
 use App\Models\Construction_customer_login;
 use App\Models\Constructor_additional_contact;
+use App\Models\CustomerBillingAddress;
 
 class CustomerController extends Controller
 {
@@ -239,8 +240,18 @@ class CustomerController extends Controller
     }
 
     public function SaveCustomerContactData(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'contact_name' => 'required',
+            'address' => 'required',
+            'email' => 'required',
+            'telephone' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
-        $data =  Customer::saveCustomerContactDetails($request->all());
+        $sameAsDefault =  ['same_as_default' => $request->has('same_as_default') ? '1' : '0'];  
+        $data =  CustomerBillingAddress::saveCustomerContactDetails(array_merge($sameAsDefault, $request->all()));
 
         return response()->json([
             'success' => (bool) $data,
@@ -271,6 +282,28 @@ class CustomerController extends Controller
                 'message' => $data ? "Job Title edited successfully" : 'Job Title could not be edited.'
             ]);  
         }
+    }
+
+    public function saveCustomerSiteAddress(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'site_name' => 'required',
+            'contact_name' => 'required',
+            'company_name' => 'required',
+            'telephone' => 'required',
+            'email' => 'required',
+            'address' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+
+        $data = Constructor_customer_site::saveCustomerAdditional($request->all());
+        return response()->json([
+            'success' => (bool) $data,
+            'message' => $data ? "Site Address added successfully" : 'Site Address could not be added.'
+        ]);
     }
    
 }

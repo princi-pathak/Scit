@@ -44,25 +44,28 @@ $access_rights = explode(',', $rights);
                         </div>
                     </div>
                     <div class="col-lg-9 px-3 text-end toprigihticon">
-                        <?php //if (isset($page) && $page == 'job_index') { ?>
-                            <div class="d-inline-flex align-items-center me-5 topbaarBtn">
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> storage</i> My Diary</a>
-                                <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#CRMHeaderPopup"> <i class="material-symbols-outlined"> dashboard</i> CRM</a>
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> contact_support </i> Help Desk <span class="notifiNumberRadColor">2</span></a>
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> mail </i> Messages </a>
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
-                                <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i> Partners </a>
-                                <a href="{{url('/')}}" class="profileDrop"> <i class="fa fa-home"> </i> Home </a>
-                            </div>
-                        <?php //} else { ?>
+                        <?php //if (isset($page) && $page == 'job_index') { 
+                        ?>
+                        <div class="d-inline-flex align-items-center me-5 topbaarBtn">
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> storage</i> My Diary</a>
+                            <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#CRMHeaderPopup"> <i class="material-symbols-outlined"> dashboard</i> CRM</a>
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> contact_support </i> Help Desk <span class="notifiNumberRadColor">2</span></a>
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> mail </i> Messages </a>
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> notifications_active </i> Notifications <span class="notifiNumberRadColor">23</span> </a>
+                            <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> handshake </i> Partners </a>
+                            <a href="{{url('/')}}" class="profileDrop"> <i class="fa fa-home"> </i> Home </a>
+                        </div>
+                        <?php //} else { 
+                        ?>
 
-                            <!-- <div class="h-100 d-inline-flex align-items-center me-5">
+                        <!-- <div class="h-100 d-inline-flex align-items-center me-5">
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> group</i></a>
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> dns</i></a>
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> mail </i></a>
                                 <a class="btn btn-sm-square bg-white text-primary me-0" href="#!"><i class="material-symbols-outlined"> notifications </i></a>
                             </div> -->
-                        <?php //} ?>
+                        <?php //} 
+                        ?>
                     </div>
                 </div>
             </div>
@@ -110,10 +113,10 @@ $access_rights = explode(',', $rights);
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Converted Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Reminders</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-search"></i> Search Quote</span></a></li>
-                                    
+
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span><i class="fa fa-calendar"></i> Appointments</span> <i class="fa-solid fa-angle-right"></i>
+                                            <span><i class="fa fa-calendar"></i> Appointments</span> <i class="fa-solid fa-angle-right"></i>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -122,7 +125,7 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span><i class="fa fa-repeat"></i> Recurring Quote</span> <i class="fa-solid fa-angle-right"></i>
+                                            <span><i class="fa fa-repeat"></i> Recurring Quote</span> <i class="fa-solid fa-angle-right"></i>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -192,7 +195,7 @@ $access_rights = explode(',', $rights);
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-list"></i>
-                                        Invoices</span> <i class="fa-solid fa-angle-right"></i>
+                                                Invoices</span> <i class="fa-solid fa-angle-right"></i>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -259,7 +262,7 @@ $access_rights = explode(',', $rights);
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span><i class="fa fa-users"></i>Customers</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                            <span><i class="fa fa-users"></i>Customers</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -283,7 +286,7 @@ $access_rights = explode(',', $rights);
                             </div>
 
                             <div class="nav-item dropdown">
-                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle @if(isset($page)) @if($page == 'item') active @endif @endif" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined">production_quantity_limits</i></span>
                                     Items
                                 </a>
@@ -291,7 +294,7 @@ $access_rights = explode(',', $rights);
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-inbox"></i>Product Categories</span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-shopping-cart"></i>Products</span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i>Product Groups</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-list-ol"></i>Catalogues</span></a>
+                                    <a href="{{ url('item/catalogues') }}" class="dropdown-item"><span><i class="fa fa-list-ol"></i>Catalogues</span></a>
                                 </div>
                             </div>
 
@@ -305,9 +308,9 @@ $access_rights = explode(',', $rights);
                                     Users
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-user"></i>Users  </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-user"></i>Users </span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-users"></i>Team Members </span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-clock"></i>Timeoff  </span></a>
+                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-clock"></i>Timeoff </span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i>Lone Worker Active List </span></a>
                                 </div>
                             </div>
@@ -358,7 +361,7 @@ $access_rights = explode(',', $rights);
                                     <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><span><i class="fa fa-terminal"></i> Triggers</span></a></li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-bullhorn"></i>
-                                        Leads</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                                Leads</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="#"><i class="fa fa-list-ul"></i>Lead Settings</a></li>
@@ -371,7 +374,7 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-file-text"></i>
-                                        Quotes</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                                Quotes</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{ url('/quote/quote_type') }}"><i class="fa fa-list-ul"></i>Quote Type </a></li>
@@ -381,8 +384,8 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span><i class="fa fa-road"></i>
-                                            Jobs </span>
+                                            <span><i class="fa fa-road"></i>
+                                                Jobs </span>
                                             <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -395,7 +398,7 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-list"></i>
-                                        Invoices</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                                Invoices</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{url('/account_codes')}}"><i class="fa fa-list"></i>Account Codes </a></li>
@@ -404,7 +407,7 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-file"></i>
-                                        Purchase Orders</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                                Purchase Orders</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{url('departments')}}"><i class="fa fa-list"></i>Departments </a></li>
@@ -412,7 +415,7 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-users"></i>
-                                        Customers</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                                Customers</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{url('customer_type')}}"><i class="fa fa-list"></i>Customer Type </a></li>
@@ -422,7 +425,7 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-user"></i>
-                                        Users</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                                Users</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Type </a></li>
@@ -435,7 +438,7 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-comments"></i>
-                                        CRM</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                                CRM</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{ url('/lead/CRM_section_types') }}"><i class="fa fa-list-ul"></i> CRM Section Types </a></li>
@@ -443,7 +446,7 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-list"></i>
-                                        General</span> <span><i class="fa-solid fa-angle-right"></i></span>
+                                                General</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{url('/attachments_types')}}"><i class="fa fa-paperclip"></i>Attachment Types </a></li>
@@ -824,7 +827,7 @@ $access_rights = explode(',', $rights);
                                                             </div>
 
                                                             <form class="">
-                                                             
+
                                                             </form>
 
                                                         </div>
@@ -1702,7 +1705,7 @@ $access_rights = explode(',', $rights);
         }
         // CRM Notes Js End for model show
 
-        
+
         // CRM Complaints History Start for model show
         const userCompliantsModal = document.getElementById('userCompliantsModal');
         const CompHistoryModal = document.getElementById('CompHistoryModal');
