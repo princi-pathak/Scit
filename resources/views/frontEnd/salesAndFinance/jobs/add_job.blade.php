@@ -63,7 +63,7 @@
                                                     <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#customerPop">
                                                         <i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
-                                                <div class="col-sm-1">
+                                                <div class="col-sm-1" id="clock" style="display:none">
                                                     <a href="#!" class="formicon"><i class="fa-solid fa-clock"></i></a>
                                                 </div>
 

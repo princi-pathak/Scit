@@ -45,6 +45,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>Quote Type</th>
                                 <th>Status</th>
@@ -55,6 +56,7 @@
                             @if(!$quote_sources->isEmpty())
                                 @foreach ($quote_sources as $value)
                                     <tr>
+                                        <td></td>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $value->title }}</td>
                                         <td> @if($value->status) <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span> @else <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> @endif </td>

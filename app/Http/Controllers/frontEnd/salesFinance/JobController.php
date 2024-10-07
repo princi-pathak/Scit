@@ -243,8 +243,6 @@ class JobController extends Controller
         }
         $key=$request->key;
         $data['task']=$task;
-        $data['page']='jobs_list';
-        $data['del_status']=0;
         $data['projects']=Project::where('status',1)->get();
         $data['last_job_id']=Job::orderBy('id','DESC')->first();
         $data['job_details']=Job::find($key);
