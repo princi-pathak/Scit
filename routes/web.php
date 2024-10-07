@@ -13,7 +13,7 @@ use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 use App\Http\Controllers\frontEnd\salesFinance\InvoiceController;
 use App\Http\Controllers\frontEnd\salesFinance\Purchase_orderController;
 use App\Http\Controllers\backEnd\ManagersController;
-use Illuminate\Routing\Route as RoutingRoute;
+use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
 
 Route::get('clear', function () {
 	Artisan::call('cache:clear');
@@ -332,9 +332,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/SaveCustomerContactData', 'SaveCustomerContactData')->name('customer.ajax.SaveCustomerContactData');
 			Route::get('/getCustomerJobTitle', 'getCustomerJobTitle')->name('customer.ajax.getCustomerJobTitle');
 			Route::post('/saveJobTitle', 'saveJobTitle')->name('customer.ajax.saveJobTitle');
+			Route::post('/saveCustomerSiteAddress', 'saveCustomerSiteAddress')->name('customer.ajax.saveCustomerSiteAddress');
 
 			
-
 		});
 	});
 
@@ -453,6 +453,13 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/quote/saveRegion', 'saveRegion')->name('quote.ajax.saveRegion');
 		Route::get('/quote/getRegions', 'getRegions')->name('quote.ajax.getRegions');
 	});
+
+	Route::controller(CataloguesController::class)->group(function () {
+
+		Route::get('/item/catalogues', 'index')->name('catalogues.index');
+		
+	});
+
 
 
 	// ------------- Personal Management - My profile ---------------------// 
