@@ -137,7 +137,7 @@
                                                         <label for="inputName" class="col-sm-3 col-form-label">Number of days*</label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
-                                                                id="default_days" name="default_days" value="14">
+                                                                id="default_days" name="default_days" value="14" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                         </div>
                                                     </div>
 

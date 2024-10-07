@@ -45,6 +45,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>Quote Reject Type</th>
                                 <th>Status</th>
@@ -55,6 +56,7 @@
                             @if(!$quote_reject_type->isEmpty())
                                 @foreach ($quote_reject_type as $value)
                                     <tr>
+                                        <td></td>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $value->title }}</td>
                                         <td> @if($value->status) <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span> @else <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> @endif </td>
@@ -194,7 +196,7 @@
                 id: id
             },
             success: function(response) {
-                if (data.success) {
+                if (response.success) {
                     console.log('Record soft deleted successfully');
                 } else {
                     console.error('Error deleting record');

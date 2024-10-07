@@ -45,6 +45,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>Quote Type</th>
                                 <th>Default Expiration Date</th>
@@ -56,6 +57,7 @@
                             @if(!$quote_type->isEmpty())
                             @foreach ($quote_type as $value)
                             <tr>
+                                <td></td>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $value->title }}</td>
                                 <td>{{ $value->number_of_days }}</td>
@@ -107,7 +109,7 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Number of days</label>
                         <div class="col-md-9">
-                            <input type="number" name="number_of_days" class="form-control editInput " placeholder="" id="number_of_days">
+                            <input type="text" name="number_of_days" class="form-control editInput " placeholder="" id="number_of_days" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                         </div>
                     </div>
                     <div class="row form-group mt-3">
@@ -206,7 +208,8 @@
                 id: id
             },
             success: function(response) {
-                if (data.success) {
+                console.log(response);
+                if (response.success) {
                     console.log('Record soft deleted successfully');
                     location.reload();
 

@@ -8,6 +8,7 @@ use Session, DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Customer;
+use App\Models\Region;
 use App\Models\Country;
 use App\Models\Job_title;
 use App\Models\Customer_type;
@@ -37,14 +38,16 @@ class CustomerController extends Controller
         $data['site'] = Constructor_customer_site::where('customer_id', $key)->get();
         $data['login'] = Construction_customer_login::where('customer_id', $key)->get();
         $data['country'] = Country::all_country_list();
-        $data['home_id'] = Auth::user()->home_id;
+        $home_id=Auth::user()->home_id;
+        $data['home_id'] =$home_id; 
+        $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
         // echo "<pre>";print_r($data['customer']);die;
         return view('frontEnd.salesAndFinance.jobs.add_customer', $data);
     }
     public function customer_add_edit_save(Request $request)
     {
 
-        // echo "<pre>";print_r($request->all());die;
+        echo "<pre>";print_r($request->all());die;
         $customer = Customer::saveCustomer($request->all());
         return response()->json($customer);
     }
