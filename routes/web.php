@@ -268,7 +268,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/add_currency', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@add_currency');
 	Route::post('/default_address', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@default_address');
 	Route::post('/save_contact', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_contact');
+	Route::post('/delete_contact', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@delete_contact');
 	Route::post('/save_site', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_site');
+	Route::post('/delete_site', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@delete_site');
 	Route::post('/save_login', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_login');
 	Route::get('/customers', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@active_customer');
 	Route::post('/status_change', 'App\Http\Controllers\ActionController@status_change');

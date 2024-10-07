@@ -42,7 +42,6 @@
 //   });
 // });
 //*******************************DataTable */
-
 $(document).ready(function() {
   var table = $('#exampleOne').DataTable({
       columnDefs: [{
@@ -51,23 +50,32 @@ $(document).ready(function() {
           targets: 0
       }],
       select: {
-          style: 'os',
+          style: 'multi',
           selector: 'td:first-child'
       },
       order: [[1, 'asc']],
       language: {
           paginate: {
-              previous: "Previous", // Change this text
-              next: "Next"          // Change this text
+              previous: "Previous",
+              next: "Next"
           },
-          info: "Showing _START_ to _END_ of _TOTAL_ entries", // This text can be adjusted as needed
+          info: "Showing _START_ to _END_ of _TOTAL_ entries",
           infoEmpty: "No entries available",
           infoFiltered: "(filtered from _MAX_ total entries)",
           lengthMenu: "Show _MENU_ entries",
           search: "Search:",
           zeroRecords: "No matching records found"
       },
-      paging: true, 
+      paging: true,
+  });
+
+  // Select All checkbox functionality
+  $('#selectAll').on('click', function() {
+      if ($(this).prop('checked')) {
+          table.rows().select();  // Select all rows
+      } else {
+          table.rows().deselect();  // Deselect all rows
+      }
   });
 
   // Delete button functionality

@@ -52,7 +52,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> All Select</label></th>
                                 <th>#</th>
                                 <th>Type</th>
                                 <th>CRM Section</th>
