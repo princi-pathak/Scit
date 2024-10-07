@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Session, DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use App\Customer;
 use App\Models\Region;
 use App\Models\Country;
@@ -16,13 +17,15 @@ use App\Models\Construction_currency;
 use App\Models\Constructor_customer_site;
 use App\Models\Construction_customer_login;
 use App\Models\Constructor_additional_contact;
+use App\Models\CustomerBillingAddress;
 
 class CustomerController extends Controller
 {
     public function customer_add_edit(Request $request)
     {
         // echo "<pre>";print_r(Auth::user()->home_id);die;
-        $key = base64_decode($request->key);
+        // $key = base64_decode($request->key);
+        $key = $request->key;
         if ($key) {
             $task = 'Edited';
         } else {
@@ -32,30 +35,32 @@ class CustomerController extends Controller
         $data['task'] = $task;
         $data['page'] = 'customers';
         $data['del_status'] = 0;
-        $data['customer_type'] = Customer_type::where('status', 1)->get();
-        $data['job_title'] = Job_title::where('status', 1)->get();
-        $data['contact'] = Constructor_additional_contact::where('customer_id', $key)->get();
-        $data['site'] = Constructor_customer_site::where('customer_id', $key)->get();
-        $data['login'] = Construction_customer_login::where('customer_id', $key)->get();
+        $data['customer_type'] = Customer_type::whereNull('deleted_at')->where('status', 1)->get();
+        $data['job_title'] = Job_title::whereNull('deleted_at')->where('status', 1)->get();
+        $data['contact'] = Constructor_additional_contact::whereNull('deleted_at')->where('customer_id', $key)->get();
+        $data['site'] = Constructor_customer_site::whereNull('deleted_at')->where('customer_id', $key)->get();
+        $data['login'] = Construction_customer_login::whereNull('deleted_at')->where('customer_id', $key)->get();
         $data['country'] = Country::all_country_list();
         $home_id=Auth::user()->home_id;
         $data['home_id'] =$home_id; 
+        $data['key']=$key;
         $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
-        // echo "<pre>";print_r($data['customer']);die;
+        // echo "<pre>";print_r($data['country']);die;
         return view('frontEnd.salesAndFinance.jobs.add_customer', $data);
     }
     public function customer_add_edit_save(Request $request)
     {
 
-        echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());die;
         $customer = Customer::saveCustomer($request->all());
         return response()->json($customer);
     }
     public function default_address(Request $request)
     {
-        // $login_customer_id=$request->login_customer_id;
+        // echo $customer_id=$request->customer_id;die;
+
         $country = Country::all_country_list();
-        $address_details = Customer::find($request->login_customer_id);
+        $address_details = Customer::find($request->customer_id);
         $result = '';
         if ($request->check == 1) {
             $result .= '<option value="" selected disabled>None</option>';
@@ -75,63 +80,42 @@ class CustomerController extends Controller
     }
     public function save_contact(Request $request)
     {
+        // echo "<pre>";print_r($request->all());die;
         $customer = Constructor_additional_contact::saveCustomerAdditional($request->all());
         // echo "<pre>";print_r($customer);die;
-        $data = Constructor_additional_contact::find($customer);
-        $job_title = Job_title::find($data->job_title_id);
-        $result = '<tr class="active">
-                    <td><input type="checkbox" value="' . $data->id . '" class="checkboxContactId"></td>
-                    <td>' . $data->contact_name . '</td>
-                    <td>' . $job_title->name . '</td>
-                    <td>' . $data->email . '</td>
-                    <td>' . $data->telephone . '</td>
-                    <td>' . $data->mobile . '</td>
-                    <td>' . $data->address . '</td>
-                    <td>' . $data->city . '</td>
-                    <td>' . $data->country . '</td>
-                    <td>' . $data->postcode . '</td>
-                    <td>Yes </td>
-
-                </tr>';
-        echo $result;
+        if($customer){
+            echo "done";
+        }else{
+            echo "error";
+        }
+    }
+    public function delete_contact(Request $request ){
+        // echo "<pre>";print_r($request->all());die;
+        $delete= Constructor_additional_contact::where('id', $request->id)->update(['deleted_at' => Carbon::now()]);
     }
     public function save_site(Request $request)
     {
+        // echo "<pre>";print_r($request->all());die;
         $customer = Constructor_customer_site::saveCustomerAdditional($request->all());
-        $data = Constructor_customer_site::find($customer);
-        $job_title = Job_title::find($data->title_id);
-        $result = '<tr class="active">
-                    <td><input type="checkbox" value="' . $data->id . '" class="checkboxContactId"></td>
-                    <td>' . $data->site_name . '</td>
-                    <td>' . $job_title->name . '</td>
-                    <td>' . $data->email . '</td>
-                    <td>' . $data->telephone . '</td>
-                    <td>' . $data->mobile . '</td>
-                    <td>' . $data->address . '</td>
-                    <td>' . $data->city . '</td>
-                    <td>' . $data->country . '</td>
-                    <td>' . $data->post_code . '</td>
-                    <td>Yes </td>
-
-                </tr>';
-        echo $result;
+        if($customer){
+            echo "done";
+        }else{
+            echo "error";
+        }
+    }
+    public function delete_site(Request $request){
+        $delete= Constructor_customer_site::where('id', $request->id)->update(['deleted_at' => Carbon::now()]);
+        echo "done";
     }
     public function save_login(Request $request)
     {
+        echo "<pre>";print_r($request->all());die;
         $customer = Construction_customer_login::saveCustomerAdditional($request->all());
-        $data = Construction_customer_login::find($customer);
-        $job_title = Job_title::find($data->title_id);
-        $result = '<tr class="active">
-                <td>#</td>
-                <td>' . $data->name . '</td>
-                <td>' . $data->email . '</td>
-                <td>' . $data->email . '</td>
-                <td>' . $data->telephone . '</td>
-                <td>29/07/2024</td>
-                <td>Active</td>
-            </tr>';
-
-        echo $result;
+        if($customer){
+            echo "done";
+        }else{
+            echo "error";
+        }
     }
     public function active_customer(Request $request)
     {
@@ -239,8 +223,18 @@ class CustomerController extends Controller
     }
 
     public function SaveCustomerContactData(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'contact_name' => 'required',
+            'address' => 'required',
+            'email' => 'required',
+            'telephone' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
-        $data =  Customer::saveCustomerContactDetails($request->all());
+        $sameAsDefault =  ['same_as_default' => $request->has('same_as_default') ? '1' : '0'];  
+        $data =  CustomerBillingAddress::saveCustomerContactDetails(array_merge($sameAsDefault, $request->all()));
 
         return response()->json([
             'success' => (bool) $data,
@@ -271,6 +265,28 @@ class CustomerController extends Controller
                 'message' => $data ? "Job Title edited successfully" : 'Job Title could not be edited.'
             ]);  
         }
+    }
+
+    public function saveCustomerSiteAddress(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'site_name' => 'required',
+            'contact_name' => 'required',
+            'company_name' => 'required',
+            'telephone' => 'required',
+            'email' => 'required',
+            'address' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+
+        $data = Constructor_customer_site::saveCustomerAdditional($request->all());
+        return response()->json([
+            'success' => (bool) $data,
+            'message' => $data ? "Site Address added successfully" : 'Site Address could not be added.'
+        ]);
     }
    
 }
