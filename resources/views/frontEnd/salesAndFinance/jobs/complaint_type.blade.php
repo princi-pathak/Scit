@@ -1,5 +1,8 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
 <style>
+     table.dataTable td.select-checkbox:before {
+            display: block;
+        }
 .icon-color span i{
     font-size: 16px;
 
@@ -45,7 +48,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <button class="profileDrop mt-2" id="deleteSelectedRows">Delete</button>
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
