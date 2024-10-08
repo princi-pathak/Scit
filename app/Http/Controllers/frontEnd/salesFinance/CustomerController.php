@@ -14,6 +14,7 @@ use App\Models\Country;
 use App\Models\Job_title;
 use App\Models\Customer_type;
 use App\Models\Construction_currency;
+use App\Models\Construction_tax_rate;
 use App\Models\Constructor_customer_site;
 use App\Models\Construction_customer_login;
 use App\Models\Constructor_additional_contact;
@@ -45,7 +46,8 @@ class CustomerController extends Controller
         $data['home_id'] =$home_id; 
         $data['key']=$key;
         $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
-        // echo "<pre>";print_r($data['country']);die;
+        $data['tax']=Construction_tax_rate::getAllTax_rate($home_id,'Active');
+        // echo "<pre>";print_r($data['tax']);die;
         return view('frontEnd.salesAndFinance.jobs.add_customer', $data);
     }
     public function customer_add_edit_save(Request $request)
@@ -109,13 +111,17 @@ class CustomerController extends Controller
     }
     public function save_login(Request $request)
     {
-        echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());die;
         $customer = Construction_customer_login::saveCustomerAdditional($request->all());
         if($customer){
             echo "done";
         }else{
             echo "error";
         }
+    }
+    public function delete_login(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $delete= Construction_customer_login::where('id', $request->id)->update(['deleted_at' => Carbon::now()]);
     }
     public function active_customer(Request $request)
     {

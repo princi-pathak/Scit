@@ -93,14 +93,14 @@
                                                         class="col-sm-3 col-form-label">Telephone</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control editInput"
-                                                            id="telephone" name="telephone" value="<?php if(isset($customer)){echo $customer->telephone;}?>">
+                                                            id="telephone" name="telephone" value="<?php if(isset($customer)){echo $customer->telephone;}?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
                                                     <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control editInput" id="mobile" name="mobile"
-                                                            value="<?php if(isset($customer)){echo $customer->mobile;}?>">
+                                                            value="<?php if(isset($customer)){echo $customer->mobile;}?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
@@ -242,7 +242,7 @@
                                                         Limit</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control editInput textareaInput"
-                                                            id="credit_limit" name="credit_limit" placeholder="Customer Ref if any" value="<?php if(isset($customer)){echo $customer->credit_limit;}?>">
+                                                            id="credit_limit" name="credit_limit" placeholder="Customer Ref if any" value="<?php if(isset($customer)){echo $customer->credit_limit;}?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
@@ -250,7 +250,7 @@
                                                         class="col-sm-3 col-form-label">Discount</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control editInput textareaInput"
-                                                            id="discount" name="discount" placeholder="Customer Job if any" value="<?php if(isset($customer)){echo $customer->discount;}?>">
+                                                            id="discount" name="discount" placeholder="Customer Job if any" value="<?php if(isset($customer)){echo $customer->discount;}?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
@@ -285,7 +285,7 @@
                                                         No.</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control editInput textareaInput"
-                                                            id="vat_tax_no" name="vat_tax_no" placeholder="" value="<?php if(isset($customer)){echo $customer->vat_tax_no;}?>">
+                                                            id="vat_tax_no" name="vat_tax_no" placeholder="" value="<?php if(isset($customer)){echo $customer->vat_tax_no;}?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                     </div>
                                                 </div>
                                                 <div class="mb-2 row">
@@ -339,7 +339,9 @@
                                                         <select class="form-control editInput selectOptions"
                                                             id="product_tax" name="product_tax">
                                                             <option selected disabled>Please Select</option>
-                                                            <option>None</option>
+                                                            <?php foreach($tax as $tax_val){?>
+                                                                <option value="{{$tax_val->id}}" <?php if(isset($customer) && $customer->product_tax == $tax_val->id){echo 'selected';}?>>{{$tax_val->name}}</option>
+                                                            <?php }?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -351,7 +353,9 @@
                                                         <select class="form-control editInput selectOptions"
                                                             id="service_tax" name="service_tax">
                                                             <option selected disabled>Please Select</option>
-                                                            <option>None</option>
+                                                            <?php foreach($tax as $tax_val1){?>
+                                                                <option value="{{$tax_val1->id}}" <?php if(isset($customer) && $customer->service_tax == $tax_val1->id){echo 'selected';}?>>{{$tax_val1->name}}</option>
+                                                            <?php }?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -445,12 +449,11 @@
                                                 <tbody id="contact_result">
                                                 <?php foreach($contact as $conv){
                                                         $job_title_details=App\Models\Job_title::find($conv->job_title_id);
-                                                        // echo "<pre>";print_r($job_title->name);die;
                                                 ?>
                                                     <tr>
                                                         <td><input type="checkbox" class="checkboxContactId" value="{{$conv->id}}"></td>
                                                         <td>{{$conv->contact_name}}</td>
-                                                        <td>{{$job_title_details->name}}</td>
+                                                        <td>{{$job_title_details->name ?? ""}}</td>
                                                         <td>{{$conv->email}}</td>
                                                         <td>{{$conv->telephone}}</td>
                                                         <td>{{$conv->mobile}}</td>
@@ -460,7 +463,7 @@
                                                         <td>{{$conv->postcode}}</td>
                                                         <td><?php echo ($conv->default_billing == 1)?"Yes":"No";?></td>
                                                         <td>
-                                                            <img src="{{url('public/frontEnd/jobs/images/pencil.png')}}" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#ContactModel" class="modal_dataFetch" data-id="{{ $conv->id }}" data-title="{{ $conv->contact_name }}" data-job_title="{{ $job_title_details->id }}" data-email="{{$conv->email}}" data-telephone="{{$conv->telephone}}" data-mobile="{{$conv->mobile}}" data-address="{{$conv->address}}" data-city="{{$conv->city}}" data-country="{{$conv->country}}" data-postcode="{{$conv->postcode}}" data-default_billing="{{$conv->default_billing}}" data-fax="{{$conv->fax}}" data-country_id="{{$conv->country_id}}" >&nbsp;
+                                                            <img src="{{url('public/frontEnd/jobs/images/pencil.png')}}" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#ContactModel" class="modal_dataFetch" data-id="{{ $conv->id }}" data-title="{{ $conv->contact_name }}" data-job_title="{{ $job_title_details->id??'' }}" data-email="{{$conv->email}}" data-telephone="{{$conv->telephone}}" data-mobile="{{$conv->mobile}}" data-address="{{$conv->address}}" data-city="{{$conv->city}}" data-country="{{$conv->country}}" data-postcode="{{$conv->postcode}}" data-default_billing="{{$conv->default_billing}}" data-fax="{{$conv->fax}}" data-country_id="{{$conv->country_id}}" >&nbsp;
                                                             <img src="{{url('public/frontEnd/jobs/images/delete.png')}}" alt="" class="contact_delete" data-delete="{{$conv->id}}">
                                                         </td>
 
@@ -516,7 +519,7 @@
                                                         ?>
                                                         <tr>
                                                             <td><input type="checkbox" value="{{$sitev->id}}"></td>
-                                                            <td>{{$sitev->name}}</td>
+                                                            <td>{{$sitev->site_name}}</td>
                                                             <td>{{$sitev->contact_name}}</td>
                                                             <td>{{$job_title_detail->name}}</td>
                                                             <td>{{$sitev->email}}</td>
@@ -567,21 +570,30 @@
                                             <table class="table">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th>Asset Ref </th>
-                                                        <th>Title </th>
-                                                        <th>Description</th>
-                                                        <th>Asset Status </th>
-                                                        <th>Assigned To </th>
+                                                        <th>Full Name </th>
+                                                        <th>Username</th>
+                                                        <th>Email</th>
+                                                        <th>Telephone </th>
+                                                        <th>Last Login </th>
+                                                        <th>Status </th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>..</td>
-                                                        <td>..</td>
-                                                        <td>..</td>
-                                                        <td>..</td>
-                                                        <td>..</td>
+                                                <tbody id="login_result">
+                                                    <?php foreach($login as $k=>$logv){?>
+                                                        <tr>
+                                                            <td>{{++$k}}</td>
+                                                            <td>{{$logv->name}}</td>
+                                                            <td>{{$logv->email}}</td>
+                                                            <td>{{$logv->telephone}}</td>
+                                                            <td>{{$logv->last_login}}</td>
+                                                            <td><?php echo($logv->status == 1)?"Active":"In-active";?></td>
+                                                            <td>
+                                                            <img src="{{url('public/frontEnd/jobs/images/pencil.png')}}" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#LoginModel" class="modal_datalogin" data-id="{{ $logv->id }}" data-email="{{ $logv->email }}" data-password_type="{{ $logv->password_type }}" data-name="{{$logv->name}}" data-telephone="{{$logv->telephone}}" data-access_rights="{{$logv->access_rights}}" data-projects="{{$logv->projects}}" data-notes="{{$logv->notes}}" data-last_login="{{$logv->last_login}}" data-status="{{$logv->status}}">&nbsp;
+                                                            <img src="{{url('public/frontEnd/jobs/images/delete.png')}}" alt="" class="login_delete" data-delete="{{$logv->id}}">
+                                                            </td>
                                                     </tr>
+                                                    <?php }?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -761,13 +773,13 @@
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Telephone</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="contact_telephone" id="contact_telephone">
+                                        <input type="text" class="form-control editInput" name="contact_telephone" id="contact_telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Mobile</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="contact_mobile" id="contact_mobile">
+                                        <input type="text" class="form-control editInput" name="contact_mobile" id="contact_mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -812,9 +824,13 @@
                                         <div class="col-sm-9">
                                         <select class="form-control editInput selectOptions" name="contact_country_code" id="contact_country_code" required>
                                                 <option value="" selected disabled>None</option>
-                                                <?php foreach($country as $country_idc){?>
-                                                    <option value="{{$country_idc->id}}">{{$country_idc->name}} ({{$country_idc->code}})</option>
-                                                <?php }?>
+                                                <?php foreach($country as $country_idc): ?>
+                                                    <?php foreach($country_idc->currencies as $currency1): ?>
+                                                        <option value="<?php echo $country_idc->id; ?>">
+                                                            <?php echo $country_idc->name; ?> (<?php echo $currency1->currency_code; ?>)
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -839,9 +855,9 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="mb-3 row">
-                            <!-- <label for="inputName" class="col-sm-3 col-form-label">Customer</label> -->
+                            <label for="inputName" class="col-sm-3 col-form-label">&emsp;Customer</label>
                             <div class="col-sm-9">
-                                <p id="customer_name" class="customer_name"></p>
+                                <p id="customer_name" class="customer_name"><?php if(isset($customer)){echo $customer->name;}?></p>
                             </div>
                         </div>
                         <div class="modal-body">
@@ -885,13 +901,13 @@
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Telephone</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_telephone" id="site_telephone">
+                                        <input type="text" class="form-control editInput" name="site_telephone" id="site_telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Mobile</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_mobile" id="site_mobile">
+                                        <input type="text" class="form-control editInput" name="site_mobile" id="site_mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -984,13 +1000,14 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="mb-3 row">
-                            <!-- <label for="inputName" class="col-sm-3 col-form-label">Customer</label> -->
+                            <label for="inputName" class="col-sm-3 col-form-label">&emsp;Customer</label>
                             <div class="col-sm-9">
-                                <p id="customer_name" class="customer_name"></p>
+                                <p id="customer_name" class="customer_name"><?php if(isset($customer)){echo $customer->name;}?></p>
                             </div>
                         </div>
                         <div class="modal-body">
                             <form role="form" id="login_form">
+                                <input type="hidden" id="login_id" name="login_id">
                             <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Email<span class="radStar">*</span></label>
                                     <div class="col-sm-9">
@@ -1014,7 +1031,7 @@
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Telephone</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="login_telephone" id="login_telephone">
+                                        <input type="text" class="form-control editInput" name="login_telephone" id="login_telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     </div>
                                 </div>
                                 <div class="mb-3 row field">
@@ -1366,7 +1383,7 @@
     function save_login(){
         var token='<?php echo csrf_token();?>'
         var email=$('#login_email').val();
-        var customer_id=$("#login_customer_id").val();
+        var customer_id=$("#id").val();
         var password_type;
         if ($('#password_type1').is(':checked')) {
             password_type = 1;
@@ -1391,6 +1408,7 @@
             projects = 2;
         }
         var notes=$("#login_note").val();
+        var id=$('#login_id').val();
         if(email == ''){
             $("#login_email").css('border','1px solid red');
             return false;
@@ -1404,11 +1422,12 @@
                 $.ajax({
                 type: "POST",
                 url: "{{url('/save_login')}}",
-                data: {email:email,customer_id:customer_id,password_type:password_type,name:name,telephone:telephone,status:status,
+                data: {id:id,email:email,customer_id:customer_id,password_type:password_type,name:name,telephone:telephone,status:status,
                     access_rights:access_rights,projects:projects,notes:notes,_token:token},
                 success: function(data) {
                     console.log(data);
                     $("#LoginModel").modal('hide');
+                    location.reload();
                     
                 }
             });
@@ -1447,7 +1466,22 @@
             }
         });
         }
-    })
+    });
+    $('.login_delete').on('click',function(){
+        var id = $(this).data('delete');
+        if (confirm("Are you sure you want to delete this row?")) {
+            $(this).closest('tr').remove();
+            var token='<?php echo csrf_token();?>'
+            $.ajax({
+            type: "POST",
+            url: "{{url('/delete_login')}}",
+            data: {id:id,_token:token},
+            success: function(data) {
+                console.log(data);
+            }
+        });
+        }
+    });
 </script>
 <script>
     $('.modal_dataFetch').on('click', function() {
@@ -1516,6 +1550,35 @@
         $("#site_country_id").val(country_id);
         $("#site_catalogue_id").val(catalogue);
         $("#site_note").val(notes);
+    });
+    
+    $('.modal_datalogin').on('click', function() {
+        var id = $(this).data('id');
+        var email = $(this).data('email');
+        var name = $(this).data('name');
+        var password_type = $(this).data('password_type');
+        var telephone = $(this).data('telephone');
+        var projects = $(this).data('projects');
+        var notes = $(this).data('notes');
+        var last_login = $(this).data('last_login');
+        var status = $(this).data('status');
+        var access_rights = $(this).data('access_rights');
+        var access_rightsArray = access_rights.split(',');
+        $('.login_check').each(function(){
+            if (access_rightsArray.includes($(this).val())) {
+                $(this).prop('checked', true); 
+            } else {
+                $(this).prop('checked', false);
+            }
+        });
+        $("#login_id").val(id);
+        $("#login_email").val(email);
+        $("#login_name").val(name);
+        $("#password_type"+password_type).prop('checked', true);
+        $("#login_telephone").val(telephone);
+        $("#login_status").val(status);
+        $("#project"+projects).prop('checked', true);
+        $("#login_note").val(notes);
     });
     
 </script>
