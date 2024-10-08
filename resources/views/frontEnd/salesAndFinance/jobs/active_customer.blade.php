@@ -34,7 +34,6 @@
             </div>
         </div>
 
-        <!-- @include('frontEnd.jobs.customer_buttons') -->
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="jobsection">
@@ -82,6 +81,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>Customer Name</th>
                                 <th>Address</th>
@@ -96,6 +96,7 @@
                         <tbody>
                             <?php foreach($customer as $k=>$val){?>
                             <tr>
+                                <td></td>
                                 <td>{{++$k}}.</td>
                                 <td>{{$val->name}}</td>
                                 <td>{{$val->address}}</td>
@@ -110,7 +111,7 @@
                                                 Action
                                             </a>
                                             <div class="dropdown-menu fade-up m-0">
-                                                <a href="{{url('customer_add_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit Details</a>
+                                                <a href="{{url('customer_add_edit?key=')}}{{$val->id}}" class="dropdown-item">Edit Details</a>
                                                 <a href="#!" class="dropdown-item">Record Expense</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="#!" class="dropdown-item">CRM History</a>
