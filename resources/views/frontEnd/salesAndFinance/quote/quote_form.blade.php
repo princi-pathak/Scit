@@ -77,20 +77,20 @@
                                 <div class="mb-3 row">
                                     <label for="inputCustomer" class="col-sm-3 col-form-label">City </label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputCustomer" placeholder="City">
+                                        <input type="text" class="form-control editInput textareaInput" id="billingCustomerCity" placeholder="City">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputPurchase" class="col-sm-3 col-form-label">County</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputPurchase" placeholder="County">
+                                        <input type="text" class="form-control editInput textareaInput" id="billingCustomerCounty" placeholder="County">
                                     </div>
                                 </div>
 
                                 <div class="mb-3 row">
                                     <label for="inputPurchase" class="col-sm-3 col-form-label">Postcode</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputPurchase" placeholder="Postcode">
+                                        <input type="text" class="form-control editInput textareaInput" id="billingCustomerPostcode" placeholder="Postcode">
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="plusandText">
@@ -101,7 +101,7 @@
                                 <div class="mb-3 row">
                                     <label for="inputEmail" class="col-sm-3 col-form-label">Telephone</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                        <select class="form-control editInput selectOptions" name="telephone_country_code" id="billingCustomerTelephoneCode">
                                             <option value="">Please Select</option>
                                             @foreach($countries as $value)
                                             <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
@@ -109,14 +109,14 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control editInput" id="inputEmail" placeholder="Telephone">
+                                        <input type="text" class="form-control editInput" id="billingCustomerTelephone" placeholder="Telephone">
                                     </div>
                                 </div>
 
                                 <div class="mb-3 row">
                                     <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                        <select class="form-control editInput selectOptions" name="mobile_country_code" id="billingCustomerMobileCode">
                                             <option value="">Please Select</option>
                                             @foreach($countries as $value)
                                             <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
@@ -124,7 +124,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control editInput" id="inputEmail" placeholder="Telephone">
+                                        <input type="text" class="form-control editInput" id="billingCustomerMobile" placeholder="Mobile">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -136,7 +136,7 @@
                                 <div class="mb-3 row">
                                     <label for="inputMobile" class="col-sm-3 col-form-label">Country</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control editInput" name="" id="">
+                                        <select class="form-control editInput" name="" id="billingCustomerCountry">
                                             @foreach($countries as $value)
                                             <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
@@ -170,7 +170,7 @@
                                 <div class="mb-3 row">
                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Company </label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputCustomer" placeholder="Company">
+                                        <input type="text" class="form-control editInput textareaInput" id="customerSiteCompany" placeholder="Company">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -183,20 +183,20 @@
                                 <div class="mb-3 row">
                                     <label for="inputCustomer" class="col-sm-3 col-form-label">City </label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputCustomer" placeholder="City">
+                                        <input type="text" class="form-control editInput textareaInput" id="customerSiteCity" placeholder="City">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputPurchase" class="col-sm-3 col-form-label">County </label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputPurchase" placeholder="County">
+                                        <input type="text" class="form-control editInput textareaInput" id="customerSiteCounty" placeholder="County">
                                     </div>
                                 </div>
 
                                 <div class="mb-3 row">
                                     <label for="inputPurchase" class="col-sm-3 col-form-label">Postcode </label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputPurchase" placeholder="Postcode">
+                                        <input type="text" class="form-control editInput textareaInput" id="customerSitePostCode" placeholder="Postcode">
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="plusandText">
@@ -207,7 +207,7 @@
                                 <div class="mb-3 row">
                                     <label for="inputEmail" class="col-sm-3 col-form-label">Telephone </label>
                                     <div class="col-sm-2">
-                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                        <select class="form-control editInput selectOptions" id="customerSiteTelephoneCode">
                                             <option value="">Please Select</option>
                                             @foreach($countries as $value)
                                             <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
@@ -215,14 +215,14 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control editInput" id="inputEmail" placeholder="Telephone ">
+                                        <input type="text" class="form-control editInput" id="customerSiteTelephone" placeholder="Telephone ">
                                     </div>
                                 </div>
 
                                 <div class="mb-3 row">
                                     <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                        <select class="form-control editInput selectOptions" id="customerSiteMobileCode">
                                             <option value="">Please Select</option>
                                             @foreach($countries as $value)
                                             <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
@@ -230,13 +230,13 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control editInput" id="inputEmail" placeholder="Telephone ">
+                                        <input type="text" class="form-control editInput" id="customerSiteMobile" placeholder="Mobile">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputMobile" class="col-sm-3 col-form-label">Country </label>
                                     <div class="col-sm-9">
-                                        <select class="form-control editInput" name="" id="">
+                                        <select class="form-control editInput" name="" id="customerSiteDetailsCountry">
                                             @foreach($countries as $value)
                                             <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
@@ -281,7 +281,7 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Site </label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" disabled id="billingDetailContact">
+                                            <select class="form-control editInput selectOptions" disabled id="">
                                                 <option>Same As Customer</option>
                                             </select>
                                         </div>
@@ -870,14 +870,20 @@
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputTelephone" class="col-sm-3 col-form-label">Telephone <span class="red-text">*</span> </label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-3">
+                                        <select class="form-control editInput selectOptions" name="telephone_country_code" id="billingTelephoneCountryCode"></select>
+                                    </div>
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control editInput" name="telephone" id="customer_phone">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="mobile" id="customer_mobile">
+                                    <div class="col-sm-3">
+                                        <select class="form-control editInput selectOptions" name="mobile_country_code" id="billingMobileCountryCode"></select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control editInput" name="telephone" id="customer_phone">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -911,6 +917,7 @@
                                     <div class="col-sm-9">
                                         <!-- British Pound - GBP -->
                                         <select class="form-control editInput selectOptions" name="currency" id="customer_currency_id">
+
                                             <option selected disabled>Please Select</option>
                                         </select>
                                     </div>
@@ -933,7 +940,7 @@
                                     <div class="col-sm-9">
                                         <select class="form-control editInput selectOptions" name="discount_type" id="customer_percentage">
                                             <option selected disabled>Please Select</option>
-                                            <option value="1">Persontage</option>
+                                            <option value="1">Percantage</option>
                                             <option value="2">Flat</option>
                                         </select>
                                     </div>
@@ -1003,7 +1010,7 @@
                                     <label for="inputPincode"
                                         class="col-sm-3 col-form-label">Pincode</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" nmae="pincode" id="customer_pincode">
+                                        <input type="text" class="form-control editInput" name="postal_code" id="customer_pincode">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1011,7 +1018,9 @@
                                         class="col-sm-3 col-form-label">Country</label>
                                     <div class="col-sm-9">
                                         <select class="form-control editInput selectOptions" name="country_code" id="customer_country_id">
-                                            <option selected disabled>Select Coutry</option>
+                                            @foreach($countries as $value)
+                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -1381,7 +1390,7 @@
                                 <div class="mb-2 row">
                                     <label for="inputCounty" class="col-sm-4 col-form-label">County</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control editInput" name="country" id="customer_country_input">
+                                        <input type="text" class="form-control editInput" name="county" id="customer_country_input">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1469,7 +1478,6 @@
     statusId="status"
     saveButtonId="saveSiteDetailsJobTitle"
     placeholderText="Job Title" />
-
 
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customeQuoteForm.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
@@ -1576,7 +1584,7 @@
                 response.Data.forEach(user => {
                     const option = document.createElement('option');
                     option.value = user.id;
-                    option.text = "+" + " " + user.code + " - " + " " + user.name;
+                    option.text = user.name;
                     selectElement.appendChild(option);
                 });
             },
@@ -1627,6 +1635,38 @@
         });
     }
 
+    function getCurrencyData(customer_currency) {
+        $.ajax({
+            url: '{{ route("currency.ajax.getCurrencyData") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log("jxcnjfjnfnk", response.data);
+                customer_currency.innerHTML = '';
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.name + " - " + user.code;
+                    customer_currency.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function selectPrevious(Select, previouslySelected) {
+        // Loop through the options in the select field
+        const options = Select.options;
+
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === previouslySelected) {
+                options[i].selected = true; // Set the previously selected country
+                break;
+            }
+        }
+    }
+
 
     $(document).ready(function() {
 
@@ -1645,8 +1685,30 @@
             option.value = "";
             option.text = "Default";
             billingDetailContact.appendChild(option);
-
+            
             var getCustomerListValue = document.getElementById('getCustomerList');
+            
+            $.ajax({
+                url: '{{ route("customer.ajax.getCustomerBillingAddress") }}',
+                method: 'POST',
+                data: {
+                    id: getCustomerListValue.value
+                },
+                success: function(response) {
+                    console.log(response.message);
+
+                    // response.data.forEach(user => {
+                    //     const option = document.createElement('option');
+                    //     option.value = user.id;
+                    //     option.text = user.name;
+                    //     billingDetailContact.appendChild(option);
+                    // });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
 
             $.ajax({
                 url: '{{ route("customer.ajax.getCustomerDetails") }}',
@@ -1662,17 +1724,26 @@
                     option2.value = response.data[0].id;
                     option2.text = response.data[0].name;
                     billingDetailContact.appendChild(option2);
-                    document.getElementById('customer_contact_id').value = response.data[0].id; 
-                    document.getElementById('siteCustomerId').value = response.data[0].id; 
-                    
-                    document.getElementById('setCustomerName').textContent = response.data[0].name;
-                    document.getElementById('setSiteAddress').textContent = response.data[0].name;
 
-                    document.getElementById('billingDetailsAddress').value = response.data[0].address;
+                    // billing details data set
+                    document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
+                    document.getElementById('setCustomerName').textContent = document.getElementById('setSiteAddress').textContent = document.getElementById('customerSiteName').value = response.data[0].name;
+                    document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
                     document.getElementById('billingDetailsEmail').value = response.data[0].email;
-                    document.getElementById('customerSiteAddress').value = response.data[0].address;
-                    document.getElementById('customerSiteName').value = response.data[0].name;
+                    document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
+                    document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].country;
+                    document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].postal_code;
+                    document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                    document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                    selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
+                    selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
+                    selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
 
+                    // Customer Site Address Data Set
+                    document.getElementById('customerSiteCompany').value = response.data[0].contact_name;
+                    selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                    selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                    selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -1740,10 +1811,10 @@
                 '{{ route("quote.ajax.saveRegion") }}', // saveUrl
                 'siteDetailregion', // modalId
                 getRegions, // callback function after success
-                
+
             );
         });
-        
+
         // Ajax Call for saving Customer Type
         $('#saveCustomerSiteDetails').on('click', function() {
             var formData = $('#add_customer_site_details_form').serialize();
@@ -1798,8 +1869,6 @@
             });
         });
 
-
-
         // Save Customer Data
         $('#SaveCustomerData').on('click', function() {
             var formData = $('#add_customer_form').serialize();
@@ -1852,11 +1921,14 @@
     const QuotecustomerPop = document.getElementById('QuotecustomerPop');
 
     OpenAddCustomerModal.onclick = function() {
-        var customerRegion = document.getElementById('customerRegion');
-        getRegions(customerRegion);
+        getRegions(document.getElementById('customerRegion'));
         getCustomerType();
-        var customer_job_title_id = document.getElementById('customer_job_title_id');
-        getCustomerJobTitle(customer_job_title_id);
+        getCurrencyData(document.getElementById('customer_currency_id'));
+        // getCountriesList(document.getElementById('customer_country_id'));
+        getCountriesList(document.getElementById('billingTelephoneCountryCode'));
+        getCountriesList(document.getElementById('billingMobileCountryCode'));
+
+        getCustomerJobTitle(document.getElementById('customer_job_title_id'));
         $('#QuotecustomerPop').modal('show');
     }
     // js for Add Customer modal open
@@ -1881,7 +1953,7 @@
             alert('Please select the customer');
         } else {
             var getCountryList = document.getElementById('getCountryList');
-            getCountriesListCustomer(getCountryList);
+            getCountriesList(getCountryList);
             getCustomerJobTitle(customer_job_titile_id);
             $('#add_customer_contact_modal').modal('show');
         }
@@ -1890,7 +1962,7 @@
 
     // js for Add Job Title modal
     $('#OpenCustomerJobTitleModel').on('click', function() {
-        getCountriesListCustomer();
+        // getCountriesListCustomer();
         $('#customer_job_title_modal').modal('show');
     });
 
@@ -1904,7 +1976,7 @@
             var getSiteAddressRegion = document.getElementById('getSiteAddressRegion');
             var customer_country = document.getElementById('siteAddressCountry');
             getRegions(getSiteAddressRegion);
-            getCountriesListCustomer(customer_country);
+            getCountriesList(customer_country);
             getCustomerJobTitle(siteJobTitle);
             $('#add_site_address_modal').modal('show');
         }

@@ -28,4 +28,8 @@ class CustomerBillingAddress extends Model
     public static function saveCustomerContactDetails(array $data){
         return self::updateOrCreate(['id' => $data['customer_id']], $data);
     }
+
+    public static function getCustomerBillingAddress($id){
+        return self::where('customer_id', $id)->get();
+    }
 }
