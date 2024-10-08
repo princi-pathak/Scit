@@ -1768,13 +1768,13 @@ $access_rights = explode(',', $rights);
             });
         });
 
-        function getCountriesList() {
+        function getCountriesList(selectElement) {
             $.ajax({
                 url: '{{ route("ajax.getCountriesList") }}',
                 method: 'GET',
                 success: function(response) {
                     console.log(response.Data);
-                    const selectElement = document.getElementById('countries');
+                    // const selectElement = document.getElementById('countries');
                     selectElement.innerHTML = '';
                     response.Data.forEach(user => {
                         const option = document.createElement('option');

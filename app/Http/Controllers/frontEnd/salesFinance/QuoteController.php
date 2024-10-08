@@ -12,6 +12,7 @@ use App\Models\QuoteRejectType;
 use App\Models\Customer_type;
 use App\Models\Region;
 use App\Models\Country;
+use App\Models\Currency;
 
 class QuoteController extends Controller
 {
@@ -153,11 +154,11 @@ class QuoteController extends Controller
 
     public function getCustomerType(){
         $data = Customer_type::getCustomerType(Auth::user()->home_id);
-        if ($data) {
-            return response()->json(['success' => true, 'data' => $data]);
-        } else {
-            return response()->json(['success' => false, 'data' => 'No Data']);
-        }
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
     }
 
     public function saveRegion(Request $request){
@@ -179,12 +180,19 @@ class QuoteController extends Controller
 
     public function getRegions(){
         $data = Region::getRegions(Auth::user()->home_id);
-        if ($data) {
-            return response()->json(['success' => true, 'data' => $data]);
-        } else {
-            return response()->json(['success' => false, 'data' => 'No Data']);
-        }
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
     }
 
-    
+    public function getCurrencyData(){
+        $data = Currency::getCurrencyData();
+        
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    } 
 }

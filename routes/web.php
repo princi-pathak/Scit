@@ -333,7 +333,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/getCustomerJobTitle', 'getCustomerJobTitle')->name('customer.ajax.getCustomerJobTitle');
 			Route::post('/saveJobTitle', 'saveJobTitle')->name('customer.ajax.saveJobTitle');
 			Route::post('/saveCustomerSiteAddress', 'saveCustomerSiteAddress')->name('customer.ajax.saveCustomerSiteAddress');
-
+			Route::post('/getCustomerBillingAddress', 'getCustomerBillingAddress')->name('customer.ajax.getCustomerBillingAddress');
+			
 			
 		});
 	});
@@ -452,6 +453,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/getCustomerType', 'getCustomerType')->name('quote.ajax.getCustomerType');
 		Route::post('/quote/saveRegion', 'saveRegion')->name('quote.ajax.saveRegion');
 		Route::get('/quote/getRegions', 'getRegions')->name('quote.ajax.getRegions');
+
+		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
+
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {

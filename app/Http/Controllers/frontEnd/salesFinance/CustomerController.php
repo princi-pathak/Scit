@@ -288,5 +288,23 @@ class CustomerController extends Controller
             'message' => $data ? "Site Address added successfully" : 'Site Address could not be added.'
         ]);
     }
+
+    public function getCustomerBillingAddress(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = CustomerBillingAddress::getCustomerBillingAddress($request->id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+
+    }
    
 }
