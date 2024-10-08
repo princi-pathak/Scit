@@ -320,6 +320,7 @@ class JobsController extends Controller
         $data['task']=$task;
         $data['page']='jobs_type_list';
         $data['del_status']=0;
+        $data['appointement_type']=Construction_job_appointment_type::whereNull('deleted_at')->where('status',1)->get();
         return view('backEnd.jobs_management.job_type_form',$data);
     }
     public function job_type_save_data(Request $request){

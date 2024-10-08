@@ -272,6 +272,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/save_site', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_site');
 	Route::post('/delete_site', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@delete_site');
 	Route::post('/save_login', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_login');
+	Route::post('/delete_login', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@delete_login');
 	Route::get('/customers', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@active_customer');
 	Route::post('/status_change', 'App\Http\Controllers\ActionController@status_change');
 	Route::get('/customer_type', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_type');
