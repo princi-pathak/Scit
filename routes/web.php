@@ -272,6 +272,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/save_site', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_site');
 	Route::post('/delete_site', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@delete_site');
 	Route::post('/save_login', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_login');
+	Route::post('/delete_login', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@delete_login');
 	Route::get('/customers', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@active_customer');
 	Route::post('/status_change', 'App\Http\Controllers\ActionController@status_change');
 	Route::get('/customer_type', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_type');
@@ -333,7 +334,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/getCustomerJobTitle', 'getCustomerJobTitle')->name('customer.ajax.getCustomerJobTitle');
 			Route::post('/saveJobTitle', 'saveJobTitle')->name('customer.ajax.saveJobTitle');
 			Route::post('/saveCustomerSiteAddress', 'saveCustomerSiteAddress')->name('customer.ajax.saveCustomerSiteAddress');
-
+			Route::post('/getCustomerBillingAddress', 'getCustomerBillingAddress')->name('customer.ajax.getCustomerBillingAddress');
+			
 			
 		});
 	});
@@ -452,6 +454,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/getCustomerType', 'getCustomerType')->name('quote.ajax.getCustomerType');
 		Route::post('/quote/saveRegion', 'saveRegion')->name('quote.ajax.saveRegion');
 		Route::get('/quote/getRegions', 'getRegions')->name('quote.ajax.getRegions');
+
+		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
+
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {

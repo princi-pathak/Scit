@@ -2750,8 +2750,9 @@
         // Calls model open and close 
         const openCallsModel = document.getElementById('openCallsModel');
         const callsModel = document.getElementById('callsModal');
+        var countries = document.getElementById("countries");
         openCallsModel.onclick = function() {
-            getCountriesList();
+            getCountriesList(countries);
             getCRMTypeData();
             $('#callsModal').modal('show');
         }
