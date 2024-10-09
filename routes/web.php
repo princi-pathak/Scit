@@ -5,6 +5,7 @@ use App\Http\Controllers\backEnd\salesfinance\LeadController as BackendLeadContr
 use App\Http\Controllers\backEnd\salesfinance\GeneralController;
 use App\Http\Controllers\frontEnd\salesFinance\LeadController as FrontendLeadController;
 use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteController;
+use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as FrontendProductCategoryController;
 
 
 Route::get('clear', function () {
@@ -379,6 +380,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/quote/saveQuoteRejectType','saveQuoteRejectType')->name('quote.ajax.saveQuoteRejectType');
 		Route::post('/quote/deleteQuoteRejectType','deleteQuoteRejectType')->name('quote.ajax.deleteQuoteRejectType');
 		
+	});
+
+	Route::controller(FrontendProductCategoryController::class)->group(function(){
+
+		Route::get('/item/product_categories','index')->name('item.index');
 	});
 
 
