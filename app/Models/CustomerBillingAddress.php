@@ -15,7 +15,9 @@ class CustomerBillingAddress extends Model
         'job_title_id', 
         'email',
         'telephone',
+        'telephone_country_code',
         'mobile',
+        'mobile_country_code',
         'fax',
         'same_as_default',
         'address',
@@ -30,6 +32,10 @@ class CustomerBillingAddress extends Model
     }
 
     public static function getCustomerBillingAddress($id){
-        return self::where('customer_id', $id)->get();
+        return self::where('customer_id', $id)->select('id', 'contact_name')->get();
+    }
+
+    public static function getCustomerBillingAddressData($id){
+        return self::where('id', $id)->get();
     }
 }
