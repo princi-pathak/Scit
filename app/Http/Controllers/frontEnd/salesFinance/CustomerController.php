@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Session, DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use App\Customer;
 use App\Models\Region;
@@ -42,18 +43,28 @@ class CustomerController extends Controller
         $data['site'] = Constructor_customer_site::whereNull('deleted_at')->where('customer_id', $key)->get();
         $data['login'] = Construction_customer_login::whereNull('deleted_at')->where('customer_id', $key)->get();
         $data['country'] = Country::all_country_list();
+        $data['country_code']=Country::getCountriesNameCode();
         $home_id=Auth::user()->home_id;
         $data['home_id'] =$home_id; 
         $data['key']=$key;
         $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
         $data['tax']=Construction_tax_rate::getAllTax_rate($home_id,'Active');
-        // echo "<pre>";print_r($data['tax']);die;
+        // echo "<pre>";print_r($data['country_code']);die;
         return view('frontEnd.salesAndFinance.jobs.add_customer', $data);
     }
     public function customer_add_edit_save(Request $request)
     {
 
         // echo "<pre>";print_r($request->all());die;
+        if($request->email !=''){
+            $validator = Validator::make($request->all(), [
+                'email' => [Rule::unique('customers')->ignore($request->id)],
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['vali_error' => $validator->errors()->first()]);
+            }
+        }
+        
         $customer = Customer::saveCustomer($request->all());
         return response()->json($customer);
     }
