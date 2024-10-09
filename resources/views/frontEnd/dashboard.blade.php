@@ -109,7 +109,7 @@
                                 <div class="user-heading alt wdgt-row lightRed"> <i class="fa fa-briefcase"></i></div>
                                 <div class="panel-body">
                                     <div class="wdgt-value">
-                                        <h1 class="count">Sales & <br> Finance</h1>
+                                        <h1 class="count">Phase-3</h1>
                                         <p></p>
                                     </div>
                                 </div>

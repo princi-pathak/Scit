@@ -25,6 +25,10 @@
         .modal.show .modal-dialog {
             box-shadow: 0px 0px 10px #34343447;
         }
+        .numberHifan{
+            text-align:center;
+            font-size:20px;
+        }
     </style>
 </head>
 <?php

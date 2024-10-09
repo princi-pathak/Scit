@@ -5,18 +5,20 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-xl-4 ">
                         <div class="pageTitle">
-                            <h3>New Customer</h3>
+                            <h3><?php if(isset($customer)){echo $customer->contact_name;}else{echo "New Customer";}?></h3>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-8 col-xl-8 px-3">
                         <div class="pageTitleBtn">
-                            <a href="javascript:void(0)" class="profileDrop" onclick="save_all_data()"><i class="fa-solid fa-floppy-disk"></i> Save</a>
+                            <a href="javascript:void(0)" class="profileDrop" onclick="save_all_data('no')"><i class="fa-solid fa-floppy-disk"></i> Save</a>
                             <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
                         </div>
                     </div>
                 </div>
-
+                <div class="alert alert-success text-center" id="msg" style="display:none;height:50px">
+                    <p>The Customer has been saved Successfully</p>
+                </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="newJobForm">
@@ -85,20 +87,43 @@
                                                     <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control editInput" id="email" name="email"
-                                                            value="<?php if(isset($customer)){echo $customer->email;}?>">
+                                                            value="<?php if(isset($customer)){echo $customer->email;}?>" onblur="getemail(1)">
+                                                            <span id="emailErr1" style="color: red;"></span>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
                                                     <label for="inputTelephone"
                                                         class="col-sm-3 col-form-label">Telephone</label>
-                                                    <div class="col-sm-9">
+                                                        <div class="col-sm-2 pe-0">
+                                                        <select class="form-control editInput selectOptions" id="telephone_country_code" name="telephone_country_code">
+                                                            <option selected disabled>Please Select</option>
+                                                            <?php foreach($country_code as $telephone_country_code){?>
+                                                                <option value="{{$telephone_country_code->id}}" <?php if(isset($customer) && $customer->telephone_country_code == $telephone_country_code->id){echo 'selected';}?>>+{{$telephone_country_code->code}}</option>
+                                                            <?php }?>
+                                                        </select>
+                                                        </div>
+                                                        <div class="col-sm-1 numberHifan">
+                                                            -
+                                                        </div>
+                                                    <div class="col-sm-6 ps-0">
                                                         <input type="text" class="form-control editInput"
                                                             id="telephone" name="telephone" value="<?php if(isset($customer)){echo $customer->telephone;}?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
                                                     <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-2 pe-0">
+                                                        <select class="form-control editInput selectOptions" id="mobile_country_code" name="mobile_country_code">
+                                                            <option selected disabled>Please Select</option>
+                                                        <?php foreach($country_code as $mobile_country_code){?>
+                                                                <option value="{{$mobile_country_code->id}}" <?php if(isset($customer) && $customer->mobile_country_code == $mobile_country_code->id){echo 'selected';}?>>+{{$mobile_country_code->code}}</option>
+                                                            <?php }?>
+                                                        </select>
+                                                        </div>
+                                                        <div class="col-sm-1 numberHifan">
+                                                            -
+                                                        </div>
+                                                    <div class="col-sm-6 ps-0">
                                                         <input type="text" class="form-control editInput" id="mobile" name="mobile"
                                                             value="<?php if(isset($customer)){echo $customer->mobile;}?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                     </div>
@@ -521,7 +546,7 @@
                                                             <td><input type="checkbox" value="{{$sitev->id}}"></td>
                                                             <td>{{$sitev->site_name}}</td>
                                                             <td>{{$sitev->contact_name}}</td>
-                                                            <td>{{$job_title_detail->name}}</td>
+                                                            <td>{{$job_title_detail->name ?? ""}}</td>
                                                             <td>{{$sitev->email}}</td>
                                                             <td>{{$sitev->telephone}}</td>
                                                             <td>{{$sitev->mobile}}</td>
@@ -529,7 +554,7 @@
                                                             <td>{{$sitev->city}}</td>
                                                             <td>{{$sitev->country}}</td>
                                                             <td>{{$sitev->post_code}}</td>
-                                                            <td>{{$site_regionName->title}}</td>
+                                                            <td>{{$site_regionName->title ?? ""}}</td>
                                                             <td>
                                                                 <div class="d-inline-flex align-items-center ">
                                                                     <div class="nav-item dropdown">
@@ -606,7 +631,7 @@
 
                         <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="pageTitleBtn">
-                            <a href="javascript:void(0)" class="profileDrop" onclick="save_all_data()"><i class="fa-solid fa-floppy-disk"></i> Save</a>
+                            <a href="javascript:void(0)" class="profileDrop" onclick="save_all_datawithredirect()"><i class="fa-solid fa-floppy-disk"></i> Save</a>
                                 <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
                             </div>
@@ -767,7 +792,8 @@
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="contact_email" id="contact_email">
+                                        <input type="text" class="form-control editInput" name="contact_email" id="contact_email" onblur="getemail(2)">
+                                        <span id="emailErr2" style="color: red;"></span>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -895,7 +921,8 @@
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_email" id="site_email">
+                                        <input type="text" class="form-control editInput" name="site_email" id="site_email" onblur="getemail(3)">
+                                        <span id="emailErr3" style="color: red;"></span>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -1111,7 +1138,10 @@
             $("#region_modal").modal('show');
         }
     }
-   function save_all_data(){
+    function save_all_datawithredirect(){
+        save_all_data('yes');
+    }
+   function save_all_data(text){
     var name=$("#name").val();
     var contact_name=$("#contact_name").val();
     var address=$("#address").val();
@@ -1144,7 +1174,24 @@
             processData: false,
             success: function(data) {
                 console.log(data);
-                window.location.href ="<?=url('customer_add_edit?key=')?>"+data.id;
+                if(data.vali_error){
+                    alert(data.vali_error);
+                    $("#email").css('border','1px solid red');
+                    return false;
+                }else{
+                    $("#email").css('border','');
+                    $('.alert').show();
+                    setTimeout(function() {
+                        $('.alert').hide();
+                        if(text == 'yes'){
+                            window.location.href ="<?=url('customers?list_mode=ACTIVE')?>";
+                        }else{
+                            window.location.href ="<?=url('customer_add_edit?key=')?>"+data.id;
+                        }
+                    }, 3000);
+                }
+                
+                
                 // console.log(data.id);
                 // $("#customer_id").val(data.id);
                 // $("#site_customer_id").val(data.id);
@@ -1361,24 +1408,44 @@
         var country_id=$("#site_country_id").val();
         var notes=$("#site_note").val();
         var id=$("#site_id").val();
-        $.ajax({
+        if(site_name == ''){
+            $("#site_name").css('border','1px solid red');
+            // $(window).scrollTop($('#site_name').position().top);
+            return false;
+        }else if(contact_name == ''){
+            $("#site_name").css('border','');
+            $("#site_contact_name").css('border','1px solid red');
+            // $(window).scrollTop($('#site_contact_name').position().top);
+            return false;
+        }else if(address == ''){
+            $("#site_contact_name").css('border','');
+            $("#site_address").css('border','1px solid red');
+            // $(window).scrollTop($('#site_address').position().top);
+            return false;
+        }else{
+            $("#site_name").css('border','');
+            $("#site_contact_name").css('border','');
+            $("#site_address").css('border','');
+            $.ajax({
             type: "POST",
             url: "{{url('/save_site')}}",
             data: {id:id,site_name:site_name,contact_name:contact_name,customer_id:customer_id,title_id:title_id,company_name:company_name,
                 email:email,telephone:telephone,mobile:mobile,fax:fax,region:region,address:address,city:city,country:country,
                 catalogue:catalogue,post_code:post_code,country_id:country_id,notes:notes,_token:token},
-            success: function(data) {
-                console.log(data);
-                if($.trim(data) == 'done'){
-                    $("#SiteModel").modal('hide');
-                    location.reload();
-                }else{
-                    alert("Someting went Wrong");
-                    return false;
+                success: function(data) {
+                    console.log(data);
+                    if($.trim(data) == 'done'){
+                        $("#SiteModel").modal('hide');
+                        location.reload();
+                    }else{
+                        alert("Someting went Wrong");
+                        return false;
+                    }
+                    
                 }
-                
-            }
-        });
+            });
+        }
+        
     }
     function save_login(){
         var token='<?php echo csrf_token();?>'
@@ -1581,5 +1648,27 @@
         $("#login_note").val(notes);
     });
     
+</script>
+<script>
+    function getemail(id)
+  {
+    var email;
+    if(id == 1){
+         email= $('#email').val();
+    }else if(id == 2){
+        email=$("#contact_email").val();
+    }else if(id == 3){
+        email=$("#site_email").val();
+    }
+    validRegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (email.search(validRegExp) == -1) 
+    {
+        $('#emailErr'+id).text("Please enter correct email address");
+      return false;
+    }else{
+        $('#emailErr'+id).text("");
+    }
+  }
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
