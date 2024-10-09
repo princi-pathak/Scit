@@ -44,15 +44,17 @@
 //*******************************DataTable */
 $(document).ready(function() {
   var table = $('#exampleOne').DataTable({
-      columnDefs: [{
-          orderable: false,
-          className: 'select-checkbox',
-          targets: 0
-      }],
-      select: {
-          style: 'multi',
-          selector: 'td:first-child'
-      },
+    // Ram 09/10/2024 comment here for manual checkbox 
+      // columnDefs: [{
+      //     orderable: false,
+      //     className: 'select-checkbox',
+      //     targets: 0
+      // }],
+      // select: {
+      //     style: 'multi',
+      //     selector: 'td:first-child'
+      // },
+      // end here
       order: [[1, 'asc']],
       language: {
           paginate: {
@@ -68,23 +70,32 @@ $(document).ready(function() {
       },
       paging: true,
   });
-
+// Ram change
   // Select All checkbox functionality
-  $('#selectAll').on('click', function() {
-      if ($(this).prop('checked')) {
-          table.rows().select();  // Select all rows
-      } else {
-          table.rows().deselect();  // Deselect all rows
-      }
-  });
+  // $('#selectAll').on('click', function() {
+  //     if ($(this).prop('checked')) {
+  //         table.rows().select();  
+  //     } else {
+  //         table.rows().deselect();
+  //     }
+  // });
 
-  // Delete button functionality
-  $('#deleteSelectedRows').click(function() {
-      var selectedRows = table.rows({ selected: true }).remove().draw();
-      if (selectedRows.count() === 0) {
-          alert('No rows selected!');
-      }
+$('#selectAll').on('click', function() {
+      // if ($(this).prop('checked')) {
+      //     table.rows().select();  
+      // } else {
+      //     table.rows().deselect();
+      // }
+      $('.delete_checkbox').prop('checked', $(this).prop('checked'));
   });
+// Ram comment this function
+  // Delete button functionality
+  // $('#deleteSelectedRows').click(function() {
+  //     var selectedRows = table.rows({ selected: true }).remove().draw();
+  //     if (selectedRows.count() === 0) {
+  //         alert('No rows selected!');
+  //     }
+  // });
 });
 //*******************************End DataTable */
 // CRM JS
