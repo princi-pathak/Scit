@@ -312,5 +312,22 @@ class CustomerController extends Controller
         ]);
 
     }
+
+    public function getCustomerBillingAddressData(Request $request){
+        
+        $validator = Validator::make($request->all(), [
+            'id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = CustomerBillingAddress::getCustomerBillingAddressData($request->id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
    
 }
