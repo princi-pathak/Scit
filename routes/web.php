@@ -14,6 +14,9 @@ use App\Http\Controllers\frontEnd\salesFinance\InvoiceController;
 use App\Http\Controllers\frontEnd\salesFinance\Purchase_orderController;
 use App\Http\Controllers\backEnd\ManagersController;
 use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
+use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as FrontendProductCategoryController;
+
+
 
 Route::get('clear', function () {
 	Artisan::call('cache:clear');
@@ -463,6 +466,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		Route::get('/item/catalogues', 'index')->name('catalogues.index');
 		
+	});
+
+	Route::controller(FrontendProductCategoryController::class)->group(function(){
+
+		Route::get('/item/product_categories','index')->name('item.index');
 	});
 
 
