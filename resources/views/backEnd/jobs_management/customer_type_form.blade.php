@@ -106,7 +106,7 @@ function get_data(){
             success:function(data)
             {
                 console.log(data);
-                if($.trim(data)=="done"){
+                if($.trim(data)!="error"){
                     window.location.href='<?php echo url('admin/customer_type');?>';
                 }
             }
