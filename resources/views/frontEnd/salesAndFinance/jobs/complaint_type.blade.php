@@ -66,7 +66,7 @@
                             @if(!$crm_sections->isEmpty())
                             @foreach ($crm_sections as $value)
                             <tr>
-                                <td></td>
+                                <td><input type="checkbox" id="" class="delete_checkbox" value="{{$value->id}}"></td>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $value->title }}</td>
                                 <td>@switch($value->crm_section)
@@ -176,6 +176,24 @@
     </div>
 </div>
 <!-- end Popup  -->
+ <script>
+   $("#deleteSelectedRows").on('click', function() {
+    let ids = [];
+    
+    $('.delete_checkbox:checked').each(function() {
+        ids.push($(this).val());
+    });
+
+    console.log(ids);
+});
+$('.delete_checkbox').on('click', function() {
+    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+        $('#selectAll').prop('checked', true);
+    } else {
+        $('#selectAll').prop('checked', false);
+    }
+});
+ </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script>
     $(document).ready(function() {

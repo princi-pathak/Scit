@@ -25,6 +25,10 @@
         .modal.show .modal-dialog {
             box-shadow: 0px 0px 10px #34343447;
         }
+        .numberHifan{
+            text-align:center;
+            font-size:20px;
+        }
     </style>
 </head>
 <?php
@@ -1778,7 +1782,7 @@ $access_rights = explode(',', $rights);
                     selectElement.innerHTML = '';
                     response.Data.forEach(user => {
                         const option = document.createElement('option');
-                        option.value = user.code;
+                        option.value = user.id;
                         option.text = "+" + " " + user.code + " - " + " " + user.name;
                         selectElement.appendChild(option);
                     });
@@ -1788,4 +1792,26 @@ $access_rights = explode(',', $rights);
                 }
             });
         }
+
+        function getCountriesListWithNameCode(selectElement) {
+            $.ajax({
+                url: '{{ route("ajax.getCountriesList") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response.Data);
+                    selectElement.innerHTML = '';
+                    response.Data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text =  user.name + " " + "(+" + user.code +")";
+                        selectElement.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+
     </script>
