@@ -26,14 +26,15 @@ class ActionController extends Controller
             $data = $model->find($id);
             $data->status = $status;
             $data->save();
+            return 1;
         } catch (\Exception $e) {
             return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
         }
-        if($data){
-            return 1;
-        }else {
-            return 0;
-        }
+        // if($data){
+        //     return 1;
+        // }else {
+        //     return 0;
+        // }
         
     }
 }

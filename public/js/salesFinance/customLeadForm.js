@@ -234,13 +234,15 @@ $('.open-modal').on('click', function () {
 
 document.getElementById('saveAddTask').addEventListener('click', function (event) {
     const yeson = document.getElementById('yeson').checked;
-    const notifyDate = document.getElementById('notify_date').value;
-    const notifyTime = document.getElementById('notify_time').value;
+    const notifyDate = document.getElementById('notifyDate').value;
+    const notifyTime = document.getElementById('notifyTime').value;
     const createDate = document.getElementById('create_date').value;
     const createTime = document.getElementById('create_time').value;
     const task_title = document.getElementById('task_title').value;
-
-    if (yeson && (!notifyDate || !notifyTime)) {
+    
+    console.log({ yeson, notifyDate, notifyTime, createDate, createTime, task_title });
+    
+    if (yeson && (!notifyDate.trim() || !notifyTime.trim())) {
         alert('Please select the notification date and time.');
         event.preventDefault(); // Prevent form submission
     } else if (!createDate & !createTime) {

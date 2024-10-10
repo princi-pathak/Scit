@@ -67,15 +67,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="ThemeBucket">
+  <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>
   <!-- <link rel="shortcut icon" href="{{ asset('public/images/favicon.png') }}"> -->
-  
-
   
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/images/favicon.ico') }}">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
- <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>
 
+  <link href="https://cdn.form.io/formiojs/formio.form.min.css">
   <title>{{ PROJECT_NAME }} @yield('title','') </title>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -119,7 +118,7 @@
   
   <!-- For body Map-->
   <link href="{{ url('public/backEnd/css/amarjeet.css')}}" rel="stylesheet" type="text/css" > 
-  <link href="https://cdn.form.io/formiojs/formio.form.min.css">
+
    <!--Core js-->
   
   <script src="{{ url('public/frontEnd/js/jquery.min.js') }}"></script>

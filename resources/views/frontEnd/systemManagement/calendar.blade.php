@@ -106,7 +106,7 @@ if (isset($system_calendar)) {
                                                         if ($user_type == 'SU') {
                                                             echo "selected";
                                                         }
-                                                    } ?>>Service User</option>
+                                                    } ?>>Child</option>
                             </select>
                         </div>
 

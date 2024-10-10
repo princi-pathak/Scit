@@ -51,9 +51,9 @@ padding: 5px 0px 15px 0px;
                             <form class="form-horizontal" id="form_data">
                             <label>Customer Type Details</label>                           
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Customer Type*</label>
+                                <label class="col-lg-3 control-label">Customer Type<span class="red-text">*</span></label>
                                 <div class="col-lg-9">
-                                    <input type="text" id="type" name="type" class="form-control" placeholder="Customer Type" value="<?php if(isset($type)){echo $type->name;}?>">
+                                    <input type="text" id="type" name="type" class="form-control" placeholder="Customer Type" value="<?php if(isset($type)){echo $type->title;}?>">
                                     <p style="color:red;display:none" id="typeError">* Customer Type is Required Field *</p>
                                 </div>
                             </div> 
@@ -84,12 +84,12 @@ padding: 5px 0px 15px 0px;
 </section>	
 <script>
 function get_data(){
-    var name=$("#type").val();
+    var title=$("#type").val();
     var id=$("#id").val();
     var home_id=$("#home_id").val();
     var token='<?php echo csrf_token();?>'
     var firstErrorField = null;
-    if (name == '') {
+    if (title == '') {
         $("#typeError").show();
         if (!firstErrorField) firstErrorField = $('#type');
     } else {
@@ -102,7 +102,7 @@ function get_data(){
         $.ajax({  
             type:"POST",
             url:"{{url('admin/customer_type_save')}}",
-            data:{id:id,home_id:home_id,name:name,_token:token},
+            data:{id:id,home_id:home_id,title:title,_token:token},
             success:function(data)
             {
                 console.log(data);

@@ -548,7 +548,7 @@
                     $('.service-user-list').html(resp);
                     $(".js-example-placeholder-single").select2({
                         dropdownParent: $('#ServiceUserlogBookModal'),
-                        placeholder: "Select Service User"
+                        placeholder: "Select Child"
                     });
                     $('input[name=\'log_id\']').val(log_id);
                     $('#ServiceUserlogBookModal').modal('show');    
@@ -657,7 +657,7 @@
                         $('.service-user-list').html(resp);
                         $(".js-example-placeholder-single").select2({
                             dropdownParent: $('#ServiceUserAddToCalendarModal'),
-                            placeholder: "Select Service User"
+                            placeholder: "Select Child"
                         });
                         $('input[name=\'log_id\']').val(log_book_id);
                         $('#ServiceUserAddToCalendarModal').modal('show');    

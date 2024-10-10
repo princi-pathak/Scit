@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <section class="main_section_page px-3">
@@ -45,6 +45,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>Quote Reject Type</th>
                                 <th>Status</th>
@@ -55,6 +56,7 @@
                             @if(!$quote_reject_type->isEmpty())
                                 @foreach ($quote_reject_type as $value)
                                     <tr>
+                                        <td></td>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $value->title }}</td>
                                         <td> @if($value->status) <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span> @else <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> @endif </td>
@@ -103,7 +105,7 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
                         <div class="col-md-9">
-                            <select name="status" id="status" class="form-control editInput">
+                            <select name="status" id="modale_status" class="form-control editInput">
                                 <option value="1">Active</option>
                                 <option value="0">InActive</option>
                             </select>
@@ -119,7 +121,7 @@
     </div>
 </div>
 <!-- end Popup  -->
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script>
     $(document).ready(function() {
         $('.open-modal').on('click', function() {
@@ -128,20 +130,20 @@
             var itemStatus = $(this).data('status');
             $('#quote_reject_type_id').val(itemId);
             $('#title').val(itemTitle);
-            $('#status').val(itemStatus);
+            $('#modale_status').val(itemStatus);
 
             if (itemId) {
                 // Editing existing record
                 $('#quote_reject_type_id').val(itemId);
                 $('#title').val(itemTitle);
-                $('#status').val(itemStatus);
+                $('#modale_status').val(itemStatus);
                 $('.modal-title').text('Quote Reject Type - Edit');
                 $('#saveChanges').text('Save Changes');
             } else {
                 // Adding new record (clear form fields if needed)
                 $('#quote_reject_type_id').val('');
                 $('#title').val('');
-                $('#status').val(1); // Default to Active
+                $('#modale_status').val(1); // Default to Active
                 $('.modal-title').text('Quote Reject Type - Add');
                 $('#saveChanges').text('Add');
             }
@@ -194,7 +196,7 @@
                 id: id
             },
             success: function(response) {
-                if (data.success) {
+                if (response.success) {
                     console.log('Record soft deleted successfully');
                 } else {
                     console.error('Error deleting record');

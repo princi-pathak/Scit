@@ -291,7 +291,7 @@
 
                         } else{
                             if(resp.status == 'insufficient_balance') {
-                                $('span.popup_error_txt').text("Service user does not have enough balance");
+                                $('span.popup_error_txt').text("Child does not have enough balance");
                             } else{
                                 $('span.popup_error_txt').text("{{ COMMON_ERROR }}");                      
                             }

@@ -6058,3 +6058,12 @@ canvas#canv1 {
 .modal-body.pdbotm{
     padding-bottom: 15px;
 }
+
+/* Ram add css for red star and radio buttons */
+.red-text {
+    color: red;
+}
+/* end here */
+.popupcloseBtn .modal-header .close {
+    margin-top: -20px;
+}

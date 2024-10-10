@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 @section('title',' Add Leads')
 <link rel="stylesheet" href="{{ url('public/css/salesFinance/custom_lead.css') }}" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -27,7 +27,7 @@ if (isset($lead)) {
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>New Leads</h3>
+                    <h3>New Lead</h3>
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@ if (isset($lead)) {
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputName" class="col-sm-3 col-form-label">Preferred date call</label>
+                                        <label for="inputName" class="col-sm-3 col-form-label">Preferred date to call</label>
                                         <div class="col-sm-3">
                                             <input type="date" name="prefer_date" class="form-control editInput" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}" id="">
                                         </div>
@@ -184,7 +184,7 @@ if (isset($lead)) {
 
                                         <button class="nav-link" id="nav-Tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-Tasks" type="button" role="tab" aria-controls="nav-Tasks" aria-selected="false">Tasks</button>
 
-                                        <button class="nav-link" id="nav-attachments-tab" data-bs-toggle="tab" data-bs-target="#nav-attachments" type="button" role="tab" aria-controls="nav-attachments" aria-selected="false">Attechmants</button>
+                                        <button class="nav-link" id="nav-attachments-tab" data-bs-toggle="tab" data-bs-target="#nav-attachments" type="button" role="tab" aria-controls="nav-attachments" aria-selected="false">Attachments</button>
 
                                     </div>
                                 </nav>
@@ -380,13 +380,13 @@ if (isset($lead)) {
                                                                         <label for="notify" class="col-form-label ps-3">Yes, On</label>
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <input type="date" class="form-control editInput" id="notify_date" name="notify_date">
+                                                                        <input type="date" class="form-control editInput" id="notifyDate" name="notify_date">
                                                                     </div>
                                                                     <div class="col-sm-1 text-center">
                                                                         <i class="fa fa-calendar-days"></i>
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <input type="time" class="form-control editInput" id="notify_time" name="notify_time">
+                                                                        <input type="time" class="form-control editInput" id="notifyTime" name="notify_time">
                                                                     </div>
                                                                     <div id="optionsDiv">
                                                                         <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
@@ -659,5 +659,5 @@ if (isset($lead)) {
     var addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
     var saveLeadAttachmentUrl = '{{ route("lead.ajax.saveLeadAttachment") }}';
 </script>
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>

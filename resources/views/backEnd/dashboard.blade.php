@@ -282,7 +282,7 @@
             <span class="mini-stat-icon orange"><i class="fa fa-user"></i></span>
             <div class="mini-stat-info">
                 <span>{{ $count['yp'] }}</span>
-                Service User
+                Child
             </div>
         </div>
     </div>

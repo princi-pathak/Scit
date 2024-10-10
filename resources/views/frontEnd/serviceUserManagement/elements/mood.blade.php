@@ -1,5 +1,5 @@
 
-<!-- Service User Emotional Health/Mood Modal -->
+<!-- Child Emotional Health/Mood Modal -->
 <div class="modal fade" id="moodModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

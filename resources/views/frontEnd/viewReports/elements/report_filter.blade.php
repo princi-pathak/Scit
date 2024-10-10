@@ -52,7 +52,7 @@
                 <?php   if(!isset($user_type)) {  ?>
                             <select id="user_type" name="user_type">
                                 <option value=""> Select </option>
-                                <option value="SERVICE_USER"> Service User </option>
+                                <option value="SERVICE_USER"> Child </option>
                                 <option value="STAFF"> Staff </option>
                             </select>
                 <?php   }  ?>
@@ -60,7 +60,7 @@
                     if(isset($user_type)) {  ?>
                     <select id="user_type" name="user_type">
                         <option value=""> Select </option>
-                        <option value="SERVICE_USER" {{ ($user_type == 'SERVICE_USER') ? 'selected': '' }}> Service User </option>
+                        <option value="SERVICE_USER" {{ ($user_type == 'SERVICE_USER') ? 'selected': '' }}> Child </option>
                         <option value="STAFF" {{ ($user_type == 'STAFF') ? 'selected': '' }}> Staff </option>
                     </select>
                 <?php } ?>

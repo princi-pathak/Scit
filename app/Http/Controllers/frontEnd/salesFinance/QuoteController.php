@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Customer;
 use App\Models\QuoteType;
 use App\Models\QuoteSource;
 use App\Models\QuoteRejectType;
+use App\Models\Customer_type;
+use App\Models\Region;
+use App\Models\Country;
+use App\Models\Currency;
 
 class QuoteController extends Controller
 {
@@ -20,7 +23,8 @@ class QuoteController extends Controller
     }
     public function create(){
         $data['page'] = "quotes";
-        $data['customers'] = Customer::getConvertedCustomers(Auth::user()->home_id);
+        $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
+        $data['countries'] = Country::getCountriesNameCode();
         return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }
     public function index(){
@@ -130,4 +134,65 @@ class QuoteController extends Controller
             return response()->json(['success' => false, 'message' => 'Record not found']);
         }
     }
+
+    public function saveCustomerType(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $saveData = Customer_type::create(array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
+        if ($saveData) {
+            return response()->json(['success' => true, 'message' => 'Customer Type added successfully.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Error in customer Creation.']);
+        }
+    } 
+
+    public function getCustomerType(){
+        $data = Customer_type::getCustomerType(Auth::user()->home_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function saveRegion(Request $request){
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'title' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $saveData = Region::updateOrCreate(['id'=>$request->id ?? null],array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
+        if ($saveData) {
+            return response()->json(['success' => true, 'message' => 'Region added successfully.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Error in region add.']);
+        }
+    }
+
+    public function getRegions(){
+        $data = Region::getRegions(Auth::user()->home_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function getCurrencyData(){
+        $data = Currency::getCurrencyData();
+        
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    } 
 }

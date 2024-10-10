@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
-use App\Models\Job_title;
 use App\Models\Constructor_customer_site;
 use App\Models\Constructor_additional_contact;
 
@@ -24,7 +23,9 @@ class Customer extends Model
         'contact_name',
         'job_title',
         'email',
+        'telephone_country_code',
         'telephone',
+        'mobile_country_code',
         'mobile',
         'fax',
         'website',
@@ -101,7 +102,7 @@ class Customer extends Model
         } else if ($lastSegment === "converted"){
             return $query->where('customers.is_converted', 1)->where('customers.status', 1)->get();
         } else if ($lastSegment === "myLeads"){
-            return $query->where('user_id', Auth::user()->id)->whereNotIn('leads.status', [7])->get();
+            return $query->where('leads.assign_to', Auth::user()->id)->whereNotIn('leads.status', [7])->get();
         } else if ($lastSegment === "authorization"){
             return $query->where('leads.status', 7)->get();
         } else if ($lastSegment === "actioned") {
@@ -141,7 +142,24 @@ class Customer extends Model
     {
         return $this->hasMany(Project::class, 'customer_name');
     }
-    public function customer_profession(){
-        return $this->hasOne(Job_title::class, 'id');
+    // public function customer_profession(){
+    //     return $this->hasOne(Job_title::class, 'id');
+    // }
+
+    public static function saveCustomerData(array $data, $customerId = null)
+    {
+        $data['home_id'] = Auth::user()->home_id;
+        $data['is_converted'] = 1;
+        return self::updateOrCreate(['id' => $customerId], $data);
     }
+
+    public static function getCustomerList(){
+        return self::where('is_converted', 1)->where('status', 1)->get();
+    }
+
+    public static function getCustomerDetails($id){
+        return self::where('id', $id)->get();
+    }
+
+  
 }

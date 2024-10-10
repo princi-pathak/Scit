@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <section class="main_section_page px-3">
@@ -45,6 +45,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>Quote Type</th>
                                 <th>Default Expiration Date</th>
@@ -56,6 +57,7 @@
                             @if(!$quote_type->isEmpty())
                             @foreach ($quote_type as $value)
                             <tr>
+                                <td></td>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $value->title }}</td>
                                 <td>{{ $value->number_of_days }}</td>
@@ -107,13 +109,13 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Number of days</label>
                         <div class="col-md-9">
-                            <input type="number" name="number_of_days" class="form-control editInput " placeholder="" id="number_of_days">
+                            <input type="text" name="number_of_days" class="form-control editInput " placeholder="" id="number_of_days" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                         </div>
                     </div>
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
                         <div class="col-md-9">
-                            <select name="status" id="status" class="form-control editInput">
+                            <select name="status" id="modale_status" class="form-control editInput">
                                 <option value="1">Active</option>
                                 <option value="0">InActive</option>
                             </select>
@@ -129,7 +131,7 @@
     </div>
 </div>
 <!-- end Popup  -->
-@include('frontEnd.jobs.layout.footer')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script>
     $(document).ready(function() {
         $('.open-modal').on('click', function() {
@@ -140,13 +142,13 @@
 
             $('#quote_type_id').val(itemId);
             $('#title').val(itemTitle);
-            $('#status').val(itemStatus);
+            $('#modale_status').val(itemStatus);
             $('#number_of_days').val(number_of_days);
             if (itemId) {
                 // Editing existing record
                 $('#quote_type_id').val(itemId);
                 $('#title').val(itemTitle);
-                $('#status').val(itemStatus);
+                $('#modale_status').val(itemStatus);
                 $('#number_of_days').val(number_of_days);
                 $('.modal-title').text('Quote Type - Edit');
                 $('#saveChanges').text('Save Changes');
@@ -155,7 +157,7 @@
                 $('#quote_type_id').val('');
                 $('#title').val('');
                 $('#number_of_days').val();
-                $('#status').val(1); // Default to Active
+                $('#modale_status').val(1); // Default to Active
                 $('.modal-title').text('Quote Type - Add');
                 $('#saveChanges').text('Add');
             }
@@ -206,7 +208,8 @@
                 id: id
             },
             success: function(response) {
-                if (data.success) {
+                console.log(response);
+                if (response.success) {
                     console.log('Record soft deleted successfully');
                     location.reload();
 

@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.master')
 
-@section('title',' Service User My Money History')
+@section('title',' Child My Money History')
 
 @section('content')
 

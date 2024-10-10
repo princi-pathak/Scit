@@ -208,7 +208,7 @@ class EarningSchemeController extends ServiceUserManagementController
         die;
     }
 
-    //add to service user availed incentives list 
+    //add to Child availed incentives list 
     public function add_to_calendar(Request $request) {
 
         $data = $request->input();

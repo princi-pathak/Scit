@@ -83,7 +83,7 @@ class LocationHistoryController extends Controller
             Session::forget('noti_data');
         }
 
-        //service user today login location
+        //Child today login location
         $su_locations   = ServiceUserLocationHistory::select('id','latitude','longitude','timestamp')
 													->where('service_user_id',$service_user_id)
 													->whereDate('timestamp',date('Y-m-d'))
@@ -91,14 +91,14 @@ class LocationHistoryController extends Controller
 													->orderBy('id','desc')
 													->first();
 		// echo '<prE>'; print_r($su_locations); die;
-		//service user today last logout location
+		//Child today last logout location
 		$su_last_running_locations   = ServiceUserLocationHistory::select('id','latitude','longitude','timestamp')
 													->where('service_user_id',$service_user_id)
 													->whereDate('timestamp',date('Y-m-d'))
 													->where('location_source','R')
 													->orderBy('id','desc')
 													->first();
-		//service user today all locations
+		//Child today all locations
 		$su_all_running_locations   = ServiceUserLocationHistory::select('id','latitude','longitude','timestamp')
 													->where('service_user_id',$service_user_id)
 													// ->whereDate('timestamp',date('Y-m-d'))

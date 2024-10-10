@@ -12,7 +12,11 @@ class Customer_type extends Model
 
     protected $fillable = [
         'home_id',
-        'name',
-        'status',
+        'title',
+        'status'
     ];
+
+    public static function getCustomerType($home_id){
+        return Customer_type::where('home_id', $home_id)->select('id','title')->where('status', 1)->get();
+    }
 }

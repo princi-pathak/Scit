@@ -173,7 +173,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                     <select class="form-control" name="service_user" id="service_user" <?php if (isset($_GET['key'])) {
                                                                                             echo "disabled";
                                                                                         } ?>>
-                        <option value="">Select Service user</option>
+                        <option value="">Select Child</option>
                         @foreach($service_users as $val)
                         <option <?php if (isset($_GET['key'])) {
                                     if ($_GET['key'] == $val->id) {

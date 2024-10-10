@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session,DB;
+use Carbon\Carbon;
 use App\Customer;
 use App\Models\Job;
 use App\Models\Product;
@@ -33,7 +34,7 @@ class JobsController extends Controller
             ->select('job.*','service.id as service_id','service.home_id','service.name','service.user_name','service.phone_no','service.section','service.email','type.id as job_type_id','type.name as type_name','type.default_days')
             ->join('service_user as service','job.customer_id','service.id')
             ->join('job_types as type','job.job_type','type.id')
-            ->where('job.status','!=',2);
+            ->whereNull('job.deleted_at');
 
             $search = '';
 
@@ -75,9 +76,10 @@ class JobsController extends Controller
     }
     public function job_delete(Request $request){
         $id=base64_decode($request->id);
-        $table=Job::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Job::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Job::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Job Deleted Successfully Done');
         echo "done";
     }
@@ -247,9 +249,10 @@ class JobsController extends Controller
     }
     public function get_delete_jobproduct(Request $request){
         $id=$request->id;
-        $table=Construction_jobassign_product::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Construction_jobassign_product::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Construction_jobassign_product::find($id);
+        // $table->status=2;
+        // $table->save();
         // Session::flash('success','Deleted Successfully Done');
         echo "done";
     }
@@ -257,7 +260,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Job_type::whereNot('status',2);
+            $query=Job_type::whereNull('deleted_at');
 
             $search = '';
 
@@ -299,9 +302,10 @@ class JobsController extends Controller
     }
     public function job_type_delete(Request $request){
         $id=base64_decode($request->id);
-        $table=Job_type::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Job_type::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Job_type::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
     }
@@ -316,6 +320,7 @@ class JobsController extends Controller
         $data['task']=$task;
         $data['page']='jobs_type_list';
         $data['del_status']=0;
+        $data['appointement_type']=Construction_job_appointment_type::whereNull('deleted_at')->where('status',1)->get();
         return view('backEnd.jobs_management.job_type_form',$data);
     }
     public function job_type_save_data(Request $request){
@@ -358,7 +363,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Work_flow::whereNot('status',2);
+            $query=Work_flow::whereNull('deleted_at');
 
             $search = '';
 
@@ -402,9 +407,10 @@ class JobsController extends Controller
     public function wrok_flow_delete(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $id=base64_decode($request->id);
-        $table=Work_flow::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Work_flow::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Work_flow::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Change Successfully Done');
         echo "done";
     }
@@ -493,7 +499,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query = Product_category::with('parent', 'children')->where('status', '!=', 2)->orderBy('id', 'ASC');
+            $query = Product_category::with('parent', 'children')->whereNull('deleted_at')->orderBy('id', 'ASC');
             $search = '';
     
             if (isset($request->limit)) {
@@ -541,9 +547,10 @@ class JobsController extends Controller
     public function product_cat_delete(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $id=base64_decode($request->id);
-        $table=Product_category::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Product_category::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Product_category::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
     }
@@ -586,7 +593,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Product::whereNot('status',2);
+            $query=Product::whereNull('deleted_at');
 
             $search = '';
 
@@ -628,9 +635,10 @@ class JobsController extends Controller
     }
     public function product_delete(Request $request){
         $id=base64_decode($request->id);
-        $table=Product::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Product::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Product::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";  
     }
@@ -638,7 +646,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Construction_account_code::whereNot('status',2);
+            $query=Construction_account_code::whereNull('deleted_at');
 
             $search = '';
 
@@ -717,9 +725,10 @@ class JobsController extends Controller
     }
     public function account_delete(Request $request){
         $id=base64_decode($request->id);
-        $table=Construction_account_code::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Construction_account_code::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Construction_account_code::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
     }
@@ -727,7 +736,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Construction_tax_rate::whereNot('status',2);
+            $query=Construction_tax_rate::whereNull('deleted_at');
 
             $search = '';
 
@@ -809,9 +818,10 @@ class JobsController extends Controller
     }
     public function tax_delete(Request $request){
         $id=base64_decode($request->id);
-        $table=Construction_tax_rate::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Construction_tax_rate::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Construction_tax_rate::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
     }
@@ -944,7 +954,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Project::whereNot('status',2)->orderBy('id','DESC');
+            $query=Project::whereNull('deleted_at')->orderBy('id','DESC');
 
             $search = '';
 
@@ -1045,9 +1055,10 @@ class JobsController extends Controller
     }
     public function project_delete(Request $request){
         $id=base64_decode($request->id);
-        $table=Project::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Project::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Project::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
     }
@@ -1056,7 +1067,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Job_recurring::whereNot('status',2)->orderBy('id','DESC');
+            $query=Job_recurring::whereNull('deleted_at')->orderBy('id','DESC');
 
             $search = '';
 
@@ -1091,7 +1102,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Construction_job_appointment_type::whereNot('status',2);
+            $query=Construction_job_appointment_type::whereNull('deleted_at');
 
             $search = '';
 
@@ -1173,9 +1184,10 @@ class JobsController extends Controller
     public function job_appointment_type_delete(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $id=base64_decode($request->id);
-        $table=Construction_job_appointment_type::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Construction_job_appointment_type::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Construction_job_appointment_type::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
     }
@@ -1183,7 +1195,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Construction_job_rejection_category::whereNot('status',2)->orderBy('id','DESC');
+            $query=Construction_job_rejection_category::whereNull('deleted_at')->orderBy('id','DESC');
 
             $search = '';
 
@@ -1259,9 +1271,10 @@ class JobsController extends Controller
     }
     public function job_rejection_category_delete(Request $request){
         $id=base64_decode($request->id);
-        $table=Construction_job_rejection_category::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Construction_job_rejection_category::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Construction_job_rejection_category::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
     }
@@ -1270,7 +1283,7 @@ class JobsController extends Controller
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         if($home_id){
-            $query=Job_title::whereNot('status',2)->orderBy('id','DESC');
+            $query=Job_title::whereNull('deleted_at')->orderBy('id','DESC');
 
             $search = '';
 
@@ -1338,9 +1351,10 @@ class JobsController extends Controller
     }
     public function job_title_delete(Request $request){
         $id=base64_decode($request->id);
-        $table=Job_title::find($id);
-        $table->status=2;
-        $table->save();
+        $delete= Job_title::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        // $table=Job_title::find($id);
+        // $table->status=2;
+        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";
     }

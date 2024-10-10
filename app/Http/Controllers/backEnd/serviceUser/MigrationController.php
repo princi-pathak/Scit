@@ -91,7 +91,7 @@ class MigrationController extends Controller
         $service_user_id = $data['service_user_id']; 
         $su_home_id = ServiceUser::where('id',$data['service_user_id'])->value('home_id');
 
-        //check if the service user has already any request sent for migration
+        //check if the Child has already any request sent for migration
         $already_request = ServiceUserMigration::where('service_user_id',$data['service_user_id'])->orderBy('id','desc')->first();
         //echo '<pre>'; print_r($already_request); die;
 

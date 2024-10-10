@@ -194,10 +194,10 @@ class LogBookController extends ServiceUserManagementController
                             $message
                             ->to($staff_email, $staff_name)
                             ->from('mobappssolutions153@gmail.com', $company_name)
-                            ->subject("Service user $service_user->name logged a late entry");
+                            ->subject("Child $service_user->name logged a late entry");
                         }
                     );
-                    Log::info("Email sent to $staff_name successfully. As Service user $service_user->name logged a late entry");
+                    Log::info("Email sent to $staff_name successfully. As Child $service_user->name logged a late entry");
                 }
             }
         } catch(Exception $ex) {
@@ -417,7 +417,7 @@ class LogBookController extends ServiceUserManagementController
                                 ->where('home_id', $login_home_id)
                                 ->select('id', 'name', 'user_name')->get();
 
-        echo '<label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Service User: </label>
+        echo '<label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child: </label>
                     <div class="col-md-6 col-sm-9 col-xs-10">
                         <div class="select-bi" style="width:100%;float:left;">
                             

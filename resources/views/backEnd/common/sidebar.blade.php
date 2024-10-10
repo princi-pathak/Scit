@@ -103,7 +103,7 @@
                     </a>
                     <ul class="sub">
                         <li class="<?php if(($page == 'users') || ($page == 'user-task') || ($page == 'user-sick-leave') || ($page == 'user-annual-leave') ) {echo 'active'; } ?>"><a href="{{ url('admin/users') }}">Users</a></li>
-                        <li class="<?php if(($page == 'service-users') || ($page == 'service-users-care-history') || ($page == 'care_team') || ($page == 'moods') || ($page == 'su_migration_form') || ($page == 'incident-report') || ($page == 'external-service') || ($page == 'su-dynamic-form')|| ($page == 'file_manager')  || ($page == 'service-user-my-money-history') || ($page == 'service-user-my-money-request') || ($page == 'service-users-log-book') || ($page == 'service-users-living-skill') || ($page == 'service-users-rmp') || ($page == 'service-users-risk') || ($page == 'service-users-earn-schm') || ($page =='service-users-bmp')) { echo 'active'; } ?>"><a href="{{ url('admin/service-users') }}" >Service Users</a></li>
+                        <li class="<?php if(($page == 'service-users') || ($page == 'service-users-care-history') || ($page == 'care_team') || ($page == 'moods') || ($page == 'su_migration_form') || ($page == 'incident-report') || ($page == 'external-service') || ($page == 'su-dynamic-form')|| ($page == 'file_manager')  || ($page == 'service-user-my-money-history') || ($page == 'service-user-my-money-request') || ($page == 'service-users-log-book') || ($page == 'service-users-living-skill') || ($page == 'service-users-rmp') || ($page == 'service-users-risk') || ($page == 'service-users-earn-schm') || ($page =='service-users-bmp')) { echo 'active'; } ?>"><a href="{{ url('admin/service-users') }}" >Childs</a></li>
                         
                         <li class="{{ ($page == 'agents') ? 'active' : '' }}"><a href="{{ url('admin/agents') }}">Agent</a></li>
 
@@ -219,7 +219,7 @@
                 </li>
                 <!-- Setting Section Start -->
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type') || ($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') || ($page == 'job_title') || ($page == 'customer_type') ){ echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'tags') || ($page == 'task_type') || ($page == 'regions') || ($page == 'payment_types') || ($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type') || ($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') || ($page == 'job_title') || ($page == 'customer_type') ){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i>
                         <span>Setting</span>
                     </a>
@@ -268,15 +268,15 @@
                         </li>
 
                         <li class="sub-menu">
-                            <a href="javascript:void(0)"  <?php if(($page == 'attachment_types') ){echo 'class="active" style="color:#1fb5ad"';}?>>
+                            <a href="javascript:void(0)"  <?php if(($page == 'tags') || ($page == 'task_type') || ($page == 'regions') || ($page == 'payment_types') || ($page == 'attachment_types') ){echo 'class="active" style="color:#1fb5ad"';}?>>
                                 <i class="fa fa-list-ul"></i><span >General</span>
                             </a>
                             <ul class="sub pdlft">
                                 <li class="{{ ($page == 'attachment_types') ? 'active' : '' }}"><a href="{{ url('admin/general/attachment_types') }}"> <i class="fa fa-paperclip"></i> Attachment Types </a></li>
-                                <li class="{{ ($page == 'payment_types') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/quotes') }}"><i class="fa fa-money"></i> Payment Types </a></li>
-                                <li class="{{ ($page == 'regions') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}"><i class="fa fa-globe"></i> Regions </a></li>
-                                <li class="{{ ($page == 'task_type') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}"><i class="fa fa-list-ul"></i> Task Type </a></li>
-                                <li class="{{ ($page == 'tags') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}"><i class="fa fa-tags"></i> Tags </a></li>
+                                <li class="{{ ($page == 'payment_types') ? 'active' : '' }}"><a href="{{ url('admin/general/payment_types') }}"><i class="fa fa-money"></i> Payment Types </a></li>
+                                <li class="{{ ($page == 'regions') ? 'active' : '' }}"><a href="{{ url('admin/general/regins') }}"><i class="fa fa-globe"></i> Regions </a></li>
+                                <li class="{{ ($page == 'task_type') ? 'active' : '' }}"><a href="{{ url('admin/general/task_types') }}"><i class="fa fa-list-ul"></i> Task Type </a></li>
+                                <li class="{{ ($page == 'tags') ? 'active' : '' }}"><a href="{{ url('admin/general/tags') }}"><i class="fa fa-tags"></i> Tags </a></li>
                             </ul>
                         </li>
                     </ul>

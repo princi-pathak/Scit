@@ -852,9 +852,9 @@ section.main_section_page {
   position: relative;
 }
 
-form.customerForm {
+/* form.customerForm {
   padding-top: 20px;
-}
+} */
 
 .editInput {
   padding: .3rem .25rem;

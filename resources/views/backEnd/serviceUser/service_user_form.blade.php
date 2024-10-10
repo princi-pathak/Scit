@@ -1,5 +1,5 @@
 @extends('backEnd.layouts.master')
-@section('title',' Service User Form')
+@section('title',' Child Form')
 @section('content')
 <!-- script src="//cdn.ckeditor.com/4.5.10/basic/ckeditor.js" -->
 
@@ -32,7 +32,7 @@
 			<div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        {{ $task }} Service User Form
+                        {{ $task }} Child Form
                     </header>
                     <div class="panel-body">
                         <div class="position-center">

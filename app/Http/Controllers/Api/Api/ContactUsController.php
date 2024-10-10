@@ -18,7 +18,7 @@ class ContactUsController extends Controller
         if(!empty($data['user_id']) && !empty($data['user_type']) && !empty($data['subject']) && !empty($data['message']))
         {
             $service_user_id = $user_id = "0";
-            if($data['user_type'] == "Service User"){
+            if($data['user_type'] == "Child"){
                 $service_user_id = $data['user_id'];
                 $home_id = ServiceUser::whereId($service_user_id)->value('home_id');
             } elseif($data['user_type'] == "Staff") {

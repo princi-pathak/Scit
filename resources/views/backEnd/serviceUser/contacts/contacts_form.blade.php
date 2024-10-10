@@ -1,5 +1,5 @@
 @extends('backEnd.layouts.master')
-@section('title',':Service User Add Contact Form')
+@section('title',':Child Add Contact Form')
 @section('content')
 
 <?php

@@ -210,7 +210,7 @@ class ProfileController extends ServiceUserManagementController
             // echo "<pre>"; print_r($social_app_val); 
             // die;
 
-            //service user money
+            //Child money
             $my_money = $this->my_money($service_user_id);
             // echo "<pre>"; print_r($my_money); die;
             $noti_data = array();
