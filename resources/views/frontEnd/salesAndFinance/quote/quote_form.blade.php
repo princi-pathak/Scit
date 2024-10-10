@@ -255,13 +255,13 @@
                                     <h4 class="contTitle">Customer Details</h4>
                                     <form action="" class="customerForm mt-3">
                                         <div class="mb-3 row">
-                                            <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                            <label for="inputName" class="col-sm-3 col-form-label">Customer <span class="radStar">*</span></label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="Customer" readonly>
+                                                <input type="text" class="form-control-plaintext editInput" id="setCustomerNameInCustomerdetails" value="" readonly>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label for="inputCustomer" class="col-sm-3 col-form-label">Project <span class="radStar">*</span></label>
+                                            <label for="inputCustomer" class="col-sm-3 col-form-label">Project </label>
                                             <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions" id="">
                                                     <option value="">None</option>
@@ -488,7 +488,7 @@
             </div>
             <!-- End  off newJobForm -->
 
-            <div class="newJobForm mt-4">
+            <div class="newJobForm mt-4" id="yourQuoteSection" >
                 <label class="upperlineTitle">Your Quotes</label>
                 <div class="row">
                     <div class="col-sm-12">
@@ -1198,13 +1198,21 @@
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputTelephone" class="col-sm-4 col-form-label">Telephone <span class="red-text">*</span> </label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-2">
+                                        <select class="form-control editInput selectOptions" name="telephone_country_code" id="siteAddressTelephoneCode">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control editInput" name="telephone" id="customer_phone">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputMobile" class="col-sm-4 col-form-label">Mobile</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-2">
+                                        <select class="form-control editInput selectOptions" name="mobile_country_code" id="siteAddressMobileCode">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control editInput" name="mobile" id="customer_mobile">
                                     </div>
                                 </div>
@@ -1250,13 +1258,13 @@
                                 <div class="mb-2 row">
                                     <label for="inputPincode" class="col-sm-4 col-form-label">Pincode</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control editInput" nmae="pincode" id="">
+                                        <input type="text" class="form-control editInput" name="post_code" id="">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputCountry" class="col-sm-4 col-form-label">Country</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control editInput selectOptions" name="country" id="siteAddressCountry">
+                                        <select class="form-control editInput selectOptions" name="country_id" id="siteAddressCountry">
                                             <option selected disabled>Select Country</option>
                                         </select>
                                     </div>
@@ -1564,12 +1572,13 @@
     }
 
     function getCustomerList() {
+
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerList") }}',
             success: function(response) {
                 console.log(response.message);
-                const get_customer_type = document.getElementById('getCustomerList');
-                get_customer_type.innerHTML = '';
+                var get_customer_type = document.getElementById('getCustomerList');
+                // get_customer_type.innerHTML = '';
 
                 response.data.forEach(user => {
                     const option = document.createElement('option');
@@ -1678,6 +1687,7 @@
     }
 
     function getBillingDetailsData(id) {
+        // alert(id);
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerDetails") }}',
             method: 'POST',
@@ -1686,7 +1696,7 @@
             },
             success: function(response) {
                 console.log(response.data);
-
+                document.getElementById('billingDetailsName').value = "";
 
                 // billing details data set
                 document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
@@ -1705,6 +1715,36 @@
 
                 // Customer Site Address Data Set
                 selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
+    function setSiteAddressDetails(id) {
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerSiteDetails") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response.data);
+                document.getElementById('siteCustomerId').value = response.data[0].id;
+                document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                document.getElementById('customerSiteAddress').value = response.data[0].address;
+                document.getElementById('customerSiteCity').value = response.data[0].city;
+                document.getElementById('customerSiteCounty').value = response.data[0].country;
+                document.getElementById('customerSitePostCode').value = response.data[0].post_code;
+                document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                document.getElementById('setSiteAddress').textContent = response.data[0].name;
+                document.getElementById('customerSiteCompany').value = response.data[0].company_name;
+                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_id);
                 selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
                 selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
             },
@@ -1764,17 +1804,41 @@
             customerSiteDetails.innerHTML = '';
 
             const option3 = document.createElement('option');
-            option3.value = "";
+            option3.value = getCustomerListValue.value;
             option3.text = "Same as customer";
             customerSiteDetails.appendChild(option3);
+
+            console.log(getCustomerListValue.value);
+            $.ajax({
+                url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
+                method: 'POST',
+                data: {
+                    id: getCustomerListValue.value
+                },
+                success: function(response) {
+                    console.log(response.message);
+
+                    response.data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.site_name;
+                        customerSiteDetails.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
 
         });
 
         $('#AddQuoteButton').on('click', function() {
             var customer = document.getElementById('getCustomerList').value;
+            alert(customer);
             if (customer === "") {
                 alert('Please select the customer');
             } else {
+                document.getElementById('yourQuoteSection').style.display = "none";
                 document.getElementById('hideQuoteDiv').style.display = "block";
                 document.getElementById('hideCustomerDetails').style.display = "none";
                 document.getElementById('hideQuoteDetails').style.display = "block";
@@ -1826,9 +1890,9 @@
         });
 
         $('#billingDetailContact').on('change', function() {
-            alert($(this).val());
-
-            if ($(this).val() == "Default") {
+            var selected = document.getElementById('getCustomerList').value;
+            console.log(selected);
+            if ($(this).val() === selected) {
                 getBillingDetailsData($(this).val());
             } else {
 
@@ -1870,6 +1934,41 @@
         });
 
 
+        $('#customerSiteDetails').on('change', function() {
+            var selected = document.getElementById('getCustomerList').value;
+            console.log($(this).val());
+            if ($(this).val() === selected) {
+
+                $.ajax({
+                    url: '{{ route("customer.ajax.getCustomerDetails") }}',
+                    method: 'POST',
+                    data: {
+                        id: $(this).val()
+                    },
+                    success: function(response) {
+                        console.log(response.data);
+                        document.getElementById('siteCustomerId').value = response.data[0].id;
+                        document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                        document.getElementById('customerSiteAddress').value = response.data[0].address;
+                        document.getElementById('customerSiteCity').value = response.data[0].city;
+                        document.getElementById('customerSiteCounty').value = response.data[0].country;
+                        document.getElementById('customerSitePostCode').value = response.data[0].postal_code;
+                        document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                        document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                        document.getElementById('setSiteAddress').textContent = document.getElementById('customerSiteCompany').value = response.data[0].name;
+                        selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                        selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                        selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                setSiteAddressDetails($(this).val());
+            }
+        });
+
 
         // Ajax Call for saving Customer Type
         $('#saveCustomerSiteDetails').on('click', function() {
@@ -1880,6 +1979,8 @@
                 data: formData,
                 success: function(response) {
                     alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
                     $('#add_site_address_modal').modal('hide');
                 },
                 error: function(xhr, status, error) {
@@ -1962,7 +2063,6 @@
         });
 
         document.getElementById('same_as_default').addEventListener('change', function() {
-            // Get the checkbox state
             const isChecked = this.checked;
 
             // Show data if checked, else show blank
@@ -2046,11 +2146,13 @@
         if (customer === "") {
             alert('Please select the customer');
         } else {
-            var getSiteAddressRegion = document.getElementById('getSiteAddressRegion');
-            var customer_country = document.getElementById('siteAddressCountry');
-            getRegions(getSiteAddressRegion);
-            getCountriesList(customer_country);
+            getRegions(document.getElementById('getSiteAddressRegion'));
+            getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
             getCustomerJobTitle(siteJobTitle);
+            getCountriesList(document.getElementById('siteAddressMobileCode'));
+            getCountriesList(document.getElementById('siteAddressTelephoneCode'));
+
+
             $('#add_site_address_modal').modal('show');
         }
     });
