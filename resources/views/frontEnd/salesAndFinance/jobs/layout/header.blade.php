@@ -291,14 +291,14 @@ $access_rights = explode(',', $rights);
 
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle @if(isset($page)) @if($page == 'item') active @endif @endif" data-bs-toggle="dropdown">
-                                    <span><i class="material-symbols-outlined">production_quantity_limits</i></span>
+                                    <span><i class="material-symbols-outlined"> production_quantity_limits</i></span>
                                     Items
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-inbox"></i>Product Categories</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-shopping-cart"></i>Products</span></a>
-                                    <a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i>Product Groups</span></a>
-                                    <a href="{{ url('item/catalogues') }}" class="dropdown-item"><span><i class="fa fa-list-ol"></i>Catalogues</span></a>
+                                    <a href="{{ url('/item/product_categories') }}" class="dropdown-item">Product Categories</a>
+                                    <a href="#!" class="dropdown-item">Products</a>
+                                    <a href="#!" class="dropdown-item">Product Groups</a>
+                                    <a href="#!" class="dropdown-item">Catalogues</a>
                                 </div>
                             </div>
 
