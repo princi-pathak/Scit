@@ -161,5 +161,9 @@ class Customer extends Model
         return self::where('id', $id)->get();
     }
 
+    // public static function getCustomerSiteData($id){
+    //     return self::where('id', $id)->get();
+    // }
+
   
 }

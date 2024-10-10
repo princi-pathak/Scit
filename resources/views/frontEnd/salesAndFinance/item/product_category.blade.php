@@ -1,4 +1,4 @@
-@include('frontEnd.jobs.layout.header')
+@include('frontEnd.salesAndFinance.jobs.layout.header')
 <meta name="csrf-token" content="{{ csrf_token() }}">
     <section class="main_section_page px-3">
         <div class="container-fluid">
@@ -25,10 +25,10 @@
                         <div class="printExpt">
                             <div class="prntExpbtn">
                             <a href="#!">Print</a>
-                            <a href="#!">Export</a>
+                            {{-- <a href="#!">Export</a> --}}
                             </div>
                             <div class="searchFilter">
-                                <a href="#!">Show Search Filter</a>
+                                {{-- <a href="#!">Show Search Filter</a> --}}
                             </div>
 
                         </div>
@@ -36,13 +36,13 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="jobsection">
-                                    <a href="#" class="profileDrop">Delete</a>
+                                    <input type="button" class="profileDrop" value="Delete">
                                 </div>
                             </div>
                             <div class="col-md-5">
-                                <div class="pageTitleBtn p-0">
+                                {{-- <div class="pageTitleBtn p-0">
                                     <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a>        
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         </div>
@@ -65,10 +65,9 @@
                                 @php
                                     $i=1;
                                 @endphp
-                                @endphp
                                 @foreach ($product_categories_list as $category_value)
                                 <tr>
-                                    <td></td>
+                                    <td class="text-center"><input type="checkbox" class="checkproductcategory" name="checkproductcategory{{$i}}" id="checkproductcategory{{$i}}" value="{{$category_value['id']}}"></td>
                                     <td>{{$i}}</td>
                                     <td>{{$category_value['product_name']}}</td>
                                     <td>{{$category_value['level']}}</td>
@@ -76,9 +75,9 @@
                                     <td>{{$category_value['number_of_children']}}</td>                                    
                                     <td>
                                         @if($category_value['status']==1)
-                                        <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
+                                        <span class="grencheck" onclick="changestatus({{$category_value['id']}},0)"><i class="fa-solid fa-circle-check"></i></span>
                                         @else
-                                        <span class="graycheck"><i class="fa-solid fa-circle-check"></i></span>
+                                        <span class="graycheck" onclick="changestatus({{$category_value['id']}},1)"><i class="fa-solid fa-circle-check"></i></span>
                                         @endif
                                     </td>
                                     <td>
@@ -100,99 +99,35 @@
                             </tbody>
                         </table>
 
-
-
-                        <!-- ********************************** -->
-
-
-
-
-                        <div class="modal fade" id="itemsCatagoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="itemsCatagoryModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-md">
-                            <div class="modal-content add_Customer">
-                                <div class="modal-header">
-                                <h5 class="modal-title fs-5" id="itemsCatagoryModalLabel">Product Category - consumable</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body ">
-                                        <div class="contantbodypopup p-0">                                                                                                
-                                            <div class="mb-2 row">
-                                                <label for="inputCity" class="col-sm-3 col-form-label">Product Category*</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="inputCity" value="">
-                                                </div>
-                                            </div>
-                                            <div class="mb-2 row">
-                                                <label for="inputCity" class="col-sm-3 col-form-label">Parent Category</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                        <option value=""></option>
-                                                        @foreach($product_categories as $pcategories)
-                                                        <option value="{{$pcategories->id}}">{{$pcategories->name}}</option>
-                                                        @endforeach
-                                                        {{-- <option> None </option>
-                                                        <option> Default </option> --}}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="mb-2 row">
-                                                <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
-                                                <div class="col-sm-4">
-                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                        <option> Active </option>
-                                                        <option> Default </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div> <!-- end modal body -->
-                                <div class="modal-footer customer_Form_Popup">
-                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn profileDrop">Save changes</button>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-
-
-
-                      <!-- ***************************************** -->
                     </div>   <!-- End off main Table -->
                 </div>
             </di>
         </div>
     </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@include('frontEnd.jobs.layout.footer')
+    <script>
+        function changestatus(id,status){
+            var token = "<?=csrf_token()?>";
+            if(confirm("Are you sure want to change the status?")){
+                $.ajax({
+                    type:'POST',
+                    url:'{{ route("item.changeProductCategoryStatus") }}',
+                    data  :{id:id,status:status,_token:token},          
+                    success:function(data){
+                        location.reload();
+                    }
+                    
+                });
+            }
+        }
+    </script>
+    <script>
+        document.getElementById('selectAll').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.checkproductcategory');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    </script>
+    
+@include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
+@include('frontEnd.salesAndFinance.jobs.layout.footer')
