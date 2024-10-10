@@ -337,8 +337,13 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/getCustomerJobTitle', 'getCustomerJobTitle')->name('customer.ajax.getCustomerJobTitle');
 			Route::post('/saveJobTitle', 'saveJobTitle')->name('customer.ajax.saveJobTitle');
 			Route::post('/saveCustomerSiteAddress', 'saveCustomerSiteAddress')->name('customer.ajax.saveCustomerSiteAddress');
+
 			Route::post('/getCustomerBillingAddress', 'getCustomerBillingAddress')->name('customer.ajax.getCustomerBillingAddress');
 			Route::post('/getCustomerBillingAddressData', 'getCustomerBillingAddressData')->name('customer.ajax.getCustomerBillingAddressData');
+			Route::post('/getCustomerSiteAddress', 'getCustomerSiteAddress')->name('customer.ajax.getCustomerSiteAddress');
+			// Route::post('/getCustomerSiteData', 'getCustomerSiteData')->name('customer.ajax.getCustomerSiteData');
+			Route::post('/getCustomerSiteDetails', 'getCustomerSiteDetails')->name('customer.ajax.getCustomerSiteDetails');
+			
 			
 			
 		});
@@ -472,6 +477,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(FrontendProductCategoryController::class)->group(function(){
 
 		Route::get('/item/product_categories','index')->name('item.index');
+		Route::post('/item/add_product_category','saveProductCategoryData')->name('item.saveProductCategoryData');
+		Route::post('/item/change_product_category_status','changeProductCategoryStatus')->name('item.changeProductCategoryStatus');
 	});
 
 
@@ -1213,6 +1220,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/customer_login_save', 'App\Http\Controllers\backEnd\CustomerController@customer_login_save');
 	Route::post('/customer_status_change', 'App\Http\Controllers\backEnd\CustomerController@customer_status_change');
 	Route::post('/customer_delete', 'App\Http\Controllers\backEnd\CustomerController@customer_delete');
+	Route::post('/default_address','App\Http\Controllers\backEnd\CustomerController@default_address');
 
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');
