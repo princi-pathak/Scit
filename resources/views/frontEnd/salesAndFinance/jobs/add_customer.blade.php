@@ -318,7 +318,7 @@
                                                     <div class="col-sm-6">
                                                         <select class="form-control editInput selectOptions"
                                                             id="payment_terms" name="payment_terms">
-                                                            <option value="21" <?php if(isset($customer) && $customer->payment_terms == 21){echo 'selected';}?>>Defoult (21)
+                                                            <option value="21" <?php if(isset($customer) && $customer->payment_terms == 21){echo 'selected';}?>>Default (21)
                                                             </option>
                                                             <?php for($i=1;$i<21;$i++){?>
                                                             <option value="{{$i}}" <?php if(isset($customer) && $i == $customer->payment_terms){echo 'selected';}?>>{{$i}}</option>

@@ -1331,14 +1331,18 @@ class JobsController extends Controller
     }
     public function job_title_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        Job_title::updateOrCreate(['id' => $request->id], $request->all());
+        $insert=Job_title::updateOrCreate(['id' => $request->id], $request->all());
         if(isset($request->id)){
             Session::flash('success','Updated Successfully Done');
         } else {
             Session::flash('success','Added Successfully Done');
         }
         
-        echo "done";
+        if($insert->status ==1){
+            echo '<option value="'.$insert->id.'">'.$insert->name.'</option>';
+        }else{
+            echo "error";
+        }
     }
     public function job_title_status_change(Request $request){
         $id=base64_decode($request->id);
