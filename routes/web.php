@@ -477,6 +477,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(FrontendProductCategoryController::class)->group(function(){
 
 		Route::get('/item/product_categories','index')->name('item.index');
+		Route::post('/item/add_product_category','saveProductCategoryData')->name('item.saveProductCategoryData');
+		Route::post('/item/change_product_category_status','changeProductCategoryStatus')->name('item.changeProductCategoryStatus');
 	});
 
 

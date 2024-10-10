@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Auth;
 class Product_category extends Model
 {
     use HasFactory;
@@ -41,5 +41,21 @@ class Product_category extends Model
     public function getChildrenCountAttribute()
     {
         return $this->children()->count();
+    }
+
+    public static function saveProductCategoryData(array $data, $productCategoryID = null)
+    {
+        $data['home_id'] = Auth::user()->home_id;        
+        return self::updateOrCreate(['id' => $productCategoryID], $data);
+    }
+    public static function checkproductcategoryname($category_name)
+    {
+        return self::where(['home_id' =>Auth::user()->home_id,'name'=>$category_name])->count();
+    }
+    public static function changeProductCategoryStatus($productCategoryID,$status)
+    {
+        $productCategory = self::find($productCategoryID);
+        $productCategory->status = $status;
+        return $productCategory->save();
     }
 }
