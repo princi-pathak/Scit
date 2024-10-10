@@ -17,7 +17,9 @@ class Constructor_customer_site extends Model
         'title_id',
         'company_name',
         'email',
+        'telephone_country_code',
         'telephone',
+        'mobile_country_code',
         'mobile',
         'fax',
         'region',
@@ -33,11 +35,18 @@ class Constructor_customer_site extends Model
 
     public static function saveCustomerAdditional(array $data)
     {
-        $insert=self::updateOrCreate(
-            ['id' => $data['id'] ?? null],
-            $data
-        );
+        $insert=self::updateOrCreate(['id' => $data['id'] ?? null], $data);
         return $insert->id;
+    }
+
+    public static function getCustomerSiteAddress($id){
+        return self::where('customer_id', $id)->select('id', 'site_name')->get();
+    }
+
+   
+
+    public static function getCustomerSiteDetails($id) {
+        return self::where('id', $id)->get();
     }
 
 }
