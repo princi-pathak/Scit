@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('customer_billing_addresses', function (Blueprint $table) {
-            //
+        Schema::table('constructor_customer_sites', function (Blueprint $table) {
+            $table->string('telephone_country_code')->nullable()->after('email'); 
+            $table->string('mobile_country_code')->nullable()->after('telephone'); 
         });
     }
 
@@ -21,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('customer_billing_addresses', function (Blueprint $table) {
+        Schema::table('constructor_customer_sites', function (Blueprint $table) {
             //
         });
     }

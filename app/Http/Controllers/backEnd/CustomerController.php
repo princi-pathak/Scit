@@ -5,12 +5,15 @@ namespace App\Http\Controllers\backEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session,DB,Validator;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Customer;
+use App\Models\Region;
 use App\Models\Country;
 use App\Models\Job_title;
 use App\Models\Customer_type;
+use App\Models\Construction_tax_rate;
 use App\Models\Constructor_customer_site;
 use App\Models\Construction_customer_login;
 use App\Models\Constructor_additional_contact;
@@ -53,26 +56,29 @@ class CustomerController extends Controller
         }
     }
     public function customer_add(Request $request){
-        $key=base64_decode($request->key);
+        $key=$request->key;
         if($key){
             $task='Edit';
         }else{
             $task='Add';
         }
         $admin   = Session::get('scitsAdminSession');
-        $data['home_id'] = $admin->home_id;
+        $home_id=$admin->home_id;
+        $data['home_id'] = $home_id;
         $data['customer']=Customer::find($key);
         $data['task']=$task;
         $data['page']='customers';
         $data['del_status']=0;
-        $data['customer_type']=Customer_type::where('status',1)->get();
-        $data['job_title']=Job_title::where('status',1)->get();
-        $data['contact']=Constructor_additional_contact::where('customer_id',$key)->get();
-        $data['site']=Constructor_customer_site::where('customer_id',$key)->get();
-        $data['login']=Construction_customer_login::where('customer_id',$key)->get();
-        // $data['country']=Country::where('status',1)->get();
+        $data['customer_type']=Customer_type::whereNull('deleted_at')->where('status', 1)->get();
+        $data['job_title']=Job_title::whereNull('deleted_at')->where('status', 1)->get();
+        $data['contact']=Constructor_additional_contact::whereNull('deleted_at')->where('customer_id', $key)->get();
+        $data['site']=Constructor_customer_site::whereNull('deleted_at')->where('customer_id', $key)->get();
+        $data['login']=Construction_customer_login::whereNull('deleted_at')->where('customer_id', $key)->get();
         $data['country']=Country::all_country_list();
-        // echo "<pre>";print_r($data['country']);die;
+        $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
+        $data['tax']=Construction_tax_rate::getAllTax_rate($home_id,'Active');
+        $data['country_code']=Country::getCountriesNameCode();
+        // echo "<pre>";print_r($data['region']);die;
         return view('backEnd.jobs_management.customers_form',$data);
     }
     public function customer_type(Request $request){
@@ -136,7 +142,7 @@ class CustomerController extends Controller
         }
 
         try {
-            Customer_type::updateOrCreate(['id' => $request->id], $request->all());
+            $insert=Customer_type::updateOrCreate(['id' => $request->id], $request->all());
         }catch (\Exception $e) {
             Log::error('Error saving Payment Type: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
@@ -148,7 +154,13 @@ class CustomerController extends Controller
             Session::flash('success','Added Successfully Done');
         }
         
-        echo "done";
+        if ($insert) {
+            if ($insert->status == 1) {
+                echo '<option value="' . $insert->id . '">' . $insert->title . '</option>';
+            }
+        } else {
+            echo "error";
+        }
     }
     public function customer_type_status_change(Request $request){
         $id=base64_decode($request->id);
@@ -170,30 +182,47 @@ class CustomerController extends Controller
     }
     public function customer_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
+        if($request->email !=''){
+            $validator = Validator::make($request->all(), [
+                'email' => [Rule::unique('customers')->ignore($request->id)],
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['vali_error' => $validator->errors()->first()]);
+            }
+        }
         $customer = Customer::saveCustomer($request->all());
-        echo $customer;
+        return response()->json($customer);
+    }
+    public function default_address(Request $request){
+        // echo 1;die;
+        $country = Country::all_country_list();
+        $address_details = Customer::find($request->customer_id);
+        $result = '';
+        if ($request->check == 1) {
+            $result .= '<option value="" selected disabled>None</option>';
+            foreach ($country as $country_codev) {
+                $select = ($country_codev->id == $address_details->country_code) ? "selected" : "";
+                $result .= '<option value="' . $country_codev->code . '" ' . $select . '>' . $country_codev->name . ' (' . $country_codev->code . ')</option>';
+            }
+        } else {
+            $result .= '<option value="" selected disabled>None</option>';
+            foreach ($country as $country_codev) {
+                $result .= '<option value="' . $country_codev->code . '">' . $country_codev->name . ' (' . $country_codev->code . ')</option>';
+            }
+        }
+        $data['reslut'] = $result;
+        $data['details'] = $address_details;
+        return response()->json($data);
     }
     public function customer_contact_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $customer=Constructor_additional_contact::saveCustomerAdditional($request->all());
         // echo "<pre>";print_r($customer);die;
-        $data=Constructor_additional_contact::find($customer);
-        $job_title=Job_title::find($data->job_title_id);
-        $result='<tr class="active">
-                    <td><input type="checkbox" value="'.$data->id.'" class="checkboxContactId"></td>
-                    <td>'.$data->contact_name.'</td>
-                    <td>'.$job_title->name.'</td>
-                    <td>'.$data->email.'</td>
-                    <td>'.$data->telephone.'</td>
-                    <td>'.$data->mobile.'</td>
-                    <td>'.$data->address.'</td>
-                    <td>'.$data->city.'</td>
-                    <td>'.$data->country.'</td>
-                    <td>'.$data->postcode.'</td>
-                    <td>Yes </td>
-
-                </tr>';
-        echo $result;
+        if($customer){
+            echo "done";
+        }else{
+            echo "error";
+        }
     }
     public function customer_site_save(Request $request){
         // echo "<pre>";print_r($request->all());die;

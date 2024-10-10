@@ -91,7 +91,14 @@ class GeneralController extends Controller
         }
 
         $saveData = Region::updateOrCreate(['id'=>$request->id ?? null],$request->all());
-        return response()->json(['data' => $saveData]);
+        if($saveData){
+            if($saveData->status ==1){
+                echo '<option value="'.$saveData->id.'">'.$saveData->title.'</option>';
+            }
+        }else{
+            echo "error";
+        }
+        // return response()->json(['data' => $saveData]);
     }
     public function region_delete(Request $request){
         $id=base64_decode($request->key);

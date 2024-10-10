@@ -302,7 +302,8 @@ class CustomerController extends Controller
         $data = Constructor_customer_site::saveCustomerAdditional($request->all());
         return response()->json([
             'success' => (bool) $data,
-            'message' => $data ? "Site Address added successfully" : 'Site Address could not be added.'
+            'message' => $data ? "Site Address added successfully" : 'Site Address could not be added.',
+            'id' => $data
         ]);
     }
 
@@ -334,6 +335,55 @@ class CustomerController extends Controller
         }
 
         $data = CustomerBillingAddress::getCustomerBillingAddressData($request->id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function getCustomerSiteAddress(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = Constructor_customer_site::getCustomerSiteAddress($request->id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    // public function getCustomerSiteData(Request $request){
+    //     $validator = Validator::make($request->all(), [
+    //         'id' => 'required'
+    //     ]);
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     $data = Constructor_customer_site::getCustomerSiteData($request->id);
+
+    //     return response()->json([
+    //         'success' => (bool) $data,
+    //         'data' => $data ? $data : 'No data.'
+    //     ]);
+    // }
+
+    public function getCustomerSiteDetails(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = Constructor_customer_site::getCustomerSiteDetails($request->id);
 
         return response()->json([
             'success' => (bool) $data,
