@@ -6,7 +6,7 @@
     <div class="modal-dialog modal-md">
     <div class="modal-content add_Customer">
         <div class="modal-header">
-        <h5 class="modal-title fs-5" id="itemsCatagoryModalLabel">Product Category</h5>
+        <h5 class="modal-title fs-5" id="itemsCatagoryModalLabel">Product Category <span class="catname"></span></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         
@@ -27,7 +27,7 @@
                         <label for="parentcategory" class="col-sm-3 col-form-label">Parent Category</label>
                         <div class="col-sm-9">
                             <select class="form-control editInput selectOptions" id="parentcategory" name="cat_id">
-                                <option value="" selected hidden>Choose</option>
+                                <option value="" selected>Choose</option>
                                 @foreach($product_categories as $pcategories)
                                 <option value="{{$pcategories->id}}">{{$pcategories->name}}</option>
                                 @endforeach
@@ -48,6 +48,7 @@
                 </div>                                        
             </div> <!-- end modal body -->
             <div class="modal-footer customer_Form_Popup">
+                <input type="hidden" name="productCategoryID" id="productCategoryID">
                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn profileDrop" id="saveproductcategory">Save</button>
             </form>                              
@@ -84,7 +85,7 @@ Array.prototype.slice.call(forms)
                 })
                 .then(response => response.json())
                 .then(data => {
-                   console.log(data.message);
+                   console.log(data);
                    if(data.success==0){
                     $('.cathidemessagedanger').css('display','block');
                     $('.catsuccessdanger').text(data.message);

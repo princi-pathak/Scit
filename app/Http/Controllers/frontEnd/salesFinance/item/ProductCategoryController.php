@@ -23,7 +23,7 @@ class ProductCategoryController extends Controller
         $segments = explode('/', $path);
         $lastSegment = end($segments);
         $users = User::getHomeUsers(Auth::user()->home_id);
-        $product_categories = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->get();
+        $product_categories = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
         $product_category = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('deleted_at',NULL)->get();
         // print_r($product_categories);
         // die;->where('deleted_at',"NULL")
@@ -51,14 +51,15 @@ class ProductCategoryController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
+        //echo Product_category::checkproductcategoryname($request->name,$request->productCategoryID);
+        //die;
         // Call the model's method to save product category data
-        if(Product_category::checkproductcategoryname($request->name)==0){
+        if(Product_category::checkproductcategoryname($request->name,$request->productCategoryID)==0){
             $saveData = Product_category::saveProductCategoryData($request->all(), $request->productCategoryID);
             // Return the appropriate response
             return response()->json([
                 'success' => (bool) $saveData,
-                'message' => $saveData ? 'Product category added successfully.' : 'Product category could not be created.'
+                'message' => $saveData ? 'The Product Category has been saved successfully.' : 'Product category could not be created.'
             ]);
         }else{
             return response()->json([
@@ -74,6 +75,16 @@ class ProductCategoryController extends Controller
         return response()->json([
             'success' => (bool) $changestatus,
             'message' => $changestatus ? 'Product category status changed successfully.' : 'Product category status could not be changed.'
+        ]);
+    }
+
+    function deleteProductCategory(Request $request){
+        //echo $request->id;
+        $productCategoryID = explode(",",$request->id);
+        $delete = Product_category::deleteProductCategory($productCategoryID);
+        return response()->json([
+            'success' => (bool) $delete,
+            'message' => $delete ? 'Product category deletd successfully.' : 'Product category could not be deletd.'
         ]);
     }
    
