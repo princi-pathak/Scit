@@ -1,4 +1,9 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
+<style>
+    .popup-content {
+        top: 26%;
+    }
+</style>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <section class="main_section_page px-3 pt-0">
@@ -22,7 +27,7 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Quote Ref</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
+                                            <input type="text" class="form-control-plaintext editInput" id="" value="Auto generate" readonly>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -265,6 +270,8 @@
                                             <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions" id="">
                                                     <option value="">None</option>
+                                                    <option value="1">Test 1</option>
+                                                    <option value="2">Test 2</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-2">
@@ -281,7 +288,8 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Site </label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" disabled id="">
+                                            <input type="hidden" name="" id="customerSiteDeliveryId">
+                                            <select class="form-control editInput selectOptions" id="customerSiteDelivery">
                                                 <option>Same As Customer</option>
                                             </select>
                                         </div>
@@ -295,7 +303,7 @@
                                         <label for="inputEmail" class="col-sm-3 col-form-label"> Region <span
                                                 class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <select class="form-control editInput selectOptions" disabled id="">
+                                            <select class="form-control editInput selectOptions" name="region" id="siteDeliveryRegions">
                                                 <option>None</option>
                                             </select>
                                         </div>
@@ -303,26 +311,26 @@
                                     <div class="mb-3 row">
                                         <label for="inputAddress" class="col-sm-3 col-form-label">Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="inputCustomer" placeholder="Name">
+                                            <input type="text" class="form-control editInput textareaInput" name="site_name" id="customerSiteDeliveryName" placeholder="Name">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Company </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="inputCustomer" placeholder="Company">
+                                            <input type="text" class="form-control editInput textareaInput" name="company_name" id="customerSiteDeliveryCompany" placeholder="Company">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">Address</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control textareaInput" name="address" id="" rows="3" placeholder="Address"></textarea>
+                                            <textarea class="form-control textareaInput" name="address" id="customerSiteDeliveryAdd" rows="3" placeholder="Address"></textarea>
                                         </div>
                                     </div>
 
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">Postcode</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control editInput textareaInput" id="inputPurchase" placeholder="Postcode">
+                                            <input type="text" class="form-control editInput textareaInput" name="company_name" id="customerSiteDeliveryPostCode" placeholder="Postcode">
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="plusandText">
@@ -333,7 +341,7 @@
                                     <div class="mb-3 row">
                                         <label for="inputEmail" class="col-sm-3 col-form-label">Telephone</label>
                                         <div class="col-sm-2">
-                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                            <select class="form-control editInput selectOptions" name="telephone_country_code" id="customerSiteDeliveryTelephoneCode">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
                                                 <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
@@ -341,14 +349,14 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="inputEmail" placeholder="Telephone">
+                                            <input type="text" class="form-control editInput" name="telephone" id="customerSiteDeliveryTelephone" placeholder="Telephone">
                                         </div>
                                     </div>
 
                                     <div class="mb-3 row">
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
                                         <div class="col-sm-2">
-                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                            <select class="form-control editInput selectOptions" name="mobile_country_code" id="customerSiteDeliveryMobileCode">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
                                                 <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
@@ -356,19 +364,19 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="inputEmail" placeholder="Telephone">
+                                            <input type="text" class="form-control editInput" name="mobile" id="customerSiteDeliveryMobile" placeholder="Mobile">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Email Address</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" id="billingDetailsEmail" placeholder="Email Address">
+                                            <input type="text" class="form-control editInput" name="email" id="customerSiteDeliveryEmail" placeholder="Email Address">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Country</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control editInput" name="" id="">
+                                            <select class="form-control editInput" name="country_id" id="customerSiteDeliveryCountry">
                                                 @foreach($countries as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                                 @endforeach
@@ -485,170 +493,171 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- End  off newJobForm -->
 
-            <div class="newJobForm mt-4" id="yourQuoteSection" >
-                <label class="upperlineTitle">Your Quotes</label>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="extraInformationTab">
-                            <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <button class="nav-link active" id="nav-Notes-tab" data-bs-toggle="tab" data-bs-target="#nav-Notes" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Quotes</button>
-                                    <button class="nav-link" id="nav-Tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-Tasks" type="button" role="tab" aria-controls="nav-Tasks" aria-selected="false">Sales Appointments</button>
-                                </div>
-                            </nav>
-                            <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-Notes" role="tabpanel" aria-labelledby="nav-Notes-tab" tabindex="0">
-                                    <div class="tabheadingTitle">
-                                        <a href="#" class="profileDrop me-3" id="AddQuoteButton"> Add Quotes</a>
+                <!-- End  off newJobForm -->
+
+                <div class="newJobForm mt-4" id="yourQuoteSection">
+                    <label class="upperlineTitle">Your Quotes</label>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="extraInformationTab">
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <button class="nav-link active" id="nav-Notes-tab" data-bs-toggle="tab" data-bs-target="#nav-Notes" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Quotes</button>
+                                        <button class="nav-link" id="nav-Tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-Tasks" type="button" role="tab" aria-controls="nav-Tasks" aria-selected="false">Sales Appointments</button>
                                     </div>
-                                    <div class="col-sm-12">
-                                        <div class="mb-3 row">
-                                            <div class="col-md-12">
-                                                <div class="productDetailTable pt-3">
-                                                    <table class="table" id="containerA">
-                                                        <thead class="table-light">
-                                                            <tr>
-                                                                <th># </th>
-                                                                <th>Quote Ref </th>
-                                                                <th>Job Ref</th>
-                                                                <th>Quote Date </th>
-                                                                <th>Expiry Date </th>
-                                                                <th>Sub Total</th>
-                                                                <th>VAT</th>
-                                                                <th>Total</th>
-                                                                <th>Deposit </th>
-                                                                <th>Outstanding</th>
-                                                                <th>Status</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                </nav>
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-Notes" role="tabpanel" aria-labelledby="nav-Notes-tab" tabindex="0">
+                                        <div class="tabheadingTitle">
+                                            <a href="#" class="profileDrop me-3" id="AddQuoteButton"> Add Quotes</a>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="mb-3 row">
+                                                <div class="col-md-12">
+                                                    <div class="productDetailTable pt-3">
+                                                        <table class="table" id="containerA">
+                                                            <thead class="table-light">
+                                                                <tr>
+                                                                    <th># </th>
+                                                                    <th>Quote Ref </th>
+                                                                    <th>Job Ref</th>
+                                                                    <th>Quote Date </th>
+                                                                    <th>Expiry Date </th>
+                                                                    <th>Sub Total</th>
+                                                                    <th>VAT</th>
+                                                                    <th>Total</th>
+                                                                    <th>Deposit </th>
+                                                                    <th>Outstanding</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- Button trigger modal -->
-                                    </div><!-- ENd col-9 -->
-                                </div>
-                                <div class="tab-pane fade" id="nav-Tasks" role="tabpanel" aria-labelledby="nav-Tasks-tab" tabindex="0">
-                                    <div class="tabheadingTitle">
-                                        <a href="#" class="profileDrop me-3"> New Appointments</a>
-                                        <a href="#" class="profileDrop ms-3"> Send To Planner</a>
+                                            <!-- Button trigger modal -->
+                                        </div><!-- ENd col-9 -->
                                     </div>
-                                    <div class="col-sm-12">
+                                    <div class="tab-pane fade" id="nav-Tasks" role="tabpanel" aria-labelledby="nav-Tasks-tab" tabindex="0">
+                                        <div class="tabheadingTitle">
+                                            <a href="#" class="profileDrop me-3"> New Appointments</a>
+                                            <a href="#" class="profileDrop ms-3"> Send To Planner</a>
+                                        </div>
+                                        <div class="col-sm-12">
 
-                                        <div class="productDetailTable mt-3">
-                                            <table class="table" id="containerA">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th>User</th>
-                                                        <th>Start Date / Time</th>
-                                                        <th>End Date / Time </th>
-                                                        <th>Notes</th>
-                                                        <th>Appointment Type </th>
-                                                        <th>Status </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="d-flex">
-                                                                <p class="leftNum">1</p>
-                                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                                    <option>Select user</option>
-                                                                    <option>Default</option>
-                                                                </select>
-                                                                <a href="#!" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
-                                                            </div>
-                                                            <div class="alertBy">
-                                                                <label><strong>Alert By :</strong></label>
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                                    <label class="form-check-label" for="inlineCheckbox1">SMS</label>
+                                            <div class="productDetailTable mt-3">
+                                                <table class="table" id="containerA">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th>User</th>
+                                                            <th>Start Date / Time</th>
+                                                            <th>End Date / Time </th>
+                                                            <th>Notes</th>
+                                                            <th>Appointment Type </th>
+                                                            <th>Status </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="d-flex">
+                                                                    <p class="leftNum">1</p>
+                                                                    <select class="form-control editInput selectOptions" id="inputJobType">
+                                                                        <option>Select user</option>
+                                                                        <option>Default</option>
+                                                                    </select>
+                                                                    <a href="#!" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
                                                                 </div>
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                                    <label class="form-check-label" for="inlineCheckbox2">Email</label>
+                                                                <div class="alertBy">
+                                                                    <label><strong>Alert By :</strong></label>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                                                        <label class="form-check-label" for="inlineCheckbox1">SMS</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                                                        <label class="form-check-label" for="inlineCheckbox2">Email</label>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
+                                                            </td>
 
-                                                        <td>
-                                                            <div class="addDateAndTime">
-                                                                <div class="startDate">
-                                                                    <input type="date" name="date" class=" editInput">
-                                                                    <input type="time" name="time" class=" editInput">
+                                                            <td>
+                                                                <div class="addDateAndTime">
+                                                                    <div class="startDate">
+                                                                        <input type="date" name="date" class=" editInput">
+                                                                        <input type="time" name="time" class=" editInput">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="pt-3">
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox" id="floatingAppointment" value="option2">
-                                                                    <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
+                                                                <div class="pt-3">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input" type="checkbox" id="floatingAppointment" value="option2">
+                                                                        <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="addDateAndTime">
-                                                                <div class="endDate">
-                                                                    <input type="date" name="date" class=" editInput">
-                                                                    <input type="time" name="time" class=" editInput">
+                                                            </td>
+                                                            <td>
+                                                                <div class="addDateAndTime">
+                                                                    <div class="endDate">
+                                                                        <input type="date" name="date" class=" editInput">
+                                                                        <input type="time" name="time" class=" editInput">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="addTextarea">
-                                                                <textarea cols="40" rows="5" placeholder="Type Notes...">Type Notes... </textarea>
-                                                            </div>
-                                                        </td>
-                                                        <td class="col-2">
-                                                            <div class="appoinment_type">
-                                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                                    <option>Select user</option>
-                                                                    <option>Default</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="Priority">
-                                                                <label>Priority :</label>
-                                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                                    <option>Select user</option>
-                                                                    <option>Default</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="statuswating">
-                                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                                    <option>Select user</option>
-                                                                    <option>Default</option>
-                                                                </select>
-                                                                <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
-                                                            </div>
-                                                            <div class="tabheadingTitle">
-                                                                <a href="#" class="profileDrop me-3"> Notify</a>
-                                                            </div>
-                                                            <div class="tabheadingTitle">
-                                                                <a href="#" class="profileDrop me-2"> Manage Files</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                            </td>
+                                                            <td>
+                                                                <div class="addTextarea">
+                                                                    <textarea cols="40" rows="5" placeholder="Type Notes...">Type Notes... </textarea>
+                                                                </div>
+                                                            </td>
+                                                            <td class="col-2">
+                                                                <div class="appoinment_type">
+                                                                    <select class="form-control editInput selectOptions" id="inputJobType">
+                                                                        <option>Select user</option>
+                                                                        <option>Default</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="Priority">
+                                                                    <label>Priority :</label>
+                                                                    <select class="form-control editInput selectOptions" id="inputJobType">
+                                                                        <option>Select user</option>
+                                                                        <option>Default</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="statuswating">
+                                                                    <select class="form-control editInput selectOptions" id="inputJobType">
+                                                                        <option>Select user</option>
+                                                                        <option>Default</option>
+                                                                    </select>
+                                                                    <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
+                                                                </div>
+                                                                <div class="tabheadingTitle">
+                                                                    <a href="#" class="profileDrop me-3"> Notify</a>
+                                                                </div>
+                                                                <div class="tabheadingTitle">
+                                                                    <a href="#" class="profileDrop me-2"> Manage Files</a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -656,10 +665,1045 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                <!-- End  off Your Quotes -->
 
 
-            <div id="hideQuoteDiv">
+
+            </div><!-- End off col-md-12 -->
+
+            <div id="">
+                <!-- hideQuoteDiv -->
+
+                <div class="newJobForm mt-4">
+                    <label class="upperlineTitle">Items Details</label>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="mb-3 row">
+                                <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="plusandText">
+                                        <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#itemsAddProductModal"><i class="fa-solid fa-square-plus"></i>
+                                        </a>
+                                        <span class="afterPlusText"> (Type to view product or <a href="#!">Click here</a> to view all assets)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="inputCountry" class="col-sm-2 col-form-label">Catalogue</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                        <option>Default Price</option>
+                                        <option>Default</option>
+                                        <option>Default</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="inputCountry" class="col-sm-2 col-form-label">Markup Based on</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                        <option>Price</option>
+                                        <option>None</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="pageTitleBtn p-0">
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                        + Insert </a>
+                                    <div class="dropdown-menu fade-up m-0" style="">
+                                        <a href="#" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Product</a>
+                                        <a href="#" class="dropdown-item col-form-label">insert SMS</a>
+                                        <a href="#" class="dropdown-item col-form-label">insert Email</a>
+                                        <a href="#" class="dropdown-item col-form-label">insert Amount</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="productDetailTable">
+                                <table class="table" id="containerA">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Code </th>
+                                            <th>Product <i class="fa  fa-info-circle"></i> </th>
+                                            <th>Description</th>
+                                            <th>
+                                                <div class="tableplusBTN">
+                                                    <span>Account Code </span>
+                                                    <span class="plusandText ps-3">
+                                                        <a href="#!" class="formicon pt-0"> <i class="fa-solid fa-square-plus"></i> </a>
+                                                    </span>
+                                                </div>
+                                            </th>
+                                            <th>Qty </th>
+                                            <th>Cost Price($) </th>
+                                            <th>Cost Calc</th>
+                                            <th>Price($) </th>
+                                            <th>Markup(%)</th>
+                                            <th>VAT(%) </th>
+                                            <th>Discount </th>
+                                            <th>Amount </th>
+                                            <th>Profit </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="CSPlus">
+                                                    <span class="plusandText">
+                                                        <!-- <a href="#!" class="formicon pt-0 me-2">  -->
+
+                                                        <div class="pageTitleBtn p-0">
+                                                            <div class="nav-item dropdown">
+                                                                <a href="#" class="nav-link formicon pt-0 me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <i class="fa-solid fa-square-plus"></i> </a>
+                                                                <div class="dropdown-menu fade-up m-0" style="">
+                                                                    <a href="#" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Product</a>
+                                                                    <a href="#" class="dropdown-item col-form-label">insert SMS</a>
+                                                                    <a href="#" class="dropdown-item col-form-label">insert Email</a>
+                                                                    <a href="#" class="dropdown-item col-form-label">insert Amount</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- </a> -->
+
+
+                                                        <input type="text" class="form-control editInput input80" value="CS-0001">
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="">
+                                                    <input type="text" class="form-control editInput" value="CS-0001">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="">
+                                                    <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="2" placeholder="Address"></textarea>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="">
+                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                        <option>No account</option>
+                                                        <option>Default</option>
+                                                        <option>Default</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="">
+                                                    <input type="text" class="form-control editInput input50" value="1">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="">
+                                                    <input type="text" class="form-control editInput input50" value="100.00">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="">
+                                                    <span class="plusandText">
+                                                        <a href="#!" class="formicon pt-0"> <i class="fa fa-building"></i> </a>
+                                                    </span>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="">
+                                                    <input type="text" class="form-control editInput input50" value="90.00">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="">
+                                                    <input type="text" class="form-control editInput input50" value="0">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="">
+                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                        <option>Please Select</option>
+                                                        <option>Default</option>
+                                                        <option>Default</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <input type="text" class="form-control editInput input50 me-2" value="0">
+                                                    <select class="form-control editInput selectOptions input50" id="inputCustomer">
+                                                        <option>Please Select</option>
+                                                        <option>Default</option>
+                                                        <option>Default</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span>$90.00</span>
+                                            </td>
+                                            <td>
+                                                <span>$-10.00</span>
+                                                <div class="minusnmber pt-1">(-11.11%)</div>
+                                            </td>
+                                            <td>
+                                                <div class="statuswating">
+                                                    <span class="oNOfswich">
+                                                        <input type="checkbox">
+                                                    </span>
+                                                    <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="table-light">
+                                            <td>
+                                                <div class="CSPlus">
+                                                    <span class="plusandText">
+                                                        <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                                                        <label>Title*:</label>
+                                                        <input type="text" class="form-control editInput ms-3" id="inputCountry" placeholder="Type to add product">
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td colspan="12">
+                                                <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                                            </td>
+                                            <td>
+                                                <div class="statuswating">
+                                                    <span class="oNOfswich">
+                                                        <input type="checkbox">
+                                                    </span>
+                                                    <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="table-light">
+                                            <td>
+                                                <div class="CSPlus">
+                                                    <span class="plusandText">
+                                                        <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                                                        <label>Title*:</label>
+                                                        <input type="text" class="form-control editInput ms-3" id="inputCountry" placeholder="Type to add product">
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td colspan="12">
+                                                <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                                            </td>
+                                            <td>
+                                                <div class="statuswating">
+                                                    <span class="oNOfswich">
+                                                        <input type="checkbox">
+                                                    </span>
+                                                    <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="14">
+                                                <div class="pageTitleBtn p-0">
+                                                    <div class="nav-item dropdown">
+                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            + Insert </a>
+                                                        <div class="dropdown-menu fade-up m-0" style="">
+                                                            <a href="#" class="dropdown-item col-form-label">Edid Details</a>
+                                                            <a href="#" class="dropdown-item col-form-label">Send SMS</a>
+                                                            <a href="#" class="dropdown-item col-form-label">CRM / History</a>
+                                                            <a href="#" class="dropdown-item col-form-label">Reject</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="productModalBAC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="productModalBACLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content add_Customer">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title fs-5" id="productModalBACLabel">Product List</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body ">
+                                                <div class="modal-body ">
+
+                                                    <div class="extraInformationTab">
+                                                        <nav>
+                                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                                <button class="nav-link active" id="nav-product-tab" data-bs-toggle="tab" data-bs-target="#nav-product" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Product(s)</button>
+                                                                <button class="nav-link" id="nav-secrices-tab" data-bs-toggle="tab" data-bs-target="#nav-secrices" type="button" role="tab" aria-controls="nav-secrices" aria-selected="false">Service(s)</button>
+                                                                <button class="nav-link" id="nav-consumable-tab" data-bs-toggle="tab" data-bs-target="#nav-consumable" type="button" role="tab" aria-controls="nav-consumable" aria-selected="false">Consumable(s)</button>
+                                                                <button class="nav-link" id="nav-productGroup-tab" data-bs-toggle="tab" data-bs-target="#nav-productGroup" type="button" role="tab" aria-controls="nav-productGroup" aria-selected="false">Product Group(s)</button>
+
+                                                            </div>
+                                                        </nav>
+                                                        <div class="tab-content" id="nav-tabContent">
+                                                            <div class="tab-pane fade show active" id="nav-product" role="tabpanel" aria-labelledby="nav-product-tab" tabindex="0">
+                                                                <div class="py-4">
+
+                                                                    <div class="row">
+                                                                        <div class="col-lg-3">
+                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                                <option>--Any Category--</option>
+                                                                                <option>Default</option>
+                                                                                <option>Default</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control editInput" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                                                                <button class="btn btn-outline-secondary editInput profileDrop" type="button" id="button-addon2">Button</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div id="alphabeticListHolder">
+                                                                        <ul class="alphabeticList">
+                                                                            <li><a href="#" class="alphabeticLink" data-term="all" data-search_mode="ALL">All</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="A" data-search_mode="STARTS">A</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="B" data-search_mode="STARTS">B</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="C" data-search_mode="STARTS">C</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="D" data-search_mode="STARTS">D</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="E" data-search_mode="STARTS">E</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="F" data-search_mode="STARTS">F</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="G" data-search_mode="STARTS">G</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="H" data-search_mode="STARTS">H</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="I" data-search_mode="STARTS">I</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="J" data-search_mode="STARTS">J</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="K" data-search_mode="STARTS">K</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="L" data-search_mode="STARTS">L</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="M" data-search_mode="STARTS">M</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="N" data-search_mode="STARTS">N</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="O" data-search_mode="STARTS">O</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="P" data-search_mode="STARTS">P</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="Q" data-search_mode="STARTS">Q</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="R" data-search_mode="STARTS">R</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="S" data-search_mode="STARTS">S</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="T" data-search_mode="STARTS">T</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="U" data-search_mode="STARTS">U</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="V" data-search_mode="STARTS">V</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="W" data-search_mode="STARTS">W</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="X" data-search_mode="STARTS">X</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="Y" data-search_mode="STARTS">Y</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="Z" data-search_mode="STARTS">Z</a></li>
+                                                                            <li>&nbsp;</li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="0" data-search_mode="STARTS">0</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="1" data-search_mode="STARTS">1</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="2" data-search_mode="STARTS">2</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="3" data-search_mode="STARTS">3</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="4" data-search_mode="STARTS">4</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="5" data-search_mode="STARTS">5</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="6" data-search_mode="STARTS">6</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="7" data-search_mode="STARTS">7</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="8" data-search_mode="STARTS">8</a></li>
+                                                                            <li><a href="#" class="alphabeticLink" data-term="9" data-search_mode="STARTS">9</a></li>
+                                                                        </ul>
+                                                                        <br class="clear">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <div class="productDetailTable">
+                                                                            <table class="table" id="containerA">
+                                                                                <thead class="table-light">
+                                                                                    <tr>
+                                                                                        <th>Code</th>
+                                                                                        <th>Product </th>
+                                                                                        <th>Code Price</th>
+                                                                                        <th>Price </th>
+                                                                                        <th>Qty</th>
+                                                                                        <th>Amount </th>
+                                                                                        <th>Delete</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td colspan="7">
+                                                                                            <label class="red_sorryText">
+                                                                                                Sorry, no records to show
+                                                                                            </label>
+                                                                                        </td>
+
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane fade" id="nav-secrices" role="tabpanel" aria-labelledby="nav-secrices-tab" tabindex="0">
+                                                                <div class="tabheadingTitle">
+                                                                    <h3>Service - </h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane fade" id="nav-consumable" role="tabpanel" aria-labelledby="nav-consumable-tab" tabindex="0">
+                                                                <div class="tabheadingTitle">
+                                                                    <h3>Consumable - </h3>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane fade" id="nav-productGroup" role="tabpanel" aria-labelledby="nav-productGroup-tab" tabindex="0">
+                                                                <div class="tabheadingTitle">
+                                                                    <h3>Product Group - </h3>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end modal body -->
+                                            <div class="modal-footer customer_Form_Popup">
+                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn profileDrop">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <table class="table totlepayment" id="containerA">
+                                    <tbody>
+                                        <tr>
+                                            <td>Sub Total (exc. VTA)</td>
+                                            <td>$90.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="discountInput">
+                                                    <span>Discount</span><input type="text" class="form-control editInput input50" value="0"> <span>%</span>
+                                                </div>
+                                            </td>
+                                            <td>$0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Apply overall markup
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>VAT</td>
+                                            <td>$18.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Total(inc.VAt)</strong></td>
+                                            <td><strong>$108.00</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Profit</td>
+                                            <td>$-10.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Margin</td>
+                                            <td>-11.11%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Deposit</td>
+                                            <td>$0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Refund</td>
+                                            <td>$0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Outstanding (inc.VAT)</strong></td>
+                                            <td><strong>$108.00</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End  off newJobForm -->
+
+                <!-- View Product -->
+                <!-- *************First addProduct model********************* -->
+
+
+
+                <div class="modal fade" id="itemsAddProductModal" tabindex="-1" data-bs-backdrop="static"
+                    data-bs-keyboard="false" aria-labelledby="customerModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content add_Customer">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="customerModalLabel">Add Customer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <div class="formDtail">
+                                            <!-- <form action="" class="customerForm"> -->
+                                            <div class="mb-2 row">
+                                                <label for="inputName"
+                                                    class="col-sm-4 col-form-label">Customer</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                        <option>-All-</option>
+                                                        <option>Analytical Customer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputCustomer"
+                                                    class="col-sm-4 col-form-label">Product
+                                                    Category</label>
+                                                <div class="col-sm-7">
+                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                        <option>Genrale Customer </option>
+                                                        <option>Analytical Customer </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-1 ps-0">
+                                                    <a href="#!" class="formicon" id="productCetagoryPopup"><i class="fa-solid fa-square-plus"></i></a>
+                                                </div>
+                                            </div>
+
+
+
+                                            <!--Start Product Cetagory Popup -->
+
+                                            <div id="cetagpopup" class="popupfst">
+                                                <div class="popup-content">
+                                                    <div class="popupTitle">
+                                                        <span class="">Product Cetagory</span>
+                                                        <span class="close" id="closecatagPopup">&times;</span>
+                                                    </div>
+                                                    <div class="contantbodypopup">
+                                                        <form action="" class="customerForm">
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity"
+                                                                    class="col-sm-3 col-form-label">Product Cetagory*</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text"
+                                                                        class="form-control editInput"
+                                                                        id="inputCity"
+                                                                        value="Port Elizabeth">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity"
+                                                                    class="col-sm-3 col-form-label">Parent Cetagory</label>
+                                                                <div class="col-sm-9">
+                                                                    <select
+                                                                        class="form-control editInput selectOptions"
+                                                                        id="inputCustomer">
+                                                                        <option> None </option>
+                                                                        <option> Default </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity"
+                                                                    class="col-sm-3 col-form-label">Status</label>
+                                                                <div class="col-sm-9">
+                                                                    <select
+                                                                        class="form-control editInput selectOptions"
+                                                                        id="inputCustomer">
+                                                                        <option> None </option>
+                                                                        <option> Default </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+
+                                                    <div class="popupF  customer_Form_Popup">
+
+                                                        <button type="button"
+                                                            class="profileDrop">Save</button>
+                                                        <button type="button"
+                                                            class="profileDrop">Save &
+                                                            Close</button>
+                                                        <button type="button" class="profileDrop">Cancel</button>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- End off Product Cetagory Popup -->
+
+
+                                            <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-4 col-form-label">Product Name*</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control editInput" id="inputName" value="John Smith">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputProject"
+                                                    class="col-sm-4 col-form-label">Product Type</label>
+                                                <div class="col-sm-7">
+                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                        <option>Please Select</option>
+                                                        <option>Supervisor</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-1 ps-0">
+                                                    <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="mb-2 row">
+                                                <label for="inputEmail"
+                                                    class="col-sm-4 col-form-label">Product Code </label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control editInput" id="inputEmail" value="roxy.scits@gmail.com">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputEmail"
+                                                    class="col-sm-4 col-form-label">Cost Price </label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control editInput" id="inputEmail" value="roxy.scits@gmail.com">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputTelephone"
+                                                    class="col-sm-4 col-form-label">Markup</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control editInput" id="inputTelephone" value="14000883788">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputMobile"
+                                                    class="col-sm-4 col-form-label">Price *</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control editInput" id="inputPrice" value="Price">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputCounty"
+                                                    class="col-sm-4 col-form-label">Description</label>
+                                                <div class="col-sm-8">
+                                                    <textarea class="form-control textareaInput"
+                                                        name="address" id="inputAddress" rows="3"
+                                                        placeholder="75 Cope Road Mall Park USA"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputCounty"
+                                                    class="col-sm-4 col-form-label pt-0">show Product</label>
+                                                <div class="col-sm-8">
+                                                    <span class="oNOfswich">
+                                                        <input type="checkbox">
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- </form> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <div class="formDtail">
+                                            <form action="" class="">
+                                                <div class="mb-2 row">
+                                                    <label for="inputCity"
+                                                        class="col-sm-4 col-form-label">Bar Code</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control editInput"
+                                                            id="inputCity" value="Port Elizabeth">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2 row">
+                                                    <label for="inputProject"
+                                                        class="col-sm-4 col-form-label">Sales Tax Rate</label>
+                                                    <div class="col-sm-7">
+                                                        <select class="form-control editInput selectOptions"
+                                                            id="inputCustomer">
+                                                            <option>None</option>
+                                                            <option>Default</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-1 ps-0">
+                                                        <a href="#!" class="formicon" id="openPopupButton">
+                                                            <i class="fa-solid fa-square-plus"></i>
+                                                        </a>
+                                                    </div>
+
+
+                                                    <!--Sales Tax Rate Popup -->
+
+                                                    <div id="popup" class="popup">
+                                                        <div class="popup-content">
+                                                            <div class="popupTitle">
+                                                                <span class="">Add Tax Rate</span>
+                                                                <span class="close"
+                                                                    id="closePopup">&times;</span>
+                                                            </div>
+                                                            <div class="contantbodypopup">
+                                                                <form action="" class="customerForm">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity"
+                                                                            class="col-sm-3 col-form-label">Tax Rate Name*</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text"
+                                                                                class="form-control editInput"
+                                                                                id="inputCity"
+                                                                                value="Port Elizabeth">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity"
+                                                                            class="col-sm-3 col-form-label">Tax Rate*</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text"
+                                                                                class="form-control editInput"
+                                                                                id="inputCity"
+                                                                                value="Port Elizabeth">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity"
+                                                                            class="col-sm-3 col-form-label">Status</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select
+                                                                                class="form-control editInput selectOptions"
+                                                                                id="inputCustomer">
+                                                                                <option> None </option>
+                                                                                <option> Default </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity"
+                                                                            class="col-sm-3 col-form-label">External Tax Code</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text"
+                                                                                class="form-control editInput"
+                                                                                id="inputCity"
+                                                                                value="Port Elizabeth">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity"
+                                                                            class="col-sm-3 col-form-label">Expiry Date</label>
+                                                                        <div class="col-sm-7">
+                                                                            <input type="date"
+                                                                                class="form-control editInput"
+                                                                                id="inputCity"
+                                                                                value="Port Elizabeth">
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+                                                            <div class="popupF  customer_Form_Popup">
+
+                                                                <button type="button"
+                                                                    class="profileDrop">Save</button>
+                                                                <button type="button"
+                                                                    class="profileDrop">Save &
+                                                                    Close</button>
+                                                                <button type="button" class="profileDrop">Cancel</button>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <!-- End off Sales Tax Rate Popup -->
+
+
+                                                </div>
+
+                                                <div class="mb-2 row">
+                                                    <label for="inputProject"
+                                                        class="col-sm-4 col-form-label">Purchase Tax Rate</label>
+                                                    <div class="col-sm-7">
+                                                        <select class="form-control editInput selectOptions"
+                                                            id="inputCustomer">
+                                                            <option>None</option>
+                                                            <option>Default</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-1 ps-0">
+                                                        <a href="#!" class="formicon" id="purchaseTaxRatePop">
+                                                            <i class="fa-solid fa-square-plus"></i>
+                                                        </a>
+                                                    </div>
+
+                                                    <!--Purchase Tax Rate Popup -->
+                                                    <div id="purchasepopup" class="purchasepopup">
+                                                        <div class="popup-content">
+                                                            <div class="popupTitle">
+                                                                <span class="">Purchase Tax Rate</span>
+                                                                <span class="close"
+                                                                    id="closePurchasePopup">&times;</span>
+                                                            </div>
+                                                            <div class="contantbodypopup">
+                                                                <form action="" class="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity"
+                                                                            class="col-sm-3 col-form-label">Tax Rate Name*</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text"
+                                                                                class="form-control editInput"
+                                                                                id="inputCity"
+                                                                                value="Port Elizabeth">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity"
+                                                                            class="col-sm-3 col-form-label">Tax Rate*</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text"
+                                                                                class="form-control editInput"
+                                                                                id="inputCity"
+                                                                                value="Port Elizabeth">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity"
+                                                                            class="col-sm-3 col-form-label">Status</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select
+                                                                                class="form-control editInput selectOptions"
+                                                                                id="inputCustomer">
+                                                                                <option> None </option>
+                                                                                <option> Default </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity"
+                                                                            class="col-sm-3 col-form-label">External Tax Code</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text"
+                                                                                class="form-control editInput"
+                                                                                id="inputCity"
+                                                                                value="Port Elizabeth">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity"
+                                                                            class="col-sm-3 col-form-label">Expiry Date</label>
+                                                                        <div class="col-sm-7">
+                                                                            <input type="date"
+                                                                                class="form-control editInput"
+                                                                                id="inputCity"
+                                                                                value="Port Elizabeth">
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+                                                            <div class="popupF  customer_Form_Popup">
+
+                                                                <button type="button"
+                                                                    class="profileDrop">Save</button>
+                                                                <button type="button"
+                                                                    class="profileDrop">Save &
+                                                                    Close</button>
+                                                                <button type="button" class="profileDrop">Cancel</button>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!--End off Purchase Tax Rate Popup -->
+                                                </div>
+
+                                                <div class="mb-2 row">
+                                                    <label for="inputAddress"
+                                                        class="col-sm-4 col-form-label">Nominal Code
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control editInput"
+                                                            id="inputCity" value="Port Elizabeth">
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-2 row">
+                                                    <label for="inputCity"
+                                                        class="col-sm-4 col-form-label">Sales A/c Code</label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control editInput selectOptions"
+                                                            id="inputCustomer">
+                                                            <option>--Please Select--</option>
+                                                            <option>United kingdom (+44)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2 row">
+                                                    <label for="inputCity"
+                                                        class="col-sm-4 col-form-label">Purchase A/c Code
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control editInput selectOptions"
+                                                            id="inputCustomer">
+                                                            <option>--Please Select--</option>
+                                                            <option>United kingdom (+44)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2 row">
+                                                    <label for="inputCity"
+                                                        class="col-sm-4 col-form-label">Expense A/c Code</label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control editInput selectOptions"
+                                                            id="inputCustomer">
+                                                            <option>--Please Select--</option>
+                                                            <option>United kingdom (+44)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2 row">
+                                                    <label for="inputCounty"
+                                                        class="col-sm-4 col-form-label">Location</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control editInput"
+                                                            id="location" placeholder="Location">
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-2 row">
+                                                    <label for="inputCity"
+                                                        class="col-sm-4 col-form-label">Status</label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control editInput selectOptions"
+                                                            id="inputCustomer">
+                                                            <option>Active</option>
+                                                            <option>United kingdom (+44)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="mb-2 row">
+                                                    <label for="inputName"
+                                                        class="col-sm-4 col-form-label">Attachment</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="file" class="form-control editInput"
+                                                            id="inputName">
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                        <div class="productDetailTable">
+                                            <table class="table" id="containerA">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Supplier </th>
+                                                        <th>Part Number</th>
+                                                        <th>Cost Price</th>
+                                                        <th>
+                                                            <a href="#!" class="formicon" id="openPopupButton">
+                                                                <i class="fa-solid fa-square-plus"></i>
+                                                            </a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div> <!-- End row -->
+                            </div>
+                            <div class="modal-footer customer_Form_Popup">
+
+                                <button type="button" class="profileDrop">Save</button>
+                                <button type="button" class="profileDrop">Save &
+                                    Close</button>
+                                <button type="button" class="profileDrop"
+                                    data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End off Customer popup -->
+                <!-- *************Secend model********************* -->
+
+                <div class="modal fade" id="itemsCatagoryModal" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="itemsCatagoryModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content add_Customer">
+                            <div class="modal-header">
+                                <h5 class="modal-title fs-5" id="itemsCatagoryModalLabel">Product Category -
+                                    consumable</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body ">
+                                <div class="contantbodypopup p-0">
+                                    <div class="mb-2 row">
+                                        <label for="inputCity" class="col-sm-3 col-form-label">Product
+                                            Category*</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control editInput" id="inputCity"
+                                                value="Port Elizabeth">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputCity" class="col-sm-3 col-form-label">Parent
+                                            Category</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control editInput selectOptions"
+                                                id="inputCustomer">
+                                                <option> None </option>
+                                                <option> Default </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputCity"
+                                            class="col-sm-3 col-form-label">Status</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control editInput selectOptions"
+                                                id="inputCustomer">
+                                                <option> Active </option>
+                                                <option> Default </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end modal body -->
+                            <div class="modal-footer customer_Form_Popup">
+                                <button type="button" class="btn profileDrop"
+                                    data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn profileDrop">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- *************End Secend model********************* -->
+
+
+
+                <!-- End off View Product -->
+
+
+
+
+
+
                 <div class="newJobForm mt-4">
                     <label class="upperlineTitle">Item Details</label>
                     <div class="row">
@@ -726,12 +1770,16 @@
                                             <th>Code </th>
                                             <th>Product </th>
                                             <th>Description</th>
+                                            <th>Account Code</th>
                                             <th>Qty </th>
-                                            <th>Cost Price(R) </th>
-                                            <th>Price(R) </th>
+                                            <th>Cost Price(£)</th>
+                                            <th>Cost <br>Calc</th>
+                                            <th>Price(£) </th>
+                                            <th>Markup(%)</th>
+                                            <th>VAT(%)</th>
                                             <th>Discount </th>
-                                            <th>VAT(%) </th>
-                                            <th>Amount Assigned To </th>
+                                            <th>Amount </th>
+                                            <th>Profit </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -744,14 +1792,19 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td>
                                                 <div class="nav-item dropdown">
-                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> Welcome</a>
+                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> Insert</a>
                                                     <div class="dropdown-menu fade-up m-0">
-                                                        <a href="#" class="dropdown-item col-form-label">Products</a>
-                                                        <a href="#" class="dropdown-item col-form-label">Our Team</a>
-                                                        <a href="#" class="dropdown-item col-form-label">Testimonial</a>
-                                                        <a href="#" class="dropdown-item col-form-label">Our Works</a>
+                                                        <a href="#" class="dropdown-item col-form-label">Insert Products</a>
+                                                        <a href="#" class="dropdown-item col-form-label">Insert Title</a>
+                                                        <a href="#" class="dropdown-item col-form-label">Insert Image</a>
+                                                        <a href="#" class="dropdown-item col-form-label">Insert Description</a>
+                                                        <a href="#" class="dropdown-item col-form-label">Insert Section</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -1500,6 +2553,76 @@
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customeQuoteForm.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
 <script>
+    // **************************impExpClickbtnPopup
+
+    const impExpClickbtnPopup = document.getElementById('impExpClickbtnPopup');
+    const importExportpopup = document.getElementById('importExportpopup');
+    const closeimportExportPopup = document.getElementById('closeimportExportPopup');
+
+    impExpClickbtnPopup.addEventListener('click', () => {
+        importExportpopup.style.display = 'block';
+        setTimeout(() => {
+            importExportpopup.style.opacity = '1';
+        }, 50);
+    });
+
+    closeimportExportPopup.addEventListener('click', () => {
+        importExportpopup.style.opacity = '0';
+        setTimeout(() => {
+            importExportpopup.style.display = 'none';
+        }, 300);
+    });
+    // **************************End impExpClickbtnPopup
+    // **************************Purchase Tax Rate
+
+    const purchaseTaxRatePop = document.getElementById('purchaseTaxRatePop');
+    const purchasepopup = document.getElementById('purchasepopup');
+    const closePurchasePopup = document.getElementById('closePurchasePopup');
+
+    purchaseTaxRatePop.addEventListener('click', () => {
+        purchasepopup.style.display = 'block';
+        setTimeout(() => {
+            purchasepopup.style.opacity = '1';
+        }, 50);
+    });
+
+    closePurchasePopup.addEventListener('click', () => {
+        purchasepopup.style.opacity = '0';
+        setTimeout(() => {
+            purchasepopup.style.display = 'none';
+        }, 300);
+    });
+    // **************************End Purchase Tax Rate
+    // **************************Product Cetagory
+    const productCetagoryPopup = document.getElementById('productCetagoryPopup');
+    const cetagpopup = document.getElementById('cetagpopup');
+    const closecatagPopup = document.getElementById('closecatagPopup');
+
+    productCetagoryPopup.addEventListener('click', () => {
+        cetagpopup.style.display = 'block';
+        setTimeout(() => {
+            cetagpopup.style.opacity = '1';
+        }, 50);
+    });
+
+    closecatagPopup.addEventListener('click', () => {
+        cetagpopup.style.opacity = '0';
+        setTimeout(() => {
+            cetagpopup.style.display = 'none';
+        }, 300);
+    });
+    // **************************End Product Cetagory
+
+
+
+
+
+
+
+
+
+
+
     //Text Editer
     var editor_config = {
         toolbar: [{
@@ -1686,6 +2809,12 @@
         }
     }
 
+    function setFieldValues(fields, value) {
+        fields.forEach(fieldId => {
+            document.getElementById(fieldId).value = value;
+        });
+    }
+
     function getBillingDetailsData(id) {
         // alert(id);
         $.ajax({
@@ -1696,19 +2825,20 @@
             },
             success: function(response) {
                 console.log(response.data);
-                document.getElementById('billingDetailsName').value = "";
-
+                var contactData = response.data[0];
                 // billing details data set
-                document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
-                document.getElementById('setCustomerName').textContent = document.getElementById('setSiteAddress').textContent = document.getElementById('customerSiteCompany').value = response.data[0].name;
-                document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
-                document.getElementById('billingDetailsEmail').value = response.data[0].email;
-                document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
-                document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].country;
-                document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].postal_code;
-                document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+
+                setFieldValues(['billingDetailsName', 'customerSiteName', 'customerSiteDeliveryName'], contactData.contact_name);
+                setFieldValues(['customer_contact_id', 'siteCustomerId'], contactData.id);
+                setFieldValues(['setCustomerName', 'setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany'], contactData.name);
+                setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
+                setFieldValues(['billingDetailsEmail', 'customerSiteDeliveryEmail'], contactData.email);
+                setFieldValues(['billingCustomerCity', 'customerSiteCity'], contactData.city);
+                setFieldValues(['billingCustomerCounty', 'customerSiteCounty'], contactData.country);
+                setFieldValues(['billingCustomerPostcode', 'customerSitePostCode', 'customerSiteDeliveryPostCode'], contactData.postal_code);
+                setFieldValues(['billingCustomerTelephone', 'customerSiteTelephone', 'customerSiteDeliveryTelephone'], contactData.telephone);
+                setFieldValues(['billingCustomerMobile', 'customerSiteMobile', 'customerSiteDeliveryMobile'], contactData.mobile);
+
                 selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
                 selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
                 selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
@@ -1717,6 +2847,11 @@
                 selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
                 selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
                 selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+
+                // Customer Site Delivery Address Data Set
+                selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
+                selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -1753,6 +2888,37 @@
             }
         });
     }
+
+    function setSiteDeliveryDetails(id) {
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerSiteDetails") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response.data);
+                document.getElementById('siteCustomerId').value = response.data[0].id;
+                document.getElementById('customerSiteDeliveryName').value = response.data[0].contact_name;
+                document.getElementById('customerSiteDeliveryAdd').value = response.data[0].address;
+                // document.getElementById('customerSiteDeliveryCity').value = response.data[0].city;
+                // document.getElementById('customerSiteDeliveryCounty').value = response.data[0].country;
+                document.getElementById('customerSiteDeliveryPostCode').value = response.data[0].post_code;
+                document.getElementById('customerSiteDeliveryTelephone').value = response.data[0].telephone;
+                document.getElementById('customerSiteDeliveryMobile').value = response.data[0].mobile;
+                document.getElementById('customerSiteDeliveryEmail').value = response.data[0].email;
+                document.getElementById('customerSiteDeliveryCompany').value = response.data[0].company_name;
+                selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_id);
+                selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
 
 
     $(document).ready(function() {
@@ -1803,10 +2969,14 @@
             const customerSiteDetails = document.getElementById('customerSiteDetails');
             customerSiteDetails.innerHTML = '';
 
+            const customerSiteDelivery = document.getElementById('customerSiteDelivery');
+            customerSiteDelivery.innerHTML = '';
+
             const option3 = document.createElement('option');
             option3.value = getCustomerListValue.value;
             option3.text = "Same as customer";
             customerSiteDetails.appendChild(option3);
+            customerSiteDelivery.appendChild(option3);
 
             console.log(getCustomerListValue.value);
             $.ajax({
@@ -1822,8 +2992,19 @@
                         const option = document.createElement('option');
                         option.value = user.id;
                         option.text = user.site_name;
+                        const option1 = option.cloneNode(true);
                         customerSiteDetails.appendChild(option);
+                        customerSiteDelivery.appendChild(option1);
                     });
+
+                    // response.data.forEach(user => {
+                    //     const option = document.createElement('option');
+                    //     option.value = user.id;
+                    //     option.text = user.site_name;
+                    //     customerSiteDelivery.appendChild(option);
+                    // });
+
+
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -1834,10 +3015,14 @@
 
         $('#AddQuoteButton').on('click', function() {
             var customer = document.getElementById('getCustomerList').value;
-            alert(customer);
+            // alert(customer);
             if (customer === "") {
                 alert('Please select the customer');
             } else {
+                getRegions(document.getElementById('siteDeliveryRegions'));
+                const selectCustomer = document.getElementById('getCustomerList');
+                const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
+                document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
                 document.getElementById('yourQuoteSection').style.display = "none";
                 document.getElementById('hideQuoteDiv').style.display = "block";
                 document.getElementById('hideCustomerDetails').style.display = "none";
@@ -1908,7 +3093,6 @@
                         // billing details data set
                         document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
                         document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
-                        // document.getElementById('setCustomerName').textContent = document.getElementById('setSiteAddress').textContent = document.getElementById('customerSiteName').value = response.data[0].name;
                         document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
                         document.getElementById('billingDetailsEmail').value = response.data[0].email;
                         document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
@@ -1968,6 +3152,40 @@
                 setSiteAddressDetails($(this).val());
             }
         });
+        $('#customerSiteDelivery').on('change', function() {
+            var selected = document.getElementById('getCustomerList').value;
+            console.log($(this).val());
+            if ($(this).val() === selected) {
+
+                $.ajax({
+                    url: '{{ route("customer.ajax.getCustomerDetails") }}',
+                    method: 'POST',
+                    data: {
+                        id: $(this).val()
+                    },
+                    success: function(response) {
+                        console.log(response.data);
+                        document.getElementById('customerSiteDeliveryId').value = response.data[0].id;
+                        document.getElementById('customerSiteDeliveryName').value = response.data[0].contact_name;
+                        document.getElementById('customerSiteDeliveryAdd').value = response.data[0].address;
+                        document.getElementById('customerSiteDeliveryPostCode').value = response.data[0].postal_code;
+                        document.getElementById('customerSiteDeliveryTelephone').value = response.data[0].telephone;
+                        document.getElementById('customerSiteDeliveryMobile').value = response.data[0].mobile;
+                        document.getElementById('customerSiteDeliveryEmail').value = response.data[0].email;
+                        document.getElementById('customerSiteDeliveryCompany').value = response.data[0].name;
+                        selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
+                        selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
+                        selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                setSiteDeliveryDetails($(this).val());
+            }
+        });
+
 
 
         // Ajax Call for saving Customer Type
