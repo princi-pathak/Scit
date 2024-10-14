@@ -1950,7 +1950,7 @@ span.oNOfswich {
   background-color: #035d97
 }
 
-.card {
+.importExportMrgin .contantbodypopup .card  {
   z-index: 0;
   border: none;
   position: relative
@@ -2041,6 +2041,7 @@ span.oNOfswich {
   z-index: -1
 }
 
+
 #progressbar li.active:before,
 #progressbar li.active:after {
   background: #0877bd
@@ -2060,4 +2061,50 @@ span.oNOfswich {
 }
 .importTemp span{
   color: #00bb3b;
+}
+.calculatorIcon .plusandText span{
+ font-size: 34px;
+}
+.costProdut{
+  border: 1px solid  #eee;
+}
+.addProduvtBg{
+  padding: 30px;
+  background-color: #edf6fb;
+}
+.addproductCentertext{
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #0877bd;
+}
+.addproductCentertext a{
+  color: #000;
+}
+.productCount{
+  background-color: #0877bd;
+  color: #fff;
+  display: inline-block;
+  border-radius: 2px;
+  padding: 0 3px;
+  font-size: 12px;
+}
+
+.nav-tabs button:nth-child(1) .productCount{
+  background: #0877bd;
+}
+.nav-tabs button:nth-child(2) .productCount{
+  background: #00bb3b;
+  ;
+}
+.nav-tabs button:nth-child(3) .productCount{
+  background: #a35001;
+}
+.nav-tabs button:nth-child(4) .productCount{
+  background: #ff0101;
+}
+.pagecounter h6 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
 }
