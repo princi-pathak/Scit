@@ -293,7 +293,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	// CRM Section Controller
 	Route::get('/complaint_type', [CrmSectionController::class, 'complaint_type']);
-
+	Route::post('/bulk_delete','App\Http\Controllers\ActionController@bulk_delete');
 	// Supplier Section
 	Route::controller(SupplierController::class)->group(function () {
 		Route::get('/suppliers', 'index');
@@ -1222,6 +1222,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/customer_status_change', 'App\Http\Controllers\backEnd\CustomerController@customer_status_change');
 	Route::post('/customer_delete', 'App\Http\Controllers\backEnd\CustomerController@customer_delete');
 	Route::post('/default_address','App\Http\Controllers\backEnd\CustomerController@default_address');
+	Route::post('/delete_contact','App\Http\Controllers\backEnd\CustomerController@delete_contact');
+	Route::post('/delete_site','App\Http\Controllers\backEnd\CustomerController@delete_site');
+	Route::post('/delete_login','App\Http\Controllers\backEnd\CustomerController@delete_login');
 
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');

@@ -130,16 +130,38 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="telephone" class="col-lg-4 col-sm-4 control-label">Telephone</label>
-                                        <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="telephone" name="telephone" placeholder="Telephone" value="<?php if (isset($customer)) {
+                                        <label for="telephone" class="col-lg-3 col-sm-3 control-label">Telephone</label>
+                                        <div class="col-sm-2 pe-0">
+                                            <select class="form-control editInput selectOptions" id="telephone_country_code" name="telephone_country_code">
+                                                <option selected disabled>Please Select</option>
+                                                <?php foreach($country_code as $telephone_country_code){?>
+                                                    <option value="{{$telephone_country_code->id}}" <?php if(isset($customer) && $customer->telephone_country_code == $telephone_country_code->id){echo 'selected';}?>>+{{$telephone_country_code->code}}</option>
+                                                <?php }?>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1 numberHifan">
+                                            -
+                                        </div>
+                                        <div class="col-lg-5 ps-0">
+                                            <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Telephone" value="<?php if (isset($customer)) {
                                                                                                                                                         echo $customer->telephone;
                                                                                                                                                     } ?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="mobile" class="col-lg-4 col-sm-4 control-label">Mobile</label>
-                                        <div class="col-lg-8">
+                                        <label for="mobile" class="col-lg-3 col-sm-3 control-label">Mobile</label>
+                                        <div class="col-sm-2 pe-0">
+                                            <select class="form-control editInput selectOptions" id="mobile_country_code" name="mobile_country_code">
+                                                <option selected disabled>Please Select</option>
+                                            <?php foreach($country_code as $mobile_country_code){?>
+                                                    <option value="{{$mobile_country_code->id}}" <?php if(isset($customer) && $customer->mobile_country_code == $mobile_country_code->id){echo 'selected';}?>>+{{$mobile_country_code->code}}</option>
+                                                <?php }?>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1 numberHifan">
+                                            -
+                                        </div>
+                                        <div class="col-lg-5 ps-0">
                                             <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value="<?php if (isset($customer)) {
                                                                                                                                                 echo $customer->mobile;
                                                                                                                                             } ?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
@@ -508,7 +530,7 @@
                                             <tr>
                                                 <td><input type="checkbox" class="checkboxContactId" value="{{$conv->id}}"></td>
                                                 <td>{{$conv->contact_name}}</td>
-                                                <td>{{$job_title_details->name}}</td>
+                                                <td>{{$job_title_details->name ?? ""}}</td>
                                                 <td>{{$conv->email}}</td>
                                                 <td>{{$conv->telephone}}</td>
                                                 <td>{{$conv->mobile}}</td>
@@ -561,6 +583,7 @@
                                     <thead>
                                         <tr class="active">
                                             <th><input type="checkbox"></th>
+                                            <th>Site Name</th>
                                             <th>Contact Name</th>
                                             <th>Customer Job Title</th>
                                             <th>Email</th>
@@ -571,17 +594,20 @@
                                             <th>County</th>
                                             <th>Postcode</th>
                                             <th>Region </th>
+                                            <th></th>
 
                                         </tr>
                                     </thead>
                                     <tbody id="site_result">
                                         <?php foreach ($site as $sitev) {
                                             $job_title_detail = App\Models\Job_title::find($sitev->title_id);
+                                            $site_regionName=App\Models\Region::find($sitev->region);
                                         ?>
                                             <tr>
                                                 <td><input type="checkbox" value="{{$sitev->id}}"></td>
+                                                <td>{{$sitev->site_name}}</td>
                                                 <td>{{$sitev->contact_name}}</td>
-                                                <td>{{$job_title_detail->name}}</td>
+                                                <td>{{$job_title_detail->name ?? ""}}</td>
                                                 <td>{{$sitev->email}}</td>
                                                 <td>{{$sitev->telephone}}</td>
                                                 <td>{{$sitev->mobile}}</td>
@@ -589,7 +615,19 @@
                                                 <td>{{$sitev->city}}</td>
                                                 <td>{{$sitev->country}}</td>
                                                 <td>{{$sitev->post_code}}</td>
-                                                <td></td>
+                                                <td>{{$site_regionName->title ?? ""}}</td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                                            <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customer_site" class="dropdown-item modal_dataSite" data-id="{{ $sitev->id }}" data-site_name="{{ $sitev->site_name }}" data-contact_name="{{ $sitev->contact_name }}" data-title_id="{{$sitev->title_id}}" data-company_name="{{$sitev->company_name}}" data-email="{{$sitev->email}}" data-telephone="{{$sitev->telephone}}" data-mobile="{{$sitev->mobile}}" data-fax="{{$sitev->fax}}" data-region="{{$sitev->region}}" data-address="{{$sitev->address}}" data-city="{{$sitev->city}}" data-country="{{$sitev->country}}" data-post_code="{{$sitev->post_code}}" data-country_id="{{$sitev->country_id}}" data-catalogue="{{$sitev->catalogue}}" data-notes="{{$sitev->notes}}" data-telephone_country_code="{{$sitev->telephone_country_code}}" data-mobile_country_code="{{$sitev->mobile_country_code}}">Edit Details</a></li>
+                                                            <li><a href="javascript:void(0)" class="dropdown-item site_delete" data-delete="{{ $sitev->id }}">Delete</a></li>
+                                                            <li><a href="javascript:void(0)" class="dropdown-item" data-id="{{ $sitev->id }}">Manage Document/Equipments</a></li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
@@ -620,6 +658,7 @@
                                             <th>Telephone</th>
                                             <th>Last Login</th>
                                             <th>Status</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody id="login_result">
@@ -632,6 +671,10 @@
                                                 <td>{{$logv->telephone}}</td>
                                                 <td></td>
                                                 <td><?php echo ($logv->status == 1) ? "Active" : "In-active"; ?></td>
+                                                <td>
+                                                    <img src="{{url('public/frontEnd/jobs/images/pencil.png')}}" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#customer_login" class="modal_datalogin hover" data-id="{{ $logv->id }}" data-email="{{ $logv->email }}" data-password_type="{{ $logv->password_type }}" data-name="{{$logv->name}}" data-telephone="{{$logv->telephone}}" data-access_rights="{{$logv->access_rights}}" data-projects="{{$logv->projects}}" data-notes="{{$logv->notes}}" data-last_login="{{$logv->last_login}}" data-status="{{$logv->status}}">&nbsp;
+                                                    <img src="{{url('public/frontEnd/jobs/images/delete.png')}}" alt="" class="login_delete hover" data-delete="{{$logv->id}}">
+                                                </td>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
@@ -643,7 +686,7 @@
                     <div class="pddtp">
                         <button type="button" class="btn btn-primary" onclick="get_data()"><i class="fa fa-floppy-o"></i> Save</button>
                         <button type="button" class="btn btn-primary" onclick="return window.location.href='<?php echo url('admin/customers'); ?>'"><i class="fa fa-arrow-left"></i> Back</button>
-                        <button type="button" class="btn btn-primary"><i class="fa fa-chevron-down"></i> Add</button>
+                        <!-- <button type="button" class="btn btn-primary"><i class="fa fa-chevron-down"></i> Add</button> -->
                     </div>
                 <!-- </form> -->
                 <!-- page end-->
@@ -799,98 +842,132 @@
                                     <div class="custom-legend"><strong>Customer Contact</strong></div>
                                     <form id="contact_form">
                                         @csrf
-                                        <input type="hidden" value="" name="customer_id" id="customer_id">
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Default Billing</label>
-                                            <div class="col-lg-9">
-                                                <input type="radio" name="r" id="yes" class="billing"> Yes
-                                                <input type="radio" name="r" id="no" class="billing" checked> No
+                                        <input type="hidden" value="" name="contact_id" id="contact_id">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Customer</label>
+                                                    <div class="col-lg-9">
+                                                        <p><?php if(isset($customer)){echo $customer->name;}?></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Default Billing</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="radio" name="r" id="yes" class="billing"> Yes
+                                                        <input type="radio" name="r" id="no" class="billing" checked> No
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Contact Name<span class="red-text">*</span></label>
+                                                    <div class="col-lg-9">
+                                                        <input type="text" name="customer_name" id="customer_name" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Job Title(Position)</label>
+                                                    <div class="col-lg-9">
+                                                        <select class="form-control who_noti" name="customer_job_titleid" id="customer_job_titleid">
+                                                            <option selected disabled>Select Job Title</option>
+                                                            <?php foreach ($job_title as $titleval) { ?>
+                                                                <option value="{{$titleval->id}}">{{$titleval->name}}</option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Email</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="email" name="customer_email" id="customer_email" class="form-control" onblur="getemail(2)">
+                                                        <span id="emailErr2" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Telephone</label>
+                                                    <div class="col-sm-2 pe-0">
+                                                        <select class="form-control editInput selectOptions" id="contact_telephone_country_code" name="contact_telephone_country_code">
+                                                            <option selected disabled>Please Select</option>
+                                                            <?php foreach($country_code as $contact_telephone_country_code){?>
+                                                                <option value="{{$contact_telephone_country_code->id}}">+{{$contact_telephone_country_code->code}}</option>
+                                                            <?php }?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-1 numberHifan">
+                                                        -
+                                                    </div>
+                                                    <div class="col-lg-6 ps-0">
+                                                        <input type="text" id="customer_telephone" name="customer_telephone" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Mobile</label>
+                                                    <div class="col-sm-2 pe-0">
+                                                        <select class="form-control editInput selectOptions" id="contact_mobile_country_code" name="contact_mobile_country_code">
+                                                            <option selected disabled>Please Select</option>
+                                                        <?php foreach($country_code as $contact_mobile_country_code){?>
+                                                                <option value="{{$contact_mobile_country_code->id}}">+{{$contact_mobile_country_code->code}}</option>
+                                                            <?php }?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-1 numberHifan">
+                                                        -
+                                                    </div>
+                                                    <div class="col-lg-6 ps-0">
+                                                        <input type="text" id="customer_mobile" name="customer_mobile" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Fax</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" id="customer_fax" name="customer_fax" class="form-control">
+                                                </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Address Details</label>
+                                                    <div class="col-lg-9">Same as Default
+                                                        <input type="checkbox" name="defaultaddcheck" id="defaultaddcheck">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Address<span class="red-text">*</span></label>
+                                                    <div class="col-lg-9">
+                                                        <textarea name="customer_address" class="form-control" id="customer_address" rows="3" cols="6"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">City</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="text" id="customer_city" name="customer_city" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Country</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="text" id="customer_country" name="customer_country" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Post Code</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="text" id="customer_post_code" name="customer_post_code" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Country</label>
+                                                    <div class="col-lg-9">
+                                                        <select id="customer_country_id" name="customer_country_id" class="form-control">
+                                                            <option selected disabled>Select Country</option>
+                                                            <?php foreach ($country as $valc) { ?>
+                                                                <option value="{{$valc->id}}">{{$valc->name}}</option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Contact Name<span class="red-text">*</span></label>
-                                            <div class="col-lg-9">
-                                                <input type="text" name="customer_name" id="customer_name" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Job Title(Position)</label>
-                                            <div class="col-lg-9">
-                                                <select class="form-control who_noti" name="customer_job_titleid" id="customer_job_titleid">
-                                                    <option selected disabled>Select Job Title</option>
-                                                    <?php foreach ($job_title as $titleval) { ?>
-                                                        <option value="{{$titleval->id}}">{{$titleval->name}}</option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Email</label>
-                                            <div class="col-lg-9">
-                                                <input type="email" name="customer_email" id="customer_email" class="form-control" onblur="getemail(2)">
-                                                <span id="emailErr2" style="color: red;"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Telephone</label>
-                                            <div class="col-lg-9">
-                                                <input type="text" id="customer_telephone" name="customer_telephone" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Mobile</label>
-                                            <div class="col-lg-9">
-                                                <input type="text" id="customer_mobile" name="customer_mobile" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Fax</label>
-                                            <div class="col-lg-9">
-                                                <input type="text" id="customer_fax" name="customer_fax" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Address Details</label>
-                                            <div class="col-lg-9">Same as Default
-                                                <input type="checkbox" name="defaultaddcheck" id="defaultaddcheck">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Address<span class="red-text">*</span></label>
-                                            <div class="col-lg-9">
-                                                <textarea name="customer_address" class="form-control" id="customer_address" rows="3" cols="6"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">City</label>
-                                            <div class="col-lg-9">
-                                                <input type="text" id="customer_city" name="customer_city" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Country</label>
-                                            <div class="col-lg-9">
-                                                <input type="text" id="customer_country" name="customer_country" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Post Code</label>
-                                            <div class="col-lg-9">
-                                                <input type="text" id="customer_post_code" name="customer_post_code" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Country</label>
-                                            <div class="col-lg-9">
-                                                <select id="customer_country_id" name="customer_country_id" class="form-control">
-                                                    <option selected disabled>Select Country</option>
-                                                    <?php foreach ($country as $valc) { ?>
-                                                        <option value="{{$valc->id}}">{{$valc->name}}</option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                        </div>
-
+                                        
                                         <div class="noti_button">
                                             <a href="javascript:" class="btn btn-primary" onclick="get_save_contact()">Save</a>
                                             <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
@@ -918,16 +995,23 @@
                                     <!-- <div class="custom-legend"><strong>Customer Site</strong></div> -->
                                     <form id="site_form">
                                         @csrf
-                                        <input type="hidden" value="" name="site_customer_id" id="site_customer_id">
+                                        <input type="hidden" value="" name="site_id" id="site_id">
+                                       <div class="row">
+                                        <div class="col-md-6">
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Site Name</label>
+                                            <label class="col-lg-3 control-label">Customer</label>
+                                            <div class="col-lg-9">
+                                                <p><?php if(isset($customer)){echo $customer->name;}?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Site Name<span class="red-text">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="text" name="site_name" id="site_name" class="form-control">
                                             </div>
                                         </div>
-
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Contact Name</label>
+                                            <label class="col-lg-3 control-label">Contact Name<span class="red-text">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="text" name="site_contact_name" id="site_contact_name" class="form-control">
                                             </div>
@@ -958,16 +1042,40 @@
                                         </div>
                                         <div class="row form-group">
                                             <label class="col-lg-3 control-label">Telephone</label>
-                                            <div class="col-lg-9">
+                                            <div class="col-sm-2 pe-0">
+                                                <select class="form-control editInput selectOptions" id="site_telephone_country_code" name="site_telephone_country_code">
+                                                    <option selected disabled>Please Select</option>
+                                                    <?php foreach($country_code as $site_telephone_country_code){?>
+                                                        <option value="{{$site_telephone_country_code->id}}">+{{$site_telephone_country_code->code}}</option>
+                                                    <?php }?>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-1 numberHifan">
+                                                -
+                                            </div>
+                                            <div class="col-lg-6 ps-0">
                                                 <input type="text" id="site_telephone" name="site_telephone" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             </div>
                                         </div>
                                         <div class="row form-group">
                                             <label class="col-lg-3 control-label">Mobile</label>
-                                            <div class="col-lg-9">
+                                            <div class="col-sm-2 pe-0">
+                                                <select class="form-control editInput selectOptions" id="site_mobile_country_code" name="site_mobile_country_code">
+                                                    <option selected disabled>Please Select</option>
+                                                <?php foreach($country_code as $site_mobile_country_code){?>
+                                                        <option value="{{$site_mobile_country_code->id}}">+{{$site_mobile_country_code->code}}</option>
+                                                    <?php }?>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-1 numberHifan">
+                                                -
+                                            </div>
+                                            <div class="col-lg-6 ps-0">
                                                 <input type="text" id="site_mobile" name="site_mobile" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             </div>
                                         </div>
+                                        </div>
+                                        <div class="col-md-6">
                                         <div class="row form-group">
                                             <label class="col-lg-3 control-label">Fax</label>
                                             <div class="col-lg-9">
@@ -979,16 +1087,14 @@
                                             <div class="col-lg-9">
                                                 <select class="form-control" name="site_region" id="site_region">
                                                     <option selected disabled>Select Region</option>
-                                                    <option value="1">India</option>
-                                                    <option value="2">Pakistan</option>
-                                                    <option value="3">Afganistan</option>
-                                                    <option value="4">China</option>
-                                                    <option value="5">Korea</option>
+                                                    <?php foreach($region as $site_region){?>
+                                                    <option value="{{$site_region->id}}">{{$site_region->title}}</option>
+                                                    <?php }?>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Address</label>
+                                            <label class="col-lg-3 control-label">Address<span class="red-text">*</span></label>
                                             <div class="col-lg-9">
                                                 <textarea name="site_address" class="form-control" id="site_address" rows="3" cols="6"></textarea>
                                             </div>
@@ -1017,7 +1123,7 @@
                                                 <select id="site_country_id" name="site_country_id" class="form-control">
                                                     <option selected disabled>Select Country</option>
                                                     <?php foreach ($country as $valc) { ?>
-                                                        <option value="{{$valc->id}}">{{$valc->name}}</option>
+                                                        <option value="{{$valc->id}}">{{$valc->name}} (+{{$valc->code}})</option>
                                                     <?php } ?>
                                                 </select>
                                             </div>
@@ -1031,13 +1137,18 @@
                                                 </select>
                                             </div>
                                         </div>
-
+                                        
+                                        </div>
+                                        <div class="col-md-12">
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Notes</label>
-                                            <div class="col-lg-9">
+                                            <label class="col-lg-2 control-label">Notes</label>
+                                            <div class="col-lg-10">
                                                 <textarea name="customer_site_notes" class="form-control" id="customer_site_notes" rows="3" cols="6"></textarea>
                                             </div>
                                         </div>
+                                        </div>
+                                       </div>
+                                        
                                         <div class="noti_button">
                                             <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
                                             <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
@@ -1066,10 +1177,10 @@
                                     <!-- <div class="custom-legend"><strong>Customer Site</strong></div> -->
                                     <form id="login_form">
                                         @csrf
-                                        <input type="hidden" value="" name="login_customer_id" id="login_customer_id">
+                                        <input type="hidden" value="" name="login_id" id="login_id">
 
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Email</label>
+                                            <label class="col-lg-3 control-label">Email<span class="red-text">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="email" name="login_email" id="login_email" class="form-control" onblur="getemail(4)">
                                                 <span id="emailErr4" style="color: red;"></span>
@@ -1077,14 +1188,14 @@
                                         </div>
 
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Password Type</label>
+                                            <label class="col-lg-3 control-label">Password Type<span class="red-text">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="radio" id="pass1" name="pass"> Generate Now
                                                 <input type="radio" id="pass2" name="pass" checked> Email Password
                                             </div>
                                         </div>
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Name</label>
+                                            <label class="col-lg-3 control-label">Name<span class="red-text">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="email" name="login_name" id="login_name" class="form-control">
                                             </div>
@@ -1164,6 +1275,9 @@
         var contact_name=$("#contact_name").val();
         var address=$("#address").val();
         var token = '<?php echo csrf_token(); ?>'
+        var count_contact='<?php echo count($contact);?>'
+        var count_site='<?php echo count($site);?>'
+        var count_login='<?php echo count($login);?>'
         var firstErrorField = null;
         if (name == '') {
             $("#name").css('border','1px solid red');
@@ -1200,11 +1314,17 @@
                         $(window).scrollTop($('#email').position().top);
                         return false;
                     }else{
+                        $(window).scrollTop(0);
                         $("#email").css('border','');
                         $('.alert').show();
                         setTimeout(function() {
                             $('.alert').hide();
-                            window.location.href ="<?=url('admin/customer_add?key=')?>"+data.id;
+                            if(count_contact>0 || count_site>0 || count_login>0){
+                                window.location.href ="<?=url('admin/customers')?>";
+                            }else{
+                                window.location.href ="<?=url('admin/customer_add?key=')?>"+data.id;
+                            }
+                            
                             
                         }, 3000);
                     }
@@ -1231,6 +1351,7 @@
         var contact_name = $("#customer_name").val();
         var job_title_id = $("#customer_job_titleid").val();
         var customer_id = $("#id").val();
+        var id=$("#contact_id").val();
         var email = $("#customer_email").val();
         var telephone = $("#customer_telephone").val();
         var mobile = $("#customer_mobile").val();
@@ -1240,37 +1361,58 @@
         var country = $("#customer_country").val();
         var postcode = $("#customer_post_code").val();
         var country_id = $("#customer_country_id").val();
-
-        $.ajax({
+        var telephone_country_code=$("#contact_telephone_country_code").val();
+        var mobile_country_code=$("#contact_mobile_country_code").val();
+        if(contact_name == ''){
+            $("#customer_name").css('border','1px solid red');
+            $("#customer_name").focus();
+            return false;
+        }else if(address == ''){
+            $("#customer_name").css('border','');
+            $("#customer_address").css('border','1px solid red');
+            return false;
+        }else{
+            $("#customer_name").css('border','');
+            $("#customer_address").css('border','');
+            $.ajax({
             type: "POST",
             url: "{{url('admin/customer_contact_save')}}",
-            data: {
-                _token: token,
-                default_billing: default_billing,
-                contact_name: contact_name,
-                job_title_id: job_title_id,
-                customer_id: customer_id,
-                email: email,
-                telephone: telephone,
-                mobile: mobile,
-                fax: fax,
-                address: address,
-                city: city,
-                country: country,
-                postcode: postcode,
-                country_id: country_id
-            },
-            success: function(data) {
-                console.log(data);
-                $("#additionl_contact_model").modal('hide');
-                location.reload();
-            }
-        });
+                data: {
+                    id:id,
+                    _token: token,
+                    default_billing: default_billing,
+                    contact_name: contact_name,
+                    job_title_id: job_title_id,
+                    customer_id: customer_id,
+                    email: email,
+                    telephone: telephone,
+                    mobile: mobile,
+                    fax: fax,
+                    address: address,
+                    city: city,
+                    country: country,
+                    postcode: postcode,
+                    country_id: country_id,
+                    telephone_country_code:telephone_country_code,
+                    mobile_country_code:mobile_country_code,
+                },
+                success: function(data) {
+                    console.log(data);
+                    if($.trim(data) == "done"){
+                        $("#additionl_contact_model").modal('hide');
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                }
+            });
+        }
+        
     }
 
     function get_save_site() {
         var token = '<?php echo csrf_token(); ?>'
-        var customer_id = $("#site_customer_id").val();
+        var customer_id = $("#id").val();
         var site_name = $("#site_name").val();
         var contact_name = $("#site_contact_name").val();
         var title_id = $("#site_title_id").val();
@@ -1287,42 +1429,73 @@
         var country = $("#site_country").val();
         var post_code = $("#site_post_code").val();
         var country_id = $("#site_country_id").val();
-
-        $.ajax({
+        var telephone_country_code=$("#site_telephone_country_code").val();
+        var mobile_country_code=$("#site_mobile_country_code").val();
+        var id=$("#site_id").val();
+        if(site_name == ''){
+            $("#site_name").css('border','1px solid red');
+            $("#site_name").focus();
+            return false;
+        }else if(contact_name == ''){
+            $("#site_name").css('border','');
+            $('#site_contact_name').css('border','1px solid red');
+            $("#site_contact_name").focus();
+            return false;
+        }else if(address == ''){
+            $("#site_contact_name").css('border','');
+            $('#site_address').css('border','1px solid red');
+            $("#site_address").focus();
+            return false;
+        }else{
+            $("#site_name").css('border','');
+            $("#site_contact_name").css('border','');
+            $("#site_address").css('border','');
+            $.ajax({
             type: "POST",
             url: "{{url('admin/customer_site_save')}}",
             data: {
-                _token: token,
-                site_name: site_name,
-                contact_name: contact_name,
-                title_id: title_id,
-                customer_id: customer_id,
-                email: email,
-                telephone: telephone,
-                mobile: mobile,
-                fax: fax,
-                address: address,
-                city: city,
-                country: country,
-                post_code: post_code,
-                country_id: country_id,
-                region: region,
-                notes: notes,
-                catalogue: catalogue,
-                company_name: company_name
-            },
-            success: function(data) {
-                console.log(data);
-                $("#site_result").append(data);
-                $("#customer_site").modal('hide');
-            }
-        });
+                    id:id,
+                    _token: token,
+                    site_name: site_name,
+                    contact_name: contact_name,
+                    title_id: title_id,
+                    customer_id: customer_id,
+                    email: email,
+                    telephone: telephone,
+                    mobile: mobile,
+                    fax: fax,
+                    address: address,
+                    city: city,
+                    country: country,
+                    post_code: post_code,
+                    country_id: country_id,
+                    region: region,
+                    notes: notes,
+                    catalogue: catalogue,
+                    company_name: company_name,
+                    telephone_country_code:telephone_country_code,
+                    mobile_country_code:mobile_country_code,
+                },
+                success: function(data) {
+                    console.log(data);
+                    if($.trim(data) == "done"){
+                        $("#customer_site").modal('hide');
+                        // $("#site_result").append(data);
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    
+                }
+            });
+        }
     }
 
     function get_save_login() {
         var token = '<?php echo csrf_token(); ?>'
         var email = $('#login_email').val();
-        var customer_id = $("#login_customer_id").val();
+        var customer_id = $("#id").val();
+        var id=$("#login_id").val();
         var password_type;
         if ($('#pass1').is(':checked')) {
             password_type = 1;
@@ -1347,30 +1520,45 @@
         }
         var notes = $("#login_notes").val();
         // console.log(access_rights);
-        // return false;
-        $.ajax({
+        if(email == ''){
+            $('#login_email').css('border','1px solid red');
+            return false;
+        }else if(name == ''){
+            $('#login_email').css('border','');
+            $('#login_name').css('border','1px solid red');
+            return false;
+        }else{
+            $('#login_email').css('border','');
+            $('#login_name').css('border','');
+            $.ajax({
             type: "POST",
             url: "{{url('admin/customer_login_save')}}",
-            data: {
-                _token: token,
-                email: email,
-                customer_id: customer_id,
-                password_type: password_type,
-                name: name,
-                telephone: telephone,
-                access_rights: access_rights,
-                projects: projects,
-                notes: notes
-            },
-            success: function(data) {
-                console.log(data);
-                $("#login_result").append(data)
-                $("#customer_login").modal('hide');
-                // if ($.trim(data) == "done") {
-                //     // window.location.href='<?php echo url('admin/customers'); ?>';
-                // }
-            }
-        });
+                data: {
+                    id:id,
+                    _token: token,
+                    email: email,
+                    customer_id: customer_id,
+                    password_type: password_type,
+                    name: name,
+                    telephone: telephone,
+                    access_rights: access_rights,
+                    projects: projects,
+                    notes: notes
+                },
+                success: function(data) {
+                    console.log(data);
+                    if($.trim(data) == "done"){
+                        // $("#login_result").append(data)
+                        $("#customer_login").modal('hide');
+                        location.reload();
+                        
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    
+                }
+            });
+        }
     }
 </script>
 <script>
@@ -1548,6 +1736,63 @@
     });
 </script>
 <script>
+    $('.contact_delete').on('click', function() {
+        var id = $(this).data('delete');
+        if (confirm("Are you sure you want to delete this row?")) {
+            $(this).closest('tr').remove();
+            var token='<?php echo csrf_token();?>'
+            $.ajax({
+            type: "POST",
+            url: "{{url('/admin/delete_contact')}}",
+            data: {id:id,_token:token},
+            success: function(data) {
+                console.log(data);
+                if($.trim(data) == "error"){
+                    alert("Something went wrong");
+                }
+            }
+        });
+        }
+    });
+
+    $('.site_delete').on('click',function(){
+        var id = $(this).data('delete');
+        if (confirm("Are you sure you want to delete this row?")) {
+            $(this).closest('tr').remove();
+            var token='<?php echo csrf_token();?>'
+            $.ajax({
+            type: "POST",
+            url: "{{url('/admin/delete_site')}}",
+            data: {id:id,_token:token},
+            success: function(data) {
+                console.log(data);
+                if($.trim(data) == "error"){
+                    alert("Something went wrong");
+                }
+            }
+        });
+        }
+    });
+    $('.login_delete').on('click',function(){
+        var id = $(this).data('delete');
+        if (confirm("Are you sure you want to delete this row?")) {
+            $(this).closest('tr').remove();
+            var token='<?php echo csrf_token();?>'
+            $.ajax({
+            type: "POST",
+            url: "{{url('/admin/delete_login')}}",
+            data: {id:id,_token:token},
+            success: function(data) {
+                console.log(data);
+                if($.trim(data) == "error"){
+                    alert("Something went wrong");
+                }
+            }
+        });
+        }
+    });
+</script>
+<script>
     $('.modal_dataFetch').on('click', function() {
         $("#additionl_contact_model").modal('show');
         var id = $(this).data('id');
@@ -1585,6 +1830,7 @@
     });
 
     $('.modal_dataSite').on('click', function() {
+        $("#customer_site").modal('show');
         var id = $(this).data('id');
         var site_name = $(this).data('site_name');
         var contact_name = $(this).data('contact_name');
@@ -1602,6 +1848,8 @@
         var country_id = $(this).data('country_id');
         var catalogue = $(this).data('catalogue');
         var notes = $(this).data('notes');
+        var telephone_country_code=$(this).data('telephone_country_code');
+        var mobile_country_code=$(this).data('mobile_country_code');
         
         $("#site_id").val(id);
         $("#site_name").val(site_name);
@@ -1616,13 +1864,20 @@
         $("#site_address").val(address);
         $("#site_city").val(city);
         $("#site_country").val(country);
-        $("#site_postcode").val(post_code);
+        $("#site_post_code").val(post_code);
         $("#site_country_id").val(country_id);
-        $("#site_catalogue_id").val(catalogue);
-        $("#site_note").val(notes);
+        $("#site_catalogue").val(catalogue);
+        $("#customer_site_notes").val(notes);
+        if(telephone_country_code!= ''){
+            $("#site_telephone_country_code").val(telephone_country_code);
+        }
+        if(mobile_country_code !=''){
+            $("#site_mobile_country_code").val(mobile_country_code);
+        }
     });
     
     $('.modal_datalogin').on('click', function() {
+        $("#customer_login").modal('show');
         var id = $(this).data('id');
         var email = $(this).data('email');
         var name = $(this).data('name');
@@ -1648,7 +1903,7 @@
         $("#login_telephone").val(telephone);
         $("#login_status").val(status);
         $("#project"+projects).prop('checked', true);
-        $("#login_note").val(notes);
+        $("#login_notes").val(notes);
     });
     
 </script>
