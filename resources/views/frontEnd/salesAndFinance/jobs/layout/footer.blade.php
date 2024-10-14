@@ -19,6 +19,28 @@
     <script src="{{ url('public/js/salesFinance/customCRM.js')}}"></script>
     <script src="https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script>
+        function getCustomerList(id) {
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerList") }}',
+            success: function(response) {
+                console.log(response.message);
+                var get_customer_type = document.getElementById(id);
+                get_customer_type.innerHTML = '';
+
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.name;
+                    get_customer_type.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+        }
+    </script>
 
 </body>
 
