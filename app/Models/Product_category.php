@@ -45,8 +45,13 @@ class Product_category extends Model
 
     public static function saveProductCategoryData(array $data, $productCategoryID = null)
     {
-        $data['home_id'] = Auth::user()->home_id;        
-        return self::updateOrCreate(['id' => $productCategoryID], $data);
+        // $data['home_id'] = Auth::user()->home_id;        
+        // return self::updateOrCreate(['id' => $productCategoryID], $data);
+        $data['home_id'] = Auth::user()->home_id;
+        // Use updateOrCreate to either update an existing record or create a new one
+        $productCategory = self::updateOrCreate(['id' => $productCategoryID], $data);
+        // Return the ID of the created or updated product category
+        return $productCategory->id;
     }
     public static function checkproductcategoryname($category_name,$productCategoryID = null)
     {
