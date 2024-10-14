@@ -224,43 +224,57 @@ class CustomerController extends Controller
             echo "error";
         }
     }
+    public function delete_contact(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id=$request->id;
+        $delete= Constructor_additional_contact::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        if($delete){
+            Session::flash('success','Deleted Successfully Done');
+            echo "done";
+        }else{
+            echo "error";
+        }
+        
+    }
     public function customer_site_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $customer=Constructor_customer_site::saveCustomerAdditional($request->all());
-        $data=Constructor_customer_site::find($customer);
-        $job_title=Job_title::find($data->title_id);
-        $result='<tr class="active">
-                    <td><input type="checkbox" value="'.$data->id.'" class="checkboxContactId"></td>
-                    <td>'.$data->site_name.'</td>
-                    <td>'.$job_title->name.'</td>
-                    <td>'.$data->email.'</td>
-                    <td>'.$data->telephone.'</td>
-                    <td>'.$data->mobile.'</td>
-                    <td>'.$data->address.'</td>
-                    <td>'.$data->city.'</td>
-                    <td>'.$data->country.'</td>
-                    <td>'.$data->post_code.'</td>
-                    <td>Yes </td>
-
-                </tr>';
-        echo $result;
+        if($customer){
+            echo "done";
+        }else{
+            echo "error";
+        }
+    }
+    public function delete_site(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id=$request->id;
+        $delete= Constructor_customer_site::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        if($delete){
+            Session::flash('success','Deleted Successfully Done');
+            echo "done";
+        }else{
+            echo "error";
+        }
     }
     public function customer_login_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $customer=Construction_customer_login::saveCustomerAdditional($request->all());
-        $data=Construction_customer_login::find($customer);
-        $job_title=Job_title::find($data->title_id);
-                $result = '<tr class="active">
-                <td>#</td>
-                <td>'.$data->name.'</td>
-                <td>'.$data->email.'</td>
-                <td>'.$data->email.'</td>
-                <td>'.$data->telephone.'</td>
-                <td>29/07/2024</td>
-                <td>Active</td>
-            </tr>';
-
-        echo $result;
+        if($customer){
+            echo "done";
+        }else{
+            echo "error";
+        }
+    }
+    public function delete_login(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id=$request->id;
+        $delete= Construction_customer_login::where('id', $id)->update(['deleted_at' => Carbon::now()]);
+        if($delete){
+            Session::flash('success','Deleted Successfully Done');
+            echo "done";
+        }else{
+            echo "error";
+        }
     }
     public function customer_status_change(Request $request){
         // echo "<pre>";print_r($request->all());die;

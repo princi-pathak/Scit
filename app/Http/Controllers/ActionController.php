@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ActionController extends Controller
 {
@@ -36,5 +37,25 @@ class ActionController extends Controller
         //     return 0;
         // }
         
+    }
+    public function bulk_delete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id = $request->ids;
+        if($id =='' || $request->model == ''){
+            return false;
+        }
+        try {
+            if($request->model == "Customer"){
+                $modelName = "App\\" . ucfirst($request->model);
+            }else{
+                $modelName = "App\Models\\" . ucfirst($request->model);
+            }
+            
+            $model = app($modelName);
+            $delete=$model::whereIn('id',$id)->update(['deleted_at' => Carbon::now()]);
+            return true;
+        } catch (\Exception $e) {
+            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+        }
     }
 }
