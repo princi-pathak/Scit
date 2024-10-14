@@ -14,7 +14,7 @@
 
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="jobsection">
-                    <a href="#" class="profileDrop" onclick="additemsCatagoryModal()">Add</a>
+                    <a href="#" class="profileDrop" onclick="additemsCatagoryModal(1)">Add</a>
                 </div>
             </div>
 
@@ -194,7 +194,7 @@
 </script>
 
 <script>
-    function edititemsCatagoryModal(id,name,catid,status){
+    function edititemsCatagoryModal(id,name,catid,status,th){
         // alert(id);
         // alert(name);
         // alert(catid);
@@ -204,16 +204,18 @@
         $('#parentcategory').val(catid);
         $('#product_category_status').val(status);
         $('#productCategoryID').val(id);
+        $('#productCategorytype').val(th);
         $('#itemsCatagoryModal').modal('show');
     }
 </script>
 <script>
-    function additemsCatagoryModal(){
+    function additemsCatagoryModal(th){
         //alert();
         $('#category_name').val('');
         $('#parentcategory').val('');
         $('#product_category_status').val(1);
         $('#productCategoryID').val('');
+        $('#productCategorytype').val(th);
         $('#itemsCatagoryModal').modal('show');
     }
 </script>

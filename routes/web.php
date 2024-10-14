@@ -15,6 +15,7 @@ use App\Http\Controllers\frontEnd\salesFinance\Purchase_orderController;
 use App\Http\Controllers\backEnd\ManagersController;
 use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as FrontendProductCategoryController;
+use App\Http\Controllers\frontEnd\salesFinance\Item\ProductController;
 
 
 
@@ -475,13 +476,15 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 
 	Route::controller(FrontendProductCategoryController::class)->group(function(){
-
 		Route::get('/item/product_categories','index')->name('item.index');
 		Route::post('/item/add_product_category','saveProductCategoryData')->name('item.saveProductCategoryData');
 		Route::post('/item/change_product_category_status','changeProductCategoryStatus')->name('item.changeProductCategoryStatus');
 		Route::post('/item/delete_product_category','deleteProductCategory')->name('item.delete_product_category');
 	});
-
+	Route::controller(ProductController::class)->group(function(){
+		Route::get('/item/products','productlist')->name('item.products');
+		Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
+	});
 
 
 	// ------------- Personal Management - My profile ---------------------// 
