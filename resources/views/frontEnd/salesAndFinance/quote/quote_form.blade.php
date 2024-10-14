@@ -671,8 +671,7 @@
 
             </div><!-- End off col-md-12 -->
 
-            <div id="">
-                <!-- hideQuoteDiv -->
+            <div id="hideQuoteDiv">
 
                 <div class="newJobForm mt-4">
                     <label class="upperlineTitle">Items Details</label>
@@ -714,9 +713,8 @@
                         <div class="col-sm-3">
                             <div class="pageTitleBtn p-0">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                        + Insert </a>
-                                    <div class="dropdown-menu fade-up m-0" style="">
+                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> + Insert </a>
+                                    <div class="dropdown-menu fade-up m-0">
                                         <a href="#" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Product</a>
                                         <a href="#" class="dropdown-item col-form-label">insert SMS</a>
                                         <a href="#" class="dropdown-item col-form-label">insert Email</a>
@@ -781,9 +779,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="">
-                                                    <input type="text" class="form-control editInput" value="CS-0001">
-                                                </div>
+                                                <div class=""><input type="text" class="form-control editInput" value="CS-0001"></div>
                                             </td>
                                             <td>
                                                 <div class="">
@@ -910,8 +906,7 @@
                                             <td colspan="14">
                                                 <div class="pageTitleBtn p-0">
                                                     <div class="nav-item dropdown">
-                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            + Insert </a>
+                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> + Insert </a>
                                                         <div class="dropdown-menu fade-up m-0" style="">
                                                             <a href="#" class="dropdown-item col-form-label">Edid Details</a>
                                                             <a href="#" class="dropdown-item col-form-label">Send SMS</a>
@@ -941,11 +936,10 @@
                                                     <div class="extraInformationTab">
                                                         <nav>
                                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                                <button class="nav-link active" id="nav-product-tab" data-bs-toggle="tab" data-bs-target="#nav-product" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Product(s)</button>
-                                                                <button class="nav-link" id="nav-secrices-tab" data-bs-toggle="tab" data-bs-target="#nav-secrices" type="button" role="tab" aria-controls="nav-secrices" aria-selected="false">Service(s)</button>
-                                                                <button class="nav-link" id="nav-consumable-tab" data-bs-toggle="tab" data-bs-target="#nav-consumable" type="button" role="tab" aria-controls="nav-consumable" aria-selected="false">Consumable(s)</button>
-                                                                <button class="nav-link" id="nav-productGroup-tab" data-bs-toggle="tab" data-bs-target="#nav-productGroup" type="button" role="tab" aria-controls="nav-productGroup" aria-selected="false">Product Group(s)</button>
-
+                                                                <button class="nav-link active" id="nav-product-tab" data-bs-toggle="tab" data-bs-target="#nav-product" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Product(s) <span class="productCount">01</span></button>
+                                                                <button class="nav-link" id="nav-secrices-tab" data-bs-toggle="tab" data-bs-target="#nav-secrices" type="button" role="tab" aria-controls="nav-secrices" aria-selected="false">Service(s) <span class="productCount">01</span></button>
+                                                                <button class="nav-link" id="nav-consumable-tab" data-bs-toggle="tab" data-bs-target="#nav-consumable" type="button" role="tab" aria-controls="nav-consumable" aria-selected="false">Consumable(s) <span class="productCount">01</span></button>
+                                                                <button class="nav-link" id="nav-productGroup-tab" data-bs-toggle="tab" data-bs-target="#nav-productGroup" type="button" role="tab" aria-controls="nav-productGroup" aria-selected="false">Product Group(s) <span class="productCount">01</span></button>
                                                             </div>
                                                         </nav>
                                                         <div class="tab-content" id="nav-tabContent">
@@ -968,50 +962,29 @@
                                                                         </div>
                                                                     </div>
 
+
                                                                     <div id="alphabeticListHolder">
                                                                         <ul class="alphabeticList">
                                                                             <li><a href="#" class="alphabeticLink" data-term="all" data-search_mode="ALL">All</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="A" data-search_mode="STARTS">A</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="B" data-search_mode="STARTS">B</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="C" data-search_mode="STARTS">C</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="D" data-search_mode="STARTS">D</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="E" data-search_mode="STARTS">E</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="F" data-search_mode="STARTS">F</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="G" data-search_mode="STARTS">G</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="H" data-search_mode="STARTS">H</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="I" data-search_mode="STARTS">I</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="J" data-search_mode="STARTS">J</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="K" data-search_mode="STARTS">K</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="L" data-search_mode="STARTS">L</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="M" data-search_mode="STARTS">M</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="N" data-search_mode="STARTS">N</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="O" data-search_mode="STARTS">O</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="P" data-search_mode="STARTS">P</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="Q" data-search_mode="STARTS">Q</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="R" data-search_mode="STARTS">R</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="S" data-search_mode="STARTS">S</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="T" data-search_mode="STARTS">T</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="U" data-search_mode="STARTS">U</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="V" data-search_mode="STARTS">V</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="W" data-search_mode="STARTS">W</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="X" data-search_mode="STARTS">X</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="Y" data-search_mode="STARTS">Y</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="Z" data-search_mode="STARTS">Z</a></li>
-                                                                            <li>&nbsp;</li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="0" data-search_mode="STARTS">0</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="1" data-search_mode="STARTS">1</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="2" data-search_mode="STARTS">2</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="3" data-search_mode="STARTS">3</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="4" data-search_mode="STARTS">4</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="5" data-search_mode="STARTS">5</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="6" data-search_mode="STARTS">6</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="7" data-search_mode="STARTS">7</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="8" data-search_mode="STARTS">8</a></li>
-                                                                            <li><a href="#" class="alphabeticLink" data-term="9" data-search_mode="STARTS">9</a></li>
+                                                                            @for ($i = 65; $i <= 90; $i++)
+                                                                                <li><a href="#" class="alphabeticLink" data-term="{{ chr($i) }}" data-search_mode="STARTS">{{ chr($i) }}</a></li>
+                                                                                @endfor
+                                                                                <li>&nbsp;</li>
+                                                                                @for($j = 0; $j <= 9; $j++)
+                                                                                    <li><a href="#" class="alphabeticLink" data-term="{{ $j }}" data-search_mode="STARTS">{{ $j }}</a></li>
+                                                                                    @endfor
                                                                         </ul>
                                                                         <br class="clear">
                                                                     </div>
                                                                 </div>
+
+                                                                <div class="row">
+                                                                    <div class="pagecounter pb-2">
+                                                                        <h6>1-1 of 1 product(s) </h6>
+                                                                    </div>
+                                                                </div>
+
+
                                                                 <div class="row">
                                                                     <div class="col-12">
                                                                         <div class="productDetailTable">
@@ -1029,12 +1002,7 @@
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td colspan="7">
-                                                                                            <label class="red_sorryText">
-                                                                                                Sorry, no records to show
-                                                                                            </label>
-                                                                                        </td>
-
+                                                                                        <td colspan="7"><label class="red_sorryText"> Sorry, no records to show</label></td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -1058,7 +1026,6 @@
                                                                     <h3>Product Group - </h3>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1070,10 +1037,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
 
                                 <table class="table totlepayment" id="containerA">
                                     <tbody>
@@ -1135,23 +1098,19 @@
 
 
 
-                <div class="modal fade" id="itemsAddProductModal" tabindex="-1" data-bs-backdrop="static"
-                    data-bs-keyboard="false" aria-labelledby="customerModalLabel" aria-hidden="true">
+                <div class="modal fade" id="itemsAddProductModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="customerModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content add_Customer">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="customerModalLabel">Add Customer</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 col-xl-6">
                                         <div class="formDtail">
-                                            <!-- <form action="" class="customerForm"> -->
                                             <div class="mb-2 row">
-                                                <label for="inputName"
-                                                    class="col-sm-4 col-form-label">Customer</label>
+                                                <label for="inputName" class="col-sm-4 col-form-label">Customer</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control editInput selectOptions" id="inputCustomer">
                                                         <option>-All-</option>
@@ -1160,9 +1119,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
-                                                <label for="inputCustomer"
-                                                    class="col-sm-4 col-form-label">Product
-                                                    Category</label>
+                                                <label for="inputCustomer" class="col-sm-4 col-form-label">Product Category</label>
                                                 <div class="col-sm-7">
                                                     <select class="form-control editInput selectOptions" id="inputCustomer">
                                                         <option>Genrale Customer </option>
@@ -1177,7 +1134,6 @@
 
 
                                             <!--Start Product Cetagory Popup -->
-
                                             <div id="cetagpopup" class="popupfst">
                                                 <div class="popup-content">
                                                     <div class="popupTitle">
@@ -1187,53 +1143,37 @@
                                                     <div class="contantbodypopup">
                                                         <form action="" class="customerForm">
                                                             <div class="mb-2 row">
-                                                                <label for="inputCity"
-                                                                    class="col-sm-3 col-form-label">Product Cetagory*</label>
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Product Cetagory*</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text"
-                                                                        class="form-control editInput"
-                                                                        id="inputCity"
-                                                                        value="Port Elizabeth">
+                                                                    <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                                 </div>
                                                             </div>
 
                                                             <div class="mb-2 row">
-                                                                <label for="inputCity"
-                                                                    class="col-sm-3 col-form-label">Parent Cetagory</label>
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Parent Cetagory</label>
                                                                 <div class="col-sm-9">
-                                                                    <select
-                                                                        class="form-control editInput selectOptions"
-                                                                        id="inputCustomer">
+                                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
                                                                         <option> None </option>
                                                                         <option> Default </option>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="mb-2 row">
-                                                                <label for="inputCity"
-                                                                    class="col-sm-3 col-form-label">Status</label>
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
                                                                 <div class="col-sm-9">
-                                                                    <select
-                                                                        class="form-control editInput selectOptions"
-                                                                        id="inputCustomer">
+                                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
                                                                         <option> None </option>
                                                                         <option> Default </option>
                                                                     </select>
                                                                 </div>
                                                             </div>
-
                                                         </form>
                                                     </div>
 
                                                     <div class="popupF  customer_Form_Popup">
-
-                                                        <button type="button"
-                                                            class="profileDrop">Save</button>
-                                                        <button type="button"
-                                                            class="profileDrop">Save &
-                                                            Close</button>
+                                                        <button type="button" class="profileDrop">Save</button>
+                                                        <button type="button" class="profileDrop">Save & Close</button>
                                                         <button type="button" class="profileDrop">Cancel</button>
-
                                                     </div>
                                                 </div>
 
@@ -1250,8 +1190,7 @@
                                             </div>
 
                                             <div class="mb-2 row">
-                                                <label for="inputProject"
-                                                    class="col-sm-4 col-form-label">Product Type</label>
+                                                <label for="inputProject" class="col-sm-4 col-form-label">Product Type</label>
                                                 <div class="col-sm-7">
                                                     <select class="form-control editInput selectOptions" id="inputCustomer">
                                                         <option>Please Select</option>
@@ -1266,49 +1205,40 @@
 
 
                                             <div class="mb-2 row">
-                                                <label for="inputEmail"
-                                                    class="col-sm-4 col-form-label">Product Code </label>
+                                                <label for="inputEmail" class="col-sm-4 col-form-label">Product Code </label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control editInput" id="inputEmail" value="roxy.scits@gmail.com">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
-                                                <label for="inputEmail"
-                                                    class="col-sm-4 col-form-label">Cost Price </label>
+                                                <label for="inputEmail" class="col-sm-4 col-form-label">Cost Price </label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control editInput" id="inputEmail" value="roxy.scits@gmail.com">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
-                                                <label for="inputTelephone"
-                                                    class="col-sm-4 col-form-label">Markup</label>
+                                                <label for="inputTelephone" class="col-sm-4 col-form-label">Markup</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control editInput" id="inputTelephone" value="14000883788">
                                                 </div>
-
                                             </div>
 
                                             <div class="mb-2 row">
-                                                <label for="inputMobile"
-                                                    class="col-sm-4 col-form-label">Price *</label>
+                                                <label for="inputMobile" class="col-sm-4 col-form-label">Price *</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control editInput" id="inputPrice" value="Price">
                                                 </div>
                                             </div>
 
                                             <div class="mb-2 row">
-                                                <label for="inputCounty"
-                                                    class="col-sm-4 col-form-label">Description</label>
+                                                <label for="inputCounty" class="col-sm-4 col-form-label">Description</label>
                                                 <div class="col-sm-8">
-                                                    <textarea class="form-control textareaInput"
-                                                        name="address" id="inputAddress" rows="3"
-                                                        placeholder="75 Cope Road Mall Park USA"></textarea>
+                                                    <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="3" placeholder="75 Cope Road Mall Park USA"></textarea>
                                                 </div>
                                             </div>
 
                                             <div class="mb-2 row">
-                                                <label for="inputCounty"
-                                                    class="col-sm-4 col-form-label pt-0">show Product</label>
+                                                <label for="inputCounty" class="col-sm-4 col-form-label pt-0">show Product</label>
                                                 <div class="col-sm-8">
                                                     <span class="oNOfswich">
                                                         <input type="checkbox">
@@ -1324,19 +1254,15 @@
                                         <div class="formDtail">
                                             <form action="" class="">
                                                 <div class="mb-2 row">
-                                                    <label for="inputCity"
-                                                        class="col-sm-4 col-form-label">Bar Code</label>
+                                                    <label for="inputCity" class="col-sm-4 col-form-label">Bar Code</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control editInput"
-                                                            id="inputCity" value="Port Elizabeth">
+                                                        <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                     </div>
                                                 </div>
                                                 <div class="mb-2 row">
-                                                    <label for="inputProject"
-                                                        class="col-sm-4 col-form-label">Sales Tax Rate</label>
+                                                    <label for="inputProject" class="col-sm-4 col-form-label">Sales Tax Rate</label>
                                                     <div class="col-sm-7">
-                                                        <select class="form-control editInput selectOptions"
-                                                            id="inputCustomer">
+                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
                                                             <option>None</option>
                                                             <option>Default</option>
                                                         </select>
@@ -1354,61 +1280,41 @@
                                                         <div class="popup-content">
                                                             <div class="popupTitle">
                                                                 <span class="">Add Tax Rate</span>
-                                                                <span class="close"
-                                                                    id="closePopup">&times;</span>
+                                                                <span class="close" id="closePopup">&times;</span>
                                                             </div>
                                                             <div class="contantbodypopup">
                                                                 <form action="" class="customerForm">
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Tax Rate Name*</label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Tax Rate Name*</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity"
-                                                                                value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Tax Rate*</label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Tax Rate*</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity"
-                                                                                value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Status</label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
                                                                         <div class="col-sm-9">
-                                                                            <select
-                                                                                class="form-control editInput selectOptions"
-                                                                                id="inputCustomer">
+                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
                                                                                 <option> None </option>
                                                                                 <option> Default </option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">External Tax Code</label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">External Tax Code</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity"
-                                                                                value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Expiry Date</label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Expiry Date</label>
                                                                         <div class="col-sm-7">
-                                                                            <input type="date"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity"
-                                                                                value="Port Elizabeth">
+                                                                            <input type="date" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -1416,11 +1322,8 @@
 
                                                             <div class="popupF  customer_Form_Popup">
 
-                                                                <button type="button"
-                                                                    class="profileDrop">Save</button>
-                                                                <button type="button"
-                                                                    class="profileDrop">Save &
-                                                                    Close</button>
+                                                                <button type="button" class="profileDrop">Save</button>
+                                                                <button type="button" class="profileDrop">Save & Close</button>
                                                                 <button type="button" class="profileDrop">Cancel</button>
 
                                                             </div>
@@ -1434,11 +1337,9 @@
                                                 </div>
 
                                                 <div class="mb-2 row">
-                                                    <label for="inputProject"
-                                                        class="col-sm-4 col-form-label">Purchase Tax Rate</label>
+                                                    <label for="inputProject" class="col-sm-4 col-form-label">Purchase Tax Rate</label>
                                                     <div class="col-sm-7">
-                                                        <select class="form-control editInput selectOptions"
-                                                            id="inputCustomer">
+                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
                                                             <option>None</option>
                                                             <option>Default</option>
                                                         </select>
@@ -1454,157 +1355,113 @@
                                                         <div class="popup-content">
                                                             <div class="popupTitle">
                                                                 <span class="">Purchase Tax Rate</span>
-                                                                <span class="close"
-                                                                    id="closePurchasePopup">&times;</span>
+                                                                <span class="close" id="closePurchasePopup">&times;</span>
                                                             </div>
                                                             <div class="contantbodypopup">
                                                                 <form action="" class="">
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Tax Rate Name*</label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Tax Rate Name*</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity"
-                                                                                value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Tax Rate*</label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Tax Rate*</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity"
-                                                                                value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Status</label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
                                                                         <div class="col-sm-9">
-                                                                            <select
-                                                                                class="form-control editInput selectOptions"
-                                                                                id="inputCustomer">
+                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
                                                                                 <option> None </option>
                                                                                 <option> Default </option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">External Tax Code</label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">External Tax Code</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity"
-                                                                                value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Expiry Date</label>
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Expiry Date</label>
                                                                         <div class="col-sm-7">
-                                                                            <input type="date"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity"
-                                                                                value="Port Elizabeth">
+                                                                            <input type="date" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                 </form>
                                                             </div>
 
                                                             <div class="popupF  customer_Form_Popup">
-
-                                                                <button type="button"
-                                                                    class="profileDrop">Save</button>
-                                                                <button type="button"
-                                                                    class="profileDrop">Save &
-                                                                    Close</button>
+                                                                <button type="button" class="profileDrop">Save</button>
+                                                                <button type="button" class="profileDrop">Save & Close</button>
                                                                 <button type="button" class="profileDrop">Cancel</button>
-
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                     <!--End off Purchase Tax Rate Popup -->
                                                 </div>
 
                                                 <div class="mb-2 row">
-                                                    <label for="inputAddress"
-                                                        class="col-sm-4 col-form-label">Nominal Code
-                                                    </label>
+                                                    <label for="inputAddress" class="col-sm-4 col-form-label">Nominal Code </label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control editInput"
-                                                            id="inputCity" value="Port Elizabeth">
+                                                        <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                     </div>
                                                 </div>
 
                                                 <div class="mb-2 row">
-                                                    <label for="inputCity"
-                                                        class="col-sm-4 col-form-label">Sales A/c Code</label>
+                                                    <label for="inputCity" class="col-sm-4 col-form-label">Sales A/c Code</label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control editInput selectOptions"
-                                                            id="inputCustomer">
+                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
                                                             <option>--Please Select--</option>
                                                             <option>United kingdom (+44)</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="mb-2 row">
-                                                    <label for="inputCity"
-                                                        class="col-sm-4 col-form-label">Purchase A/c Code
-                                                    </label>
+                                                    <label for="inputCity" class="col-sm-4 col-form-label">Purchase A/c Code </label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control editInput selectOptions"
-                                                            id="inputCustomer">
+                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
                                                             <option>--Please Select--</option>
                                                             <option>United kingdom (+44)</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="mb-2 row">
-                                                    <label for="inputCity"
-                                                        class="col-sm-4 col-form-label">Expense A/c Code</label>
+                                                    <label for="inputCity" class="col-sm-4 col-form-label">Expense A/c Code</label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control editInput selectOptions"
-                                                            id="inputCustomer">
+                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
                                                             <option>--Please Select--</option>
                                                             <option>United kingdom (+44)</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="mb-2 row">
-                                                    <label for="inputCounty"
-                                                        class="col-sm-4 col-form-label">Location</label>
+                                                    <label for="inputCounty" class="col-sm-4 col-form-label">Location</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control editInput"
-                                                            id="location" placeholder="Location">
+                                                        <input type="text" class="form-control editInput" id="location" placeholder="Location">
                                                     </div>
                                                 </div>
 
                                                 <div class="mb-2 row">
-                                                    <label for="inputCity"
-                                                        class="col-sm-4 col-form-label">Status</label>
+                                                    <label for="inputCity" class="col-sm-4 col-form-label">Status</label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control editInput selectOptions"
-                                                            id="inputCustomer">
+                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
                                                             <option>Active</option>
                                                             <option>United kingdom (+44)</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
-
                                                 <div class="mb-2 row">
-                                                    <label for="inputName"
-                                                        class="col-sm-4 col-form-label">Attachment</label>
+                                                    <label for="inputName" class="col-sm-4 col-form-label">Attachment</label>
                                                     <div class="col-sm-8">
-                                                        <input type="file" class="form-control editInput"
-                                                            id="inputName">
+                                                        <input type="file" class="form-control editInput" id="inputName">
                                                     </div>
                                                 </div>
-
                                             </form>
                                         </div>
                                         <div class="productDetailTable">
@@ -1627,12 +1484,9 @@
                                 </div> <!-- End row -->
                             </div>
                             <div class="modal-footer customer_Form_Popup">
-
                                 <button type="button" class="profileDrop">Save</button>
-                                <button type="button" class="profileDrop">Save &
-                                    Close</button>
-                                <button type="button" class="profileDrop"
-                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="profileDrop">Save & Close</button>
+                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -1640,44 +1494,35 @@
                 <!-- End off Customer popup -->
                 <!-- *************Secend model********************* -->
 
-                <div class="modal fade" id="itemsCatagoryModal" data-bs-backdrop="static"
-                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="itemsCatagoryModalLabel"
+                <div class="modal fade" id="itemsCatagoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="itemsCatagoryModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-md">
                         <div class="modal-content add_Customer">
                             <div class="modal-header">
-                                <h5 class="modal-title fs-5" id="itemsCatagoryModalLabel">Product Category -
-                                    consumable</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <h5 class="modal-title fs-5" id="itemsCatagoryModalLabel">Product Category - consumable</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body ">
                                 <div class="contantbodypopup p-0">
                                     <div class="mb-2 row">
-                                        <label for="inputCity" class="col-sm-3 col-form-label">Product
-                                            Category*</label>
+                                        <label for="inputCity" class="col-sm-3 col-form-label">Product Category*</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" id="inputCity"
-                                                value="Port Elizabeth">
+                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                         </div>
                                     </div>
                                     <div class="mb-2 row">
-                                        <label for="inputCity" class="col-sm-3 col-form-label">Parent
-                                            Category</label>
+                                        <label for="inputCity" class="col-sm-3 col-form-label">Parent Category</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control editInput selectOptions"
-                                                id="inputCustomer">
+                                            <select class="form-control editInput selectOptions" id="inputCustomer">
                                                 <option> None </option>
                                                 <option> Default </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="mb-2 row">
-                                        <label for="inputCity"
-                                            class="col-sm-3 col-form-label">Status</label>
+                                        <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control editInput selectOptions"
-                                                id="inputCustomer">
+                                            <select class="form-control editInput selectOptions" id="inputCustomer">
                                                 <option> Active </option>
                                                 <option> Default </option>
                                             </select>
@@ -1686,8 +1531,7 @@
                                 </div>
                             </div> <!-- end modal body -->
                             <div class="modal-footer customer_Form_Popup">
-                                <button type="button" class="btn profileDrop"
-                                    data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
                                 <button type="button" class="btn profileDrop">Save changes</button>
                             </div>
                         </div>
@@ -1699,122 +1543,6 @@
 
                 <!-- End off View Product -->
 
-
-
-
-
-
-                <div class="newJobForm mt-4">
-                    <label class="upperlineTitle">Item Details</label>
-                    <div class="row">
-                        <div class="col-sm-7">
-                            <div class="mb-3 row">
-                                <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="plusandText">
-                                        <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
-                                        <span class="afterPlusText"> (Type to view product or <a href="#!">Click here</a> to view all assets)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputCountry" class="col-sm-2 col-form-label">Catalogue</label>
-                                <div class="col-sm-3">
-                                    <select class="form-control editInput" name="" id="">
-                                        <option value="">Default Pricing</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputCountry" class="col-sm-2 col-form-label">Markup Based on</label>
-                                <div class="col-sm-3">
-                                    <select class="form-control editInput" name="" id="">
-                                        <option value="">Price</option>
-                                        <option value="">Cost Price</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="col-sm-5">
-                            <div class="mb-3 row">
-                                <label for="inputCountry" class="col-sm-3 col-form-label">Template Options</label>
-                                <div class="col-sm-5">
-                                    <select class="form-control editInput" name="" id="">
-                                        <option value="">Show Product Details</option>
-                                        <option value="">Hide Product Details</option>
-                                        <option value="">Hide Product Price</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> Insert</a>
-                                        <div class="dropdown-menu fade-up m-0">
-                                            <a href="#" class="dropdown-item col-form-label">Insert Product</a>
-                                            <a href="#" class="dropdown-item col-form-label">Insert Title</a>
-                                            <a href="#" class="dropdown-item col-form-label">Insert Image</a>
-                                            <a href="#" class="dropdown-item col-form-label">Insert Description</a>
-                                            <a href="#" class="dropdown-item col-form-label">Insert Section</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="col-sm-12">
-                            <div class="productDetailTable">
-                                <table class="table" id="containerA">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>Code </th>
-                                            <th>Product </th>
-                                            <th>Description</th>
-                                            <th>Account Code</th>
-                                            <th>Qty </th>
-                                            <th>Cost Price(£)</th>
-                                            <th>Cost <br>Calc</th>
-                                            <th>Price(£) </th>
-                                            <th>Markup(%)</th>
-                                            <th>VAT(%)</th>
-                                            <th>Discount </th>
-                                            <th>Amount </th>
-                                            <th>Profit </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>0.00</td>
-                                            <td>R0.00</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <div class="nav-item dropdown">
-                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> Insert</a>
-                                                    <div class="dropdown-menu fade-up m-0">
-                                                        <a href="#" class="dropdown-item col-form-label">Insert Products</a>
-                                                        <a href="#" class="dropdown-item col-form-label">Insert Title</a>
-                                                        <a href="#" class="dropdown-item col-form-label">Insert Image</a>
-                                                        <a href="#" class="dropdown-item col-form-label">Insert Description</a>
-                                                        <a href="#" class="dropdown-item col-form-label">Insert Section</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="newJobForm mt-4">
                     <label class="upperlineTitle">Extra Information</label>
@@ -2552,77 +2280,9 @@
 
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customeQuoteForm.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
+
+@include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script>
-    // **************************impExpClickbtnPopup
-
-    const impExpClickbtnPopup = document.getElementById('impExpClickbtnPopup');
-    const importExportpopup = document.getElementById('importExportpopup');
-    const closeimportExportPopup = document.getElementById('closeimportExportPopup');
-
-    impExpClickbtnPopup.addEventListener('click', () => {
-        importExportpopup.style.display = 'block';
-        setTimeout(() => {
-            importExportpopup.style.opacity = '1';
-        }, 50);
-    });
-
-    closeimportExportPopup.addEventListener('click', () => {
-        importExportpopup.style.opacity = '0';
-        setTimeout(() => {
-            importExportpopup.style.display = 'none';
-        }, 300);
-    });
-    // **************************End impExpClickbtnPopup
-    // **************************Purchase Tax Rate
-
-    const purchaseTaxRatePop = document.getElementById('purchaseTaxRatePop');
-    const purchasepopup = document.getElementById('purchasepopup');
-    const closePurchasePopup = document.getElementById('closePurchasePopup');
-
-    purchaseTaxRatePop.addEventListener('click', () => {
-        purchasepopup.style.display = 'block';
-        setTimeout(() => {
-            purchasepopup.style.opacity = '1';
-        }, 50);
-    });
-
-    closePurchasePopup.addEventListener('click', () => {
-        purchasepopup.style.opacity = '0';
-        setTimeout(() => {
-            purchasepopup.style.display = 'none';
-        }, 300);
-    });
-    // **************************End Purchase Tax Rate
-    // **************************Product Cetagory
-    const productCetagoryPopup = document.getElementById('productCetagoryPopup');
-    const cetagpopup = document.getElementById('cetagpopup');
-    const closecatagPopup = document.getElementById('closecatagPopup');
-
-    productCetagoryPopup.addEventListener('click', () => {
-        cetagpopup.style.display = 'block';
-        setTimeout(() => {
-            cetagpopup.style.opacity = '1';
-        }, 50);
-    });
-
-    closecatagPopup.addEventListener('click', () => {
-        cetagpopup.style.opacity = '0';
-        setTimeout(() => {
-            cetagpopup.style.display = 'none';
-        }, 300);
-    });
-    // **************************End Product Cetagory
-
-
-
-
-
-
-
-
-
-
-
     //Text Editer
     var editor_config = {
         toolbar: [{
@@ -3384,5 +3044,69 @@
     $('#OpenSiteAddressJobTitleModel').on('click', function() {
         $('#siteDetailJobTitle').modal('show');
     });
+
+
+
+
+
+
+    // **************************impExpClickbtnPopup
+
+    const impExpClickbtnPopup = document.getElementById('impExpClickbtnPopup');
+    const importExportpopup = document.getElementById('importExportpopup');
+    const closeimportExportPopup = document.getElementById('closeimportExportPopup');
+
+    impExpClickbtnPopup.addEventListener('click', () => {
+        importExportpopup.style.display = 'block';
+        setTimeout(() => {
+            importExportpopup.style.opacity = '1';
+        }, 50);
+    });
+
+    closeimportExportPopup.addEventListener('click', () => {
+        importExportpopup.style.opacity = '0';
+        setTimeout(() => {
+            importExportpopup.style.display = 'none';
+        }, 300);
+    });
+    // **************************End impExpClickbtnPopup
+    // **************************Purchase Tax Rate
+
+    const purchaseTaxRatePop = document.getElementById('purchaseTaxRatePop');
+    const purchasepopup = document.getElementById('purchasepopup');
+    const closePurchasePopup = document.getElementById('closePurchasePopup');
+
+    purchaseTaxRatePop.addEventListener('click', () => {
+        purchasepopup.style.display = 'block';
+        setTimeout(() => {
+            purchasepopup.style.opacity = '1';
+        }, 50);
+    });
+
+    closePurchasePopup.addEventListener('click', () => {
+        purchasepopup.style.opacity = '0';
+        setTimeout(() => {
+            purchasepopup.style.display = 'none';
+        }, 300);
+    });
+    // **************************End Purchase Tax Rate
+    // **************************Product Cetagory
+    const productCetagoryPopup = document.getElementById('productCetagoryPopup');
+    const cetagpopup = document.getElementById('cetagpopup');
+    const closecatagPopup = document.getElementById('closecatagPopup');
+
+    productCetagoryPopup.addEventListener('click', () => {
+        cetagpopup.style.display = 'block';
+        setTimeout(() => {
+            cetagpopup.style.opacity = '1';
+        }, 50);
+    });
+
+    closecatagPopup.addEventListener('click', () => {
+        cetagpopup.style.opacity = '0';
+        setTimeout(() => {
+            cetagpopup.style.display = 'none';
+        }, 300);
+    });
+    // **************************End Product Cetagory
 </script>
-@include('frontEnd.salesAndFinance.jobs.layout.footer')
