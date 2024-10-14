@@ -140,7 +140,7 @@ class CustomerController extends Controller
         $data['customer'] = Customer::get_customer_list_Attribute($home_id, $request->list_mode);
         $data['list_mode'] = $request->list_mode;
         $data['active_customer'] = Customer::getConvertedCustomersCount($home_id);
-        $data['inactive_customer'] = Customer::where(['is_converted' => 1, 'status' => 0, 'home_id' => $home_id])->count();
+        $data['inactive_customer'] = Customer::where(['is_converted' => 1, 'status' => 0, 'home_id' => $home_id,'deleted_at'=>null])->count();
         return view('frontEnd.salesAndFinance.jobs.active_customer', $data);
     }
     public function customer_type()
