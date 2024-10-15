@@ -69,14 +69,14 @@ thead#flowhead {
                             </div>
                            </div>
                            <div class="col-lg-6">
-                            <div class="cog-btn-main-area">
+                            <!-- <div class="cog-btn-main-area">
                              <a class="btn btn-primary" href="#" data-toggle="dropdown">
                                     <i class="fa fa-cog fa-fw"></i>
                                 </a>
                                 <ul class="dropdown-menu pull-right">
                                     
                                 </ul>   
-                            </div>
+                            </div> -->
                            </div>
                           </div>
                             <div class="space15"></div>

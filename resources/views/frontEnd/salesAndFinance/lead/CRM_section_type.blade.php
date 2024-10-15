@@ -34,21 +34,25 @@
                         </div>
                     </div>
                     <div class="markendDelete">
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="jobsection">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="jobsection">
+                                        <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                        <!-- <a href="#" class="profileDrop">Mark As completed</a> -->
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="pageTitleBtn p-0">
+                                <div class="col-md-5">
+                                    <div class="pageTitleBtn p-0">
+                                        <!-- <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> All Select</label></th>
                                 <th>#</th>
                                 <th>Type</th>
                                 <th>CRM Section</th>
@@ -62,6 +66,7 @@
                             @if(!$crm_sections->isEmpty())
                             @foreach ($crm_sections as $value)
                             <tr>
+                                <td><input type="checkbox" id="" class="delete_checkbox" value="{{$value->id}}"></td>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $value->title }}</td>
                                 <td>@switch($value->crm_section)
@@ -224,3 +229,47 @@
         });
     });
 </script>
+<script>
+   $("#deleteSelectedRows").on('click', function() {
+    let ids = [];
+    
+    $('.delete_checkbox:checked').each(function() {
+        ids.push($(this).val());
+    });
+    if(ids.length == 0){
+        alert("Please check the checkbox for delete");
+    }else{
+        if(confirm("Are you sure to delete?")){
+            // console.log(ids);
+            var token='<?php echo csrf_token();?>'
+            var model='CRMSectionType';
+            $.ajax({
+                type: "POST",
+                url: "{{url('/bulk_delete')}}",
+                data: {ids:ids,model:model,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if(data){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    }
+    
+});
+$('.delete_checkbox').on('click', function() {
+    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+        $('#selectAll').prop('checked', true);
+    } else {
+        $('#selectAll').prop('checked', false);
+    }
+});
+ </script>
