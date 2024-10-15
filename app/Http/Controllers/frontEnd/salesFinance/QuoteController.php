@@ -195,4 +195,14 @@ class QuoteController extends Controller
             'data' => $data ? $data : 'No data.'
         ]);
     } 
+
+    public function getQuoteTypes(){
+        $data = QuoteType::getActiveQuoteType();
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+
+    }
 }

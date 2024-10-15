@@ -16,6 +16,7 @@ use App\Http\Controllers\backEnd\ManagersController;
 use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as FrontendProductCategoryController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductController;
+use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
 
 
 
@@ -300,6 +301,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/suppliers', 'index');
 		Route::get('/supplier_add', 'supplier_add');
 	});
+	Route::controller(ExpenseController::class)->group(function(){
+		Route::get('/expenses','expenses');
+	});
 
 	// General section Front 
 	Route::controller(GeneralSectionController::class)->group(function () {
@@ -448,6 +452,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/quote_type', 'quote_type')->name('quote.quote_type');
 		Route::post('/quote/saveQuoteType', 'saveQuoteType')->name('quote.ajax.saveQuoteType');
 		Route::post('/quote/deleteQuoteType', 'deleteQuoteType')->name('quote.ajax.deleteQuoteType');
+		Route::get('/quote/getQuoteTypes', 'getQuoteTypes')->name('quote.ajax.getQuoteTypes');
+
 
 		// Add Quote Sources
 		Route::get('/quote/quote_sources', 'quote_sources')->name('quote.quote_sources');

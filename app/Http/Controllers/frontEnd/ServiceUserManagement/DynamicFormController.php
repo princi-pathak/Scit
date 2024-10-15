@@ -51,12 +51,14 @@ class DynamicFormController extends Controller
                         //Daily record
                         $d_form_name = DB::table('dynamic_form_builder')->where('id', $data['dynamic_form_builder_id'])->value('title');
                         $inserlogbook = array(
-                            'title'=>$data['title'],
+                            // 'title'=>$data['title'],
+                            'title'=>null,
                             'category_id'=>3,
                             'category_name'=>'Visitor',
                             'category_icon'=>'fa fa-users',
                             'date'=>date('Y-m-d H:i:s', strtotime($data['date'])),
-                            'details'=>$data['details'],
+                            // 'details'=>$data['details'],
+                            'details'=> null,
                             'home_id'=>Auth::user()->home_id,
                             'user_id'=>Auth::user()->id,
                             'image_name'=>'',
@@ -90,9 +92,11 @@ class DynamicFormController extends Controller
                             'service_user_id'=>$data['service_user_id'],
                             'contact_id'=>0,
                             'care_team_id'=>0,
-                            'title'=>$data['title'],
+                            // 'title'=>$data['title'],
+                            'title'=>null,
                             'status'=>1,
-                            'details'=>$data['details'],
+                            // 'details'=>$data['details'],
+                            'details'=> null,
                             'is_deleted'=>0,
                             'created_at'=>date('Y-m-d H:i:s'),
                             'updated_at'=>date('Y-m-d H:i:s'),
@@ -128,8 +132,10 @@ class DynamicFormController extends Controller
                         //Behaviour Management
                         $insert_behaviour_managment = array(
                             'service_user_id'=>$data['service_user_id'],
-                            'title'=>$data['title'],
+                            // 'title'=> $data['title'],
+                            'title'=> null,
                             'details'=>$data['details'],
+                            'details'=> null,
                             'sent_to'=>2,
                             'formdata'=>json_encode($data['data']),
                             'home_id'=>Auth::user()->home_id,
@@ -153,9 +159,11 @@ class DynamicFormController extends Controller
                         //plans
                         $insert_plans_managment = array(
                             'service_user_id'=>$data['service_user_id'],
-                            'task'=>$data['title'],
+                            // 'task'=>$data['title'],
+                            'task'=> null,
                             'date'=>date('Y-m-d'),
-                            'description'=>$data['details'],
+                            // 'description'=>$data['details'],
+                            'description'=> null,
                             'qqa_review'=>"",
                             'formdata'=>json_encode($data['data']),
                             'home_id'=>Auth::user()->home_id,

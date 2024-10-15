@@ -684,7 +684,7 @@
                     </div>
 
                     <div class="pddtp">
-                        <button type="button" class="btn btn-primary" onclick="get_data()"><i class="fa fa-floppy-o"></i> Save</button>
+                        <button type="button" class="btn btn-primary" onclick="get_data()" id="submit_btnMain"><i class="fa fa-floppy-o"></i> Save</button>
                         <button type="button" class="btn btn-primary" onclick="return window.location.href='<?php echo url('admin/customers'); ?>'"><i class="fa fa-arrow-left"></i> Back</button>
                         <!-- <button type="button" class="btn btn-primary"><i class="fa fa-chevron-down"></i> Add</button> -->
                     </div>
@@ -1298,6 +1298,7 @@
             $("#name").css('border','');
             $("#contact_name").css('border','');
             $("#address").css('border','');
+            $('#submit_btnMain').attr('disabled','disabled');
             $.ajax({
             type: "POST",
             url: "{{url('admin/customer_save')}}",

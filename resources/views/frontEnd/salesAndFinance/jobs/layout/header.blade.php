@@ -302,7 +302,7 @@ $access_rights = explode(',', $rights);
                                 </div>
                             </div>
 
-                            <a href="#" class="nav-item nav-link">
+                            <a href="{{url('/expenses')}}" class="nav-item nav-link">
                                 <span><i class="material-symbols-outlined"> calculate </i></span>
                                 Expenses
                             </a>
