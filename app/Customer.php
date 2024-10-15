@@ -127,7 +127,7 @@ class Customer extends Model
     }
     public static function get_customer_list_Attribute($home_id,$list_mode){
         $status = ($list_mode == 'ACTIVE') ? 1 : 0;
-        return Customer::where(['is_converted' => '1', 'status' => $status,'home_id'=>$home_id])->get();
+        return Customer::where(['is_converted' => '1', 'status' => $status,'home_id'=>$home_id,'deleted_at'=>null])->get();
     }
 
     public function sites()

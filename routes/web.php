@@ -15,6 +15,8 @@ use App\Http\Controllers\frontEnd\salesFinance\Purchase_orderController;
 use App\Http\Controllers\backEnd\ManagersController;
 use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as FrontendProductCategoryController;
+use App\Http\Controllers\frontEnd\salesFinance\Item\ProductController;
+use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
 
 
 
@@ -293,11 +295,14 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	// CRM Section Controller
 	Route::get('/complaint_type', [CrmSectionController::class, 'complaint_type']);
-
+	Route::post('/bulk_delete','App\Http\Controllers\ActionController@bulk_delete');
 	// Supplier Section
 	Route::controller(SupplierController::class)->group(function () {
 		Route::get('/suppliers', 'index');
 		Route::get('/supplier_add', 'supplier_add');
+	});
+	Route::controller(ExpenseController::class)->group(function(){
+		Route::get('/expenses','expenses');
 	});
 
 	// General section Front 
@@ -447,6 +452,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/quote_type', 'quote_type')->name('quote.quote_type');
 		Route::post('/quote/saveQuoteType', 'saveQuoteType')->name('quote.ajax.saveQuoteType');
 		Route::post('/quote/deleteQuoteType', 'deleteQuoteType')->name('quote.ajax.deleteQuoteType');
+		Route::get('/quote/getQuoteTypes', 'getQuoteTypes')->name('quote.ajax.getQuoteTypes');
+
 
 		// Add Quote Sources
 		Route::get('/quote/quote_sources', 'quote_sources')->name('quote.quote_sources');
@@ -475,13 +482,17 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 
 	Route::controller(FrontendProductCategoryController::class)->group(function(){
-
 		Route::get('/item/product_categories','index')->name('item.index');
 		Route::post('/item/add_product_category','saveProductCategoryData')->name('item.saveProductCategoryData');
 		Route::post('/item/change_product_category_status','changeProductCategoryStatus')->name('item.changeProductCategoryStatus');
 		Route::post('/item/delete_product_category','deleteProductCategory')->name('item.delete_product_category');
 	});
-
+	Route::controller(ProductController::class)->group(function(){
+		Route::get('/item/products','productlist')->name('item.products');
+		Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
+		Route::post('/item/generateproductcode','generateproductcode')->name('item.generateproductcode');
+		Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
+	});
 
 
 	// ------------- Personal Management - My profile ---------------------// 
@@ -1222,6 +1233,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/customer_status_change', 'App\Http\Controllers\backEnd\CustomerController@customer_status_change');
 	Route::post('/customer_delete', 'App\Http\Controllers\backEnd\CustomerController@customer_delete');
 	Route::post('/default_address','App\Http\Controllers\backEnd\CustomerController@default_address');
+	Route::post('/delete_contact','App\Http\Controllers\backEnd\CustomerController@delete_contact');
+	Route::post('/delete_site','App\Http\Controllers\backEnd\CustomerController@delete_site');
+	Route::post('/delete_login','App\Http\Controllers\backEnd\CustomerController@delete_login');
 
 	//User TaskAllocation
 	Route::match(['get', 'post'], '/user/task-allocations/{user_id}', 'App\Http\Controllers\backEnd\user\TaskAllocationController@index');

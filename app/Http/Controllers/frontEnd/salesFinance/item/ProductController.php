@@ -9,15 +9,13 @@ use Session, DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Product_category;
+use App\Models\Product;
+use App\Models\Construction_tax_rate;
 use App\User;
 
-class ProductCategoryController extends Controller
+class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
+    function productlist(Request $request){
         $page = "item";
         $path = $request->path();
         $segments = explode('/', $path);
@@ -40,54 +38,51 @@ class ProductCategoryController extends Controller
             array_push($productcategory_array,$arr);
         }
         $product_categories_list = $productcategory_array;
-        return view('frontEnd.salesAndFinance.Item.product_category', compact('product_categories', 'page', 'lastSegment', 'users', 'product_categories_list'));
+        return view('frontEnd.salesAndFinance.Item.product', compact('product_categories', 'page', 'lastSegment', 'users', 'product_categories_list'));
     }
-    //add product category
-    function saveProductCategoryData(Request $request){
+
+    function productcategorylist(Request $request){
+        $product_categories = Product_category::with('parent', 'children')
+        ->where('home_id', Auth::user()->home_id)
+        ->where('status', 1)
+        ->where('deleted_at', NULL)
+        ->get();
+        return response()->json($product_categories);
+    }
+
+    function generateproductcode(Request $request){
+        $product_name = strtoupper($request->productname);
+        $pro_name = Product::genrateproductcode($product_name);
+        return response()->json($pro_name);
+    }
+
+    function saveTaxrateData(Request $request){
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'status' => 'required',
+            'taxratename' => 'required',
+            'tax_rate_status' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
         //echo Product_category::checkproductcategoryname($request->name,$request->productCategoryID);
         //die;
-        // Call the model's method to save product category data
-        if(Product_category::checkproductcategoryname($request->name,$request->productCategoryID)==0){
-            $saveData = Product_category::saveProductCategoryData($request->all(), $request->productCategoryID);
+       // Call the model's method to save product category data
+        if(Construction_tax_rate::checkTaxRatename($request->taxratename,$request->taxrateID)==0){
+            $saveData = Construction_tax_rate::saveTaxRateData($request->all(), $request->taxrateID);
             // Return the appropriate response
             return response()->json([
                 'success' => 1,
-                'message' => $saveData ? 'The Product Category has been saved successfully.' : 'Product category could not be created.',
+                'message' => $saveData ? 'The Tax Rate has been saved successfully.' : 'Tax Rate could not be created.',
                 'lastid' => $saveData
             ]);
         }else{
             return response()->json([
                 'success' => 0,
-                'message' => 'This Product category already exist.',
+                'message' => 'This Tax Rate already exist.',
                 'lastid' => 0
             ]);
         }
         
     }
 
-    function changeProductCategoryStatus(Request $request){
-        $changestatus = Product_category::changeProductCategoryStatus($request->id, $request->status);
-        return response()->json([
-            'success' => (bool) $changestatus,
-            'message' => $changestatus ? 'Product category status changed successfully.' : 'Product category status could not be changed.'
-        ]);
-    }
-
-    function deleteProductCategory(Request $request){
-        //echo $request->id;
-        $productCategoryID = explode(",",$request->id);
-        $delete = Product_category::deleteProductCategory($productCategoryID);
-        return response()->json([
-            'success' => (bool) $delete,
-            'message' => $delete ? 'Product category deletd successfully.' : 'Product category could not be deletd.'
-        ]);
-    }
-   
 }

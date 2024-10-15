@@ -49,6 +49,7 @@
             </div> <!-- end modal body -->
             <div class="modal-footer customer_Form_Popup">
                 <input type="hidden" name="productCategoryID" id="productCategoryID">
+                <input type="hidden" name="productCategorytype" id="productCategorytype">
                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn profileDrop" id="saveproductcategory">Save</button>
             </form>                              
@@ -78,7 +79,8 @@ Array.prototype.slice.call(forms)
 
                 // Here you can handle form submission using AJAX
                 var formData = new FormData(form);
-
+                var productCategorytype = $('#productCategorytype').val();
+                var category_name = $('#category_name').val();
                 fetch('{{ route("item.saveProductCategoryData") }}', {
                     method: 'POST',
                     body: formData
@@ -94,7 +96,23 @@ Array.prototype.slice.call(forms)
                     $('.cathidemessage').css('display','block');
                     $('.catsuccess').text(data.message);
                     $(".catsuccess").show('slow' , 'linear').delay(3000).fadeOut(function(){
-                        location.reload();
+                        if(productCategorytype!=2){
+                            location.reload();
+                        }else{                                                       
+                            $('#productcategorylist').append($('<option>', {
+                                value: data.lastid,
+                                text: category_name
+                            }));
+                            $('#productcategorylist').val(data.lastid);
+                            $('#itemsCatagoryModal').modal('hide');
+                            // var $newOption = $('<option>', {
+                            //     value: data.lastid, // Assuming `data.lastid` contains the new ID
+                            //     text: category_name // The name of the new category
+                            // });
+                            // $('#productcategorylist').append($newOption).val(data.lastid); // Append and set as selected
+                            // $('#itemsCatagoryModal').modal('hide');
+                        }
+                        
                     });
                    }
                     // Show success message

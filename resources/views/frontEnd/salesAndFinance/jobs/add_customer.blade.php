@@ -595,6 +595,7 @@
                                             <table class="table">
                                                 <thead class="table-light">
                                                     <tr>
+                                                        <th>#</th>
                                                         <th>Full Name </th>
                                                         <th>Username</th>
                                                         <th>Email</th>
@@ -609,6 +610,7 @@
                                                         <tr>
                                                             <td>{{++$k}}</td>
                                                             <td>{{$logv->name}}</td>
+                                                            <td>{{$logv->email}}</td>
                                                             <td>{{$logv->email}}</td>
                                                             <td>{{$logv->telephone}}</td>
                                                             <td>{{$logv->last_login}}</td>
