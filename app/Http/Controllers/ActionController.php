@@ -9,8 +9,12 @@ class ActionController extends Controller
 {
     public function status_change(Request $request)
     {
-        // echo "<pre>";print_r($request->model);die;
+        // echo "<pre>";print_r($request->all());die;
         $id = $request->id;
+        if($id =='' || $request->model == ''){
+            return false;
+        }
+        
         if($request->status == 1){
             $status=0;
         }else {
@@ -18,16 +22,16 @@ class ActionController extends Controller
         }
         try {
             if($request->model == "Customer"){
-                $modelName = "App\\" . ucfirst($request->model);
+                $modelName = "App\\" . $request->model;
             }else{
-                $modelName = "App\Models\\" . ucfirst($request->model);
+                $modelName = "App\Models\\" . $request->model;
             }
             
             $model = app($modelName);
             $data = $model->find($id);
             $data->status = $status;
             $data->save();
-            return 1;
+            return true;
         } catch (\Exception $e) {
             return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
         }
@@ -46,9 +50,9 @@ class ActionController extends Controller
         }
         try {
             if($request->model == "Customer"){
-                $modelName = "App\\" . ucfirst($request->model);
+                $modelName = "App\\" . $request->model;
             }else{
-                $modelName = "App\Models\\" . ucfirst($request->model);
+                $modelName = "App\Models\\" . $request->model;
             }
             
             $model = app($modelName);

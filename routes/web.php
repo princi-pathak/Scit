@@ -16,6 +16,7 @@ use App\Http\Controllers\backEnd\ManagersController;
 use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as FrontendProductCategoryController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductController;
+use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
 
 
 
@@ -299,6 +300,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(SupplierController::class)->group(function () {
 		Route::get('/suppliers', 'index');
 		Route::get('/supplier_add', 'supplier_add');
+	});
+	Route::controller(ExpenseController::class)->group(function(){
+		Route::get('/expenses','expenses');
 	});
 
 	// General section Front 

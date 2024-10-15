@@ -66,7 +66,7 @@ class JobController extends Controller
         return view('frontEnd.salesAndFinance.jobs.index',$data);
     }
     public function job_list(){
-        $data['job']=Job::where('status',1)->get();
+        $data['job']=Job::whereNull('deleted_at')->get();
         $data['access_rights']=$this->access_rights();
         // echo "<pre>";print_r($data['access_rights']);die;
         return view('frontEnd.salesAndFinance.jobs.job',$data);
@@ -567,7 +567,7 @@ class JobController extends Controller
     }
     public function job_appointment_type_list(Request $request){
         $home_id = Auth::user()->home_id;
-        $data['appointment_type']=Construction_job_appointment_type::where('home_id',$home_id)->get();
+        $data['appointment_type']=Construction_job_appointment_type::where(['home_id'=>$home_id,'deleted_at'=>null])->get();
         // echo "<pre>";print_r($data['appointment_type']);die;
         $data['home_id']=$home_id;
         $data['users']=User::all();
@@ -602,7 +602,7 @@ class JobController extends Controller
         return response()->json($data);
     }
     public function appointment_rejection_cat_list(){
-        $data['rejection']=construction_appointment_rejection_category::whereNot('status',2)->get();
+        $data['rejection']=construction_appointment_rejection_category::where(['deleted_at'=>null])->get();
         $home_id = Auth::user()->home_id;
         $data['home_id']=$home_id;
         // echo "<pre>";print_r($data['rejection']);die;
