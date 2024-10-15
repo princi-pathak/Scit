@@ -46,16 +46,7 @@ class DynamicForm extends Model //FormBuilder
                                     <h3 class="m-t-0 m-b-20 clr-blue fnt-20 dynamic_form_h3"> Fill Form Details </h3>
                                   
                                 </div>
-                                <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                        <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Title: </label>
-                                        <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
-                                            <div class="input-group popovr">
-                                                <input type="text" class="form-control static_title" placeholder="" name="title" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                             
 
                                 <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
                                     <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
@@ -80,16 +71,7 @@ class DynamicForm extends Model //FormBuilder
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                        <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Details: </label>
-                                        <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
-                                            <div class="input-group popovr">
-                                                <textarea class="form-control" placeholder="" name="details" /></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                              
                                 ';
             $formdata .= $static_fields;
             $label_col_val = '1';
@@ -1499,9 +1481,11 @@ class DynamicForm extends Model //FormBuilder
         /*----- June 07,2018 End ---*/
         // $form->service_user_id  = $service_user_id; 
         $form->location_id      = $data['location_id']; 
-        $form->title            = $data['title'];
+        // $form->title            = $data['title'];
+        $form->title            = null;
         $form->time             = $data['time']; 
-        $form->details          = $data['details']; 
+        // $form->details          = $data['details']; 
+        $form->details          = null; 
         $form->pattern_data     = $formdata; 
         
         if(isset($data['alert_status'])) {
