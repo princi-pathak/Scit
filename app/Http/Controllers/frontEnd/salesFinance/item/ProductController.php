@@ -9,6 +9,8 @@ use Session, DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Product_category;
+use App\Models\Product;
+use App\Models\Construction_tax_rate;
 use App\User;
 
 class ProductController extends Controller
@@ -48,8 +50,39 @@ class ProductController extends Controller
         return response()->json($product_categories);
     }
 
-    // function generateproductcode(Request $request){
+    function generateproductcode(Request $request){
+        $product_name = strtoupper($request->productname);
+        $pro_name = Product::genrateproductcode($product_name);
+        return response()->json($pro_name);
+    }
 
-    // }
+    function saveTaxrateData(Request $request){
+        $validator = Validator::make($request->all(), [
+            'taxratename' => 'required',
+            'tax_rate_status' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        //echo Product_category::checkproductcategoryname($request->name,$request->productCategoryID);
+        //die;
+       // Call the model's method to save product category data
+        if(Construction_tax_rate::checkTaxRatename($request->taxratename,$request->taxrateID)==0){
+            $saveData = Construction_tax_rate::saveTaxRateData($request->all(), $request->taxrateID);
+            // Return the appropriate response
+            return response()->json([
+                'success' => 1,
+                'message' => $saveData ? 'The Tax Rate has been saved successfully.' : 'Tax Rate could not be created.',
+                'lastid' => $saveData
+            ]);
+        }else{
+            return response()->json([
+                'success' => 0,
+                'message' => 'This Tax Rate already exist.',
+                'lastid' => 0
+            ]);
+        }
+        
+    }
 
 }
