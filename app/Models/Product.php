@@ -23,4 +23,15 @@ class Product extends Model
     public static function tax_detail($home_id){
         return Construction_tax_rate::where('home_id',$home_id)->get();
     }
+
+    public static function genrateproductcode($product_name){ 
+        $check = self::where('product_code', 'like', '%' . $product_name . '%');
+        if($check->count()==0){
+            return $product_name."-0001";
+        }else{
+            $getlastvalue = self::where('product_code', 'like', '%' . $product_name . '%')->orderBy('product_code', 'desc')->skip(0)->take(1)->first();
+            return $getlastvalue->product_code+1;
+        }
+         
+    } 
 }

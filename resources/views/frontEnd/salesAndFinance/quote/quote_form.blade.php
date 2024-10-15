@@ -295,7 +295,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="#!" id="OpenAddCustomerContact" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                <a href="#!" id="" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -398,42 +398,44 @@
                                 <div class="mb-3 row">
                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Type </label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control editInput textareaInput" id="customerSiteName" placeholder="City">
+                                        <select class="form-control editInput" name="quote_type" id="quoteType">
+                                            <option value="">-Select-</option>
+                                        </select>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="plusandText">
-                                            <a href="#!" id="OpenAddCustomerContact" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                            <a href="#!" id="OpenQuoteTypeModel" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Date</label>
                                     <div class="col-sm-9">
-                                        <input type="date" class="form-control editInput textareaInput" id="inputCustomer" placeholder="City">
+                                        <input type="date" class="form-control editInput textareaInput" id="" placeholder="City">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputAddress" class="col-sm-3 col-form-label">Expiry Date</label>
                                     <div class="col-sm-9">
-                                        <input type="date" class="form-control editInput textareaInput" id="inputCustomer" placeholder="City">
+                                        <input type="date" class="form-control editInput textareaInput" id="" placeholder="City">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Customer Ref </label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputCustomer" placeholder="City">
+                                        <input type="text" class="form-control editInput textareaInput" id="" placeholder="Customer Ref">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputPurchase" class="col-sm-3 col-form-label">Customer Job Ref</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputPurchase" placeholder="County">
+                                        <input type="text" class="form-control editInput textareaInput" id="inputPurchase" placeholder="Customer Job Ref">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputPurchase" class="col-sm-3 col-form-label">Purchase Order Ref</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput textareaInput" id="inputPurchase" placeholder="Postcode">
+                                        <input type="text" class="form-control editInput textareaInput" id="" placeholder="Purchase Order Ref">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -448,7 +450,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="plusandText">
-                                            <a href="#!" id="OpenAddCustomerContact" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                            <a href="#!" id="OpenAddQuoteSourceModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1285,15 +1287,15 @@
                                                             <div class="contantbodypopup">
                                                                 <form action="" class="customerForm">
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Tax Rate Name*</label>
+                                                                        <label for="" class="col-sm-3 col-form-label">Tax Rate Name*</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Tax Rate*</label>
+                                                                        <label for="" class="col-sm-3 col-form-label">Tax Rate*</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
@@ -1306,15 +1308,15 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">External Tax Code</label>
+                                                                        <label for="" class="col-sm-3 col-form-label">External Tax Code</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Expiry Date</label>
+                                                                        <label for="" class="col-sm-3 col-form-label">Expiry Date</label>
                                                                         <div class="col-sm-7">
-                                                                            <input type="date" class="form-control editInput" id="inputCity" value="Port Elizabeth">
+                                                                            <input type="date" class="form-control editInput" id="" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -1366,9 +1368,9 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Tax Rate*</label>
+                                                                        <label for="" class="col-sm-3 col-form-label">Tax Rate*</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
@@ -1381,15 +1383,15 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">External Tax Code</label>
+                                                                        <label for="" class="col-sm-3 col-form-label">External Tax Code</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
+                                                                            <input type="text" class="form-control editInput" id="" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Expiry Date</label>
+                                                                        <label for="" class="col-sm-3 col-form-label">Expiry Date</label>
                                                                         <div class="col-sm-7">
-                                                                            <input type="date" class="form-control editInput" id="inputCity" value="Port Elizabeth">
+                                                                            <input type="date" class="form-control editInput" id="" value="Port Elizabeth">
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -1408,7 +1410,7 @@
                                                 <div class="mb-2 row">
                                                     <label for="inputAddress" class="col-sm-4 col-form-label">Nominal Code </label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
+                                                        <input type="text" class="form-control editInput" id="" value="Port Elizabeth">
                                                     </div>
                                                 </div>
 
@@ -1422,34 +1424,34 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-2 row">
-                                                    <label for="inputCity" class="col-sm-4 col-form-label">Purchase A/c Code </label>
+                                                    <label for="" class="col-sm-4 col-form-label">Purchase A/c Code </label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                        <select class="form-control editInput selectOptions" id="">
                                                             <option>--Please Select--</option>
                                                             <option>United kingdom (+44)</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="mb-2 row">
-                                                    <label for="inputCity" class="col-sm-4 col-form-label">Expense A/c Code</label>
+                                                    <label for="" class="col-sm-4 col-form-label">Expense A/c Code</label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                        <select class="form-control editInput selectOptions" id="">
                                                             <option>--Please Select--</option>
                                                             <option>United kingdom (+44)</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="mb-2 row">
-                                                    <label for="inputCounty" class="col-sm-4 col-form-label">Location</label>
+                                                    <label for="location" class="col-sm-4 col-form-label">Location</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" class="form-control editInput" id="location" placeholder="Location">
                                                     </div>
                                                 </div>
 
                                                 <div class="mb-2 row">
-                                                    <label for="inputCity" class="col-sm-4 col-form-label">Status</label>
+                                                    <label for="" class="col-sm-4 col-form-label">Status</label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                        <select class="form-control editInput selectOptions" id="">
                                                             <option>Active</option>
                                                             <option>United kingdom (+44)</option>
                                                         </select>
@@ -1457,9 +1459,9 @@
                                                 </div>
 
                                                 <div class="mb-2 row">
-                                                    <label for="inputName" class="col-sm-4 col-form-label">Attachment</label>
+                                                    <label for="" class="col-sm-4 col-form-label">Attachment</label>
                                                     <div class="col-sm-8">
-                                                        <input type="file" class="form-control editInput" id="inputName">
+                                                        <input type="file" class="form-control editInput" id="">
                                                     </div>
                                                 </div>
                                             </form>
@@ -1511,18 +1513,18 @@
                                         </div>
                                     </div>
                                     <div class="mb-2 row">
-                                        <label for="inputCity" class="col-sm-3 col-form-label">Parent Category</label>
+                                        <label for="" class="col-sm-3 col-form-label">Parent Category</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                            <select class="form-control editInput selectOptions" id="">
                                                 <option> None </option>
                                                 <option> Default </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="mb-2 row">
-                                        <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
+                                        <label for="" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                            <select class="form-control editInput selectOptions" id="">
                                                 <option> Active </option>
                                                 <option> Default </option>
                                             </select>
@@ -2265,7 +2267,8 @@
     inputId="region"
     statusId="status"
     saveButtonId="saveSiteDetailsRegion"
-    placeholderText="Region" />
+    placeholderText="Region" 
+/>
 <!-- Add Regions Modal End -->
 
 <!-- Include the modal component -->
@@ -2276,7 +2279,28 @@
     inputId="JobTitle"
     statusId="status"
     saveButtonId="saveSiteDetailsJobTitle"
-    placeholderText="Job Title" />
+    placeholderText="Job Title" 
+/>
+
+<x-quote-type-modal
+    modalId="quoteTypeModal"
+    modalTitle="Quote Type - Add"
+    formId="add_quote_type_form"
+    inputId="JobTitle"
+    statusId="status"
+    saveButtonId="saveQuoteTypeQuote"
+    placeholderText="Job Title"
+ />
+
+ <x-quote-source
+    modalId="quoteSourceModal"
+    modalTitle="Quote Source - Add"
+    formId="add_quote_source_form"
+    inputId="JobTitle"
+    statusId="status"
+    saveButtonId="saveQuoteSourceQuote"
+    placeholderText="Job Title"
+ />
 
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customeQuoteForm.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
@@ -2339,7 +2363,6 @@
             url: '{{ route("quote.ajax.getRegions") }}',
             success: function(response) {
                 console.log(response.message);
-                // const get_customer_type = document.getElementById('customerRegion');
                 get_customer_type.innerHTML = '';
                 response.data.forEach(user => {
                     const option = document.createElement('option');
@@ -2352,6 +2375,25 @@
                 console.error(error);
             }
         });
+    }
+
+    function getQuoteType(quoteType){
+        $.ajax({
+            url: '{{ route("quote.ajax.getQuoteTypes") }}',
+            success: function(response) {
+                console.log(response.message);
+                quoteType.innerHTML = '';
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.title;
+                    quoteType.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        }); 
     }
 
     function getCustomerList() {
@@ -2476,7 +2518,6 @@
     }
 
     function getBillingDetailsData(id) {
-        // alert(id);
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerDetails") }}',
             method: 'POST',
@@ -2519,7 +2560,6 @@
         });
     }
 
-
     function setSiteAddressDetails(id) {
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerSiteDetails") }}',
@@ -2561,8 +2601,6 @@
                 document.getElementById('siteCustomerId').value = response.data[0].id;
                 document.getElementById('customerSiteDeliveryName').value = response.data[0].contact_name;
                 document.getElementById('customerSiteDeliveryAdd').value = response.data[0].address;
-                // document.getElementById('customerSiteDeliveryCity').value = response.data[0].city;
-                // document.getElementById('customerSiteDeliveryCounty').value = response.data[0].country;
                 document.getElementById('customerSiteDeliveryPostCode').value = response.data[0].post_code;
                 document.getElementById('customerSiteDeliveryTelephone').value = response.data[0].telephone;
                 document.getElementById('customerSiteDeliveryMobile').value = response.data[0].mobile;
@@ -2578,10 +2616,9 @@
         });
     }
 
-
-
-
     $(document).ready(function() {
+
+        getQuoteType(document.getElementById('quoteType'));
 
         document.getElementById('hideQuoteDiv').style.display = "none";
         document.getElementById('hideQuoteDetails').style.display = "none";
@@ -2657,14 +2694,6 @@
                         customerSiteDelivery.appendChild(option1);
                     });
 
-                    // response.data.forEach(user => {
-                    //     const option = document.createElement('option');
-                    //     option.value = user.id;
-                    //     option.text = user.site_name;
-                    //     customerSiteDelivery.appendChild(option);
-                    // });
-
-
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -2697,6 +2726,7 @@
         });
 
         // Ajax Call for saving Customer Type 
+
 
         // ajax call for saving customer contact on billing details
         $('#saveJobTitle').on('click', function() {
@@ -2777,7 +2807,6 @@
             }
         });
 
-
         $('#customerSiteDetails').on('change', function() {
             var selected = document.getElementById('getCustomerList').value;
             console.log($(this).val());
@@ -2812,6 +2841,7 @@
                 setSiteAddressDetails($(this).val());
             }
         });
+
         $('#customerSiteDelivery').on('change', function() {
             var selected = document.getElementById('getCustomerList').value;
             console.log($(this).val());
@@ -2846,6 +2876,23 @@
             }
         });
 
+        $('#saveQuoteSourceQuote').on('click', function() {
+            var formData = $('#add_quote_source_form').serialize();
+            $.ajax({
+                url: '{{ route("quote.ajax.saveQuoteSources") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
+                    $('#quoteSourceModal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
 
 
         // Ajax Call for saving Customer Type
@@ -2860,6 +2907,27 @@
                     console.log(response.id);
                     setSiteAddressDetails(response.id);
                     $('#add_site_address_modal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        
+        $('#saveQuoteTypeQuote').on('click', function() {
+            var formData = $('#add_quote_type_form').serialize();
+            $.ajax({
+                url: '{{ route("quote.ajax.saveQuoteType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
+                    $('#quoteTypeModal').modal('hide');
+                    getQuoteType(document.getElementById('quoteType'));
+
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -2924,7 +2992,6 @@
 
         // Save Customer Data
         $('#saveCustomerContactData').on('click', function() {
-            alert();
             var formData = $('#add_customer_contact_form').serialize();
             $.ajax({
                 url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
@@ -2942,22 +3009,15 @@
 
         document.getElementById('same_as_default').addEventListener('change', function() {
             const isChecked = this.checked;
-
             // Show data if checked, else show blank
             if (isChecked) {
                 var gettext = document.getElementById('billingDetailsAddress').text;
                 document.getElementById('cuatomer_address').text = gettext;
-                // alert("checked");
             } else {
                 alert("not checked");
-
             }
         });
-
     });
-
-
-
 
     window.onload = function() {
         var buttons = document.querySelectorAll('.hide-on-load');
@@ -2992,6 +3052,16 @@
     $('#openRegionsModal').on('click', function() {
         $('#quote_region_modal').modal('show');
     });
+
+    $('#OpenQuoteTypeModel').on('click', function() {
+        $('#quoteTypeModal').modal('show');
+    });
+    
+    $('#OpenAddQuoteSourceModal').on('click', function() {
+        $('#quoteSourceModal').modal('show');
+    });
+
+    
 
     // js for Add Customer Contact modal
     const OpenAddCustomerContact = document.getElementById('OpenAddCustomerContact');

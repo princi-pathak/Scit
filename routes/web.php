@@ -452,6 +452,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/quote_type', 'quote_type')->name('quote.quote_type');
 		Route::post('/quote/saveQuoteType', 'saveQuoteType')->name('quote.ajax.saveQuoteType');
 		Route::post('/quote/deleteQuoteType', 'deleteQuoteType')->name('quote.ajax.deleteQuoteType');
+		Route::get('/quote/getQuoteTypes', 'getQuoteTypes')->name('quote.ajax.getQuoteTypes');
+
 
 		// Add Quote Sources
 		Route::get('/quote/quote_sources', 'quote_sources')->name('quote.quote_sources');
@@ -488,6 +490,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(ProductController::class)->group(function(){
 		Route::get('/item/products','productlist')->name('item.products');
 		Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
+		Route::post('/item/generateproductcode','generateproductcode')->name('item.generateproductcode');
+		Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
 	});
 
 
