@@ -39,4 +39,39 @@ class Construction_tax_rate extends Model
             return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
         }
     }
+
+    public static function saveTaxRateData(array $data, $taxRateID = null)
+    {
+        $data['home_id'] = Auth::user()->home_id;
+        $taxRate = self::updateOrCreate(['id' => $taxRateID], $data);
+        // Return the ID of the created or updated product category
+        return $taxRate->id;
+    }
+    public static function checkTaxRatename($taxrate_name,$taxRateID = null)
+    {
+        $homeId = Auth::user()->home_id;
+
+        // If no product category ID is provided, count categories with the same name
+        if (empty($taxRateID)) {
+            return self::where(['home_id' => $homeId, 'name' => $taxrate_name])->count();
+        } else {
+            // Check for a category with the same name and the provided ID
+            $checkName = self::where(['home_id' => $homeId, 'name' => $taxrate_name])
+                ->where('id', '!=', $taxRateID)
+                ->first();
+
+            // If a category with the same name exists and it's not the current one, return 1
+            if ($checkName) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+    public static function changeTaxRateStatus($taxRateID,$status)
+    {
+        $taxRate = self::find($taxRateID);
+        $taxRate->status = $status;
+        return $taxRate->save();
+    }
 }

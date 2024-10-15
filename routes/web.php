@@ -16,6 +16,7 @@ use App\Http\Controllers\backEnd\ManagersController;
 use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as FrontendProductCategoryController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductController;
+use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
 
 
 
@@ -300,6 +301,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/suppliers', 'index');
 		Route::get('/supplier_add', 'supplier_add');
 	});
+	Route::controller(ExpenseController::class)->group(function(){
+		Route::get('/expenses','expenses');
+	});
 
 	// General section Front 
 	Route::controller(GeneralSectionController::class)->group(function () {
@@ -486,6 +490,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(ProductController::class)->group(function(){
 		Route::get('/item/products','productlist')->name('item.products');
 		Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
+		Route::post('/item/generateproductcode','generateproductcode')->name('item.generateproductcode');
+		Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
 	});
 
 

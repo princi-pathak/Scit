@@ -105,25 +105,28 @@
                             <a href="#!">Show Search Filter</a>
                         </div>
                     </div>
+                    <!-- Ram 15/10/2024 here code for bulk delete -->
                     <div class="markendDelete">
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="jobsection">
-                                    <a href="#" class="profileDrop">Delete</a>
-                                    <a href="#" class="profileDrop">Mark As completed</a>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="jobsection">
+                                        <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                        <!-- <a href="#" class="profileDrop">Mark As completed</a> -->
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="pageTitleBtn p-0">
+                                <div class="col-md-5">
+                                    <div class="pageTitleBtn p-0">
+                                        <!-- <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    <!-- end here -->
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <td></td>
+                                <!-- Ram bulk delete -->
+                                <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> All Select</label></th>
                                 <th>#</th>
                                 <th>Lead Ref.</th>
                                 <th>Full Name</th>
@@ -157,7 +160,8 @@
                             }
                             @endphp
                             <tr>
-                                <td></td>
+                                <!-- Ram bulk delete -->
+                                <td><input type="checkbox" id="" class="delete_checkbox" value="{{$customer->id}}"></td>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $customer->lead_ref }}</td>
                                 <td>{{ $customer->contact_name }}</td>
@@ -3139,4 +3143,50 @@
         });
 </script>
 <!-- Email CK Editor End -->
+ <!-- Ram 15/10/2024 code for bulk delete -->
+<script>
+   $("#deleteSelectedRows").on('click', function() {
+    let ids = [];
+    
+    $('.delete_checkbox:checked').each(function() {
+        ids.push($(this).val());
+    });
+    if(ids.length == 0){
+        alert("Please check the checkbox for delete");
+    }else{
+        if(confirm("Are you sure to delete?")){
+            // console.log(ids);
+            var token='<?php echo csrf_token();?>'
+            var model='Lead';
+            $.ajax({
+                type: "POST",
+                url: "{{url('/bulk_delete')}}",
+                data: {ids:ids,model:model,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if(data){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    }
+    
+});
+$('.delete_checkbox').on('click', function() {
+    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+        $('#selectAll').prop('checked', true);
+    } else {
+        $('#selectAll').prop('checked', false);
+    }
+});
+ </script>
+ <!-- end here -->
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
