@@ -484,6 +484,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(ProductController::class)->group(function(){
 		Route::get('/item/products','productlist')->name('item.products');
 		Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
+		Route::post('/item/generateproductcode','generateproductcode')->name('item.generateproductcode');
+		Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
 	});
 
 
