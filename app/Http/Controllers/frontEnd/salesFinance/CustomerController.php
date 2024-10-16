@@ -308,7 +308,7 @@ class CustomerController extends Controller
     }
 
     public function getCustomerBillingAddress(Request $request){
-
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'id' => 'required'
         ]);
