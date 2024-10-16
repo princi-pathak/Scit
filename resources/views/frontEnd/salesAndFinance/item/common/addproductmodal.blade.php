@@ -150,8 +150,8 @@
                                     <label for="inputProject" class="col-sm-4 col-form-label">Sales
                                         Tax Rate</label>
                                     <div class="col-sm-7">
-                                        <select class="form-control editInput selectOptions" id="salestax">
-                                            <option>None</option>
+                                        <select class="form-control editInput selectOptions" id="salestax" onclick="taxratelist(1)">
+                                            <option>-Please Select-</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1 ps-0">
@@ -167,8 +167,8 @@
                                     <label for="inputProject" class="col-sm-4 col-form-label">Purchase
                                         Tax Rate</label>
                                     <div class="col-sm-7">
-                                        <select class="form-control editInput selectOptions" id="purchasetax">
-                                            <option>None</option>
+                                        <select class="form-control editInput selectOptions" id="purchasetax" onclick="taxratelist(2)">
+                                            <option>-Please Select-</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1 ps-0">
@@ -178,85 +178,7 @@
                                         </a>
                                     </div>
 
-                                    <!--Purchase Tax Rate Popup -->
-                                    {{-- <div id="purchasepopup" class="purchasepopup">
-                                                        <div class="popup-content">
-                                                            <div class="popupTitle">
-                                                                <span class="">Purchase Tax Rate</span>
-                                                                <span class="close"
-                                                                    id="closePurchasePopup">&times;</span>
-                                                            </div>
-                                                            <div class="contantbodypopup">
-                                                                <form action="" class="">
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Tax
-                                                                            Rate Name*</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity" value="Port Elizabeth">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Tax
-                                                                            Rate*</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity" value="Port Elizabeth">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Status</label>
-                                                                        <div class="col-sm-9">
-                                                                            <select
-                                                                                class="form-control editInput selectOptions"
-                                                                                id="inputCustomer">
-                                                                                <option> None </option>
-                                                                                <option> Default </option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">External
-                                                                            Tax Code</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity" value="Port Elizabeth">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity"
-                                                                            class="col-sm-3 col-form-label">Expiry
-                                                                            Date</label>
-                                                                        <div class="col-sm-7">
-                                                                            <input type="date"
-                                                                                class="form-control editInput"
-                                                                                id="inputCity" value="Port Elizabeth">
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-
-                                                            <div class="popupF  customer_Form_Popup">
-
-                                                                <button type="button"
-                                                                    class="profileDrop">Save</button>
-                                                                <button type="button" class="profileDrop">Save &
-                                                                    Close</button>
-                                                                <button type="button"
-                                                                    class="profileDrop">Cancel</button>
-
-                                                            </div>
-                                                        </div>
-
-                                                    </div> --}}
-                                    <!--End off Purchase Tax Rate Popup -->
+                                    
                                 </div>
 
                                 <div class="mb-2 row">
@@ -265,7 +187,7 @@
                                     </label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control editInput" id="inputCity"
-                                            value="Port Elizabeth">
+                                            value="">
                                     </div>
                                 </div>
 
@@ -273,9 +195,8 @@
                                     <label for="inputCity" class="col-sm-4 col-form-label">Sales
                                         A/c Code</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                        <select class="form-control editInput selectOptions" id="salesaccountcode" onclick="accountcode(1)">
                                             <option>--Please Select--</option>
-                                            <option>United kingdom (+44)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -284,9 +205,8 @@
                                         A/c Code
                                     </label>
                                     <div class="col-sm-8">
-                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                        <select class="form-control editInput selectOptions" id="purchaseaccountcode" onclick="accountcode(2)">
                                             <option>--Please Select--</option>
-                                            <option>United kingdom (+44)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -294,9 +214,8 @@
                                     <label for="inputCity" class="col-sm-4 col-form-label">Expense
                                         A/c Code</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                        <select class="form-control editInput selectOptions" id="Expenseaccountcode" onclick="accountcode(3)">
                                             <option>--Please Select--</option>
-                                            <option>United kingdom (+44)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -312,8 +231,8 @@
                                     <label for="inputCity" class="col-sm-4 col-form-label">Status</label>
                                     <div class="col-sm-8">
                                         <select class="form-control editInput selectOptions" id="inputCustomer">
-                                            <option>Active</option>
-                                            <option>United kingdom (+44)</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
                                         </select>
                                     </div>
                                 </div>
@@ -452,5 +371,122 @@
         return (/\s/).test(s);
     }
 </script>
+<script>
+    //salestax
+    var dataLoadedstax = false;
+    var dataLoadedptax = false;
+    function taxratelist(th){
+        if(th==1){
+            if (dataLoadedstax) return;
+        }else if(th==2){
+            if (dataLoadedptax) return;
+        }
+       
+        var token = "<?= csrf_token() ?>";
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('item.taxratelist') }}',
+            data: {
+                _token: token
+            },
+            success: function(data) {
+                console.log(data);
+                if(th==1){
+                    var $select = $('#salestax');
+                    $select.empty(); // Clear existing options
+
+                    // Loop through the data and append options to the select box
+                    $.each(data, function(index, category) {
+                        $select.append($('<option>', {
+                            value: category.id, // Assuming the id field
+                            text: category.name // Assuming the name field
+                        }));
+                    });
+                    dataLoadedstax = true;
+                }else if(th==2){
+                    var $select = $('#purchasetax');
+                    $select.empty(); // Clear existing options
+
+                    // Loop through the data and append options to the select box
+                    $.each(data, function(index, category) {
+                        $select.append($('<option>', {
+                            value: category.id, // Assuming the id field
+                            text: category.name // Assuming the name field
+                        }));
+                    });
+                    dataLoadedptax = true;
+                }
+                
+            }
+
+        });
+    }
+</script>
+<script>
+    var dataLoadedsac = false;
+    var dataLoadedpac = false;
+    var dataLoadedeac = false;
+    function accountcode(th){
+        if(th==1){
+            if (dataLoadedsac) return;
+        }else if(th==2){
+            if (dataLoadedpac) return;
+        }else if(th==3){
+            if (dataLoadedeac) return;
+        }       
+        var token = "<?= csrf_token() ?>";
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('item.account_code') }}',
+            data: {
+                _token: token
+            },
+            success: function(data) {
+                console.log(data);
+                //salesaccountcode  purchaseaccountcode  Expenseaccountcode
+                if(th==1){
+                    var $select = $('#salesaccountcode');
+                    $select.empty(); // Clear existing options
+                    
+                    // Loop through the data and append options to the select box
+                    $.each(data, function(index, category) {
+                        $select.append($('<option>', {
+                            value: category.id, // Assuming the id field
+                            text: category.name // Assuming the name field
+                        }));
+                    });
+                    dataLoadedsac = true;
+                }else if(th==2){
+                    var $select = $('#purchaseaccountcode');
+                    $select.empty(); // Clear existing options
+
+                    // Loop through the data and append options to the select box
+                    $.each(data, function(index, category) {
+                        $select.append($('<option>', {
+                            value: category.id, // Assuming the id field
+                            text: category.name // Assuming the name field
+                        }));
+                    });
+                    dataLoadedpac = true;
+                }else if(th==3){
+                    var $select = $('#Expenseaccountcode');
+                    $select.empty(); // Clear existing options
+
+                    // Loop through the data and append options to the select box
+                    $.each(data, function(index, category) {
+                        $select.append($('<option>', {
+                            value: category.id, // Assuming the id field
+                            text: category.name // Assuming the name field
+                        }));
+                    });
+                    dataLoadedeac = true;
+                }
+                
+            }
+
+        });
+    }
+</script>
+
 
 
