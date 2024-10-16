@@ -95,5 +95,14 @@ class Job extends Model
             $data=['id'=>$insert->id,'name'=>$insert->name,'job_ref'=>$insert->job_ref];
             return $data;
     }
+    public static function getAllAppointment($customer_id){
+        return DB::table('jobs as job')
+                ->select('job.*','appoint.id as appointment_id','appoint.home_id as appoint_home','appoint.job_id','appoint.user_id','appoint.appointment_type_id','appoint.status','appoint.deleted_at')
+                ->join('construction_job_appointments as appoint','job.id','=','appoint.job_id')
+                ->where('job.customer_id',$customer_id)
+                ->where('appoint.status',1)
+                ->whereNull('appoint.deleted_at')
+                ->get();
+    }
     
 }
