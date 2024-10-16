@@ -45,4 +45,7 @@ class Project extends Model
         }
         return $insert;
     }
+    public static function getAllProject($customer_id){
+        return self::where(['customer_name'=>$customer_id,'status'=>1])->get();
+    }
 }
