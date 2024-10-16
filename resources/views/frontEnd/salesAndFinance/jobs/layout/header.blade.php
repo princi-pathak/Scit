@@ -29,6 +29,9 @@
             text-align:center;
             font-size:20px;
         }
+        .table_responsive div#exampleOne_wrapper {
+            overflow: auto;
+        }
     </style>
 </head>
 <?php
