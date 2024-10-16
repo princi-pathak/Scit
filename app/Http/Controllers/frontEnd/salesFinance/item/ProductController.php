@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Product_category;
 use App\Models\Product;
 use App\Models\Construction_tax_rate;
+use App\Models\Construction_account_code;
 use App\User;
 
 class ProductController extends Controller
@@ -50,6 +51,21 @@ class ProductController extends Controller
         return response()->json($product_categories);
     }
 
+    function taxratelist(Request $request){
+        $taxrate = Construction_tax_rate::where('home_id', Auth::user()->home_id)
+        ->where('status', 1)
+        ->where('deleted_at', NULL)
+        ->get();
+        return response()->json($taxrate);
+    }
+    function account_code(Request $request){
+        $account_code = Construction_account_code::where('home_id', Auth::user()->home_id)
+        ->where('status', 1)
+        ->where('deleted_at', NULL)
+        ->get();
+        return response()->json($account_code);
+    }
+
     function generateproductcode(Request $request){
         $product_name = strtoupper($request->productname);
         $pro_name = Product::genrateproductcode($product_name);
@@ -58,8 +74,8 @@ class ProductController extends Controller
 
     function saveTaxrateData(Request $request){
         $validator = Validator::make($request->all(), [
-            'taxratename' => 'required',
-            'tax_rate_status' => 'required',
+            'name' => 'required',
+            'status' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
