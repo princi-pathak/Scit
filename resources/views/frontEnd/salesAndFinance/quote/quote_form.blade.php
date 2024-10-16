@@ -295,7 +295,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="#!" id="" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                <a href="#!" id="openSiteDeliveryModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -2064,7 +2064,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> <!-- End row -->
+                    </div>
                     <div class="mb-2 row">
                         <label for="inputName" class="col-sm-2 col-form-label">Notes </label>
                         <div class="col-sm-10">
@@ -2081,6 +2081,7 @@
     </div>
 </div>
 <!-- Add Site Address Modal End -->
+
 
 <!-- Add Customer Contact Modal Start -->
 <div class="modal fade" id="add_customer_contact_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
@@ -2222,41 +2223,174 @@
 </div>
 <!-- Add Customer Contact Modal End -->
 
-<!-- Add Job Title Modal Start -->
-<div class="modal fade" id="customer_job_title_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Add Customer Site Delivery Contact Modal Start -->
+<div class="modal fade" id="add_site_delivery_address_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title" id="thirdModalLabel">Job Title - Add</h5>
+                <h5 class="modal-title" id="">Add Site Address</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="add_job_title_form">
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="red-text">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="hidden" name="job_title_id" id="job_title_id">
-                            <input type="text" name="name" class="form-control editInput" id="customer_type_name" value="" placeholder="Job Title">
+                <form action="" id="add_customer_site_delivery_form" class="add_customer_form">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="formDtail">
+                                <div class="mb-2 row">
+                                    <label for="inputName" class="col-sm-4 col-form-label">Customer </label>
+                                    <div class="col-sm-8">
+                                        <label for="inputAddress" class="col-form-label"><span id="setSiteDeliveryAddress"></span> </label>
+                                        <input type="hidden" name="customer_id" id="siteCustomerDeliveryId">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputName" class="col-sm-4 col-form-label">Site Name <span class="red-text">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="site_name" id="">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputName" class="col-sm-4 col-form-label">Contact Name <span class="red-text">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="contact_name" id="">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputProject" class="col-sm-4 col-form-label">Job Title (Position)</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control editInput selectOptions get_job_title_result" name="title_id" id="siteDeliveryJobTitle">
+                                            <option>Please Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a href="javascript:void(0)" class="formicon" id="OpenSiteDeliveryAddressJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputName" class="col-sm-4 col-form-label">Company Name <span class="red-text">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="company_name" id="">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputEmail" class="col-sm-4 col-form-label">Email <span class="red-text">*</span> </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="email" id="">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputTelephone" class="col-sm-4 col-form-label">Telephone <span class="red-text">*</span> </label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control editInput selectOptions" name="telephone_country_code" id="siteDeliveryAddressTelephoneCode">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control editInput" name="telephone" id="">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputMobile" class="col-sm-4 col-form-label">Mobile</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control editInput selectOptions" name="mobile_country_code" id="siteDeliveryAddressMobileCode">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control editInput" name="mobile" id="">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputAddress" class="col-sm-4 col-form-label">Fax</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="fax" id="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="formDtail">
+                                <div class="mb-2 row">
+                                    <label for="inputProject" class="col-sm-4 col-form-label">Region</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control editInput selectOptions get_job_title_result" name="region" id="getSiteDeliveryAddressRegion">
+                                            <option>Please Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a href="javascript:void(0)" class="formicon" id="OpenSiteDeliveryRegionModel"><i class="fa-solid fa-square-plus"></i></a>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputAddress" class="col-sm-4 col-form-label">Address <span class="red-text">*</span></label>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-control textareaInput" name="address" id="" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCity" class="col-sm-4 col-form-label">City</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="city" id="">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCounty" class="col-sm-4 col-form-label">County</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="country" id="">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputPincode" class="col-sm-4 col-form-label">Pincode</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control editInput" name="post_code" id="">
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCountry" class="col-sm-4 col-form-label">Country</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control editInput selectOptions" name="country_id" id="siteDeliveryAddressCountry">
+                                            <option selected disabled>Select Country</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <label for="inputCountry" class="col-sm-4 col-form-label">Default Catalogue</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control editInput selectOptions" name="catalogue" id="">
+                                            <option>None</option>
+                                            <option value="1">ABCD</option>
+                                            <option value="2">Test</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
-                        <div class="col-sm-9">
-                            <select id="customer_type_status" name="status" class="form-control editInput">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
+                    <div class="mb-2 row">
+                        <label for="inputName" class="col-sm-2 col-form-label">Notes </label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control textareaInput" name="notes" id="" rows="3"></textarea>
                         </div>
-                    </div>
-                    <div class="pageTitleBtn">
-                        <button type="button" class="profileDrop" id="saveJobTitle">Save</button>
-                        <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+                <button type="button" class="profileDrop" id="saveCustomerSiteDeliveryDetails">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
+<!-- Add Customer Site Delivery Contact Modal End -->
+
+<!-- Add Job Title Modal Start -->
+<x-job-title-model
+    modalId="customer_job_title_modal"
+    modalTitle="Job Title - Add"
+    formId="add_job_title_form"
+    inputId="customer_type_name"
+    statusId="customer_type_status"
+    saveButtonId="saveJobTitle"
+    placeholderText="Job Title" />
+
 <!-- Add Job Title Modal End -->
 
 <!-- Add Regions Modal Start -->
@@ -2267,8 +2401,7 @@
     inputId="region"
     statusId="status"
     saveButtonId="saveSiteDetailsRegion"
-    placeholderText="Region" 
-/>
+    placeholderText="Region" />
 <!-- Add Regions Modal End -->
 
 <!-- Include the modal component -->
@@ -2279,9 +2412,18 @@
     inputId="JobTitle"
     statusId="status"
     saveButtonId="saveSiteDetailsJobTitle"
-    placeholderText="Job Title" 
-/>
+    placeholderText="Job Title" />
 
+<x-job-title-model
+    modalId="siteDeliveryJobTitleModal"
+    modalTitle="Job Title - Add"
+    formId="add_site_delivery_job_title_form"
+    inputId="JobTitle"
+    statusId="status"
+    saveButtonId="saveSiteDetailsJobTitle"
+    placeholderText="Job Title" />
+
+<!-- Include the quote type modal component -->
 <x-quote-type-modal
     modalId="quoteTypeModal"
     modalTitle="Quote Type - Add"
@@ -2289,18 +2431,16 @@
     inputId="JobTitle"
     statusId="status"
     saveButtonId="saveQuoteTypeQuote"
-    placeholderText="Job Title"
- />
+    placeholderText="Job Title" />
 
- <x-quote-source
+<x-quote-source
     modalId="quoteSourceModal"
     modalTitle="Quote Source - Add"
     formId="add_quote_source_form"
     inputId="JobTitle"
     statusId="status"
     saveButtonId="saveQuoteSourceQuote"
-    placeholderText="Job Title"
- />
+    placeholderText="Job Title" />
 
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customeQuoteForm.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
@@ -2377,7 +2517,7 @@
         });
     }
 
-    function getQuoteType(quoteType){
+    function getQuoteType(quoteType) {
         $.ajax({
             url: '{{ route("quote.ajax.getQuoteTypes") }}',
             success: function(response) {
@@ -2393,7 +2533,7 @@
             error: function(xhr, status, error) {
                 console.error(error);
             }
-        }); 
+        });
     }
 
     function getCustomerList() {
@@ -2517,6 +2657,12 @@
         });
     }
 
+    function setTextContent(fields, value) {
+        fields.forEach(fieldId => {
+            document.getElementById(fieldId).textContent = value;
+        });
+    }
+
     function getBillingDetailsData(id) {
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerDetails") }}',
@@ -2530,8 +2676,9 @@
                 // billing details data set
 
                 setFieldValues(['billingDetailsName', 'customerSiteName', 'customerSiteDeliveryName'], contactData.contact_name);
-                setFieldValues(['customer_contact_id', 'siteCustomerId'], contactData.id);
-                setFieldValues(['setCustomerName', 'setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany'], contactData.name);
+                setFieldValues(['customer_contact_id', 'siteCustomerId', 'siteCustomerDeliveryId'], contactData.id);
+                customer_contact_id
+                setTextContent(['setCustomerName', 'setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany', 'setSiteDeliveryAddress'], contactData.name);
                 setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
                 setFieldValues(['billingDetailsEmail', 'customerSiteDeliveryEmail'], contactData.email);
                 setFieldValues(['billingCustomerCity', 'customerSiteCity'], contactData.city);
@@ -2616,6 +2763,46 @@
         });
     }
 
+    function removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, id) {
+
+        customerSiteDetails.innerHTML = '';
+        customerSiteDelivery.innerHTML = '';
+        const option3 = document.createElement('option');
+        option3.value = id;
+        option3.text = "Same as customer";
+        const option4 = option3.cloneNode(true);
+        customerSiteDetails.appendChild(option3);
+        customerSiteDelivery.appendChild(option4);
+
+        console.log(id);
+
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response.message);
+
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.site_name;
+                    const option1 = option.cloneNode(true);
+                    customerSiteDetails.appendChild(option);
+                    customerSiteDelivery.appendChild(option1);
+                });
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
+
     $(document).ready(function() {
 
         getQuoteType(document.getElementById('quoteType'));
@@ -2664,41 +2851,41 @@
 
 
             const customerSiteDetails = document.getElementById('customerSiteDetails');
-            customerSiteDetails.innerHTML = '';
-
             const customerSiteDelivery = document.getElementById('customerSiteDelivery');
-            customerSiteDelivery.innerHTML = '';
+         
+            removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
+            // const option3 = document.createElement('option');
+            // option3.value = getCustomerListValue.value;
+            // option3.text = "Same as customer";
+            // const option4 = option3.cloneNode(true);
+            // customerSiteDetails.appendChild(option3);
+            // customerSiteDelivery.appendChild(option4);
 
-            const option3 = document.createElement('option');
-            option3.value = getCustomerListValue.value;
-            option3.text = "Same as customer";
-            customerSiteDetails.appendChild(option3);
-            customerSiteDelivery.appendChild(option3);
+            // console.log(getCustomerListValue.value);
 
-            console.log(getCustomerListValue.value);
-            $.ajax({
-                url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
-                method: 'POST',
-                data: {
-                    id: getCustomerListValue.value
-                },
-                success: function(response) {
-                    console.log(response.message);
+            // $.ajax({
+            //     url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
+            //     method: 'POST',
+            //     data: {
+            //         id: getCustomerListValue.value
+            //     },
+            //     success: function(response) {
+            //         console.log(response.message);
 
-                    response.data.forEach(user => {
-                        const option = document.createElement('option');
-                        option.value = user.id;
-                        option.text = user.site_name;
-                        const option1 = option.cloneNode(true);
-                        customerSiteDetails.appendChild(option);
-                        customerSiteDelivery.appendChild(option1);
-                    });
+            //         response.data.forEach(user => {
+            //             const option = document.createElement('option');
+            //             option.value = user.id;
+            //             option.text = user.site_name;
+            //             const option1 = option.cloneNode(true);
+            //             customerSiteDetails.appendChild(option);
+            //             customerSiteDelivery.appendChild(option1);
+            //         });
 
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
+            //     },
+            //     error: function(xhr, status, error) {
+            //         console.error(error);
+            //     }
+            // });
 
         });
 
@@ -2906,6 +3093,7 @@
                     alert(response.message);
                     console.log(response.id);
                     setSiteAddressDetails(response.id);
+                    removeAddCustomerSiteAddress(document.getElementById('customerSiteDetails'),document.getElementById('customerSiteDelivery') ,response.id);
                     $('#add_site_address_modal').modal('hide');
                 },
                 error: function(xhr, status, error) {
@@ -2914,7 +3102,25 @@
             });
         });
 
-        
+        $('#saveCustomerSiteDeliveryDetails').on('click', function() {
+            var formData = $('#add_customer_site_delivery_form').serialize();
+            $.ajax({
+                url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
+                    $('#add_site_delivery_address_modal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+
         $('#saveQuoteTypeQuote').on('click', function() {
             var formData = $('#add_quote_type_form').serialize();
             $.ajax({
@@ -3056,12 +3262,12 @@
     $('#OpenQuoteTypeModel').on('click', function() {
         $('#quoteTypeModal').modal('show');
     });
-    
+
     $('#OpenAddQuoteSourceModal').on('click', function() {
         $('#quoteSourceModal').modal('show');
     });
 
-    
+
 
     // js for Add Customer Contact modal
     const OpenAddCustomerContact = document.getElementById('OpenAddCustomerContact');
@@ -3090,16 +3296,15 @@
     // js for Add Site Address modal
     $('#openCustomerSiteAddress').on('click', function() {
         var customer = document.getElementById('getCustomerList').value;
-        var siteJobTitle = document.getElementById('siteJobTitle');
         if (customer === "") {
             alert('Please select the customer');
         } else {
             getRegions(document.getElementById('getSiteAddressRegion'));
             getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
-            getCustomerJobTitle(siteJobTitle);
+            getCustomerJobTitle(document.getElementById('siteJobTitle'));
+            // alert(document.getElementById('siteAddressMobileCode'));
             getCountriesList(document.getElementById('siteAddressMobileCode'));
             getCountriesList(document.getElementById('siteAddressTelephoneCode'));
-
 
             $('#add_site_address_modal').modal('show');
         }
@@ -3112,6 +3317,19 @@
 
     // js for Add job Title in site Details modal
     $('#OpenSiteAddressJobTitleModel').on('click', function() {
+        $('#siteDetailJobTitle').modal('show');
+    });
+
+    $('#openSiteDeliveryModal').on('click', function() {
+        getCustomerJobTitle(document.getElementById('siteDeliveryJobTitle'));
+        getCountriesList(document.getElementById('siteDeliveryAddressTelephoneCode'));
+        getCountriesList(document.getElementById('siteDeliveryAddressMobileCode'));
+        getRegions(document.getElementById('getSiteDeliveryAddressRegion'));
+        getCountriesListWithNameCode(document.getElementById('siteDeliveryAddressCountry'));
+        $('#add_site_delivery_address_modal').modal('show');
+    });
+
+    $('#OpenSiteDeliveryAddressJobTitleModel').on('click', function() {
         $('#siteDetailJobTitle').modal('show');
     });
 
