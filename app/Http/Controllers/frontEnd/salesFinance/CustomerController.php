@@ -255,7 +255,8 @@ class CustomerController extends Controller
 
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? "Customer Contact added successfully" : 'Customer contact could not be added.'
+            'message' => $data ? "Customer Contact added successfully" : 'Customer contact could not be added.',
+            'lastid' => $data->id
         ]);
     }
 
