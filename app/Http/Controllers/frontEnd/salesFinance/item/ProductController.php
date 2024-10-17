@@ -100,5 +100,33 @@ class ProductController extends Controller
         }
         
     }
+    function saveproductdata(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'status' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        //echo Product_category::checkproductcategoryname($request->name,$request->productCategoryID);
+        //die;
+       // Call the model's method to save product category data
+        //if(Product::checkTaxRatename($request->taxratename,$request->taxrateID)==0){
+            $saveData = Product::saveProductdata($request->all(), $request->productID);
+            // Return the appropriate response
+            return response()->json([
+                'success' => 1,
+                'message' => $saveData ? 'The Product has been saved successfully.' : 'Product could not be created.',
+                'lastid' => $saveData
+            ]);
+        // }else{
+        //     return response()->json([
+        //         'success' => 0,
+        //         'message' => 'This Tax Rate already exist.',
+        //         'lastid' => 0
+        //     ]);
+        // }
+        
+    }
 
 }

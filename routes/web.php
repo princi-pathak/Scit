@@ -306,6 +306,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/find_project','find_project');
 		Route::post('/find_appointment','find_appointment');
 		Route::post('/expense_save','expense_save');
+		Route::post('/expense_image_delete','expense_image_delete');
 	});
 
 	// General section Front 
@@ -497,6 +498,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
 		Route::post('/item/taxratelist','taxratelist')->name('item.taxratelist');
 		Route::post('/item/account_code','account_code')->name('item.account_code');
+		Route::post('/item/saveproductdata','saveproductdata')->name('item.saveproductdata');
 	});
 
 
