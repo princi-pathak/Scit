@@ -4,7 +4,7 @@ namespace App\Http\Controllers\frontEnd\salesFinance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth,Validator;
+use Auth,Validator,File;
 use App\Models\Construction_tax_rate;
 use App\User;
 use App\Customer;
@@ -60,5 +60,23 @@ class ExpenseController extends Controller
             $requestData = $request->all();
         }
         return $expense=Expense::expense_save($requestData);
+    }
+    public function expense_image_delete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $expense_record=Expense::find($request->id);
+        $expense_record->attachments='';
+        // $expense_record->save();
+        try {
+            @unlink('images/expense/'.$expense_record->attachments);
+            // File::delete(public_path('images/expense/' . $expense_record->attachments));
+        }
+        catch (\Exception $e) {
+            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+        }
+        // if($expense_record){
+        //     return true;
+        // }else{
+        //     return false;
+        // }
     }
 }
