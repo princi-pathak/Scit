@@ -99,11 +99,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <form method='get' action="{{ url('admin/managers') }}">
-                                        <div class="dataTables_filter" id="editable-sample_filter">
-                                            <label>Search: <input name="search" type="text" value="{{ $search }}" aria-controls="editable-sample" class="form-control medium" placeholder="Search Name" ></label>
-                                        </div>
-                                    </form>
+                                  
                                 </div>
                             </div>
 

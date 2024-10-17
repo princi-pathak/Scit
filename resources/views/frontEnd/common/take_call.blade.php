@@ -2,7 +2,7 @@
 $home_id = Auth::user()->home_id;
 $company_id = App\Home::where('is_deleted', '0')->where('id', $home_id)->value('admin_id');
 $manager_data = App\User::where('status', '1')
-    ->where('user_type', 'M')
+    ->where('user_type', 'CM')
     ->where('is_deleted', '0')
     ->where('company_id', $company_id)
     ->get();
