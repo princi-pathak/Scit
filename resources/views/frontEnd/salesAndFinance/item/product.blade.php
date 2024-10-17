@@ -12,10 +12,10 @@
 
         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
             <div class="jobsection">
-                <a href="#" class="profileDrop" data-bs-toggle="modal" data-bs-target="#itemsAddProductModal">Add</a>
+                <a href="#" class="profileDrop" onclick="itemsAddProductModal(1)">Add</a>
                 <a href="#" class="profileDrop">Active (5)</a>
                 <a href="#" class="profileDrop">Inactive (5)</a>
-                <a href="#" class="profileDrop" id="impExpClickbtnPopup">Import/Export</a>
+                {{-- <a href="#" class="profileDrop" id="impExpClickbtnPopup">Import/Export</a> --}}
             </div>
         </div>
 
@@ -111,16 +111,7 @@
                     </div>
                 </div>
 
-                <!-- <div class="popupF  customer_Form_Popup">
-
-                                <button type="button"
-                                    class="profileDrop">Save</button>
-                                <button type="button"
-                                    class="profileDrop">Save &
-                                    Close</button>
-                                <button type="button" class="profileDrop">Cancel</button>
-
-                            </div> -->
+                
             </div>
         </div>
         <!-- End off Import/Export Popup -->
@@ -994,6 +985,15 @@
         $('#productCategoryID').val('');
         $('#productCategorytype').val(th);
         $('#itemsCatagoryModal').modal('show');
+    }
+</script>
+<script>
+    function itemsAddProductModal(th){
+        $("#productform")[0].reset();
+        $(".needs-validationp").removeClass('was-validated');
+        $('#producttype').val(th);
+        //$('#taxratepopup').css('display','block');
+        $('#itemsAddProductModal').modal('show');
     }
 </script>
 

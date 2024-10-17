@@ -87,7 +87,7 @@
         </div>
 	</section>
 </section>
-<!-- <script>
+<script>
 
     $(document).ready(function () {
             // Attach a submit handler to the form
@@ -131,7 +131,7 @@
             }
 
 
-</script> -->
+</script>
 
 <script>
     $(document).ready(function()

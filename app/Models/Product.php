@@ -11,7 +11,7 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'home_id', 'adder_id', 'customer_only', 'cat_id', 'product_name', 'cost_price', 'margin', 'price', 'tax_rate', 'qty', 'description', 'product_code', 'show_temp', 'bar_code', 'tax_id', 'nominal_code', 'sales_acc_code', 'purchase_acc_code', 'expense_acc_code', 'location', 'attachment', 'status'
+        'home_id', 'adder_id', 'customer_only', 'cat_id','product_type', 'product_name', 'cost_price', 'margin', 'price', 'tax_rate', 'qty', 'description', 'product_code', 'show_temp', 'bar_code', 'tax_id', 'nominal_code', 'sales_acc_code', 'purchase_acc_code', 'expense_acc_code', 'location', 'attachment', 'status'
     ];
     public static function product_detail($id){
         $data=DB::table('products as pr')
@@ -33,5 +33,16 @@ class Product extends Model
             return $getlastvalue->product_code+1;
         }
          
-    } 
+    }
+
+    public static function saveProductdata(array $data, $productID = null){
+        // $data['home_id'] = Auth::user()->home_id;        
+        // return self::updateOrCreate(['id' => $productCategoryID], $data);
+        $data['home_id'] = Auth::user()->home_id;
+        $data['adder_id'] = Auth::user()->id;
+        // Use updateOrCreate to either update an existing record or create a new one
+        $product = self::updateOrCreate(['id' => $productID], $data);
+        // Return the ID of the created or updated product category
+        return $product->id;
+    }
 }
