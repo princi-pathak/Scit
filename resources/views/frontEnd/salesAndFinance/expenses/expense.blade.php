@@ -4,6 +4,9 @@
     font-size: 12px;
     white-space: nowrap;
 }
+.image_delete {
+    cursor: pointer;
+}
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -18,7 +21,7 @@
 
         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
             <div class="jobsection">
-                <a href="#" class="profileDrop" data-bs-toggle="modal" data-bs-target="#customerPop">Add</a>
+                <a href="#" class="profileDrop" onclick="modal_show()">Add</a>
                 <a href="#" class="profileDrop">Unauthorised (0)</a>
                 <a href="#" class="profileDrop">Authorised (0)</a>
                 <a href="#" class="profileDrop">Rejected (0)</a>
@@ -154,7 +157,7 @@
                                             Action
                                         </a>
                                         <div class="dropdown-menu fade-up m-0">
-                                            <a href="#" class="dropdown-item col-form-label fetch_data" data-bs-toggle="modal" data-bs-target="#customerPop" data-id="{{$val->id}}" data-title="{{$val->title}}" data-amount="{{$val->amount}}" data-vat="{{$val->vat}}" data-vat_amount="{{$val->vat_amount}}" data-gross_amount="{{$val->gross_amount}}" data-expense_date="{{$val->expense_date}}" data-user_id="{{$val->user_id}}" data-reference="{{$val->reference}}" data-customer_id="{{$val->customer_id}}" data-title="{{$val->project_id}}" data-job="{{$val->job}}" data-job_appointment_id="{{$val->job_appointment_id}}" data-authorised="{{$val->authorised}}" data-billable="{{$val->billable}}" data-paid="{{$val->paid}}" data-notes="{{$val->notes}}" data-attachments="{{$val->attachments}}">Edit</a>
+                                            <a href="#" class="dropdown-item col-form-label fetch_data" data-bs-toggle="modal" data-bs-target="#customerPop" data-id="{{$val->id}}" data-title="{{$val->title}}" data-amount="{{$val->amount}}" data-vat="{{$val->vat}}" data-vat_amount="{{$val->vat_amount}}" data-gross_amount="{{$val->gross_amount}}" data-expense_date="{{$val->expense_date}}" data-user_id="{{$val->user_id}}" data-reference="{{$val->reference}}" data-customer_id="{{$val->customer_id}}" data-job="{{$val->job}}" data-project_id="{{$val->project_id}}" data-job_appointment_id="{{$val->job_appointment_id}}" data-authorised="{{$val->authorised}}" data-billable="{{$val->billable}}" data-paid="{{$val->paid}}" data-notes="{{$val->notes}}" data-attachments="{{$val->attachments}}">Edit</a>
                                             <hr class="dropdown-divider">
                                             <a href="#" class="dropdown-item col-form-label">Reject</a>
                                         </div>
@@ -275,7 +278,7 @@
                                                                     class="col-sm-3 col-form-label">Customer</label>
                                                                 <div class="col-sm-9">
                                                                     <select class="form-control editInput selectOptions"
-                                                                        id="customer_id" name="customer_id">
+                                                                        id="customer_id" name="customer_id" onchange="find_project(null,null)">
                                                                         <option selected disabled >--None--</option>
                                                                         @foreach($customer as $customer_val)
                                                                             <option value="{{$customer_val->id}}">{{$customer_val->name}}</option>
@@ -288,7 +291,7 @@
                                                                     class="col-sm-3 col-form-label">Project</label>
                                                                 <div class="col-sm-9">
                                                                     <select class="form-control editInput selectOptions"
-                                                                        id="project_id" name="project_id" disabled>
+                                                                        id="project_id" name="project_id" disabled onchange="find_appointment(null)">
                                                                         <option >None</option>
                                                                     </select>
                                                                 </div>
@@ -370,6 +373,7 @@
                                                                         id="attachments" name="attachments" value="">
                                                                     <p>(Max file size 25 MB)</p>
                                                                     <p id="fileSizeError" style="color: red; display: none;">File larger than 25 MB.</p>
+                                                                    <p id="file_name"></p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -433,8 +437,13 @@
         var gross_amount=amount+calculation;
         $("#gross_amount").val(gross_amount.toFixed(2));
     });
-    $("#customer_id").on('change', function(){
-        var customer_id=$(this).val();
+    function find_project(customer_id,project_id){
+        var customer_id;
+        if(customer_id == '' || customer_id == null){
+            customer_id=$("#customer_id").val();
+        }else{
+            customer_id=customer_id;
+        }
         var token='<?php echo csrf_token();?>'
         const projectSelect = document.getElementById("project_id");
         $("#project_id").prop('disabled',false);
@@ -451,11 +460,21 @@
                         option.text = `${project.project_name}`;
                         projectSelect.appendChild(option);
                     });
+                    
+                    if (project_id != null) {
+                        $('#project_id').val(project_id);
+                    }
                 }
             });
-    });
-    $("#project_id").on('change', function(){
-        var id=$(this).val();
+    }
+    function find_appointment(project_id){
+        var id;
+        if(project_id =='' || project_id == null){
+            id=$("#project_id").val();
+        }else{
+            id=project_id;
+        }
+        
         var token='<?php echo csrf_token();?>'
         const job_appointmentSelect = document.getElementById("job_appointment_id");
         $("#job_appointment_id").prop('disabled',false);
@@ -472,9 +491,12 @@
                         option.text = `${appoint.job_ref}`;
                         job_appointmentSelect.appendChild(option);
                     });
+                    if(project_id != null){
+                        $('#job_appointment_id').val(project_id);
+                    }
                 }
             });
-    });
+    }
     $("#save_data").on('click', function(){
         if ($('#authorised1').is(':checked')) {
             $("#authorised").val(1);
@@ -586,6 +608,14 @@ $('.delete_checkbox').on('click', function() {
         var paid = $(this).data('paid');
         var notes = $(this).data('notes');
         var attachments = $(this).data('attachments');
+        var project_id = $(this).data('project_id');
+
+        $("#gross_amount").prop('disabled',false);
+        $("#project_id").prop('disabled',false);
+        $("#job_appointment_id").prop('disabled',false);
+
+        find_project(customer_id,project_id);
+        find_appointment(project_id);
 
         $('#id').val(id);
         $('#title').val(title);
@@ -598,12 +628,48 @@ $('.delete_checkbox').on('click', function() {
         $('#reference').val(reference);
         $('#customer_id').val(customer_id);
         $('#job').val(job);
-        $('#job_appointment_id').val(job_appointment_id);
         $('#authorised').val(authorised);
+        $('#authorised'+authorised).prop('checked',true);
         $('#billable').val(billable);
+        $('#billable'+billable).prop('checked',true);
         $('#paid').val(paid);
+        $('#paid'+paid).prop('checked',true);
         $('#notes').val(notes);
-        $('#attachments').val(attachments);
+        // 
+        // $('#attachments').val(attachments);
+        var imgSrc = "{{url('public/frontEnd/jobs/images/delete.png')}}";
+        var text = '&emsp;<img src="' + imgSrc + '" alt="" class="image_delete" data-delete="' + id + '">';
+        $("#file_name").html(attachments + text);
+    });
+ </script>
+ <script>
+    function modal_show(){
+        $("#form_data")[0].reset();
+        $("#customerPop").modal('show');
+    }
+    $(document).on('click', '.image_delete', function() {
+        var id=$(this).data('delete');
+        if(confirm("Are you sure to delete?")){
+            var token='<?php echo csrf_token();?>'
+            $.ajax({
+                type: "POST",
+                url: "{{url('/expense_image_delete')}}",
+                data: {id:id,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if(data){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
     });
  </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
