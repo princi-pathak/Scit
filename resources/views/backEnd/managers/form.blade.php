@@ -123,7 +123,7 @@ if (isset($user_info)) {
                                     </div>
                                 </div>
 
-                                <input type="hidden" id="selectedHomes" value="{{ (isset($user_info->home_id)) ? $user_info->home_id : '' }}">
+                                <!-- <input type="hidden" id="selectedHomes" value="{{ (isset($user_info->home_id)) ? $user_info->home_id : '' }}">
                                 <div class="form-group">
                                     <label for="homes" class=" col-lg-3 control-label">Select Homes:</label>
                                     <div class="col-lg-3">
@@ -131,7 +131,7 @@ if (isset($user_info)) {
                                     </div>
                                     <div class="col-lg-3" id="homesCheckboxList">
                                     </div>
-                                </div>
+                                </div> -->
 
 
                                 <div class="form-group">

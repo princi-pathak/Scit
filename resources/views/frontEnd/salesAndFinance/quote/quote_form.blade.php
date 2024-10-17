@@ -159,6 +159,7 @@
                                         <select class="form-control editInput selectOptions" disabled id="customerSiteDetails">
                                             <option>-Not Assigned-</option>
                                         </select>
+                                        <input type="hidden" name="customer_id" id="siteCustomerId">
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="plusandText">
@@ -1941,7 +1942,6 @@
                                     <label for="inputName" class="col-sm-4 col-form-label">Customer </label>
                                     <div class="col-sm-8">
                                         <label for="inputAddress" class="col-form-label"><span id="setSiteAddress"></span> </label>
-                                        <input type="hidden" name="customer_id" id="siteCustomerId">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -2716,6 +2716,15 @@
             },
             success: function(response) {
                 console.log(response.data);
+
+                let selectElement = document.getElementById('customerSiteDetails'); // or document.querySelector('[name="mySelectName"]');
+                let newOption = document.createElement('option');
+                newOption.value = response.data[0].id;
+                newOption.text = response.data[0].site_name;
+                newOption.selected = true;
+                selectElement.appendChild(newOption);
+
+                // document.getElementById('customerSiteDetails');
                 document.getElementById('siteCustomerId').value = response.data[0].id;
                 document.getElementById('customerSiteName').value = response.data[0].contact_name;
                 document.getElementById('customerSiteAddress').value = response.data[0].address;
@@ -2764,18 +2773,7 @@
     }
 
     function removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, id) {
-
-        customerSiteDetails.innerHTML = '';
-        customerSiteDelivery.innerHTML = '';
-        const option3 = document.createElement('option');
-        option3.value = id;
-        option3.text = "Same as customer";
-        const option4 = option3.cloneNode(true);
-        customerSiteDetails.appendChild(option3);
-        customerSiteDelivery.appendChild(option4);
-
         console.log(id);
-
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
             method: 'POST',
@@ -2783,8 +2781,8 @@
                 id: id
             },
             success: function(response) {
-                console.log(response.message);
-
+                console.log(response.data);
+                // alert(response.data);    
                 response.data.forEach(user => {
                     const option = document.createElement('option');
                     option.value = user.id;
@@ -2794,6 +2792,53 @@
                     customerSiteDelivery.appendChild(option1);
                 });
 
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function setCustomerBillingData(id) {
+        // alert(id)
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response.data);
+
+                let selectElement = document.getElementById('billingDetailContact'); // Get the select element
+
+                // Create and append a new option
+                let newOption = document.createElement('option');
+                newOption.value = response.data[0].id;
+                newOption.text = response.data[0].contact_name;
+                selectElement.appendChild(newOption);
+
+                // Set the new option as selected
+                newOption.selected = true;
+
+                // billing details data set
+                document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
+                document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
+                document.getElementById('billingDetailsEmail').value = response.data[0].email;
+                document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
+                document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
+                document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
+                document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
+                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
+
+                // Customer Site Address Data Set
+                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -2852,7 +2897,17 @@
 
             const customerSiteDetails = document.getElementById('customerSiteDetails');
             const customerSiteDelivery = document.getElementById('customerSiteDelivery');
-         
+
+            customerSiteDetails.innerHTML = '';
+            customerSiteDelivery.innerHTML = '';
+
+            const option3 = document.createElement('option');
+            option3.value = getCustomerListValue.value;
+            option3.text = "Same as customer";
+            const option4 = option3.cloneNode(true);
+            customerSiteDetails.appendChild(option3);
+            customerSiteDelivery.appendChild(option4);
+
             removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
             // const option3 = document.createElement('option');
             // option3.value = getCustomerListValue.value;
@@ -2958,38 +3013,7 @@
                 getBillingDetailsData($(this).val());
             } else {
 
-                $.ajax({
-                    url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
-                    method: 'POST',
-                    data: {
-                        id: $(this).val()
-                    },
-                    success: function(response) {
-                        console.log(response.data);
-
-                        // billing details data set
-                        document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                        document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
-                        document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
-                        document.getElementById('billingDetailsEmail').value = response.data[0].email;
-                        document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
-                        document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
-                        document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
-                        document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                        document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
-                        selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
-                        selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
-                        selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
-
-                        // Customer Site Address Data Set
-                        selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                        selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                        selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
+                setCustomerBillingData($(this).val());
 
             }
         });
@@ -3093,7 +3117,7 @@
                     alert(response.message);
                     console.log(response.id);
                     setSiteAddressDetails(response.id);
-                    removeAddCustomerSiteAddress(document.getElementById('customerSiteDetails'),document.getElementById('customerSiteDelivery') ,response.id);
+                    // removeAddCustomerSiteAddress(document.getElementById('customerSiteDetails'),document.getElementById('customerSiteDelivery'), response.id);
                     $('#add_site_address_modal').modal('hide');
                 },
                 error: function(xhr, status, error) {
@@ -3204,8 +3228,12 @@
                 method: 'POST',
                 data: formData,
                 success: function(response) {
+                    console.log(response);
+
                     alert(response.message);
+                    setCustomerBillingData(response.lastid);
                     $('#add_customer_contact_modal').modal('hide');
+                    //getBillingDetailsData();
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -3218,9 +3246,8 @@
             // Show data if checked, else show blank
             if (isChecked) {
                 var gettext = document.getElementById('billingDetailsAddress').text;
+                console.log(gettext);
                 document.getElementById('cuatomer_address').text = gettext;
-            } else {
-                alert("not checked");
             }
         });
     });
