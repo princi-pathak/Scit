@@ -33,8 +33,8 @@
                             <div class="mb-2 row">
                                 <label for="inputName" class="col-sm-4 col-form-label">Customer</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control editInput selectOptions" id="getCustomerList" name="customer_only" required>
-                                        <option>-All-</option>
+                                    <select class="form-control editInput selectOptions" id="getCustomerList" name="customer_only">
+                                        <option value="">-All-</option>
                                     </select>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                                     Category</label>
                                 <div class="col-sm-7">
                                     <select class="form-control editInput selectOptions" id="productcategorylist" name="cat_id">
-                                        <option>- Any Category -</option>
+                                        <option value="">- Any Category -</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-1 ps-0">
@@ -57,7 +57,7 @@
                                     Name*</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control editInput" name="product_name" id="productname"
-                                        value="">
+                                        value="" required>
                                 </div>
                             </div>
 
@@ -114,7 +114,7 @@
                                 <label for="inputMobile" class="col-sm-4 col-form-label">Price
                                     *</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control editInput" id="price" name="price" value="">
+                                    <input type="text" class="form-control editInput" id="price" name="price" value="" required>
                                 </div>
                             </div>
 
@@ -158,7 +158,7 @@
                                     <div class="col-sm-7">
                                         <select class="form-control editInput selectOptions" id="salestax"
                                             onclick="taxratelist(1)" name="tax_rate">
-                                            <option>-Please Select-</option>
+                                            <option value="">-Please Select-</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1 ps-0">
@@ -175,7 +175,7 @@
                                     <div class="col-sm-7">
                                         <select class="form-control editInput selectOptions" id="purchasetax"
                                             onclick="taxratelist(2)" name="tax_id">
-                                            <option>-Please Select-</option>
+                                            <option value="">-Please Select-</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1 ps-0">
@@ -204,7 +204,7 @@
                                     <div class="col-sm-8">
                                         <select class="form-control editInput selectOptions" id="salesaccountcode"
                                             onclick="accountcode(1)" name="sales_acc_code">
-                                            <option>--Please Select--</option>
+                                            <option value="">--Please Select--</option>
                                         </select>
                                     </div>
                                 </div>
@@ -215,7 +215,7 @@
                                     <div class="col-sm-8">
                                         <select class="form-control editInput selectOptions" id="purchaseaccountcode"
                                             onclick="accountcode(2)" name="purchase_acc_code">
-                                            <option>--Please Select--</option>
+                                            <option value="">--Please Select--</option>
                                         </select>
                                     </div>
                                 </div>
@@ -225,7 +225,7 @@
                                     <div class="col-sm-8">
                                         <select class="form-control editInput selectOptions" id="Expenseaccountcode"
                                             onclick="accountcode(3)" name="expense_acc_code">
-                                            <option>--Please Select--</option>
+                                            <option value="">--Please Select--</option>
                                         </select>
                                     </div>
                                 </div>
@@ -253,6 +253,7 @@
                                     <div class="col-sm-8">
                                         <input type="file" class="form-control editInput" id="attachment" name="attachment">
                                     </div>
+                                    
                                 </div>
 
                             
@@ -329,7 +330,7 @@ Array.prototype.slice.call(forms)
                     $('.productsuccess').text(data.message);
                     $(".productsuccess").show('slow' , 'linear').delay(3000).fadeOut(function(){
                         if(producttype==1){
-                            //location.reload();
+                            location.reload();
                         }
                         
                     });
@@ -351,8 +352,20 @@ Array.prototype.slice.call(forms)
 })();
 </script>
 @include('frontEnd.salesAndFinance.item.common.addtaxrate')
+@include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
+@include('frontEnd.salesAndFinance.item.common.uploadproductimage')
 
-
+<script>
+    function additemsCatagoryModal(th){
+        //alert();
+        $('#category_name').val('');
+        $('#parentcategory').val('');
+        $('#product_category_status').val(1);
+        $('#productCategoryID').val('');
+        $('#productCategorytype').val(th);
+        $('#itemsCatagoryModal').modal('show');
+    }
+</script>
 
 <script>
     var dataLoaded = false;

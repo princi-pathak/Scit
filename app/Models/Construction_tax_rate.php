@@ -44,9 +44,9 @@ class Construction_tax_rate extends Model
     public static function saveTaxRateData(array $data, $taxRateID = null)
     {
         $data['home_id'] = Auth::user()->home_id;
-        $taxRate = self::updateOrCreate(['id' => $taxRateID], $data);
+        return self::updateOrCreate(['id' => $taxRateID], $data);
         // Return the ID of the created or updated product category
-        return $taxRate->id;
+        //return $taxRate->id;
     }
     public static function checkTaxRatename($taxrate_name,$taxRateID = null)
     {
