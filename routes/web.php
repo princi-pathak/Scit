@@ -304,6 +304,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(ExpenseController::class)->group(function(){
 		Route::get('/expenses','expenses');
 		Route::post('/find_project','find_project');
+		Route::post('/find_job','find_job');
 		Route::post('/find_appointment','find_appointment');
 		Route::post('/expense_save','expense_save');
 		Route::post('/expense_image_delete','expense_image_delete');

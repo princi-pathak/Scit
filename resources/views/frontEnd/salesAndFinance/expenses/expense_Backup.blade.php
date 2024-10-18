@@ -1,5 +1,4 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
-
 <style>
     table.tablechange tbody td {
     font-size: 12px;
@@ -8,90 +7,12 @@
 .image_delete {
     cursor: pointer;
 }
-.textbox {
-    box-sizing: border-box;
-    perspective: 500px;
-    position: relative;
-    text-align: left;
-}
-
-.textbox input {
-    padding: 10px 14px;
-    width: 100%;
-}
-
-.textbox input::placeholder {
-    color: #ccc;
-}
-
-.textbox .autoComplete {
-    left: 0;
-    position: absolute;
-    top: calc(100% + 5px);
-    width: 100%;
-}
-
-.textbox .autoComplete .item {
-    animation: showItem .3s ease forwards;
-    background-color: #fff;
-    box-shadow: 0 8px 8px -10px rgba(0, 0, 0, .4);
-    box-sizing: border-box;
-    color: #7C8487;
-    cursor: pointer;
-    display: block;
-    font-size: .8rem;
-    opacity: 0;
-    outline: none;
-    padding: 10px;
-    text-decoration: none;
-    transform-origin: top;
-    /* transform: rotateX(-90deg); */
-    transform: translateX(10px);
-}
-
-.textbox .autoComplete .item:hover,
-.textbox .autoComplete .item:focus {
-    background-color: #fafafa;
-    color: #D1822B;
-}
-
-@keyframes showItem {
-    0% {
-        opacity: 0;
-        /* transform: rotateX(-90deg); */
-        transform: translateX(10px);
-    }
-
-    100% {
-        opacity: 1;
-        /* transform: rotateX(0); */
-        transform: translateX(0);
-    }
-}
-.select2-container--default .select2-selection--single {
-    height: 38px;
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ced4da;
-    font-size: 14px;
-}
-
-.select2-container .select2-selection--single .select2-selection__arrow {
-    height: 100%;
-}
-
-.select2-container .select2-selection--single .select2-selection__rendered {
-    padding: 4px;
-}
-.select2-container .select2-selection--multiple{
-    min-height:32px !important;
- }
 </style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 col-lg-4 col-xl-4 ">
             <div class="pageTitle">
-                <h3>Expense</h3>
+                <h3>Products</h3>
             </div>
         </div>
     </div>
@@ -217,7 +138,7 @@
                             <td>{{ $user }}</td>
                             <td>{{ $val->title }}</td>
                             <td>{{ $val->reference }}</td>
-                            <td>{{ $val->job ?? "-" }}</td>
+                            <td>{{ $job->job_ref ?? "-" }}</td>
                             <td>{{$site->site_name ?? ""}}</td>
                             <td>{{$val->notes}}</td>
                             <td>£{{$val->amount}}</td>
@@ -370,7 +291,7 @@
                                                                     class="col-sm-3 col-form-label">Project</label>
                                                                 <div class="col-sm-9">
                                                                     <select class="form-control editInput selectOptions"
-                                                                        id="project_id" name="project_id" disabled>
+                                                                        id="project_id" name="project_id" disabled onchange="find_appointment(null)">
                                                                         <option >None</option>
                                                                     </select>
                                                                 </div>
@@ -378,12 +299,8 @@
                                                             <div class="mb-2 row">
                                                                 <label for="inputName" class="col-sm-3 col-form-label">Job</label>
                                                                 <div class="col-sm-9">
-                                                                    <div class="textbox completeIt">
-                                                                        <input type="text" class="form-control editInput" id="job" autocomplete="off" autofocus name="job_display">
-                                                                        <input type="hidden" id="selectedJobRef" name="job">
-                                                                        <div class="icon"></div>
-                                                                        <div class="autoComplete" id="jobList"></div>
-                                                                    </div>
+                                                                    <input type="text" class="form-control editInput"
+                                                                        id="job" name="job" value="">
                                                                 </div>
                                                             </div>
                                                             <div class="mb-2 row">
@@ -391,7 +308,7 @@
                                                                     class="col-sm-3 col-form-label">Job Appointment</label>
                                                                 <div class="col-sm-9">
                                                                     <select class="form-control editInput selectOptions"
-                                                                        id="job_appointment_id" name="job_appointment_id" disabled >
+                                                                        id="job_appointment_id" name="job_appointment_id" disabled>
                                                                         <option >None</option>
                                                                     </select>
                                                                 </div>
@@ -480,8 +397,6 @@
     </di>
 </div>
 </section>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 <script>
     const maxFileSize = 25 * 1024 * 1024;
     const fileInput = document.getElementById('attachments');
@@ -567,31 +482,36 @@
                 }
             });
     }
-    // function find_job(project_id){
-    //     var job_input=$("#job").val();
-    //     if(job_input.length>4){
-    //         var token='<?php echo csrf_token();?>'
-            
-    //         $.ajax({
-    //                 type: "POST",
-    //                 url: "{{url('/find_job')}}",
-    //                 data: {job_input:job_input,_token:token},
-    //                 success: function(data) {
-    //                     console.log(data);
-    //                     $('#jobList').empty();
-    //                     if (data.job_appoint.length > 0) {
-    //                         $.each(data.job_appoint, function(index, job) {
-    //                             $('#jobList').append('<option value="' + job.job_ref + '">'+ job.site_address +'</option>');
-    //                         });
-    //                     } else {
-    //                         $('#jobList').append('<option value="">No job found</option>');
-    //                     }
-                        
-    //                 }
-    //             });
-    //     }
+    function find_appointment(project_id){
+        var id;
+        if(project_id =='' || project_id == null){
+            id=$("#project_id").val();
+        }else{
+            id=project_id;
+        }
         
-    // }
+        var token='<?php echo csrf_token();?>'
+        const job_appointmentSelect = document.getElementById("job_appointment_id");
+        $("#job_appointment_id").prop('disabled',false);
+        $.ajax({
+                type: "POST",
+                url: "{{url('/find_appointment')}}",
+                data: {id:id,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    const job_appointArr=data.job_appoint;
+                    job_appointArr.forEach((appoint) => {
+                        const option = document.createElement("option");
+                        option.value = appoint.id;
+                        option.text = `${appoint.job_ref}`;
+                        job_appointmentSelect.appendChild(option);
+                    });
+                    if(project_id != null){
+                        $('#job_appointment_id').val(project_id);
+                    }
+                }
+            });
+    }
     $("#save_data").on('click', function(){
         if ($('#authorised1').is(':checked')) {
             $("#authorised").val(1);
@@ -743,7 +663,7 @@ $('.delete_checkbox').on('click', function() {
         $("#job_appointment_id").prop('disabled',false);
 
         find_project(customer_id,project_id);
-        find_appointment(job);
+        find_appointment(project_id);
 
         $('#id').val(id);
         $('#title').val(title);
@@ -800,95 +720,4 @@ $('.delete_checkbox').on('click', function() {
         }
     });
  </script>
-<script>
-   let job_input = document.getElementById('job');
-let autoComplete = document.getElementById('jobList');
-let hiddenJobInput = document.getElementById('selectedJobRef'); // Hidden input field
-
-job_input.addEventListener('input', function() {
-    let job_val = job_input.value;
-
-    if (job_val.length > 4) {
-        var token = '<?php echo csrf_token();?>';
-        
-        $.ajax({
-            type: "POST",
-            url: "{{url('/find_job')}}",
-            data: { job_input: job_val, _token: token },
-            success: function(data) {
-                $('#jobList').empty(); // Clear previous results
-
-                if (data.job_appoint.length > 0) {
-                    data.job_appoint.forEach((job) => {
-                        let item = document.createElement('a');
-                        item.classList.add('item');
-                        item.setAttribute('href', '#');
-                        item.dataset.value = job.job_ref;
-                        item.innerHTML = `${job.job_ref} - ${job.site_address}`;
-
-                        // Add click event to set job reference
-                        item.addEventListener('click', function(event) {
-                            event.preventDefault();
-                            job_input.value = `${job.job_ref}`;   // Set site address in the input field
-                            hiddenJobInput.value = job.job_ref;  // Save job_ref in the hidden input field
-
-                            console.log(hiddenJobInput.value);  // Log to confirm it's being set correctly
-                            $('#jobList').empty();              // Clear the autocomplete suggestions
-                            job_input.focus();
-                            find_appointment(hiddenJobInput.value);
-                        });
-
-                        autoComplete.appendChild(item);
-                    });
-                } else {
-                    let noJobItem = document.createElement('a');
-                    noJobItem.classList.add('item');
-                    noJobItem.setAttribute('href', '#');
-                    noJobItem.innerHTML = "No job found";
-                    autoComplete.appendChild(noJobItem);
-                }
-            }
-        });
-    }
-});
-
-</script>
-<script>
-    function find_appointment(selectedJobRef){
-        var id=selectedJobRef.split('JOB-');
-        console.log(id);
-        if(id.length>1){
-            var job_id=id[1];
-            var token='<?php echo csrf_token();?>'
-            $.ajax({
-                type: "POST",
-                url: "{{url('/find_appointment')}}",
-                data: {job_id:job_id,_token:token},
-                success: function(data) {
-                    console.log(data);
-                    if(data.length>0){
-                        $('#job_appointment_id').prop('disabled',false);
-                        var selectHTML = '';
-                        $.each(data, function(index, appointment) {
-                            selectHTML += '<option value="' + appointment.appointment_id + '">' + appointment.user_name + ':'+ appointment.start_date +' '+appointment.start_time+'-'+appointment.end_date+' '+appointment.end_time+','+appointment.status+ '</option>';
-                        });
-
-                        selectHTML += '</select>';
-                        document.getElementById('job_appointment_id').innerHTML = selectHTML;
-                        
-                        $('#job_appointment_id').select2();
-                        // document.getElementById('job_appointment_id').select2();
-                    }else{
-                        $('#job_appointment_id').prop('disabled',true);
-                    }
-                },
-                error: function(xhr, status, error) {
-                   var errorMessage = xhr.status + ': ' + xhr.statusText;
-                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
-                }
-            });
-        }
-    }
-</script>
-
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

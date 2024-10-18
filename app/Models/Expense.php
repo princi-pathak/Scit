@@ -14,16 +14,10 @@ class Expense extends Model
     ];
 
     public static function expense_save($data){
-        // echo "<pre>";print_r($data);
-        try {
-            $insert=self::updateOrCreate(
+           return self::updateOrCreate(
                 ['id' => $data['id'] ?? null],
                 $data
             );
-        } catch (\Exception $e) {
-            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
-        }
-        return $insert;
     }
     public static function getAllExpense($home_id){
         return self::where(['home_id'=>$home_id,'deleted_at'=>null])->get();

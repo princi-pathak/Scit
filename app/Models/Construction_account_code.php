@@ -19,12 +19,8 @@ class Construction_account_code extends Model
     }
 
     public static function saveAccount_Codes($data){
-        try {
+        
             $Task_type=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
             return $Task_type;
-        }catch (\Exception $e) {
-            Log::error('Error saving Payment Type: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
-        }
     }
 }

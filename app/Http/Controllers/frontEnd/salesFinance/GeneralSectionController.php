@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontEnd\salesFinance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\AttachmentType;
@@ -19,7 +20,7 @@ class GeneralSectionController extends Controller
         $home_id = Auth::user()->home_id;
         $data['attachmentType']=AttachmentType::getAllAttachmentType();
         $data['home_id']=$home_id;
-        return view('frontEnd.salesAndFinance.jobs.attachment_type',$data);
+        return view('frontEnd.salesAndFinance.general.attachment_type',$data);
     }
 
     public function save_attachment_type(Request $request){
@@ -31,7 +32,7 @@ class GeneralSectionController extends Controller
         $home_id = Auth::user()->home_id;
         $data['payment_type']=Payment_type::getAllPayment_type();
         $data['home_id']=$home_id;
-        return view('frontEnd.salesAndFinance.jobs.payment_type',$data);
+        return view('frontEnd.salesAndFinance.general.payment_type',$data);
     }
 
     public function save_payment_type(Request $request){
@@ -49,14 +50,14 @@ class GeneralSectionController extends Controller
         $home_id = Auth::user()->home_id;
         $data['region']=Region::getAllRegion($home_id);
         $data['home_id']=$home_id;
-        return view('frontEnd.salesAndFinance.jobs.region',$data);
+        return view('frontEnd.salesAndFinance.general.region',$data);
     }
 
     public function task_types(Request $request){
         $home_id = Auth::user()->home_id;
         $data['task_type']=Task_type::getAllTask_type($home_id);
         $data['home_id']=$home_id;
-        return view('frontEnd.salesAndFinance.jobs.task_type',$data);
+        return view('frontEnd.salesAndFinance.general.task_type',$data);
     }
 
     public function save_task_type(Request $request){

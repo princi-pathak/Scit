@@ -73,14 +73,10 @@ class Customer extends Model
             $data['section_id'] = implode(',',$data['section_id']);
         }
         // echo "<pre>";print_r($data);die;
-        try {
             $insert=self::updateOrCreate(
                 ['id' => $data['id'] ?? null],
                 $data
             );
-        } catch (\Exception $e) {
-            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
-        }
         $data=['id'=>$insert->id,'name'=>$insert->name];
         return $data;
     }
