@@ -32,7 +32,6 @@ class Construction_job_appointment extends Model
         $loop = count($data['user_id']);
     
     for ($i = 0; $i < $loop; $i++) {
-        try {
             $appointmentData = [
                 'user_id' => $data['user_id'][$i],
                 'home_id' => $data['home_id'],
@@ -52,11 +51,6 @@ class Construction_job_appointment extends Model
                 ['id' => $data['id'][$i] ?? null],
                 $appointmentData
             );
-
-        } catch (\Exception $e) {
-            return response()->json(['success' => 'false', 'message' => $e->getMessage()], 500);
-        }
-
                 $result=['id'=>$insert->id];
                 return $result;
         }
