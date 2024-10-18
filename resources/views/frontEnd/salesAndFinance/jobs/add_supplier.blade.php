@@ -32,7 +32,7 @@
                                           
 
                                             <div class="mb-3 row">
-                                                <label for="inputName" class="col-sm-3 col-form-label">Supplier Name<span class="red-text">*</span></label>
+                                                <label for="inputName" class="col-sm-3 col-form-label">Supplier Name<span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput" id="inputName"
                                                         placeholder="Supplier Name">
@@ -46,13 +46,13 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label for="inputName" class="col-sm-3 col-form-label">Contact Name<span class="red-text">*</span></label>
+                                                <label for="inputName" class="col-sm-3 col-form-label">Contact Name<span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput" id="inputName">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label for="inputName" class="col-sm-3 col-form-label">Email<span class="red-text">*</span></label>
+                                                <label for="inputName" class="col-sm-3 col-form-label">Email<span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput" id="inputName">
                                                 </div>

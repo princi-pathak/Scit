@@ -971,6 +971,7 @@ form.customerForm {
 }
 
 /* Start popup before popup  */
+
 .importExportMrgin{
   display: none;
   position: fixed;
@@ -1950,7 +1951,7 @@ span.oNOfswich {
   background-color: #035d97
 }
 
-.importExportMrgin .contantbodypopup .card  {
+.importExportMrgin .contantbodypopup .card {
   z-index: 0;
   border: none;
   position: relative
@@ -2041,7 +2042,6 @@ span.oNOfswich {
   z-index: -1
 }
 
-
 #progressbar li.active:before,
 #progressbar li.active:after {
   background: #0877bd
@@ -2107,4 +2107,84 @@ span.oNOfswich {
   font-size: 14px;
   font-weight: 600;
   color: #000;
+}
+.cost_popup{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 99999;
+  transition: opacity 0.3s ease;
+}
+.cost_popup .popup-content.firstCostpop{
+ min-width: 800px;
+ top: 40%;
+}
+.quotecatgrysmallPop{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 99999;
+  transition: opacity 0.3s ease;
+}
+.quotecatgrysmallPop .popup-content{
+  top: 24%;
+ }
+ .quotesalesTaxRate{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 99999;
+  transition: opacity 0.3s ease;
+ }
+ .quotesalesTaxRate .popup-content{
+  top: 30%;
+ }
+ .addimg{
+  background-color: #fbfbfb;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  padding: 6px;
+  text-align: center;
+  width: 100%;
+ }
+ .addimg .insrtImg{
+  height: 96px;
+ }
+ .sectionTitle{
+  border: 1px solid #0078d1;
+  padding: 6px;
+ }
+ .secTitle{
+  white-space: nowrap;
+  padding: 0 10px;
+ }
+ div#exampleOne_wrapper {
+  overflow: auto;
+}
+div#exampleOne_wrapper::-webkit-scrollbar {
+  height: 10px;
+}
+div#exampleOne_wrapper::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+}
+/* Handle */
+div#exampleOne_wrapper::-webkit-scrollbar-thumb {
+  background: #0877bd; 
+  border-radius: 10px;
+}
+
+.popup-content {
+  top: 26%;
 }

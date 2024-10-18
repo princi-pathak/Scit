@@ -13,6 +13,7 @@ use App\Models\Customer_type;
 use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
+use App\Models\Product_category;
 
 class QuoteController extends Controller
 {
@@ -25,6 +26,7 @@ class QuoteController extends Controller
         $data['page'] = "quotes";
         $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
         $data['countries'] = Country::getCountriesNameCode();
+        $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
         return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }
     public function index(){

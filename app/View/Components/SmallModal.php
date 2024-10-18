@@ -6,19 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ProductList extends Component
+class SmallModal extends Component
 {
     /**
      * Create a new component instance.
      */
-    public $modalId;
-    public $modalTitle;
-    public function __construct(  
-        string $modalId = 'defaultModalId',
-        string $modalTitle = 'Product List' )
+    public function __construct()
     {
-        $this->modalId = $modalId;
-        $this->modalTitle = $modalTitle;
+        //
     }
 
     /**
@@ -26,6 +21,6 @@ class ProductList extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.product-list');
+        return view('components.small-modal');
     }
 }
