@@ -58,9 +58,9 @@ class ProductCategoryController extends Controller
             $saveData = Product_category::saveProductCategoryData($request->all(), $request->productCategoryID);
             // Return the appropriate response
             return response()->json([
-                'success' => 1,
+                'success' => (bool) $saveData,
                 'message' => $saveData ? 'The Product Category has been saved successfully.' : 'Product category could not be created.',
-                'lastid' => $saveData
+                'lastid' => $saveData->id
             ]);
         }else{
             return response()->json([

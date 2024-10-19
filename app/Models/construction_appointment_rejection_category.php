@@ -19,14 +19,12 @@ class construction_appointment_rejection_category extends Model
     ];
     public static function SaveAppointmentRejectionCategory($data){
         // echo "<pre>";print_r($data);die;
-        try {
+        
             $insert=self::updateOrCreate(
                 ['id' => $data['id'] ?? null],
                 $data
             );
-        } catch (\Exception $e) {
-            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
-        }
-        return "done";
+        
+        return $insert;
     }
 }

@@ -8,6 +8,7 @@ use Session, DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Customer;
 use App\Models\Region;
@@ -54,7 +55,6 @@ class CustomerController extends Controller
     }
     public function customer_add_edit_save(Request $request)
     {
-
         // echo "<pre>";print_r($request->all());die;
         if($request->email !=''){
             $validator = Validator::make($request->all(), [
@@ -64,9 +64,13 @@ class CustomerController extends Controller
                 return response()->json(['vali_error' => $validator->errors()->first()]);
             }
         }
-        
-        $customer = Customer::saveCustomer($request->all());
-        return response()->json($customer);
+        try {
+            $customer = Customer::saveCustomer($request->all());
+            return response()->json($customer);
+        } catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
+        }
     }
     public function default_address(Request $request)
     {
@@ -94,11 +98,12 @@ class CustomerController extends Controller
     public function save_contact(Request $request)
     {
         // echo "<pre>";print_r($request->all());die;
-        $customer = Constructor_additional_contact::saveCustomerAdditional($request->all());
-        // echo "<pre>";print_r($customer);die;
-        if($customer){
+        try {
+            $customer = Constructor_additional_contact::saveCustomerAdditional($request->all());
             echo "done";
-        }else{
+        } catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            // return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
             echo "error";
         }
     }
@@ -109,10 +114,12 @@ class CustomerController extends Controller
     public function save_site(Request $request)
     {
         // echo "<pre>";print_r($request->all());die;
-        $customer = Constructor_customer_site::saveCustomerAdditional($request->all());
-        if($customer){
+        try {
+            $customer = Constructor_customer_site::saveCustomerAdditional($request->all());
             echo "done";
-        }else{
+        } catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            // return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
             echo "error";
         }
     }
@@ -123,10 +130,12 @@ class CustomerController extends Controller
     public function save_login(Request $request)
     {
         // echo "<pre>";print_r($request->all());die;
-        $customer = Construction_customer_login::saveCustomerAdditional($request->all());
-        if($customer){
+        try {
+            $customer = Construction_customer_login::saveCustomerAdditional($request->all());
             echo "done";
-        }else{
+        } catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            // return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
             echo "error";
         }
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontEnd\salesFinance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\User;
 use App\Customer;
 use App\ServiceUser;
@@ -401,9 +402,13 @@ class JobController extends Controller
             'notes'=>$data['appointment_notes']
         ];
         // echo "<pre>";print_r($array_data);die;
-        $result= Construction_job_appointment::save_appointement($array_data);
-        return true;
-        // return response()->json($result);
+        try {
+            $result= Construction_job_appointment::save_appointement($array_data);
+            return true;
+        } catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
+        }
         
     }
     public function new_appointment_add_section(Request $request){
@@ -610,7 +615,14 @@ class JobController extends Controller
         
     }
     public function appointment_rejection_cat_save(Request $request){
-        echo construction_appointment_rejection_category::SaveAppointmentRejectionCategory($request->all());
+        // echo "<pre>";print_r($request->all());die;
+        try {
+            $reject_cat=construction_appointment_rejection_category::SaveAppointmentRejectionCategory($request->all());
+            return response()->json(['success' => true, 'reject_cat' => $reject_cat]);
+        } catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
+        }
     }
     public function job_appointment_rejection_edit_form(Request $request){
         $data=construction_appointment_rejection_category::find($request->id);
