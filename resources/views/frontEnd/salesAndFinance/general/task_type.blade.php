@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-4 col-lg-4 col-xl-4 ">
                     <div class="pageTitle">
-                        <h3>Region</h3>
+                        <h3>Task Types</h3>
                     </div>
                 </div>
                 <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -23,7 +23,7 @@
                 <div class="col-md-8 col-lg-8 col-xl-8 px-3">
                 
                     <div class="jobsection">
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customerPop" class="profileDrop">New Region</a>
+                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customerPop" class="profileDrop">Add</a>
                     </div>
                     
                 </div>
@@ -66,14 +66,14 @@
                                 <tr>
                                     <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> All Select</label></th>
                                     <th>#</th>
-                                    <th>Region </th>
+                                    <th>Task Type </th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                                                
                             <tbody id="result">
-                            <?php foreach($region as $key=>$val){?>
+                            <?php foreach($task_type as $key=>$val){?>
                                 <tr>
                                     <td><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></td>
                                     <td>{{++$key}}</td>
@@ -94,7 +94,7 @@
                                                     Action
                                                 </a>
                                                 <div class="dropdown-menu fade-up m-0">
-                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-title="{{ $val->title }}" data-mobile_visible="{{ $val->mobile_visible }}" data-status="{{ $val->status }}">Edit Details</a>
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-title="{{ $val->title }}" data-status="{{ $val->status }}">Edit Details</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -112,7 +112,7 @@
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="customerModalLabel">Add Region</h5>
+                                    <h5 class="modal-title" id="customerModalLabel">Task Type - Add</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -126,7 +126,10 @@
                                                 <form id="form_data" class="customerForm">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Region<span class="red-text">*</span></label>
+
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Task Type<span class="radStar ">*</span></label>
+
+
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
                                                                 id="name" name="title" value="">
@@ -187,10 +190,6 @@
                 var status = $.trim($('#statusModal option:selected').val());
                 var home_id = '<?php echo $home_id;?>';
                 var id = $("#id").val();
-                mobile_visible=0;
-                if ($('#mobile_visible_1').is(':checked')) {
-                    mobile_visible=1;
-                }
                 var message;
 
                 if (id == '') {
@@ -199,14 +198,14 @@
                     message = "Edited Successfully Done";
                 }
 
-                if (title == '') {
+                if (home_id == '') {
                     $("#name").addClass('addError');
                     return false;
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: '{{ route("quote.ajax.saveRegion") }}',
-                        data: {id: id, home_id: home_id, title: title,mobile_visible:mobile_visible, status: status, _token: token},
+                        url: '{{ url("/save_task_type") }}',
+                        data: {id: id, home_id: home_id, title: title, status: status, _token: token},
                         success: function(data) {
                             console.log(data);
                             if(data.vali_error){
@@ -221,8 +220,9 @@
                                 setTimeout(function() {
                                     $(".alert").hide();
                                     location.reload();
+                                    // $("#form_data")[0].reset();
                                 }, 3000);
-                                // $("#form_data")[0].reset();
+                                
                             }
                             
                         }
@@ -234,16 +234,14 @@
                 var id = $(this).data('id');
                 var title = $(this).data('title');
                 var status = $(this).data('status');
-                var mobile_visible= $(this).data('mobile_visible');
 
                 $('#id').val(id);
                 $('#name').val(title);
-                $("#mobile_visible_"+mobile_visible).prop('checked',true);
                 $('#statusModal').val(status);
             });
             function status_change(id, status){
             var token='<?php echo csrf_token();?>'
-            var model="Region";
+            var model="Task_type";
             $.ajax({
                 type: "POST",
                 url: "{{url('/status_change')}}",
@@ -277,7 +275,7 @@
         if(confirm("Are you sure to delete?")){
             // console.log(ids);
             var token='<?php echo csrf_token();?>'
-            var model='Region';
+            var model='Task_type';
             $.ajax({
                 type: "POST",
                 url: "{{url('/bulk_delete')}}",
@@ -307,6 +305,6 @@ $('.delete_checkbox').on('click', function() {
         $('#selectAll').prop('checked', false);
     }
 });
- </script>  
+ </script>      
     </section>
     @include('frontEnd.salesAndFinance.jobs.layout.footer')

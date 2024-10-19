@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontEnd\salesFinance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Construction_account_code;
 use App\Models\Construction_tax_rate;
@@ -25,9 +26,13 @@ class InvoiceController extends Controller
         if ($validator->fails()) {
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
-
-        $data=Construction_account_code::saveAccount_Codes($request->all());
-        return response()->json(['data' => $data]);
+        try {
+            $data=Construction_account_code::saveAccount_Codes($request->all());
+            return response()->json(['data' => $data]);
+        } catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
+        }
     }
 
     public function tax_rate(Request $request){

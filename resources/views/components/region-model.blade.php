@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <form id="{{ $formId }}">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <input type="hidden" name="region_id" id="region_id">
                                 <input type="text" name="title" class="form-control editInput" id="{{ $inputId }}" value="" placeholder="Region">

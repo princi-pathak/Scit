@@ -529,7 +529,7 @@
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task User <span class="red-text">*</span></label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task User <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <input type="hidden" name="form_type" id="form_type" value="">
                                                                             <input type="hidden" name="lead_id" id="crm_lead_id_task">
@@ -540,13 +540,13 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Title <span class="red-text">*</span></label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Title <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" class="form-control editInput" id="taskTitle" name="title" value="">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task Type <span class="red-text">*</span></label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task Type <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-6">
                                                                             <select class="form-control editInput" name="task_type_id" id="lead_task_types">
                                                                             </select>
@@ -556,7 +556,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Start Date <span class="red-text">*</span></label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Start Date <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-4">
                                                                             <input type="date" class="form-control editInput" name="start_date" id="TaskStartDate">
                                                                         </div>
@@ -565,7 +565,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">End Date <span class="red-text">*</span></label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">End Date <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-4">
                                                                             <input type="date" class="form-control editInput" name="end_date" id="TaskEndDate" value="">
                                                                         </div>
@@ -861,7 +861,7 @@
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task User <span class="red-text">*</span></label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task User <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <select class="form-control editInput" name="user_id_timer" id="">
                                                                                 @foreach($users as $value)
@@ -871,7 +871,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Title <span class="red-text">*</span></label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Title <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <input type="text" class="form-control editInput" name="title_timer" id="staticEmail">
                                                                         </div>
@@ -893,7 +893,7 @@
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="mb-3 row">
-                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task Type <span class="red-text">*</span></label>
+                                                                        <label for="staticEmail" class="col-sm-4 col-form-label">Task Type <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-6">
                                                                             <select class="form-control editInput" name="task_type_id" id="lead_task_types_timer">
                                                                                 <option value="">Select</option>
@@ -936,7 +936,7 @@
                                             <div class="modal-body">
                                                 <form action="" id="lead_task_type_form">
                                                     <div class="mb-3 row">
-                                                        <label for="inputJobRef" class="col-sm-3 col-form-label">Task Type <span class="red-text">*</span></label>
+                                                        <label for="inputJobRef" class="col-sm-3 col-form-label">Task Type <span class="radStar ">*</span></label>
                                                         <div class="col-sm-9">
                                                             <input type="text" name="title" class="form-control editInput" id="inputJobRef" value="" placeholder="Task Type">
                                                         </div>
@@ -1150,7 +1150,7 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                         <div class="col-sm-7">
                             <select name="crm_type_id" class="form-control editInput" id="calls_type">
                                 <option value="">Select</option>
@@ -1161,7 +1161,7 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                        <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
                             <div class="col-form-label">
                                 <div id="editor">
@@ -1188,7 +1188,7 @@
                     </div>
                     <div class="notification_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1199,7 +1199,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
                                 <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
@@ -1239,7 +1239,7 @@
             <div class="modal-body">
                 <form action="" id="crm_section_type_form">
                     <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control editInput" name="title" id="type_title" value="">
                             <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
@@ -1274,7 +1274,7 @@
             <div class="modal-body">
                 <form action="" id="crm_lead_email_form" enctype='multipart/form-data'>
                     <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">To <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">To <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
                             <input type="hidden" class="form-control editInput" name="crm_lead_email_id" id="">
                             <input type="text" class="form-control editInput" name="to" id="" value="">
@@ -1287,13 +1287,13 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Subject <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Subject <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control editInput" name="subject" id="">
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Message <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Message <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
                             <div class="col-form-label">
                                 <div id="emailEditor">
@@ -1326,7 +1326,7 @@
                     </div>
                     <div id="notification_email_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1337,7 +1337,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput">
                                     <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -1383,7 +1383,7 @@
             <div class="modal-body">
                 <form action="" id="crm_lead_notes_form">
                     <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                         <div class="col-sm-8">
                             <input type="hidden" class="form-control editInput" name="crm_lead_notes_id" id="">
                             <select class="form-control editInput" name="crm_section_type_id" id="lead_notes_crm"></select>
@@ -1394,7 +1394,7 @@
 
                     </div>
                     <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
                             <div class="col-form-label">
                                 <div id="NotesEditor">
@@ -1421,7 +1421,7 @@
                     </div>
                     <div id="notification_notes_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="user_id" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1432,7 +1432,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput">
                                     <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -1477,7 +1477,7 @@
             <div class="modal-body">
                 <form action="" id="crm_section_type_notes_form">
                     <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control editInput" name="title" id="type_title_notes">
                             <input type="hidden" class="form-control editInput" name="crm_section" id="crm_section_notes" value="3">
@@ -1514,7 +1514,7 @@
             <div class="modal-body">
                 <form action="" id="crm_lead_complaint_form">
                     <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                         <div class="col-sm-8">
                             <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
                             <select class="form-control editInput" name="crm_section_type_id" id="lead_complaint_crm">
@@ -1527,7 +1527,7 @@
 
                     </div>
                     <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
                             <div class="col-form-label">
                                 <div id="complaintEditor">
@@ -1554,7 +1554,7 @@
                     </div>
                     <div id="notification_complaint_div">
                         <div class="mb-2 row">
-                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <select name="user_id" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
@@ -1565,7 +1565,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_complaint_who1" class="editInput">
                                     <input type="checkbox" name="notification" id="calls_complaint_who1" value="1"> Notification (User Only)
@@ -1600,7 +1600,7 @@
             <div class="modal-body">
                 <form action="" id="crm_section_type_form">
                     <div class="mb-2 row">
-                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control editInput" name="title" id="type_title_complaint" value="">
                             <input type="hidden" class="form-control editInput" name="crm_section_complaint" id="crm_section_complaint" value="4">

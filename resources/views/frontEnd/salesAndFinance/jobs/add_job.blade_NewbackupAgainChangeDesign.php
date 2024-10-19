@@ -1419,7 +1419,7 @@
                                         <form action="" class="customerForm">
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Customer
-                                                    Name <span class="red-text">*</span></label>
+                                                    Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
                                                         id="customer_name">
@@ -1428,7 +1428,7 @@
                                             <div class="mb-2 row">
                                                 <label for="inputCustomer"
                                                     class="col-sm-3 col-form-label">Customer
-                                                    Type <span class="red-text">*</span></label>
+                                                    Type <span class="radStar ">*</span></label>
                                                 <div class="col-sm-7">
                                                     <select class="form-control editInput selectOptions get_customer_result"
                                                         id="customer_type_id">
@@ -1446,7 +1446,7 @@
 
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Conatact
-                                                    Name <span class="red-text">*</span></label>
+                                                    Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
                                                         id="customer_contact_name">
@@ -1858,7 +1858,7 @@
                 <div class="modal-body">
                     <form id="customer_type_form">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer Type <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer Type <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" name="customer_type_name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Type">
                             </div>
@@ -1908,19 +1908,19 @@
                         </div>
                         <input type="hidden" id="project_customer_id">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Name <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Project Name <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control editInput" value="" id="project_name">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Start Date <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Start Date <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <input type="date" class="form-control editInput"  id="project_start_date">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">End Date <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">End Date <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <input type="date" class="form-control editInput" id="project_end_date">
                             </div>
@@ -1999,7 +1999,7 @@
 
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Conatact
-                                                    Name <span class="red-text">*</span></label>
+                                                    Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
                                                         id="contact_contact_name">
@@ -2091,7 +2091,7 @@
                                         </div>
                                             <div class="mb-2 row">
                                                 <label for="inputAddress"
-                                                    class="col-sm-3 col-form-label">Address <span class="red-text">*</span></label>
+                                                    class="col-sm-3 col-form-label">Address <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <textarea class="form-control textareaInput" id="contact_address" rows="3"></textarea>
                                                 </div>
@@ -2195,7 +2195,7 @@
                                             </div>
                                         </div>
                                             <!-- <div class="mb-2 row">
-                                                <label for="inputName" class="col-sm-3 col-form-label">Product Name <span class="red-text">*</span></label>
+                                                <label for="inputName" class="col-sm-3 col-form-label">Product Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <p id="contact_customer_name"></p>
                                                 </div>
@@ -2204,7 +2204,7 @@
                                             
                                             
                                             <div class="mb-2 row">
-                                                <label for="inputName" class="col-sm-3 col-form-label">Product Name <span class="red-text">*</span></label>
+                                                <label for="inputName" class="col-sm-3 col-form-label">Product Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
                                                         id="product_name">
@@ -2298,7 +2298,7 @@
                                         </div>
                                             <div class="mb-2 row">
                                                 <label for="inputAddress"
-                                                    class="col-sm-3 col-form-label">Address <span class="red-text">*</span></label>
+                                                    class="col-sm-3 col-form-label">Address <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <textarea class="form-control textareaInput" id="contact_address" rows="3"></textarea>
                                                 </div>
@@ -2386,7 +2386,7 @@
 
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Site
-                                                    Name <span class="red-text">*</span></label>
+                                                    Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
                                                         id="site_name">
@@ -2394,7 +2394,7 @@
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Contact
-                                                    Name <span class="red-text">*</span></label>
+                                                    Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput"
                                                         id="site_contact_name">
@@ -2501,7 +2501,7 @@
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="inputAddress"
-                                                    class="col-sm-3 col-form-label">Address <span class="red-text">*</span></label>
+                                                    class="col-sm-3 col-form-label">Address <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
                                                     <textarea class="form-control textareaInput" id="site_address" rows="3"></textarea>
                                                 </div>
@@ -2592,7 +2592,7 @@
                     <div class="modal-body">
                         <form id="job_type_form">
                             <div class="mb-3 row">
-                                <label for="inputJobRef" class="col-sm-3 col-form-label">Job Type <span class="red-text">*</span></label>
+                                <label for="inputJobRef" class="col-sm-3 col-form-label">Job Type <span class="radStar ">*</span></label>
                                 <div class="col-sm-9">
                                     <input type="text" name="job_type_name" class="form-control editInput" id="job_type_name" value="" placeholder="Job Type">
                                 </div>
@@ -2650,7 +2650,7 @@
                 <div class="modal-body">
                     <form id="region_form">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" name="region_name" class="form-control editInput" id="region_name" value="" placeholder="Region">
                             </div>
@@ -2685,7 +2685,7 @@
                 <div class="modal-body">
                     <form id="job_title_form">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" name="job_title_name" class="form-control editInput" id="job_title_name" value="" placeholder="Job Title">
                             </div>

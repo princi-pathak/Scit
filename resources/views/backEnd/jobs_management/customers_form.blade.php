@@ -73,7 +73,7 @@
                                 <div class="">
                                     <h4 class="contTitle">Customer Details</h4>
                                     <div class="form-group">
-                                        <label for="name" class="col-lg-4 col-sm-4 control-label">Customer Name <span class="red-text">*</span></label>
+                                        <label for="name" class="col-lg-4 col-sm-4 control-label">Customer Name <span class="radStar ">*</span></label>
                                         <div class="col-lg-8">
                                             <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php if (isset($customer)) {
                                                                                                                                         echo $customer->name;
@@ -97,7 +97,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="contact_name" class="col-lg-4 col-sm-4 control-label">Contact Name <span class="red-text">*</span></label>
+                                        <label for="contact_name" class="col-lg-4 col-sm-4 control-label">Contact Name <span class="radStar ">*</span></label>
                                         <div class="col-lg-8">
                                             <input type="email" class="form-control" id="contact_name" name="contact_name" placeholder="Contact Name" value="<?php if (isset($customer)) {
                                                                                                                                                                     echo $customer->contact_name;
@@ -225,7 +225,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Address <span class="red-text">*</span></label>
+                                        <label for="inputPassword1" class="col-lg-4 col-sm-4 control-label">Address <span class="radStar ">*</span></label>
                                         <div class="col-lg-8">
                                             <textarea class="form-control textareaInput" name="address" id="address" rows="8" cols="70"><?php if (isset($customer)) {
                                                 echo $customer->address;
@@ -712,7 +712,7 @@
                                         @csrf
                                         
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Customer Type<span class="red-text">*</span></label>
+                                            <label class="col-lg-3 control-label">Customer Type<span class="radStar ">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="text" name="customer_type_name" id="customer_type_name" class="form-control">
                                             </div>
@@ -756,7 +756,7 @@
                                         @csrf
                                         
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Job Title<span class="red-text">*</span></label>
+                                            <label class="col-lg-3 control-label">Job Title<span class="radStar ">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="text" name="job_title_name" id="job_title_name" class="form-control">
                                             </div>
@@ -800,7 +800,7 @@
                                         @csrf
                                         
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Region<span class="red-text">*</span></label>
+                                            <label class="col-lg-3 control-label">Region<span class="radStar ">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="text" name="region_name" id="region_name" class="form-control">
                                             </div>
@@ -859,7 +859,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Contact Name<span class="red-text">*</span></label>
+                                                    <label class="col-lg-3 control-label">Contact Name<span class="radStar ">*</span></label>
                                                     <div class="col-lg-9">
                                                         <input type="text" name="customer_name" id="customer_name" class="form-control">
                                                     </div>
@@ -931,7 +931,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Address<span class="red-text">*</span></label>
+                                                    <label class="col-lg-3 control-label">Address<span class="radStar ">*</span></label>
                                                     <div class="col-lg-9">
                                                         <textarea name="customer_address" class="form-control" id="customer_address" rows="3" cols="6"></textarea>
                                                     </div>
@@ -1005,13 +1005,13 @@
                                             </div>
                                         </div>
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Site Name<span class="red-text">*</span></label>
+                                            <label class="col-lg-3 control-label">Site Name<span class="radStar ">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="text" name="site_name" id="site_name" class="form-control">
                                             </div>
                                         </div>
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Contact Name<span class="red-text">*</span></label>
+                                            <label class="col-lg-3 control-label">Contact Name<span class="radStar ">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="text" name="site_contact_name" id="site_contact_name" class="form-control">
                                             </div>
@@ -1094,7 +1094,7 @@
                                             </div>
                                         </div>
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Address<span class="red-text">*</span></label>
+                                            <label class="col-lg-3 control-label">Address<span class="radStar ">*</span></label>
                                             <div class="col-lg-9">
                                                 <textarea name="site_address" class="form-control" id="site_address" rows="3" cols="6"></textarea>
                                             </div>
@@ -1180,7 +1180,7 @@
                                         <input type="hidden" value="" name="login_id" id="login_id">
 
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Email<span class="red-text">*</span></label>
+                                            <label class="col-lg-3 control-label">Email<span class="radStar ">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="email" name="login_email" id="login_email" class="form-control" onblur="getemail(4)">
                                                 <span id="emailErr4" style="color: red;"></span>
@@ -1188,14 +1188,14 @@
                                         </div>
 
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Password Type<span class="red-text">*</span></label>
+                                            <label class="col-lg-3 control-label">Password Type<span class="radStar ">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="radio" id="pass1" name="pass"> Generate Now
                                                 <input type="radio" id="pass2" name="pass" checked> Email Password
                                             </div>
                                         </div>
                                         <div class="row form-group">
-                                            <label class="col-lg-3 control-label">Name<span class="red-text">*</span></label>
+                                            <label class="col-lg-3 control-label">Name<span class="radStar ">*</span></label>
                                             <div class="col-lg-9">
                                                 <input type="email" name="login_name" id="login_name" class="form-control">
                                             </div>
