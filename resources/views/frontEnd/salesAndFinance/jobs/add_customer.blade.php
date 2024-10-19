@@ -656,7 +656,7 @@
                 <div class="modal-body">
                     <form id="customer_type_form">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer Type <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Customer Type <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" name="customer_type_name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Type">
                             </div>
@@ -691,7 +691,7 @@
                 <div class="modal-body">
                     <form id="job_title_form">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" name="job_title_name" class="form-control editInput" id="job_title_name" value="" placeholder="Job Title">
                             </div>
@@ -726,7 +726,7 @@
                 <div class="modal-body">
                     <form id="region_form">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="red-text">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" name="region_name" class="form-control editInput" id="region_name" value="" placeholder="Region">
                             </div>

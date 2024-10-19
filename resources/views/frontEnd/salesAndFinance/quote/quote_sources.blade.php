@@ -112,7 +112,7 @@
                     @csrf
                     <div><span id="error-message" class="error"></span></div>
                     <div class="row form-group">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Quote Source <span class="red-text">*</span></label>
+                        <label class="col-lg-3 col-sm-3 col-form-label">Quote Source <span class="radStar ">*</span></label>
                         <div class="col-md-9">
                             <input type="hidden" name="quote_source_id" id="quote_source_id">
                             <input type="text" name="title" class="form-control editInput " placeholder="Quote Source" id="title">
