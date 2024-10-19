@@ -1,5 +1,5 @@
 <div>
-    <!-- He who is contented is rich. - Laozi -->
+    <!-- The best way to take care of the future is to take care of the present moment. - Thich Nhat Hanh -->
     <div class="modal fade" id="{{ $modalId }}" tabindex="-1" aria-labelledby="{{ $modalId }}Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content add_Customer">
@@ -10,7 +10,13 @@
                 <div class="modal-body">
                     <form id="{{ $formId }}">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="radStar ">*</span></label>
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Name <span class="red_sorryText">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" name="name" class="form-control editInput" id="{{ $inputId }}" value="" placeholder="Job Title">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Departmental Code </label>
                             <div class="col-sm-9">
                                 <input type="hidden" name="job_title_id" id="job_title_id">
                                 <input type="text" name="name" class="form-control editInput" id="{{ $inputId }}" value="" placeholder="Job Title">

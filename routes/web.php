@@ -320,7 +320,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/task_types', 'task_types');
 		Route::post('/save_task_type', 'save_task_type');
 		Route::get('/tags', 'tags');
-		Route::post('/save_tag', 'save_tag');
+		Route::post('/save_tag', 'save_tag')->name('General.ajax.saveQuoteTag');
+		Route::get('/getTags', 'getTags')->name('General.ajax.getTags');
+
+		
 	});
 
 	// Invoice Section 
@@ -494,12 +497,16 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 	Route::controller(ProductController::class)->group(function(){
 		Route::get('/item/products','productlist')->name('item.products');
+		Route::get('/item/products/active','productlist')->name('item.products.active');
+		Route::get('/item/products/inactive','productlist')->name('item.products.inactive');
 		Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
 		Route::post('/item/generateproductcode','generateproductcode')->name('item.generateproductcode');
 		Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
 		Route::post('/item/taxratelist','taxratelist')->name('item.taxratelist');
 		Route::post('/item/account_code','account_code')->name('item.account_code');
 		Route::post('/item/saveproductdata','saveproductdata')->name('item.saveproductdata');
+		Route::post('/item/changeProductStatus','changeProductStatus')->name('item.changeProductStatus');
+		Route::post('/item/deleteProduct','deleteProduct')->name('item.deleteProduct');
 	});
 
 

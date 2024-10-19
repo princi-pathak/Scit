@@ -1,5 +1,5 @@
 <div>
-    <!-- I have not failed. I've just found 10,000 ways that won't work. - Thomas Edison -->
+    <!-- Breathing in, I calm body and mind. Breathing out, I smile. - Thich Nhat Hanh -->
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="{{ $modalId }}" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content add_Customer">
