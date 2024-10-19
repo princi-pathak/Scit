@@ -308,6 +308,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/find_appointment','find_appointment');
 		Route::post('/expense_save','expense_save');
 		Route::post('/expense_image_delete','expense_image_delete');
+		Route::get('/reject_expense','reject_expense');
 	});
 
 	// General section Front 

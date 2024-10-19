@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use App\User;
 use App\Customer;
+use App\Models\Week;
 use App\Models\Region;
 use App\Models\Country;
 use App\Models\Job_title;
@@ -150,6 +152,9 @@ class CustomerController extends Controller
         $data['list_mode'] = $request->list_mode;
         $data['active_customer'] = Customer::getConvertedCustomersCount($home_id);
         $data['inactive_customer'] = Customer::where(['is_converted' => 1, 'status' => 0, 'home_id' => $home_id,'deleted_at'=>null])->count();
+        $data['users'] = User::getHomeUsers($home_id);
+        $data['rate']=Construction_tax_rate::getAllTax_rate($home_id,'Active');
+        $data['weeks'] = Week::getWeeklist();
         return view('frontEnd.salesAndFinance.jobs.active_customer', $data);
     }
     public function customer_type()
