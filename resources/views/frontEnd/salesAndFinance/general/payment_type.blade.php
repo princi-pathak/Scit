@@ -134,7 +134,11 @@
                                                 <form id="form_data" class="customerForm">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
+
                                                         <label for="inputName" class="col-sm-3 col-form-label">Payment Type<span class="radStar ">*</span></label>
+
+                                                        
+
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
                                                                 id="name" name="title" value="">
