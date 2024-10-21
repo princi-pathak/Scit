@@ -329,9 +329,13 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	// Invoice Section 
 	Route::controller(InvoiceController::class)->group(function () {
 		Route::get('/account_codes', 'account_codes');
-		Route::post('/save_account_code', 'save_account_code');
+		Route::post('/save_account_code', 'save_account_code')->name('invoice.ajax.saveAccountCode');
 		Route::get('/tax_rate', 'tax_rate');
 		Route::post('/save_tax_rate', 'save_tax_rate');
+		Route::get('/getAccountCode', 'getAccountCode')->name('Invoice.ajax.getAccountCode');
+
+		
+
 	});
 
 	
@@ -480,6 +484,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/getRegions', 'getRegions')->name('quote.ajax.getRegions');
 
 		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
+
+		Route::post('/quote/saveQuoteData', 'saveQuoteData');
 
 	});
 

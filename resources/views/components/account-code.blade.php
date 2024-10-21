@@ -19,7 +19,7 @@
                         <div class="mb-3 row">
                             <label for="inputJobRef" class="col-sm-4 col-form-label">Departmental Code </label>
                             <div class="col-sm-8">
-                                <input type="text" name="code" class="form-control editInput" id="{{ $inputId }}" >
+                                <input type="text" name="departmental_code" class="form-control editInput" id="{{ $inputId }}" >
                             </div>
                         </div>
                         <div class="mb-3 row">

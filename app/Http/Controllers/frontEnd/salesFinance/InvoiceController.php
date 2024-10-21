@@ -27,8 +27,8 @@ class InvoiceController extends Controller
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
         try {
-            $data=Construction_account_code::saveAccount_Codes($request->all());
-            return response()->json(['data' => $data]);
+            $data=Construction_account_code::saveAccount_Codes(array_merge(['home_id' => Auth::user()->home_id], $request->all()));
+            return response()->json(['data' => $data,  'message' => $data ? "Account Code save succcessfully" : 'Account Code could not be added.']);
         } catch (\Exception $e) {
             Log::error('Error saving Tag: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
@@ -55,5 +55,14 @@ class InvoiceController extends Controller
 
         $data=Construction_tax_rate::saveTax_rate($request->all());
         return response()->json(['data' => $data]);
+    }
+
+    public function getAccountCode(){
+        $data =  Construction_account_code::getAllAccount_Codes(Auth::user()->home_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
     }
 }
