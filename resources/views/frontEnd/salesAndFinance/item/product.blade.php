@@ -230,8 +230,7 @@
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 Action </a>
                                             <div class="dropdown-menu fade-up m-0">
-                                                <a href="#" class="dropdown-item col-form-label"
-                                                    data-bs-toggle="modal" data-bs-target="#itemsAddProductModal">Edit
+                                                <a href="#" class="dropdown-item col-form-label" onclick="itemsAddProductModal(3,{{ $product_value['id'] }})">Edit
                                                     Details</a>
                                             </div>
                                         </div>
@@ -1000,15 +999,7 @@
     });
 </script> --}}
 
-<script>
-    function itemsAddProductModal(th){
-        $("#productform")[0].reset();
-        $(".needs-validationp").removeClass('was-validated');
-        $('#producttype').val(th);
-        //$('#taxratepopup').css('display','block');
-        $('#itemsAddProductModal').modal('show');
-    }
-</script>
+
 <script>
     function changeproductstatus(id, status) {
         var token = "<?= csrf_token() ?>";

@@ -112,20 +112,27 @@ class ExpenseController extends Controller
     }
     public function expense_image_delete(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        
         try {
             $expense_record=Expense::find($request->id);    
             File::delete(public_path('images/expense/' . $expense_record->attachments));
             $expense_record->attachments='';
             $expense_record->save();
+            return true;
         }
         catch (\Exception $e) {
             return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
         }
-        if($expense_record){
-            return true;
-        }else{
-            return false;
+    }
+    public function reject_expense(Request $request){
+        $id=base64_decode($request->key);
+        try {
+            $expense_reject=Expense::find($id);    
+            $expense_reject->reject=1;
+            $expense_reject->save();
+            return redirect()->back()->with('message','Expense Rejected');
+        }
+        catch (\Exception $e) {
+            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
         }
     }
 }
