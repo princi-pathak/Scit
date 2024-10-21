@@ -814,7 +814,7 @@ $('.delete_checkbox').on('click', function() {
 <script>
    let job_input = document.getElementById('job');
 let autoComplete = document.getElementById('jobList');
-let hiddenJobInput = document.getElementById('selectedJobRef'); // Hidden input field
+let hiddenJobInput = document.getElementById('selectedJobRef'); 
 
 job_input.addEventListener('input', function() {
     let job_val = job_input.value;
@@ -827,7 +827,7 @@ job_input.addEventListener('input', function() {
             url: "{{url('/find_job')}}",
             data: { job_input: job_val, _token: token },
             success: function(data) {
-                $('#jobList').empty(); // Clear previous results
+                $('#jobList').empty(); 
 
                 if (data.job_appoint.length > 0) {
                     data.job_appoint.forEach((job) => {
@@ -837,14 +837,14 @@ job_input.addEventListener('input', function() {
                         item.dataset.value = job.job_ref;
                         item.innerHTML = `${job.job_ref} - ${job.site_address}`;
 
-                        // Add click event to set job reference
+                        
                         item.addEventListener('click', function(event) {
                             event.preventDefault();
-                            job_input.value = `${job.job_ref}`;   // Set site address in the input field
-                            hiddenJobInput.value = job.job_ref;  // Save job_ref in the hidden input field
+                            job_input.value = `${job.job_ref}`;   
+                            hiddenJobInput.value = job.job_ref;  
 
-                            console.log(hiddenJobInput.value);  // Log to confirm it's being set correctly
-                            $('#jobList').empty();              // Clear the autocomplete suggestions
+                            console.log(hiddenJobInput.value);  
+                            $('#jobList').empty();              
                             job_input.focus();
                             find_appointment(hiddenJobInput.value);
                         });

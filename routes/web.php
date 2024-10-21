@@ -311,6 +311,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/reject_expense','reject_expense');
 	});
 
+	Route::controller(CustomerController::class)->group(function(){
+		Route::post('save_crm_customer_call','save_crm_customer_call');
+		Route::post('get_all_crm_customer_call','get_all_crm_customer_call');
+	});
+
 	// General section Front 
 	Route::controller(GeneralSectionController::class)->group(function () {
 		Route::get('/attachments_types', 'attachments_types');
