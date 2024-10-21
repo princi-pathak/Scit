@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="inputCustomer" class="col-sm-3 col-form-label">City </label>
+                                    <label for="billingCustomerCity" class="col-sm-3 col-form-label">City </label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control editInput textareaInput" id="billingCustomerCity" placeholder="City">
                                     </div>
@@ -163,13 +163,13 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Name </label>
+                                    <label for="customerSiteName" class="col-sm-3 col-form-label">Name </label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control editInput textareaInput" id="customerSiteName" placeholder="Name">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Company </label>
+                                    <label for="customerSiteCompany" class="col-sm-3 col-form-label">Company </label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control editInput textareaInput" id="customerSiteCompany" placeholder="Company">
                                     </div>
@@ -182,7 +182,7 @@
                                 </div>
 
                                 <div class="mb-3 row">
-                                    <label for="inputCustomer" class="col-sm-3 col-form-label">City </label>
+                                    <label for="customerSiteCity" class="col-sm-3 col-form-label">City </label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control editInput textareaInput" id="customerSiteCity" placeholder="City">
                                     </div>
@@ -311,7 +311,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Company </label>
+                                        <label for="customerSiteDeliveryCompany" class="col-sm-3 col-form-label">Company </label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control editInput textareaInput" name="company_name" id="customerSiteDeliveryCompany" placeholder="Company">
                                         </div>
@@ -392,7 +392,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Type </label>
+                                    <label for="quoteType" class="col-sm-3 col-form-label">Quote Type </label>
                                     <div class="col-sm-7">
                                         <select class="form-control editInput" name="quote_type" id="quoteType">
                                             <option value="">-Select-</option>
@@ -693,20 +693,11 @@
                                         <span class="afterPlusText"> (Type to view product or <a href="#!" id="openABCProductModal">Click here</a> to view all assets)</span>
                                     </div>
                                 </div>
-                                <!-- <div class="col-sm-7">
-                                            <div class="plusandText">
-                                                <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i>
-                                                </a>
-                                                <span class="afterPlusText"> (Type to view product or <a href="#!"
-                                                        data-bs-toggle="modal" data-bs-target="#productModalBAC">Click
-                                                        here</a> to view all assets)</span>
-                                            </div>
-                                        </div> -->
                             </div>
                             <div class="mb-3 row">
                                 <label for="inputCountry" class="col-sm-2 col-form-label">Catalogue</label>
                                 <div class="col-sm-3">
-                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                    <select class="form-control editInput selectOptions" id="">
                                         <option>Default Price</option>
                                         <option>Default</option>
                                         <option>Default</option>
@@ -714,12 +705,11 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="inputCountry" class="col-sm-2 col-form-label">Markup Based
-                                    on</label>
+                                <label for="inputCountry" class="col-sm-2 col-form-label">Markup Based on</label>
                                 <div class="col-sm-3">
-                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                    <select class="form-control editInput selectOptions" id="">
                                         <option>Price</option>
-                                        <option>None</option>
+                                        <option>Cost Price</option>
                                     </select>
                                 </div>
                             </div>
@@ -727,20 +717,13 @@
                         <div class="col-sm-3">
                             <div class="pageTitleBtn p-0">
                                 <div class="nav-item dropdown">
-                                    <a href="#!" class="nav-link dropdown-toggle profileDrop"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        + Insert </a>
+                                    <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> + Insert </a>
                                     <div class="dropdown-menu fade-up m-0" style="">
-                                        <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal"
-                                            data-bs-target="#productModalBAC">insert Product</a>
-                                        <a href="#!" class="dropdown-item col-form-label"
-                                            onclick="insrtTitle()">insert Title</a>
-                                        <a href="#!" class="dropdown-item col-form-label"
-                                            onclick="insrtImgappend()">insert Image</a>
-                                        <a href="#!" class="dropdown-item col-form-label"
-                                            onclick="insrtDescription()">insert Description</a>
-                                        <a href="#!" class="dropdown-item col-form-label"
-                                            onclick="insrtSection()">insert Section</a>
+                                        <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Product</a>
+                                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtTitle()">insert Title</a>
+                                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtImgappend()">insert Image</a>
+                                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtDescription()">insert Description</a>
+                                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">insert Section</a>
                                     </div>
                                 </div>
                             </div>
@@ -752,14 +735,13 @@
                                     <thead class="table-light">
                                         <tr>
                                             <th>Code </th>
-                                            <th>Product <i class="fa  fa-info-circle"></i> </th>
+                                            <th>Product <i class="fa fa-info-circle"></i></th>
                                             <th>Description</th>
                                             <th>
                                                 <div class="tableplusBTN">
                                                     <span>Account Code </span>
                                                     <span class="plusandText ps-3">
-                                                        <a href="#!" class="formicon pt-0"> <i
-                                                                class="fa-solid fa-square-plus"></i> </a>
+                                                        <a href="#!" class="formicon pt-0" id="OpenAddAccountCodeModal"> <i class="fa-solid fa-square-plus"></i> </a>
                                                     </span>
                                                 </div>
                                             </th>
@@ -780,31 +762,24 @@
                                             <td>
                                                 <div class="CSPlus">
                                                     <span class="plusandText">
-                                                        <a href="#!" class="formicon pt-0 me-2"> <i
-                                                                class="fa-solid fa-square-plus"></i> </a>
-                                                        <input type="text"
-                                                            class="form-control editInput input80"
-                                                            value="CS-0001">
+                                                        <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                                                        <input type="text" class="form-control editInput input80" value="CS-0001">
                                                     </span>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="">
-                                                    <input type="text" class="form-control editInput"
-                                                        value="CS-0001">
+                                                    <input type="text" class="form-control editInput" value="CS-0001">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="">
-                                                    <textarea class="form-control textareaInput" name="address"
-                                                        id="inputAddress" rows="2"
-                                                        placeholder="Address"></textarea>
+                                                    <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="2" placeholder="Address"></textarea>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="">
-                                                    <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
+                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
                                                         <option>No account</option>
                                                         <option>Default</option>
                                                         <option>Default</option>
@@ -812,46 +787,31 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="">
-                                                    <input type="text" class="form-control editInput input50"
-                                                        value="1">
-                                                </div>
+                                                <div class=""><input type="text" class="form-control editInput input50" value="1"></div>
                                             </td>
                                             <td>
-                                                <div class="">
-                                                    <input type="text" class="form-control editInput input50"
-                                                        value="100.00">
-                                                </div>
+                                                <div class=""> <input type="text" class="form-control editInput input50" value="100.00"></div>
                                             </td>
                                             <td>
                                                 <div class="calculatorIcon">
-                                                    <span class="plusandText">
-                                                        <a href="#!" class="formicon pt-0"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#calculatePop"> <span
-                                                                class="material-symbols-outlined">
-                                                                calculate
-                                                            </span> </a>
+                                                    <span class="plusandText"> 
+                                                        <a href="#!" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
                                                     </span>
                                                 </div>
-
                                             </td>
                                             <td>
                                                 <div class="">
-                                                    <input type="text" class="form-control editInput input50"
-                                                        value="90.00">
+                                                    <input type="text" class="form-control editInput input50" value="90.00">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="">
-                                                    <input type="text" class="form-control editInput input50"
-                                                        value="0">
+                                                    <input type="text" class="form-control editInput input50" value="0">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="">
-                                                    <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
+                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
                                                         <option>Please Select</option>
                                                         <option>Default</option>
                                                         <option>Default</option>
@@ -860,10 +820,8 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex">
-                                                    <input type="text"
-                                                        class="form-control editInput input50 me-2" value="0">
-                                                    <select class="form-control editInput selectOptions input50"
-                                                        id="inputCustomer">
+                                                    <input type="text" class="form-control editInput input50 me-2" value="0">
+                                                    <select class="form-control editInput selectOptions input50" id="inputCustomer">
                                                         <option>Please Select</option>
                                                         <option>Default</option>
                                                         <option>Default</option>
@@ -891,20 +849,16 @@
                                 </table>
 
                                 <!-- CalculatePop Modal -->
-                                <div class="modal fade" id="calculatePop" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                <div class="modal fade" id="calculatePop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                     aria-hidden="true">
                                     <div class="modal-dialog modal-xl">
                                         <div class="modal-content add_Customer">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="customerModalLabel">Cost calculator
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                                <h5 class="modal-title" id="customerModalLabel">Cost calculator </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <h4 class="contTitle text-start">Product</h4>
-
                                                 <div class="productDetailTable mt-2">
                                                     <table class="table" id="containerA">
                                                         <thead class="table-light">
@@ -924,33 +878,23 @@
                                                                 <td>
                                                                     <div class="CSPlus">
                                                                         <span class="plusandText">
-                                                                            <input type="text"
-                                                                                class="form-control editInput input80"
-                                                                                value="T3-0001">
+                                                                            <input type="text" class="form-control editInput input80" value="T3-0001">
                                                                         </span>
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            value="TEst-331">
+                                                                        <input type="text" class="form-control editInput" value="TEst-331">
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="">
-                                                                        <textarea
-                                                                            class="form-control textareaInput rounded-0"
-                                                                            name="address" id="inputAddress"
-                                                                            rows="1"
-                                                                            placeholder="Address"></textarea>
+                                                                        <textarea class="form-control textareaInput rounded-0" name="address" id="inputAddress" rows="1" placeholder="Address"></textarea>
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="">
-                                                                        <select
-                                                                            class="form-control editInput selectOptions"
-                                                                            id="inputCustomer">
+                                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
                                                                             <option>No account</option>
                                                                             <option>Default</option>
                                                                             <option>Default</option>
@@ -959,16 +903,12 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="">
-                                                                        <input type="text"
-                                                                            class="form-control editInput input50"
-                                                                            value="1">
+                                                                        <input type="text" class="form-control editInput input50" value="1">
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="">
-                                                                        <input type="text"
-                                                                            class="form-control editInput input50"
-                                                                            value="100.00">
+                                                                        <input type="text" class="form-control editInput input50" value="100.00">
                                                                     </div>
                                                                 </td>
 
@@ -997,18 +937,12 @@
 
                                                 <div class="mb-3 mt-2 row">
                                                     <div class="col-sm-3">
-                                                        <input type="text" class="form-control editInput"
-                                                            id="inputCountry" placeholder="Type to add product">
+                                                        <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
                                                     </div>
                                                     <div class="col-sm-7">
                                                         <div class="plusandText">
-                                                            <a href="#!" class="formicon"
-                                                                id="cost_product_popup"><i
-                                                                    class="fa-solid fa-square-plus"></i>
-                                                            </a>
-                                                            <span class="afterPlusText"> (Type to view product
-                                                                or <a href="#!">Click
-                                                                    here</a> to view all assets)</span>
+                                                            <a href="#!" class="formicon" id="cost_product_popup"><i class="fa-solid fa-square-plus"></i></a>
+                                                            <span class="afterPlusText"> (Type to view product or <a href="#!">Click here</a> to view all assets)</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1031,11 +965,8 @@
                                                                 <tr>
                                                                     <td colspan="7">
                                                                         <div class="addProduvtBg text-center">
-                                                                            <h5 class="addproductCentertext">Add
-                                                                                products as costs to get
-                                                                                started! <br>Search Products or
-                                                                                <a href="#!">click here</a> to
-                                                                                view all products.
+                                                                            <h5 class="addproductCentertext">Add products as costs to get started! <br>Search Products or
+                                                                                <a href="#!">click here</a> to view all products.
                                                                             </h5>
                                                                         </div>
                                                                     </td>
@@ -1059,49 +990,33 @@
                                                     <div class="popup-content firstCostpop">
                                                         <div class="popupTitle">
                                                             <span class="">Product Cetagory</span>
-                                                            <span class="close"
-                                                                id="closeCostPopup">&times;</span>
+                                                            <span class="close" id="closeCostPopup">&times;</span>
                                                         </div>
                                                         <div class="contantbodypopup">
                                                             <form action="" class="customerForm">
-
-
                                                                 <div class="row">
                                                                     <div class="col-md-6 col-lg-6 col-xl-6">
                                                                         <div class="formDtail">
                                                                             <!-- <form action="" class="customerForm"> -->
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputName"
-                                                                                    class="col-sm-4 col-form-label">Customer</label>
+                                                                                <label for="inputName" class="col-sm-4 col-form-label">Customer</label>
                                                                                 <div class="col-sm-8">
-                                                                                    <select
-                                                                                        class="form-control editInput selectOptions"
-                                                                                        id="inputCustomer">
+                                                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
                                                                                         <option>-All-</option>
-                                                                                        <option>Analytical
-                                                                                            Customer</option>
+                                                                                        <option>Analytical Customer</option>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCustomer"
-                                                                                    class="col-sm-4 col-form-label">Product
-                                                                                    Category</label>
+                                                                                <label for="inputCustomer" class="col-sm-4 col-form-label">Product Category</label>
                                                                                 <div class="col-sm-7">
-                                                                                    <select
-                                                                                        class="form-control editInput selectOptions"
-                                                                                        id="inputCustomer">
-                                                                                        <option>Genrale Customer
-                                                                                        </option>
-                                                                                        <option>Analytical
-                                                                                            Customer </option>
+                                                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                                        <option>Genrale Customer </option>
+                                                                                        <option>Analytical Customer </option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-sm-1 ps-0">
-                                                                                    <a href="#!"
-                                                                                        class="formicon"
-                                                                                        id="prod_catgry_smallPop"><i
-                                                                                            class="fa-solid fa-square-plus"></i></a>
+                                                                                    <a href="#!" class="formicon" id="prod_catgry_smallPop"><i class="fa-solid fa-square-plus"></i></a>
                                                                                 </div>
                                                                             </div>
 
@@ -1109,32 +1024,18 @@
 
                                                                             <!--Start Product Cetagory Popup -->
 
-                                                                            <div id="quote_catgsmallpop"
-                                                                                class="quotecatgrysmallPop">
+                                                                            <div id="quote_catgsmallpop" class="quotecatgrysmallPop">
                                                                                 <div class="popup-content">
                                                                                     <div class="popupTitle">
-                                                                                        <span class="">Product
-                                                                                            Cetagory</span>
-                                                                                        <span class="close"
-                                                                                            id="close_quote_catagPopup">×</span>
+                                                                                        <span class="">Product Cetagory</span>
+                                                                                        <span class="close" id="close_quote_catagPopup">×</span>
                                                                                     </div>
-                                                                                    <div
-                                                                                        class="contantbodypopup">
-                                                                                        <form action=""
-                                                                                            class="customerForm">
-                                                                                            <div
-                                                                                                class="mb-2 row">
-                                                                                                <label
-                                                                                                    for="inputCity"
-                                                                                                    class="col-sm-3 col-form-label">Product
-                                                                                                    Cetagory*</label>
-                                                                                                <div
-                                                                                                    class="col-sm-9">
-                                                                                                    <input
-                                                                                                        type="text"
-                                                                                                        class="form-control editInput"
-                                                                                                        id="inputCity"
-                                                                                                        value="Port Elizabeth">
+                                                                                    <div class="contantbodypopup">
+                                                                                        <form action="" class="customerForm"> 
+                                                                                            <div class="mb-2 row">
+                                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Product Cetagory*</label>
+                                                                                                <div class="col-sm-9">
+                                                                                                    <input type="text" class="form-control editInput" id="inputCity" value="Port Elizabeth">
                                                                                                 </div>
                                                                                             </div>
 
@@ -3789,10 +3690,8 @@
         getRegions(document.getElementById('customerRegion'));
         getCustomerType();
         getCurrencyData(document.getElementById('customer_currency_id'));
-        // getCountriesList(document.getElementById('customer_country_id'));
         getCountriesList(document.getElementById('billingTelephoneCountryCode'));
         getCountriesList(document.getElementById('billingMobileCountryCode'));
-
         getCustomerJobTitle(document.getElementById('customer_job_title_id'));
         $('#QuotecustomerPop').modal('show');
     }
@@ -3851,10 +3750,8 @@
             getRegions(document.getElementById('getSiteAddressRegion'));
             getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
             getCustomerJobTitle(document.getElementById('siteJobTitle'));
-            // alert(document.getElementById('siteAddressMobileCode'));
             getCountriesList(document.getElementById('siteAddressMobileCode'));
             getCountriesList(document.getElementById('siteAddressTelephoneCode'));
-
             $('#add_site_address_modal').modal('show');
         }
     });
@@ -3886,13 +3783,14 @@
         $('#productModalBAC').modal('show');
     });
 
-
     $('#OpenAddQuoteTag').on('click', function() {
         $('#quoteTagModal').modal('show');
     });
 
-
-
+    $('#OpenAddAccountCodeModal').on('click', function() {
+        $('#accountCodeModal').modal('show');
+    });
+    
     function itemsAddProductModal(th) {
         $("#productform")[0].reset();
         $(".needs-validationp").removeClass('was-validated');
@@ -4019,28 +3917,28 @@
         node.classList.add("add_table_insrt"); // Adding the class to the row
 
         node.innerHTML = `
-        <td colspan="13">
-            <div class="d-flex">
-                <div class="CSPlus">
-                    <span class="plusandText pt-1">
-                        <a href="#!" onclick="insrtImgappend()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                        <label></label>
+            <td colspan="13">
+                <div class="d-flex">
+                    <div class="CSPlus">
+                        <span class="plusandText pt-1">
+                            <a href="#!" onclick="insrtImgappend()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                            <label></label>
+                        </span>
+                    </div>
+                    <div class="addimg">
+                        <img class="insrtImg" src="assets/imagrs/imgad1.png">
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="statuswating">
+                    <span class="oNOfswich">
+                        <input type="checkbox">
                     </span>
+                    <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                 </div>
-                <div class="addimg">
-                    <img class="insrtImg" src="assets/imagrs/imgad1.png">
-                </div>
-            </div>
-        </td>
-        <td>
-            <div class="statuswating">
-                <span class="oNOfswich">
-                    <input type="checkbox">
-                </span>
-                <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-            </div>
-        </td>            
-    `;
+            </td>            
+        `;
 
         // Select the table body using a class instead of an ID
         const tableBody = document.querySelector(".add_table_insrt");
@@ -4063,26 +3961,25 @@
         const node = document.createElement("tr");
         node.classList.add("add_table_insrt");
         node.innerHTML = `
-        <td colspan="13">
-            <div class="d-flex">
-                <div class="CSPlus">
-                    <span class="plusandText pt-1">
-                        <a href="#!" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
-                    </span>
+            <td colspan="13">
+                <div class="d-flex">
+                    <div class="CSPlus">
+                        <span class="plusandText pt-1">
+                            <a href="#!" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
+                        </span>
+                    </div>
+                    <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
                 </div>
-                <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
-            </div>
-        </td>
-        <td>
-            <div class="statuswating">
-                <span class="oNOfswich">
-                    <input type="checkbox">
-                </span>
-                <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-            </div>
-        </td>                     
-    `;
-
+            </td>
+            <td>
+                <div class="statuswating">
+                    <span class="oNOfswich">
+                        <input type="checkbox">
+                    </span>
+                    <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                </div>
+            </td>                     
+        `;
 
         // Get table body element
         const tableBody = document.querySelector(".add_table_insrt");
@@ -4104,74 +4001,74 @@
         const node = document.createElement("tr");
         node.classList.add("add_table_insrt");
         node.innerHTML = `
-    <td colspan="14" class="p-0">
-        <div class="newJobForm">
-            <div class="d-flex">
-            <div class="CSPlus">
-                <span class="plusandText pt-1">
-                    <a href="#!" onclick="insrtSection()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                    <label class="secTitle">Section Title* :</label>
-                </span>
-            </div>
-            <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
-            
-            <div class="pageTitleBtn p-0">
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                        + Section Insert </a>
-                    <div class="dropdown-menu fade-up m-0">
-                        <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Section Product</a>
-                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionTtle()">insert Section Title</a>
-                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionImg()">insert Section Image</a>
-                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionDescription()">insert Section Description</a>
+            <td colspan="14" class="p-0">
+                <div class="newJobForm">
+                    <div class="d-flex">
+                    <div class="CSPlus">
+                        <span class="plusandText pt-1">
+                            <a href="#!" onclick="insrtSection()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                            <label class="secTitle">Section Title* :</label>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                    
+                    <div class="pageTitleBtn p-0">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                + Section Insert </a>
+                            <div class="dropdown-menu fade-up m-0">
+                                <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Section Product</a>
+                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionTtle()">insert Section Title</a>
+                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionImg()">insert Section Image</a>
+                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionDescription()">insert Section Description</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="statuswating text-end ps-3">
+                        <span class="oNOfswich">
+                            <input type="checkbox">
+                        </span>
+                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                    </div>
+                    </div>
+
+                    <div class="productDetailTable mt-3">
+                        <table class="table" id="containerA">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Code </th>
+                                    <th>Product <i class="fa  fa-info-circle"></i> </th>
+                                    <th>Description</th>
+                                    <th>
+                                        <div class="tableplusBTN">
+                                            <span>Account Code </span>
+                                            <span class="plusandText ps-3">
+                                                <a href="#!" class="formicon pt-0"> <i
+                                                        class="fa-solid fa-square-plus"></i> </a>
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th>Qty </th>
+                                    <th>Cost Price($) </th>
+                                    <th>Cost Calc</th>
+                                    <th>Price($) </th>
+                                    <th>Markup(%)</th>
+                                    <th>VAT(%) </th>
+                                    <th>Discount </th>
+                                    <th>Amount </th>
+                                    <th>Profit </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="add_sectionTitle">
+                                
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
-
-            <div class="statuswating text-end ps-3">
-                <span class="oNOfswich">
-                    <input type="checkbox">
-                </span>
-                <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-            </div>
-            </div>
-
-            <div class="productDetailTable mt-3">
-                <table class="table" id="containerA">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Code </th>
-                            <th>Product <i class="fa  fa-info-circle"></i> </th>
-                            <th>Description</th>
-                            <th>
-                                <div class="tableplusBTN">
-                                    <span>Account Code </span>
-                                    <span class="plusandText ps-3">
-                                        <a href="#!" class="formicon pt-0"> <i
-                                                class="fa-solid fa-square-plus"></i> </a>
-                                    </span>
-                                </div>
-                            </th>
-                            <th>Qty </th>
-                            <th>Cost Price($) </th>
-                            <th>Cost Calc</th>
-                            <th>Price($) </th>
-                            <th>Markup(%)</th>
-                            <th>VAT(%) </th>
-                            <th>Discount </th>
-                            <th>Amount </th>
-                            <th>Profit </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody class="add_sectionTitle">
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </td>                    
-    `;
+            </td>                    
+            `;
         // Get table body element 
         const tableBody = document.querySelector(".add_table_insrt");
         if (tableBody) {
@@ -4186,35 +4083,34 @@
         }
     }
 
-
     //**************Table inner Table insrtSectionTtle
     function insrtSectionTtle() {
         const node = document.createElement("tr");
         node.classList.add("add_sectionTitle");
         node.innerHTML = `
-                  <td>
-            <div class="CSPlus">
-                <span class="plusandText">
-                    <a href="#!" onclick="insrtSectionTtle()" class="formicon pt-0 me-2">
-                        <i class="fa-solid fa-square-plus"></i>
-                    </a>
-                    <label>Title*:</label>
-                    <input type="text" class="form-control editInput ms-3" placeholder="Type to add product">
-                </span>
-            </div>
-        </td>
-        <td colspan="12">
-            <input type="text" class="form-control editInput" placeholder="Type to add product">
-        </td>
-        <td>
-            <div class="statuswating">
-                <span class="oNOfswich">
-                    <input type="checkbox">
-                </span>
-                <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-            </div>
-        </td>   
-    `;
+                        <td>
+                    <div class="CSPlus">
+                        <span class="plusandText">
+                            <a href="#!" onclick="insrtSectionTtle()" class="formicon pt-0 me-2">
+                                <i class="fa-solid fa-square-plus"></i>
+                            </a>
+                            <label>Title*:</label>
+                            <input type="text" class="form-control editInput ms-3" placeholder="Type to add product">
+                        </span>
+                    </div>
+                </td>
+                <td colspan="12">
+                    <input type="text" class="form-control editInput" placeholder="Type to add product">
+                </td>
+                <td>
+                    <div class="statuswating">
+                        <span class="oNOfswich">
+                            <input type="checkbox">
+                        </span>
+                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                    </div>
+                </td>   
+            `;
         // Get table body element
         const tableBody = document.querySelector(".add_sectionTitle");
         if (tableBody) {
