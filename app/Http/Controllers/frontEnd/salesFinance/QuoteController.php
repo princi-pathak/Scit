@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Models\QuoteType;
+use App\Models\QuoteType; 
+use App\Models\Quote; 
 use App\Models\QuoteSource;
 use App\Models\QuoteRejectType;
 use App\Models\Customer_type;
@@ -14,6 +15,7 @@ use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Product_category;
+use Illuminate\Database\QueryException;
 
 class QuoteController extends Controller
 {
@@ -164,7 +166,6 @@ class QuoteController extends Controller
     }
 
     public function saveRegion(Request $request){
-        // dd($request);
         $validator = Validator::make($request->all(), [
             'title' => 'required'
         ]);
@@ -199,12 +200,40 @@ class QuoteController extends Controller
     } 
 
     public function getQuoteTypes(){
-        $data = QuoteType::getActiveQuoteType();
+        $data = QuoteType::getActiveQuoteType(Auth::user()->home_id);
 
         return response()->json([
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data.'
         ]);
+
+    }
+
+    public function saveQuoteData(Request $request){
+
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'customer_id' => 'required',
+                'quote_date' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+    
+            $quote = Quote::saveQuoteData(array_merge(['home_id', Auth::user()->home_id], $request->all()));
+
+    
+            // return response()->json(['message' => 'Appointment created successfully'], 201);
+    
+        } catch (QueryException $e) {
+            // Handle database error
+            return response()->json(['error' => 'Database error: ' . $e->getMessage()], 500);
+        } catch (\Exception $e) {
+            // Handle general errors
+            return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
 
     }
 }

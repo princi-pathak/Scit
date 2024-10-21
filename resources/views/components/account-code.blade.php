@@ -10,21 +10,21 @@
                 <div class="modal-body">
                     <form id="{{ $formId }}">
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Name <span class="red_sorryText">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="text" name="name" class="form-control editInput" id="{{ $inputId }}" value="" placeholder="Job Title">
+                            <label for="inputJobRef" class="col-sm-4 col-form-label">Name <span class="red_sorryText">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="hidden" name="job_title_id" id="">
+                                <input type="text" name="name" class="form-control editInput" id="{{ $inputId }}" >
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Departmental Code </label>
-                            <div class="col-sm-9">
-                                <input type="hidden" name="job_title_id" id="job_title_id">
-                                <input type="text" name="name" class="form-control editInput" id="{{ $inputId }}" value="" placeholder="Job Title">
+                            <label for="inputJobRef" class="col-sm-4 col-form-label">Departmental Code </label>
+                            <div class="col-sm-8">
+                                <input type="text" name="departmental_code" class="form-control editInput" id="{{ $inputId }}" >
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
-                            <div class="col-sm-9">
+                            <label for="inputJobRef" class="col-sm-4 col-form-label">Status</label>
+                            <div class="col-sm-8">
                                 <select id="{{ $statusId }}" name="status" class="form-control editInput">
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
