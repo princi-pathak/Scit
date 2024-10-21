@@ -13,15 +13,15 @@
         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
             <div class="jobsection">
                 <a href="#" class="profileDrop" onclick="itemsAddProductModal(1)">Add</a>
-                <a href="#" class="profileDrop">Active (5)</a>
-                <a href="#" class="profileDrop">Inactive (5)</a>
+                <a href="{{url('/item/products/active')}}" class="profileDrop">Active ({{count($product)}})</a>
+                <a href="{{url('/item/products/inactive')}}" class="profileDrop">Inactive ({{count($product_inactive)}})</a>
                 {{-- <a href="#" class="profileDrop" id="impExpClickbtnPopup">Import/Export</a> --}}
             </div>
         </div>
 
 
         <!--Start Import/Export Popup -->
-        <div id="importExportpopup" class="importExportMrgin">
+        {{-- <div id="importExportpopup" class="importExportMrgin">
             <div class="popup-content">
                 <div class="popupTitle">
                     <span class="">Import/Export - Produc</span>
@@ -113,7 +113,7 @@
 
                 
             </div>
-        </div>
+        </div> --}}
         <!-- End off Import/Export Popup -->
 
     </div>
@@ -134,8 +134,9 @@
                     <div class="row">
                         <div class="col-md-7">
                             <div class="jobsection d-flex">
-                                <a href="#" class="profileDrop">Delete</a>
-                                <div class="pageTitleBtn p-0">
+                                <input type="button" class="profileDrop" id="getCheckedValues" value="Delete">
+                                <span class="alert text-danger text-center deletemsg"></span>
+                                {{-- <div class="pageTitleBtn p-0">
                                     <div class="nav-item dropdown">
                                         <a href="#" class="nav-link dropdown-toggle profileDrop"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -149,14 +150,14 @@
                                                 product codes</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <div class="pageTitleBtn p-0">
+                            {{-- <div class="pageTitleBtn p-0">
                                 <a href="#" class="profileDrop"> <i class="material-symbols-outlined">
                                         settings </i></a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -187,43 +188,64 @@
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td>1</td>
-                            <td>Computer</td>
-                            <td>CO-0001</td>
-                            <td>Consumable</td>
-                            <td>consumable</td>
-                            <td>We are providing all type of computer service</td>
-                            <td>0</td>
-                            <td>£200.00 </td>
-                            <td>-20</td>
-                            <td> £160.00 </td>
-                            <td>5</td>
-                            <td>06/09/2024 05:59</td>
-                            <td>06/09/2024 05:59</td>
+                        @php
+                            $i = 1;
+                        @endphp
+                        @foreach ($product_list_array as $product_value)
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="checkproductcategory"
+                                    name="checkproductcategory{{ $i }}"
+                                    id="checkproductcategory{{ $i }}"
+                                    value="{{ $product_value['id'] }}"
+                                    ></td>
+                                <td>{{$i}}</td>
+                                <td>{{ $product_value['product_name'] }}</td>
+                                <td>{{ $product_value['product_code'] }}</td>
+                                <td>{{ $product_value['product_type_name'] }}</td>
+                                <td>{{ $product_value['cat_name'] }}</td>
+                                <td>{{ $product_value['description'] }}</td>
+                                <td>{{ $product_value['customer_name'] }}</td>
+                                <td>{{ $product_value['cost_price'] }} </td>
+                                <td>{{ $product_value['margin'] }}</td>
+                                <td>{{ $product_value['price'] }} </td>
+                                <td>{{ $product_value['tax_rate_value'] }}</td>
+                                <td>{{ $product_value['created_at'] }}</td>
+                                <td>{{ $product_value['updated_at'] }}</td>
 
-                            <td>
-                                <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
-                            </td>
-                            <td>
-                                <div class="pageTitleBtn p-0">
-                                    <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle profileDrop"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            Action </a>
-                                        <div class="dropdown-menu fade-up m-0">
-                                            <a href="#" class="dropdown-item col-form-label"
-                                                data-bs-toggle="modal" data-bs-target="#itemsAddProductModal">Edit
-                                                Details</a>
+                                <td>
+                                    @if ($product_value['status'] == 1)
+                                        <span class="grencheck"
+                                            onclick="changeproductstatus({{ $product_value['id'] }},0)"><i
+                                                class="fa-solid fa-circle-check"></i></span>
+                                    @else
+                                        <span class="graycheck"
+                                            onclick="changeproductstatus({{ $product_value['id'] }},1)"><i
+                                                class="fa-solid fa-circle-check"></i></span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="pageTitleBtn p-0">
+                                        <div class="nav-item dropdown">
+                                            <a href="#" class="nav-link dropdown-toggle profileDrop"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                Action </a>
+                                            <div class="dropdown-menu fade-up m-0">
+                                                <a href="#" class="dropdown-item col-form-label" onclick="itemsAddProductModal(3,{{ $product_value['id'] }})">Edit
+                                                    Details</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                            @php
+                                $i++;
+                            @endphp
+                        @endforeach
 
                     </tbody>
                 </table>
+
+                
 
 
                 <!-- *************First addProduct model********************* -->
@@ -976,27 +998,85 @@
 
     });
 </script> --}}
+
+
 <script>
-    function additemsCatagoryModal(th){
-        //alert();
-        $('#category_name').val('');
-        $('#parentcategory').val('');
-        $('#product_category_status').val(1);
-        $('#productCategoryID').val('');
-        $('#productCategorytype').val(th);
-        $('#itemsCatagoryModal').modal('show');
+    function changeproductstatus(id, status) {
+        var token = "<?= csrf_token() ?>";
+        if (confirm("Are you sure want to change the status?")) {
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('item.changeProductStatus') }}',
+                data: {
+                    id: id,
+                    status: status,
+                    _token: token
+                },
+                success: function(data) {
+                    location.reload();
+                }
+
+            });
+        }
     }
 </script>
 <script>
-    function itemsAddProductModal(th){
-        $("#productform")[0].reset();
-        $(".needs-validationp").removeClass('was-validated');
-        $('#producttype').val(th);
-        //$('#taxratepopup').css('display','block');
-        $('#itemsAddProductModal').modal('show');
-    }
+    document.getElementById('getCheckedValues').addEventListener('click', function() {
+        const checkedValues = Array.from(document.querySelectorAll('.checkproductcategory:checked'))
+            .map(checkbox => checkbox.value);
+        //alert("Checked values: " + checkedValues.join(", "));
+        var id = checkedValues.join(", ");
+        var token = "<?= csrf_token() ?>";
+        if(id==""){
+            $('.deletemsg').text("Please select product");
+            return false;
+        }else{
+            if (confirm("Are you sure want to delete this?")) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('item.deleteProduct') }}',
+                    data: {
+                        id: id,
+                        _token: token
+                    },
+                    success: function(data) {
+                        console.log(data);
+
+                        location.reload();
+                    }
+
+                });
+            }
+        }
+    });
+</script>
+<script>
+    const checkAll = document.getElementById('selectAll');
+    const checkboxes = document.querySelectorAll('.checkproductcategory');
+
+    checkAll.addEventListener('change', function() {
+        $('.deletemsg').text("");
+        checkboxes.forEach(checkbox => {
+            if (!checkbox.disabled) { // Only set checked state for enabled checkboxes
+                checkbox.checked = this.checked;
+            }
+        });
+    });
+
+    checkboxes.forEach(checkbox => {       
+        checkbox.addEventListener('change', function() {
+            $('.deletemsg').text("");
+            if (!this.checked) {
+                checkAll.checked = false; // Uncheck "Check All" if any checkbox is unchecked
+            } else {
+                // If all enabled checkboxes are checked, check the "Check All" checkbox
+                const allChecked = Array.from(checkboxes).every(cb => cb.checked || cb.disabled);
+                checkAll.checked = allChecked;
+            }
+        });
+    });
 </script>
 
 @include('frontEnd.salesAndFinance.item.common.addproductmodal')
-@include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
+
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

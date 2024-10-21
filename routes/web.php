@@ -304,9 +304,16 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(ExpenseController::class)->group(function(){
 		Route::get('/expenses','expenses');
 		Route::post('/find_project','find_project');
+		Route::post('/find_job','find_job');
 		Route::post('/find_appointment','find_appointment');
 		Route::post('/expense_save','expense_save');
 		Route::post('/expense_image_delete','expense_image_delete');
+		Route::get('/reject_expense','reject_expense');
+	});
+
+	Route::controller(CustomerController::class)->group(function(){
+		Route::post('save_crm_customer_call','save_crm_customer_call');
+		Route::post('get_all_crm_customer_call','get_all_crm_customer_call');
 	});
 
 	// General section Front 
@@ -319,15 +326,22 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/task_types', 'task_types');
 		Route::post('/save_task_type', 'save_task_type');
 		Route::get('/tags', 'tags');
-		Route::post('/save_tag', 'save_tag');
+		Route::post('/save_tag', 'save_tag')->name('General.ajax.saveQuoteTag');
+		Route::get('/getTags', 'getTags')->name('General.ajax.getTags');
+
+		
 	});
 
 	// Invoice Section 
 	Route::controller(InvoiceController::class)->group(function () {
 		Route::get('/account_codes', 'account_codes');
-		Route::post('/save_account_code', 'save_account_code');
+		Route::post('/save_account_code', 'save_account_code')->name('invoice.ajax.saveAccountCode');
 		Route::get('/tax_rate', 'tax_rate');
 		Route::post('/save_tax_rate', 'save_tax_rate');
+		Route::get('/getAccountCode', 'getAccountCode')->name('Invoice.ajax.getAccountCode');
+
+		
+
 	});
 
 	
@@ -477,6 +491,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
 
+		Route::post('/quote/saveQuoteData', 'saveQuoteData');
+
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {
@@ -493,12 +509,17 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 	Route::controller(ProductController::class)->group(function(){
 		Route::get('/item/products','productlist')->name('item.products');
+		Route::get('/item/products/active','productlist')->name('item.products.active');
+		Route::get('/item/products/inactive','productlist')->name('item.products.inactive');
 		Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
 		Route::post('/item/generateproductcode','generateproductcode')->name('item.generateproductcode');
 		Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
 		Route::post('/item/taxratelist','taxratelist')->name('item.taxratelist');
 		Route::post('/item/account_code','account_code')->name('item.account_code');
 		Route::post('/item/saveproductdata','saveproductdata')->name('item.saveproductdata');
+		Route::post('/item/changeProductStatus','changeProductStatus')->name('item.changeProductStatus');
+		Route::post('/item/deleteProduct','deleteProduct')->name('item.deleteProduct');
+		Route::post('/item/getproductdata','getproductdata')->name('item.getproductdata');
 	});
 
 

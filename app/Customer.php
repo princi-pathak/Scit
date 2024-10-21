@@ -57,7 +57,7 @@ class Customer extends Model
     ];
 
     public static function getConvertedCustomersCount($home_id){
-        return Customer::where(['is_converted' => '1', 'status' => 1])->where('home_id', $home_id)->count();
+        return Customer::where(['is_converted' => '1', 'status' => 1,'deleted_at'=>null])->where('home_id', $home_id)->count();
     }
 
     public static function getConvertedCustomers($home_id){
@@ -73,14 +73,10 @@ class Customer extends Model
             $data['section_id'] = implode(',',$data['section_id']);
         }
         // echo "<pre>";print_r($data);die;
-        try {
             $insert=self::updateOrCreate(
                 ['id' => $data['id'] ?? null],
                 $data
             );
-        } catch (\Exception $e) {
-            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
-        }
         $data=['id'=>$insert->id,'name'=>$insert->name];
         return $data;
     }

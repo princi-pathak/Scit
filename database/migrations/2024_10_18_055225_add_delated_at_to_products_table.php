@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->string('telephone_country_code')->nullable()->after('email'); 
-            $table->string('mobile_country_code')->nullable()->after('telephone'); 
+        Schema::table('products', function (Blueprint $table) {
+            $table->softDeletes()->after('status');
+            $table->boolean('status')->default('1')->comment("0 for In-Active, 1 for Active")->change();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('customers', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             //
         });
     }

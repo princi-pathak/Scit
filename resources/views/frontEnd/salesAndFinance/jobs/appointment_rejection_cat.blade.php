@@ -226,15 +226,14 @@
                         url: "{{url('/appointment_rejection_cat_save')}}",
                         data: {id:id,home_id:home_id,appointment_status:appointment_status,category:category,status:status,_token:token},
                         success: function(data) {
-                            console.log(data);
-                            if($.trim(data) == "done"){
+                            // console.log(data.success);
+                            if(data.success){
                                 $("#message").text(message);
                                 $(".success_message").show();
                                 setTimeout(function() {
                                     $(".alert").hide();
                                     window.location.reload();
                                 }, 3000);
-                                // $("#form_data")[0].reset();
                             } else {
                                 alert("Something went Wrong");
                             }

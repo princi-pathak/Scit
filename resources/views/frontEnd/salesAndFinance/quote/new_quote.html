@@ -1613,11 +1613,16 @@
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 + Insert </a>
                                             <div class="dropdown-menu fade-up m-0" style="">
-                                                <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Product</a>
-                                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtTitle()">insert Title</a>
-                                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtImgappend()">insert Image</a>
-                                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtDescription()">insert Description</a>
-                                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">insert Section</a>
+                                                <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal"
+                                                    data-bs-target="#productModalBAC">insert Product</a>
+                                                <a href="#!" class="dropdown-item col-form-label"
+                                                    onclick="insrtTitle()">insert Title</a>
+                                                <a href="#!" class="dropdown-item col-form-label"
+                                                    onclick="insrtImgappend()">insert Image</a>
+                                                <a href="#!" class="dropdown-item col-form-label"
+                                                    onclick="insrtDescription()">insert Description</a>
+                                                <a href="#!" class="dropdown-item col-form-label"
+                                                    onclick="insrtSection()">insert Section</a>
                                             </div>
                                         </div>
                                     </div>
@@ -1625,7 +1630,7 @@
 
                                 <div class="col-sm-12">
                                     <div class="productDetailTable">
-                                        <table class="table" id="containerA">
+                                        <table class="table mb-0" id="containerA">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Code </th>
@@ -1763,7 +1768,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                     
+
                                             </tbody>
                                         </table>
 
@@ -3021,13 +3026,20 @@
                                                     <td colspan="2">
                                                         <div class="pageTitleBtn p-0">
                                                             <div class="nav-item dropdown">
-                                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <a href="#" class="nav-link dropdown-toggle profileDrop"
+                                                                    data-bs-toggle="dropdown" aria-expanded="false">
                                                                     + Insert </a>
                                                                 <div class="dropdown-menu fade-up m-0">
-                                                                    <a href="#" class="dropdown-item col-form-label">Edid Details</a>
-                                                                    <a href="#" class="dropdown-item col-form-label">Send SMS</a>
-                                                                    <a href="#" class="dropdown-item col-form-label">CRM / History</a>
-                                                                    <a href="#" class="dropdown-item col-form-label">Reject</a>
+                                                                    <a href="#"
+                                                                        class="dropdown-item col-form-label">Edid
+                                                                        Details</a>
+                                                                    <a href="#"
+                                                                        class="dropdown-item col-form-label">Send
+                                                                        SMS</a>
+                                                                    <a href="#" class="dropdown-item col-form-label">CRM
+                                                                        / History</a>
+                                                                    <a href="#"
+                                                                        class="dropdown-item col-form-label">Reject</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -3169,14 +3181,11 @@
                                         <div class="descriptionTitle">
                                             <h4 class="contTitle text-start">Description </h4>
                                             <div class="plusandText">
-                                                <span class="afterPlusText"> (Type to view product to view all
-                                                    assets)</span>
+                                                <span class="afterPlusText"> (Type to view product to view all assets)</span>
                                             </div>
                                         </div>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea8">
-                                                Arjun Kumar UI/UX Designer and Developer
-                                              </textarea>
+                                            <textarea cols="40" rows="5" id="textarea8">Arjun Kumar UI/UX Designer and Developer</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -3184,15 +3193,12 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Customer Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea9">
-                                                Arjun Kumar UI/UX Designer and Developer
-                                              </textarea>
+                                            <textarea cols="40" rows="5" id="textarea9">Arjun Kumar UI/UX Designer and Developer</textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div><!-- End  off newJobForm -->
-
                     </div> <!-- End col-12 -->
                 </div>
                 <div class="row">
@@ -3204,7 +3210,6 @@
                         </div>
                     </div>
                 </div>
-                <!--  -->
             </div>
         </section>
 
@@ -3343,57 +3348,59 @@
     </script>
 
     <script>
-    function insrtTitle() {
-    const node = document.createElement("tr");
-    node.classList.add("add_table_insrt");
-    node.innerHTML = `
-        <td>
-            <div class="CSPlus">
-                <span class="plusandText">
-                    <a href="#!" class="formicon pt-0 me-2">
-                        <i class="fa-solid fa-square-plus"></i>
-                    </a>
-                    <label>Title*:</label>
-                    <input type="text" class="form-control editInput ms-3" placeholder="Type to add product">
-                </span>
-            </div>
-        </td>
-        <td colspan="12">
-            <input type="text" class="form-control editInput" placeholder="Type to add product">
-        </td>
-        <td>
-            <div class="statuswating">
-                <span class="oNOfswich">
-                    <input type="checkbox">
-                </span>
-                <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-            </div>
-        </td>
-    `;
-    const tableBody = document.querySelector(".add_table_insrt");
-    if (tableBody) {
-        tableBody.appendChild(node);
+        //**************insrtTitle
+        function insrtTitle() {
+            const node = document.createElement("tr");
+            node.classList.add("add_table_insrt");
+                    node.innerHTML = `
+                <td>
+                    <div class="CSPlus">
+                        <span class="plusandText">
+                            <a href="#!" onclick="insrtTitle()" class="formicon pt-0 me-2">
+                                <i class="fa-solid fa-square-plus"></i>
+                            </a>
+                            <label>Title*:</label>
+                            <input type="text" class="form-control editInput ms-3" placeholder="Type to add product">
+                        </span>
+                    </div>
+                </td>
+                <td colspan="12">
+                    <input type="text" class="form-control editInput" placeholder="Type to add product">
+                </td>
+                <td>
+                    <div class="statuswating">
+                        <span class="oNOfswich">
+                            <input type="checkbox">
+                        </span>
+                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                    </div>
+                </td>
+            `;
+            const tableBody = document.querySelector(".add_table_insrt");
+            if (tableBody) {
+                tableBody.appendChild(node);
 
-        // Add event listener to the close button
-        const closeButton = node.querySelector('.closeappend');
-        closeButton.addEventListener('click', function() {
-            node.remove(); // Remove the row when close button is clicked
-        });
-    } else {
-        console.error("Table body with ID 'add_table_insrt' not found.");
-    }
-}
+                // Add event listener to the close button
+                const closeButton = node.querySelector('.closeappend');
+                closeButton.addEventListener('click', function () {
+                    node.remove(); // Remove the row when close button is clicked
+                });
+            } else {
+                console.error("Table body with ID 'add_table_insrt' not found.");
+            }
+        }
 
-function insrtImgappend() {
-    const node = document.createElement("tr");
-    node.classList.add("add_table_insrt"); // Adding the class to the row
+        //**************insrtImgappend
+        function insrtImgappend() {
+            const node = document.createElement("tr");
+            node.classList.add("add_table_insrt"); // Adding the class to the row
 
-    node.innerHTML = `
+            node.innerHTML = `
         <td colspan="13">
             <div class="d-flex">
                 <div class="CSPlus">
                     <span class="plusandText pt-1">
-                        <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                        <a href="#!" onclick="insrtImgappend()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
                         <label></label>
                     </span>
                 </div>
@@ -3412,34 +3419,32 @@ function insrtImgappend() {
         </td>            
     `;
 
-    // Select the table body using a class instead of an ID
-    const tableBody = document.querySelector(".add_table_insrt");
-    
-    if (tableBody) {
-        tableBody.appendChild(node);
+            // Select the table body using a class instead of an ID
+            const tableBody = document.querySelector(".add_table_insrt");
 
-        // Add event listener to the close button
-        const closeButton = node.querySelector('.closeappend');
-        closeButton.addEventListener('click', function() {
-            node.remove(); // Remove the row when the close button is clicked
-        });
-    } else {
-        console.error("Table body with class 'add_table_insrt' not found.");
-    }
-}
+            if (tableBody) {
+                tableBody.appendChild(node);
 
+                // Add event listener to the close button
+                const closeButton = node.querySelector('.closeappend');
+                closeButton.addEventListener('click', function () {
+                    node.remove(); // Remove the row when the close button is clicked
+                });
+            } else {
+                console.error("Table body with class 'add_table_insrt' not found.");
+            }
+        }
 
-//**************insrtDescription
-function insrtDescription() {
-    const node = document.createElement("tr");
-    node.classList.add("add_table_insrt");
-    node.innerHTML = `
+        //**************insrtDescription
+        function insrtDescription() {
+            const node = document.createElement("tr");
+            node.classList.add("add_table_insrt");
+            node.innerHTML = `
         <td colspan="13">
             <div class="d-flex">
                 <div class="CSPlus">
                     <span class="plusandText pt-1">
-                        <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                        
+                        <a href="#!" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
                     </span>
                 </div>
                 <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
@@ -3456,32 +3461,32 @@ function insrtDescription() {
     `;
 
 
-    // Get table body element
-    const tableBody = document.querySelector(".add_table_insrt");
-    if (tableBody) {
-        tableBody.appendChild(node);
+            // Get table body element
+            const tableBody = document.querySelector(".add_table_insrt");
+            if (tableBody) {
+                tableBody.appendChild(node);
 
-        // Add event listener to the close button
-        const closeButton = node.querySelector('.closeappend');
-        closeButton.addEventListener('click', function() {
-            node.remove(); // Remove the row when close button is clicked
-        });
-    } else {
-        console.error("Table body with ID 'add_table_insrt' not found.");
-    }
-}
+                // Add event listener to the close button
+                const closeButton = node.querySelector('.closeappend');
+                closeButton.addEventListener('click', function () {
+                    node.remove(); // Remove the row when close button is clicked
+                });
+            } else {
+                console.error("Table body with ID 'add_table_insrt' not found.");
+            }
+        }
 
-//**************insrt Section Title
-function insrtSection() {
-    const node = document.createElement("tr");
-    node.classList.add("add_table_insrt");
-    node.innerHTML = `
+        //**************insrt Section Title
+        function insrtSection() {
+            const node = document.createElement("tr");
+            node.classList.add("add_table_insrt");
+            node.innerHTML = `
     <td colspan="14" class="p-0">
-        <div class="sectionTitle">
+        <div class="newJobForm">
             <div class="d-flex">
             <div class="CSPlus">
                 <span class="plusandText pt-1">
-                    <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                    <a href="#!" onclick="insrtSection()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
                     <label class="secTitle">Section Title* :</label>
                 </span>
             </div>
@@ -3494,8 +3499,8 @@ function insrtSection() {
                     <div class="dropdown-menu fade-up m-0">
                         <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Section Product</a>
                         <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionTtle()">insert Section Title</a>
-                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtImgappend()">insert Section Image</a>
-                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtDescription()">insert Section Description</a>
+                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionImg()">insert Section Image</a>
+                        <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionDescription()">insert Section Description</a>
                     </div>
                 </div>
             </div>
@@ -3536,7 +3541,7 @@ function insrtSection() {
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody class="add_table_insrt add_sectionTitle">
+                    <tbody class="add_sectionTitle">
                         
                     </tbody>
                 </table>
@@ -3544,32 +3549,30 @@ function insrtSection() {
         </div>
     </td>                    
     `;
-    // Get table body element 
-    const tableBody = document.querySelector(".add_table_insrt");
-    if (tableBody) {
-        tableBody.appendChild(node);
-        // Add event listener to the close button
-        const closeButton = node.querySelector('.closeappend');
-        closeButton.addEventListener('click', function() {
-            node.remove(); // Remove the row when close button is clicked
-        });
-    } else {
-        console.error("Table body with ID 'add_table_insrt' not found.");
-    }
-}
+            // Get table body element 
+            const tableBody = document.querySelector(".add_table_insrt");
+            if (tableBody) {
+                tableBody.appendChild(node);
+                // Add event listener to the close button
+                const closeButton = node.querySelector('.closeappend');
+                closeButton.addEventListener('click', function () {
+                    node.remove(); // Remove the row when close button is clicked
+                });
+            } else {
+                console.error("Table body with ID 'add_table_insrt' not found.");
+            }
+        }
 
 
-
-
-//**************insrt Section Title
-function insrtSectionTtle() {
-    const node = document.createElement("tr");
-    node.classList.add("add_sectionTitle");
-    node.innerHTML = `
+        //**************Table inner Table insrtSectionTtle
+        function insrtSectionTtle() {
+            const node = document.createElement("tr");
+            node.classList.add("add_sectionTitle");
+            node.innerHTML = `
                   <td>
             <div class="CSPlus">
                 <span class="plusandText">
-                    <a href="#!" class="formicon pt-0 me-2">
+                    <a href="#!" onclick="insrtSectionTtle()" class="formicon pt-0 me-2">
                         <i class="fa-solid fa-square-plus"></i>
                     </a>
                     <label>Title*:</label>
@@ -3589,19 +3592,100 @@ function insrtSectionTtle() {
             </div>
         </td>   
     `;
-    // Get table body element
-    const tableBody = document.querySelector(".add_sectionTitle");
-    if (tableBody) {
-        tableBody.appendChild(node);
-        // Add event listener to the close button
-        const closeButton = node.querySelector('.closeappend');
-        closeButton.addEventListener('click', function() {
-            node.remove(); // Remove the row when close button is clicked
-        });
-    } else {
-        console.error("Table body with ID 'add_sectionTitle' not found.");
-    }
-}
+            // Get table body element
+            const tableBody = document.querySelector(".add_sectionTitle");
+            if (tableBody) {
+                tableBody.appendChild(node);
+                // Add event listener to the close button
+                const closeButton = node.querySelector('.closeappend');
+                closeButton.addEventListener('click', function () {
+                    node.remove(); // Remove the row when close button is clicked
+                });
+            } else {
+                console.error("Table body with ID 'add_sectionTitle' not found.");
+            }
+        }
+
+        //**************Table inner Table insrtSectionImg
+        function insrtSectionImg() {
+            const node = document.createElement("tr");
+            node.classList.add("add_sectionTitle");
+            node.innerHTML = `
+                    <td colspan="13">
+                        <div class="d-flex">
+                            <div class="CSPlus">
+                                <span class="plusandText pt-1">
+                                    <a href="#!" onclick="insrtSectionImg()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                                    <label></label>
+                                </span>
+                            </div>
+                            <div class="addimg">
+                                <img class="insrtImg" src="assets/imagrs/imgad1.png">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="statuswating">
+                            <span class="oNOfswich">
+                                <input type="checkbox">
+                            </span>
+                            <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                        </div>
+                    </td>  
+                    `;
+            // Get table body element
+            const tableBody = document.querySelector(".add_sectionTitle");
+            if (tableBody) {
+                tableBody.appendChild(node);
+                // Add event listener to the close button
+                const closeButton = node.querySelector('.closeappend');
+                closeButton.addEventListener('click', function () {
+                    node.remove(); // Remove the row when close button is clicked
+                });
+            } else {
+                console.error("Table body with ID 'add_sectionTitle' not found.");
+            }
+        }
+    
+        //**************Table inner Table insrtSectionDescription
+        function insrtSectionDescription() {
+            const node = document.createElement("tr");
+            node.classList.add("add_sectionTitle");
+            node.innerHTML = `
+                     <td colspan="13">
+                            <div class="d-flex">
+                                <div class="CSPlus">
+                                    <span class="plusandText pt-1">
+                                        <a href="#!" onclick="insrtSectionDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="statuswating">
+                                <span class="oNOfswich">
+                                    <input type="checkbox">
+                                </span>
+                                <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                            </div>
+                        </td>   
+                    `;
+            // Get table body element
+            const tableBody = document.querySelector(".add_sectionTitle");
+            if (tableBody) {
+                tableBody.appendChild(node);
+                // Add event listener to the close button
+                const closeButton = node.querySelector('.closeappend');
+                closeButton.addEventListener('click', function () {
+                    node.remove(); // Remove the row when close button is clicked
+                });
+            } else {
+                console.error("Table body with ID 'add_sectionTitle' not found.");
+            }
+        }
+
     </script>
 </body>
+
 </html>

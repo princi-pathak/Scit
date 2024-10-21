@@ -51,7 +51,7 @@ padding: 5px 0px 15px 0px;
                             <form class="form-horizontal" id="form_data">
                             <label>Customer Type Details</label>                           
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Customer Type<span class="red-text">*</span></label>
+                                <label class="col-lg-3 control-label">Customer Type<span class="radStar ">*</span></label>
                                 <div class="col-lg-9">
                                     <input type="text" id="type" name="type" class="form-control" placeholder="Customer Type" value="<?php if(isset($type)){echo $type->title;}?>">
                                     <p style="color:red;display:none" id="typeError">* Customer Type is Required Field *</p>
