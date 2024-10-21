@@ -17,12 +17,13 @@ class AccountCode extends Component
     public $inputId;
     public $statusId;
     public $saveButtonId;
-    public function __construct(         string $modalId = 'defaultModalId',
-    string $modalTitle = 'Job Title - Add',
-    string $formId = 'defaultFormId',
-    string $inputId = 'defaultInputId',
-    string $statusId = 'defaultStatusId',
-    string $saveButtonId = 'defaultSaveButtonId')
+    public function __construct(         
+        string $modalId = 'defaultModalId',
+        string $modalTitle = 'Job Title - Add',
+        string $formId = 'defaultFormId',
+        string $inputId = 'defaultInputId',
+        string $statusId = 'defaultStatusId',
+        string $saveButtonId = 'defaultSaveButtonId' )
     {
         $this->modalId = $modalId;
         $this->modalTitle = $modalTitle;
