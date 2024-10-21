@@ -217,4 +217,88 @@ class ProductController extends Controller
         ]);
     }
 
+    function getproductdata(Request $request){
+        $product_id = $request->product_id;
+        $product_val = Product::where('id',$product_id)->first();
+        $arr['id'] = $product_val->id;
+        $arr['customer_only'] = $product_val->customer_only;
+        if($product_val->customer_only!=""){
+            $arr['customer_name'] = Customer::where('id',$product_val->customer_only)->value('name');
+        }else{
+            $arr['customer_name'] = "";
+        }            
+        $arr['cat_id'] = $product_val->cat_id;
+        if($product_val->cat_id!=""){
+            $arr['cat_name'] = Product_category::where('id',$product_val->cat_id)->value('name');
+        }else{
+            $arr['cat_name'] = "";
+        }
+        $arr['product_type'] = $product_val->product_type;
+        switch ($product_val->product_type) {
+            case "1":
+                $pro_type_name = "Product";
+                break;
+            case "2":
+                $pro_type_name = "Services";
+                break;
+            case "3":
+                $pro_type_name = "Consumable";
+                break;
+            default:
+                $pro_type_name = "";
+            }
+        $arr['product_type_name'] = $pro_type_name;
+        $arr['product_name'] = $product_val->product_name;
+        $arr['cost_price'] = $product_val->cost_price;
+        $arr['margin'] = $product_val->margin;
+        $arr['price'] = $product_val->price;
+        $arr['tax_rate'] = $product_val->tax_rate;
+        if($product_val->tax_rate!=""){
+            $arr['tax_rate_value'] = Construction_tax_rate::where('id', $product_val->tax_rate)->value('tax_rate');
+            $arr['tax_rate_name'] = Construction_tax_rate::where('id', $product_val->tax_rate)->value('name');
+        }else{
+            $arr['tax_rate_value'] = "";
+            $arr['tax_rate_name'] = "";
+        }
+        $arr['qty'] = $product_val->qty;
+        $arr['description'] = $product_val->description;
+        $arr['product_code'] = $product_val->product_code;
+        $arr['show_temp'] = $product_val->show_temp;
+        $arr['bar_code'] = $product_val->bar_code;
+
+        $arr['tax_id'] = $product_val->tax_id;
+        if($product_val->tax_id!=""){
+            $arr['ptax_rate_value'] = Construction_tax_rate::where('id', $product_val->tax_id)->value('tax_rate');
+            $arr['ptax_rate_name'] = Construction_tax_rate::where('id', $product_val->tax_id)->value('name');
+        }else{
+            $arr['ptax_rate_value'] = "";
+            $arr['ptax_rate_name'] = "";
+        }
+        $arr['nominal_code'] = $product_val->nominal_code;
+        $arr['sales_acc_code'] = $product_val->sales_acc_code;
+        if($product_val->sales_acc_code!=""){
+            $arr['sales_acc_name'] = Construction_account_code::where('id',$product_val->sales_acc_code)->value('name');
+        }else{
+            $arr['sales_acc_name'] = "";
+        }
+        $arr['purchase_acc_code'] = $product_val->purchase_acc_code;
+        if($product_val->purchase_acc_code!=""){
+            $arr['purchase_acc_name'] = Construction_account_code::where('id',$product_val->purchase_acc_code)->value('name');
+        }else{
+            $arr['purchase_acc_name'] = "";
+        }
+        $arr['expense_acc_code'] = $product_val->expense_acc_code;
+        if($product_val->purchase_acc_code!=""){
+            $arr['expense_acc_name'] = Construction_account_code::where('id',$product_val->expense_acc_code)->value('name');
+        }else{
+            $arr['expense_acc_name'] = "";
+        }
+        $arr['location'] = $product_val->location;
+        $arr['attachment'] = $product_val->attachment;
+        $arr['status'] = $product_val->status;
+        $arr['created_at'] = $product_val->created_at;
+        $arr['updated_at'] = $product_val->updated_at;
+        return response()->json($arr);
+    }
+
 }

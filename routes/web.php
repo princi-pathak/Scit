@@ -507,6 +507,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/item/saveproductdata','saveproductdata')->name('item.saveproductdata');
 		Route::post('/item/changeProductStatus','changeProductStatus')->name('item.changeProductStatus');
 		Route::post('/item/deleteProduct','deleteProduct')->name('item.deleteProduct');
+		Route::post('/item/getproductdata','getproductdata')->name('item.getproductdata');
 	});
 
 

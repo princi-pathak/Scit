@@ -12,13 +12,46 @@
     }
     .producthidemessage{display:none}
     .producthidemessagedanger{display:none}  
+   .Img_Title{
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+   }
+    .uploadImgSec{
+        padding: 0;
+        list-style: none;
+    }
+    .uploadImgSec li{
+        width: 112px;
+        border: 1px solid #ddd;
+        display: inline-block;
+        margin-bottom: 4px;
+        position: relative;
+    }
+    .uploadImgSec li img {
+        width: 100%;
+    }
+    .imgclose{
+        position: absolute;
+        top: -13px;
+        right: 0;
+        color: #f00;
+        font-size: 27px;
+        text-decoration: none;
+    }
+    .productimages{
+        display: none;
+    }
+    .productuploadedit{
+        display: none;
+    }
 </style>
 <div class="modal fade" id="itemsAddProductModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
     aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title" id="customerModalLabel">Add Product</h5>
+                <h5 class="modal-title" id="customerModalLabel">Product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -121,7 +154,7 @@
                             <div class="mb-2 row">
                                 <label for="inputCounty" class="col-sm-4 col-form-label">Description</label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control textareaInput" name="address" id="description" name="description" rows="3"
+                                    <textarea class="form-control textareaInput"  id="description" name="description" rows="3"
                                         placeholder="Description"></textarea>
                                 </div>
                             </div>
@@ -132,7 +165,7 @@
                                 </label>
                                 <div class="col-sm-8">
                                     <span class="oNOfswich">
-                                        <input type="checkbox" name="show_temp" value="1" checked>
+                                        <input type="checkbox" name="show_temp" id="show_temp" value="1" checked>
                                     </span>
                                 </div>
                             </div>
@@ -252,6 +285,34 @@
                                     <label for="attachment" class="col-sm-4 col-form-label">Attachment</label>
                                     <div class="col-sm-8">
                                         <input type="file" class="form-control editInput" id="attachment" name="attachment">
+                                        <input type="button" class="profileDrop productuploadedit" onclick="uploadproductimage()" value="Upload Image">
+                                    </div>
+                                    
+                                </div>
+                                <div class="mb-2 row productimages">
+                                    
+                                    <div class="col-sm-12">
+                                        <label class="Img_Title">Images</label>
+                                        <ul class="uploadImgSec">
+                                             <li> 
+                                                <img src="{{url('public/product/1729249431.jpg')}}" alt="uploadImg"> 
+                                                <a href="#!" class="imgclose">×</a>
+                                            </li>
+                                            <li> 
+                                                <img src="{{url('public/product/1729249431.jpg')}}" alt="uploadImg"> 
+                                                <a href="#!" class="imgclose">×</a>
+                                            </li>
+                                            <li> 
+                                                <img src="{{url('public/product/1729249431.jpg')}}" alt="uploadImg"> 
+                                                <a href="#!" class="imgclose">×</a>
+                                            </li>
+                                            <li> 
+                                                <img src="{{url('public/product/1729249431.jpg')}}" alt="uploadImg"> 
+                                                <a href="#!" class="imgclose">×</a>
+                                            </li>
+                                             
+
+                                        </ul>                                       
                                     </div>
                                     
                                 </div>
@@ -290,6 +351,7 @@
         </div>
     </div>
 </div>
+
 <script>
     (function () {
 'use strict';
@@ -570,6 +632,85 @@ Array.prototype.slice.call(forms)
                     dataLoadedeac = true;
                 }
 
+            }
+
+        });
+    }
+</script>
+<script>
+    function itemsAddProductModal(th,id=null){
+        if(th==1){
+            $('#attachment,#generateproductcode').css('display','block');
+            $('.productimages,.productuploadedit').css('display','none');
+            $("#productform")[0].reset();
+        }else if(th==3){
+            $('#attachment,#generateproductcode').css('display','none');
+            $('.productimages,.productuploadedit').css('display','block');
+            getproductdetailbyID(id);
+        }        
+        $(".needs-validationp").removeClass('was-validated');
+        $('#producttype').val(th);
+        $('#itemsAddProductModal').modal('show');
+    }
+
+    function getproductdetailbyID(id){
+        var token = "<?= csrf_token() ?>";
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('item.getproductdata') }}',
+            data: {
+                product_id:id,
+                _token: token
+            },
+            success: function(data) {
+                console.log(data.product_name);
+                $('#getCustomerList').html($('<option>', {
+                    value: data.customer_only, // Assuming the id field
+                    text: data.customer_name // Assuming the name field
+                }));
+                $('#productcategorylist').html($('<option>', {
+                    value: data.cat_id, // Assuming the id field
+                    text: data.cat_name // Assuming the name field
+                }));
+                $('#product_type').val(data.product_type);
+                // $('#product_type').html($('<option>', {
+                //     value: data.product_type, // Assuming the id field
+                //     text: data.product_type_name // Assuming the name field
+                // }));
+                $('#productname').val(data.product_name);
+                $('#product_code').val(data.product_code);
+                $('#cost_price').val(data.cost_price);
+                $('#margin').val(data.margin);
+                $('#price').val(data.price);
+                $('#description').val(data.description);
+                $('#show_temp').val(data.show_temp);
+                $('#bar_code').val(data.bar_code);
+                $('#nominal_code').val(data.nominal_code);
+                $('#location').val(data.location);
+
+                $('#salestax').html($('<option>', {
+                    value: data.tax_rate, // Assuming the id field
+                    text: data.tax_rate_name // Assuming the name field
+                }));
+                $('#purchasetax').html($('<option>', {
+                    value: data.tax_id, // Assuming the id field
+                    text: data.ptax_rate_name // Assuming the name field
+                }));
+                $('#salesaccountcode').html($('<option>', {
+                    value: data.sales_acc_code, // Assuming the id field
+                    text: data.sales_acc_name // Assuming the name field
+                }));
+                $('#purchaseaccountcode').html($('<option>', {
+                    value: data.purchase_acc_code, // Assuming the id field
+                    text: data.purchase_acc_name // Assuming the name field
+                }));
+                $('#Expenseaccountcode').html($('<option>', {
+                    value: data.expense_acc_code, // Assuming the id field
+                    text: data.expense_acc_name // Assuming the name field
+                }));
+                $('#status').val(data.status)
+                $('#productID').val(data.id)
+                
             }
 
         });
