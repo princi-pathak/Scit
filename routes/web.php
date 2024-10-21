@@ -308,6 +308,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/find_appointment','find_appointment');
 		Route::post('/expense_save','expense_save');
 		Route::post('/expense_image_delete','expense_image_delete');
+		Route::get('/reject_expense','reject_expense');
+	});
+
+	Route::controller(CustomerController::class)->group(function(){
+		Route::post('save_crm_customer_call','save_crm_customer_call');
+		Route::post('get_all_crm_customer_call','get_all_crm_customer_call');
 	});
 
 	// General section Front 

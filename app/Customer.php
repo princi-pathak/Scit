@@ -57,7 +57,7 @@ class Customer extends Model
     ];
 
     public static function getConvertedCustomersCount($home_id){
-        return Customer::where(['is_converted' => '1', 'status' => 1])->where('home_id', $home_id)->count();
+        return Customer::where(['is_converted' => '1', 'status' => 1,'deleted_at'=>null])->where('home_id', $home_id)->count();
     }
 
     public static function getConvertedCustomers($home_id){

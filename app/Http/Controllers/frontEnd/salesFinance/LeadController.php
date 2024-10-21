@@ -568,6 +568,7 @@ class LeadController extends Controller
 
     public function saveCRMLeadData(Request $request)
     {
+        echo "<pre>";print_r($request->all());die;
         $validator = Validator::make($request->all(), [
             'lead_ref' => 'required',
             'crm_type_id' => 'required',

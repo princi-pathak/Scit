@@ -153,6 +153,11 @@
                         </div>
                     </div>
                 </div> -->
+                @if(session('message'))
+                <div class="alert alert-success text-center success_message mt-3 m-auto" style="height:50px; width:50%">
+                    <p>{{ session('message') }}</p>
+                </div>
+                @endif
                 <div class="markendDelete">
                             <div class="row">
                                 <div class="col-md-7">
@@ -227,7 +232,13 @@
                             <td><?php echo($val->authorised ==1)?"Yes":"No";?></td>
                             <td><?php echo($val->reject ==1)?"Yes":"No";?></td>
                             <td><?php echo($val->paid ==1)?"Yes":"No";?></td>
-                            <td><?php echo($val->attachments!='')?"<a href='#!' style='text-decoration:none'>View</a>":"";?></td>
+                            <td> 
+                                @if($val->attachments != '')
+                                <a href="{{ url('public/images/expense/' . $val->attachments) }}" target="_blank" style="text-decoration:none">
+                                    View
+                                </a>
+                                @endif
+                            </td>
                             <td>{{$val->created_at}}</td>
                             <td>
                                 <div class="pageTitleBtn p-0">
@@ -238,7 +249,7 @@
                                         <div class="dropdown-menu fade-up m-0">
                                             <a href="#" class="dropdown-item col-form-label fetch_data" data-bs-toggle="modal" data-bs-target="#customerPop" data-id="{{$val->id}}" data-title="{{$val->title}}" data-amount="{{$val->amount}}" data-vat="{{$val->vat}}" data-vat_amount="{{$val->vat_amount}}" data-gross_amount="{{$val->gross_amount}}" data-expense_date="{{$val->expense_date}}" data-user_id="{{$val->user_id}}" data-reference="{{$val->reference}}" data-customer_id="{{$val->customer_id}}" data-job="{{$val->job}}" data-project_id="{{$val->project_id}}" data-job_appointment_id="{{$val->job_appointment_id}}" data-authorised="{{$val->authorised}}" data-billable="{{$val->billable}}" data-paid="{{$val->paid}}" data-notes="{{$val->notes}}" data-attachments="{{$val->attachments}}">Edit</a>
                                             <hr class="dropdown-divider">
-                                            <a href="#" class="dropdown-item col-form-label">Reject</a>
+                                            <a onclick="return confirm('Are you sure to reject it?')" href="{{url('/reject_expense?key=')}}{{base64_encode($val->id)}}" class="dropdown-item col-form-label">Reject</a>
                                         </div>
                                     </div>
                                 </div>
@@ -803,7 +814,7 @@ $('.delete_checkbox').on('click', function() {
 <script>
    let job_input = document.getElementById('job');
 let autoComplete = document.getElementById('jobList');
-let hiddenJobInput = document.getElementById('selectedJobRef'); // Hidden input field
+let hiddenJobInput = document.getElementById('selectedJobRef'); 
 
 job_input.addEventListener('input', function() {
     let job_val = job_input.value;
@@ -816,7 +827,7 @@ job_input.addEventListener('input', function() {
             url: "{{url('/find_job')}}",
             data: { job_input: job_val, _token: token },
             success: function(data) {
-                $('#jobList').empty(); // Clear previous results
+                $('#jobList').empty(); 
 
                 if (data.job_appoint.length > 0) {
                     data.job_appoint.forEach((job) => {
@@ -826,14 +837,14 @@ job_input.addEventListener('input', function() {
                         item.dataset.value = job.job_ref;
                         item.innerHTML = `${job.job_ref} - ${job.site_address}`;
 
-                        // Add click event to set job reference
+                        
                         item.addEventListener('click', function(event) {
                             event.preventDefault();
-                            job_input.value = `${job.job_ref}`;   // Set site address in the input field
-                            hiddenJobInput.value = job.job_ref;  // Save job_ref in the hidden input field
+                            job_input.value = `${job.job_ref}`;   
+                            hiddenJobInput.value = job.job_ref;  
 
-                            console.log(hiddenJobInput.value);  // Log to confirm it's being set correctly
-                            $('#jobList').empty();              // Clear the autocomplete suggestions
+                            console.log(hiddenJobInput.value);  
+                            $('#jobList').empty();              
                             job_input.focus();
                             find_appointment(hiddenJobInput.value);
                         });
@@ -889,6 +900,13 @@ job_input.addEventListener('input', function() {
             });
         }
     }
+</script>
+<script>
+    $(document).ready(function(){
+        setTimeout(function() {
+            $('.alert').hide();
+        }, 3000);
+    })
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

@@ -10,11 +10,15 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use App\User;
 use App\Customer;
+use App\Models\Week;
 use App\Models\Region;
 use App\Models\Country;
 use App\Models\Job_title;
 use App\Models\Customer_type;
+use App\Models\CRMSectionType;
+use App\Models\Crm_customer_call;
 use App\Models\Construction_currency;
 use App\Models\Construction_tax_rate;
 use App\Models\Constructor_customer_site;
@@ -150,6 +154,9 @@ class CustomerController extends Controller
         $data['list_mode'] = $request->list_mode;
         $data['active_customer'] = Customer::getConvertedCustomersCount($home_id);
         $data['inactive_customer'] = Customer::where(['is_converted' => 1, 'status' => 0, 'home_id' => $home_id,'deleted_at'=>null])->count();
+        $data['users'] = User::getHomeUsers($home_id);
+        $data['rate']=Construction_tax_rate::getAllTax_rate($home_id,'Active');
+        $data['weeks'] = Week::getWeeklist();
         return view('frontEnd.salesAndFinance.jobs.active_customer', $data);
     }
     public function customer_type()
@@ -399,6 +406,74 @@ class CustomerController extends Controller
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data.'
         ]);
+    }
+    public function save_crm_customer_call(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'crm_type_id' => 'required',
+            'content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        if ($request->notify_radio == 1) {
+            $validator = Validator::make($request->all(), [
+                'notify_user' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['vali_error' => $validator->errors()->first()]);
+            }
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
+            $notification = $sms = $email = null;
+        }
+
+        if ($request->telephone) {
+            $phone = "+" . $request->country_code . "-" . $request->telephone;
+        } else {
+            $phone = $request->telephone;
+        }
+        $values = [
+            'home_id' => Auth::user()->home_id,
+            'customer_id' => $request->call_customer_id,
+            'direction' => $request->direction,
+            'telephone' => $phone,
+            'crm_type_id' => $request->crm_type_id,
+            'notes' => $request->content,
+            'notify' => $request->notify_radio,
+            'user_id' => $request->notify_user,
+            'notification' => $notification,
+            'sms' => $sms,
+            'email' => $email,
+            'customer_visibility' => $request->customer_visible
+        ];
+        try{
+            $customer_call= Crm_customer_call::save_customer_call($values);
+            $type=CRMSectionType::find($customer_call->crm_type_id);
+            $data=['type'=>$type->title,$customer_call];
+            return response()->json(['success' =>true,'data'=>$data]);
+        }catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+    public function get_all_crm_customer_call(Request $request){
+        $getAllcrmlist=Crm_customer_call::getAllcrmlist($request->id);
+        $data=array();
+        foreach($getAllcrmlist as $val){
+            $type=CRMSectionType::find($val->crm_type_id);
+            $data[]=[
+                'customer_visibility'=>$val->customer_visibility,
+                'telephone'=>$val->telephone,
+                'notes'=>$val->notes,
+                'type'=>$type->title
+            ];
+        }
+        return response()->json(['success' =>true,'data'=>$data]);
     }
    
 }
