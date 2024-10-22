@@ -66,9 +66,15 @@
                             <div class="mb-2 row">
                                 <label for="inputName" class="col-sm-4 col-form-label">Customer</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control editInput selectOptions" id="getCustomerList" name="customer_only">
-                                        <option value="">-All-</option>
-                                    </select>
+                                    <div id="customerlist">
+                                        <select class="form-control editInput selectOptions" id="getCustomerList" name="customer_only">
+                                            <option value="">-All-</option>
+                                        </select>
+                                    </div>
+                                    <div id="onecustomer">
+                                        <label class="editInput"><input type="checkbox" name="customer_only" value=""> Yes Display for this customer only</label>
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="mb-2 row">
@@ -191,7 +197,7 @@
                                     <div class="col-sm-7">
                                         <select class="form-control editInput selectOptions" id="salestax"
                                             onclick="taxratelist(1)" name="tax_rate">
-                                            <option value="">-Please Select-</option>
+                                            <option value="20">Vat-20</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1 ps-0">
@@ -293,8 +299,8 @@
                                     
                                     <div class="col-sm-12">
                                         <label class="Img_Title">Images</label>
-                                        <ul class="uploadImgSec">
-                                             <li> 
+                                        <ul class="uploadImgSec" id="image-list">
+                                             {{-- <li> 
                                                 <img src="{{url('public/product/1729249431.jpg')}}" alt="uploadImg"> 
                                                 <a href="#!" class="imgclose">×</a>
                                             </li>
@@ -309,7 +315,7 @@
                                             <li> 
                                                 <img src="{{url('public/product/1729249431.jpg')}}" alt="uploadImg"> 
                                                 <a href="#!" class="imgclose">×</a>
-                                            </li>
+                                            </li> --}}
                                              
 
                                         </ul>                                       
@@ -392,6 +398,9 @@ Array.prototype.slice.call(forms)
                     $('.productsuccess').text(data.message);
                     $(".productsuccess").show('slow' , 'linear').delay(3000).fadeOut(function(){
                         if(producttype==1){
+                            location.reload();
+                        }
+                        if(producttype==3){
                             location.reload();
                         }
                         
@@ -547,7 +556,7 @@ Array.prototype.slice.call(forms)
                     // Loop through the data and append options to the select box
                     $.each(data, function(index, category) {
                         $select.append($('<option>', {
-                            value: category.id, // Assuming the id field
+                            value: category.tax_rate, // Assuming the id field
                             text: category.name // Assuming the name field
                         }));
                     });
@@ -640,13 +649,18 @@ Array.prototype.slice.call(forms)
 <script>
     function itemsAddProductModal(th,id=null){
         if(th==1){
-            $('#attachment,#generateproductcode').css('display','block');
-            $('.productimages,.productuploadedit').css('display','none');
+            $('#attachment,#generateproductcode,#customerlist').css('display','block');
+            $('.productimages,.productuploadedit,#onecustomer').css('display','none');
             $("#productform")[0].reset();
         }else if(th==3){
-            $('#attachment,#generateproductcode').css('display','none');
-            $('.productimages,.productuploadedit').css('display','block');
+            $('#attachment,#generateproductcode,#onecustomer').css('display','none');
+            $('.productimages,.productuploadedit,#customerlist').css('display','block');
             getproductdetailbyID(id);
+            getallproductimages(id);
+        }else if(th==2){            
+            $('#attachment,#generateproductcode,#onecustomer').css('display','block');
+            $('.productimages,.productuploadedit,#customerlist').css('display','none');
+            $("#productform")[0].reset();
         }        
         $(".needs-validationp").removeClass('was-validated');
         $('#producttype').val(th);
@@ -714,5 +728,72 @@ Array.prototype.slice.call(forms)
             }
 
         });
+    }
+
+    function getallproductimages(id){
+        var token = "<?= csrf_token() ?>";
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('item.getproductimage') }}',
+            data: {
+                product_id:id,
+                _token: token
+            },
+            success: function(data) {
+                console.log(data);
+                // Assuming `data` is an array of image URLs
+                var imageList = $('#image-list'); // Change this to your actual <ul> or <ol> ID
+                imageList.empty(); // Clear existing images
+
+                // Iterate over the image URLs and create <li> elements
+                data.forEach(function(imageUrl) {
+                    console.log(imageUrl.imagename)
+                    imgurl = "{{url('public/product')}}/"+imageUrl.imagename;
+                    var image = '<li><img src="'+imgurl+'" alt="uploadImg"><a href="#!" class="imgclose" onclick="deleteimage('+id+','+imageUrl.id+')">×</a></li>';
+                    // var listItem = $('<li></li>');
+                    // var image = $('<img>').attr('src', imageUrl);
+                    
+                    // listItem.append(image);
+                    imageList.append(image);
+                });
+                
+            }
+
+        });
+
+    }
+</script>
+<script>
+    function uploadproductimage(){
+        $("#productimage_form")[0].reset();
+        $(".needs-validationi").removeClass('was-validated');
+        var productname = $('#productname').val();
+        var productid = $('#productID').val();
+        $(".imgproname").text(productname);
+        $("#imgproduct_id").val(productid);
+        $('#uploadproductimagemodal').modal('show');
+    }
+</script>
+<script>
+    function deleteimage(productid,productimgid){
+        //alert(productid)
+        //alert(productimgid)
+        var token = "<?= csrf_token() ?>";
+        if(confirm("Are you sure want to delete this?")){
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('item.deleteproductimage') }}',
+                data: {
+                    productimgid:productimgid,
+                    _token: token
+                },
+                success: function(data) {
+                    console.log(data);
+                    getallproductimages(productid)
+                    
+                }
+
+            });
+        }
     }
 </script>
