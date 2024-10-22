@@ -1,7 +1,5 @@
 <div>
     <!-- Because you are alive, everything is possible. - Thich Nhat Hanh -->
-
-    <!-- Modal -->
     <div class="modal fade" id="{{ $modalId }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="{{ $modalId }}Label" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content add_Customer">
@@ -23,7 +21,6 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-product" role="tabpanel" aria-labelledby="nav-product-tab" tabindex="0">
                                     <div class="py-4">
-
                                         <div class="row">
                                             <div class="col-lg-3">
                                                 <select class="form-control editInput selectOptions" id="inputCustomer">
@@ -46,11 +43,11 @@
                                                 <li><a href="#" class="alphabeticLink" data-term="all" data-search_mode="ALL">All</a></li>
                                                 @for ($i = 65; $i <= 90; $i++)
                                                     <li><a href="#" class="alphabeticLink" data-term="{{ chr($i) }}" data-search_mode="STARTS">{{ chr($i) }}</a></li>
-                                                    @endfor
+                                                @endfor
                                                     <li>&nbsp;</li>
-                                                    @for($j = 0; $j <= 9; $j++)
-                                                        <li><a href="#" class="alphabeticLink" data-term="{{ $j }}" data-search_mode="STARTS">{{ $j }}</a></li>
-                                                        @endfor
+                                                @for($j = 0; $j <= 9; $j++)
+                                                    <li><a href="#" class="alphabeticLink" data-term="{{ $j }}" data-search_mode="STARTS">{{ $j }}</a></li>
+                                                @endfor
                                             </ul>
                                             <br class="clear">
                                         </div>
@@ -62,25 +59,25 @@
                                         </div>
                                     </div>
 
-
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="productDetailTable">
-                                                <table class="table" id="containerA">
+                                                <table class="table"
+                                                    id="containerA">
                                                     <thead class="table-light">
                                                         <tr>
                                                             <th>Code</th>
-                                                            <th>Product </th>
-                                                            <th>Code Price</th>
-                                                            <th>Price </th>
-                                                            <th>Qty</th>
-                                                            <th>Amount </th>
-                                                            <th>Delete</th>
+                                                            <th>Category </th>
+                                                            <th>Product</th>
+                                                            <th>Description </th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody class="insrt_product_and_detail">
                                                         <tr>
-                                                            <td colspan="7"><label class="red_sorryText"> Sorry, no records to show</label></td>
+                                                            <td>T3-0001 </td>
+                                                            <td>General </td>
+                                                            <td><a href="#!" onclick="insrtProduct()" data-bs-dismiss="modal" aria-label="Close">TEst 331</a> </td>
+                                                            <td>Test </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -96,7 +93,6 @@
                                 <div class="tab-pane fade" id="nav-consumable" role="tabpanel" aria-labelledby="nav-consumable-tab" tabindex="0">
                                     <div class="tabheadingTitle">
                                         <h3>Consumable - </h3>
-
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="nav-productGroup" role="tabpanel" aria-labelledby="nav-productGroup-tab" tabindex="0">
@@ -107,7 +103,8 @@
                             </div>
                         </div>
                     </div>
-                </div> <!-- end modal body -->
+                </div> 
+                <!-- end modal body -->
                 <div class="modal-footer customer_Form_Popup">
                     <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn profileDrop">Save changes</button>
