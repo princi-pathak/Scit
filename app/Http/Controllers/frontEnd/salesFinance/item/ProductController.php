@@ -12,6 +12,7 @@ use App\Models\Product_category;
 use App\Models\Product;
 use App\Models\Construction_tax_rate;
 use App\Models\Construction_account_code;
+use App\Models\ProductImage;
 use App\Customer;
 use App\User;
 
@@ -70,7 +71,7 @@ class ProductController extends Controller
             $arr['price'] = $product_val->price;
             $arr['tax_rate'] = $product_val->tax_rate;
             if($product_val->tax_rate!=""){
-                $arr['tax_rate_value'] = Construction_tax_rate::where('id', $product_val->tax_rate)->value('tax_rate');
+                $arr['tax_rate_value'] = $product_val->tax_rate;
             }else{
                 $arr['tax_rate_value'] = "";
             }
@@ -156,6 +157,7 @@ class ProductController extends Controller
        // Call the model's method to save product category data
         if(Construction_tax_rate::checkTaxRatename($request->taxratename,$request->taxrateID)==0){
             $saveData = Construction_tax_rate::saveTaxRateData($request->all(), $request->taxrateID);
+
             // Return the appropriate response
             return response()->json([
                 'success' => (bool)1,
@@ -184,6 +186,17 @@ class ProductController extends Controller
        // Call the model's method to save product category data
         //if(Product::checkTaxRatename($request->taxratename,$request->taxrateID)==0){
             $saveData = Product::saveProductdata($request->all(), $request->productID);
+            if($request->attachment!=''){
+                $imageName = time().'.'.$request->attachment->extension();      
+                $request->attachment->move(public_path('product'), $imageName); 
+                $productimg = new ProductImage;
+                $productimg->productID = $saveData->id;
+                $productimg->imagename = $imageName;
+                $productimg->save();
+            }
+            
+            
+            // $data['attachment'] = $imageName;
             // Return the appropriate response
             return response()->json([
                 'success' => (bool) $saveData,
@@ -254,8 +267,8 @@ class ProductController extends Controller
         $arr['price'] = $product_val->price;
         $arr['tax_rate'] = $product_val->tax_rate;
         if($product_val->tax_rate!=""){
-            $arr['tax_rate_value'] = Construction_tax_rate::where('id', $product_val->tax_rate)->value('tax_rate');
-            $arr['tax_rate_name'] = Construction_tax_rate::where('id', $product_val->tax_rate)->value('name');
+            $arr['tax_rate_value'] = $product_val->tax_rate;
+            $arr['tax_rate_name'] = Construction_tax_rate::where('tax_rate', $product_val->tax_rate)->value('name');
         }else{
             $arr['tax_rate_value'] = "";
             $arr['tax_rate_name'] = "";
@@ -300,5 +313,26 @@ class ProductController extends Controller
         $arr['updated_at'] = $product_val->updated_at;
         return response()->json($arr);
     }
+
+    public function getproductimage(Request $request){
+        $image = ProductImage::getallproductimage($request->product_id);
+        return response()->json($image);
+    }
+
+    public function saveproductimages(Request $request){
+        $saveData = ProductImage::saveproductimages($request->all());
+        // Return the appropriate response
+        return response()->json([
+            'success' => (bool) $saveData,
+            'message' => $saveData ? 'The Product Image has been saved successfully.' : 'Product Image could not be created.',
+            'lastid' => $saveData->id
+        ]);
+    }
+
+    public function deleteproductimage(Request $request){
+        ProductImage::deleteproductimage($request->productimgid);
+    }
+
+    
 
 }

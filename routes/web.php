@@ -314,6 +314,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(CustomerController::class)->group(function(){
 		Route::post('save_crm_customer_call','save_crm_customer_call');
 		Route::post('get_all_crm_customer_call','get_all_crm_customer_call');
+		Route::post('save_crm_customer_email','save_crm_customer_email');
+		Route::post('get_all_crm_customer_email','get_all_crm_customer_email');
+		Route::post('visibility_change','visibility_change');
 	});
 
 	// General section Front 
@@ -520,6 +523,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/item/changeProductStatus','changeProductStatus')->name('item.changeProductStatus');
 		Route::post('/item/deleteProduct','deleteProduct')->name('item.deleteProduct');
 		Route::post('/item/getproductdata','getproductdata')->name('item.getproductdata');
+		Route::post('/item/getproductimage','getproductimage')->name('item.getproductimage');
+		Route::post('/item/saveproductimages','saveproductimages')->name('item.saveproductimages');
+		Route::post('/item/deleteproductimage','deleteproductimage')->name('item.deleteproductimage');
 	});
 
 
