@@ -19,6 +19,7 @@ use App\Models\Job_title;
 use App\Models\Customer_type;
 use App\Models\CRMSectionType;
 use App\Models\Crm_customer_call;
+use App\Models\Crm_customer_email;
 use App\Models\Construction_currency;
 use App\Models\Construction_tax_rate;
 use App\Models\Constructor_customer_site;
@@ -155,9 +156,25 @@ class CustomerController extends Controller
         $data['active_customer'] = Customer::getConvertedCustomersCount($home_id);
         $data['inactive_customer'] = Customer::where(['is_converted' => 1, 'status' => 0, 'home_id' => $home_id,'deleted_at'=>null])->count();
         $data['users'] = User::getHomeUsers($home_id);
+        $data['customer_email_to']=$this->customer_email_to($home_id);
+        // echo "<pre>";print_r($data['customer_email_to']);die;
         $data['rate']=Construction_tax_rate::getAllTax_rate($home_id,'Active');
         $data['weeks'] = Week::getWeeklist();
         return view('frontEnd.salesAndFinance.jobs.active_customer', $data);
+    }
+    private function customer_email_to($home_id){
+        $user=User::where(['home_id'=>$home_id,'is_deleted'=>0])->get();
+        $data=array();
+        foreach($user as $val){
+            $data[]=[
+                'id'=>$val->id,
+                'name'=>$val->name,
+                'email'=>$val->email,
+                'type'=>'user',
+            ];
+        }
+        // Ram here code for supplier leave for now
+        return $data;
     }
     public function customer_type()
     {
@@ -474,6 +491,125 @@ class CustomerController extends Controller
             ];
         }
         return response()->json(['success' =>true,'data'=>$data]);
+    }
+    public function save_crm_customer_email(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        // echo $request->message;die;
+        $validator = Validator::make($request->all(), [
+            'to' => 'required',
+            'cc' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+        // Ram when this is comming multiple in future then uncomment below codes
+        // $validator = Validator::make($request->all(), [
+        //     'to' => 'required|array|min:1',
+        //     'to.*' => 'required|string',
+        //     'cc' => 'required|array|min:1',
+        //     'cc.*' => 'required|string',
+        //     'subject' => 'required|string',
+        //     'message' => 'required|string',
+        // ], [
+        //     'to.required' => 'The recipient field is required.',
+        //     'to.array' => 'The recipient field must be an array.',
+        //     'to.min' => 'At least one recipient is required.',
+        //     'to.*.required' => 'The recipient field must be a valid email address.',
+            
+        //     'cc.required' => 'The CC field is required.',
+        //     'cc.array' => 'The CC field must be an array.',
+        //     'cc.min' => 'At least one CC email address is required.',
+        //     'cc.*.required' => 'The CC field is required.',
+        
+        //     'subject.required' => 'The subject field is required.',
+        //     'message.required' => 'The message field is required.',
+        // ]);
+
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        if ($request->notify == 1) {
+            $validator = Validator::make($request->all(), [
+                'notify_user' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['vali_error' => $validator->errors()->first()]);
+            }
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
+            $notification = $sms = $email = null;
+        }
+        if ($request->hasFile('image_attachment')) {
+            $imageName = time().'.'.$request->image_attachment->extension();      
+            $request->image_attachment->move(public_path('images/customer_crm'), $imageName);
+        }else{
+            $imageName='';
+        }
+        $values = [
+            'home_id' => Auth::user()->home_id,
+            'customer_id' => $request->email_customer_id,
+            'to' => $request->to,
+            'cc' => $request->cc,
+            'subject' => $request->subject,
+            'message' => $request->message,
+            'notify' => $request->notify,
+            'user_id' => $request->notify_user,
+            'notification' => $notification,
+            'sms' => $sms,
+            'email' => $email,
+            'attachments'=>$imageName
+        ];
+        try{
+            $customer_email= Crm_customer_email::save_customer_email($values);
+            $customer_crm_email=Crm_customer_email::find($customer_email->id);
+            $customer_detail=Customer::find($customer_email->customer_id);
+            $user_detail=User::find($customer_email->to);
+            $data=$customer_crm_email;
+            $data['customer_email'] = $customer_detail->email ?? "";
+            $data['name']=$customer_detail->name ?? "";
+            $data['send_email']=$user_detail->email ?? "";
+            return response()->json(['success' =>true,'data'=>$data]);
+        }catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+    public function get_all_crm_customer_email(Request $request){
+        // echo "<pre>";print_r($request->id);die;
+        $getAllcrmlist=Crm_customer_email::getAllcrmEmail($request->id);
+        $data=array();
+        foreach($getAllcrmlist as $val){
+            $customer_detail=Customer::find($val->customer_id);
+            $user_detail=User::find($val->to);
+            $data[]=[
+                'id'=>$val->id,
+                'customer_visibility'=>$val->customer_visibility,
+                'telephone'=>$val->telephone,
+                'message'=>$val->message,
+                'type'=>'System',
+                'customer_email'=>$customer_detail->email ?? "",
+                'name'=>$customer_detail->name ?? "",
+                'send_email'=>$user_detail->email ?? "",
+            ];
+        }
+        return response()->json(['success' =>true,'data'=>$data]);
+    }
+    public function visibility_change(Request $request){
+        try{
+            $customer_crm_email=Crm_customer_email::find($request->id);
+            if($customer_crm_email->customer_visibility == 0){
+                $status=1;
+            }else{
+                $status=0;
+            }
+            $customer_crm_email->customer_visibility=$status;
+            $customer_crm_email->save();
+            return response()->json(['success' =>true,'data'=>$customer_crm_email]); 
+        }catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
    
 }
