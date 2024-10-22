@@ -39,13 +39,13 @@ class Product extends Model
     public static function saveProductdata(array $data, $productID = null){        
         $data['home_id'] = Auth::user()->home_id;
         $data['adder_id'] = Auth::user()->id;
-        if(isset($data['attachment'])){
-            $imageName = time().'.'.$data['attachment']->extension();      
-            $data['attachment']->move(public_path('product'), $imageName); 
-        }else{
-            $imageName = "";
-        }
-        $data['attachment'] = $imageName;   
+        // if(isset($data['attachment'])){
+        //     $imageName = time().'.'.$data['attachment']->extension();      
+        //     $data['attachment']->move(public_path('product'), $imageName); 
+        // }else{
+        //     $imageName = "";
+        // }
+        // $data['attachment'] = $imageName;   
         return self::updateOrCreate(['id' => $productID], $data);
     }
     public static function changeProductStatus($productID,$status)
