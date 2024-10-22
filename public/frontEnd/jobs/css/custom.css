@@ -910,7 +910,7 @@ form.customerForm {
   line-height: 32px;
   padding-left: 10px;
 }
-.productDetailTable table.table thead tr th, .productDetailTable table.table tbody tr td{
+.productDetailTable table.table thead tr th, .productDetailTable table.table tbody tr td, .productDetailTable table.table tfoot tr td{
   font-size: 12px;
   line-height: 22px;
 }
@@ -2185,6 +2185,3 @@ div#exampleOne_wrapper::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
 
-.popup-content {
-  top: 26%;
-}

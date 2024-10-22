@@ -658,6 +658,18 @@
                                         <a href="#" class="profileDrop p-2 crmNewBtn" id="openNewEmail"> New</a>
                                     </div>
                                 </div>
+                                <div class="col-sm-5">
+                                    <div class="jobsection  mt-3">
+                                        <select name="" class="form-control editInput" id="">
+                                            <option value="1">All</option>
+                                            <option value="2">Customer Related</option>
+                                            <option value="3">Quote Related</option>
+                                            <option value="4">Job Related</option>
+                                            <option value="5">Invoice Related</option>
+                                                                                
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-sm-3">
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
@@ -676,19 +688,19 @@
                                                     <th>Contact</th>
                                                     <th>Type</th>
                                                     <th>Note(s)</th>
-                                                    <th>Status</th>
                                                     <th>Customer Visible</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="crm_customer_email">
                                                 <tr>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -807,12 +819,12 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="mb-3 row">
+                                                                    <!-- <div class="mb-3 row">
                                                                         <label for="related_to" class="col-sm-3 col-form-label">Related To</label>
                                                                         <div class="col-sm-9">
                                                                             <span class="editInput" id="related_To"></span>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-3 col-form-label">Notes</label>
                                                                         <div class="col-sm-9">
@@ -1084,12 +1096,12 @@
                                                                             <input type="hidden" name="start_time_timer" id="start_time">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="mb-3 row">
+                                                                    <!-- <div class="mb-3 row">
                                                                         <label for="related_to" class="col-sm-4 col-form-label">Related To</label>
                                                                         <div class="col-sm-8">
                                                                             <span class="editInput" id="relatedTo"></span>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="mb-3 row">
@@ -1369,13 +1381,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-2 row">
+                    <!-- <div class="mb-2 row">
                         <label for="calls_lead_ref" class="col-sm-3 col-form-label">Related To </label>
                         <div class="col-sm-9">
                             <span class="editInput" id="call_lead_ref"></span>
                             <input type="hidden" name="lead_ref" id="call_lead_ref_data">
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mb-2 row">
                         <label for="" class="col-sm-3 col-form-label">Notify? </label>
                         <div class="col-sm-9">
@@ -1469,18 +1481,31 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" id="crm_lead_email_form" enctype='multipart/form-data'>
+                <form action="" id="crm_customer_email_form" enctype='multipart/form-data'>
+                    @csrf
+                    <input type="hidden" name="email_customer_id" id="email_customer_id" class="customer_id">
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">To <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
-                            <input type="hidden" class="form-control editInput" name="crm_lead_email_id" id="">
-                            <input type="text" class="form-control editInput" name="to" id="" value="">
+                            <!-- <input type="text" class="form-control editInput" name="to" id="to" value=""> -->
+                            <select name="to" class="form-control editInput" id="to">
+                                <option value=""></option>
+                                @foreach($customer_email_to as $email_val)
+                                    <option value="{{$email_val['id']}}">{{$email_val['name']}} [{{$email_val['email']}}] --{{$email_val['type']}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Cc </label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control editInput" name="cc" id="">
+                            <!-- <input type="text" class="form-control editInput" name="cc" id="cc"> -->
+                            <select name="cc" class="form-control editInput" id="cc">
+                                <option value=""></option>
+                                @foreach($customer_email_to as $email_val1)
+                                    <option value="{{$email_val1['id']}}">{{$email_val1['name']}} [{{$email_val1['email']}}] --{{$email_val1['type']}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="mb-2 row">
@@ -1502,16 +1527,16 @@
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Attachment </label>
                         <div class="col-sm-9">
-                            <input type="file" class="editInput" name="attachment" id="image">
+                            <input type="file" class="editInput" name="image_attachment" id="image_attachment">
                         </div>
                     </div>
-                    <div class="mb-2 row">
+                    <!-- <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Related To </label>
                         <div class="col-sm-9">
                             <span class="editInput" id="lead_ref_email"></span>
                             <input type="hidden" id="lead_id_email" name="lead_id">
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mb-2 row">
                         <label for="" class="col-sm-3 col-form-label">Notify? </label>
                         <div class="col-sm-9">
@@ -1527,8 +1552,10 @@
                             <div class="col-sm-9">
                                 <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                     <option value=""></option>
-                                    @foreach($users as $value)
-                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @foreach($customer as $value)
+                                    @if($value->email)
+                                    <option value="{{ $value->id }}">Me- {{ $value->email }}/No Mobile</option>
+                                    @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -1537,18 +1564,18 @@
                             <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <label for="calls_notify_who1" class="editInput">
-                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
+                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1" checked> Notification (User Only)
                                 </label>
                                 <label for="calls_notify_who2" class="editInput">
                                     <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS
                                 </label>
                                 <label for="calls_notify_who3" class="editInput">
-                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1"> Email
+                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1" checked> Email
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-2 row">
+                    <!-- <div class="mb-2 row">
                         <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
                         <div class="col-sm-9">
                             <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault1" value="0" checked>
@@ -1556,7 +1583,7 @@
                             <input class="form-check-input" type="radio" name="customer_visible" id="flexRadioDefault2" value="1">
                             <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
                         </div>
-                    </div>
+                    </div> -->
                 </form>
             </div>
             <div class="modal-footer">
@@ -1573,7 +1600,6 @@
     </section>
     <!-- Moment js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
     <script>
         function status_change(id, status){
             var token='<?php echo csrf_token();?>'
@@ -1650,7 +1676,8 @@ $('.delete_checkbox').on('click', function() {
           $(".customer_id").val(id);
             // $("#form_data")[0].reset();
             $("#CRMPop").modal('show');
-            get_all_crm_customer_call(id)
+            get_all_crm_customer_call(id);
+            get_all_crm_customer_email(id);
         }
     }
 </script>
@@ -1921,7 +1948,7 @@ job_input.addEventListener('input', function() {
                         selectHTML += '</select>';
                         document.getElementById('job_appointment_id').innerHTML = selectHTML;
                         
-                        $('#job_appointment_id').select2();
+                        // $('#job_appointment_id').select2();
                         // document.getElementById('job_appointment_id').select2();
                     }else{
                         $('#job_appointment_id').prop('disabled',true);
@@ -2098,8 +2125,223 @@ job_input.addEventListener('input', function() {
         .catch(error => {
             console.error(error);
         });
+       
+
 </script>
 <!-- Script For adding CK editor End -->
+<script type="module">
+    import {
+        ClassicEditor,
+        Essentials,
+        Paragraph,
+        Bold,
+        Italic,
+        Font,
+        Underline,
+        Alignment,
+        Plugin,
+        ButtonView
+    } from 'ckeditor5';
+
+    class PreviewPlugin extends Plugin {
+        static get pluginName() {
+            return 'PreviewPlugin';
+        }
+
+        init() {
+            const editor = this.editor;
+
+            editor.ui.componentFactory.add('preview', locale => {
+                const view = new ButtonView(locale);
+
+                view.set({
+                    label: 'Preview',
+                    withText: true,
+                    tooltip: 'Preview Content'
+                });
+
+                view.on('execute', () => {
+                    const editorData = editor.getData();
+
+                    // Open a new window to display the formatted content
+                    const previewWindow = window.open('', 'Preview', 'width=800,height=600');
+                    previewWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>Preview</title>
+                            <style>
+                                body { font-family: Arial, sans-serif; padding: 20px; }
+                                .ck-content { margin: 0; }
+                            </style>
+                        </head>
+                        <body>${editorData}</body>
+                    </html>
+                `);
+                    previewWindow.document.close();
+                });
+
+                return view;
+            });
+        }
+    }
+
+    ClassicEditor
+        .create(document.querySelector('#emailEditor'), {
+            plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment, PreviewPlugin],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic', 'underline', 'alignment', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'preview'
+            ]
+        })
+        .then(editor => {
+            window.editor = editor;
+            // var editorData = editor.getData();
+            // Add a click event listener to the save button
+            document.getElementById('saveCRMLeadEmails').addEventListener('click', function() {
+
+                // Get the CKEditor content
+                document.getElementById('emailMessage').value = editor.getData();
+                console.log(document.getElementById('emailMessage').value);
+                var formData = new FormData(document.getElementById('crm_customer_email_form'));
+                $.ajax({
+                    url: '{{ url("save_crm_customer_email") }}',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        console.log(data);
+                        if(data.vali_error){
+                        alert(data.vali_error);
+                        $("#user_notifiy").css('border','1px solid red');
+                        $('#user_notifiy').focus();
+                        return false;
+                    }else if(data.success){
+                            const responseData = data.data; 
+                            const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
+                            var visibilityCell = '';
+
+                            if (responseData.customer_visibility == "0") {
+                                visibilityCell += '<span class="grayCheck" onclick="customer_visibility('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            } else if (responseData.customer_visibility == "1") {
+                                visibilityCell += '<span class="grencheck" onclick="customer_visibility('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            }
+
+                            var html = '<tr>' +
+                                '<td>' + date + '</td>' +
+                                '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                                '<td>' + responseData.name + '<br>Email:'+responseData.customer_email + '</td>' +  
+                                '<td>System</td>' +        
+                                '<td>Eamil sent to' + responseData.send_email + 'from'+ responseData.name +'</td>' +
+                                '<td id="visible_check'+responseData.id+'">' + visibilityCell + '</td>' +
+                                '<td><i class="fa fa-phone"></i> ' +
+                                '<i class="fa fa-envelope"></i> ' +
+                                '<i class="fa fa-list-ul"></i> ' +
+                                '<i class="fa fa-file"></i> ' +
+                                '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                                '</tr>';
+                            $("#crm_customer_email").append(html);
+                            $('#NewEmailModel').modal('hide');
+                        } else {
+                            alert("Something went wrong");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    ClassicEditor
+        .create(document.querySelector('#NotesEditor'), {
+            plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment, PreviewPlugin],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic', 'underline', 'alignment', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'preview'
+            ]
+        })
+        .then(editor => {
+            window.editor = editor;
+            var editorData = editor.getData();
+            // Add a click event listener to the save button
+            document.getElementById('saveCRMLeadNotes').addEventListener('click', function() {
+                // Get the CKEditor content
+                document.getElementById('CRMNotes').value = editor.getData();
+                console.log(document.getElementById('CRMNotes').value);
+                // var formData = new FormData(document.getElementById('crm_lead_notes_form'));
+                var formData = $('#crm_lead_notes_form').serialize();
+                console.log(formData);
+                $.ajax({
+                    url: '{{ route("lead.ajax.saveCRMLeadNotes") }}',
+                    method: 'POST',
+                    data: formData,
+                    // processData: false,  
+                    // contentType: false,  
+                    success: function(response) {
+                        alert(response.message);
+                        $('#NewNotesModel').modal('hide');
+                        getNotesDataAjax();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+
+            });
+
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+
+
+    ClassicEditor
+        .create(document.querySelector('#complaintEditor'), {
+            plugins: [Essentials, Paragraph, Bold, Italic, Underline, Font, Alignment, PreviewPlugin],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic', 'underline', 'alignment', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'preview'
+            ]
+        })
+        .then(editor => {
+            window.editor = editor;
+            var editorData = editor.getData();
+            // Add a click event listener to the save button
+            document.getElementById('saveCRMLeadComplaint').addEventListener('click', function() {
+                // Get the CKEditor content
+                document.getElementById('CRMComplaint').value = editor.getData();
+                console.log(document.getElementById('CRMComplaint').value);
+                var formData = $('#crm_lead_complaint_form').serialize();
+                console.log(formData);
+                $.ajax({
+                    url: '{{ route("lead.ajax.saveCRMLeadComplaint") }}',
+                    method: 'POST',
+                    data: formData,
+                    // processData: false,  
+                    // contentType: false,  
+                    success: function(response) {
+                        alert(response.message);
+                        getComplaintDataAjax();
+                        $('#compliantsModal').modal('hide');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+
+            });
+
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 
 <script>
     function get_all_crm_customer_call(id){
@@ -2152,7 +2394,78 @@ job_input.addEventListener('input', function() {
             }
         });
     }
-</script>
+    function get_all_crm_customer_email(id){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: '{{ url("get_all_crm_customer_email") }}',
+            method: 'POST',
+            data: {
+                id: id,_token:token
+            },
+            success: function(response) {
+                console.log(response);
+                var data = response.data;
+                var tableBody = $("#crm_customer_email"); 
+                tableBody.empty();
+                
+                data.forEach(function(item) {
+                    
+                    var date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+                    
+              
+                    var visibilityCell = '';
+                    if (item.customer_visibility === 0) {
+                        visibilityCell = '<span class="grayCheck" onclick="customer_visibility('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    } else if (item.customer_visibility === 1) {
+                        visibilityCell = '<span class="grencheck" onclick="customer_visibility('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    }
+                    var html = '<tr>' +
+                        '<td>' + date + '</td>' +                       
+                        '<td>' + '<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>' + '</td>' + 
+                        '<td>' + item.name + '<br>Email:'+item.customer_email + '</td>' +      
+                        '<td>' + (item.type || '-') + '</td>' +          
+                        '<td>Eamil sent to ' + item.send_email + ' from '+ item.name +'</td>' +         
+                        '<td id="visible_check'+item.id+'">' + visibilityCell + '</td>' +              
+                        '<td>' +         
+                            '<i class="fa fa-phone"></i> ' +
+                            '<i class="fa fa-envelope"></i> ' +
+                            '<i class="fa fa-list-ul"></i> ' +
+                            '<i class="fa fa-file"></i> ' +
+                            '<i class="fa fa-exclamation-triangle"></i>Sent' +
+                        '</td>' +
+                    '</tr>';
 
+                    // Append each row to the table body
+                    tableBody.append(html);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
+<script>
+    function customer_visibility(id){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            type: "POST",
+            url: "{{url('/visibility_change')}}",
+            data: {id:id,_token:token},
+            success: function(data) {
+                console.log(data);
+                // visible_check1
+                var visibilityCell = '';
+                if(data.data.customer_visibility == 0){
+                    visibilityCell = '<span class="grayCheck" onclick="customer_visibility('+data.data.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                } else if (data.data.customer_visibility === 1) {
+                    visibilityCell = '<span class="grencheck" onclick="customer_visibility('+data.data.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                }
+                $("#visible_check"+data.data.id).html(visibilityCell);
+                
+            }
+        });
+    }
+</script>
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor5-build-classic/ckeditor.js"></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
