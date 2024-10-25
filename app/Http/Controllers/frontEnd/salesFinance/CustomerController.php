@@ -21,6 +21,7 @@ use App\Models\Customer_type;
 use App\Models\CRMSectionType;
 use App\Models\Crm_customer_call;
 use App\Models\Crm_customer_task;
+use App\Models\Crm_customer_note;
 use App\Models\Crm_customer_email;
 use App\Models\Construction_currency;
 use App\Models\Construction_tax_rate;
@@ -163,6 +164,10 @@ class CustomerController extends Controller
         $data['rate']=Construction_tax_rate::getAllTax_rate($home_id,'Active');
         $data['weeks'] = Week::getWeeklist();
         $data['task_type']=Task_type::getAllTask_type($home_id);
+        $data['job_title'] = Job_title::whereNull('deleted_at')->where('status', 1)->get();
+        $data['country'] = Country::all_country_list();
+        $data['country_code']=Country::getCountriesNameCode();
+        // echo "<pre>";print_r($data['country_code']);die;
         return view('frontEnd.salesAndFinance.jobs.active_customer', $data);
     }
     private function customer_email_to($home_id){
@@ -677,7 +682,9 @@ class CustomerController extends Controller
         }
     }
     public function get_customer_details(Request $request){
-        return Customer::find($request->id);
+        $data['contact']=Constructor_additional_contact::where('customer_id',$request->id)->get();
+        $data['customer']=Customer::find($request->id);
+        return $data;
     }
     public function get_all_crm_customer_task(Request $request){
         $getAllcrmlist=Crm_customer_task::getAllcrmTask($request->id);
@@ -705,6 +712,84 @@ class CustomerController extends Controller
                 'notify_date'=>$val->notify_date,
                 'notify_time'=>$val->notify_time,
                 'notes'=>$val->notes,
+                'type'=>$task_type->title,
+                'customer_name'=>$customer->name
+            ];
+        }
+        return response()->json(['success' =>true,'data'=>$data]);
+    }
+    public function save_crm_customer_notes(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'notes_customer_id' => 'required',
+            'crm_section_type_id' => 'required',
+            'notes' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        if ($request->notify == 1) {
+            $validator = Validator::make($request->all(), [
+                'user_id' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['vali_error' => $validator->errors()->first()]);
+            }
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
+            $notification = $sms = $email = null;
+        }
+        $values = [
+            'home_id' => Auth::user()->home_id,
+            'customer_id' => $request->notes_customer_id,
+            'contact' => $request->notes_contact,
+            'crm_section_type_id' => $request->crm_section_type_id,
+            'notes' => $request->notes,
+            'notify' => $request->notify,
+            'user_id' => $request->user_id,
+            'notification' => $notification,
+            'sms' => $sms,
+            'email' => $email,
+            'customer_visibility' => $request->customer_visibility
+        ];
+        
+        try{
+            $crm_customer_note = Crm_customer_note::save_customer_note($values);
+            $task_type=CRMSectionType::find($crm_customer_note->crm_section_type_id);
+            $customer=Customer::find($crm_customer_note->customer_id);
+            $contact=Constructor_additional_contact::find($crm_customer_note->contact);
+            $data=$crm_customer_note;
+            $data['type']=$task_type->title;
+            $data['customer_name']=$customer->name;
+            $data['contact']=$customer->contact_name ?? "";
+            return response()->json(['success' =>true,'data'=>$data]);
+        }catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+    public function get_all_crm_customer_note(Request $request){
+        $getAllcrmlist=Crm_customer_note::getAllcrmNotes($request->id);
+        // echo "<pre>";print_r($getAllcrmlist);die;
+        $data=array();
+        foreach($getAllcrmlist as $val){
+            $task_type=CRMSectionType::find($val->crm_section_type_id);
+            $customer=Customer::find($val->customer_id);
+            $contact=Constructor_additional_contact::find($val->contact);
+            $data[]=[
+                'id'=>$val->id,
+                'home_id'=>$val->home_id,
+                'customer_id'=>$val->customer_id,
+                'contact'=>$contact->contact_name ?? "",
+                'crm_section_type_id'=>$val->crm_section_type_id,
+                'notes'=>$val->notes,
+                'customer_visibility'=>$val->customer_visibility,
+                'user_id'=>$val->user_id,
                 'type'=>$task_type->title,
                 'customer_name'=>$customer->name
             ];
