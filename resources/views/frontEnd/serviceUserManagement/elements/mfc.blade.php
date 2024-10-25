@@ -11,7 +11,7 @@
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                             <button class="btn label-default add-new-btn active" type="button"> Add New </button>
                             <button class="btn label-default logged-btn active mfc-logged-btn" type="button"> Logged Records </button>
-                            <button class="btn label-default search-btn active" type="button"> Search </button>
+                            <!-- <button class="btn label-default search-btn active" type="button"> Search </button> -->
                         </div>
 
                         <div class="add-new-box risk-tabs custm-tabs">
