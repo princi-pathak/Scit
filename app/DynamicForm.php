@@ -46,32 +46,6 @@ class DynamicForm extends Model //FormBuilder
                                     <h3 class="m-t-0 m-b-20 clr-blue fnt-20 dynamic_form_h3"> Fill Form Details </h3>
                                   
                                 </div>
-                             
-
-                                <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                        <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Date: </label>
-                                        <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
-                                          <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
-                                            <input name="date" value="'.$mfc_today_date.'" size="16" readonly="" class="form-control" type="text" >
-                                            <span class="input-group-btn add-on">
-                                              <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
-                                            </span>
-                                          </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                        <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Time: </label>
-                                        <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
-                                            <div class="input-group popovr">
-                                                <input type="text" class="form-control static_title" placeholder="" name="time" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              
                                 ';
             $formdata .= $static_fields;
             $label_col_val = '1';
@@ -172,11 +146,6 @@ class DynamicForm extends Model //FormBuilder
 
     public static function showFormWithValue($dynamic_form_id = null,$enable = false){ //show filled form
 
-
-
-
-
-        
         /* Note:
             the form fields will be shown according to the latest form pattern 
         */
