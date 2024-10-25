@@ -202,7 +202,6 @@ function time_diff_string($from, $to, $full = false) {
                                         <span  data-toggle="tooltip" data-placement="right" title="" class="timeline-icon darkgreen-clr">
                                         @endif      
                                             <i class="{{$key['icon']}} fontam"></i>
-                                            
                                         </span>
                                         <span class="time_abbre" data-toggle="tooltip" data-placement="top" title="{{ $key['created_at'] }}">{{ time_diff_string(date("d-m-Y H:i", strtotime($key['created_at'])), 'now') }} <span style="color:black;font-weight:400;font-size:14px;">by {{ $key['staff_name']}}</span></span>
                                         @if($key['description'])

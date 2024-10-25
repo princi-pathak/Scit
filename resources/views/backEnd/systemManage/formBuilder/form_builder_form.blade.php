@@ -356,7 +356,21 @@ if (isset($form)) {
                                         </div>
                                     </div>
 
-
+                                    <style>
+                                   .uploadPopImg img {
+                                        width: 100%;
+                                    }
+                                    .uploadPopImg {
+                                        width: 120px;
+                                        
+                                    }
+                                    label.col-lg-2.control-label.mrtp70 {
+                                        margin-top: 40px;
+                                    }
+                                    .mrtp80{
+                                        margin-top: 46px;
+                                    }
+                                </style>
 
 
                                     <h4 class="text-center m-t-0 m-b-30">Select Field You want to Add</h4>
@@ -373,7 +387,21 @@ if (isset($form)) {
                         <div class="row">
                             <div class="custom-from m-t-50 p-t-30">
                                 <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
-                                    <form class="form-horizontal" id="" method="post" action="{{ $action }}">
+                                    <form class="form-horizontal" id="" method="post" action="{{ $action }}" enctype="multipart/form-data">
+                                    
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label mrtp70">Select an image to upload </label>
+                                            <div class="col-lg-6">
+                                                <input type="file" class="form-control mrtp80" id="image" name="form_image">
+                                                <!-- <select class="form-control show_alert_date" name="alert_field">
+                                                    
+                                                </select> -->
+                                            </div>
+                                            <div class="col-lg-4">
+                                            <div class="uploadPopImg"><img id="preview" class="my-2" src="" width="100px"></div>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             <label class="col-lg-2 control-label">Alert Field</label>
                                             <div class="col-lg-8">
@@ -505,6 +533,48 @@ if (isset($form)) {
     $(document).on('change', '.send_to', function() {
         $('input[name=send_to]').val($(this).val());
     });
+</script>
+
+<script>
+  var imgfile = "0";
+  document.getElementById('image').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      console.log(file);
+      if (!file) return;
+
+      const img = new Image();
+      const objectURL = URL.createObjectURL(file);
+      img.src = objectURL;
+      
+      img.onload = function() {
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+        const aspectRatio = width / height;
+        const validImageTypes = ['image/jpeg','image/jpg', 'image/png', 'image/gif'];
+        if (!validImageTypes.includes(file.type)) {
+          //messageDiv.textContent = 'Invalid file type. Please upload a JPEG, PNG, or GIF image.';
+          //return;
+          const fileInput = document.getElementById('image');
+          fileInput.value = '';
+          document.getElementById('image_error').textContent = "Invalid file type. Please upload a JPG, JPEG, PNG, or GIF image.";
+          document.getElementById('preview').style.display = 'none';
+          // Clean up if the ratio is invalid
+          URL.revokeObjectURL(objectURL);
+          imgfile="1";
+        }else{
+          document.getElementById('preview').src = objectURL;
+          document.getElementById('preview').style.display = 'block';
+          document.getElementById('image_error').style.display = 'none';
+          imgfile="0";
+        }
+          
+      };
+
+      img.onerror = function() {
+          document.getElementById('image_error').textContent = 'Failed to load image.';
+          document.getElementById('preview').style.display = 'none';
+      };
+  });
 </script>
 
 
