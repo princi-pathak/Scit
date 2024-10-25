@@ -198,7 +198,7 @@
                     message = "Edited Successfully Done";
                 }
 
-                if (home_id == '') {
+                if (title == '') {
                     $("#name").addClass('addError');
                     return false;
                 } else {
