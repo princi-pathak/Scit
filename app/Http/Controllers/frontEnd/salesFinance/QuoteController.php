@@ -16,6 +16,7 @@ use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Product_category;
 use Illuminate\Database\QueryException;
+use App\User;
 
 class QuoteController extends Controller
 {
@@ -206,7 +207,6 @@ class QuoteController extends Controller
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data.'
         ]);
-
     }
 
     public function saveQuoteData(Request $request){
@@ -234,6 +234,15 @@ class QuoteController extends Controller
             // Handle general errors
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
+
+    }
+    public function getUsersList(){
+        $data = User::getHomeUsers(Auth::user()->home_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
 
     }
 }
