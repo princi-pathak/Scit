@@ -79,9 +79,6 @@ class FormBuilderController extends Controller
             } else{
                 return redirect()->back()->with('error','No input field added in the form.'); 
             }
-            
-            // $imageName = time() . '.' . $request->form_image->extension();
-            // $request->image->move(public_path('images/formio'), $imageName);
 
             $image = $request->file('form_image');
 

@@ -226,52 +226,7 @@ class DynamicForm extends Model //FormBuilder
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                        <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Title: </label>
-                                        <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
-                                            <div class="input-group popovr">
-                                                <input type="text" class="form-control trans static_title" placeholder="" name="title" value="'.$form_info->title .'" '.$disabled.' />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                        <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Date: </label>
-                                        <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
-                                          <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date dpYears">
-                                            <input name="date" size="16" readonly="" class="form-control trans" type="text" value="'.$form_date.'" '.$disabled.' >
-                                            <span class="input-group-btn add-on">
-                                              <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
-                                            </span>
-                                          </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                        <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Time: </label>
-                                        <div class="col-md-10 col-sm-12 col-xs-12 r-p-0">
-                                            <div class="input-group popovr">
-                                                <input type="text" class="form-control trans static_title" placeholder="" name="time" value="'.$form_info->time .'" '.$disabled.' />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
-                                        <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Detail: </label>
-                                        <div class="col-md-10 col-sm-12 col-xs-12 r-p-0">
-                                            <div class="input-group popovr">
-                                                <textarea class="form-control trans" placeholder="" name="details" '.$disabled.' >'.$form_info->details .'</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>';
+                             ';
 
             $formdata = '';
             $formdata .= $static_fields;
@@ -625,6 +580,8 @@ class DynamicForm extends Model //FormBuilder
             //$result['title']            = $form_builder->title;
             $result['service_user_id']  = $form_info->service_user_id;
             //$result['detail']     = `->detail;
+            $result['image']            = asset('public/images/formio/' . $form_info->image) ;
+            $result['imageName']        = $form_info->image;
             $result['form_data']          = $formdata;
 
         } else{

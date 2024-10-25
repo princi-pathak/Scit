@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use Auth, DB;
 use App\DynamicFormBuilder, App\DynamicForm, App\ServiceUser, App\DynamicFormLocation, App\Notification, App\ServiceUserLogBook, App\LogBook, App\EarningScheme, APP\ServiceUserRisk;
+use Carbon\Carbon;
+
 //App\ServiceUser, App\Admin, App\Home, App\LogBook;
 //use Hash, Session;
 //use Carbon\Carbon;
@@ -392,11 +394,19 @@ class DynamicFormController extends Controller
 
         foreach ($dyn_forms as $key => $value) {
 
+            
+            $title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
 
-            if ($value->date == '') {
+            // if ($value->date == '') {
+            //     $date = '';
+            // } else {
+            //     $date = date('d-m-Y', strtotime($value->date));
+            // }
+
+            if ($value->created_at == '') {
                 $date = '';
             } else {
-                $date = date('d-m-Y', strtotime($value->date));
+                $date = \Carbon\Carbon::parse($value->created_at)->format('d-m-Y');
             }
 
             if ((!empty($date)) || (!empty($value->time))) {
@@ -408,28 +418,52 @@ class DynamicFormController extends Controller
             }
 
             echo '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel rows">
-                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                            <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
-                            <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
-                                <div class="input-group popovr">
+                <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+                    <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
+                    <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
+                        <div class="input-group popovr">
 
-                                    <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
-                                    <input type="text" class="form-control" name="" disabled value="' . $value->title . ' ' . $start_brct . $date . ' ' . $value->time . $end_brct . '" maxlength="255"/> 
-                                     
-                                    <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
-                                        <i class="fa fa-cog"></i>
-                                        <div class="pop-notifbox">
-                                            <ul class="pop-notification" type="none">
-                                                <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
-                                                <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
-                                                <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Daily Log Book </a> </li>
-                                            </ul>
-                                        </div>
-                                    </span>
+                            <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
+                            <input type="text" class="form-control" name="" disabled value="' . $title . ' ' . $start_brct . $date . ' ' .  $end_brct . '" maxlength="255"/> 
+                            
+                            <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
+                                <i class="fa fa-cog"></i>
+                                <div class="pop-notifbox">
+                                    <ul class="pop-notification" type="none">
+                                        <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
+                                        <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+                                        <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Daily Log Book </a> </li>
+                                    </ul>
                                 </div>
-                            </div>
+                            </span>
                         </div>
-                    </div>  ';
+                    </div>
+                </div>
+            </div>  ';
+
+            // echo '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel rows">
+            //             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
+            //                 <!-- <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"></label> -->
+            //                 <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
+            //                     <div class="input-group popovr">
+
+            //                         <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
+            //                         <input type="text" class="form-control" name="" disabled value="' . $value->title . ' ' . $start_brct . $date . ' ' . $value->time . $end_brct . '" maxlength="255"/> 
+                                     
+            //                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
+            //                             <i class="fa fa-cog"></i>
+            //                             <div class="pop-notifbox">
+            //                                 <ul class="pop-notification" type="none">
+            //                                     <li> <a href="#" data-dismiss="modal" aria-hidden="true" class="dyn-form-view-data" id="' . $value->id . '"> <span> <i class="fa fa-eye"></i> </span> View/Edit</a> </li>
+            //                                     <li> <a href="#" class="dyn_form_del_btn" id="' . $value->id . '"> <span class="color-red"> <i class="fa fa-exclamation-circle"></i> </span> Remove </a> </li>
+            //                                     <li> <a href="#" class="dyn_form_daily_log" dyn_form_id="' . $value->id . '"> <span class="color-green"> <i class="fa fa-plus-circle"></i> </span> Daily Log Book </a> </li>
+            //                                 </ul>
+            //                             </div>
+            //                         </span>
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //         </div>  ';
         }
         //echo $pagination;
     }
@@ -538,6 +572,7 @@ class DynamicFormController extends Controller
             ->join('dynamic_form_builder', 'dynamic_form.form_builder_id', '=', 'dynamic_form_builder.id')
             ->select('dynamic_form_builder.pattern', 'dynamic_form.pattern_data')->where('dynamic_form.id', $dynamic_form_idformio)
             ->get();
+            
         return $res;
     }
 }

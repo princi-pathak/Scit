@@ -15,6 +15,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
     .pagination>li>span {
         padding: 5px 6px;
     }
+    
 </style>
 
 <!-- dynmic Form Modal -->
@@ -29,7 +30,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 <div class="row">
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default add-new-btn active" type="button"> Add New </button>
-                        <!-- <button class="btn label-default logged-btn dyn-logged-btn active logged-dyn-btn" type="button"> Logged Plans </button> -->
+                        <button class="btn label-default logged-btn dyn-logged-btn active logged-dyn-btn" type="button"> Logged Plans </button>
                         <!-- <button class="btn label-default search-btn active" type="button"> Search </button> -->
                     </div>
                     <!-- Add new Details -->
@@ -90,18 +91,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <!--</div>-->
 
                             <!-- option for save in daily log -->
-                            <style>
-                                .uploadPopImg {
-                                    width: 120px;
-                                    height: 120px;
-                                    /* border: 1px solid #ddd; */
-                                    margin: 10px auto;
-                                }
 
-                                #hideImageDiv {
-                                    display: none;
-                                }
-                            </style>
 
 
                             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -158,8 +148,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <!-- record shown using Ajax -->
                         </div>
                         <div class="modal-footer m-t-0 recent-task-sec">
-                            <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true">
-                                Cancel </button>
+                            <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
                             <!-- <button class="btn btn-warning sbt-edit-bmp-record" type="button"> Confirm</button> -->
                         </div>
                     </div>
@@ -482,7 +471,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             }
 
             var formdata = $('#' + form_id).serialize();
-            alert(formdata); // return false;
+            // alert(formdata); // return false;
             //$('.loader').show();
             // $('body').addClass('body-overflow');
             $.ajax({
@@ -492,7 +481,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 //dataType: 'json',
                 success: function(resp) {
                     console.log(resp);
-                    alert("ldkjflk");
+                    // alert("ldkjflk");
                     if (isAuthenticated(resp) == "false") {
                         return false;
                     }
@@ -579,6 +568,13 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     if (isAuthenticated(resp) == false) {
                         return false;
                     }
+
+                    if (resp['imageName'] != undefined) {
+                        document.getElementById('hideImageDiv').style.display = "block";
+                    } else {
+                        document.getElementById('hideImageDiv').style.display = "none";
+                    }
+                    document.getElementById('imagePreview').src = resp['image'];
 
                     if (resp == true) {
 
