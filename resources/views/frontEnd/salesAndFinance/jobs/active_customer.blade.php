@@ -29,7 +29,9 @@
     position: relative;
     text-align: left;
 }
-
+.image_style {
+    cursor: pointer;
+}
 .textbox input {
     padding: 10px 14px;
     width: 100%;
@@ -102,6 +104,72 @@
     min-height:32px !important;
  }
 
+ .CRMFullModel .modal-dialog.modal-xl {
+        --bs-modal-width: 1600px;
+    }
+
+    .overdue {
+        display: flex;
+        justify-content: end;
+    }
+
+    .overdue label {
+        line-height: 22px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .yeloColrbox {
+        width: 20px;
+        height: 20px;
+        display: block;
+        background-color: #FFCC66;
+        margin-right: 4px;
+    }
+
+    .popup2 {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 99999;
+        transition: opacity 0.3s ease;
+    }
+
+    .col-form-label p {
+        margin: 0;
+        line-height: 15px;
+    }
+
+    #showDivContLeads.show {
+        height: 0;
+    }
+
+    #showDivContLeads {
+        height: 176px;
+        transition: .7s;
+        overflow: hidden;
+    }
+
+    .btnActive {
+        background-color: #494949;
+    }
+
+    .days_check div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .days_check div label {
+        padding: 0;
+    }
+
+    .days_check .form-check-input {
+        margin-top: 2px;
+    }
 </style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
@@ -736,19 +804,29 @@
                                                     </div>
                                                 </nav>
                                                 <form id="crm_lead_task_form">
+                                                    <input type="hidden" name="task_customer_id" id="task_customer_id" class="customer_id">
+                                                    <input type="hidden" name="task_id" id="task_id" class="task_id">
+                                                    @csrf
                                                     <div class="tab-content p-3 border bg-light" id="nav-tabContent">
                                                         <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                                             <div class="row">
                                                                 <div class="col-6">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                                                        <div class="col-sm-9">
+                                                                            <p class="customer_name"></p>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task User <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-8">
                                                                             <input type="hidden" name="form_type" id="form_type" value="">
-                                                                            <input type="hidden" name="lead_id" id="crm_lead_id_task">
-                                                                            <input type="hidden" id="crm_lead_task_id" name="crm_lead_task_id">
                                                                             <select class="form-control editInput" name="user_id" id="getUserList">
-                                                                                <option value="">Select</option>
+                                                                            @foreach($users as $value)
+                                                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                            @endforeach
                                                                             </select>
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
@@ -761,6 +839,9 @@
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task Type <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-6">
                                                                             <select class="form-control editInput" name="task_type_id" id="lead_task_types">
+                                                                                @foreach($task_type as $type)
+                                                                                    <option value="{{$type->id}}">{{$type->title}}</option>
+                                                                                @endforeach
                                                                             </select>
                                                                         </div>
                                                                         <div class="col-sm-2">
@@ -1108,7 +1189,9 @@
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Task Type <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-6">
                                                                             <select class="form-control editInput" name="task_type_id" id="lead_task_types_timer">
-                                                                                <option value="">Select</option>
+                                                                                @foreach($task_type as $type1)
+                                                                                    <option value="{{$type1->id}}">{{$type1->title}}</option>
+                                                                                @endforeach
                                                                             </select>
                                                                         </div>
                                                                         <div class="col-sm-2">
@@ -1211,10 +1294,9 @@
                                                     <th>Created On </th>
                                                     <th>Created By </th>
                                                     <th></th>
-                                                    <th></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="crm_customer_task">
                                             </tbody>
                                         </table>
                                     </div>
@@ -1609,7 +1691,7 @@
                 url: "{{url('/status_change')}}",
                 data: {id:id,status:status,model:model,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if($.trim(data)==1){
                         // $('.alert').show().fadeOut(800);
                         $(".alert").show('slow' , 'linear').delay(2000).fadeOut(setTimeout(function() {
@@ -1642,7 +1724,7 @@
                 url: "{{url('/bulk_delete')}}",
                 data: {ids:ids,model:model,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data){
                         location.reload();
                     }else{
@@ -1676,9 +1758,27 @@ $('.delete_checkbox').on('click', function() {
           $(".customer_id").val(id);
             // $("#form_data")[0].reset();
             $("#CRMPop").modal('show');
+            get_customer_details(id);
             get_all_crm_customer_call(id);
             get_all_crm_customer_email(id);
+            get_all_crm_customer_task(id);
         }
+    }
+    function get_customer_details(id){
+        var token='<?php echo csrf_token();?>'
+            $.ajax({
+                type: "POST",
+                url: "{{url('/get_customer_details')}}",
+                data: {id:id,_token:token},
+                success: function(data) {
+                    console.log(data)
+                    $('.customer_name').text(data.name);
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
     }
 </script>
 <script>
@@ -1726,13 +1826,13 @@ $('.delete_checkbox').on('click', function() {
         // alert(vat_amount)
         var amount = parseFloat($("#amount").val());
         if (!isNaN(vat_amount)) {
-            console.log(1);
+            // console.log(1);
             $("#vat").val(0);
             var calculation=amount*vat_amount/100;
             var gross_amount=amount+calculation;
             $("#gross_amount").val(gross_amount.toFixed(2));
         }else{
-            console.log(2);
+            // console.log(2);
             $("#gross_amount").val(amount.toFixed(2));
         }
     }
@@ -1751,7 +1851,7 @@ $('.delete_checkbox').on('click', function() {
                 url: "{{url('/find_project')}}",
                 data: {customer_id:customer_id,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     const projectArr=data.project;
                     projectArr.forEach((project) => {
                         const option = document.createElement("option");
@@ -1848,7 +1948,7 @@ $('.delete_checkbox').on('click', function() {
             cache: false,
             processData: false,
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data.vali_error){
                         alert(data.vali_error);
                         $("#email").css('border','1px solid red');
@@ -1904,7 +2004,7 @@ job_input.addEventListener('input', function() {
                             job_input.value = `${job.job_ref}`;   
                             hiddenJobInput.value = job.job_ref; 
 
-                            console.log(hiddenJobInput.value); 
+                            // console.log(hiddenJobInput.value); 
                             $('#jobList').empty();            
                             job_input.focus();
                             find_appointment(hiddenJobInput.value);
@@ -1928,7 +2028,7 @@ job_input.addEventListener('input', function() {
 <script>
     function find_appointment(selectedJobRef){
         var id=selectedJobRef.split('JOB-');
-        console.log(id);
+        // console.log(id);
         if(id.length>1){
             var job_id=id[1];
             var token='<?php echo csrf_token();?>'
@@ -1937,7 +2037,7 @@ job_input.addEventListener('input', function() {
                 url: "{{url('/find_appointment')}}",
                 data: {job_id:job_id,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data.length>0){
                         $('#job_appointment_id').prop('disabled',false);
                         var selectHTML = '';
@@ -1985,13 +2085,21 @@ job_input.addEventListener('input', function() {
             $('#NewEmailModel').modal('show');
         }
 
+        const mainCheckbox = document.getElementById('yeson');
+        const optionsDiv = document.getElementById('optionsDiv');
+        // Open the second modal without hiding the first one
+        $('#openSecondModal').on('click', function() {
+            optionsDiv.style.display = 'none';
+            $('#secondModal').modal('show');
+        });
+
 
         function getCRMTypeData() {
         $.ajax({
             url: '{{ route("lead.ajax.getCRMTypeData") }}',
             method: 'GET',
             success: function(response) {
-                console.log(response.Data);
+                // console.log(response.Data);
                 const selectElement = document.getElementById('calls_type');
                 const lead_notes_crm = document.getElementById('lead_notes_crm');
                 const lead_complaint_crm = document.getElementById('lead_complaint_crm');
@@ -2080,7 +2188,7 @@ job_input.addEventListener('input', function() {
                     method: 'POST',
                     data: formData,
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         if(data.vali_error){
                         alert(data.vali_error);
                         $("#user_notifiy").css('border','1px solid red');
@@ -2201,7 +2309,7 @@ job_input.addEventListener('input', function() {
 
                 // Get the CKEditor content
                 document.getElementById('emailMessage').value = editor.getData();
-                console.log(document.getElementById('emailMessage').value);
+                // console.log(document.getElementById('emailMessage').value);
                 var formData = new FormData(document.getElementById('crm_customer_email_form'));
                 $.ajax({
                     url: '{{ url("save_crm_customer_email") }}',
@@ -2210,7 +2318,7 @@ job_input.addEventListener('input', function() {
                     contentType: false,
                     processData: false,
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         if(data.vali_error){
                         alert(data.vali_error);
                         $("#user_notifiy").css('border','1px solid red');
@@ -2272,10 +2380,10 @@ job_input.addEventListener('input', function() {
             document.getElementById('saveCRMLeadNotes').addEventListener('click', function() {
                 // Get the CKEditor content
                 document.getElementById('CRMNotes').value = editor.getData();
-                console.log(document.getElementById('CRMNotes').value);
+                // console.log(document.getElementById('CRMNotes').value);
                 // var formData = new FormData(document.getElementById('crm_lead_notes_form'));
                 var formData = $('#crm_lead_notes_form').serialize();
-                console.log(formData);
+                // console.log(formData);
                 $.ajax({
                     url: '{{ route("lead.ajax.saveCRMLeadNotes") }}',
                     method: 'POST',
@@ -2316,9 +2424,9 @@ job_input.addEventListener('input', function() {
             document.getElementById('saveCRMLeadComplaint').addEventListener('click', function() {
                 // Get the CKEditor content
                 document.getElementById('CRMComplaint').value = editor.getData();
-                console.log(document.getElementById('CRMComplaint').value);
+                // console.log(document.getElementById('CRMComplaint').value);
                 var formData = $('#crm_lead_complaint_form').serialize();
-                console.log(formData);
+                // console.log(formData);
                 $.ajax({
                     url: '{{ route("lead.ajax.saveCRMLeadComplaint") }}',
                     method: 'POST',
@@ -2328,7 +2436,7 @@ job_input.addEventListener('input', function() {
                     success: function(response) {
                         alert(response.message);
                         getComplaintDataAjax();
-                        $('#compliantsModal').modal('hide');
+                        // $('#compliantsModal').modal('hide');
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -2340,6 +2448,71 @@ job_input.addEventListener('input', function() {
         })
         .catch(error => {
             console.error(error);
+        });
+
+        $('#saveCRMLeadTaskWithTimer').on('click', function() {
+            const formTypeInput = document.getElementById('form_type');
+            if (document.getElementById('nav-home').classList.contains('active')) {
+                formTypeInput.value = 'task_form';
+            } else if (document.getElementById('nav-profile').classList.contains('active')) {
+                formTypeInput.value = 'timer_form';
+            }
+
+            var formData = $('#crm_lead_task_form').serialize();
+            $.ajax({
+                url: '{{ url("save_crm_customer_task") }}',
+                method: 'POST',
+                data: formData,
+                success: function(data) {
+                    console.log(data);
+                    if (data.vali_error) {
+                        alert(data.vali_error);
+                        return false;
+                    } else {
+                        const responseData = data.data;
+                        const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
+                        const start_date = moment(responseData.start_date).format('DD/MM/YYYY HH:mm');
+
+                        // Check if the row with the same task id already exists
+                        var existingRow = $('#crm_customer_task tr[data-task-id="' + responseData.id + '"]');
+                        
+                        // Prepare the row HTML content
+                        var html = '<tr data-task-id="' + responseData.id + '">' + // Added data-task-id attribute
+                            '<td> </td>' +
+                            '<td>' + start_date + '</td>' +
+                            '<td><?php echo Auth::user()->name; ?></td>' +
+                            '<td>' + responseData.customer_name + '</td>' +
+                            '<td>' + responseData.type + '</td>' +
+                            '<td>' + responseData.title + '</td>' +
+                            '<td>' + responseData.notes + '</td>' +
+                            '<td>' + responseData.customer_name + '</td>' +
+                            '<td>' + date + '</td>' +
+                            '<td><?php echo Auth::user()->name; ?></td>' +
+                            '<td>' +
+                                '<img src="<?php echo url('public/frontEnd/jobs/images/pencil.png');?>" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#secondModal" class="modal_data_crm_task image_style" ' +
+                                'data-id="'+responseData.id+'" data-title="'+responseData.title+'" data-user_id="'+responseData.user_id+'" data-task_type_id="'+responseData.task_type_id+'" data-start_date="'+responseData.start_date+'" ' +
+                                'data-start_time="'+responseData.start_time+'" data-end_date="'+responseData.end_date+'" data-end_time="'+responseData.end_time+'" data-is_recurring="'+responseData.is_recurring+'" data-notify="'+responseData.notify+'" ' +
+                                'data-notification="'+responseData.notification+'" data-email="'+responseData.email+'" data-sms="'+responseData.sms+'" data-notify_date="'+responseData.notify_date+'" data-notify_time="'+responseData.notify_time+'" data-notes="'+responseData.notes+'">&emsp;' +
+                                '<img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="crm_task_delete image_style" data-delete="'+responseData.id+'">' +
+                            '</td>' +
+                        '</tr>';
+
+                        if (existingRow.length > 0) {
+                            // If the row exists, replace the existing row with the updated one
+                            existingRow.replaceWith(html);
+                        } else {
+                            // If it's a new task, append the row
+                            $("#crm_customer_task").append(html);
+                        }
+
+                        // Close the modal after saving
+                        $('#secondModal').modal('hide');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
 </script>
 
@@ -2353,7 +2526,7 @@ job_input.addEventListener('input', function() {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response.data);
+                // console.log(response.data);
                 var data = response.data;
                 var tableBody = $("#customer_crmData"); 
                 tableBody.empty();
@@ -2403,7 +2576,7 @@ job_input.addEventListener('input', function() {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
                 var tableBody = $("#crm_customer_email"); 
                 tableBody.empty();
@@ -2444,6 +2617,50 @@ job_input.addEventListener('input', function() {
             }
         });
     }
+    function get_all_crm_customer_task(id){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: '{{ url("get_all_crm_customer_task") }}',
+            method: 'POST',
+            data: {
+                id: id,_token:token
+            },
+            success: function(response) {
+                console.log(response);
+                var data = response.data;
+                var tableBody = $("#crm_customer_task"); 
+                tableBody.empty();
+                
+                data.forEach(function(item) {
+                    const date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+                    const start_date = moment(item.start_date).format('DD/MM/YYYY HH:mm');
+                    var html = '<tr data-task-id="' + item.id + '">' +
+                                    '<td> </td>' +
+                                    '<td>' + start_date + '</td>' +
+                                    '<td><?php echo Auth::user()->name; ?></td>' +
+                                    '<td>' + item.customer_name + '</td>' +  
+                                    '<td>' + item.type + '</td>' +        
+                                    '<td>' + item.title + '</td>' +
+                                    '<td>' + item.notes + '</td>' +
+                                    '<td>' + item.customer_name + '</td>' +
+                                    '<td>' + date + '</td>' +
+                                    '<td><?php echo Auth::user()->name; ?></td>' +
+                                    '<td>' +
+                                        '<img src="<?php echo url('public/frontEnd/jobs/images/pencil.png');?>" height="16px" alt="" class="modal_data_crm_task image_style" ' +
+                                        'data-id="'+item.id+'" data-title="'+item.title+'" data-user_id="'+item.user_id+'" data-task_type_id="'+item.task_type_id+'" data-start_date="'+item.start_date+'" ' +
+                                        'data-start_time="'+item.start_time+'" data-end_date="'+item.end_date+'" data-end_time="'+item.end_time+'" data-is_recurring="'+item.is_recurring+'" data-notify="'+item.notify+'" ' +
+                                        'data-notification="'+item.notification+'" data-email="'+item.email+'" data-sms="'+item.sms+'" data-notify_date="'+item.notify_date+'" data-notify_time="'+item.notify_time+'" data-notes="'+item.notes+'">&emsp;' +
+                                        '<img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="crm_task_delete image_style" data-delete="'+item.id+'">' +
+                                    '</td>' +
+                                '</tr>';
+                    tableBody.append(html);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 </script>
 <script>
     function customer_visibility(id){
@@ -2453,7 +2670,7 @@ job_input.addEventListener('input', function() {
             url: "{{url('/visibility_change')}}",
             data: {id:id,_token:token},
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 // visible_check1
                 var visibilityCell = '';
                 if(data.data.customer_visibility == 0){
@@ -2467,5 +2684,137 @@ job_input.addEventListener('input', function() {
         });
     }
 </script>
+<script>
+    $(document).ready(function () {
+    document.getElementById('weekly').style.display = 'none';
+    document.getElementById('monthly').style.display = 'none';
+    document.getElementById('task_end_date').style.display = 'none';
+
+    $('#isRecurring').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('#recurrence_div').show();
+        } else {
+            $('#recurrence_div').hide();
+        }
+    });
+
+    $('input[name="task_end_repe_date"]').on('change', function () {
+
+        // Hide both divs initially
+        $('#repetitation').hide();
+        $('#task_end_date').hide();
+
+        var value = $(this).val();
+        // Show the appropriate div based on the selected radio button
+        if (value === '1') {
+            $('#repetitation').show();
+        } else if (value === '2') {
+            $('#task_end_date').show();
+        }
+    });
+
+    document.getElementById('task_frequency').addEventListener('change', function () {
+        document.getElementById('daily').style.display = 'none';
+        document.getElementById('weekly').style.display = 'none';
+        document.getElementById('monthly').style.display = 'none';
+
+        var selectedValue = this.value;
+        // Show the appropriate div based on the selected option
+        if (selectedValue == 1) {
+            document.getElementById('daily').style.display = 'block';
+        } else if (selectedValue == 2) {
+            document.getElementById('weekly').style.display = 'block';
+        } else if (selectedValue == 3) {
+            document.getElementById('monthly').style.display = 'block';
+        }
+    });
+
+     // start here js for time start and pause
+        let timerInterval;
+        let elapsedSeconds = 0;
+        let isRunning = false;
+
+        function toggleTimer() {
+            if (isRunning) {
+                // Pause the timer
+                clearInterval(timerInterval);
+                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-play"></i> Start';
+            } else {
+                // Start the timer with an interval of 100ms for faster updates
+                timerInterval = setInterval(function() {
+                    elapsedSeconds++;
+                    document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+                    document.getElementById('start_time').value = formatTime(elapsedSeconds);
+                }, 100); // Now the timer updates every 100 milliseconds
+                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
+            }
+            isRunning = !isRunning; // Toggle the running state
+        }
+
+        function formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+        }
+
+        function pad(number) {
+            return number < 10 ? '0' + number : number;
+        }
+
+        document.getElementById('toggleTimerBtn').addEventListener('click', toggleTimer);
+        // End js for time start and end
+
+
+});
+</script>
+<script>
+    $(document).on('click', '.modal_data_crm_task', function() {
+        $("#secondModal").modal('show');
+        var taskId = $(this).data('id');
+        var title = $(this).data('title');
+        var userId = $(this).data('user_id');
+        var taskTypeId = $(this).data('task_type_id');
+        var startDate = $(this).data('start_date');
+        var startTime = $(this).data('start_time');
+        var endDate = $(this).data('end_date');
+        var endTime = $(this).data('end_time');
+        var isRecurring = $(this).data('is_recurring');
+        var notify = $(this).data('notify');
+        var notification = $(this).data('notification');
+        var email = $(this).data('email');
+        var sms = $(this).data('sms');
+        var notifyDate = $(this).data('notify_date');
+        var notifyTime = $(this).data('notify_time');
+        var notes = $(this).data('notes');
+        
+        $('#task_id').val(taskId); 
+        $('#getUserList').val(userId);
+        $('#taskTitle').val(title);
+        $('#lead_task_types').val(taskTypeId);
+        $('#TaskStartDate').val(startDate);
+        $('#TaskStartTime').val(startTime);
+        $('#TaskEndDate').val(endDate);
+        $('#TaskEndTime').val(endTime);
+        $('#lead_task_types').val(taskTypeId);
+        $('#lead_task_types').val(taskTypeId);
+        $('#lead_task_types').val(taskTypeId);
+        $('#notify_date').val(notifyDate);
+        $('#notify_time').val(notifyTime);
+        $('#TaskNotesText').val(notes);
+        if(isRecurring == 1){
+            $('#isRecurring').prop('checked',true);
+        }else{
+            $('#isRecurring').prop('checked',false);
+        }
+        if(notify == 1){
+            $('#yeson').prop('checked',true);
+        }else{
+            $('#yeson').prop('checked',false);
+        }
+        
+    });
+</script>
+
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor5-build-classic/ckeditor.js"></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

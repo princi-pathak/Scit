@@ -317,6 +317,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('save_crm_customer_email','save_crm_customer_email');
 		Route::post('get_all_crm_customer_email','get_all_crm_customer_email');
 		Route::post('visibility_change','visibility_change');
+		Route::post('save_crm_customer_task','save_crm_customer_task');
+		Route::post('get_customer_details','get_customer_details');
+		Route::post('get_all_crm_customer_task','get_all_crm_customer_task');
 	});
 
 	// General section Front 
