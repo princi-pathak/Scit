@@ -81,12 +81,21 @@ class MFCController extends ServiceUserManagementController
         
         foreach ($mfc_records as $key => $value) {
 
+            $title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
+
+
             $first = 0;
 
-            if($value->date == '' ) {  
+            // if($value->date == '' ) {  
+            //     $date = '';
+            // }  else {
+            //     $date = date('d-m-Y', strtotime($value->date));
+            // }
+
+            if ($value->created_at == '') {
                 $date = '';
-            }  else {
-                $date = date('d-m-Y', strtotime($value->date));
+            } else {
+                $date = \Carbon\Carbon::parse($value->created_at)->format('d-m-Y');
             }
 
             if((!empty($date)) || (!empty($value->time))) {
@@ -124,7 +133,7 @@ class MFCController extends ServiceUserManagementController
                     
                     <div class="form-group col-md-9 col-sm-9 col-xs-12 r-p-0">
                         <div class="input-group popovr">
-                            <input type="text" name="edit_su_record_desc[]" class="form-control cus-control edit_record_desc_'.$value->id.' edit_mfc_rcrd"  disabled  value="'.ucfirst($value->title).' '.$start_brct.$date.' '.$value->time.$end_brct.'" maxlength="255"/>';
+                            <input type="text" name="edit_su_record_desc[]" class="form-control cus-control edit_record_desc_'.$value->id.' edit_mfc_rcrd"  disabled  value="'.ucfirst($title).' '.$start_brct.$date.' '.$end_brct.'" maxlength="255"/>';
                              
                             if(!empty($value->info)){
                                 echo '<div class="input-plus color-green"> <i class="fa fa-plus"></i> </div>';

@@ -1335,16 +1335,8 @@
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                </tr>
+                                            <tbody id="crm_customer_note">
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -1519,6 +1511,157 @@
     </div>
 </div>
 <!-- end Calls Modal -->
+ <!-- CRM Add Notes Modal Start -->
+<div class="modal fade" id="NewNotesModel" tabindex="-1" role="dialog" aria-labelledby="notesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notesModalLabel">Notes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCrmNotesBtn" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="crm_lead_notes_form">
+                    @csrf
+                     <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <div class="col-form-label">
+                                <button type="button" class="profileDrop" id="search_contacts">Search Contacts</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Customer<span class="radStar ">*</span></label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="notes_customer_id" id="notes_customer_id">
+                                @foreach($customer as $value)
+                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Contact </label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="notes_contact" id="notes_contact">
+                                
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="#!" class="formicon" id="contact_add"><i class="fa-solid fa-square-plus"></i></a>
+                        </div>
+
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="crm_section_type_id" id="lead_notes_crm"></select>
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="#!" class="formicon" id="openCrmTypeModelNotes"><i class="fa-solid fa-square-plus"></i></a>
+                        </div>
+
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
+                        <div class="col-sm-9">
+                            <div class="col-form-label">
+                                <div id="NotesEditor">
+                                </div>
+                                <textarea name="notes" id="CRMNotes" style="display: none;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2 row">
+                        <label for="" class="col-sm-3 col-form-label">Notify? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="notify" id="notify_notes1" value="0" checked>
+                            <label class="form-check-label editInput" for="notify_notes1"> No </label>
+                            <input class="form-check-input" type="radio" name="notify" id="notify_notes2" value="1">
+                            <label class="form-check-label editInput" for="notify_notes2"> Yes </label>
+                        </div>
+                    </div>
+                    <div id="notification_notes_div">
+                        <div class="mb-2 row">
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <div class="col-sm-9">
+                                <select name="user_id" class="form-control editInput" id="user_notifiy">
+                                    <option value=""></option>
+                                    @foreach($users as $value)
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <div class="col-sm-9">
+                                <label for="calls_notify_who1" class="editInput">
+                                    <input type="checkbox" name="notification" id="calls_notify_who1" value="1" checked> Notification (User Only)
+                                </label>
+                                <label for="calls_notify_who2" class="editInput">
+                                    <input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS
+                                </label>
+                                <label for="calls_notify_who3" class="editInput">
+                                    <input type="checkbox" name="email" id="calls_notify_who3" value="1" checked> Email
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="inputCity" class="col-sm-3 col-form-label">Customer Visible? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="customer_visibility" id="flexRadioDefault1" value="0" checked>
+                            <label class="form-check-label editInput" for="flexRadioDefault1">No</label>
+                            <input class="form-check-input" type="radio" name="customer_visibility" id="flexRadioDefault2" value="1">
+                            <label class="form-check-label editInput" for="flexRadioDefault2">Yes</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMLeadNotes">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CRM Types Modal Notes Start -->
+<div class="modal fade" id="crmTypeModelNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="crm_section_type_notes_form">
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control editInput" name="title" id="type_title_notes">
+                            <input type="hidden" class="form-control editInput" name="crm_section" id="crm_section_notes" value="3">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
+                        <div class="col-sm-9">
+                            <input type="color" class="form-control editInput" name="colour_code" id="colour_code_notes" value="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMTypesNotes">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CRM Types Modal Notes End -->
  <!-- CRM Types Modal Start -->
 <div class="modal fade" id="crmTypeModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -1676,6 +1819,297 @@
     </div>
 </div>
 <!-- CRM Add Email Modal End -->
+  <!--  Modal start here -->
+  <div class="modal fade" id="task_type_modal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="customerModalLabel">Task Type - Add</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    <div class="alert alert-success text-center success_message" style="display:none;height:50px">
+                        <p id="message"></p>
+                    </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="formDtail">
+                                <form id="task_type_form_data" class="customerForm">
+                                    <input type="hidden" name="id" id="id">
+                                    <div class="mb-2 row">
+
+                                        <label for="inputName" class="col-sm-3 col-form-label">Task Type<span class="radStar ">*</span></label>
+
+
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control editInput"
+                                                id="name" name="title" value="">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputProject"
+                                            class="col-sm-3 col-form-label">Status</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control editInput selectOptions"
+                                                id="statusModal" name="status">
+                                                <option value="1" >Active</option>
+                                                <option value="0">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> <!-- End row -->
+                </div>
+                <div class="modal-footer customer_Form_Popup">
+
+                    <button type="button" class="profileDrop" id="save_task_type_data">Save</button>
+                    <!-- <button type="button" class="profileDrop" id="save_dataClose">Save &
+                        Close</button> -->
+                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+                    <!-- end here -->
+    <!-- Contact Modal start here -->
+    <div class="modal fade" id="contact_modal" tabindex="-1" aria-labelledby="customerModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content add_Customer">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="customerModalLabel">Add Customer Contact</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="formDtail">
+                                        <form id="contact_form">
+                                            <div class="mb-2 row">
+                                                <label for="inputProject" class="col-sm-3 col-form-label">Customer<span class="radStar">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control editInput selectOptions" id="contact_customer_id">
+                                                        <option selected disabled>Select Customer</option>
+                                                        <?php foreach($customer as $customer_val){?>
+                                                            <option value="{{$customer_val->id}}">{{$customer_val->name}}</option>
+                                                        <?php }?>
+                                                    </select>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            <div class="mb-2 row">
+                                                <label class="col-sm-3 col-form-label">Default Billing</label>
+                                                <div class="col-sm-9">
+
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="contact_radio" id="contact_default_yes">
+                                                        <label class="form-check-label checkboxtext"
+                                                            for="inlineRadio1">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="contact_radio" id="contact_default_no" checked>
+                                                        <label class="form-check-label checkboxtext"
+                                                            for="inlineRadio2">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">Contact
+                                                    Name <span class="radStar ">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_contact_name">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputProject" class="col-sm-3 col-form-label">Job
+                                                    Title (Position)</label>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control editInput selectOptions get_job_title_result"
+                                                        id="contact_job_titile_id">
+                                                        <option selected disabled>Please Select
+                                                        </option>
+                                                        <?php foreach($job_title as $con_val_title){?>
+                                                            <option value="{{$con_val_title->id}}">{{$con_val_title->name}}</option>
+                                                            <?php }?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <a href="javascript:void(0)" class="formicon job_title_modal"><i
+                                                            class="fa-solid fa-square-plus"></i></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputEmail"
+                                                    class="col-sm-3 col-form-label">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_email">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputTelephone"
+                                                    class="col-sm-3 col-form-label">Telephone</label>
+                                                    <div class="col-sm-2">
+                                                    <select class="form-control editInput selectOptions">
+                                                        @foreach($country_code as $code)
+                                                            <option value="{{$code->id}}">+{{$code->code}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_phone">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputMobile"
+                                                    class="col-sm-3 col-form-label">Mobile</label>
+                                                    <div class="col-sm-2">
+                                                        <select class="form-control editInput selectOptions">
+                                                        @foreach($country_code as $country_code)
+                                                            <option value="{{$country_code->id}}">+{{$country_code->code}}</option>
+                                                        @endforeach
+                                                        </select>
+                                                    </div>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_mobile">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputAddress"
+                                                    class="col-sm-3 col-form-label">Fax</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_fax">
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="formDtail">
+                                        <form action="" class="">
+                                        <div class="mb-2 row">
+                                            <label class="col-sm-3 col-form-label">Address Details</label>
+                                            <div class="col-sm-9">
+
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="contact_default_address" onchange="default_address()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputAddress"
+                                                    class="col-sm-3 col-form-label">Address <span class="radStar ">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <textarea class="form-control textareaInput" id="contact_address" rows="3"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputCity"
+                                                    class="col-sm-3 col-form-label">City</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_city">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputCounty"
+                                                    class="col-sm-3 col-form-label">County</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_country_input">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label for="inputPincode"
+                                                    class="col-sm-3 col-form-label">Pincode</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput"
+                                                        id="contact_pincode">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2 row">
+                                                <label for="inputCountry"
+                                                    class="col-sm-3 col-form-label">Country</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control editInput selectOptions"
+                                                        id="contact_country_id">
+                                                        <option selected disabled>Select Coutry</option>
+                                                        <?php foreach($country as $countryval){?>
+                                                        <option value="{{$countryval->id}}" class="contact_country_id">{{$countryval->name}} ({{$countryval->code}})</option>
+                                                        <?php }?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div> <!-- End row -->
+
+                        </div>
+                        <div class="modal-footer customer_Form_Popup">
+
+                            <button type="button" class="profileDrop" onclick="save_contact()">Save</button>
+                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- end here -->
+         <!-- Job title Modal start -->
+     <div class="modal fade" id="job_modaltitle" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thirdModalLabel">Job Title - Add</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="job_title_form">
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="radStar ">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" name="job_title_name" class="form-control editInput" id="job_title_name" value="" placeholder="Job Title">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-9">
+                                <select id="job_title_status" name="job_title_status" class="form-control editInput">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pageTitleBtn">
+                            <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_job_title()"> Save</a>
+                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- end here -->
+
             </div>
         </di>
     </div>
@@ -1691,7 +2125,7 @@
                 url: "{{url('/status_change')}}",
                 data: {id:id,status:status,model:model,_token:token},
                 success: function(data) {
-                    // console.log(data);
+                    console.log(data);
                     if($.trim(data)==1){
                         // $('.alert').show().fadeOut(800);
                         $(".alert").show('slow' , 'linear').delay(2000).fadeOut(setTimeout(function() {
@@ -1724,7 +2158,7 @@
                 url: "{{url('/bulk_delete')}}",
                 data: {ids:ids,model:model,_token:token},
                 success: function(data) {
-                    // console.log(data);
+                    console.log(data);
                     if(data){
                         location.reload();
                     }else{
@@ -1762,6 +2196,7 @@ $('.delete_checkbox').on('click', function() {
             get_all_crm_customer_call(id);
             get_all_crm_customer_email(id);
             get_all_crm_customer_task(id);
+            get_all_crm_customer_note(id);
         }
     }
     function get_customer_details(id){
@@ -1772,7 +2207,14 @@ $('.delete_checkbox').on('click', function() {
                 data: {id:id,_token:token},
                 success: function(data) {
                     console.log(data)
-                    $('.customer_name').text(data.name);
+                    $('.customer_name').text(data.customer.name);
+                    $("#notes_customer_id").val(data.customer.id);
+                    // 
+                    var selectHTML='';
+                    $.each(data.contact, function(index, contact) {
+                            selectHTML += '<option value="' + contact.id + '">' + contact.contact_name + '</option>';
+                            $("#notes_contact").html(selectHTML);
+                        });
                 },
                 error: function(xhr, status, error) {
                    var errorMessage = xhr.status + ': ' + xhr.statusText;
@@ -1851,7 +2293,7 @@ $('.delete_checkbox').on('click', function() {
                 url: "{{url('/find_project')}}",
                 data: {customer_id:customer_id,_token:token},
                 success: function(data) {
-                    // console.log(data);
+                    console.log(data);
                     const projectArr=data.project;
                     projectArr.forEach((project) => {
                         const option = document.createElement("option");
@@ -1948,7 +2390,7 @@ $('.delete_checkbox').on('click', function() {
             cache: false,
             processData: false,
                 success: function(data) {
-                    // console.log(data);
+                    console.log(data);
                     if(data.vali_error){
                         alert(data.vali_error);
                         $("#email").css('border','1px solid red');
@@ -2037,7 +2479,7 @@ job_input.addEventListener('input', function() {
                 url: "{{url('/find_appointment')}}",
                 data: {job_id:job_id,_token:token},
                 success: function(data) {
-                    // console.log(data);
+                    console.log(data);
                     if(data.length>0){
                         $('#job_appointment_id').prop('disabled',false);
                         var selectHTML = '';
@@ -2092,14 +2534,41 @@ job_input.addEventListener('input', function() {
             optionsDiv.style.display = 'none';
             $('#secondModal').modal('show');
         });
+        $('#openThirdModal').on('click', function() {
+            $('#task_type_modal').modal('show');
+        });
+        $('#openThirdModal2').on('click', function() {
+            $('#task_type_modal').modal('show');
+        });
 
+        // Notes model show and hide
+        const openNotesModel = document.getElementById('openNotesModel');
+        const NewNotesModel = document.getElementById('NewNotesModel');
+        openNotesModel.onclick = function() {
+            getCRMTypeData();
+            $('#NewNotesModel').modal('show');
+        }
+         // CRM Section Type ADD model in Complaints Js Start for model  show
+         const openCrmTypeModelNotes = document.getElementById('openCrmTypeModelNotes');
+        const crmTypeModelNotes = document.getElementById('crmTypeModelNotes');
+        openCrmTypeModelNotes.onclick = function() {
+            $('#crmTypeModelNotes').modal('show');
+        }
 
+        $(".job_title_modal").on('click', function(){
+            $("#job_title_form")[0].reset();
+            $("#job_modaltitle").modal('show');
+        });
+        $("#contact_add").on('click', function(){
+            $('#contact_modal').modal('show');
+        });
+        
         function getCRMTypeData() {
         $.ajax({
             url: '{{ route("lead.ajax.getCRMTypeData") }}',
             method: 'GET',
             success: function(response) {
-                // console.log(response.Data);
+                console.log(response.Data);
                 const selectElement = document.getElementById('calls_type');
                 const lead_notes_crm = document.getElementById('lead_notes_crm');
                 const lead_complaint_crm = document.getElementById('lead_complaint_crm');
@@ -2188,7 +2657,7 @@ job_input.addEventListener('input', function() {
                     method: 'POST',
                     data: formData,
                     success: function(data) {
-                        // console.log(data);
+                        console.log(data);
                         if(data.vali_error){
                         alert(data.vali_error);
                         $("#user_notifiy").css('border','1px solid red');
@@ -2318,7 +2787,7 @@ job_input.addEventListener('input', function() {
                     contentType: false,
                     processData: false,
                     success: function(data) {
-                        // console.log(data);
+                        console.log(data);
                         if(data.vali_error){
                         alert(data.vali_error);
                         $("#user_notifiy").css('border','1px solid red');
@@ -2385,15 +2854,53 @@ job_input.addEventListener('input', function() {
                 var formData = $('#crm_lead_notes_form').serialize();
                 // console.log(formData);
                 $.ajax({
-                    url: '{{ route("lead.ajax.saveCRMLeadNotes") }}',
+                    url: '{{ url("save_crm_customer_notes") }}',
                     method: 'POST',
                     data: formData,
                     // processData: false,  
                     // contentType: false,  
                     success: function(response) {
-                        alert(response.message);
-                        $('#NewNotesModel').modal('hide');
-                        getNotesDataAjax();
+                        console.log(response);
+                        if(response.vali_error){
+                        alert(response.vali_error);
+                        $("#user_notifiy").css('border','1px solid red');
+                        $('#user_notifiy').focus();
+                        return false;
+                    }else if(response.success){
+                            const responseData = response.data; 
+                            const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
+                            var visibilityCell = '';
+
+                            if (responseData.customer_visibility == "0") {
+                                visibilityCell += '<span class="grayCheck" onclick="customer_visibility1('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            } else if (responseData.customer_visibility == "1") {
+                                visibilityCell += '<span class="grencheck" onclick="customer_visibility1('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            }
+                            var contact;
+                            if(responseData.contact == ''){
+                                contact=responseData.customer_name;
+                            }else{
+                                contact=responseData.contact;
+                            }
+
+                            var html = '<tr>' +
+                                '<td>' + date + '</td>' +
+                                '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                                '<td>' + contact + '</td>' +  
+                                '<td>'+ responseData.type +'</td>' +        
+                                '<td>' + responseData.notes + '</td>' +
+                                '<td id="visible_note'+responseData.id+'">' + visibilityCell + '</td>' +
+                                '<td><i class="fa fa-phone"></i> ' +
+                                '<i class="fa fa-envelope"></i> ' +
+                                '<i class="fa fa-list-ul"></i> ' +
+                                '<i class="fa fa-file"></i> ' +
+                                '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                                '</tr>';
+                            $("#crm_customer_note").append(html);
+                            $('#NewNotesModel').modal('hide');
+                        } else {
+                            alert("Something went wrong");
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -2514,6 +3021,72 @@ job_input.addEventListener('input', function() {
                 }
             });
         });
+        $('#save_task_type_data').on('click', function(){
+            var token='<?php echo csrf_token();?>'
+            var title = $("#name").val();
+            var status = $.trim($('#statusModal option:selected').val());
+            var home_id = '<?php echo Auth::user()->home_id;?>';
+            if(title == ''){
+                $("#name").css('border','1px solid red');
+                return false;
+            }else{
+                $("#name").css('border','');
+                $.ajax({
+                    type: "POST",
+                    url: '{{ url("/save_task_type") }}',
+                    data: {home_id: home_id, title: title, status: status, _token: token},
+                    success: function(data) {
+                        console.log(data);
+                        if(data.vali_error){
+                            alert(data.vali_error);
+                            return false;
+                        }else if(data.data && data.data.original && data.data.original.error){
+                            alert(data.data.original.error);
+                            return false;
+                        }else{
+                            $("#task_type_modal").modal('hide');
+                            var html='<option value="'+data.data.id+'">'+data.data.title+'</option>';
+                            $("#lead_task_types").append(html);
+                            
+                        }
+                    } 
+                });
+            }
+        });
+        // Ajax Call for saving CRM section Type for notes
+        $('#saveCRMTypesNotes').on('click', function() {
+            var title = $('#type_title_notes').val();
+            var colourCode = $('#colour_code_notes').val();
+            var crmSection = $('#crm_section_notes').val();
+
+            var formData = {
+                title: title,
+                colour_code: colourCode,
+                crm_section: crmSection
+            };
+            console.log(formData);
+            addCRMTypes(formData, 3);
+        });
+        function addCRMTypes(formData, type) {
+            $.ajax({
+                url: '{{ route("lead.ajax.saveCRMSectionType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    if (type === 3) {
+                        $('#crmTypeModelNotes').modal('hide');
+                    } else if (type === 4) {
+                        $('#crmTypeModelComplaint').modal('hide');
+                    }
+                    getCRMTypeData();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
 </script>
 
 <script>
@@ -2526,7 +3099,7 @@ job_input.addEventListener('input', function() {
                 id: id,_token:token
             },
             success: function(response) {
-                // console.log(response.data);
+                console.log(response.data);
                 var data = response.data;
                 var tableBody = $("#customer_crmData"); 
                 tableBody.empty();
@@ -2576,7 +3149,7 @@ job_input.addEventListener('input', function() {
                 id: id,_token:token
             },
             success: function(response) {
-                // console.log(response);
+                console.log(response);
                 var data = response.data;
                 var tableBody = $("#crm_customer_email"); 
                 tableBody.empty();
@@ -2661,6 +3234,61 @@ job_input.addEventListener('input', function() {
             }
         });
     }
+    function get_all_crm_customer_note(id){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: '{{ url("get_all_crm_customer_note") }}',
+            method: 'POST',
+            data: {
+                id: id,_token:token
+            },
+            success: function(response) {
+                console.log(response);
+                var data = response.data;
+                var tableBody = $("#crm_customer_note"); 
+                tableBody.empty();
+                
+                data.forEach(function(item) {
+                    
+                    var date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+                    
+              
+                    var visibilityCell = '';
+                    if (item.customer_visibility === 0) {
+                        visibilityCell = '<span class="grayCheck" onclick="customer_visibility1('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    } else if (item.customer_visibility === 1) {
+                        visibilityCell = '<span class="grencheck" onclick="customer_visibility1('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    }
+                    var contact;
+                    if(item.contact == ''){
+                        contact=item.customer_name;
+                    }else{
+                        contact=item.contact;
+                    }
+
+                    var html = '<tr>' +
+                        '<td>' + date + '</td>' +
+                        '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                        '<td>' + contact + '</td>' +  
+                        '<td>'+ item.type +'</td>' +        
+                        '<td>' + item.notes + '</td>' +
+                        '<td id="visible_note'+item.id+'">' + visibilityCell + '</td>' +
+                        '<td><i class="fa fa-phone"></i> ' +
+                        '<i class="fa fa-envelope"></i> ' +
+                        '<i class="fa fa-list-ul"></i> ' +
+                        '<i class="fa fa-file"></i> ' +
+                        '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                        '</tr>';
+
+                    // Append each row to the table body
+                    tableBody.append(html);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 </script>
 <script>
     function customer_visibility(id){
@@ -2670,7 +3298,7 @@ job_input.addEventListener('input', function() {
             url: "{{url('/visibility_change')}}",
             data: {id:id,_token:token},
             success: function(data) {
-                // console.log(data);
+                console.log(data);
                 // visible_check1
                 var visibilityCell = '';
                 if(data.data.customer_visibility == 0){
@@ -2815,6 +3443,82 @@ job_input.addEventListener('input', function() {
         
     });
 </script>
-
+<script>
+    function save_job_title(){
+        var token='<?php echo csrf_token();?>'
+        var name=$("#job_title_name").val();
+        var status=$("#job_title_status").val();
+        var home_id='<?php echo Auth::user()->home_id; ?>'
+        if(name == ''){
+        $("#job_title_name").css('border','1px solid red');
+        return false;
+        }else{
+            $("#job_title_name").css('border','');
+            $.ajax({
+                type: "POST",
+                url: "{{url('/save_job_title')}}",
+                data: {name:name,status:status,home_id:home_id,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    
+                    $("#job_modaltitle").modal('hide');
+                    $('.get_job_title_result').append(data);
+                    // window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    }
+    function save_contact(){
+        var token='<?php echo csrf_token();?>'
+        var default_billing; 
+        if ($('#contact_default_yes').is(':checked')) {
+            default_billing=1;
+        }else {
+            default_billing=0;
+        }
+        var customer_id=$("#contact_customer_id").val();
+        var contact_name=$("#contact_contact_name").val();
+        var job_title_id=$("#contact_job_titile_id").val();
+        var email=$("#contact_email").val();
+        var telephone=$("#contact_phone").val();
+        var mobile=$("#contact_mobile").val();
+        var fax=$("#contact_fax").val();
+        var address=$("#contact_address").val();
+        var city=$("#contact_city").val();
+        var country=$("#contact_country_input").val();
+        var postcode=$("#contact_pincode").val();
+        var country_id=$("#contact_country_id").val();
+        if(customer_id == '' || customer_id == null){
+            $("#contact_customer_id").css('border','1px solid red');
+            return false;
+        }else if(contact_name == ''){
+            $("#contact_customer_id").css('border','');
+            $('#contact_contact_name').css('border','1px solid red');
+            return false;
+        }else if(address == ''){
+            $('#contact_contact_name').css('border','');
+            $("#contact_address").css('border','1px solid red');
+            return false;
+        }else {
+            $("#contact_customer_id").css('border','');
+            $("#contact_contact_name").css('border','');
+            $("#contact_address").css('border','');
+            $.ajax({
+                type: "POST",
+                url: "{{url('/contact_save')}}",
+                data: {country_id:country_id,postcode:postcode,country:country,city:city,address:address,fax:fax,mobile:mobile,telephone:telephone,email:email,job_title_id:job_title_id,contact_name:contact_name,customer_id:customer_id,default_billing:default_billing,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    $("#contact_modal").modal('hide');
+                    $("#notes_contact").append(data);
+                }
+            });
+        }
+    }
+</script>
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor5-build-classic/ckeditor.js"></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

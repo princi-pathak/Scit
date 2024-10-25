@@ -27,7 +27,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div id="editable-sample_length" class="dataTables_length">
-                                        <form method='post' action="{{ url('admin/form-builder') }}" id="records_per_page_form">
+                                        <form method='post' action="{{ url('admin/form-builder') }}" id="records_per_page_form" >
                                             <label>
                                                 <select name="limit"  size="1" aria-controls="editable-sample" class="form-control xsmall select_limit">
                                                     <option value="10" {{ ($limit == '10') ? 'selected': '' }}>10</option>
