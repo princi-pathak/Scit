@@ -90,15 +90,21 @@ class BmpController extends ServiceUserManagementController
         }
 
         foreach ($bmp_form as $key => $value) {
-
+            $title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
 
             $details_check = (!empty($value->details)) ? '<i class="fa fa-check"></i>' : '';
             //$plan_check    = (!empty($value->plan)) ? '<i class="fa fa-check"></i>' : '';
             //$review_check  = (!empty($value->review)) ? '<i class ="fa fa-check"></i>' : '';
-            if ($value->date == '') {
+            // if ($value->date == '') {
+            //     $date = '';
+            // } else {
+            //     $date = date('d-m-Y', strtotime($value->date));
+            // }
+
+            if ($value->created_at == '') {
                 $date = '';
             } else {
-                $date = date('d-m-Y', strtotime($value->date));
+                $date = \Carbon\Carbon::parse($value->created_at)->format('d-m-Y');
             }
 
             if ((!empty($date)) || (!empty($value->time))) {
@@ -115,7 +121,7 @@ class BmpController extends ServiceUserManagementController
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr">
                                     <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '">
-                                    <input type="text" class="form-control" name="bmp_title_name" disabled value="' . $value->title . ' ' . $start_brct . $date . ' ' . $value->time . $end_brct . '" maxlength="255"/>
+                                    <input type="text" class="form-control" name="bmp_title_name" disabled value="' . $title . ' ' . $start_brct . $date . ' ' . $end_brct . '" maxlength="255"/>
                                      
                                     <div class="input-plus color-green"> <i class="fa fa-plus"></i> 
                                     </div>   

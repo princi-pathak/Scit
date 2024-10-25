@@ -6,6 +6,7 @@
 .search_bmp_title{
     display:none;
 }
+
 </style>
 <!-- Add Behaviour Management Plans Modal -->
 <div class="modal fade my_plan_model" id="BMPAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -20,7 +21,7 @@
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default add-new-btn active" type="button"> Add New </button>
                         <button class="btn label-default logged-btn active logged-bmp-btn" type="button"> Logged Plans </button>
-                        <button class="btn label-default search-btn active" type="button"> Search </button>
+                        <!-- <button class="btn label-default search-btn active" type="button"> Search </button> -->
                     </div>
                     <!-- Add new Details -->
                     <div class="add-new-box risk-tabs custm-tabs">
@@ -70,6 +71,11 @@
                             @include('frontEnd.common.popup_alert_messages')
                         
                             <div class="dynamic-form-fields"> </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="uploadPopImg mt-0" id="hideImageDiv"><img id="imagePreview" class="my-2" src="" width="100px"></div>
+                            </div>
+
                             <div class="modal-footer m-t-0 m-b-15 modal-bttm">
                                 <!-- <input type="hidden" name="plan_detail" value=""> -->
                                 <input type="hidden" name="service_user_id" value="{{ $service_user_id }}">
@@ -724,6 +730,7 @@
                     if(isAuthenticated(resp) == false) {
                         return false;
                     }
+                    
                     $('.view-bmp-record').html(resp);
 
                     $('.loader').hide();

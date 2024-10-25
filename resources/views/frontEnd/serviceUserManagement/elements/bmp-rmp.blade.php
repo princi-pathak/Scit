@@ -13,7 +13,7 @@
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default active risk-add-btn" type="button"> Add New </button>
                         <button class="btn label-default logged-btn logged-plan-btn" type="button"> Logged Plans </button>
-                        <button class="btn label-default risk-search-btn" type="button"> Search </button>
+                        <!-- <button class="btn label-default risk-search-btn" type="button"> Search </button> -->
                     </div>                      
                     <!-- Add new Details -->
                     <div class="risk-add-box risk-tabs risk-label-left">
