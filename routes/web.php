@@ -320,6 +320,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('save_crm_customer_task','save_crm_customer_task');
 		Route::post('get_customer_details','get_customer_details');
 		Route::post('get_all_crm_customer_task','get_all_crm_customer_task');
+		Route::post('save_crm_customer_notes','save_crm_customer_notes');
+		Route::post('get_all_crm_customer_note','get_all_crm_customer_note');
 	});
 
 	// General section Front 
