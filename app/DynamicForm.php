@@ -44,8 +44,7 @@ class DynamicForm extends Model //FormBuilder
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h3 class="m-t-0 m-b-20 clr-blue fnt-20 dynamic_form_h3"> Fill Form Details </h3>
-                                  
-                                </div>
+                              
                                 ';
             $formdata .= $static_fields;
             $label_col_val = '1';
@@ -138,6 +137,8 @@ class DynamicForm extends Model //FormBuilder
             $result['response']         = true;
             $result['form_builder_id']  = $form_builder_id;
             $result['pattern']          = $formdata;
+            $result['image']            = asset('public/images/formio/' . $form->image) ;
+            $result['imageName']        = $form->image;
         } else{
             $result['response']     = false;
         }
@@ -1452,7 +1453,8 @@ class DynamicForm extends Model //FormBuilder
         $form->location_id      = $data['location_id']; 
         // $form->title            = $data['title'];
         $form->title            = null;
-        $form->time             = $data['time']; 
+        // $form->time             = $data['time']; 
+        $form->time             =  null; 
         // $form->details          = $data['details']; 
         $form->details          = null; 
         $form->pattern_data     = $formdata; 

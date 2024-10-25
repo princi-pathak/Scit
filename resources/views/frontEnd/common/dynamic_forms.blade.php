@@ -29,8 +29,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 <div class="row">
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default add-new-btn active" type="button"> Add New </button>
-                        <button class="btn label-default logged-btn dyn-logged-btn active logged-dyn-btn" type="button"> Logged Plans </button>
-                        <button class="btn label-default search-btn active" type="button"> Search </button>
+                        <!-- <button class="btn label-default logged-btn dyn-logged-btn active logged-dyn-btn" type="button"> Logged Plans </button> -->
+                        <!-- <button class="btn label-default search-btn active" type="button"> Search </button> -->
                     </div>
                     <!-- Add new Details -->
                     <div class="add-new-box risk-tabs custm-tabs">
@@ -90,6 +90,19 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <!--</div>-->
 
                             <!-- option for save in daily log -->
+                            <style>
+                                .uploadPopImg {
+                                    width: 120px;
+                                    height: 120px;
+                                    /* border: 1px solid #ddd; */
+                                    margin: 10px auto;
+                                }
+
+                                #hideImageDiv {
+                                    display: none;
+                                }
+                            </style>
+
 
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="below-divider"></div>
@@ -97,7 +110,14 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <!-- alert messages -->
                             @include('frontEnd.common.popup_alert_messages')
 
-                            <div class="dynamic-form-fields"> </div>
+                            <div class="dynamic-form-fields">
+
+
+
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="uploadPopImg mt-0" id="hideImageDiv"><img id="imagePreview" class="my-2" src="" width="100px"></div>
+                            </div>
 
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel ">      
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
@@ -303,10 +323,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group modal-footer m-t-0 modal-bttm">
-                                <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true">
-                                    Cancel </button>
+                                <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
                                 <input type="hidden" name="dyn_form_id" value="" id="dyn_form_id">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn btn-warning sbt-su-dyn-frm-log" type="submit"> Submit </button>
@@ -324,7 +342,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 <script>
     $(document).ready(function() {
         $('.dynamic_form_select').on('change', function() {
-
             var form_select = $(this);
             var model_id = form_select.closest('.modal').attr('id');
 
@@ -349,10 +366,16 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     dataType: "json",
                     success: function(resp) {
                         console.log(resp);
+                        console.log(resp['image']);
                         if (isAuthenticated(resp) == false) {
                             return false;
                         }
-
+                        if (resp['imageName'] != undefined) {
+                            document.getElementById('hideImageDiv').style.display = "block";
+                        } else {
+                            document.getElementById('hideImageDiv').style.display = "none";
+                        }
+                        document.getElementById('imagePreview').src = resp['image'];
                         var response = resp['response'];
                         if (response == true) {
 
@@ -415,20 +438,21 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             var form_id = $(this).closest('form').attr('id');
             // alert(form_id); //return false;
             var service_user = $('#' + model_id + ' .su_n_id');
+            // alert(service_user); 
             var form_builder = $('#' + model_id + ' .dynamic_form_select');
             // alert(form_builder); //return false;
             var static_title = $('#' + model_id + ' .static_title');
 
-            var static_title_vl = static_title.val();
-            if (static_title_vl == undefined) {
-                return false;
-            }
+            // var static_title_vl = static_title.val();
+            // if (static_title_vl == undefined) {
+            //     return false;
+            // }
 
             var service_user_id = service_user.val().trim();
             // alert(service_user_id); 
             var form_builder_id = form_builder.val().trim();
             // alert(form_builder_id); 
-            var static_title_vl = static_title_vl.trim();
+            // var static_title_vl = static_title_vl.trim();
             // alert(static_title_vl); return false;
             var err = 0;
 
@@ -446,22 +470,21 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 form_builder.parent().removeClass('red_border');
             }
 
-            if (static_title_vl == '') {
-                static_title.addClass('red_border');
-                err = 1;
-            } else {
-                static_title.removeClass('red_border');
-            }
+            // if (static_title_vl == '') {
+            //     static_title.addClass('red_border');
+            //     err = 1;
+            // } else {
+            //     static_title.removeClass('red_border');
+            // }
 
             if (err == 1) {
                 return false;
             }
 
             var formdata = $('#' + form_id).serialize();
-            //alert(formdata); return false;
+            alert(formdata); // return false;
             //$('.loader').show();
             // $('body').addClass('body-overflow');
-            //console.log(formdata);
             $.ajax({
                 type: 'post',
                 url: "{{ url('/service/dynamic-form/save') }}",
@@ -469,12 +492,13 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 //dataType: 'json',
                 success: function(resp) {
                     console.log(resp);
+                    alert("ldkjflk");
                     if (isAuthenticated(resp) == "false") {
                         return false;
                     }
 
                     if (resp == "true") {
-                        //console.log("true");
+                        console.log("true");
                         $('#' + form_id + ' span.popup_success_txt').text('Record has been Added Successfully');
                         $('#' + form_id + ' .popup_success').show();
                         setTimeout(function() {

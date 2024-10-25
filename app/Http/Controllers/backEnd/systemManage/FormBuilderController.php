@@ -68,10 +68,10 @@ class FormBuilderController extends Controller
     }
 
     public function add(Request $request) { 
-
         if($request->isMethod('post')) {     
             // dd($request);
             $data = $request->input();
+            // dd($request);
           // echo "<pre>"; print_r($data); die;
             
             if(isset($data['formdata'])){
@@ -80,6 +80,19 @@ class FormBuilderController extends Controller
                 return redirect()->back()->with('error','No input field added in the form.'); 
             }
             
+            // $imageName = time() . '.' . $request->form_image->extension();
+            // $request->image->move(public_path('images/formio'), $imageName);
+
+            $image = $request->file('form_image');
+
+            // Create a unique file name
+            $imageName = time() . '.' . $image->extension();
+        
+            // Move the file to the public/images directory
+            $image->move(public_path('images/formio'), $imageName);
+
+
+
             foreach (explode(',', $data['form_home_ids']) as $homeId) {
                 $home_id            = $homeId;
                 $form               = new DynamicFormBuilder;
@@ -90,6 +103,7 @@ class FormBuilderController extends Controller
                 $form->location_ids = $data['form_location_ids'];
                 $form->pattern      = json_encode($data['formdata']);
                 $form->alert_field  =  $data['alert_field'];
+                $form->image        =  $imageName;
                 $form->reminder_day =  $data['form_reminder_day'];
                 $form->send_to      =  $data['send_to'];
 
