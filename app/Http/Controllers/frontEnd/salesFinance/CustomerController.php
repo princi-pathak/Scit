@@ -16,9 +16,11 @@ use App\Models\Week;
 use App\Models\Region;
 use App\Models\Country;
 use App\Models\Job_title;
+use App\Models\Task_type;
 use App\Models\Customer_type;
 use App\Models\CRMSectionType;
 use App\Models\Crm_customer_call;
+use App\Models\Crm_customer_task;
 use App\Models\Crm_customer_email;
 use App\Models\Construction_currency;
 use App\Models\Construction_tax_rate;
@@ -160,6 +162,7 @@ class CustomerController extends Controller
         // echo "<pre>";print_r($data['customer_email_to']);die;
         $data['rate']=Construction_tax_rate::getAllTax_rate($home_id,'Active');
         $data['weeks'] = Week::getWeeklist();
+        $data['task_type']=Task_type::getAllTask_type($home_id);
         return view('frontEnd.salesAndFinance.jobs.active_customer', $data);
     }
     private function customer_email_to($home_id){
@@ -610,6 +613,103 @@ class CustomerController extends Controller
         }catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
+    }
+    public function save_crm_customer_task(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        if($request->form_type == 'task_form'){
+            $validator = Validator::make($request->all(), [
+                'title' => 'required',
+                'task_type_id' => 'required',
+                'start_date' => 'required',
+                'start_time' => 'required',
+                'end_date' => 'required',
+                'end_time' => 'required',
+            ]);
+        }else{
+            $validator = Validator::make($request->all(), [
+                'title' => 'required',
+                'task_type_id' => 'required',
+            ]);
+        }
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        if ($request->notify == 1) {
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
+            $notification = $sms = $email = null;
+        }
+        $values = [
+            'id'=>$request->task_id,
+            'home_id' => Auth::user()->home_id,
+            'customer_id' => $request->task_customer_id,
+            'user_id' => $request->user_id ?? $request->user_id_timer,
+            'title' => $request->title ?? $request->title_timer,
+            'task_type_id' => $request->task_type_id ?? $request->task_type_id_time,
+            'start_date' => $request->start_date ?? Carbon::now()->toDateString(),
+            'start_time' => $request->start_time ?? Carbon::now()->toTimeString(),
+            'end_date' => $request->end_date,
+            'end_time' => $request->end_time,
+            'is_recurring' => $request->is_recurring ?? false,
+            'notify' => $request->notify,
+            'notification' => $notification,
+            'sms' => $sms,
+            'email' => $email,
+            'notify_date' => $request->task_date,
+            'notify_time' => $request->task_time,
+            'notes' => $request->notes
+        ];
+        // echo "<pre>";print_r($values);die;
+        try{
+            $crm_customer_task = Crm_customer_task::save_customer_task($values);
+            $task_type=Task_type::find($crm_customer_task->task_type_id);
+            $customer=Customer::find($crm_customer_task->customer_id);
+            $data=$crm_customer_task;
+            $data['type']=$task_type->title;
+            $data['customer_name']=$customer->name;
+            return response()->json(['success' =>true,'data'=>$data]);
+        }catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+    public function get_customer_details(Request $request){
+        return Customer::find($request->id);
+    }
+    public function get_all_crm_customer_task(Request $request){
+        $getAllcrmlist=Crm_customer_task::getAllcrmTask($request->id);
+        // echo "<pre>";print_r($getAllcrmlist);die;
+        $data=array();
+        foreach($getAllcrmlist as $val){
+            $task_type=Task_type::find($val->task_type_id);
+            $customer=Customer::find($val->customer_id);
+            $data[]=[
+                'id'=>$val->id,
+                'home_id'=>$val->home_id,
+                'customer_id'=>$val->customer_id,
+                'user_id'=>$val->user_id,
+                'title'=>$val->title,
+                'task_type_id'=>$val->task_type_id,
+                'start_date'=>$val->start_date,
+                'start_time'=>$val->start_time,
+                'end_date'=>$val->end_date,
+                'end_time'=>$val->end_time,
+                'is_recurring'=>$val->is_recurring,
+                'notify'=>$val->notify,
+                'notification'=>$val->notification,
+                'email'=>$val->email,
+                'sms'=>$val->sms,
+                'notify_date'=>$val->notify_date,
+                'notify_time'=>$val->notify_time,
+                'notes'=>$val->notes,
+                'type'=>$task_type->title,
+                'customer_name'=>$customer->name
+            ];
+        }
+        return response()->json(['success' =>true,'data'=>$data]);
     }
    
 }
