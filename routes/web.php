@@ -464,6 +464,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('lead/getCRMTaskDataRecurring', 'getCRMTaskDataRecurring')->name('lead.ajax.getCRMTaskDataRecurring');
 		Route::get('lead/getUserList', 'getUserList')->name('lead.ajax.getUserList');
 		Route::post('lead/getLeadDataWithRecurrence', 'getLeadDataWithRecurrence')->name('lead.ajax.getLeadDataWithRecurrence');
+
+		
 	});
 
 	Route::controller(FrontendQuoteController::class)->group(function () {
@@ -498,6 +500,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
 
 		Route::post('/quote/saveQuoteData', 'saveQuoteData');
+
+		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
+
 
 	});
 

@@ -562,8 +562,8 @@
                                         </div>
                                         <div class="tab-pane fade" id="nav-Tasks" role="tabpanel" aria-labelledby="nav-Tasks-tab" tabindex="0">
                                             <div class="tabheadingTitle">
-                                                <a href="#" class="profileDrop me-3"> New Appointments</a>
-                                                <a href="#" class="profileDrop ms-3"> Send To Planner</a>
+                                                <a href="#!" class="profileDrop me-3" onclick="insrtAppoinment()"> New Appointments</a>
+                                                <a href="#!" class="profileDrop ms-3"> Send To Planner</a>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="productDetailTable mt-3">
@@ -578,88 +578,13 @@
                                                                 <th>Status </th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="d-flex">
-                                                                        <p class="leftNum">1</p>
-                                                                        <select class="form-control editInput selectOptions" id="inputJobType">
-                                                                            <option>Select user</option>
-                                                                            <option>Default</option>
-                                                                        </select>
-                                                                        <a href="#!" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
-                                                                    </div>
-                                                                    <div class="alertBy">
-                                                                        <label><strong>Alert By :</strong></label>
-                                                                        <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                                            <label class="form-check-label" for="inlineCheckbox1">SMS</label>
-                                                                        </div>
-                                                                        <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                                            <label class="form-check-label" for="inlineCheckbox2">Email</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="addDateAndTime">
-                                                                        <div class="startDate">
-                                                                            <input type="date" name="date" class=" editInput">
-                                                                            <input type="time" name="time" class=" editInput">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pt-3">
-                                                                        <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" type="checkbox" id="floatingAppointment" value="option2">
-                                                                            <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="addDateAndTime">
-                                                                        <div class="endDate">
-                                                                            <input type="date" name="date" class=" editInput">
-                                                                            <input type="time" name="time" class=" editInput">
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="addTextarea">
-                                                                        <textarea cols="40" rows="5" placeholder="Type Notes...">Type Notes... </textarea>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="col-2">
-                                                                    <div class="appoinment_type">
-                                                                        <select class="form-control editInput selectOptions" id="inputJobType">
-                                                                            <option>Select user</option>
-                                                                            <option>Default</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="Priority">
-                                                                        <label>Priority :</label>
-                                                                        <select class="form-control editInput selectOptions" id="inputJobType">
-                                                                            <option>Select user</option>
-                                                                            <option>Default</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="statuswating">
-                                                                        <select class="form-control editInput selectOptions" id="inputJobType">
-                                                                            <option>Select user</option>
-                                                                            <option>Default</option>
-                                                                        </select>
-                                                                        <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
-                                                                    </div>
-                                                                    <div class="tabheadingTitle">
-                                                                        <a href="#" class="profileDrop me-3"> Notify</a>
-                                                                    </div>
-                                                                    <div class="tabheadingTitle">
-                                                                        <a href="#" class="profileDrop me-2"> Manage Files</a>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                        <tbody class="add_insrtAppoinment">
+                                                            
                                                         </tbody>
+
+                                                        <tfoot>
+                                                            <a href="#!" class="profileDrop ms-3"> Save Appointment(s)</a>
+                                                        </tfoot>
                                                     </table>
                                                 </div>
                                             </div>
@@ -899,26 +824,6 @@
 
                                         <!-- Modal -->
 
-                                        <!-- <table class="table totlepayment" id="containerA">
-                                            <tbody >
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <div class="pageTitleBtn p-0">
-                                                            <div class="nav-item dropdown">
-                                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> + Insert </a>
-                                                                <div class="dropdown-menu fade-up m-0">
-                                                                    <a href="#" class="dropdown-item col-form-label">Edid Details</a>
-                                                                    <a href="#" class="dropdown-item col-form-label">Send SMS</a>
-                                                                    <a href="#" class="dropdown-item col-form-label">CRM / History</a>
-                                                                    <a href="#" class="dropdown-item col-form-label">Reject</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                
-                                            </tbody>
-                                        </table> -->
                                     </div>
                                 </div>
                             </div>
@@ -963,15 +868,13 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                     <!-- End  off newJobForm -->
 
-
-                    <!-- ***************************************Start deposit Details****************************************** -->
-                    <div class="newJobForm mt-4">
+                    <!--  -->
+                    <div id="hideDepositSection">
+                        <!-- ***************************************Start deposit Details****************************************** -->
+                        <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Deposit Details</label>
                             <div class="row">
 
@@ -1043,125 +946,122 @@
                                 </div>
                             </div>
                         </div>
-                     <!-- **************************************End of deposit Details****************************************** -->
-
-
-                    <!-- *************************Start Task*************************************************** -->
-                    <div class="newJobForm mt-4">
-                        <label class="upperlineTitle">Tasks</label>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="tabheadingTitle pb-3 pt-2">
-                                    <a href="#" class="profileDrop me-3"> New Task</a>
-                                </div>
-                                <div class="extraInformationTab">
-                                    <nav>
-                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                            <button class="nav-link active" id="tab_quoteTask" data-bs-toggle="tab" data-bs-target="#nav-tab_quoteTask" type="button" role="tab"
-                                                aria-controls="nav-Notes" aria-selected="true">Task</button>
-                                            <button class="nav-link" id="nav-RecurringTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-RecurringTasks" type="button" role="tab"
-                                                aria-controls="nav-Tasks" aria-selected="false">Recurring Task</button>
-
-                                        </div>
-                                    </nav>
-                                    <div class="tab-content" id="nav-tabContent">
-                                        <div class="tab-pane fade show active" id="nav-tab_quoteTask" role="tabpanel" aria-labelledby="tab_quoteTask" tabindex="0">
-                                            <div class="col-sm-12">
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-12">
-                                                        <div class="productDetailTable pt-3">
-                                                            <table class="table" id="containerA">
-                                                                <thead class="table-light">
-                                                                    <tr>
-                                                                        <th># </th>
-                                                                        <th>Quote Ref </th>
-                                                                        <th>Job Ref</th>
-                                                                        <th>Quote Date </th>
-                                                                        <th>Expiry Date </th>
-                                                                        <th>Sub Total</th>
-                                                                        <th>VAT</th>
-                                                                        <th>Total</th>
-                                                                        <th>Deposit </th>
-                                                                        <th>Outstanding</th>
-                                                                        <th>Status</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                        <td>...</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                        <!-- **************************************End of deposit Details****************************************** -->
+                    </div>
+                    <!--  -->
+                    <div id="hideAttachmentTask"> 
+                        <!-- *************************Start Task*************************************************** -->
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Tasks</label>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="tabheadingTitle pb-3 pt-2">
+                                        <a href="#" class="profileDrop me-3"> New Task</a>
+                                    </div>
+                                    <div class="extraInformationTab">
+                                        <nav>
+                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                <button class="nav-link active" id="tab_quoteTask" data-bs-toggle="tab" data-bs-target="#nav-tab_quoteTask" type="button" role="tab"
+                                                    aria-controls="nav-Notes" aria-selected="true">Task</button>
+                                                <button class="nav-link" id="nav-RecurringTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-RecurringTasks" type="button" role="tab"
+                                                    aria-controls="nav-Tasks" aria-selected="false">Recurring Task</button>
+                                            </div>
+                                        </nav>
+                                        <div class="tab-content" id="nav-tabContent">
+                                            <div class="tab-pane fade show active" id="nav-tab_quoteTask" role="tabpanel" aria-labelledby="tab_quoteTask" tabindex="0">
+                                                <div class="col-sm-12">
+                                                    <div class="mb-3 row">
+                                                        <div class="col-md-12">
+                                                            <div class="productDetailTable pt-3">
+                                                                <table class="table" id="containerA">
+                                                                    <thead class="table-light">
+                                                                        <tr>
+                                                                            <th># </th>
+                                                                            <th>Quote Ref </th>
+                                                                            <th>Job Ref</th>
+                                                                            <th>Quote Date </th>
+                                                                            <th>Expiry Date </th>
+                                                                            <th>Sub Total</th>
+                                                                            <th>VAT</th>
+                                                                            <th>Total</th>
+                                                                            <th>Deposit </th>
+                                                                            <th>Outstanding</th>
+                                                                            <th>Status</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>...</td>
+                                                                            <td>...</td>
+                                                                            <td>...</td>
+                                                                            <td>...</td>
+                                                                            <td>...</td>
+                                                                            <td>...</td>
+                                                                            <td>...</td>
+                                                                            <td>...</td>
+                                                                            <td>...</td>
+                                                                            <td>...</td>
+                                                                            <td>...</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <!-- Button trigger modal -->
                                                 </div>
+                                                <!-- ENd col-9 -->
+                                            </div>
+                                            <div class="tab-pane fade" id="nav-RecurringTasks" role="tabpanel" aria-labelledby="nav-RecurringTasks-tab" tabindex="0">
 
-                                                <!-- Button trigger modal -->
-                                            </div><!-- ENd col-9 -->
-                                        </div>
-                                        <div class="tab-pane fade" id="nav-RecurringTasks" role="tabpanel" aria-labelledby="nav-RecurringTasks-tab" tabindex="0">
+                                                <div class="col-sm-12">
 
-                                            <div class="col-sm-12">
-
-                                                <div class="productDetailTable pt-3">
-                                                    <table class="table" id="containerA">
-                                                        <thead class="table-light">
-                                                            <tr>
-                                                                <th># </th>
-                                                                <th>Quote Ref </th>
-                                                                <th>Job Ref</th>
-                                                                <th>Quote Date </th>
-                                                                <th>Expiry Date </th>
-                                                                <th>Sub Total</th>
-                                                                <th>VAT</th>
-                                                                <th>Total</th>
-                                                                <th>Deposit </th>
-                                                                <th>Outstanding</th>
-                                                                <th>Status</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                                <td>...</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <div class="productDetailTable pt-3">
+                                                        <table class="table" id="containerA">
+                                                            <thead class="table-light">
+                                                                <tr>
+                                                                    <th># </th>
+                                                                    <th>Quote Ref </th>
+                                                                    <th>Job Ref</th>
+                                                                    <th>Quote Date </th>
+                                                                    <th>Expiry Date </th>
+                                                                    <th>Sub Total</th>
+                                                                    <th>VAT</th>
+                                                                    <th>Total</th>
+                                                                    <th>Deposit </th>
+                                                                    <th>Outstanding</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                    <td>...</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- **********************End of Task************************ -->
-
-
-
-                    <!-- ***********************************Start Attechments******************************** -->
-
-                    <div class="newJobForm mt-4">
+                        <!-- **********************End of Task************************ -->
+                    
+                        <!-- ***********************************Start Attechments******************************** -->
+                        <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Attachments</label>
                             <div class="row">
 
@@ -1169,7 +1069,7 @@
                                     <div class=" p-0">
                                         <a href="#" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
                                         <a href="#" class="profileDrop">Upload Malti Attachment</a>
-                                        <a href="#" class="profileDrop">Preview Attachment(s)</a> 
+                                        <a href="#" class="profileDrop">Preview Attachment(s)</a>
                                         <a href="#" class="profileDrop">Download Attachment</a>
 
                                     </div>
@@ -1181,7 +1081,7 @@
                                         <table class="table" id="containerA">
                                             <thead class="table-light">
                                                 <tr>
-                                                <th>#</th>
+                                                    <th>#</th>
                                                     <th>Type</th>
                                                     <th>Title </th>
                                                     <th>Description</th>
@@ -1197,7 +1097,7 @@
                                                 <tr>
                                                     <td colspan="7">
                                                         <label class="red_sorryText">
-                                                        Sorry, no attachment(s) found
+                                                            Sorry, no attachment(s) found
                                                         </label>
                                                     </td>
 
@@ -1210,13 +1110,13 @@
                             </div>
                         </div>
                         <!-- ***************************************End Of Attechment********************************************** -->
-
+                    </div>
 
 
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                             <div class="pageTitleBtn">
-                                <a href="#" class="profileDrop hide-on-load"><i class="fa-solid fa-floppy-disk"></i> Save</a>
+                                <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
                                 <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a>
                             </div>
                         </div>
@@ -2006,52 +1906,49 @@
 </div>
 <!-- Add Customer Site Delivery Contact Modal End -->
 
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="new_Attachment_model" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title pupTitle">ABCD</h5>
+                <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button"></button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="">
 
-<div>
-    <!-- It is never too late to be what you might have been. - George Eliot -->
-    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="new_Attachment_model" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content add_Customer">
-                <div class="modal-header">
-                    <h5 class="modal-title pupTitle">ABCD</h5>
-                    <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button"></button>
-                </div>
-                <div class="modal-body">
-                    <form role="form" id="">
-                        
-                        <div><span id="error-message" class="error"></span></div>
-                        <div class="row form-group">
-                            <label class="col-lg-3 col-sm-3 col-form-label">Quote Type <span class="radStar ">*</span></label>
-                            <div class="col-md-9">
-                                <input type="hidden" name="quote_type_id" id="quote_type_id">
-                                <input type="text" name="title" class="form-control editInput " placeholder="Quote Type" id="title">
-                            </div>
+                    <div><span id="error-message" class="error"></span></div>
+                    <div class="row form-group">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Quote Type <span class="radStar ">*</span></label>
+                        <div class="col-md-9">
+                            <input type="hidden" name="quote_type_id" id="quote_type_id">
+                            <input type="text" name="title" class="form-control editInput " placeholder="Quote Type" id="title">
                         </div>
-                        <div class="row form-group mt-3">
-                            <label class="col-lg-3 col-sm-3 col-form-label">Number of days</label>
-                            <div class="col-md-9">
-                                <input type="text" name="number_of_days" class="form-control editInput " placeholder="Number of days" id="number_of_days" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                            </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Number of days</label>
+                        <div class="col-md-9">
+                            <input type="text" name="number_of_days" class="form-control editInput " placeholder="Number of days" id="number_of_days" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                         </div>
-                        <div class="row form-group mt-3">
-                            <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
-                            <div class="col-md-9">
-                                <select name="status" id="modale_status" class="form-control editInput">
-                                    <option value="1">Active</option>
-                                    <option value="0">InActive</option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
+                        <div class="col-md-9">
+                            <select name="status" id="modale_status" class="form-control editInput">
+                                <option value="1">Active</option>
+                                <option value="0">InActive</option>
+                            </select>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer customer_Form_Popup">
-                    <button type="button" class="btn profileDrop" id="">Save</button>
-                    <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-                </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+                <button type="button" class="btn profileDrop" id="">Save</button>
+                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Add Job Title Modal Start -->
 <x-job-title-model
@@ -2123,6 +2020,7 @@
     saveButtonId="saveQuoteTag"
     placeholderText="Tag" />
 
+<!-- account code modal -->
 <x-account-code
     modalId="accountCodeModal"
     modalTitle="Add Departmental Code"
@@ -2600,12 +2498,39 @@
         });
     }
 
+    function getUsersList(){
+        alert();
+        $.ajax({
+            url: '{{ route("quote.ajax.getUsersData") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log(response.data);
+                const usersList = document.getElementById('getUsersList');
+                // alert(response.data);    
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.name;
+                    usersList.appendChild(option);
+                });
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
     $(document).ready(function() {
 
         getQuoteType(document.getElementById('quoteType'));
 
         document.getElementById('hideQuoteDiv').style.display = "none";
         document.getElementById('hideQuoteDetails').style.display = "none";
+        document.getElementById('hideAttachmentTask').style.display = "none";
+        document.getElementById('hideDepositSection').style.display = "none";
+
+        
 
         $('#getCustomerList').on('click', function() {
             getCustomerList();
@@ -3150,7 +3075,14 @@
     $('#new_Attachment_open_model').on('click', function() {
         $('#new_Attachment_model').modal('show');
     });
+
+    // $('.getUsersList').on('click', function() {
+    //     // $('#new_Attachment_model').modal('show');
+    //     alert();
+    //     getUsersList(document.getElementById('getUsersList'));
+    // });
     
+
 
 
     function itemsAddProductModal(th) {
@@ -3738,4 +3670,106 @@
             console.error("Table body with ID 'add_sectionTitle' not found.");
         }
     }
+
+
+
+      //**************insrtTitle
+      function insrtAppoinment() {
+            const node = document.createElement("tr");
+            node.classList.add("add_insrtAppoinment");
+                    node.innerHTML = `
+                <td>
+                    <div class="d-flex">
+                        <p class="leftNum">1</p>
+                        <select class="form-control editInput selectOptions onclick="getUsersList();" >
+                            <option>Select user</option>
+                            <option>Default</option>
+                        </select>
+                        <a href="#!" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
+                    </div>
+                    <div class="alertBy">
+                        <label><strong>Alert By :</strong></label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                            <label class="form-check-label" for="inlineCheckbox1">SMS</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                            <label class="form-check-label" for="inlineCheckbox2">Email</label>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="addDateAndTime">
+                        <div class="startDate">
+                            <input type="date" name="date" class=" editInput">
+                            <input type="time" name="time" class=" editInput">
+                        </div>
+                    </div>
+                    <div class="pt-3">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="floatingAppointment" value="option2">
+                            <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="addDateAndTime">
+                        <div class="endDate">
+                            <input type="date" name="date" class=" editInput">
+                            <input type="time" name="time" class=" editInput">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="addTextarea">
+                        <textarea cols="40" rows="5" placeholder="Type Notes...">Type Notes... </textarea>
+                    </div>
+                </td>
+                <td class="col-2">
+                    <div class="appoinment_type">
+                        <select class="form-control editInput selectOptions" id="">
+                            <option>Select user</option>
+                            <option>Install</option>
+                            <option>Cold Call</option>
+                            <option>Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="Priority">
+                        <label>Priority :</label>
+                        <select class="form-control editInput selectOptions" id="">
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="statuswating">
+
+                        <div><label for="inputPurchase" class="col-sm-3 col-form-label">Awaiting</label></div>
+                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                    </div>
+                      <div class="tabheadingTitle">
+                         <label for="inputPurchase" class="col-sm-3 col-form-label"><input type="checkbox">Dispatch Now</label>
+                    </div>
+                    <div class="tabheadingTitle">
+                        <a href="#" class="profileDrop me-3"> Notify</a>
+                    </div>
+                </td>                                         
+            `;
+            const tableBody = document.querySelector(".add_insrtAppoinment");
+            if (tableBody) {
+                tableBody.appendChild(node);
+
+                // Add event listener to the close button
+                const closeButton = node.querySelector('.closeappend');
+                closeButton.addEventListener('click', function () {
+                    node.remove(); // Remove the row when close button is clicked
+                });
+            } else {
+                console.error("Table body with ID 'add_insrtAppoinment' not found.");
+            }
+        }
+
 </script>
