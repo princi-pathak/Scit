@@ -65,8 +65,7 @@
                             </div>
 
                             @include('frontEnd.common.popup_alert_messages')
-                            <div class="dynamic-form-fields"> </div>
-                                
+                            <div class="dynamic-form-fields"> </div> 
                             <div class="modal-footer m-t-0 modal-bttm m-b-5">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <!-- <input type="hidden" name="su_daily_record_id" value=""> -->

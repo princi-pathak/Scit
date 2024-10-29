@@ -48,6 +48,19 @@ float: right;
         border: 2px solid #d9d9d9;
         object-fit: cover;
     }
+    .uploadPopImg img {
+        width: 100%;
+    }
+    .uploadPopImg {
+        width: 120px;
+        
+    }
+    label.col-lg-2.control-label.mrtp70 {
+        margin-top: 40px;
+    }
+    .mrtp80{
+        margin-top: 46px;
+    }
 </style>
 <!--header start-->
 <header class="header fixed-top">
