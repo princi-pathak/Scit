@@ -298,9 +298,12 @@ class DynamicFormController extends Controller
                 $form->date         = date('Y-m-d', strtotime($data['date']));
             }
 
-            $form->title             = $data['title'];
-            $form->details             = $data['details'];
-            $form->time             = $data['time'];
+            // $form->title             = $data['title'];
+            $form->title             = null;
+            // $form->details             = $data['details'];
+            $form->details             = null;
+            // $form->time             = $data['time'];
+            $form->time             = null;
             $form->pattern_data        = json_encode($data['data']);
             // $form->alert_status     = $data['alert_status']; 
             // $form->alert_date       = $data['alert_date']; 

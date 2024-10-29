@@ -355,24 +355,7 @@ if (isset($form)) {
                                             </select>
                                         </div>
                                     </div>
-
-                                    <style>
-                                   .uploadPopImg img {
-                                        width: 100%;
-                                    }
-                                    .uploadPopImg {
-                                        width: 120px;
-                                        
-                                    }
-                                    label.col-lg-2.control-label.mrtp70 {
-                                        margin-top: 40px;
-                                    }
-                                    .mrtp80{
-                                        margin-top: 46px;
-                                    }
-                                </style>
-
-
+                                    
                                     <h4 class="text-center m-t-0 m-b-30">Select Field You want to Add</h4>
                                     <!-- <b>Select Field You want to Add</b> -->
                                     <div class="prient-btn">
@@ -393,13 +376,19 @@ if (isset($form)) {
                                             <label class="col-lg-2 control-label mrtp70">Select an image to upload </label>
                                             <div class="col-lg-6">
                                                 <input type="file" class="form-control mrtp80" id="image" name="form_image">
-                                                <!-- <select class="form-control show_alert_date" name="alert_field">
-                                                    
-                                                </select> -->
                                             </div>
-                                            <div class="col-lg-4">
-                                            <div class="uploadPopImg"><img id="preview" class="my-2" src="" width="100px"></div>
-                                            </div>
+
+                                            @if(isset($form->image))
+                                                <div class="col-lg-4">
+                                                    <div class="uploadPopImg"><img id="preview" class="my-2" src="{{ url('public/images/formio/'. $form->image)}}" width="100px"></div>
+                                                    <input type="hidden" class="form-control mrtp80" id="image" name="form_img" value="{{ $form->image }}">
+                                                </div>
+                                            @else
+                                                <div class="col-lg-4">
+                                                    <div class="uploadPopImg"><img id="preview" class="my-2" src="" width="100px"></div>
+                                                </div>
+                                            @endif
+
                                         </div>
 
                                         <div class="form-group">
