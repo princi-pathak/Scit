@@ -2,6 +2,11 @@
     button.choices__button {
         display: none;
     }
+
+    .pagination>li>a,
+    .pagination>li>span {
+        padding: 5px 6px;
+    }
 </style>
 <?php
 $home_id = Auth::user()->home_id;
@@ -10,13 +15,6 @@ $dynamic_forms = App\DynamicFormBuilder::getFormList();
 $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 ?>
 
-<style>
-    .pagination>li>a,
-    .pagination>li>span {
-        padding: 5px 6px;
-    }
-    
-</style>
 
 <!-- dynmic Form Modal -->
 <div class="modal fade" id="dynmicFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -106,7 +104,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="uploadPopImg mt-0" id="hideImageDiv"><img id="imagePreview" class="my-2" src="" width="100px"></div>
+                                <div class="uploadPopImg mt-0 hideImageDiv" id=""><img class="my-2 imagePreview" src="" width="100px"></div>
                             </div>
 
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel ">      
@@ -265,15 +263,19 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         <!-- Add new Details -->
                         <div class="risk-tabs">
                             <!-- dynamic form fields will be shown here -->
-                            <div class="dynamic-form-fields"> </div>
+                            <div class="dynamic-form-fields">
+
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="uploadPopImg mt-0 hideImageDiv" id=""><img class="my-2 imagePreview" src="" width="100px"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer m-t-0">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="dynamic_form_id" class="dynamic_form_id" value="">
                         <input type="hidden" name="formdata" id="setformdata" value="">
-                        <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel
-                        </button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
                         <!-- <button class="btn btn-warning sbt_edit_bmp_btn" id="vw-sbt-bmp-plan" type="button"> Continue </button> -->
                         <button class="btn btn-warning e-sbt-dyn-form-btn" disabled="" id="" type="button" data-dismiss="modal" aria-hidden="true"> Save </button>
                     </div>
@@ -359,12 +361,35 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         if (isAuthenticated(resp) == false) {
                             return false;
                         }
-                        if (resp['imageName'] != undefined) {
-                            document.getElementById('hideImageDiv').style.display = "block";
+                        // if (resp['imageName'] != undefined) {
+                        //     document.getElementsByClassName('hideImageDiv').style.display = "block";
+                        // } else {
+                        //     document.getElementsByClassName('hideImageDiv').style.display = "none";
+                        // }
+                        // document.getElementsByClassName('imagePreview').src = resp['image'];
+
+                        if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
+                            const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                            const imagePreviews = document.getElementsByClassName('imagePreview');
+
+                            // Show or hide the image preview for each form
+                            for (let i = 0; i < hideImageDivs.length; i++) {
+                                hideImageDivs[i].style.display = "block";
+                            }
+
+                            // Set the src attribute for each image preview
+                            for (let i = 0; i < imagePreviews.length; i++) {
+                                imagePreviews[i].src = resp['image'];
+                            }
                         } else {
-                            document.getElementById('hideImageDiv').style.display = "none";
+                            const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                            for (let i = 0; i < hideImageDivs.length; i++) {
+                                hideImageDivs[i].style.display = "none";
+                            }
                         }
-                        document.getElementById('imagePreview').src = resp['image'];
+
+
                         var response = resp['response'];
                         if (response == true) {
 
@@ -487,6 +512,13 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     }
 
                     if (resp == "true") {
+
+                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                        for (let i = 0; i < hideImageDivs.length; i++) {
+                            hideImageDivs[i].style.display = "none";
+                        }
+
                         console.log("true");
                         $('#' + form_id + ' span.popup_success_txt').text('Record has been Added Successfully');
                         $('#' + form_id + ' .popup_success').show();
@@ -569,14 +601,34 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         return false;
                     }
 
-                    if (resp['imageName'] != undefined) {
-                        document.getElementById('hideImageDiv').style.display = "block";
+                    if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
+                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                        const imagePreviews = document.getElementsByClassName('imagePreview');
+
+                        // Show or hide the image preview for each form
+                        for (let i = 0; i < hideImageDivs.length; i++) {
+                            hideImageDivs[i].style.display = "block";
+                        }
+
+                        // Set the src attribute for each image preview
+                        for (let i = 0; i < imagePreviews.length; i++) {
+                            imagePreviews[i].src = resp['image'];
+                        }
                     } else {
-                        document.getElementById('hideImageDiv').style.display = "none";
+                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                        for (let i = 0; i < hideImageDivs.length; i++) {
+                            hideImageDivs[i].style.display = "none";
+                        }
                     }
-                    document.getElementById('imagePreview').src = resp['image'];
 
                     if (resp == true) {
+
+                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                            for (let i = 0; i < hideImageDivs.length; i++) {
+                                hideImageDivs[i].style.display = "none";
+                            }
 
                         $('#' + model_id).modal('hide');
                         $('#' + previous_model_id).modal('show');
@@ -667,9 +719,30 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 url: "{{ url('/service/dynamic-form/view/data') }}" + '/' + dynamic_form_id,
                 dataType: 'json',
                 success: function(resp) {
-
+                    console.log(resp);
                     if (isAuthenticated(resp) == false) {
                         return false;
+                    }
+
+                    if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
+                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                        const imagePreviews = document.getElementsByClassName('imagePreview');
+
+                        // Show or hide the image preview for each form
+                        for (let i = 0; i < hideImageDivs.length; i++) {
+                            hideImageDivs[i].style.display = "block";
+                        }
+
+                        // Set the src attribute for each image preview
+                        for (let i = 0; i < imagePreviews.length; i++) {
+                            imagePreviews[i].src = resp['image'];
+                        }
+                    } else {
+                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                        for (let i = 0; i < hideImageDivs.length; i++) {
+                            hideImageDivs[i].style.display = "none";
+                        }
                     }
 
                     var response = resp['response'];

@@ -1,53 +1,49 @@
 <?php
+
 namespace App\Http\Controllers\backEnd\systemManage;
+
 use App\Http\Requests;
-use App\Http\Controllers\Controller;    
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Session; 
-use App\DynamicFormBuilder, App\DynamicForm, App\DynamicFormLocation;  
-use DB, Auth; 
+use Session;
+use App\DynamicFormBuilder, App\DynamicForm, App\DynamicFormLocation;
+use DB, Auth;
 use Hash;
 use Illuminate\Support\Facades\Mail;
 
 class FormBuilderController extends Controller
 {
-    public function index(Request $request) {   
-        
-        $home_id = Session::get('scitsAdminSession')->home_id;
-      
+    public function index(Request $request)
+    {
 
-        if(empty($home_id)) {
-            return redirect('admin/')->with('error',NO_HOME_ERR);
+        $home_id = Session::get('scitsAdminSession')->home_id;
+
+
+        if (empty($home_id)) {
+            return redirect('admin/')->with('error', NO_HOME_ERR);
         }
         $home_id = Session::get('scitsAdminSession')->home_id;
         //$forms = DynamicForm::select('id','home_id','title')->where('home_id',$home_id)->orderBy('title','asc');
-        $forms = DynamicFormBuilder::select('id','title')
-                    ->where('home_id',$home_id)
-                    ->orderBy('title','asc');
-                       
-                    
+        $forms = DynamicFormBuilder::select('id', 'title')
+            ->where('home_id', $home_id)
+            ->orderBy('title', 'asc');
+
+
         $search = '';
 
-        if(isset($request->limit))
-        {
+        if (isset($request->limit)) {
             $limit = $request->limit;
-            Session::put('page_record_limit',$limit);
-        } 
-        else
-        {
-            if(Session::has('page_record_limit'))
-            {
+            Session::put('page_record_limit', $limit);
+        } else {
+            if (Session::has('page_record_limit')) {
                 $limit = Session::get('page_record_limit');
-            } 
-            else
-            {
+            } else {
                 $limit = 25;
             }
         }
-        if(isset($request->search))
-        {
+        if (isset($request->search)) {
             $search     = trim($request->search);
-            $forms      = $forms->where('title','like','%'.$search.'%');
+            $forms      = $forms->where('title', 'like', '%' . $search . '%');
         }
         $forms          = $forms->paginate($limit);
 
@@ -56,7 +52,7 @@ class FormBuilderController extends Controller
         }*/
 
         //echo '<pre>'; print_r($forms); die;
-        
+
         $page = 'form-builder';
         // echo "<pre>";
         // print_r($forms);
@@ -64,27 +60,28 @@ class FormBuilderController extends Controller
         // echo "<pre>";
         // print_r(compact('forms'));
         // die();
-        return view('backEnd/systemManage/formBuilder/form_builder', compact('page','limit','forms','search')); //users.blade.php
+        return view('backEnd/systemManage/formBuilder/form_builder', compact('page', 'limit', 'forms', 'search')); //users.blade.php
     }
 
-    public function add(Request $request) { 
-        if($request->isMethod('post')) {     
+    public function add(Request $request)
+    {
+        if ($request->isMethod('post')) {
             // dd($request);
             $data = $request->input();
             // dd($request);
-          // echo "<pre>"; print_r($data); die;
-            
-            if(isset($data['formdata'])){
-               $data['formdata'] = is_array(json_decode($data['formdata']))? array_values(json_decode($data['formdata'])): array(); 
-            } else{
-                return redirect()->back()->with('error','No input field added in the form.'); 
+            // echo "<pre>"; print_r($data); die;
+
+            if (isset($data['formdata'])) {
+                $data['formdata'] = is_array(json_decode($data['formdata'])) ? array_values(json_decode($data['formdata'])) : array();
+            } else {
+                return redirect()->back()->with('error', 'No input field added in the form.');
             }
 
             $image = $request->file('form_image');
 
             // Create a unique file name
             $imageName = time() . '.' . $image->extension();
-        
+
             // Move the file to the public/images directory
             $image->move(public_path('images/formio'), $imageName);
 
@@ -107,65 +104,79 @@ class FormBuilderController extends Controller
                 if (!$form->save()) {
                     return redirect()->back()->with('error', 'Some error occurred. Please try again later.');
                 }
-    
+
                 // if($form->save()) {
                 //     return redirect('admin/form-builder')->with('success', 'New Form added successfully.');
                 // } else {
                 //     return redirect()->back()->with('error','Some error occurred. Please try after sometime.'); 
                 // }
             }
-            
+
             return redirect('admin/form-builder')->with('success', 'New Form added successfully.');
         }
-         
+
         $locations = DynamicFormLocation::get()->toArray();
-       
+
         $page = 'form-builder';
-        return view('backEnd.systemManage.formBuilder.form_builder_form', compact('page','locations'));
+        return view('backEnd.systemManage.formBuilder.form_builder_form', compact('page', 'locations'));
     }
 
-    public function edit(Request $request, $form_builder_id = null) { 
-        
+    public function edit(Request $request, $form_builder_id = null)
+    {
+
         $home_id = Session::get('scitsAdminSession')->home_id;
-        
-        if($request->isMethod('post')) {   
-           
+
+        if ($request->isMethod('post')) {
+
             $data = $request->input();
-             //echo '<pre>'; print_r($data); die;
+            //echo '<pre>'; print_r($data); die;
 
-            if(isset($data['formdata'])){
-                $datatableedit=DynamicFormBuilder::where('id',$data['dynamic_form_builder_id'])->first();
-               $data['formdata'] =is_array(json_decode($data['formdata']))?array_values(json_decode($data['formdata'])):json_decode($datatableedit->pattern);
-            //    /is_array($assoc_array)? array_values($assoc_array): array();
-            } else{
-               return redirect()->back()->with('error','No input field added in the form.');
+            if (isset($data['formdata'])) {
+                $datatableedit = DynamicFormBuilder::where('id', $data['dynamic_form_builder_id'])->first();
+                $data['formdata'] = is_array(json_decode($data['formdata'])) ? array_values(json_decode($data['formdata'])) : json_decode($datatableedit->pattern);
+                //    /is_array($assoc_array)? array_values($assoc_array): array();
+            } else {
+                return redirect()->back()->with('error', 'No input field added in the form.');
             }
-            $form  = DynamicFormBuilder::where('id',$data['dynamic_form_builder_id'])->first();
+            $form  = DynamicFormBuilder::where('id', $data['dynamic_form_builder_id'])->first();
 
-            if($data['form_reminder_day'] === NULL){
+            if ($data['form_reminder_day'] === NULL) {
                 $form_reminder_day = "";
             } else {
                 $form_reminder_day = $data['form_reminder_day'];
             }
 
-            if(!empty($form)){            
-            
+            if (isset($request->form_img)) {
+                $imageName = $request->form_img;
+            } else {
+                $image = $request->file('form_image');
+
+                // Create a unique file name
+                $imageName = time() . '.' . $image->extension();
+
+                // Move the file to the public/images directory
+                $image->move(public_path('images/formio'), $imageName);
+            }
+
+
+            if (!empty($form)) {
+
                 $form->title        = $data['form_title'];
                 $form->detail       = $data['form_detail'];
                 $form->location_ids = $data['form_location_ids'];
                 $form->pattern      = json_encode($data['formdata']);
                 $form->alert_field  =  $data['alert_field'];
-                $form->home_ids      = $data['form_home_ids'];
+                $form->home_ids     =  $data['form_home_ids'];
+                $form->image        =   $imageName;
                 $form->reminder_day  =  $form_reminder_day;
                 $form->send_to       =  $data['send_to'];
                 $form->logtype      =  $data['logtypes'];
 
-                if($form->save()) {
-                   return redirect('admin/form-builder')->with('success','Form updated successfully.'); 
-                }  else {
-                   return redirect()->back()->with('error','Some error occurred. Please try after sometime.'); 
-                }  
-
+                if ($form->save()) {
+                    return redirect('admin/form-builder')->with('success', 'Form updated successfully.');
+                } else {
+                    return redirect()->back()->with('error', 'Some error occurred. Please try after sometime.');
+                }
             } else {
                 return redirect('admin/')->with('error', UNAUTHORIZE_ERR);
             }
@@ -180,40 +191,40 @@ class FormBuilderController extends Controller
             
             if(!empty($form_builder))                           
         }*/
-        
-        $form = DynamicFormBuilder::where('id',$form_builder_id)->where('home_id',$home_id)->first();
+
+        $form = DynamicFormBuilder::where('id', $form_builder_id)->where('home_id', $home_id)->first();
         // echo "<pre>"; print_r($form); die;
         //$form             = DynamicForm::where('id', $form_id)->first();
         //echo '<pre>'; print_r($form); die;
-        if(!empty($form)) {
+        if (!empty($form)) {
 
             $form_info        = $this->_view($form->id);
             $dynamic_formdata = $form_info['formdata'];
             $already_fields   = $form_info['total_fields'];
-
         } else {
             return redirect('admin/')->with('error', UNAUTHORIZE_ERR);
         }
-        
+
         //$dynamic_formdata = implode();
         /*echo "<pre>";
         print_r($already_fields);
         die;*/
         $locations = DynamicFormLocation::get()->toArray();
         $page = 'form-builder';
-        return view('backEnd/systemManage/formBuilder/form_builder_form', compact('form','page','dynamic_formdata','already_fields','locations'));
+        return view('backEnd/systemManage/formBuilder/form_builder_form', compact('form', 'page', 'dynamic_formdata', 'already_fields', 'locations'));
     }
 
-    public function _view($form_builder_id = null)  {
-        
+    public function _view($form_builder_id = null)
+    {
+
         $home_id = Session::get('scitsAdminSession')->home_id;
-        $form = DynamicFormBuilder::where('id',$form_builder_id)
-                    //->join('form_default as fd','fd.id','form_builder.form_default_id')
-                    ->where('dynamic_form_builder.home_id',$home_id)
-                    ->first();
+        $form = DynamicFormBuilder::where('id', $form_builder_id)
+            //->join('form_default as fd','fd.id','form_builder.form_default_id')
+            ->where('dynamic_form_builder.home_id', $home_id)
+            ->first();
         //echo '<pre>'; print_r($form); die;
 
-        if(!empty($form)) {
+        if (!empty($form)) {
             //$form->pattern = $form->pattern;
             // echo "<pre>";
             // print_r($form);     
@@ -255,7 +266,7 @@ class FormBuilderController extends Controller
             //         $option_value = '';
             //         $opt = '';
             //         $j = 0;
-                   
+
             //         //for($i=1; $i <= $option_count; $i++){
             //         foreach($value->select_options as $select_option){
             //             //echo '<pre>'; print_r($select_option);
@@ -264,7 +275,7 @@ class FormBuilderController extends Controller
 
             //             $option_name    = $select_option['option_name'];
             //             $option_value   = $select_option['option_value'];
-                        
+
             //             //if( ($option_name !== '') && ($option_value !== '') ) {            
             //                 $options .= '<option value="'.$option_value.'">'.$option_name.'</option>';
 
@@ -308,7 +319,7 @@ class FormBuilderController extends Controller
             //                     <span class="sort-sp" title="sort"><i class="fa fa-sort"></i></span>
             //                 </div> 
             //             </div>'; 
-                  
+
             //     } else if($field_type == 'Date') {
             //         $formdata .= 
             //             '<div class="form-group cus-field"> 
@@ -338,7 +349,7 @@ class FormBuilderController extends Controller
             //         $j = 0;
 
             //         foreach ($value->select_checkboxs as $select_checkbox) {
-                        
+
             //             $select_checkbox = (array)$select_checkbox;
 
             //             $checkbox_name   = $select_checkbox['checkbox_name'];
@@ -378,15 +389,15 @@ class FormBuilderController extends Controller
             //         $formdata .='';
             //     }
             // }
-            
+
             $result['response'] = true;
             $result['total_fields'] = $total_fields;
             $result['title']    = $form->title;
             //$result['detail']   = $plan->detail;
             $result['formdata'] = $form->pattern;
-        //  echo $result['formdata'] ;
-        //  die();
-       
+            //  echo $result['formdata'] ;
+            //  die();
+
         } else {
             $result['response'] = false;
         }
@@ -394,14 +405,15 @@ class FormBuilderController extends Controller
         return $result;
     }
 
-    public function delete($form_id) { 
-        
+    public function delete($form_id)
+    {
+
         $home_id = Session::get('scitsAdminSession')->home_id;
-        if(!empty($form_id)) {
+        if (!empty($form_id)) {
             $delete_form = DynamicFormBuilder::where('id', $form_id)->where('home_id', $home_id)->delete();
-                            DynamicForm::where('form_builder_id', $form_id)->where('home_id', $home_id)->delete();
-            if(!empty($delete_form)) {
-                return redirect('admin/form-builder')->with('success','Form deleted Successfully.');
+            DynamicForm::where('form_builder_id', $form_id)->where('home_id', $home_id)->delete();
+            if (!empty($delete_form)) {
+                return redirect('admin/form-builder')->with('success', 'Form deleted Successfully.');
             } else {
                 return redirect('admin/')->with('error', UNAUTHORIZE_ERR);
             }
@@ -409,5 +421,4 @@ class FormBuilderController extends Controller
             return redirect('admin/')->with('error', 'Form does not exists.');
         }
     }
-    
 }
