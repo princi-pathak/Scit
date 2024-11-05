@@ -24,7 +24,7 @@ class PlacementPlanController extends ServiceUserManagementController
             return redirect('/')->with('error',UNAUTHORIZE_ERR); 
         }
         //check su home id end
-
+        
         $today = date('Y-m-d');
         
         $completed_targets = DB::table('su_placement_plan')
@@ -410,11 +410,12 @@ class PlacementPlanController extends ServiceUserManagementController
     public function edit(Request $request) { 
         
         if($request->isMethod('post'))  {
-            //echo "<pre>"; print_r($request->input()); die;
+            // echo "<pre>"; print_r($request->input()); die;
             $today = date('Y-m-d');
             $data = $request->input();
             // echo "<pre>"; print_r($data); die;
-            $date = date('Y-m-d', strtotime($data['target_date']));
+            // $date = date('Y-m-d', strtotime($data['target_date']));
+            $date = null ;
 
             // if(isset($data['formdata'])){
             //     $formdata = json_encode($data['formdata']);
@@ -439,12 +440,17 @@ class PlacementPlanController extends ServiceUserManagementController
                 // if($placement_plan->dynamic_form_id != 'Null') {
                     $dynamic_form_id = $placement_plan->dynamic_form_id;
                     // echo $dynamic_form_id; die;
+                    if($data['title'] || $data['time'] || $data['details'] === "" ){
+                        $data['details'] = $data['time'] = $data['title'] = null;
+                    }
                     if(!empty($dynamic_form_id)) {
                         $dynamic_form       = DynamicForm::find($dynamic_form_id);
                         if(!empty($dynamic_form)) {
+                          
                             $dynamic_form->title            = $data['title'];
                             $dynamic_form->time             = $data['time']; 
                             $dynamic_form->details          = $data['details']; 
+                            $dynamic_form->dynamic_form_id  = $data['dynamic_form_builder_id'];
                             $dynamic_form->pattern_data     = $formdata; 
                             if(!empty($data['date'])){
                                 $dynamic_form->date         = date('Y-m-d',strtotime($data['date']));   

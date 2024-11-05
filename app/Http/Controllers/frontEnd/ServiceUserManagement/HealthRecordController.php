@@ -147,9 +147,12 @@ class HealthRecordController extends ServiceUserManagementController
             $form->form_builder_id  = $data['dynamic_form_builder_id'];
             $form->service_user_id = $data['service_user_id'];        
             $form->location_id      = $data['location_id']; 
-            $form->title            = $data['title'];
-            $form->time             = $data['time']; 
-            $form->details          = $data['details']; 
+            // $form->title            = $data['title'];
+            $form->title            = null;
+            // $form->time             = $data['time']; 
+            $form->time             = null; 
+            // $form->details          = $data['details']; 
+            $form->details          = null; 
             $form->pattern_data     = $formdata; 
         
         if(isset($data['alert_status'])) {
@@ -260,9 +263,11 @@ class HealthRecordController extends ServiceUserManagementController
                         'service_user_id'=>$data['service_user_id'],
                         'contact_id'=>0,
                         'care_team_id'=>0,
-                        'title'=>$data['title'],
+                        // 'title'=>$data['title'],
+                        'title'=>null,
                         'status'=>1,
-                        'details'=>$data['details'],
+                        // 'details'=>$data['details'],
+                        'details'=>null,
                         'is_deleted'=>0,
                         'created_at'=>date('Y-m-d H:i:s'),
                         'updated_at'=>date('Y-m-d H:i:s'),

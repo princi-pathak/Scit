@@ -100,12 +100,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
                             <div class="dynamic-form-fields">
 
-
-
                             </div>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="uploadPopImg mt-0 hideImageDiv" id=""><img class="my-2 imagePreview" src="" width="100px"></div>
-                            </div>
+                       
 
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel ">      
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
@@ -266,9 +262,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <div class="dynamic-form-fields">
 
                             </div>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="uploadPopImg mt-0 hideImageDiv" id=""><img class="my-2 imagePreview" src="" width="100px"></div>
-                            </div>
+                        
                         </div>
                     </div>
                     <div class="modal-footer m-t-0">
@@ -357,37 +351,31 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     dataType: "json",
                     success: function(resp) {
                         console.log(resp);
-                        console.log(resp['image']);
+                       
                         if (isAuthenticated(resp) == false) {
                             return false;
                         }
-                        // if (resp['imageName'] != undefined) {
-                        //     document.getElementsByClassName('hideImageDiv').style.display = "block";
+
+                        // if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
+                        //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                        //     const imagePreviews = document.getElementsByClassName('imagePreview');
+
+                        //     // Show or hide the image preview for each form
+                        //     for (let i = 0; i < hideImageDivs.length; i++) {
+                        //         hideImageDivs[i].style.display = "block";
+                        //     }
+
+                        //     // Set the src attribute for each image preview
+                        //     for (let i = 0; i < imagePreviews.length; i++) {
+                        //         imagePreviews[i].src = resp['image'];
+                        //     }
                         // } else {
-                        //     document.getElementsByClassName('hideImageDiv').style.display = "none";
+                        //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                        //     for (let i = 0; i < hideImageDivs.length; i++) {
+                        //         hideImageDivs[i].style.display = "none";
+                        //     }
                         // }
-                        // document.getElementsByClassName('imagePreview').src = resp['image'];
-
-                        if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
-                            const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-                            const imagePreviews = document.getElementsByClassName('imagePreview');
-
-                            // Show or hide the image preview for each form
-                            for (let i = 0; i < hideImageDivs.length; i++) {
-                                hideImageDivs[i].style.display = "block";
-                            }
-
-                            // Set the src attribute for each image preview
-                            for (let i = 0; i < imagePreviews.length; i++) {
-                                imagePreviews[i].src = resp['image'];
-                            }
-                        } else {
-                            const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-
-                            for (let i = 0; i < hideImageDivs.length; i++) {
-                                hideImageDivs[i].style.display = "none";
-                            }
-                        }
 
 
                         var response = resp['response'];
@@ -555,7 +543,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
         });
 
         $('.e-sbt-dyn-form-btn').click(function() {
-
+            alert("hello");
             var model_id = $(this).closest('.modal').attr('id');
             var previous_model_id = $(this).closest('.modal').find('.previous_modal_btn').attr('pre_modal');
             var logged_box = $('#' + previous_model_id).find('.logged-box');
@@ -596,31 +584,31 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 data: formdata,
                 dataType: 'json',
                 success: function(resp) {
-
+                    
                     if (isAuthenticated(resp) == false) {
                         return false;
                     }
 
-                    if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
-                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-                        const imagePreviews = document.getElementsByClassName('imagePreview');
+                    // if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
+                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                    //     const imagePreviews = document.getElementsByClassName('imagePreview');
 
-                        // Show or hide the image preview for each form
-                        for (let i = 0; i < hideImageDivs.length; i++) {
-                            hideImageDivs[i].style.display = "block";
-                        }
+                    //     // Show or hide the image preview for each form
+                    //     for (let i = 0; i < hideImageDivs.length; i++) {
+                    //         hideImageDivs[i].style.display = "block";
+                    //     }
 
-                        // Set the src attribute for each image preview
-                        for (let i = 0; i < imagePreviews.length; i++) {
-                            imagePreviews[i].src = resp['image'];
-                        }
-                    } else {
-                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                    //     // Set the src attribute for each image preview
+                    //     for (let i = 0; i < imagePreviews.length; i++) {
+                    //         imagePreviews[i].src = resp['image'];
+                    //     }
+                    // } else {
+                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
 
-                        for (let i = 0; i < hideImageDivs.length; i++) {
-                            hideImageDivs[i].style.display = "none";
-                        }
-                    }
+                    //     for (let i = 0; i < hideImageDivs.length; i++) {
+                    //         hideImageDivs[i].style.display = "none";
+                    //     }
+                    // }
 
                     if (resp == true) {
 
@@ -724,26 +712,26 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         return false;
                     }
 
-                    if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
-                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-                        const imagePreviews = document.getElementsByClassName('imagePreview');
+                    // if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
+                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                    //     const imagePreviews = document.getElementsByClassName('imagePreview');
 
-                        // Show or hide the image preview for each form
-                        for (let i = 0; i < hideImageDivs.length; i++) {
-                            hideImageDivs[i].style.display = "block";
-                        }
+                    //     // Show or hide the image preview for each form
+                    //     for (let i = 0; i < hideImageDivs.length; i++) {
+                    //         hideImageDivs[i].style.display = "block";
+                    //     }
 
-                        // Set the src attribute for each image preview
-                        for (let i = 0; i < imagePreviews.length; i++) {
-                            imagePreviews[i].src = resp['image'];
-                        }
-                    } else {
-                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                    //     // Set the src attribute for each image preview
+                    //     for (let i = 0; i < imagePreviews.length; i++) {
+                    //         imagePreviews[i].src = resp['image'];
+                    //     }
+                    // } else {
+                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
 
-                        for (let i = 0; i < hideImageDivs.length; i++) {
-                            hideImageDivs[i].style.display = "none";
-                        }
-                    }
+                    //     for (let i = 0; i < hideImageDivs.length; i++) {
+                    //         hideImageDivs[i].style.display = "none";
+                    //     }
+                    // }
 
                     var response = resp['response'];
                     var form_builder_id = resp['form_builder_id'];

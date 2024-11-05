@@ -1,5 +1,5 @@
 <?php 
-     // $home_id = Auth::user()->home_id;
+    // $home_id = Auth::user()->home_id;
     // $service_users = App\ServiceUser::where('home_id',$home_id)->get()->toArray();
     $dynamic_forms = App\DynamicFormBuilder::getFormList();
     $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
@@ -57,7 +57,7 @@
                         <!-- alert messages -->
                         @include('frontEnd.common.popup_alert_messages')
 
-                            <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+                            <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Task: </label>
                                     <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
@@ -66,9 +66,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+                            <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Detail: </label>
                                     <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
@@ -77,13 +77,13 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
+                            <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Date: </label>
                                     <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
-                                        <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date"> <!-- dpYears -->
+                                        <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">  // dpYears 
                                            <input name="target_date" required type="text" value="" readonly="" size="16" class="form-control date-pick" maxlength="10">
                                             <span class="input-group-btn add-on datetime-picker1" >
                                                 <input style="left:-1px; top:0px;" type="text" value="" name="" id="target-new-date" class="form-control date-btn">
@@ -92,7 +92,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                         <div class="edit-dynamic-form-fields"> </div>
 
@@ -310,8 +310,8 @@ $(document).ready(function() {
             var model_id        = $(this).closest('.modal').attr('id');
             // alert(model_id);
             var f_buld_id = $('.placement_plan_f_buld_id').val();
-            var st_title = $('#'+model_id+' .static_title');
-            var st_title = st_title.val();
+            // var st_title = $('#'+model_id+' .static_title');
+            // var st_title = st_title.val();
 
             // alert(st_title);
             // return false;
@@ -322,14 +322,14 @@ $(document).ready(function() {
                 error = 1;
                 // return false;
             }
-            if(st_title == undefined){
-                return false;
-            } 
-            var st_title = st_title.trim();
-            if(st_title == '') {
-                $('#'+model_id+' .static_title').addClass('red_border');
-                error = 1;
-            }
+            // if(st_title == undefined){
+            //     return false;
+            // } 
+            // var st_title = st_title.trim();
+            // if(st_title == '') {
+            //     $('#'+model_id+' .static_title').addClass('red_border');
+            //     error = 1;
+            // }
 
             if(error == 1){
                 return false;
