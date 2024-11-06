@@ -204,7 +204,7 @@ if (isset($system_calendar)) {
                                                 foreach ($service_user['health_records'] as $key => $value) {
                                                     if (empty($value['calendar_id'])) {
                                                         $pre_exist = 'Y';  ?>
-                                                        <div class='external-event label label-health' event_id="{{ $value['health_record_id'] }}" event_type="{{ $value['event_type'] }}" su_id="{{ $service_user['id'] }}" rec_type='health_record'>{{ $su_name.' - '.$value['title'] }}
+                                                        <div class='external-event label label-health' event_id="{{ $value['health_record_id'] }}" event_type="{{ $value['event_type'] }}" su_id="{{ $service_user['id'] }}" rec_type='health_record'>{{ $su_name }}
                                                             <span class="fa fa-close pull-right del_hel_rec dele"></span>
                                                         </div>
 

@@ -333,8 +333,7 @@ class PlacementPlanController extends ServiceUserManagementController
                     //saving notification end
 
                     $message = 'A Placement Plan "' .$placement_plan->task. '" added';
-
-                        return redirect('/service/placement-plans/'.$service_user_id)->with('success', 'Target added to Active targets successfully.');
+                    return redirect('/service/placement-plans/'.$service_user_id)->with('success', 'Target added to Active targets successfully.');
                 } else {
                     return redirect()->back()->with('error', 'Some error occurred. Please try after sometime.');
                 }

@@ -57,7 +57,7 @@
                         <!-- alert messages -->
                         @include('frontEnd.common.popup_alert_messages')
 
-                            <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+                            <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Task: </label>
                                     <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
@@ -66,9 +66,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
-                            <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
+                            <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Detail: </label>
                                     <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
@@ -77,13 +77,13 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
-                            <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
+                            <div class="col-md-12 col-sm-12 col-xs-12 cog-panel datepicker-sttng">      
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
                                     <label class="col-md-2 col-sm-2 col-xs-12 p-t-7"> Date: </label>
                                     <div class="col-md-10 col-sm-10 col-xs-12 r-p-0">
-                                        <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">  // dpYears 
+                                         <div data-date-viewmode="" data-date-format="dd-mm-yyyy" data-date="" class="input-group date"> <!-- dpYears  -->
                                            <input name="target_date" required type="text" value="" readonly="" size="16" class="form-control date-pick" maxlength="10">
                                             <span class="input-group-btn add-on datetime-picker1" >
                                                 <input style="left:-1px; top:0px;" type="text" value="" name="" id="target-new-date" class="form-control date-btn">
@@ -92,7 +92,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
                         <div class="edit-dynamic-form-fields"> </div>
 
