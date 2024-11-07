@@ -17,6 +17,7 @@ use App\Models\Currency;
 use App\Models\Product_category;
 use Illuminate\Database\QueryException;
 use App\User;
+use Illuminate\Support\Facades\Log;
 
 class QuoteController extends Controller
 {
@@ -210,7 +211,7 @@ class QuoteController extends Controller
     }
 
     public function saveQuoteData(Request $request){
-
+        dd($request);
         try {
 
             $validator = Validator::make($request->all(), [
@@ -223,15 +224,17 @@ class QuoteController extends Controller
             }
     
             $quote = Quote::saveQuoteData(array_merge(['home_id', Auth::user()->home_id], $request->all()));
-
+            Log::info('This is an informational message.', [$quote]);
     
             // return response()->json(['message' => 'Appointment created successfully'], 201);
     
         } catch (QueryException $e) {
             // Handle database error
+            Log::error('This is an error message from db.', $e->getMessage());
             return response()->json(['error' => 'Database error: ' . $e->getMessage()], 500);
         } catch (\Exception $e) {
             // Handle general errors
+            Log::error('This is an error message.', $e->getMessage());
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
 

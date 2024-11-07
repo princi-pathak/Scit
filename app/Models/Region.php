@@ -16,7 +16,7 @@ class Region extends Model
     ];
 
     public static function getRegions($home_id){
-        return Region::where('home_id', $home_id)->where('status', 1)->get();
+        return Region::where('home_id', $home_id)->where('status', 1)->orderBy('created_at', 'desc')->get();
     }
 
     public static function getAllRegion($home_id){
