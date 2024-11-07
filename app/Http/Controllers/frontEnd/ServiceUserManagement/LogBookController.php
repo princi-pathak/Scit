@@ -278,7 +278,8 @@ class LogBookController extends ServiceUserManagementController
                             ->orderBy('date','desc')->take(1)->value('date');
 
             $latest_date    = date('Y-m-d H:i:s', strtotime($latest_date));
-            $given_date    = date('Y-m-d');
+            // $given_date    = date('Y-m-d H:i:s', strtotime($data['log_date']));
+            $given_date    = date('Y-m-d H:i:s');
             $latest_date_without_time    = date('Y-m-d', strtotime($latest_date));
             $given_date_without_time    = date('Y-m-d', strtotime($given_date));
             $current_date_without_time    = date('Y-m-d');
@@ -340,8 +341,7 @@ class LogBookController extends ServiceUserManagementController
                     else {
                         $result['response'] = false;
                     }
-                }
-                else{
+                } else{
                     if($su_log_book_record->save()) {
                         $result['response'] = true;
                         echo "1";
@@ -360,8 +360,7 @@ class LogBookController extends ServiceUserManagementController
                 // }  else {
                 //     $result['response'] = false;  
                 // }
-            }   
-            else {
+            }  else {
                 
                 $result['response'] = false;
                 echo "2";

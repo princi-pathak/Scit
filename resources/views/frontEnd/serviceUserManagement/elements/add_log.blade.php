@@ -56,7 +56,7 @@
                         <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 datepicker-sttng date-sttng">
                             <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Date: </label>
                             <div class="col-md-9 col-sm-10 col-xs-12">
-                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date"> //dpYears
+                               <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">   //dpYears 
                                    <input name="log_date" id="daily_log_date" value="{{ date('d-m-Y H:i') }}" type="text" readonly="" size="16" class="form-control daily-log-book-datetime">
                                     <span class="input-group-btn add-on datetime-picker2">
                                         <input type="text" value="" name="" id="log-book-datetimepicker" autocomplete="off" class="form-control date-btn2">
@@ -217,13 +217,13 @@ $('.cancel-log').click(function(){
             //dataType : 'json',
 
             success:function(resp){
-                console.log(resp)
+                alert(resp);
+                console.log("resp", resp)
                 if (isAuthenticated(resp) == false){
                     return false;
                 }
 
                 if (resp == false){
-                    
                     $('span.popup_error_txt').text('Error Occured', 'Try after sometime');
                     $('.popup_error').show();
                     setTimeout(function(){$(".popup_error").fadeOut()}, 5000);

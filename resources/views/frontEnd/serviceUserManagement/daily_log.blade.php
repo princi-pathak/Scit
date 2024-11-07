@@ -906,8 +906,6 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     `));
                             }
 
-
-
                             var timeline_icon = document.createElement("span");
                             timeline_icon.setAttribute("class", "timeline-icon");
                             timeline_icon.setAttribute("data-toggle", "tooltip");
@@ -1180,6 +1178,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
             data: data,
             success: function(resp) {
                 console.log(resp)
+                console.log("get the data for the daily log");
                 if (isAuthenticated(resp) == false) {
                     return false;
                 }
