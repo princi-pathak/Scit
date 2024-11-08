@@ -211,30 +211,28 @@ class QuoteController extends Controller
     }
 
     public function saveQuoteData(Request $request){
-        dd($request);
         try {
-
             $validator = Validator::make($request->all(), [
                 'customer_id' => 'required',
-                'quote_date' => 'required'
+                'quota_date' => 'required'
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
     
-            $quote = Quote::saveQuoteData(array_merge(['home_id', Auth::user()->home_id], $request->all()));
+            $quote = Quote::updateOrCreate(array_merge(['home_id'=> Auth::user()->home_id], $request->all()));
             Log::info('This is an informational message.', [$quote]);
-    
-            // return response()->json(['message' => 'Appointment created successfully'], 201);
+            $data = array();
+            return view('frontEnd.salesAndFinance.quote.draft', $data);
     
         } catch (QueryException $e) {
             // Handle database error
-            Log::error('This is an error message from db.', $e->getMessage());
+            Log::error('This is an error message from db.', [$e->getMessage()]);
             return response()->json(['error' => 'Database error: ' . $e->getMessage()], 500);
         } catch (\Exception $e) {
             // Handle general errors
-            Log::error('This is an error message.', $e->getMessage());
+            Log::error('This is an error message.', [$e->getMessage()]);
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
 

@@ -1,5 +1,5 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
-
+@section('title','Quotes')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <style>
@@ -299,7 +299,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="plusandText">
-                                                    <a href="#!" id="openSiteDeliveryModal"  class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                    <a href="#!" id="openSiteDeliveryModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -400,7 +400,7 @@
                                         <div class="mb-3 row">
                                             <label for="inputJobRef" class="col-sm-3 col-form-label">Quote Ref</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
+                                                <input type="text" class="form-control-plaintext editInput" name="quote_ref" id="inputName" value="Auto generate" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -418,9 +418,9 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Date</label>
+                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Date <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control editInput textareaInput" name="quota_date" id="">
+                                            <input type="date" class="form-control editInput textareaInput" name="quota_date" id="" required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -666,7 +666,7 @@
                                                         <div class="tableplusBTN">
                                                             <span>Account Code </span>
                                                             <span class="plusandText ps-3">
-                                                                <a href="#!" class="formicon pt-0" id="OpenAddAccountCodeModal"> <i class="fa-solid fa-square-plus"></i> </a>
+                                                                <a href="#!" class="formicon pt-0" onclick="openAccountCodeModal('set')" id=""> <i class="fa-solid fa-square-plus"></i> </a>
                                                             </span>
                                                         </div>
                                                     </th>
@@ -1392,7 +1392,7 @@
                                 <div class="col-sm-12 mb-3 mt-2">
                                     <div class=" p-0">
                                         <a href="#" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
-                                        <a href="#" class="profileDrop">Upload Malti Attachment</a>
+                                        <a href="#" class="profileDrop">Upload Multi Attachment</a>
                                         <a href="#" class="profileDrop">Preview Attachment(s)</a>
                                         <a href="#" class="profileDrop">Download Attachment</a>
 
@@ -1620,7 +1620,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" onclick="openRegionModal('customerRegion')" id="openRegionsModal"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" onclick="openRegionModal('customerRegion')" id=""><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1742,42 +1742,6 @@
 </div>
 <!-- Add Customer Type Modal End -->
 
-<!-- Add Customer Regions Modal Start -->
-<!-- <div class="modal fade" id="quote_region_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content add_Customer">
-            <div class="modal-header">
-                <h5 class="modal-title" id="thirdModalLabel">Add Region</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="add_region_form">
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="radStar ">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="title" class="form-control editInput" id="region_name" value="" placeholder="Region">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
-                        <div class="col-sm-9">
-                            <select id="region_status" name="status" class="form-control editInput">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="pageTitleBtn">
-                        <a href="#" class="profileDrop p-2 crmNewBtn" id="saveRegionsData"> Save</a>
-                        <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> -->
-<!-- Add Customer Regions Modal End -->
-
 <!-- Add Site Address Modal Start -->
 <div class="modal fade" id="add_site_address_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -1817,7 +1781,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="OpenSiteAddressJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" onclick="openjobTitleModal('siteJobTitle')" id=""><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1870,7 +1834,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="OpenCustomerRegionModel"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" onclick="openRegionModal('getSiteAddressRegion')" id="OpenCustomerRegionModel"><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1982,7 +1946,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="OpenCustomerJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" onclick="openjobTitleModal('customer_job_titile_id')" id="OpenCustomerJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -2115,7 +2079,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="OpenSiteDeliveryAddressJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" onclick="openjobTitleModal('siteDeliveryJobTitle')" id="OpenSiteDeliveryAddressJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -2279,47 +2243,9 @@
 <!-- Include the region modal  -->
 @include('components.region-model')
 
-<!-- Add Job Title Modal Start -->
-<x-job-title-model
-    modalId="customer_job_title_modal"
-    modalTitle="Job Title - Add"
-    formId="add_job_title_form"
-    inputId="customer_type_name"
-    statusId="customer_type_status"
-    saveButtonId="saveJobTitle"
-    placeholderText="Job Title" />
+@include('components.job-title-model')
 
-<!-- Add Job Title Modal End -->
-
-<!-- Add Regions Modal Start -->
-<x-region-model
-    modalId="siteDetailregion"
-    modalTitle="Add Region"
-    formId="add_site_details_region_form"
-    inputId="region"
-    statusId="status"
-    saveButtonId="saveSiteDetailsRegion"
-    placeholderText="Region" />
-<!-- Add Regions Modal End -->
-
-<!-- Include the modal component -->
-<x-job-title-model
-    modalId="siteDetailJobTitle"
-    modalTitle="Job Title - Add"
-    formId="add_site_details_job_title_form"
-    inputId="JobTitle"
-    statusId="status"
-    saveButtonId="saveSiteDetailsJobTitle"
-    placeholderText="Job Title" />
-
-<x-job-title-model
-    modalId="siteDeliveryJobTitleModal"
-    modalTitle="Job Title - Add"
-    formId="add_site_delivery_job_title_form"
-    inputId="JobTitle"
-    statusId="status"
-    saveButtonId="saveSiteDetailsJobTitle"
-    placeholderText="Job Title" />
+@include('components.account-code')
 
 <!-- Include the quote type modal component -->
 <x-quote-type-modal
@@ -2349,30 +2275,9 @@
     saveButtonId="saveQuoteTag"
     placeholderText="Tag" />
 
-<!-- account code modal -->
-<x-account-code
-    modalId="accountCodeModal"
-    modalTitle="Add Departmental Code"
-    formId="add_departmental_code_form"
-    inputId="accountName"
-    departmentCode="accountCode"
-    statusId="status"
-    saveButtonId="saveAccountCode" />
-
-<x-account-code
-    modalId="sectionAccountCodeModal"
-    modalTitle="Add Departmental Code"
-    formId="add_section_departmental_code_form"
-    inputId="accountName"
-    departmentCode="accountCode"
-    statusId="status"
-    saveButtonId="saveSectionAccountCode" />
-
-
 <x-product-list
     modalId="productModalBAC"
     modalTitle="Product List" />
-
 
 @include('frontEnd.salesAndFinance.item.common.addproductmodal')
 @include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
@@ -2424,26 +2329,6 @@
                     option.value = user.id;
                     option.text = user.title;
                     get_customer_type.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getRegions(regions) {
-        // alert(regions);
-        $.ajax({
-            url: '{{ route("quote.ajax.getRegions") }}',
-            success: function(response) {
-                console.log(response.message);
-                regions.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.title;
-                    regions.appendChild(option);
                 });
             },
             error: function(xhr, status, error) {
@@ -2513,26 +2398,6 @@
         });
     }
 
-    function getCustomerJobTitle(jobTitle) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerJobTitle") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("jxcnjfjnfnk", response.data);
-                jobTitle.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name;
-                    jobTitle.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
     function getTags(tags) {
         $.ajax({
             url: '{{ route("General.ajax.getTags") }}',
@@ -2545,26 +2410,6 @@
                     option.value = user.id;
                     option.text = user.title;
                     tags.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getAccountCode(accountCode) {
-        $.ajax({
-            url: '{{ route("Invoice.ajax.getAccountCode") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("accountCode", response.data);
-                accountCode.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name;
-                    accountCode.appendChild(option);
                 });
             },
             error: function(xhr, status, error) {
@@ -2612,7 +2457,7 @@
                 console.error(error);
             }
         });
-    }  
+    }
 
 
 
@@ -2851,7 +2696,7 @@
         });
     }
 
-  
+
     $(document).ready(function() {
 
         getQuoteType(document.getElementById('quoteType'));
@@ -2979,28 +2824,28 @@
 
 
         // ajax call for saving customer contact on billing details
-        $('#saveJobTitle').on('click', function() {
-            var customer_job_titile_id = document.getElementById('customer_job_titile_id');
-            saveFormData(
-                'add_job_title_form', // formId
-                '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
-                'customer_job_title_modal', // modalId
-                getCustomerJobTitle, // callback function after success
-                customer_job_titile_id
-            );
-        });
+        // $('#saveJobTitle').on('click', function() {
+        //     var customer_job_titile_id = document.getElementById('customer_job_titile_id');
+        //     saveFormData(
+        //         'add_job_title_form', // formId
+        //         '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
+        //         'customer_job_title_modal', // modalId
+        //         getCustomerJobTitle, // callback function after success
+        //         customer_job_titile_id
+        //     );
+        // });
 
-        // ajax call for saving customer contact on billing details
-        $('#saveSiteDetailsJobTitle').on('click', function() {
-            var customer_job_titile_id = document.getElementById('siteJobTitle');
-            saveFormData(
-                'add_site_details_job_title_form', // formId
-                '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
-                'siteDetailJobTitle', // modalId
-                getCustomerJobTitle, // callback function after success
-                customer_job_titile_id
-            );
-        });
+        // // ajax call for saving customer contact on billing details
+        // $('#saveSiteDetailsJobTitle').on('click', function() {
+        //     var customer_job_titile_id = document.getElementById('siteJobTitle');
+        //     saveFormData(
+        //         'add_site_details_job_title_form', // formId
+        //         '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
+        //         'siteDetailJobTitle', // modalId
+        //         getCustomerJobTitle, // callback function after success
+        //         customer_job_titile_id
+        //     );
+        // });
 
         $('#saveQuoteTag').on('click', function() {
             var quoteTag = document.getElementById('quoteTag');
@@ -3012,31 +2857,6 @@
                 quoteTag
             );
         });
-
-
-        // ajax call for saving Region on Customer Site details
-        $('#saveSiteDetailsRegion').on('click', function() {
-            var getSiteAddressRegion = document.getElementById('getSiteAddressRegion');
-            saveFormData(
-                'add_site_details_region_form', // formId
-                '{{ route("quote.ajax.saveRegion") }}', // saveUrl
-                'siteDetailregion', // modalId
-                getRegions, // callback function after success
-
-            );
-        });
-
-        $('#saveAccountCode').on('click', function() {
-            var accoutCodeList = document.getElementById('accoutCodeList');
-            saveFormData(
-                'add_departmental_code_form', // formId
-                '{{ route("invoice.ajax.saveAccountCode") }}', // saveUrl
-                'accountCodeModal', // modalId
-                accoutCodeList, // callback function after success
-
-            );
-        });
-
 
         $('#billingDetailContact').on('change', function() {
             var selected = document.getElementById('getCustomerList').value;
@@ -3196,25 +3016,6 @@
         });
 
         // Ajax Call for saving Customer Type
-        $('#saveRegionsData').on('click', function() {
-            var formData = $('#add_region_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveRegion") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    var customerRegion = document.getElementById('customerRegion');
-                    getRegions(customerRegion);
-                    $('#quote_region_modal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Ajax Call for saving Customer Type
         $('#saveAddCustomerType').on('click', function() {
             var formData = $('#add_customer_type_form').serialize();
             $.ajax({
@@ -3314,11 +3115,6 @@
         $('#quote_cutomer_type_modal').modal('show');
     });
 
-    // js for Add Regions modal
-    // $('#openRegionsModal').on('click', function() {
-    //     $('#quote_region_modal').modal('show');
-    // });
-
     $('#OpenQuoteTypeModel').on('click', function() {
         $('#quoteTypeModal').modal('show');
     });
@@ -3347,12 +3143,6 @@
     }
     // js for Add Customer Contact modal
 
-    // js for Add Job Title modal
-    $('#OpenCustomerJobTitleModel').on('click', function() {
-        // getCountriesListCustomer();
-        $('#customer_job_title_modal').modal('show');
-    });
-
     // js for Add Site Address modal
     $('#openCustomerSiteAddress').on('click', function() {
         var customer = document.getElementById('getCustomerList').value;
@@ -3368,16 +3158,6 @@
         }
     });
 
-    // js for Add Regions modal on site address
-    // $('#OpenCustomerRegionModel').on('click', function() {
-    //     $('#siteDetailregion').modal('show');
-    // });
-
-    // js for Add job Title in site Details modal
-    $('#OpenSiteAddressJobTitleModel').on('click', function() {
-        $('#siteDetailJobTitle').modal('show');
-    });
-
     $('#openSiteDeliveryModal').on('click', function() {
         getCustomerJobTitle(document.getElementById('siteDeliveryJobTitle'));
         getCountriesList(document.getElementById('siteDeliveryAddressTelephoneCode'));
@@ -3387,9 +3167,9 @@
         $('#add_site_delivery_address_modal').modal('show');
     });
 
-    $('#OpenSiteDeliveryAddressJobTitleModel').on('click', function() {
-        $('#siteDetailJobTitle').modal('show');
-    });
+    // $('#OpenSiteDeliveryAddressJobTitleModel').on('click', function() {
+    //     $('#siteDetailJobTitle').modal('show');
+    // });
 
     $('#openABCProductModal').on('click', function() {
         $('#productModalBAC').modal('show');
@@ -3399,9 +3179,9 @@
         $('#quoteTagModal').modal('show');
     });
 
-    $('#OpenAddAccountCodeModal').on('click', function() {
-        $('#accountCodeModal').modal('show');
-    });
+    // $('#OpenAddAccountCodeModal').on('click', function() {
+    //     $('#accountCodeModal').modal('show');
+    // });
 
     $('#new_Attachment_open_model').on('click', function() {
         $('#new_Attachment_model').modal('show');

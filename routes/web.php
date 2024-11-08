@@ -337,7 +337,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/save_tag', 'save_tag')->name('General.ajax.saveQuoteTag');
 		Route::get('/getTags', 'getTags')->name('General.ajax.getTags');
 
-		
 	});
 
 	// Invoice Section 

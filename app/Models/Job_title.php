@@ -17,7 +17,7 @@ class Job_title extends Model
     ];
 
     public static function getCustomerJobTitle(){
-        return self::where('deleted_at', null)->where('status', 1)->get();
+        return self::where('deleted_at', null)->where('status', 1)->orderBy('created_at', 'desc')->get();
     } 
 
     public static function saveJobTitle(array $data, $home_id){

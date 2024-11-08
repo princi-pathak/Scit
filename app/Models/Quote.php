@@ -38,5 +38,4 @@ class Quote extends Model
         'status'
     ];
 
-
 }

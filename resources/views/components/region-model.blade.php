@@ -12,7 +12,6 @@
                         <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="radStar ">*</span></label>
                         <div class="col-sm-9">
                             <input type="hidden" name="region_id" id="regionButton">
-
                             <input type="text" name="title" class="form-control editInput" id="titleRegion" value="" placeholder="Region">
                         </div>
                     </div>
@@ -59,6 +58,25 @@
             },
             error: function(error) {
                 console.error('Error saving region:', error);
+            }
+        });
+    }
+
+    function getRegions(regions) {
+        $.ajax({
+            url: '{{ route("quote.ajax.getRegions") }}',
+            success: function(response) {
+                console.log(response.message);
+                regions.innerHTML = '';
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.title;
+                    regions.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
             }
         });
     }
