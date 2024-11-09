@@ -337,7 +337,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/save_tag', 'save_tag')->name('General.ajax.saveQuoteTag');
 		Route::get('/getTags', 'getTags')->name('General.ajax.getTags');
 
-		
 	});
 
 	// Invoice Section 
@@ -501,7 +500,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
 
-		Route::post('/quote/saveQuoteData', 'saveQuoteData');
+		Route::post('/quote/saveQuoteData', 'store');
 
 		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 

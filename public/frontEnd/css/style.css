@@ -7675,4 +7675,9 @@ min-height: 40px;
     color: #e39592 !important;
 }
 
-
+.loader {
+    animation: unset !important;
+    border-radius: unset !important;
+    margin-top: unset !important;
+    border: unset !important;
+}

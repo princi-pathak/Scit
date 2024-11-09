@@ -347,7 +347,9 @@ class UserController extends Controller
 
 		$previouHome = User::where('id', Auth::user()->id)->value('home_id');
 		$array = [$request->home];
+		$array = array_merge($array, [$previouHome]);
 		$string = implode(',', $array);
+	
 		User::where('id', Auth::user()->id)->update(['home_id' => $string]);
 
 		return redirect()->route('dashboard');
