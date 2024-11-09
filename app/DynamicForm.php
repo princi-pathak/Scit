@@ -24,7 +24,7 @@ class DynamicForm extends Model //FormBuilder
         $form      =  DynamicFormBuilder::where('id', $form_builder_id)
             ->where('home_id', $home_id)
             ->first();
-
+        // dd($form);
         $form_pattern = (isset($form->pattern)) ? $form->pattern : '';
         //echo '<pre>'; print_r($image_id); die;
 
@@ -41,7 +41,7 @@ class DynamicForm extends Model //FormBuilder
             $static_fields    = ' <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="below-divider"></div>
                                         <div class="prient-btn">
-                                        <input type="button" onclick="PrintDiv(this)" data-id="' . $image_id . '" value="download PDF" />
+                                        <input type="button" onclick="PrintDiv(this)" data-id="' . $image_id . '"  data-image="' . $form->image . '"  value="download PDF" />
                                         </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -56,6 +56,8 @@ class DynamicForm extends Model //FormBuilder
             $formdata .= "<input type='hidden' value='" . $form_builder_id . "' id='formid'>";
             $formdata .= "<input type='hidden' value='" . $home_id . "' id='home_id'>";
             $formdata .= "<input type='hidden' value='.$form_pattern.' id='getdatamodel'>";
+            $formdata .= "<input type='hidden' value='". $form->image."' id='imageName'>";
+            
             //  echo "<pre>";   print_r($form->alert_field);  echo "<pre>";
             if ($form->alert_field == '1') {
                 $static_field = '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
@@ -136,11 +138,17 @@ class DynamicForm extends Model //FormBuilder
             }
             $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12 cog-panel' id='formiotest'></div>";
             $formdata .= '';
+            if(!empty($form->image)){
+                $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12" id="formiotestimage">
+                                <div class="uploadPopImg mt-0 hideImageDiv" ><img class="my-2 imagePreview" src="'.asset('public/images/formio/' . $form->image).'" width="100px"></div>
+                            </div>';    
+            }
+            
             $result['response']         = true;
             $result['form_builder_id']  = $form_builder_id;
             $result['pattern']          = $formdata;
-            $result['image']            = asset('public/images/formio/' . $form->image);
-            $result['imageName']        = $form->image;
+            // $result['image']            = asset('public/images/formio/' . $form->image);
+            // $result['imageName']        = $form->image;
         } else {
             $result['response']     = false;
         }
@@ -236,6 +244,7 @@ class DynamicForm extends Model //FormBuilder
             $formdata .= $static_fields;
             $total_fields = 0;
             $formdata .= "<input type='hidden' value='" . $dynamic_form_id . "' id='dynamic_form_idformio'>";
+            $formdata .= "<input type='hidden' value='". $form_builder->image."' id='imageName'>";
 
             //echo '<pre>'; print_r($static_fields); die;
 
@@ -577,6 +586,11 @@ class DynamicForm extends Model //FormBuilder
                 $formdata .= $static_field;
             }
 
+            if(!empty($form_info->image)){
+                $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12" id="formiotestimage">
+                                <div class="uploadPopImg mt-0 hideImageDiv" ><img class="my-2 imagePreview" src="'.asset('public/images/formio/' . $form_info->image).'" width="100px"></div>
+                            </div>';    
+            }
 
             $result['response']         = true;
             $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12' id='formioView'></div>";
@@ -584,8 +598,8 @@ class DynamicForm extends Model //FormBuilder
             //$result['title']            = $form_builder->title;
             $result['service_user_id']  = $form_info->service_user_id;
             //$result['detail']     = `->detail;
-            $result['image']            = asset('public/images/formio/' . $form_info->image);
-            $result['imageName']        = $form_info->image;
+            // $result['image']            = asset('public/images/formio/' . $form_info->image);
+            // $result['imageName']        = $form_info->image;
             $result['form_data']        = $formdata;
         } else {
             $result['response']     = false;

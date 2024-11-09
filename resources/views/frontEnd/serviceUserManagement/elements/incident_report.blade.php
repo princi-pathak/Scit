@@ -94,9 +94,9 @@
                             @include('frontEnd.common.popup_alert_messages')
                             <div class="dynamic-form-fields"> </div>
 
-                            <div class="col-md-12 col-sm-12 col-xs-12">
+                            <!-- <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="uploadPopImg mt-0 hideImageDiv"><img class="my-2 imagePreview" src="" width="100px"></div>
-                            </div>
+                            </div> -->
 
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12">
                                 <h3 class="m-t-0 m-b-20 clr-blue rmp-details fnt-20"> Details </h3>
