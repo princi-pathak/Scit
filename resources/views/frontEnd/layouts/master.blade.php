@@ -246,6 +246,17 @@ function PrintDiv(th)
     //console.log(finalpath);
     // let imagepathdata="public/images/admin/"+"$(th).data('id')";
        var divContents = document.getElementById("formiotest").innerHTML;  
+    
+
+    var inputField = document.getElementById("imageName");
+    if (inputField.value.trim() === "") {
+      var divContentImage = "";
+    } else {
+      var divContentImage = document.getElementById('formiotestimage').innerHTML;
+    }
+
+
+       console.log(divContentImage);
        var printWindow = window.open('', '', 'height=600,width=600');  
        printWindow.document.write('<html><head><title>Print DIV Content</title>'); 
       printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">'); 
@@ -259,6 +270,7 @@ function PrintDiv(th)
        printWindow.document.write('<img src="{{url('/public/images/scits.png')}}" style="float:right;height:80px;">');
        printWindow.document.write('</div>');    
        printWindow.document.write(divContents);  
+       printWindow.document.write(divContentImage);  
        printWindow.document.write('</div>');
        printWindow.document.write('<div class="footer">'); 
        printWindow.document.write('<div class="footer-section-area">'); 

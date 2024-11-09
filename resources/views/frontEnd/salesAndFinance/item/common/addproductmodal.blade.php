@@ -116,8 +116,6 @@
                                                 </div> --}}
                             </div>
 
-
-
                             <div class="mb-2 row">
                                 <label for="product_code" class="col-sm-4 col-form-label">Product
                                     Code </label>
