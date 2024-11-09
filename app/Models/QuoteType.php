@@ -11,8 +11,12 @@ class QuoteType extends Model
 
     protected $fillable = ['title', 'number_of_days' ,'status', 'home_id'];
 
-    public static function getAllQuoteType(){
-        return QuoteType::where('deleted_at', null)->get();
+    public static function getAllQuoteType($home_id){
+        return QuoteType::where('deleted_at', null)->where('home_id', $home_id)->get();
+    }
+
+    public static function getActiveQuoteType(){
+        return QuoteType::where('deleted_at', null)->where('status', 1)->get();
     }
 
 }

@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
     const hiddenDiv = document.getElementById('hiddenDiv');
     hiddenDiv.style.display = 'none';
 });
@@ -9,3 +9,4 @@ if (inputField.value.trim() !== '') {
 } else {
     hiddenDiv.style.display = 'none'; // Hide the div if input is empty
 }
+

@@ -29,7 +29,7 @@
                                 <div class="col-md-11 col-sm-11 col-xs-12">
                                     <div class="select-style">
                                         <select name="service_user_id" class="su_n_id">
-                                            <option value=""> Service User </option>
+                                            <option value=""> Child </option>
                                             @foreach($service_users as $value)
                                                 <option value="{{ $value['id'] }}" {{ ($service_user_id == $value['id']) ? 'selected' : '' }}>{{ ucfirst($value['name']) }}</option>
                                             @endforeach
@@ -87,10 +87,11 @@
                         
                             <div class="dynamic-form-fields"> </div>
 
-                            
+                            <!-- <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="uploadPopImg mt-0 hideImageDiv" id=""><img class="my-2 imagePreview" src="" width="100px"></div>
+                            </div> -->
 
                             <div class="modal-footer m-t-0 m-b-15 modal-bttm">
-                                
                                 <input type="hidden" name="location_id" value="{{ $this_location_id }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
@@ -132,7 +133,7 @@
                             <div class="col-md-11 col-sm-11 col-xs-12">
                                 <div class="select-style">
                                     <select name="service_user_id" class="su_id" disabled="">
-                                         <option value="0"> N/A Service User </option>
+                                         <option value="0"> N/A Child </option>
                                         @foreach($service_users as $value)
                                             <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
                                         @endforeach
@@ -194,18 +195,18 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#dynmicFormModal" class="close" style="padding-right:6px"> <i class="fa fa-arrow-left"></i></a>
-                <h4 class="modal-title"> Add Record To Service User's Daily Log</h4>
+                <h4 class="modal-title"> Add Record To Child's Daily Log</h4>
             </div>
             <div class="modal-body" >
                 <div class="row">
                     <div class="add-new-box risk-tabs custm-tabs">
                         <form method="post" action="" id="">        
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Service User: </label>
+                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child: </label>
                                 <div class="col-md-6 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
                                         <select name="s_user_id" class="select-field form-control" required id="records_list" style="width:100%;">
-                                            <option value="0"> Select Service User </option>
+                                            <option value="0"> Select Child </option>
                                             @foreach($service_users as $value)
                                                 <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
                                             @endforeach
@@ -319,24 +320,28 @@
         });
 
         $('.sbt-dyn-form-btn-health').click(function(){
+            // alert("dfdsf");
             var model_id        = $(this).closest('.modal').attr('id');            
             var form_id         = $(this).closest('form').attr('id');
-            //alert(form_id); //return false;
+            // alert(form_id); //return false;
             var service_user    = $('#'+model_id+' .su_n_id');
-            var form_builder    = $('#'+model_id+' .dynamic_form_select');
-            //alert(form_builder); return false;
-            var static_title    = $('#'+model_id+' .static_title');
-            
-            var static_title_vl = static_title.val();
-            if(static_title_vl == undefined){
-                return false;
-            } 
-
             var service_user_id = service_user.val().trim();
             // alert(service_user_id); 
+            // alert(service_user.val().trim()); 
+            var form_builder    = $('#'+model_id+' .dynamic_form_select');
+            // alert(form_builder); return false;
             var form_builder_id = form_builder.val().trim();
-            //alert(form_builder_id); return false;
-            var static_title_vl = static_title_vl.trim();
+            // alert(form_builder_id); return false;
+            // var static_title    = $('#'+model_id+' .static_title');
+            
+            // var static_title_vl = static_title.val();
+            // alert(static_title_vl); return false;
+
+            // if(static_title_vl == undefined){
+            //     return false;
+            // } 
+
+            // var static_title_vl = static_title_vl.trim();
             // alert(static_title_vl); return false;
             var err = 0;
 
@@ -354,12 +359,12 @@
                 form_builder.parent().removeClass('red_border');
             }
 
-            if(static_title_vl == '') { 
-                static_title.addClass('red_border');
-                err = 1;
-            } else{
-                static_title.removeClass('red_border');
-            }
+            // if(static_title_vl == '') { 
+            //     static_title.addClass('red_border');
+            //     err = 1;
+            // } else{
+            //     static_title.removeClass('red_border');
+            // }
 
             if(err == 1){
                 return false;
@@ -853,7 +858,7 @@
                         $('.popup_error').show();
 
                     } else if(res == '1') {
-                        $('span.popup_success_txt').text('Record has been added to Service User dailylog successfully.');
+                        $('span.popup_success_txt').text('Record has been added to Child dailylog successfully.');
                         $('.popup_success').show();
                         setTimeout(function(){$('.popup_success').fadeOut()},5000);
                         $('.dyn-logged-btn').click();

@@ -71,4 +71,9 @@ class Home extends Model
         } 
     }
 
+    public static function getHomeFromConpany($Id){
+        return Home::where('admin_id', $Id)->where('is_deleted', 0)->get();
+    }
+
+
 }

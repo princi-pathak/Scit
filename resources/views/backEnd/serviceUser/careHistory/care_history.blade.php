@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.master')
 
-@section('title',' Service User Care History')
+@section('title',' Child Care History')
 
 @section('content')
 
@@ -121,7 +121,7 @@
     </section>
 <!--main content end-->
 
-<!-- Add Service User Care History -->
+<!-- Add Child Care History -->
 
 
 

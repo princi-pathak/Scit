@@ -4,7 +4,7 @@
                                 ->get();
 
 ?>
-<!-- Service User list Modal -->
+<!-- Child list Modal -->
 <div class="modal fade" id="ServiceUserlistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -13,19 +13,19 @@
                 <!-- <a class="close view-all-logs mdl-back-btn" href="" data-toggle="modal" data-dismiss="modal" data-target=""> -->
                     <!-- <i class="fa fa-arrow-left" title=""></i> -->
                 <!-- </a> -->
-                <h4 class="modal-title"> Service User</h4>
+                <h4 class="modal-title"> Child</h4>
             </div>
             <div class="modal-body" >
                 <div class="row">
                     <div class="add-new-box risk-tabs custm-tabs">
                         <!-- <form method="post" action="{{ url('/handover/daily/log')}}" id="srvc-user-lst"> -->
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Service User: </label>
+                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child: </label>
                                 <div class="col-md-6 col-sm-9 col-xs-10">
                                     <div class="select-bi" style="width:100%;float:left;">
                                         
                                         <select class="js-example-placeholder-single1 form-control" required id="records_list" style="width:100%;" name="service_usr_id">
-                                            <option value="">Select Service User</option>';
+                                            <option value="">Select Child</option>';
 
                                             @foreach($service_user_list as $value){
                                                 <option value="{{$value->id}}">{{ucfirst($value->user_name)}}</option>;

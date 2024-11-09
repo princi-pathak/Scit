@@ -62,7 +62,7 @@ padding: 5px 0px 15px 0px;
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Default Days</label>
                                 <div class="col-lg-9">
-                                    <input type="text" name="days" class="form-control" placeholder="Default Days" value="<?php if(isset($job_type)){echo $job_type->default_days;}else {echo 14;}?>">
+                                    <input type="text" name="days" class="form-control" placeholder="Default Days" value="<?php if(isset($job_type)){echo $job_type->default_days;}else {echo 14;}?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                 </div>
                             </div> 
                             <div class="form-group">
@@ -76,9 +76,10 @@ padding: 5px 0px 15px 0px;
                                 <div class="col-lg-9">
                                     <select class="form-control" name="appointment">
 										<option desabled selected>select Appointment Type</option>
-                                        <option value="1" <?php if(isset($job_type) && $job_type->appointment_id == 1){echo "selected";}?>>Install</option>
-                                        <option value="2" <?php if(isset($job_type) && $job_type->appointment_id == 2){echo "selected";}?>>Cold Call</option>
-                                        <option value="3" <?php if(isset($job_type) && $job_type->appointment_id == 3){echo "selected";}?>>Maintenance</option>
+                                        <?php foreach($appointement_type as $type){?>
+                                            <option value="{{$type->id}}" <?php if(isset($job_type) && $job_type->appointment_id == $type->id){echo "selected";}?>>{{$type->name}}</option>
+                                        <?php }?>
+                                        
 									</select>
                                 </div>
                             </div> 

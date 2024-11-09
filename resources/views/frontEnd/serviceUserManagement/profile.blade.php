@@ -1,5 +1,5 @@
 @extends('frontEnd.layouts.master')
-@section('title','Service User Profile')
+@section('title','Child Profile')
 @section('content')
 <style>
     .view_log {

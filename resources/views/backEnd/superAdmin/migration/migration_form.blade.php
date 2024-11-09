@@ -24,7 +24,7 @@ border-color: #1ca59e;
 			<div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                       Service user migaration
+                       Child migaration
                     </header>
                     <div class="panel-body">
                         <div class="position-center">

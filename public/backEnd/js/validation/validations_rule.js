@@ -1107,7 +1107,7 @@ $('#edit_agent_form').formValidation({
 
     }  
 });
-/* service users */
+/* Childs */
 $('#add_service_user_form').formValidation({
     framework: 'bootstrap',
     excluded: [':disabled'],
@@ -4764,7 +4764,7 @@ $('#edit_system_guide_form').formValidation({
     }  
 });
 
-///////////--------Add External Service(backEnd) -> Service Users Section-------//////////////
+///////////--------Add External Service(backEnd) -> Childs Section-------//////////////
 
 $('#add_external_service_form').formValidation({
     framework: 'bootstrap',
@@ -4863,7 +4863,7 @@ $('#add_external_service_form').formValidation({
     }  
 });
 
-///////////--------Edit External Service(backEnd) -> Service Users Section-------//////////////
+///////////--------Edit External Service(backEnd) -> Childs Section-------//////////////
 $('#edit_external_service_form').formValidation({
     framework: 'bootstrap',
     excluded: [':disabled'],

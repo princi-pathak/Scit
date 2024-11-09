@@ -158,7 +158,7 @@ class DailyLogsController extends ServiceUserManagementController
 
             if($request->filter=='1'){
             if(!empty($data)){
-                //sourabh staff member and service user filter
+                //sourabh staff member and Child filter
                 if($request->service_user=='' && $request->staff_member==''){
                     $service_userss = ServiceUser::select('id')
                             ->where('home_id',$home_id)

@@ -173,7 +173,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                     <select class="form-control" name="service_user" id="service_user" <?php if (isset($_GET['key'])) {
                                                                                             echo "disabled";
                                                                                         } ?>>
-                        <option value="">Select Service user</option>
+                        <option value="">Select Child</option>
                         @foreach($service_users as $val)
                         <option <?php if (isset($_GET['key'])) {
                                     if ($_GET['key'] == $val->id) {
@@ -252,7 +252,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                             </span>
                                             <span class="time_abbre" data-toggle="tooltip" data-placement="top" title="{{ $key['created_at'] }}">{{ time_diff_string(date("d-m-Y H:i", strtotime($key['created_at'])), 'now') }} <span style="color:black;font-weight:400;font-size:14px;">by {{$key['staff_name']}}</span></span>
                                             @if($key['category_name'])
-                                            <h1 class="title_time_log"><span style="color:{{$key['category_color']}};">{{ $key['category_name'] }}</span> | <span class="log_title">{{$key['title']}}</span></h1>
+                                            <h1 class="title_time_log"><span style="color:{{$key['category_color']}};">{{ $key['category_name'] }}</span> </h1>
                                             @else
                                             <h1 class="title_time_log"><span class="log_title">{{ $key['title']}}</span></h1>
                                             @endif
@@ -308,7 +308,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                             </span>
                                             <span class="time_abbre" data-toggle="tooltip" data-placement="top" title="{{ $key['created_at'] }}">{{ time_diff_string(date("d-m-Y H:i", strtotime($key['created_at'])), 'now') }} <span style="color:black;font-weight:400;font-size:14px;">by {{ $key['staff_name']}}</span></span>
                                             @if($key['category_name'])
-                                            <h1 class="title_time_log"><span style="color:{{$key['category_color']}};">{{ $key['category_name'] }}</span> | <span class="log_title">{{$key['title']}}</span></h1>
+                                            <h1 class="title_time_log"><span style="color:{{$key['category_color']}};">{{ $key['category_name'] }}</span> </h1>
                                             @else
                                             <h1 class="title_time_log"><span class="log_title">{{ $key['title']}}</span></h1>
                                             @endif
@@ -906,8 +906,6 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                     `));
                             }
 
-
-
                             var timeline_icon = document.createElement("span");
                             timeline_icon.setAttribute("class", "timeline-icon");
                             timeline_icon.setAttribute("data-toggle", "tooltip");
@@ -1180,6 +1178,7 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
             data: data,
             success: function(resp) {
                 console.log(resp)
+                console.log("get the data for the daily log");
                 if (isAuthenticated(resp) == false) {
                     return false;
                 }

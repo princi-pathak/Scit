@@ -59,11 +59,20 @@ class IncidentController extends ServiceUserManagementController
         }
 
         foreach ($incident_form as $key => $value) {
+
+            $title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
             
-            if($value->date == '' ) {  
+            // if($value->date == '' ) {  
+            //     $date = '';
+            // }  else {
+            //     $date = date('d-m-Y', strtotime($value->date));
+            // }
+
+            
+            if ($value->created_at == '') {
                 $date = '';
-            }  else {
-                $date = date('d-m-Y', strtotime($value->date));
+            } else {
+                $date = \Carbon\Carbon::parse($value->created_at)->format('d-m-Y');
             }
 
             if((!empty($date)) || (!empty($value->time))) {
@@ -80,7 +89,7 @@ class IncidentController extends ServiceUserManagementController
                             <div class="col-md-12 col-sm-11 col-xs-12 r-p-0">
                                 <div class="input-group popovr">
                                     <input type="hidden" name="" value="'.$value->id.'" disabled="disabled" class="edit_incident_id_'.$value->id.'">
-                                    <input type="text" class="form-control" name="incident_title_name" disabled value="'.$value->title.' '.$start_brct.$date.' '.$value->time.$end_brct.'" maxlength="255"/>
+                                    <input type="text" class="form-control" name="incident_title_name" disabled value="'.$title.' '.$start_brct.$date.' '.$end_brct.'" maxlength="255"/>
                             
                                     <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
                                         <i class="fa fa-cog"></i>

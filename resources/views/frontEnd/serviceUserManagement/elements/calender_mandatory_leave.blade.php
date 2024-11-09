@@ -25,7 +25,7 @@
                                 <div class="select-style">
                                     <?php //echo Auth::user()->home_id; ?>
                                     <select name="su_id_ml">
-                                        <option value="0">Select Service User</option>
+                                        <option value="0">Select Child</option>
                                         <?php
                                         foreach ($service_users as $key=>$value) { ?>
                                         <option value="{{ $value->id }}"                                         

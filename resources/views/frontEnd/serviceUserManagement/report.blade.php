@@ -146,7 +146,7 @@
                         <div class="white-box analytics-info box_white counter">
                             <div class="d-flex">
                                 <div class="heading">
-                                    <h3 class="box-title">Missing service user</h3>
+                                    <h3 class="box-title">Missing Child</h3>
                                 </div>
                                 <div class="icon-2 icon">
                                 <span class="icon_name"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>

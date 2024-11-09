@@ -93,7 +93,7 @@ function time_diff_string($from, $to, $full = false) {
             
             <div class="col-md-2 col-lg-2">                
                 <select class="form-control" name="service_user" id="service_user" <?php if(isset($service_user_id)){ echo "disabled"; } ?>>
-                    <option value="">Select Service user</option>
+                    <option value="">Select Child</option>
                     @foreach($service_users as $val)
                         <option <?php if(isset($service_user_id)){ if($service_user_id==$val->id){ echo "Selected"; } } ?> value="{{$val->id}}">{{$val->name}}</option>
                     @endforeach
@@ -202,7 +202,6 @@ function time_diff_string($from, $to, $full = false) {
                                         <span  data-toggle="tooltip" data-placement="right" title="" class="timeline-icon darkgreen-clr">
                                         @endif      
                                             <i class="{{$key['icon']}} fontam"></i>
-                                            
                                         </span>
                                         <span class="time_abbre" data-toggle="tooltip" data-placement="top" title="{{ $key['created_at'] }}">{{ time_diff_string(date("d-m-Y H:i", strtotime($key['created_at'])), 'now') }} <span style="color:black;font-weight:400;font-size:14px;">by {{ $key['staff_name']}}</span></span>
                                         @if($key['description'])

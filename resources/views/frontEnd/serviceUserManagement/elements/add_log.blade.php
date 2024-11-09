@@ -29,15 +29,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                        <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                             <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Title: </label>
-                            <div class="col-md-9 col-sm-10 col-xs-12">
+                            <div class="col-md-9 col-sm-10 col-xs-12"> -->
                                 <!-- <div class="select-bi" style="width:100%;float:left;"> -->
-                                    <input type="text" class="form-control" placeholder="" name="log_title" />
+                                    <!-- <input type="text" class="form-control" placeholder="" name="log_title" /> -->
                                 <!-- </div> -->
                                 <!-- <p class="help-block"> Enter the Title of Log and add details below.</p> -->
-                            </div>
-                        </div>
+                            <!-- </div> -->
+                        <!-- </div> -->
 
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0"><!-- add-rcrd -->
                             <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Category: </label>
@@ -53,10 +53,10 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 datepicker-sttng date-sttng">
+                        <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 datepicker-sttng date-sttng">
                             <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Date: </label>
                             <div class="col-md-9 col-sm-10 col-xs-12">
-                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date"> <!-- dpYears -->
+                               <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" class="input-group date">   //dpYears 
                                    <input name="log_date" id="daily_log_date" value="{{ date('d-m-Y H:i') }}" type="text" readonly="" size="16" class="form-control daily-log-book-datetime">
                                     <span class="input-group-btn add-on datetime-picker2">
                                         <input type="text" value="" name="" id="log-book-datetimepicker" autocomplete="off" class="form-control date-btn2">
@@ -64,16 +64,16 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         
-                        <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
+                        <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                             <label class="col-md-2 col-sm-1 col-xs-12 p-t-7"> Details: </label>
                             <div class="col-md-9 col-sm-10 col-xs-12">
                                 <div class="select-bi">
                                     <textarea name="log_detail" class="form-control detail-info-txt log-detail" rows="3" ></textarea>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- new image -->
                         <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
@@ -169,28 +169,28 @@ $('.cancel-log').click(function(){
             $('select[name=\'category\']').removeClass('red_border');
         }
 
-        if(log_date == ''){ 
-            $('input[name=\'log_date\']').addClass('red_border');
-            error = 1;
-        }else{ 
-            $('input[name=\'log_date\']').removeClass('red_border');
-        }
+        // if(log_date == ''){ 
+        //     $('input[name=\'log_date\']').addClass('red_border');
+        //     error = 1;
+        // }else{ 
+        //     $('input[name=\'log_date\']').removeClass('red_border');
+        // }
 
-        if(log_title == ''){ 
+        // if(log_title == ''){ 
 
-            $('input[name=\'log_title\']').addClass('red_border');
-            error = 1;
-        }else{
+        //     $('input[name=\'log_title\']').addClass('red_border');
+        //     error = 1;
+        // }else{
 
-            $('input[name=\'log_title\']').removeClass('red_border');
-        }
+        //     $('input[name=\'log_title\']').removeClass('red_border');
+        // }
 
-        if(log_detail == ''){ 
-            $('textarea[name=\'log_detail\']').addClass('red_border');
-            error = 1;
-        }else{ 
-            $('textarea[name=\'log_detail\']').removeClass('red_border');
-        }
+        // if(log_detail == ''){ 
+        //     $('textarea[name=\'log_detail\']').addClass('red_border');
+        //     error = 1;
+        // }else{ 
+        //     $('textarea[name=\'log_detail\']').removeClass('red_border');
+        // }
 
         // if(log_image == ''){ 
         //     $('input[name=\'log_image\']').addClass('red_border');
@@ -217,13 +217,13 @@ $('.cancel-log').click(function(){
             //dataType : 'json',
 
             success:function(resp){
-                console.log(resp)
+                alert(resp);
+                console.log("resp", resp)
                 if (isAuthenticated(resp) == false){
                     return false;
                 }
 
                 if (resp == false){
-                    
                     $('span.popup_error_txt').text('Error Occured', 'Try after sometime');
                     $('.popup_error').show();
                     setTimeout(function(){$(".popup_error").fadeOut()}, 5000);

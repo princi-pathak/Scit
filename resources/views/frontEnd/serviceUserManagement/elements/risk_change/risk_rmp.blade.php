@@ -1,4 +1,3 @@
-
 <!-- Risk RMP Plan Add-->
 <div class="modal fade" id="rmpAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -15,9 +14,9 @@
                             <div class="col-md-11 col-sm-11 col-xs-12">
                                 <div class="select-style">
                                     <select name="service_user_id" class="su_n_id" disabled="">
-                                        <option value="0"> Select Service User </option>
+                                        <option value="0"> Select Child </option>
                                         @foreach($service_users as $value)
-                                            <option value="{{ $value['id'] }}" {{ ($service_user_id == $value['id']) ? 'selected' : '' }}>{{ ucfirst($value['name']) }}</option>
+                                        <option value="{{ $value['id'] }}" {{ ($service_user_id == $value['id']) ? 'selected' : '' }}>{{ ucfirst($value['name']) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -28,32 +27,34 @@
                             <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 text-right"> Add: </label>
                             <div class="col-md-11 col-sm-12 col-xs-12">
                                 <div class="select-style">
-                                    <select name="dynamic_form_builder_id" class="dynamic_form_select" >
+                                    <select name="dynamic_form_builder_id" class="dynamic_form_select">
                                         <option value="0"> Select Form </option>
-                                        
+
                                         <?php
                                         $this_location_id = App\DynamicFormLocation::getLocationIdByTag('rmp');
-                                        foreach($dynamic_forms as $value) {
-                                        
-                                            $location_ids_arr = explode(',',$value['location_ids']);
+                                        foreach ($dynamic_forms as $value) {
 
-                                            if(in_array($this_location_id,$location_ids_arr)) { 
-                                            ?>
+                                            $location_ids_arr = explode(',', $value['location_ids']);
+
+                                            if (in_array($this_location_id, $location_ids_arr)) {
+                                        ?>
                                                 <option value="{{ $value['id'] }}"> {{ ucfirst($value['title']) }} </option>
-                                            <?php } 
+                                        <?php }
                                         } ?>
                                     </select>
                                 </div>
                                 <p class="help-block"> Choose a user and the type of form you want to fill. </p>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="below-divider"></div>
                         </div>
-                        
-                        @include('frontEnd.common.popup_alert_messages')    
+
+                        @include('frontEnd.common.popup_alert_messages')
                         <div class="dynamic-form-fields"> </div>
+
+                        
                         <div class="rmp_static_fields" style="display: none;">
                             <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
@@ -131,9 +132,9 @@
                             <div class="col-md-11 col-sm-11 col-xs-12">
                                 <div class="select-style">
                                     <select name="service_user_id" class="su_n_id" disabled="">
-                                        <option value="0"> Select Service User </option>
+                                        <option value="0"> Select Child </option>
                                         @foreach($service_users as $value)
-                                            <option value="{{ $value['id'] }}" {{ ($service_user_id == $value['id']) ? 'selected' : '' }}>{{ ucfirst($value['name']) }}</option>
+                                        <option value="{{ $value['id'] }}" {{ ($service_user_id == $value['id']) ? 'selected' : '' }}>{{ ucfirst($value['name']) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -146,30 +147,31 @@
                                 <div class="select-style">
                                     <select name="dynamic_form_builder_id" class="dynamic_form_select" disabled>
                                         <option value="0"> Select Form </option>
-                                        
+
                                         <?php
                                         $this_location_id = App\DynamicFormLocation::getLocationIdByTag('rmp');
-                                        foreach($dynamic_forms as $value) {
-                                        
-                                            $location_ids_arr = explode(',',$value['location_ids']);
+                                        foreach ($dynamic_forms as $value) {
 
-                                            if(in_array($this_location_id,$location_ids_arr)) { 
-                                            ?>
+                                            $location_ids_arr = explode(',', $value['location_ids']);
+
+                                            if (in_array($this_location_id, $location_ids_arr)) {
+                                        ?>
                                                 <option value="{{ $value['id'] }}"> {{ ucfirst($value['title']) }} </option>
-                                            <?php } 
+                                        <?php }
                                         } ?>
                                     </select>
                                 </div>
                                 <p class="help-block"> Choose a user and the type of form you want to fill. </p>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="below-divider"></div>
                         </div>
-                        
-                        @include('frontEnd.common.popup_alert_messages')    
+
+                        @include('frontEnd.common.popup_alert_messages')
                         <div class="dynamic-form-fields"> </div>
+                   
 
                         <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
                             <label class="col-md-1 col-sm-1 col-xs-12 p-t-7"> User: </label>
@@ -233,7 +235,7 @@
                             </div>
                             
                         </div> -->
-                        
+
                     </div>
                 </div>
                 <div class="modal-footer m-t-0">
@@ -290,115 +292,119 @@
 </script> -->
 
 <script>
-    $(document).ready(function(){
-        
+    $(document).ready(function() {
+
         //show sent to fields
-        $(document).on('change','#rmpAddModal .dynamic_form_select', function(){
+        $(document).on('change', '#rmpAddModal .dynamic_form_select', function() {
             $('.rmp_static_fields').show();
         });
-        
-        $(document).on('change','#rmpAddModal .notify_method', function(){
+
+        $(document).on('change', '#rmpAddModal .notify_method', function() {
 
             var notify_method_value = $(this).val();
-            if(notify_method_value == 'EMAIL') {
+            if (notify_method_value == 'EMAIL') {
                 $('.notify_person').closest('.cog-panel').show();
                 //$('.notify_person').attr('disabled',false);
-            } else{
+            } else {
                 $('.notify_person').closest('.cog-panel').hide();
                 //$('.notify_person').attr('disabled',true);
             }
         });
 
-        $('.smt_rmp_btn').click(function(){
-            
-            var model_id        = $(this).closest('.modal').attr('id');
-            var form_id         = $(this).closest('form').attr('id');
-            var service_user    = $('#'+model_id+' .su_n_id');
-            var form_builder    = $('#'+model_id+' .dynamic_form_select');
-            var static_title    = $('#'+model_id+' .static_title');
-            
+        $('.smt_rmp_btn').click(function() {
+
+            var model_id = $(this).closest('.modal').attr('id');
+            var form_id = $(this).closest('form').attr('id');
+            var service_user = $('#' + model_id + ' .su_n_id');
+            var form_builder = $('#' + model_id + ' .dynamic_form_select');
+            var static_title = $('#' + model_id + ' .static_title');
+
             var static_title_vl = static_title.val();
-            if(static_title_vl == undefined){
+            if (static_title_vl == undefined) {
                 return false;
-            } 
+            }
 
             var service_user_id = service_user.val().trim();
             var form_builder_id = form_builder.val().trim();
             var static_title_vl = static_title_vl.trim();
             var err = 0;
 
-            if(service_user_id == 0) { 
+            if (service_user_id == 0) {
                 service_user.parent().addClass('red_border');
                 err = 1;
-            }else{
+            } else {
                 service_user.parent().removeClass('red_border');
             }
 
-            if(form_builder_id == 0) { 
+            if (form_builder_id == 0) {
                 form_builder.parent().addClass('red_border');
                 err = 1;
-            } else{
+            } else {
                 form_builder.parent().removeClass('red_border');
             }
 
-            if(static_title_vl == '') { 
+            if (static_title_vl == '') {
                 static_title.addClass('red_border');
                 err = 1;
-            } else{
+            } else {
                 static_title.removeClass('red_border');
             }
 
-            if(err == 1){
+            if (err == 1) {
                 return false;
             }
 
-            var formdata = $('#'+form_id).serialize();
-       
+            var formdata = $('#' + form_id).serialize();
+
             $('.loader').show();
             $('body').addClass('body-overflow');
 
             $.ajax({
-                type : 'post',
-                url :  "{{ url('/service/risk/rmp/add') }}",
-                data : formdata,
+                type: 'post',
+                url: "{{ url('/service/risk/rmp/add') }}",
+                data: formdata,
                 dataType: 'json',
-                success:function(resp){
+                success: function(resp) {
 
-                    if(isAuthenticated(resp) == false){
+                    if (isAuthenticated(resp) == false) {
                         return false;
                     }
-                    
-                    var response = resp['response'];
-                    
-                    if(response == true){
-                        $('#'+form_id+' span.popup_success_txt').text('Rmp has been Added Successfully');
-                        $('#'+form_id+' .popup_success').show();
-                        setTimeout(function(){$('#'+form_id+' .popup_success').fadeOut()}, 5000);
-                        
-                        $('#'+model_id+' .dynamic_form_select').val('0');
-                        $('#'+model_id+' .dynamic-form-fields').html('');
 
-                        $('#'+model_id).modal('hide');
+                    var response = resp['response'];
+
+                    if (response == true) {
+                        $('#' + form_id + ' span.popup_success_txt').text('Rmp has been Added Successfully');
+                        $('#' + form_id + ' .popup_success').show();
+                        setTimeout(function() {
+                            $('#' + form_id + ' .popup_success').fadeOut()
+                        }, 5000);
+
+                        $('#' + model_id + ' .dynamic_form_select').val('0');
+                        $('#' + model_id + ' .dynamic-form-fields').html('');
+
+                        $('#' + model_id).modal('hide');
 
                         $('.loader').hide();
                         $('body').removeClass('body-overflow');
-                        
+
                         //$('.modal-backdrop').remove();
-                        
+
                         $('#riskIncdntRprtModal').modal('show');
 
-                    } else{
+                    } else {
                         //show error message
-                        $('#'+form_id+'  span.popup_error_txt').text("{{ COMMON_ERROR }}");
-                        $('#'+form_id+' .popup_error').show();
-                        setTimeout(function(){$('#'+form_id+' .popup_error').fadeOut()}, 5000);
+                        $('#' + form_id + '  span.popup_error_txt').text("{{ COMMON_ERROR }}");
+                        $('#' + form_id + ' .popup_error').show();
+                        setTimeout(function() {
+                            $('#' + form_id + ' .popup_error').fadeOut()
+                        }, 5000);
                     }
 
                     $('.loader').hide();
                     $('body').removeClass('body-overflow');
                 }
-            });  
-            return false;  
+            });
+            return false;
         });
 
         /*$('.smt_rmp_btn').on('click', function(){
@@ -460,41 +466,41 @@
         $('#rmpAddModal').on('scroll',function(){
             $('.dpYears').datepicker('place')
         });*/
-        
+
     });
 </script>
 
 <!-- sticky notification script on modal close-->
 <script>
-    $('.rmp-modal-close').click(function(){
+    $('.rmp-modal-close').click(function() {
         //var risk_rmp_notif_ttl = $('.rmp-details').text();
         var risk_name = $('input[name=\'risk_name\']').val();
         var unique_id = $.gritter.add({
-                title: 'Risk Details',
-                text: 'Please fill the required RMP/Incident Report Form of '+risk_name+' risk',
-                //text: 'Please fill the required RMP/Incident Report Form of  .',
-                sticky: true,
-                class_name: 'my-sticky-class'
+            title: 'Risk Details',
+            text: 'Please fill the required RMP/Incident Report Form of ' + risk_name + ' risk',
+            //text: 'Please fill the required RMP/Incident Report Form of  .',
+            sticky: true,
+            class_name: 'my-sticky-class'
         });
     });
 </script>
 
 <script>
-        //var risk_inc_notif_ttl = $('.inc-details').text();
-        //$(document).ready(function(){
-        /* var Gritter = function () {    
-            alert('mk'); 
-            var risk_inc_notif_ttl = 'mk';
-            
-            var unique_id = $.gritter.add({
-                    title: risk_inc_notif_ttl,
-                    text: 'Please fill the necessary form and submit it.',
-                    sticky: true,
-                    // (int | optional) the time you want it to be alive for before fading out
-                    //time: '',
-                    // (string | optional) the class name you want to apply to that specific message
-                    class_name: 'my-sticky-class'
-            });
-        }();*/
-        //});
+    //var risk_inc_notif_ttl = $('.inc-details').text();
+    //$(document).ready(function(){
+    /* var Gritter = function () {    
+        alert('mk'); 
+        var risk_inc_notif_ttl = 'mk';
+        
+        var unique_id = $.gritter.add({
+                title: risk_inc_notif_ttl,
+                text: 'Please fill the necessary form and submit it.',
+                sticky: true,
+                // (int | optional) the time you want it to be alive for before fading out
+                //time: '',
+                // (string | optional) the class name you want to apply to that specific message
+                class_name: 'my-sticky-class'
+        });
+    }();*/
+    //});
 </script>

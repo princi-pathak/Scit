@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
-use App\Models\Job_title;
 use App\Models\Constructor_customer_site;
 use App\Models\Constructor_additional_contact;
 
@@ -24,7 +23,9 @@ class Customer extends Model
         'contact_name',
         'job_title',
         'email',
+        'telephone_country_code',
         'telephone',
+        'mobile_country_code',
         'mobile',
         'fax',
         'website',
@@ -56,7 +57,7 @@ class Customer extends Model
     ];
 
     public static function getConvertedCustomersCount($home_id){
-        return Customer::where(['is_converted' => '1', 'status' => 1])->where('home_id', $home_id)->count();
+        return Customer::where(['is_converted' => '1', 'status' => 1,'deleted_at'=>null])->where('home_id', $home_id)->count();
     }
 
     public static function getConvertedCustomers($home_id){
@@ -72,14 +73,10 @@ class Customer extends Model
             $data['section_id'] = implode(',',$data['section_id']);
         }
         // echo "<pre>";print_r($data);die;
-        try {
             $insert=self::updateOrCreate(
                 ['id' => $data['id'] ?? null],
                 $data
             );
-        } catch (\Exception $e) {
-            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
-        }
         $data=['id'=>$insert->id,'name'=>$insert->name];
         return $data;
     }
@@ -101,7 +98,7 @@ class Customer extends Model
         } else if ($lastSegment === "converted"){
             return $query->where('customers.is_converted', 1)->where('customers.status', 1)->get();
         } else if ($lastSegment === "myLeads"){
-            return $query->where('user_id', Auth::user()->id)->whereNotIn('leads.status', [7])->get();
+            return $query->where('leads.assign_to', Auth::user()->id)->whereNotIn('leads.status', [7])->get();
         } else if ($lastSegment === "authorization"){
             return $query->where('leads.status', 7)->get();
         } else if ($lastSegment === "actioned") {
@@ -126,7 +123,7 @@ class Customer extends Model
     }
     public static function get_customer_list_Attribute($home_id,$list_mode){
         $status = ($list_mode == 'ACTIVE') ? 1 : 0;
-        return Customer::where(['is_converted' => '1', 'status' => $status,'home_id'=>$home_id])->get();
+        return Customer::where(['is_converted' => '1', 'status' => $status,'home_id'=>$home_id,'deleted_at'=>null])->get();
     }
 
     public function sites()
@@ -141,7 +138,28 @@ class Customer extends Model
     {
         return $this->hasMany(Project::class, 'customer_name');
     }
-    public function customer_profession(){
-        return $this->hasOne(Job_title::class, 'id');
+    // public function customer_profession(){
+    //     return $this->hasOne(Job_title::class, 'id');
+    // }
+
+    public static function saveCustomerData(array $data, $customerId = null)
+    {
+        $data['home_id'] = Auth::user()->home_id;
+        $data['is_converted'] = 1;
+        return self::updateOrCreate(['id' => $customerId], $data);
     }
+
+    public static function getCustomerList(){
+        return self::where('is_converted', 1)->where('status', 1)->get();
+    }
+
+    public static function getCustomerDetails($id){
+        return self::where('id', $id)->get();
+    }
+
+    // public static function getCustomerSiteData($id){
+    //     return self::where('id', $id)->get();
+    // }
+
+  
 }

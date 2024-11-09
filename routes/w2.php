@@ -923,7 +923,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>'CheckAdminAuth'], function(){
 	Route::match(['get','post'], '/service-users/delete/{su_id}', 'App\Http\Controllers\backEnd\serviceUser\ServiceUserController@delete');
 	Route::get('/service-users/send-set-pass-link/{su_id}', 'App\Http\Controllers\backEnd\serviceUser\ServiceUserController@send_set_pass_link_mail');
 
-	//backEnd Service Users Care History
+	//backEnd Childs Care History
 	Route::match(['get','post'],'/service-users/care-history/{su_id}', 'App\Http\Controllers\backEnd\serviceUser\CareHistoryController@index');
 	Route::match(['get','post'],'/service-users/care-history/add/{su_id}', 'App\Http\Controllers\backEnd\serviceUser\CareHistoryController@add');
 	Route::match(['get','post'],'/service-users/care-history/edit/{care_id}', 'App\Http\Controllers\backEnd\serviceUser\CareHistoryController@edit');
@@ -1109,7 +1109,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>'CheckAdminAuth'], function(){
 	Route::match(['get','post'], '/categories/add', 'App\Http\Controllers\backEnd\HomeCategoriesController@add');	
 	// Route::get('/categories/add', 'App\Http\Controllers\backEnd\HomeCategoriesController@add');	
 
-	// Backend unique username for user,service user,agent & admin
+	// Backend unique username for user,Child,agent & admin
 	Route::match(['get','post'], '/users/check_username_unique', 'App\Http\Controllers\backEnd\UserController@check_username_exist');
 	Route::match(['get','post'], '/service-users/check_username_exists', 'App\Http\Controllers\backEnd\serviceUser\ServiceUserController@check_username_exist');
 	Route::match(['get','post'], '/system-admin/check_user_username_exists', 'App\Http\Controllers\backEnd\superAdmin\AdminController@check_username_exist');
@@ -1205,21 +1205,21 @@ Route::group(['prefix' => 'admin', 'middleware'=>'CheckAdminAuth'], function(){
 	Route::match(['get', 'post'], '/manager/check-email-exists', 'App\Http\Controllers\backEnd\ManagersController@check_email_exists');
 	Route::match(['get', 'post'], '/manager/check-contact-no-exists', 'App\Http\Controllers\backEnd\ManagersController@check_contact_no_exists');
 
-	//backEnd Service User Dynamic Forms
+	//backEnd Child Dynamic Forms
 	Route::match(['get', 'post'], '/service-user/dynamic-forms/{su_id}', 'App\Http\Controllers\backEnd\serviceUser\DynamicFormController@index');
 	Route::match(['get', 'post'], '/service-user/dynamic-forms/view/{d_form_id}', 'App\Http\Controllers\backEnd\serviceUser\DynamicFormController@view');
 	Route::post('/service-user/dynamic-form/edit', 'App\Http\Controllers\backEnd\serviceUser\DynamicFormController@edit');
 	Route::get('/service-user/dynamic-form/delete/{d_form_id}', 'App\Http\Controllers\backEnd\serviceUser\DynamicFormController@delete');
 
-	//backEnd Service User File Manager
+	//backEnd Child File Manager
 	Route::match(['get', 'post'], '/service-user/file-managers/{su_id}', 'App\Http\Controllers\backEnd\serviceUser\FileManagerController@index');
 	Route::match(['get','post'], '/service-user/file-manager/add/{service_user_id}', 'App\Http\Controllers\backEnd\serviceUser\FileManagerController@add');
 	Route::get('/service-user/file-manager/delete/{file_id}','App\Http\Controllers\backEnd\serviceUser\FileManagerController@delete');
 
-	//backEnd Service User My Money History
+	//backEnd Child My Money History
 	Route::match(['get','post'], '/service-user/my-money/history/{su_id}', 'App\Http\Controllers\backEnd\serviceUser\MyMoneyHistoryController@index');
 
-	//backEnd Service User My Money Request
+	//backEnd Child My Money Request
 	Route::match(['get','post'], '/service-user/my-money/request/{su_id}', 'App\Http\Controllers\backEnd\serviceUser\MyMoneyRequestController@index');
 	Route::match(['get','post'], '/service-user/my-money/request-view/{money_request_id}', 'App\Http\Controllers\backEnd\serviceUser\MyMoneyRequestController@view');
 
@@ -1250,7 +1250,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>'CheckAdminAuth'], function(){
 //super admin path
 Route::group(['prefix' => 'super-admin', 'middleware'=>'CheckAdminAuth'], function(){
 	
-	//service user migration
+	//Child migration
 	Route::get('/migrations', 'App\Http\Controllers\backEnd\superAdmin\MigrationController@index');	
 	Route::get('/migration/view/{migration_id}', 'App\Http\Controllers\backEnd\superAdmin\MigrationController@view');	
 	Route::post('/migration/update', 'App\Http\Controllers\backEnd\superAdmin\MigrationController@update');	

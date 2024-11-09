@@ -2,6 +2,11 @@
     button.choices__button {
         display: none;
     }
+
+    .pagination>li>a,
+    .pagination>li>span {
+        padding: 5px 6px;
+    }
 </style>
 <?php
 $home_id = Auth::user()->home_id;
@@ -10,12 +15,6 @@ $dynamic_forms = App\DynamicFormBuilder::getFormList();
 $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 ?>
 
-<style>
-    .pagination>li>a,
-    .pagination>li>span {
-        padding: 5px 6px;
-    }
-</style>
 
 <!-- dynmic Form Modal -->
 <div class="modal fade" id="dynmicFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -30,7 +29,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default add-new-btn active" type="button"> Add New </button>
                         <button class="btn label-default logged-btn dyn-logged-btn active logged-dyn-btn" type="button"> Logged Plans </button>
-                        <button class="btn label-default search-btn active" type="button"> Search </button>
+                        <!-- <button class="btn label-default search-btn active" type="button"> Search </button> -->
                     </div>
                     <!-- Add new Details -->
                     <div class="add-new-box risk-tabs custm-tabs">
@@ -40,7 +39,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                 <div class="col-md-11 col-sm-11 col-xs-12">
                                     <div class="select-style">
                                         <select name="service_user_id" class="su_n_id">
-                                            <option value=""> Service User </option>
+                                            <option value=""> Child </option>
                                             @foreach($service_users as $value)
                                             <option value="{{ $value['id'] }}" {{ ($service_user_id==$value['id'])
                                                 ? 'selected' : '' }}>{{ ucfirst($value['name']) }}</option>
@@ -91,13 +90,18 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
                             <!-- option for save in daily log -->
 
+
+
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="below-divider"></div>
                             </div>
                             <!-- alert messages -->
                             @include('frontEnd.common.popup_alert_messages')
 
-                            <div class="dynamic-form-fields"> </div>
+                            <div class="dynamic-form-fields">
+
+                            </div>
+                       
 
                             <!-- <div class="col-md-12 col-sm-12 col-xs-12 cog-panel ">      
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
@@ -138,8 +142,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <!-- record shown using Ajax -->
                         </div>
                         <div class="modal-footer m-t-0 recent-task-sec">
-                            <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true">
-                                Cancel </button>
+                            <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
                             <!-- <button class="btn btn-warning sbt-edit-bmp-record" type="button"> Confirm</button> -->
                         </div>
                     </div>
@@ -222,7 +225,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <div class="col-md-11 col-sm-11 col-xs-12">
                                 <div class="select-style">
                                     <select name="service_user_id" class="su_id" disabled="">
-                                        <option value="0"> N/A Service User </option>
+                                        <option value="0"> N/A Child </option>
                                         @foreach($service_users as $value)
                                         <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
                                         @endforeach
@@ -256,15 +259,17 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         <!-- Add new Details -->
                         <div class="risk-tabs">
                             <!-- dynamic form fields will be shown here -->
-                            <div class="dynamic-form-fields"> </div>
+                            <div class="dynamic-form-fields">
+
+                            </div>
+                        
                         </div>
                     </div>
                     <div class="modal-footer m-t-0">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="dynamic_form_id" class="dynamic_form_id" value="">
                         <input type="hidden" name="formdata" id="setformdata" value="">
-                        <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel
-                        </button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
                         <!-- <button class="btn btn-warning sbt_edit_bmp_btn" id="vw-sbt-bmp-plan" type="button"> Continue </button> -->
                         <button class="btn btn-warning e-sbt-dyn-form-btn" disabled="" id="" type="button" data-dismiss="modal" aria-hidden="true"> Save </button>
                     </div>
@@ -283,19 +288,19 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#dynmicFormModal" class="close" style="padding-right:6px"> <i class="fa fa-arrow-left"></i></a>
-                <h4 class="modal-title"> Add Record To Service User's Daily Log</h4>
+                <h4 class="modal-title"> Add Record To Child's Daily Log</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="add-new-box risk-tabs custm-tabs">
                         <form method="post" action="" id="">
                             <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd">
-                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Service User:
+                                <label class="col-md-4 col-sm-2 col-xs-12 p-t-7 text-right"> Select Child:
                                 </label>
                                 <div class="col-md-6 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
                                         <select name="s_user_id" class="select-field form-control" required id="records_list" style="width:100%;">
-                                            <option value="0"> Select Service User </option>
+                                            <option value="0"> Select Child </option>
                                             @foreach($service_users as $value)
                                             <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
                                             @endforeach
@@ -303,10 +308,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group modal-footer m-t-0 modal-bttm">
-                                <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true">
-                                    Cancel </button>
+                                <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
                                 <input type="hidden" name="dyn_form_id" value="" id="dyn_form_id">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn btn-warning sbt-su-dyn-frm-log" type="submit"> Submit </button>
@@ -324,7 +327,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 <script>
     $(document).ready(function() {
         $('.dynamic_form_select').on('change', function() {
-
             var form_select = $(this);
             var model_id = form_select.closest('.modal').attr('id');
 
@@ -349,9 +351,32 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     dataType: "json",
                     success: function(resp) {
                         console.log(resp);
+                       
                         if (isAuthenticated(resp) == false) {
                             return false;
                         }
+
+                        // if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
+                        //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                        //     const imagePreviews = document.getElementsByClassName('imagePreview');
+
+                        //     // Show or hide the image preview for each form
+                        //     for (let i = 0; i < hideImageDivs.length; i++) {
+                        //         hideImageDivs[i].style.display = "block";
+                        //     }
+
+                        //     // Set the src attribute for each image preview
+                        //     for (let i = 0; i < imagePreviews.length; i++) {
+                        //         imagePreviews[i].src = resp['image'];
+                        //     }
+                        // } else {
+                        //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                        //     for (let i = 0; i < hideImageDivs.length; i++) {
+                        //         hideImageDivs[i].style.display = "none";
+                        //     }
+                        // }
+
 
                         var response = resp['response'];
                         if (response == true) {
@@ -415,20 +440,21 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
             var form_id = $(this).closest('form').attr('id');
             // alert(form_id); //return false;
             var service_user = $('#' + model_id + ' .su_n_id');
+            // alert(service_user); 
             var form_builder = $('#' + model_id + ' .dynamic_form_select');
             // alert(form_builder); //return false;
             var static_title = $('#' + model_id + ' .static_title');
 
-            var static_title_vl = static_title.val();
-            if (static_title_vl == undefined) {
-                return false;
-            }
+            // var static_title_vl = static_title.val();
+            // if (static_title_vl == undefined) {
+            //     return false;
+            // }
 
             var service_user_id = service_user.val().trim();
             // alert(service_user_id); 
             var form_builder_id = form_builder.val().trim();
             // alert(form_builder_id); 
-            var static_title_vl = static_title_vl.trim();
+            // var static_title_vl = static_title_vl.trim();
             // alert(static_title_vl); return false;
             var err = 0;
 
@@ -446,22 +472,21 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 form_builder.parent().removeClass('red_border');
             }
 
-            if (static_title_vl == '') {
-                static_title.addClass('red_border');
-                err = 1;
-            } else {
-                static_title.removeClass('red_border');
-            }
+            // if (static_title_vl == '') {
+            //     static_title.addClass('red_border');
+            //     err = 1;
+            // } else {
+            //     static_title.removeClass('red_border');
+            // }
 
             if (err == 1) {
                 return false;
             }
 
             var formdata = $('#' + form_id).serialize();
-            //alert(formdata); return false;
+            // alert(formdata); // return false;
             //$('.loader').show();
             // $('body').addClass('body-overflow');
-            //console.log(formdata);
             $.ajax({
                 type: 'post',
                 url: "{{ url('/service/dynamic-form/save') }}",
@@ -469,12 +494,20 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 //dataType: 'json',
                 success: function(resp) {
                     console.log(resp);
+                    // alert("ldkjflk");
                     if (isAuthenticated(resp) == "false") {
                         return false;
                     }
 
                     if (resp == "true") {
-                        //console.log("true");
+
+                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                        for (let i = 0; i < hideImageDivs.length; i++) {
+                            hideImageDivs[i].style.display = "none";
+                        }
+
+                        console.log("true");
                         $('#' + form_id + ' span.popup_success_txt').text('Record has been Added Successfully');
                         $('#' + form_id + ' .popup_success').show();
                         setTimeout(function() {
@@ -510,7 +543,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
         });
 
         $('.e-sbt-dyn-form-btn').click(function() {
-
+            alert("hello");
             var model_id = $(this).closest('.modal').attr('id');
             var previous_model_id = $(this).closest('.modal').find('.previous_modal_btn').attr('pre_modal');
             var logged_box = $('#' + previous_model_id).find('.logged-box');
@@ -551,12 +584,39 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 data: formdata,
                 dataType: 'json',
                 success: function(resp) {
-
+                    
                     if (isAuthenticated(resp) == false) {
                         return false;
                     }
 
+                    // if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
+                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                    //     const imagePreviews = document.getElementsByClassName('imagePreview');
+
+                    //     // Show or hide the image preview for each form
+                    //     for (let i = 0; i < hideImageDivs.length; i++) {
+                    //         hideImageDivs[i].style.display = "block";
+                    //     }
+
+                    //     // Set the src attribute for each image preview
+                    //     for (let i = 0; i < imagePreviews.length; i++) {
+                    //         imagePreviews[i].src = resp['image'];
+                    //     }
+                    // } else {
+                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                    //     for (let i = 0; i < hideImageDivs.length; i++) {
+                    //         hideImageDivs[i].style.display = "none";
+                    //     }
+                    // }
+
                     if (resp == true) {
+
+                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                            for (let i = 0; i < hideImageDivs.length; i++) {
+                                hideImageDivs[i].style.display = "none";
+                            }
 
                         $('#' + model_id).modal('hide');
                         $('#' + previous_model_id).modal('show');
@@ -647,10 +707,31 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 url: "{{ url('/service/dynamic-form/view/data') }}" + '/' + dynamic_form_id,
                 dataType: 'json',
                 success: function(resp) {
-
+                    console.log(resp);
                     if (isAuthenticated(resp) == false) {
                         return false;
                     }
+
+                    // if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
+                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                    //     const imagePreviews = document.getElementsByClassName('imagePreview');
+
+                    //     // Show or hide the image preview for each form
+                    //     for (let i = 0; i < hideImageDivs.length; i++) {
+                    //         hideImageDivs[i].style.display = "block";
+                    //     }
+
+                    //     // Set the src attribute for each image preview
+                    //     for (let i = 0; i < imagePreviews.length; i++) {
+                    //         imagePreviews[i].src = resp['image'];
+                    //     }
+                    // } else {
+                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+
+                    //     for (let i = 0; i < hideImageDivs.length; i++) {
+                    //         hideImageDivs[i].style.display = "none";
+                    //     }
+                    // }
 
                     var response = resp['response'];
                     var form_builder_id = resp['form_builder_id'];
@@ -974,7 +1055,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         $('.popup_error').show();
 
                     } else if (res == '1') {
-                        $('span.popup_success_txt').text('Record has been added to Service User dailylog successfully.');
+                        $('span.popup_success_txt').text('Record has been added to Child dailylog successfully.');
                         $('.popup_success').show();
                         setTimeout(function() {
                             $('.popup_success').fadeOut()

@@ -13,7 +13,7 @@
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default active risk-add-btn" type="button"> Add New </button>
                         <button class="btn label-default logged-btn logged-plan-btn" type="button"> Logged Plans </button>
-                        <button class="btn label-default risk-search-btn" type="button"> Search </button>
+                        <!-- <button class="btn label-default risk-search-btn" type="button"> Search </button> -->
                     </div>                      
                     <!-- Add new Details -->
                     <div class="risk-add-box risk-tabs risk-label-left">
@@ -23,7 +23,7 @@
                                 <div class="col-md-11 col-sm-11 col-xs-12">
                                     <div class="select-style">
                                         <select name="service_user_id" class="su_n_id" disabled="" >
-                                            <option value="0"> Select Service User </option>
+                                            <option value="0"> Select Child </option>
                                             @foreach($service_users as $value)
                                                 <option value="{{ $value['id'] }}" {{ ($service_user_id == $value['id']) ? 'selected' : '' }}>{{ ucfirst($value['name']) }}</option>
                                             @endforeach
@@ -65,8 +65,7 @@
                             </div>
 
                             @include('frontEnd.common.popup_alert_messages')
-                            <div class="dynamic-form-fields"> </div>
-                                
+                            <div class="dynamic-form-fields"> </div> 
                             <div class="modal-footer m-t-0 modal-bttm m-b-5">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <!-- <input type="hidden" name="su_daily_record_id" value=""> -->

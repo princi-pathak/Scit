@@ -28,7 +28,7 @@ class ServiceUserController extends StaffManagementController
                     'response' => true,
                     'image_url' => serviceUserProfileImagePath,
                     'data' => $listing_service_users,
-                    'message' => "Listing of Service Users."
+                    'message' => "Listing of Childs."
                 )
             ));
         } else {

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Construction_product_supplier_list extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'product_id', 'supplier_id', 'part_number', 'cost_price_supplier'
+    ];
 }

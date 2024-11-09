@@ -67,15 +67,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="ThemeBucket">
+  <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>
   <!-- <link rel="shortcut icon" href="{{ asset('public/images/favicon.png') }}"> -->
-  
-
   
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/images/favicon.ico') }}">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
- <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>
 
+  <link href="https://cdn.form.io/formiojs/formio.form.min.css">
   <title>{{ PROJECT_NAME }} @yield('title','') </title>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -119,7 +118,7 @@
   
   <!-- For body Map-->
   <link href="{{ url('public/backEnd/css/amarjeet.css')}}" rel="stylesheet" type="text/css" > 
-  <link href="https://cdn.form.io/formiojs/formio.form.min.css">
+
    <!--Core js-->
   
   <script src="{{ url('public/frontEnd/js/jquery.min.js') }}"></script>
@@ -247,6 +246,17 @@ function PrintDiv(th)
     //console.log(finalpath);
     // let imagepathdata="public/images/admin/"+"$(th).data('id')";
        var divContents = document.getElementById("formiotest").innerHTML;  
+    
+
+    var inputField = document.getElementById("imageName");
+    if (inputField.value.trim() === "") {
+      var divContentImage = "";
+    } else {
+      var divContentImage = document.getElementById('formiotestimage').innerHTML;
+    }
+
+
+       console.log(divContentImage);
        var printWindow = window.open('', '', 'height=600,width=600');  
        printWindow.document.write('<html><head><title>Print DIV Content</title>'); 
       printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">'); 
@@ -260,6 +270,7 @@ function PrintDiv(th)
        printWindow.document.write('<img src="{{url('/public/images/scits.png')}}" style="float:right;height:80px;">');
        printWindow.document.write('</div>');    
        printWindow.document.write(divContents);  
+       printWindow.document.write(divContentImage);  
        printWindow.document.write('</div>');
        printWindow.document.write('<div class="footer">'); 
        printWindow.document.write('<div class="footer-section-area">'); 

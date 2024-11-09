@@ -119,12 +119,8 @@ h6 {
   display: flex;
   justify-content: space-between;
 }
-.menubaar a.dropdown-item i{
+.menubaar a.dropdown-item i {
   line-height: 21px;
-  padding-right: 10px;
-}
-li.nav-item1 ul.dropdown-menu1 li a.dropdown-item {
-  display: block;
 }
 .menubaar .dropdown-item.active,
 .menubaar .dropdown-item:active {
@@ -192,8 +188,8 @@ li.nav-item1 ul.dropdown-menu1 li a.dropdown-item {
 /* **************End off Header************* */
 .profileDrop {
   background: #0877bd;
-  padding: 6px 16px;
-  border-radius: 4px;
+  padding: 6px 10px;
+  border-radius: 3px;
   color: #fff;
   font-size: 13px;
   text-decoration: none;
@@ -204,19 +200,20 @@ li.nav-item1 ul.dropdown-menu1 li a.dropdown-item {
 .profileDrop:hover {
   background-color: #494949;
   color: #fff;
-  box-shadow: 0px 0px 10px #838080;
 }
 button.profileDrop{
   background: #0877bd;
-  padding: 6px 20px;
-  border-radius: 4px;
+  padding: 6px 10px;
+  border-radius: 3px;
   color: #fff;
   font-size: 13px;
   text-decoration: none;
   border: none;
-  margin-left: 7px;
 }
 .pageTitleBtn a.profileDrop {
+  margin-left: 7px;
+}
+.pageTitleBtn .profileDrop {
   margin-left: 7px;
 }
 
@@ -265,7 +262,6 @@ a.overdueJobsFolder i {
   margin-right: 8px;
   color: #ffc845;
 }
-
 
 /* ****************************Table ********************* */
 
@@ -914,8 +910,9 @@ form.customerForm {
   line-height: 32px;
   padding-left: 10px;
 }
-.productDetailTable table.table thead tr th, .productDetailTable table.table tbody tr td{
+.productDetailTable table.table thead tr th, .productDetailTable table.table tbody tr td, .productDetailTable table.table tfoot tr td{
   font-size: 12px;
+  line-height: 22px;
 }
 /* .preInstall {
   padding: 0 60px;
@@ -958,7 +955,6 @@ form.customerForm {
 .add_Customer .modal-header {
   padding: 8px 16px;
   background: #0877bd;
-  cursor: move;
 }
 .add_Customer .modal-header h5 {
   font-size: 18px;
@@ -976,8 +972,59 @@ form.customerForm {
 
 /* Start popup before popup  */
 
-
-.popup {
+.importExportMrgin{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 99999;
+  transition: opacity 0.3s ease;
+}
+.importExportMrgin .popup-content{
+  min-width: 800px;
+  top: 46%;
+}
+.popupfst{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 99999;
+  transition: opacity 0.3s ease;
+}
+.purchasepopup{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 99999;
+  transition: opacity 0.3s ease;
+}
+.clickHerepopup{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 99999;
+  transition: opacity 0.3s ease;
+}
+.clickHerepopup .popup-content {
+  min-width: 800px;
+  top: 28%;
+}
+.popup{
   display: none;
   position: fixed;
   top: 0;
@@ -1072,7 +1119,7 @@ form.customerForm {
   justify-content: start;
   flex-direction: column;
   margin: 0.8rem 1rem 0rem 1rem;
-  transition: background-color 0.1s ease-in-out;
+  transition: 0.1s ease-in-out;
 }
 
 .customInputContainer.show .options {
@@ -1328,11 +1375,10 @@ canvas#canv1 {
   position: relative;
   cursor: pointer;
   transition: 0.3s ease;
-  margin-bottom: 0;
 }
 
 .uploadImg i {
-  font-size: 27px;
+  font-size: 50px;
   color: #0877bd;
 }
 .uploadImg input {
@@ -1344,6 +1390,8 @@ canvas#canv1 {
   opacity: 0;
   cursor: pointer;
 }
+
+
 
 
 /* *************** */
@@ -1398,10 +1446,29 @@ canvas#canv1 {
   padding: 7px 10px;
   border-bottom: 1px solid #eee;
 }
+
+
 .radStar{
   color: #f00;
 }
-/* **********************Malti step form **********************/
+/* forrmOuter */
+
+/* .forrmOuter {
+  display: -webkit-box;
+  width: 700px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.forrmOuter .formDtail {
+  width: 100%;
+}
+#form2{
+   left: 600px;
+}
+#form3{
+  left: 600px;
+} */
+
 :root {
   --primary: #333;
   --secondary: #333;
@@ -1451,15 +1518,18 @@ form .page .field .label {
   top: -30px;
   font-weight: 500;
 }
+form .page .field input {
+  /* box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  border: 1px solid var(--inputBorderColor);
+  border-radius: 5px;
+  padding-left: 15px;
+  margin: 0 1px;
+  font-size: 18px;
+  transition: border-color 150ms ease; */
+}
 form .page .field input.invalid-input {
-  border-color: var(--errorColor);
-}
-/*Ram here code for select validation 05/08/2024*/
-form .page .field select.invalid-input {
-  border-color: var(--errorColor);
-}
-/*Ram here code for select validation 12/08/2024*/
-form .page .field textarea.invalid-input {
   border-color: var(--errorColor);
 }
 form .page .field select {
@@ -1477,10 +1547,14 @@ form .page .field button {
     text-decoration: none;
     transition: .6s;
     height: 27px;
+
 }
 form .page .field button:hover {
   background: #000;
 }
+/* form .page .btns button {
+  margin-top: -20px !important;
+} */
 form .page .btns button.prev {
   margin-right: 3px;
   font-size: 17px;
@@ -1618,17 +1692,18 @@ form .page .btns button.next {
 }
 
 
-/****************************************************** */
+/* ***************************************************** */
 .red_sorryText{
   width: 100%;
   text-align: center;
   color: #f00;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 12px;
 }
 
 
 #divTohide {
-  transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
+  transition:  0.5s ease-in-out;
   overflow: hidden; 
 }
 #divTohide {
@@ -1637,109 +1712,476 @@ form .page .btns button.next {
   display: block;
 }
 
-/* ******************CRM css********************* */
-.crmModelCont .nav-pills .nav-link {
-  border-radius: 3px;
-  margin-right: 8px;
-  color: #0877bd;
-  border: 1px solid #0877bd;
+/* ****************Finance Css********************* */
+.tableFormCenter{
+  display: flex;
+  justify-content: center;
+  padding-bottom: 8px;
 }
-.crmModelCont .nav-pills .nav-link.active, .crmModelCont .nav-pills .show>.nav-link {
-  color: #fff;
-  background-color: #0877bd;
+
+.maimTable.account_Statements div#exampleOne_length{
+  display: none;
 }
-.sarchBtn{
-font-size: 12px;
-background-color: #0877bd;
-color: #fff;
-border: 1px solid #0877bd;
-}
-.searchForm .form-control:focus {
-  border-color: #dddddd;
-  outline: 0;
-  box-shadow: none;
-}
-a.crmNewBtn{
-  font-size: 12px;
-  display: block;
+.boxIconORtext{
   text-align: center;
 }
-.hideandshow{
+.boxIconORtext h3 i{
+  font-size: 48px;
+  color: #00bb3b;
+}
+.boxIconORtext p{
+  font-size: 13px;
+}
+.editORdelete{
+  text-align: center;
+}
+.editORdelete a {
+  font-size: 13px;
+  color: #ff0000;
+  font-weight: 500;
+  text-decoration: none;
+}
+.editORdelete a.edit{
+  color: #003cff;
+  margin-right: 10px;
+}
+.newJobForm.border_green{
+ border: 2px solid #00bb3b;
+}
+.tableplusBTN {
+ display: flex;
+}
+.tableplusBTN span {
+  line-height: 22px;
+}
+.input50{
+  width: 50px;
+}
+.input80{
+  width: 80px;
+}
+.minusnmber{
+  color: #f00;
+}
+.totlepayment{
+  width: 300px;
+  margin-left: auto;
+  text-align: end;
+}
+.discountInput{
   display: flex;
   justify-content: end;
 }
-#showDivCont {
-  height: 176px;
-  transition: .7s;
-  overflow: hidden;
+.discountInput input{
+  text-align: center;
+  margin: 0 6px;
+  height: 24px;
 }
-#showDivCont.show {        
- height: 0;
+.descriptionTitle{
+  display: flex;
+}
+.descriptionTitle .afterPlusText {
+  font-size: 12px;
+  line-height: 20px;
+  padding-left: 10px;
 }
 
-.red-text {
-    color: red;
+
+span.oNOfswich {
+  padding-top: 6px;
+}
+.oNOfswich input[type="checkbox"] {
+  position: relative;
+  width: 41px;
+  height: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: red;
+  outline: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  box-shadow: inset 0 0 5px rgb(0 0 0 / 50%);
 }
 
-.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable{
-  height: 200px; /* Set your desired height */
-}
-.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
-  height: 200px; /* Set your desired height */
-}
-.add_Customer .modal-header.terques-bg button {
-  border: navajowhite;
-  background: transparent;
-  color: #fff;
-}
-.viewColor{
+.oNOfswich input[type="checkbox"]::before {
+  content: "";
   width: 20px;
   height: 20px;
-  background-color: #f00;
-  display: inline-block;
-  margin-right: 8px;
-}
-.colorCode{
-  display: inline-block;
-  line-height: 21px;
-}
-
-
-/* *****Bottom fixed Timer *** */
-.saveTimer {
-  position: fixed;
-  right: 28px;
-  bottom: 16px;
-  z-index: 1;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.5s;
 }
 
-.saveTimer ul.timerlist {
-  display: flex;
+.oNOfswich input[type="checkbox"]:checked::before {
+  transform: translateX(100%);
+  background: #fff;
+}
+
+.oNOfswich input[type="checkbox"]:checked {
+  background: #00ed64;
+}
+.CSPlus .plusandText{
+ align-items: center;
+}
+
+#alphabeticListHolder {
+  margin: 10px 0 0 0;
+}
+#alphabeticListHolder ul.alphabeticList {
   list-style: none;
+  padding-left: 0;
+}
+#alphabeticListHolder ul.alphabeticList li {
+  float: left;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 3px;
+}
+#alphabeticListHolder ul.alphabeticList li a {
+  padding: 3px 7px;
+  color: #0081c2;
+  border: 1px solid #38c;
+  margin-right: 2px;
+  text-decoration: none;
+}
+#alphabeticListHolder ul.alphabeticList li a:hover {
+  color: white;
+  background-color: #38c;
+}
+.numberHifan{
+  text-align:center;
+  font-size:20px;
+}
+
+/* ****************************** */
+
+#msform {
+  text-align: center;
+  position: relative;
+}
+
+#msform fieldset {
+  background: white;
+  border: 0 none;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
   margin: 0;
-  padding: 0;
+  padding-bottom: 20px;
+  position: relative
 }
 
-.saveTimer ul.timerlist li {
-  background-color: #333;
-  color: #fff;
-  border-radius: 4px;
-  margin-left: 10px;
-  padding: 10px 20px;
+.form-card {
+  text-align: left
+}
+
+#msform fieldset:not(:first-of-type) {
+  display: none
+}
+
+#msform input,
+#msform textarea {
+  padding: 8px 15px 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  margin-bottom: 25px;
+  margin-top: 2px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: montserrat;
+  color: #2C3E50;
+  background-color: #ECEFF1;
+  font-size: 16px;
+  letter-spacing: 1px
+}
+
+#msform input:focus,
+#msform textarea:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #0877bd;
+  outline-width: 0
+}
+
+#msform .action-button {
+  width: 100px;
   cursor: pointer;
+  border: 0 none;
+  margin: 10px 0px 10px 5px;
+  float: right;
+  background: #0877bd;
+  padding: 6px 10px;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+  transition: .6s;
+  display: inline-block;
 }
-/* *****End Bottom fixed Timer *** */
 
-
-.CRMFullModel .modal-dialog.modal-xl {
-  --bs-modal-width: 1600px;
-}
-div#CompHistoryModal {
-  --bs-modal-zindex: 1056;
+#msform .action-button:hover,
+#msform .action-button:focus {
+  background-color: #035d97
 }
 
+#msform .action-button-previous {
+  width: 100px;
+  border: 0 none;
+  border-radius: 0px;
+  cursor: pointer;
+  margin: 10px 5px 10px 0px;
+  float: right;
+  background: #0877bd;
+  padding: 6px 10px;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+  transition: .6s;
+  display: inline-block;
+}
 
-.modal-dialog.modal-lg.mediamSizePopup {
-    --bs-modal-width: 1000px;
+#msform .action-button-previous:hover,
+#msform .action-button-previous:focus {
+  background-color: #035d97
+}
+
+.importExportMrgin .contantbodypopup .card {
+  z-index: 0;
+  border: none;
+  position: relative
+}
+
+/* .fs-title {
+  font-size: 25px;
+  color: #0877bd;
+  margin-bottom: 15px;
+  font-weight: normal;
+  text-align: left
+} */
+
+.purple-text {
+  color: #0877bd;
+  font-weight: normal
+}
+
+/* .steps {
+  font-size: 25px;
+  color: gray;
+  margin-bottom: 10px;
+  font-weight: normal;
+  text-align: right
+} */
+
+.fieldlabels {
+  color: gray;
+  text-align: left
+}
+
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: lightgrey
+}
+
+#progressbar .active {
+  color: #0877bd
+}
+
+#progressbar li {
+  list-style-type: none;
+  font-size: 15px;
+  width: 25%;
+  float: left;
+  position: relative;
+  font-weight: 400
+}
+
+#progressbar #account:before {
+  content: "1 Import/Export"
+}
+
+#progressbar #personal:before {
+  content: "2 Action"
+}
+
+#progressbar #payment:before {
+  content: "3 Upload"
+}
+
+#progressbar #confirm:before {
+  content: "4 Summary"
+}
+
+#progressbar li:before {
+  width: 50px;
+  height: 50px;
+  line-height: 45px;
+  display: block;
+  font-size: 20px;
+  color: #ffffff;
+  background: lightgray;
+  border-radius: 50%;
+  margin: 0 auto 10px auto;
+  padding: 2px
+}
+
+#progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: lightgray;
+  position: absolute;
+  left: 0;
+  top: 25px;
+  z-index: -1
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+  background: #0877bd
+}
+
+.progress {
+  height: 20px
+}
+
+.progress-bar {
+  background-color: #0877bd
+}
+
+.fit-image {
+  width: 100%;
+  object-fit: cover
+}
+.importTemp span{
+  color: #00bb3b;
+}
+.calculatorIcon .plusandText span{
+ font-size: 34px;
+}
+.costProdut{
+  border: 1px solid  #eee;
+}
+.addProduvtBg{
+  padding: 30px;
+  background-color: #edf6fb;
+}
+.addproductCentertext{
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #0877bd;
+}
+.addproductCentertext a{
+  color: #000;
+}
+.productCount{
+  background-color: #0877bd;
+  color: #fff;
+  display: inline-block;
+  border-radius: 2px;
+  padding: 0 3px;
+  font-size: 12px;
+}
+
+.nav-tabs button:nth-child(1) .productCount{
+  background: #0877bd;
+}
+.nav-tabs button:nth-child(2) .productCount{
+  background: #00bb3b;
+  ;
+}
+.nav-tabs button:nth-child(3) .productCount{
+  background: #a35001;
+}
+.nav-tabs button:nth-child(4) .productCount{
+  background: #ff0101;
+}
+.pagecounter h6 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+}
+.cost_popup{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 99999;
+  transition: opacity 0.3s ease;
+}
+.cost_popup .popup-content.firstCostpop{
+ min-width: 800px;
+ top: 40%;
+}
+.quotecatgrysmallPop{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 99999;
+  transition: opacity 0.3s ease;
+}
+.quotecatgrysmallPop .popup-content{
+  top: 24%;
+ }
+ .quotesalesTaxRate{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 99999;
+  transition: opacity 0.3s ease;
+ }
+ .quotesalesTaxRate .popup-content{
+  top: 30%;
+ }
+ .addimg{
+  background-color: #fbfbfb;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  padding: 6px;
+  text-align: center;
+  width: 100%;
+ }
+ .addimg .insrtImg{
+  height: 96px;
+ }
+ .sectionTitle{
+  border: 1px solid #0078d1;
+  padding: 6px;
+ }
+ .secTitle{
+  white-space: nowrap;
+  padding: 0 10px;
+ }
+ div#exampleOne_wrapper {
+  overflow: auto;
+}
+div#exampleOne_wrapper::-webkit-scrollbar {
+  height: 10px;
+}
+div#exampleOne_wrapper::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+}
+/* Handle */
+div#exampleOne_wrapper::-webkit-scrollbar-thumb {
+  background: #0877bd; 
+  border-radius: 10px;
 }
 
