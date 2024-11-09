@@ -43,8 +43,7 @@
                                     <div class="form-card">
                                         <div class="newJobForm p-3 mb-3">
                                             <h4 class="contTitle text-start">Import Templates</h4>
-                                            <label class="col-form-label">Download an empty template to add new
-                                                products or prices</label>
+                                            <label class="col-form-label">Download an empty template to add new products or prices</label>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label class="importTemp">Product & price <a href="#!">
@@ -63,19 +62,14 @@
                                         </div>
                                     </div>
                                     <input type="button" name="next" class="next action-button" value="Next" />
-
                                 </fieldset>
-
-
 
                                 <fieldset>
                                     <div class="form-card">
-
                                         <label class="fieldlabels">First Name: *</label> <input type="text" />
                                     </div>
                                     <input type="button" name="next" class="next action-button" value="Next" />
-                                    <input type="button" name="previous" class="previous action-button-previous"
-                                        value="Previous" />
+                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                                 </fieldset>
 
 
@@ -83,9 +77,9 @@
                                     <div class="form-card">
                                         <label class="fieldlabels">Upload Your Photo:</label>
                                         <input type="file" name="pic" accept="image/*">
-                                    </div> <input type="button" name="next" class="next action-button"
-                                        value="Submit" /> <input type="button" name="previous"
-                                        class="previous action-button-previous" value="Previous" />
+                                    </div> 
+                                    <input type="button" name="next" class="next action-button" value="Submit" /> 
+                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                                 </fieldset>
 
 
@@ -93,25 +87,20 @@
                                     <div class="form-card">
                                         <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
                                         <div class="row justify-content-center">
-                                            <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png"
-                                                    class="fit-image"> </div>
+                                            <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
                                         </div> <br><br>
                                         <div class="row justify-content-center">
                                             <div class="col-7 text-center">
-                                                <h5 class="purple-text text-center">You Have Successfully Signed Up
-                                                </h5>
+                                                <h5 class="purple-text text-center">You Have Successfully Signed Up </h5>
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="button" name="previous" class="previous action-button-previous"
-                                        value="Previous" />
+                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                                 </fieldset>
                             </form>
                         </div>
                     </div>
                 </div>
-
-                
             </div>
         </div> --}}
         <!-- End off Import/Export Popup -->
@@ -138,16 +127,11 @@
                                 <span class="alert text-danger text-center deletemsg"></span>
                                 {{-- <div class="pageTitleBtn p-0">
                                     <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle profileDrop"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            Bulk Action </a>
+                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> Bulk Action </a>
                                         <div class="dropdown-menu fade-up m-0">
-                                            <a href="#" class="dropdown-item col-form-label">Set Accont
-                                                Codes</a>
-                                            <a href="#" class="dropdown-item col-form-label">Set Tax
-                                                Rats</a>
-                                            <a href="#" class="dropdown-item col-form-label">Fix duplicate
-                                                product codes</a>
+                                            <a href="#" class="dropdown-item col-form-label">Set Accont Codes</a>
+                                            <a href="#" class="dropdown-item col-form-label">Set Tax Rats</a>
+                                            <a href="#" class="dropdown-item col-form-label">Fix duplicate product codes</a>
                                         </div>
                                     </div>
                                 </div> --}}
@@ -155,8 +139,7 @@
                         </div>
                         <div class="col-md-5">
                             {{-- <div class="pageTitleBtn p-0">
-                                <a href="#" class="profileDrop"> <i class="material-symbols-outlined">
-                                        settings </i></a>
+                                <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a>
                             </div> --}}
                         </div>
                     </div>
@@ -165,9 +148,7 @@
                 <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll">
-                                <label for="selectAll"> </label>
-                            </th>
+                            <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> </label></th>
                             <th>#</th>
                             <th>Product Name</th>
                             <th>Product Code</th>
@@ -183,7 +164,6 @@
                             <th>Last Updated On</th>
                             <th>Status</th>
                             <th></th>
-
                         </tr>
                     </thead>
 
@@ -193,11 +173,7 @@
                         @endphp
                         @foreach ($product_list_array as $product_value)
                             <tr>
-                                <td class="text-center"><input type="checkbox" class="checkproductcategory"
-                                    name="checkproductcategory{{ $i }}"
-                                    id="checkproductcategory{{ $i }}"
-                                    value="{{ $product_value['id'] }}"
-                                    ></td>
+                                <td class="text-center"><input type="checkbox" class="checkproductcategory" name="checkproductcategory{{ $i }}" id="checkproductcategory{{ $i }}" value="{{ $product_value['id'] }}" ></td>
                                 <td>{{$i}}</td>
                                 <td>{{ $product_value['product_name'] }}</td>
                                 <td>{{ $product_value['product_code'] }}</td>
@@ -252,14 +228,12 @@
 
 
 
-                {{-- <div class="modal fade" id="itemsAddProductModal" tabindex="-1" data-bs-backdrop="static"
-                    data-bs-keyboard="false" aria-labelledby="customerModalLabel" aria-hidden="true">
+                {{-- <div class="modal fade" id="itemsAddProductModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="customerModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content add_Customer">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="customerModalLabel">Add Customer</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -267,29 +241,24 @@
                                         <div class="formDtail">
                                             <!-- <form action="" class="customerForm"> -->
                                             <div class="mb-2 row">
-                                                <label for="inputName"
-                                                    class="col-sm-4 col-form-label">Customer</label>
+                                                <label for="inputName" class="col-sm-4 col-form-label">Customer</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
+                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
                                                         <option>-All-</option>
                                                         <option>Analytical Customer</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
-                                                <label for="inputCustomer" class="col-sm-4 col-form-label">Product
-                                                    Category</label>
+                                                <label for="inputCustomer" class="col-sm-4 col-form-label">Product Category</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control editInput selectOptions"
-                                                        id="inputCustomer">
+                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
                                                         <option>Genrale Customer </option>
                                                         <option>Analytical Customer </option>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-1 ps-0">
-                                                    <a href="#!" class="formicon" id="productCetagoryPopup"><i
-                                                            class="fa-solid fa-square-plus"></i></a>
+                                                    <a href="#!" class="formicon" id="productCetagoryPopup"><i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
 
@@ -845,8 +814,7 @@
 <script src="assets/js/jquery-3.7.1.min.js"></script>
 <script src="assets/js/bootstrap.bundle.js"></script>
 <script src="https://www.ville-pont-eveque.fr/tools/library/DataTables/media/js/jquery.dataTables.js"></script>
-<script src="https://www.ville-pont-eveque.fr/tools/library/DataTables/extensions/Select/js/dataTables.select.js">
-</script>
+<script src="https://www.ville-pont-eveque.fr/tools/library/DataTables/extensions/Select/js/dataTables.select.js"></script>
 <script src="assets/js/custom.js"></script>
 
 <script>

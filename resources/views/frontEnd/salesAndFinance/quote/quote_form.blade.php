@@ -1,5 +1,5 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
-
+@section('title','Quotes')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <style>
@@ -26,16 +26,26 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <form action="{{ url('/quote/saveQuoteData') }}" class="customerForm mt-3">
+                        @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endforeach
+                <form action="{{ url('/quote/saveQuoteData') }}" method="post" class="customerForm mt-3">
+                    @csrf
                     <div class="newJobForm card">
                         <div class="row" id="hideCustomerDetails">
-
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="formDtail">
                                     <h4 class="contTitle">Customer Details</h4>
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Quote Ref</label>
                                         <div class="col-sm-9">
+                                            <input type="hidden" name="quote_ref">
                                             <input type="text" class="form-control-plaintext editInput" id="" value="Auto generate" readonly>
                                         </div>
                                     </div>
@@ -306,10 +316,15 @@
                                         <div class="mb-3 row">
                                             <label for="inputEmail" class="col-sm-3 col-form-label"> Region <span
                                                     class="radStar">*</span></label>
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions" name="region" id="siteDeliveryRegions">
                                                     <option>None</option>
                                                 </select>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="plusandText">
+                                                    <a href="#!" id="" onclick="openRegionModal('siteDeliveryRegions');" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -395,7 +410,8 @@
                                         <div class="mb-3 row">
                                             <label for="inputJobRef" class="col-sm-3 col-form-label">Quote Ref</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
+                                                <input type="hidden" name="quote_ref">
+                                                <input type="text" class="form-control-plaintext editInput"  id="inputName" value="Auto generate" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -413,9 +429,9 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Date</label>
+                                        <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Date <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control editInput textareaInput" name="quota_date" id="">
+                                            <input type="date" class="form-control editInput textareaInput" name="quota_date" id="" required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -579,7 +595,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody class="add_insrtAppoinment">
-                                                            
+
                                                         </tbody>
 
                                                         <tfoot>
@@ -661,7 +677,7 @@
                                                         <div class="tableplusBTN">
                                                             <span>Account Code </span>
                                                             <span class="plusandText ps-3">
-                                                                <a href="#!" class="formicon pt-0" id="OpenAddAccountCodeModal"> <i class="fa-solid fa-square-plus"></i> </a>
+                                                                <a href="#!" class="formicon pt-0" onclick="openAccountCodeModal('set')" id=""> <i class="fa-solid fa-square-plus"></i> </a>
                                                             </span>
                                                         </div>
                                                     </th>
@@ -838,7 +854,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Description</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" name="description" id="textarea8"> </textarea>
+                                            <textarea cols="40" rows="5" name="extra_information" id="textarea8"> </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -846,7 +862,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Customer Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea9" name="customerNotes"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea9" name="customer_notes"> </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -854,7 +870,7 @@
                                     <div class="pt-3">
                                         <h4 class="contTitle text-start">Terms</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea10" name="terms"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea10" name="tearms"> </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -862,7 +878,7 @@
                                     <div class="pt-3">
                                         <h4 class="contTitle text-start">Internal Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea11" name="internalNotes"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea11" name="internal_notes"> </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -877,8 +893,327 @@
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Deposit Details</label>
                             <div class="row">
-
                                 <div class="col-sm-3 mb-3 mt-2">
+                                    <div class=" p-0">
+                                        <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Creadit Deposit</a>
+                                        <span class="col-form-label">
+                                            or
+                                        </span>
+                                        <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Creadit Deposit Invoice</a>
+                                    </div>
+                                </div>
+
+
+                                <!-- ************************* -->
+                                <div class="modal fade" id="creaditDepositModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositModalLabel" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content add_Customer">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title fs-5" id="creaditDepositModalLabel">Creadit Deposit</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body ">
+                                                <div class="contantbodypopup p-0">
+
+                                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                        <li class="nav-item me-2" role="presentation">
+                                                            <button class="profileDrop" id="paymentDetails-tab" data-bs-toggle="pill" data-bs-target="#paymentDetails" type="button" role="tab" aria-controls="paymentDetails" aria-selected="false" tabindex="-1">Payment Details</button>
+                                                        </li>
+                                                        <li class="nav-item me-2" role="presentation">
+                                                            <button class="profileDrop" id="billingDetails-tab" data-bs-toggle="pill" data-bs-target="#billingDetails" type="button" role="tab" aria-controls="billingDetails" aria-selected="false" tabindex="-1">Billing Details</button>
+                                                        </li>
+                                                        <li class="nav-item me-2" role="presentation">
+                                                            <button class="profileDrop active activetb" id="paymentType-tab" data-bs-toggle="pill" data-bs-target="#paymentType" type="button" role="tab" aria-controls="paymentType" aria-selected="true">Payment Type</button>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content" id="pills-tabContent">
+                                                        <div class="tab-pane fade" id="paymentDetails" role="tabpanel" aria-labelledby="paymentDetails-tab" tabindex="0">
+                                                            <div class="newJobForm card">
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="QU-0021 - Quote Date 24/10/2024" readonly="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="Prathima" readonly="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Totle (inc. VAT)</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="$12,000.00" readonly="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
+                                                                        <span class="radStar">*</span></label>
+                                                                    <div class="col-sm-5">
+                                                                        <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                                    </div>
+                                                                    <div class="col-sm-1 ps-0">
+                                                                        <input class="form-control editInput text-center" value="%" disabled="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-1 pe-0">
+                                                                        <input class="form-control editInput text-center" value="$" disabled="">
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <input type="text" class="form-control editInput" id="inputCity" value="$ 0.00">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCounty" class="col-sm-3 col-form-label pt-0">Take Card Payment Now?</label>
+                                                                    <div class="col-sm-8">
+                                                                        <span class="oNOfswich">
+                                                                            <input type="checkbox">
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--  -->
+                                                        <div class="tab-pane fade" id="billingDetails" role="tabpanel" aria-labelledby="billingDetails-tab" tabindex="0">
+                                                            <div class="newJobForm card">
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">First Name<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Arjun">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Last Name<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Kumar">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Email Address<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="info@gmail.com">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Telephone<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Address Line1<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="USA">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Address Line2</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">City<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">County</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Country</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="United Stat Kingdom">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Postcode<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" id="inputCity">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--  -->
+                                                        <div class="tab-pane fade active show" id="paymentType" role="tabpanel" aria-labelledby="paymentType-tab" tabindex="0">
+                                                            <div class="mb-2 row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="text-end">
+                                                                        <h5>Paying Now: $12000.00</h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="newJobForm card">
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                            <option>Cash</option>
+                                                                            <option>paypal</option>
+                                                                            <option>Card</option>
+                                                                            <option>Bank</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
+                                                                        <span class="radStar">*</span></label>
+                                                                    <div class="col-sm-5">
+                                                                        <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                                    </div>
+                                                                    <div class="col-sm-1 ps-0">
+                                                                        <span class="material-symbols-outlined">
+                                                                            calendar_month
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <!--  -->
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end modal body -->
+                                            <div class="modal-footer customer_Form_Popup">
+                                                <button type="button" class="btn profileDrop">Next</button>
+                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ************************ -->
+                                <!-- *********************** -->
+                                <div class="modal fade" id="creaditDepositInvoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositInvoiceModalModalLabel" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content add_Customer">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title fs-5" id="creaditDepositInvoiceModalModalLabel">Creadit Deposit Invoice</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body ">
+                                                <div class="contantbodypopup p-0">
+                                                    <div class="newJobForm card">
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date
+                                                                <span class="radStar">*</span></label>
+                                                            <div class="col-sm-5">
+                                                                <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                            </div>
+                                                            <div class="col-sm-1 ps-0">
+                                                                <a href="#!">
+                                                                    <span class="material-symbols-outlined">
+                                                                        calendar_month
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Due Date
+                                                                <span class="radStar">*</span></label>
+                                                            <div class="col-sm-5">
+                                                                <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                            </div>
+                                                            <div class="col-sm-1 ps-0">
+                                                                <a href="#!">
+                                                                    <span class="material-symbols-outlined">
+                                                                        calendar_month
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 row">
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Line Item</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" class="form-control editInput" id="inputName" placeholder="Line Item">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
+                                                                <span class="radStar">*</span></label>
+                                                            <div class="col-sm-5">
+                                                                <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                            </div>
+                                                            <div class="col-sm-2 ps-0">
+                                                                <input class="form-control editInput text-center" value="% of $.00" disabled="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Sub Totle <span class="radStar">*</span></label>
+                                                            <div class="col-sm-1 pe-0">
+                                                                <input class="form-control editInput text-center" value="$" disabled="">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <input type="text" class="form-control editInput" id="inputCity" value="0.00">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                    <option>-Please Select-</option>
+                                                                    <option>Customer-2</option>
+                                                                    <option>Customer-3</option>
+                                                                    <option>Customer-4</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-2 row">
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Totle (inc. VAT)</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end modal body -->
+                                            <div class="modal-footer customer_Form_Popup">
+                                                <button type="button" class="btn profileDrop">Save</button>
+                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- *********************** -->
+
+
+                                <!-- <div class="col-sm-3 mb-3 mt-2">
                                     <div class=" p-0">
                                         <a href="#" class="profileDrop">Creadit Deposit</a>
                                         <span class="col-form-label">
@@ -886,7 +1221,7 @@
                                         </span>
                                         <a href="#" class="profileDrop">Creadit Deposit Invoice</a>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-sm-12">
                                     <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
@@ -949,7 +1284,7 @@
                         <!-- **************************************End of deposit Details****************************************** -->
                     </div>
                     <!--  -->
-                    <div id="hideAttachmentTask"> 
+                    <div id="hideAttachmentTask">
                         <!-- *************************Start Task*************************************************** -->
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Tasks</label>
@@ -1059,7 +1394,7 @@
                             </div>
                         </div>
                         <!-- **********************End of Task************************ -->
-                    
+
                         <!-- ***********************************Start Attechments******************************** -->
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Attachments</label>
@@ -1068,7 +1403,7 @@
                                 <div class="col-sm-12 mb-3 mt-2">
                                     <div class=" p-0">
                                         <a href="#" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
-                                        <a href="#" class="profileDrop">Upload Malti Attachment</a>
+                                        <a href="#" class="profileDrop">Upload Multi Attachment</a>
                                         <a href="#" class="profileDrop">Preview Attachment(s)</a>
                                         <a href="#" class="profileDrop">Download Attachment</a>
 
@@ -1116,7 +1451,8 @@
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                             <div class="pageTitleBtn">
-                                <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
+                                <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a> -->
+                                <button type="submit" class="profileDrop">Save</button>
                                 <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a>
                             </div>
                         </div>
@@ -1127,6 +1463,8 @@
         </div>
     </div>
 </section>
+
+
 
 <!-- Add Customer Modal Start -->
 <div class="modal fade" id="QuotecustomerPop" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
@@ -1293,7 +1631,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="openRegionsModal"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" onclick="openRegionModal('customerRegion')" id=""><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1415,42 +1753,6 @@
 </div>
 <!-- Add Customer Type Modal End -->
 
-<!-- Add Customer Regions Modal Start -->
-<div class="modal fade" id="quote_region_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content add_Customer">
-            <div class="modal-header">
-                <h5 class="modal-title" id="thirdModalLabel">Add Region</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="add_region_form">
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Region <span class="radStar ">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="title" class="form-control editInput" id="region_name" value="" placeholder="Region">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
-                        <div class="col-sm-9">
-                            <select id="region_status" name="status" class="form-control editInput">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="pageTitleBtn">
-                        <a href="#" class="profileDrop p-2 crmNewBtn" id="saveRegionsData"> Save</a>
-                        <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Add Customer Regions Modal End -->
-
 <!-- Add Site Address Modal Start -->
 <div class="modal fade" id="add_site_address_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -1490,7 +1792,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="OpenSiteAddressJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" onclick="openjobTitleModal('siteJobTitle')" id=""><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1543,7 +1845,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="OpenCustomerRegionModel"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" onclick="openRegionModal('getSiteAddressRegion')" id="OpenCustomerRegionModel"><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1655,7 +1957,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="OpenCustomerJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" onclick="openjobTitleModal('customer_job_titile_id')" id="OpenCustomerJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1788,7 +2090,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:void(0)" class="formicon" id="OpenSiteDeliveryAddressJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
+                                        <a href="javascript:void(0)" class="formicon" onclick="openjobTitleModal('siteDeliveryJobTitle')" id="OpenSiteDeliveryAddressJobTitleModel"><i class="fa-solid fa-square-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1949,48 +2251,12 @@
     </div>
 </div>
 
+<!-- Include the region modal  -->
+@include('components.region-model')
 
-<!-- Add Job Title Modal Start -->
-<x-job-title-model
-    modalId="customer_job_title_modal"
-    modalTitle="Job Title - Add"
-    formId="add_job_title_form"
-    inputId="customer_type_name"
-    statusId="customer_type_status"
-    saveButtonId="saveJobTitle"
-    placeholderText="Job Title" />
+@include('components.job-title-model')
 
-<!-- Add Job Title Modal End -->
-
-<!-- Add Regions Modal Start -->
-<x-region-model
-    modalId="siteDetailregion"
-    modalTitle="Add Region"
-    formId="add_site_details_region_form"
-    inputId="region"
-    statusId="status"
-    saveButtonId="saveSiteDetailsRegion"
-    placeholderText="Region" />
-<!-- Add Regions Modal End -->
-
-<!-- Include the modal component -->
-<x-job-title-model
-    modalId="siteDetailJobTitle"
-    modalTitle="Job Title - Add"
-    formId="add_site_details_job_title_form"
-    inputId="JobTitle"
-    statusId="status"
-    saveButtonId="saveSiteDetailsJobTitle"
-    placeholderText="Job Title" />
-
-<x-job-title-model
-    modalId="siteDeliveryJobTitleModal"
-    modalTitle="Job Title - Add"
-    formId="add_site_delivery_job_title_form"
-    inputId="JobTitle"
-    statusId="status"
-    saveButtonId="saveSiteDetailsJobTitle"
-    placeholderText="Job Title" />
+@include('components.account-code')
 
 <!-- Include the quote type modal component -->
 <x-quote-type-modal
@@ -2020,30 +2286,9 @@
     saveButtonId="saveQuoteTag"
     placeholderText="Tag" />
 
-<!-- account code modal -->
-<x-account-code
-    modalId="accountCodeModal"
-    modalTitle="Add Departmental Code"
-    formId="add_departmental_code_form"
-    inputId="accountName"
-    departmentCode="accountCode"
-    statusId="status"
-    saveButtonId="saveAccountCode" />
-
-<x-account-code
-    modalId="sectionAccountCodeModal"
-    modalTitle="Add Departmental Code"
-    formId="add_section_departmental_code_form"
-    inputId="accountName"
-    departmentCode="accountCode"
-    statusId="status"
-    saveButtonId="saveSectionAccountCode" />
-
-
 <x-product-list
     modalId="productModalBAC"
     modalTitle="Product List" />
-
 
 @include('frontEnd.salesAndFinance.item.common.addproductmodal')
 @include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
@@ -2089,25 +2334,6 @@
             success: function(response) {
                 console.log(response.message);
                 const get_customer_type = document.getElementById('get_customer_type');
-                get_customer_type.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.title;
-                    get_customer_type.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getRegions(get_customer_type) {
-        $.ajax({
-            url: '{{ route("quote.ajax.getRegions") }}',
-            success: function(response) {
-                console.log(response.message);
                 get_customer_type.innerHTML = '';
                 response.data.forEach(user => {
                     const option = document.createElement('option');
@@ -2183,26 +2409,6 @@
         });
     }
 
-    function getCustomerJobTitle(jobTitle) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerJobTitle") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("jxcnjfjnfnk", response.data);
-                jobTitle.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name;
-                    jobTitle.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
     function getTags(tags) {
         $.ajax({
             url: '{{ route("General.ajax.getTags") }}',
@@ -2215,26 +2421,6 @@
                     option.value = user.id;
                     option.text = user.title;
                     tags.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getAccountCode(accountCode) {
-        $.ajax({
-            url: '{{ route("Invoice.ajax.getAccountCode") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("accountCode", response.data);
-                accountCode.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name;
-                    accountCode.appendChild(option);
                 });
             },
             error: function(xhr, status, error) {
@@ -2498,7 +2684,7 @@
         });
     }
 
-    function getUsersList(){
+    function getUsersList() {
         alert();
         $.ajax({
             url: '{{ route("quote.ajax.getUsersData") }}',
@@ -2521,6 +2707,7 @@
         });
     }
 
+
     $(document).ready(function() {
 
         getQuoteType(document.getElementById('quoteType'));
@@ -2530,7 +2717,7 @@
         document.getElementById('hideAttachmentTask').style.display = "none";
         document.getElementById('hideDepositSection').style.display = "none";
 
-        
+
 
         $('#getCustomerList').on('click', function() {
             getCustomerList();
@@ -2648,28 +2835,28 @@
 
 
         // ajax call for saving customer contact on billing details
-        $('#saveJobTitle').on('click', function() {
-            var customer_job_titile_id = document.getElementById('customer_job_titile_id');
-            saveFormData(
-                'add_job_title_form', // formId
-                '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
-                'customer_job_title_modal', // modalId
-                getCustomerJobTitle, // callback function after success
-                customer_job_titile_id
-            );
-        });
+        // $('#saveJobTitle').on('click', function() {
+        //     var customer_job_titile_id = document.getElementById('customer_job_titile_id');
+        //     saveFormData(
+        //         'add_job_title_form', // formId
+        //         '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
+        //         'customer_job_title_modal', // modalId
+        //         getCustomerJobTitle, // callback function after success
+        //         customer_job_titile_id
+        //     );
+        // });
 
-        // ajax call for saving customer contact on billing details
-        $('#saveSiteDetailsJobTitle').on('click', function() {
-            var customer_job_titile_id = document.getElementById('siteJobTitle');
-            saveFormData(
-                'add_site_details_job_title_form', // formId
-                '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
-                'siteDetailJobTitle', // modalId
-                getCustomerJobTitle, // callback function after success
-                customer_job_titile_id
-            );
-        });
+        // // ajax call for saving customer contact on billing details
+        // $('#saveSiteDetailsJobTitle').on('click', function() {
+        //     var customer_job_titile_id = document.getElementById('siteJobTitle');
+        //     saveFormData(
+        //         'add_site_details_job_title_form', // formId
+        //         '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
+        //         'siteDetailJobTitle', // modalId
+        //         getCustomerJobTitle, // callback function after success
+        //         customer_job_titile_id
+        //     );
+        // });
 
         $('#saveQuoteTag').on('click', function() {
             var quoteTag = document.getElementById('quoteTag');
@@ -2681,31 +2868,6 @@
                 quoteTag
             );
         });
-
-
-        // ajax call for saving Region on Customer Site details
-        $('#saveSiteDetailsRegion').on('click', function() {
-            var getSiteAddressRegion = document.getElementById('getSiteAddressRegion');
-            saveFormData(
-                'add_site_details_region_form', // formId
-                '{{ route("quote.ajax.saveRegion") }}', // saveUrl
-                'siteDetailregion', // modalId
-                getRegions, // callback function after success
-
-            );
-        });
-
-        $('#saveAccountCode').on('click', function() {
-            var accoutCodeList = document.getElementById('accoutCodeList');
-            saveFormData(
-                'add_departmental_code_form', // formId
-                '{{ route("invoice.ajax.saveAccountCode") }}', // saveUrl
-                'accountCodeModal', // modalId
-                accoutCodeList, // callback function after success
-
-            );
-        });
-
 
         $('#billingDetailContact').on('change', function() {
             var selected = document.getElementById('getCustomerList').value;
@@ -2865,25 +3027,6 @@
         });
 
         // Ajax Call for saving Customer Type
-        $('#saveRegionsData').on('click', function() {
-            var formData = $('#add_region_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveRegion") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    var customerRegion = document.getElementById('customerRegion');
-                    getRegions(customerRegion);
-                    $('#quote_region_modal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Ajax Call for saving Customer Type
         $('#saveAddCustomerType').on('click', function() {
             var formData = $('#add_customer_type_form').serialize();
             $.ajax({
@@ -2983,11 +3126,6 @@
         $('#quote_cutomer_type_modal').modal('show');
     });
 
-    // js for Add Regions modal
-    $('#openRegionsModal').on('click', function() {
-        $('#quote_region_modal').modal('show');
-    });
-
     $('#OpenQuoteTypeModel').on('click', function() {
         $('#quoteTypeModal').modal('show');
     });
@@ -3016,12 +3154,6 @@
     }
     // js for Add Customer Contact modal
 
-    // js for Add Job Title modal
-    $('#OpenCustomerJobTitleModel').on('click', function() {
-        // getCountriesListCustomer();
-        $('#customer_job_title_modal').modal('show');
-    });
-
     // js for Add Site Address modal
     $('#openCustomerSiteAddress').on('click', function() {
         var customer = document.getElementById('getCustomerList').value;
@@ -3037,16 +3169,6 @@
         }
     });
 
-    // js for Add Regions modal on site address
-    $('#OpenCustomerRegionModel').on('click', function() {
-        $('#siteDetailregion').modal('show');
-    });
-
-    // js for Add job Title in site Details modal
-    $('#OpenSiteAddressJobTitleModel').on('click', function() {
-        $('#siteDetailJobTitle').modal('show');
-    });
-
     $('#openSiteDeliveryModal').on('click', function() {
         getCustomerJobTitle(document.getElementById('siteDeliveryJobTitle'));
         getCountriesList(document.getElementById('siteDeliveryAddressTelephoneCode'));
@@ -3056,9 +3178,9 @@
         $('#add_site_delivery_address_modal').modal('show');
     });
 
-    $('#OpenSiteDeliveryAddressJobTitleModel').on('click', function() {
-        $('#siteDetailJobTitle').modal('show');
-    });
+    // $('#OpenSiteDeliveryAddressJobTitleModel').on('click', function() {
+    //     $('#siteDetailJobTitle').modal('show');
+    // });
 
     $('#openABCProductModal').on('click', function() {
         $('#productModalBAC').modal('show');
@@ -3068,20 +3190,26 @@
         $('#quoteTagModal').modal('show');
     });
 
-    $('#OpenAddAccountCodeModal').on('click', function() {
-        $('#accountCodeModal').modal('show');
-    });
+    // $('#OpenAddAccountCodeModal').on('click', function() {
+    //     $('#accountCodeModal').modal('show');
+    // });
 
     $('#new_Attachment_open_model').on('click', function() {
         $('#new_Attachment_model').modal('show');
     });
+
+    // $('#openSiteDeliveryRegionModal').on('click', function() {
+    //     $('#site_delivery_region_modal').modal('show');
+    // });
+
+
 
     // $('.getUsersList').on('click', function() {
     //     // $('#new_Attachment_model').modal('show');
     //     alert();
     //     getUsersList(document.getElementById('getUsersList'));
     // });
-    
+
 
 
 
@@ -3180,6 +3308,7 @@
         </td>
         <td>
             <div class="">
+                <input tye="hidden" name="item[]['itemDetails']" value="product">
                 <input type="text" class="form-control editInput" value="CS-0001">
             </div>
         </td>
@@ -3349,12 +3478,13 @@
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                             <label>Title*:</label>
-                            <input type="text" class="form-control editInput ms-3" placeholder="Type to add product">
+                            <input tye="hidden" name="item[]['itemDetails']" value="title">
+                            <input type="text" class="form-control editInput ms-3" name="item[]['item_title']" placeholder="Type to add product">
                         </span>
                     </div>
                 </td>
                 <td colspan="12">
-                    <input type="text" class="form-control editInput" placeholder="Type to add product">
+                    <input type="text" class="form-control editInput" name="item[]['item_desc']" placeholder="Type to add product">
                 </td>
                 <td>
                     <div class="statuswating">
@@ -3395,6 +3525,9 @@
                     </div>
                     <div class="addimg">
                         <img class="insrtImg" src="assets/imagrs/imgad1.png">
+                        <input type="hidden" name="item[][''item_image]">
+                        <input tye="hidden" name="item[]['itemDetails']" value="image">
+
                     </div>
                 </div>
             </td>
@@ -3436,7 +3569,8 @@
                             <a href="#!" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
                         </span>
                     </div>
-                    <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                    <input tye="hidden" name="item[]['itemDetails']" value="description">
+                    <input type="text" class="form-control editInput" name="item[]['item_description']" id="" placeholder="Type to add product">
                 </div>
             </td>
             <td>
@@ -3562,7 +3696,8 @@
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                             <label>Title*:</label>
-                            <input type="text" class="form-control editInput ms-3" placeholder="Type to add product">
+                            <input tye="hidden" name="item[]['itemDetails']" value="section_title">
+                            <input type="text" class="form-control editInput ms-3" name="section_product_title[]" placeholder="Type to add product">
                         </span>
                     </div>
                 </td>
@@ -3606,6 +3741,7 @@
                                 </span>
                             </div>
                             <div class="addimg">
+                                <input tye="hidden" name="item[]['itemDetails']" value="section_image">
                                 <img class="insrtImg" src="assets/imagrs/imgad1.png">
                             </div>
                         </div>
@@ -3645,6 +3781,7 @@
                                         <a href="#!" onclick="insrtSectionDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
                                     </span>
                                 </div>
+                                <input tye="hidden" name="item[]['itemDetails']" value="section_description">
                                 <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
                             </div>
                         </td>
@@ -3671,13 +3808,11 @@
         }
     }
 
-
-
-      //**************insrtTitle
-      function insrtAppoinment() {
-            const node = document.createElement("tr");
-            node.classList.add("add_insrtAppoinment");
-                    node.innerHTML = `
+    //**************insrtTitle
+    function insrtAppoinment() {
+        const node = document.createElement("tr");
+        node.classList.add("add_insrtAppoinment");
+        node.innerHTML = `
                 <td>
                     <div class="d-flex">
                         <p class="leftNum">1</p>
@@ -3758,18 +3893,17 @@
                     </div>
                 </td>                                         
             `;
-            const tableBody = document.querySelector(".add_insrtAppoinment");
-            if (tableBody) {
-                tableBody.appendChild(node);
+        const tableBody = document.querySelector(".add_insrtAppoinment");
+        if (tableBody) {
+            tableBody.appendChild(node);
 
-                // Add event listener to the close button
-                const closeButton = node.querySelector('.closeappend');
-                closeButton.addEventListener('click', function () {
-                    node.remove(); // Remove the row when close button is clicked
-                });
-            } else {
-                console.error("Table body with ID 'add_insrtAppoinment' not found.");
-            }
+            // Add event listener to the close button
+            const closeButton = node.querySelector('.closeappend');
+            closeButton.addEventListener('click', function() {
+                node.remove(); // Remove the row when close button is clicked
+            });
+        } else {
+            console.error("Table body with ID 'add_insrtAppoinment' not found.");
         }
-
+    }
 </script>

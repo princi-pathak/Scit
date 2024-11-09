@@ -97,9 +97,9 @@
                                 </div> -->
                             <div class="dynamic-form-fields"> </div>
 
-                            <div class="col-md-12 col-sm-12 col-xs-12">
+                            <!-- <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="uploadPopImg mt-0 hideImageDiv"><img class="my-2 imagePreview" src="" width="100px"></div>
-                            </div>
+                            </div> -->
 
                             <div class="form-group modal-footer m-t-0 modal-bttm">
                                 <!-- <a class="bottm-btns" href="{{ url('/service/calendar/'.$service_user_id) }}" ><div class="pull-left"><i class="fa fa-calendar"></i></div></a> -->
