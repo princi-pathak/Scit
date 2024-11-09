@@ -26,6 +26,15 @@
 
         <div class="row">
             <div class="col-lg-12">
+                        @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endforeach
                 <form action="{{ url('/quote/saveQuoteData') }}" method="post" class="customerForm mt-3">
                     @csrf
                     <div class="newJobForm card">
@@ -36,6 +45,7 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Quote Ref</label>
                                         <div class="col-sm-9">
+                                            <input type="hidden" name="quote_ref">
                                             <input type="text" class="form-control-plaintext editInput" id="" value="Auto generate" readonly>
                                         </div>
                                     </div>
@@ -400,7 +410,8 @@
                                         <div class="mb-3 row">
                                             <label for="inputJobRef" class="col-sm-3 col-form-label">Quote Ref</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext editInput" name="quote_ref" id="inputName" value="Auto generate" readonly>
+                                                <input type="hidden" name="quote_ref">
+                                                <input type="text" class="form-control-plaintext editInput"  id="inputName" value="Auto generate" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -843,7 +854,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Description</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" name="description" id="textarea8"> </textarea>
+                                            <textarea cols="40" rows="5" name="extra_information" id="textarea8"> </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -851,7 +862,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Customer Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea9" name="customerNotes"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea9" name="customer_notes"> </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -859,7 +870,7 @@
                                     <div class="pt-3">
                                         <h4 class="contTitle text-start">Terms</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea10" name="terms"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea10" name="tearms"> </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -867,7 +878,7 @@
                                     <div class="pt-3">
                                         <h4 class="contTitle text-start">Internal Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea11" name="internalNotes"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea11" name="internal_notes"> </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -3297,6 +3308,7 @@
         </td>
         <td>
             <div class="">
+                <input tye="hidden" name="item[]['itemDetails']" value="product">
                 <input type="text" class="form-control editInput" value="CS-0001">
             </div>
         </td>
@@ -3466,12 +3478,13 @@
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                             <label>Title*:</label>
-                            <input type="text" class="form-control editInput ms-3" placeholder="Type to add product">
+                            <input tye="hidden" name="item[]['itemDetails']" value="title">
+                            <input type="text" class="form-control editInput ms-3" name="item[]['item_title']" placeholder="Type to add product">
                         </span>
                     </div>
                 </td>
                 <td colspan="12">
-                    <input type="text" class="form-control editInput" placeholder="Type to add product">
+                    <input type="text" class="form-control editInput" name="item[]['item_desc']" placeholder="Type to add product">
                 </td>
                 <td>
                     <div class="statuswating">
@@ -3512,6 +3525,9 @@
                     </div>
                     <div class="addimg">
                         <img class="insrtImg" src="assets/imagrs/imgad1.png">
+                        <input type="hidden" name="item[][''item_image]">
+                        <input tye="hidden" name="item[]['itemDetails']" value="image">
+
                     </div>
                 </div>
             </td>
@@ -3553,7 +3569,8 @@
                             <a href="#!" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
                         </span>
                     </div>
-                    <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                    <input tye="hidden" name="item[]['itemDetails']" value="description">
+                    <input type="text" class="form-control editInput" name="item[]['item_description']" id="" placeholder="Type to add product">
                 </div>
             </td>
             <td>
@@ -3679,7 +3696,8 @@
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                             <label>Title*:</label>
-                            <input type="text" class="form-control editInput ms-3" placeholder="Type to add product">
+                            <input tye="hidden" name="item[]['itemDetails']" value="section_title">
+                            <input type="text" class="form-control editInput ms-3" name="section_product_title[]" placeholder="Type to add product">
                         </span>
                     </div>
                 </td>
@@ -3723,6 +3741,7 @@
                                 </span>
                             </div>
                             <div class="addimg">
+                                <input tye="hidden" name="item[]['itemDetails']" value="section_image">
                                 <img class="insrtImg" src="assets/imagrs/imgad1.png">
                             </div>
                         </div>
@@ -3762,6 +3781,7 @@
                                         <a href="#!" onclick="insrtSectionDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
                                     </span>
                                 </div>
+                                <input tye="hidden" name="item[]['itemDetails']" value="section_description">
                                 <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
                             </div>
                         </td>

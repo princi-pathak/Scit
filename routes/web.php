@@ -500,7 +500,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
 
-		Route::post('/quote/saveQuoteData', 'saveQuoteData');
+		Route::post('/quote/saveQuoteData', 'store');
 
 		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 

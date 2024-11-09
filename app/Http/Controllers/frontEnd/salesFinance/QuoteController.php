@@ -210,7 +210,8 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function saveQuoteData(Request $request){
+    public function store(Request $request){
+        // dd($request);
         try {
             $validator = Validator::make($request->all(), [
                 'customer_id' => 'required',
@@ -218,10 +219,106 @@ class QuoteController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
+                return redirect()->back()->withErrors($validator)->withInput();
             }
-    
-            $quote = Quote::updateOrCreate(array_merge(['home_id'=> Auth::user()->home_id], $request->all()));
+
+            if (!isset($request->quote_ref)) {
+                $lastQuote = Quote::orderBy('id', 'desc')->first();
+                $nextId = $lastQuote ? $lastQuote->id + 1 : 1;
+                $quote_refid = 'QU-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+            } else {
+                $quote_refid = $request->quote_ref;
+            }
+
+            $quote = Quote::saveQuoteData($request->all(), $quote_refid, Auth::user()->home_id);
+
+            // foreach ($request->input('items') as $itemData) {
+
+            //     if($itemData['itemDetails'] === "title"){
+            //         $item = [
+            //             'quote_id' => $quote->id,
+            //             'type' => 1,
+            //             'section_type' => $itemData['itemDetails'],
+            //             'title' => $itemData['item_title'],
+            //             'description' => $itemData['item_desc'] 
+            //         ];
+            //     } else if($itemData['itemDetails'] === "description"){
+            //         $item = [
+            //             'quote_id' => $quote->id,
+            //             'type' => 1,
+            //             'section_type' => $itemData['itemDetails'],
+            //             'description' => $itemData['item_desc']
+            //         ];
+            //     } else if($itemData['itemDetails'] === "image"){
+            //         $item = [
+            //             'quote_id' => $quote->id,
+            //             'type' => 1,
+            //             'section_type' => $itemData['itemDetails'],
+            //             'image' => $itemData['item_image']
+            //         ];
+            //     } else if($itemData['itemDetails'] === "product"){
+            //         $item = [
+            //             'quote_id' => $quote->id,
+            //             'type' => 1,
+            //             'section_type' => $itemData['itemDetails'],
+            //             'product_id' => $itemData['product_id'],
+            //             'title' => $itemData['item_title'],
+            //             'decritption' => $itemData['item_desc'],
+            //             'account_code' => $itemData['account_code'],
+            //             'quantity' => $itemData['quantity'],
+            //             'cost_price' => $itemData['cost_price'],
+            //             'price' => $itemData['price'],
+            //             'markup' => $itemData['markup'],
+            //             'VAT' => $itemData['VAT'],
+            //             'discount' => $itemData['discount'],
+            //             'amount' => $itemData['amount'],
+            //             'profit' => $itemData['profit']
+            //         ];
+            //     } else if($itemData['itemDetails'] === "section_title"){
+            //         $item = [
+            //             'quote_id' => $quote->id,
+            //             'type' => 2,
+            //             'section_type' => $itemData['itemDetails'],
+            //             'image' => $itemData['item_image']
+            //         ];
+            //     } else if($itemData['itemDetails'] === "section_description"){
+            //         $item = [
+            //             'quote_id' => $quote->id,
+            //             'type' => 2,
+            //             'section_type' => $itemData['itemDetails'],
+            //             'description' => $itemData['item_desc']
+            //         ];
+            //     } else if($itemData['itemDetails'] === "section_image"){
+            //         $item = [
+            //             'quote_id' => $quote->id,
+            //             'type' => 2,
+            //             'section_type' => $itemData['itemDetails'],
+            //             'image' => $itemData['item_image']
+            //         ];
+            //     }  else if($itemData['itemDetails'] === "section_product"){
+            //         $item = [
+            //             'quote_id' => $quote->id,
+            //             'type' => 2,
+            //             'section_type' => $itemData['itemDetails'],
+            //             'product_id' => $itemData['product_id'],
+            //             'title' => $itemData['item_title'],
+            //             'decritption' => $itemData['item_desc'],
+            //             'account_code' => $itemData['account_code'],
+            //             'quantity' => $itemData['quantity'],
+            //             'cost_price' => $itemData['cost_price'],
+            //             'price' => $itemData['price'],
+            //             'markup' => $itemData['markup'],
+            //             'VAT' => $itemData['VAT'],
+            //             'discount' => $itemData['discount'],
+            //             'amount' => $itemData['amount'],
+            //             'profit' => $itemData['profit']
+            //         ];
+            //     } 
+                
+            //     $quote->items()->create($item);
+            // }
+
+
             Log::info('This is an informational message.', [$quote]);
             $data = array();
             return view('frontEnd.salesAndFinance.quote.draft', $data);
@@ -235,7 +332,6 @@ class QuoteController extends Controller
             Log::error('This is an error message.', [$e->getMessage()]);
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
-
     }
     public function getUsersList(){
         $data = User::getHomeUsers(Auth::user()->home_id);
