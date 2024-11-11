@@ -657,13 +657,42 @@
                                             <div class="dropdown-menu fade-up m-0" style="">
                                                 <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Product</a>
                                                 <a href="#!" class="dropdown-item col-form-label" onclick="insrtTitle()">insert Title</a>
-                                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtImgappend()">insert Image</a>
+                                                <!-- <a href="#!" class="dropdown-item col-form-label" onclick="insrtImgappend()">insert Image</a> -->
+                                                <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">insert Image</a>
                                                 <a href="#!" class="dropdown-item col-form-label" onclick="insrtDescription()">insert Description</a>
                                                 <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">insert Section</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
+                                 <!-- insrt Image Modal -->
+                                 <div class="modal fade" id="attachmentsPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Insert Image</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                            
+                                                <p class="uploadImg"> 
+                                                    <i class="fa fa-cloud-upload"></i>
+                                                <input type="file" multiple="false" accept="image/*" id="finput" onchange="upload()">
+                                                </p>
+                                                <canvas id="canv1"></canvas>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="pageTitleBtn p-0">
+                                                    <a href="#!" class="profileDrop" onclick="insrtImgappend()" data-bs-dismiss="modal"> Apply</a>
+                                                    <a href="#!" class="profileDrop" data-bs-dismiss="modal"> Close</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               <!-- End insrt Image Modal -->
 
                                 <div class="col-sm-12">
                                     <div class="productDetailTable">
@@ -3308,7 +3337,7 @@
         </td>
         <td>
             <div class="">
-                <input tye="hidden" name="item[]['itemDetails']" value="product">
+                <input type="hidden" name="item[][itemDetails]" value="product">
                 <input type="text" class="form-control editInput" value="CS-0001">
             </div>
         </td>
@@ -3478,13 +3507,12 @@
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                             <label>Title*:</label>
-                            <input tye="hidden" name="item[]['itemDetails']" value="title">
-                            <input type="text" class="form-control editInput ms-3" name="item[]['item_title']" placeholder="Type to add product">
+                            <input type="text" class="form-control editInput ms-3" name="item['title']['item_title']" placeholder="Type to add product">
                         </span>
                     </div>
                 </td>
                 <td colspan="12">
-                    <input type="text" class="form-control editInput" name="item[]['item_desc']" placeholder="Type to add product">
+                    <input type="text" class="form-control editInput" name="item['title']['item_desc']" placeholder="Type to add product">
                 </td>
                 <td>
                     <div class="statuswating">
@@ -3525,8 +3553,7 @@
                     </div>
                     <div class="addimg">
                         <img class="insrtImg" src="assets/imagrs/imgad1.png">
-                        <input type="hidden" name="item[][''item_image]">
-                        <input tye="hidden" name="item[]['itemDetails']" value="image">
+                        <input type="hidden" name="item[]['image'][]['itemImage']" value="image">
 
                     </div>
                 </div>
@@ -3569,8 +3596,7 @@
                             <a href="#!" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
                         </span>
                     </div>
-                    <input tye="hidden" name="item[]['itemDetails']" value="description">
-                    <input type="text" class="form-control editInput" name="item[]['item_description']" id="" placeholder="Type to add product">
+                    <input type="text" class="form-control editInput" name="item['description']['item_description']" id="" placeholder="Type to add product">
                 </div>
             </td>
             <td>
@@ -3612,7 +3638,7 @@
                             <label class="secTitle">Section Title* :</label>
                         </span>
                     </div>
-                    <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                    <input type="text" class="form-control editInput" name="item[]['section_title_name']" id="inputCountry" placeholder="Type to add product">
                     
                     <div class="pageTitleBtn p-0">
                         <div class="nav-item dropdown">
@@ -3621,7 +3647,7 @@
                             <div class="dropdown-menu fade-up m-0">
                                 <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Section Product</a>
                                 <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionTtle()">insert Section Title</a>
-                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionImg()">insert Section Image</a>
+                                <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">insert Section Image</a>
                                 <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionDescription()">insert Section Description</a>
                             </div>
                         </div>
@@ -3663,7 +3689,116 @@
                                 </tr>
                             </thead>
                             <tbody class="add_sectionTitle">
-                                
+                                 <tr>
+                            <td>
+                    <div class="CSPlus">
+                        <span class="plusandText">
+                            <a href="#!" class="formicon pt-0 me-2" onclick="insrtProduct()"> <i
+                                    class="fa-solid fa-square-plus"></i> </a>
+                            <input type="text"
+                                class="form-control editInput input80"
+                                value="CS-0001">
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput"
+                            value="CS-0001">
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <textarea class="form-control textareaInput" name="address"
+                            id="inputAddress" rows="2"
+                            placeholder="Address"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <select class="form-control editInput selectOptions"
+                            id="inputCustomer">
+                            <option>No account</option>
+                            <option>Default</option>
+                            <option>Default</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput input50"
+                            value="1">
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput input50"
+                            value="100.00">
+                    </div>
+                </td>
+                <td>
+                    <div class="calculatorIcon">
+                        <span class="plusandText">
+                            <a href="#!" class="formicon pt-0"
+                                data-bs-toggle="modal"
+                                data-bs-target="#calculatePop"> <span
+                                    class="material-symbols-outlined">
+                                    calculate
+                                </span> </a>
+                        </span>
+                    </div>
+
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput input50"
+                            value="90.00">
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput input50"
+                            value="0">
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <select class="form-control editInput selectOptions"
+                            id="inputCustomer">
+                            <option>Please Select</option>
+                            <option>Default</option>
+                            <option>Default</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex">
+                        <input type="text"
+                            class="form-control editInput input50 me-2" value="0">
+                        <select class="form-control editInput selectOptions input50"
+                            id="inputCustomer">
+                            <option>Please Select</option>
+                            <option>Default</option>
+                            <option>Default</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <span>$90.00</span>
+                </td>
+                <td>
+                    <span>$-10.00</span>
+                    <div class="minusnmber pt-1">(-11.11%)</div>
+                </td>
+                <td>
+                    <div class="statuswating">
+                        <span class="oNOfswich">
+                            <input type="checkbox">
+                        </span>
+                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                    </div>
+                </td>    
+                        </tr>
                             </tbody>
                         </table>
                     </div>
@@ -3696,13 +3831,13 @@
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                             <label>Title*:</label>
-                            <input tye="hidden" name="item[]['itemDetails']" value="section_title">
-                            <input type="text" class="form-control editInput ms-3" name="section_product_title[]" placeholder="Type to add product">
+                            <input type="hidden" name="item[][itemDetails]" value="section_title">
+                            <input type="text" class="form-control editInput ms-3" name="item[][section_title][section_item_title]" placeholder="Type to add product">
                         </span>
                     </div>
                 </td>
                 <td colspan="12">
-                    <input type="text" class="form-control editInput" placeholder="Type to add product">
+                    <input type="text" class="form-control editInput" name="item[][section_title][section_item_description]" placeholder="Type to add product">
                 </td>
                 <td>
                     <div class="statuswating">
@@ -3741,7 +3876,7 @@
                                 </span>
                             </div>
                             <div class="addimg">
-                                <input tye="hidden" name="item[]['itemDetails']" value="section_image">
+                                <input type="hidden" name="item[][section_image][section_item_image]" value="section_image">
                                 <img class="insrtImg" src="assets/imagrs/imgad1.png">
                             </div>
                         </div>
@@ -3781,8 +3916,8 @@
                                         <a href="#!" onclick="insrtSectionDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
                                     </span>
                                 </div>
-                                <input tye="hidden" name="item[]['itemDetails']" value="section_description">
-                                <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                                <input type="hidden" name="item[][itemDetails]" value="section_description">
+                                <input type="text" class="form-control editInput" name="item[][section_description][section_item_description]" id="inputCountry" placeholder="Section Description">
                             </div>
                         </td>
                         <td>
@@ -3907,3 +4042,11 @@
         }
     }
 </script>
+<script>
+        function upload(){
+            var imgcanvas = document.getElementById("canv1");
+            var fileinput = document.getElementById("finput");
+            var image = new SimpleImage(fileinput);
+            image.drawTo(imgcanvas);
+        }
+     </script>

@@ -41,7 +41,7 @@ class QuoteController extends Controller
     // Quote Type
     public function quote_type(){
         $data['page'] = "setting";
-        $data['quote_type'] = QuoteType::getAllQuoteType();
+        $data['quote_type'] = QuoteType::getAllQuoteType(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.quote_type', $data);
     }
 
@@ -232,91 +232,33 @@ class QuoteController extends Controller
 
             $quote = Quote::saveQuoteData($request->all(), $quote_refid, Auth::user()->home_id);
 
-            // foreach ($request->input('items') as $itemData) {
+            $titles = []; 
 
-            //     if($itemData['itemDetails'] === "title"){
-            //         $item = [
-            //             'quote_id' => $quote->id,
-            //             'type' => 1,
-            //             'section_type' => $itemData['itemDetails'],
-            //             'title' => $itemData['item_title'],
-            //             'description' => $itemData['item_desc'] 
-            //         ];
-            //     } else if($itemData['itemDetails'] === "description"){
-            //         $item = [
-            //             'quote_id' => $quote->id,
-            //             'type' => 1,
-            //             'section_type' => $itemData['itemDetails'],
-            //             'description' => $itemData['item_desc']
-            //         ];
-            //     } else if($itemData['itemDetails'] === "image"){
-            //         $item = [
-            //             'quote_id' => $quote->id,
-            //             'type' => 1,
-            //             'section_type' => $itemData['itemDetails'],
-            //             'image' => $itemData['item_image']
-            //         ];
-            //     } else if($itemData['itemDetails'] === "product"){
-            //         $item = [
-            //             'quote_id' => $quote->id,
-            //             'type' => 1,
-            //             'section_type' => $itemData['itemDetails'],
-            //             'product_id' => $itemData['product_id'],
-            //             'title' => $itemData['item_title'],
-            //             'decritption' => $itemData['item_desc'],
-            //             'account_code' => $itemData['account_code'],
-            //             'quantity' => $itemData['quantity'],
-            //             'cost_price' => $itemData['cost_price'],
-            //             'price' => $itemData['price'],
-            //             'markup' => $itemData['markup'],
-            //             'VAT' => $itemData['VAT'],
-            //             'discount' => $itemData['discount'],
-            //             'amount' => $itemData['amount'],
-            //             'profit' => $itemData['profit']
-            //         ];
-            //     } else if($itemData['itemDetails'] === "section_title"){
-            //         $item = [
-            //             'quote_id' => $quote->id,
-            //             'type' => 2,
-            //             'section_type' => $itemData['itemDetails'],
-            //             'image' => $itemData['item_image']
-            //         ];
-            //     } else if($itemData['itemDetails'] === "section_description"){
-            //         $item = [
-            //             'quote_id' => $quote->id,
-            //             'type' => 2,
-            //             'section_type' => $itemData['itemDetails'],
-            //             'description' => $itemData['item_desc']
-            //         ];
-            //     } else if($itemData['itemDetails'] === "section_image"){
-            //         $item = [
-            //             'quote_id' => $quote->id,
-            //             'type' => 2,
-            //             'section_type' => $itemData['itemDetails'],
-            //             'image' => $itemData['item_image']
-            //         ];
-            //     }  else if($itemData['itemDetails'] === "section_product"){
-            //         $item = [
-            //             'quote_id' => $quote->id,
-            //             'type' => 2,
-            //             'section_type' => $itemData['itemDetails'],
-            //             'product_id' => $itemData['product_id'],
-            //             'title' => $itemData['item_title'],
-            //             'decritption' => $itemData['item_desc'],
-            //             'account_code' => $itemData['account_code'],
-            //             'quantity' => $itemData['quantity'],
-            //             'cost_price' => $itemData['cost_price'],
-            //             'price' => $itemData['price'],
-            //             'markup' => $itemData['markup'],
-            //             'VAT' => $itemData['VAT'],
-            //             'discount' => $itemData['discount'],
-            //             'amount' => $itemData['amount'],
-            //             'profit' => $itemData['profit']
-            //         ];
-            //     } 
+            foreach ($request->input('item') as $itemData) {
+
+                if(!empty($itemData['title']['item_title'])){
+                    $title = [
+                        'quote_id' => $quote->id,
+                        'type' => 1,
+                        'section_type' => "title",
+                        'title' => $itemData['title']['item_title'],
+                        'description' => $itemData['title']['item_desc'] 
+                    ];
+                    $quote->items()->create($title);
+                } 
+
+                if(!empty($itemData['description']['item_description'])){
+                    $description = [
+                        'quote_id' => $quote->id,
+                        'type' => 1,
+                        'section_type' => "description",
+                        'description' => $itemData['description']['item_description']
+                    ];
+                    $quote->items()->create($description);
+                } 
+            
                 
-            //     $quote->items()->create($item);
-            // }
+            }
 
 
             Log::info('This is an informational message.', [$quote]);
@@ -330,7 +272,7 @@ class QuoteController extends Controller
         } catch (\Exception $e) {
             // Handle general errors
             Log::error('This is an error message.', [$e->getMessage()]);
-            return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'An error occurred: ' . $e], 500);
         }
     }
     public function getUsersList(){

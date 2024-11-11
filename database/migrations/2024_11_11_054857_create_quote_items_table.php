@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('quote_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('quote_id');
+            $table->foreignId('quote_id')->constrained()->onDelete('cascade');
             $table->string('type')->comment('1-normal, 2-section');
             $table->string('section_type')->comment('title, image, description, product, section_title, section_image, section_description, section_product');
             $table->integer('product_id')->nullable();
+            $table->string('section_title')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('image')->nullable();
