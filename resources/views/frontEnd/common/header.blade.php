@@ -43,17 +43,16 @@ float: right;
         color: #fff;
         background: #1f88b5;
     }
-
     .top-nav img {
         border: 2px solid #d9d9d9;
         object-fit: cover;
     }
     .uploadPopImg img {
         width: 100%;
+        margin-bottom: 10px;
     }
     .uploadPopImg {
         width: 120px;
-        
     }
     label.col-lg-2.control-label.mrtp70 {
         margin-top: 40px;

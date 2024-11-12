@@ -653,15 +653,16 @@
                                 <div class="col-sm-3">
                                     <div class="pageTitleBtn p-0">
                                         <div class="nav-item dropdown">
-                                            <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> + Insert </a>
+                                            <a href="#!" class="nav-link profileDrop" onclick="openProductListModal();">insert Product</a>
+
+                                            <!-- <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false"> + Insert </a>
                                             <div class="dropdown-menu fade-up m-0" style="">
                                                 <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Product</a>
                                                 <a href="#!" class="dropdown-item col-form-label" onclick="insrtTitle()">insert Title</a>
-                                                <!-- <a href="#!" class="dropdown-item col-form-label" onclick="insrtImgappend()">insert Image</a> -->
                                                 <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">insert Image</a>
                                                 <a href="#!" class="dropdown-item col-form-label" onclick="insrtDescription()">insert Description</a>
                                                 <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">insert Section</a>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -2287,6 +2288,8 @@
 
 @include('components.account-code')
 
+@include('components.product-list')
+
 <!-- Include the quote type modal component -->
 <x-quote-type-modal
     modalId="quoteTypeModal"
@@ -2314,10 +2317,6 @@
     statusId="status"
     saveButtonId="saveQuoteTag"
     placeholderText="Tag" />
-
-<x-product-list
-    modalId="productModalBAC"
-    modalTitle="Product List" />
 
 @include('frontEnd.salesAndFinance.item.common.addproductmodal')
 @include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
@@ -2611,6 +2610,8 @@
             }
         });
     }
+
+    
 
     function setSiteDeliveryDetails(id) {
         $.ajax({
@@ -3500,6 +3501,7 @@
         const node = document.createElement("tr");
         node.classList.add("add_table_insrt");
         node.innerHTML = `
+            <form>
                 <td>
                     <div class="CSPlus">
                         <span class="plusandText">
@@ -3507,12 +3509,12 @@
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                             <label>Title*:</label>
-                            <input type="text" class="form-control editInput ms-3" name="item['title']['item_title']" placeholder="Type to add product">
+                            <input type="text" class="form-control editInput ms-3" name="item[][title][item_title]" placeholder="Type to add product">
                         </span>
                     </div>
                 </td>
                 <td colspan="12">
-                    <input type="text" class="form-control editInput" name="item['title']['item_desc']" placeholder="Type to add product">
+                    <input type="text" class="form-control editInput" name="item[][title][item_desc]" placeholder="Type to add product">
                 </td>
                 <td>
                     <div class="statuswating">
@@ -3521,7 +3523,8 @@
                         </span>
                         <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                     </div>
-                </td>
+                </td> 
+            </form>
             `;
         const tableBody = document.querySelector(".add_table_insrt");
         if (tableBody) {
@@ -3596,7 +3599,7 @@
                             <a href="#!" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
                         </span>
                     </div>
-                    <input type="text" class="form-control editInput" name="item['description']['item_description']" id="" placeholder="Type to add product">
+                    <input type="text" class="form-control editInput" name="item[][description][item_description]" id="" placeholder="Type to add product">
                 </div>
             </td>
             <td>
