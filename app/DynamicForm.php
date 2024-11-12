@@ -57,6 +57,12 @@ class DynamicForm extends Model //FormBuilder
             $formdata .= "<input type='hidden' value='" . $home_id . "' id='home_id'>";
             $formdata .= "<input type='hidden' value='.$form_pattern.' id='getdatamodel'>";
             $formdata .= "<input type='hidden' value='". $form->image."' id='imageName'>";
+
+            if(!empty($form->image)){
+                $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12" id="formiotestimage">
+                                <div class="uploadPopImg mt-0 hideImageDiv" ><img class="my-2 imagePreview" src="'.asset('public/images/formio/' . $form->image).'" width="100px"></div>
+                            </div>';    
+            }
             
             //  echo "<pre>";   print_r($form->alert_field);  echo "<pre>";
             if ($form->alert_field == '1') {
@@ -138,11 +144,7 @@ class DynamicForm extends Model //FormBuilder
             }
             $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12 cog-panel' id='formiotest'></div>";
             $formdata .= '';
-            if(!empty($form->image)){
-                $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12" id="formiotestimage">
-                                <div class="uploadPopImg mt-0 hideImageDiv" ><img class="my-2 imagePreview" src="'.asset('public/images/formio/' . $form->image).'" width="100px"></div>
-                            </div>';    
-            }
+        
             
             $result['response']         = true;
             $result['form_builder_id']  = $form_builder_id;
@@ -246,6 +248,12 @@ class DynamicForm extends Model //FormBuilder
             $formdata .= "<input type='hidden' value='" . $dynamic_form_id . "' id='dynamic_form_idformio'>";
             $formdata .= "<input type='hidden' value='". $form_builder->image."' id='imageName'>";
 
+            if(!empty($form_info->image)){
+                $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12" id="formiotestimage">
+                                <div class="uploadPopImg mt-0 hideImageDiv" ><img class="my-2 imagePreview" src="'.asset('public/images/formio/' . $form_info->image).'" width="100px"></div>
+                            </div>';    
+            }
+            
             //echo '<pre>'; print_r($static_fields); die;
 
             $inp_col = 10;
@@ -586,11 +594,7 @@ class DynamicForm extends Model //FormBuilder
                 $formdata .= $static_field;
             }
 
-            if(!empty($form_info->image)){
-                $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12" id="formiotestimage">
-                                <div class="uploadPopImg mt-0 hideImageDiv" ><img class="my-2 imagePreview" src="'.asset('public/images/formio/' . $form_info->image).'" width="100px"></div>
-                            </div>';    
-            }
+          
 
             $result['response']         = true;
             $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12' id='formioView'></div>";

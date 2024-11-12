@@ -61,4 +61,8 @@ class Product extends Model
         //$productCategory->deleted_at = date('Y-m-d H:i:s');
         return $product;
     }
+
+    public static function getProductList($type){
+        return self::join('product_categories', 'products.cat_id', '=','product_categories.id')->where('product_type', $type)->select('products.id','products.cat_id', 'products.product_code', 'products.product_name', 'product_categories.name', 'products.description')->get();
+    }
 }
