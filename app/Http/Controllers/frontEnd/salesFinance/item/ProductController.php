@@ -333,6 +333,12 @@ class ProductController extends Controller
         ProductImage::deleteproductimage($request->productimgid);
     }
 
-    
+    public function getProductList(Request $request){
+        $data = Product::getProductList($request->type);
 
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
 }
