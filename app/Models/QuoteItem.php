@@ -26,7 +26,7 @@ class QuoteItem extends Model
         'profit'
     ];
 
-    public function quotation()
+    public function quote()
     {
         return $this->belongsTo(Quote::class);
     }

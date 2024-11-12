@@ -381,7 +381,7 @@ if (isset($form)) {
                                             @if(isset($form->image))
                                                 <div class="col-lg-4">
                                                     <div class="uploadPopImg"><img id="preview" class="my-2" src="{{ url('public/images/formio/'. $form->image)}}" width="100px"></div>
-                                                    <input type="hidden" class="form-control mrtp80" id="image" name="form_img" value="{{ $form->image }}">
+                                                    <input type="hidden" class="form-control mrtp80" id="form_img" name="form_img" value="{{ $form->image }}">
                                                 </div>
                                             @else
                                                 <div class="col-lg-4">
@@ -528,6 +528,7 @@ if (isset($form)) {
   var imgfile = "0";
   document.getElementById('image').addEventListener('change', function(event) {
       const file = event.target.files[0];
+      console.log(file.lastModified);
       console.log(file);
       if (!file) return;
 
