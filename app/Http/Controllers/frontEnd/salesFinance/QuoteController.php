@@ -31,6 +31,7 @@ class QuoteController extends Controller
         $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
         $data['countries'] = Country::getCountriesNameCode();
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
+        // dd($data['product_categories']);
         return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }
     public function index(){
@@ -176,11 +177,18 @@ class QuoteController extends Controller
         }
 
         $saveData = Region::updateOrCreate(['id'=>$request->id ?? null],array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
-        if ($saveData) {
-            return response()->json(['success' => true, 'message' => 'Region added successfully.']);
-        } else {
-            return response()->json(['success' => false, 'message' => 'Error in region add.']);
-        }
+
+        return response()->json([
+            'success' => (bool) $saveData,
+            'message' => $saveData ? 'Region added successfully.' :'Error in region add.'
+        ]);
+
+
+        // if ($saveData) {
+        //     return response()->json(['success' => true, 'message' =>'Region added successfully.' ]);
+        // } else {
+        //     return response()->json(['success' => false, 'message' => 'Error in region add.']);
+        // }
     }
 
     public function getRegions(){
@@ -230,34 +238,65 @@ class QuoteController extends Controller
                 $quote_refid = $request->quote_ref;
             }
 
+            $titleArr = [];
+
             $quote = Quote::saveQuoteData($request->all(), $quote_refid, Auth::user()->home_id);
-
-            $titles = []; 
-
-            foreach ($request->input('item') as $itemData) {
-
-                if(!empty($itemData['title']['item_title'])){
-                    $title = [
-                        'quote_id' => $quote->id,
-                        'type' => 1,
-                        'section_type' => "title",
+            // dd($request->input('item'));
+            foreach ($request->input('item') as $itemData ) {
+                // dd($itemData);
+                if (isset($itemData['title']['item_title']) && isset($itemData['title']['item_desc'])) {
+                    $titleData = [
+                        'quote_id' => $quote->id,  // Assuming you have a Quote model
+                        'type' => 1,  // Define the type if necessary
+                        'section_type' => 'title',  // Section type is 'title'
                         'title' => $itemData['title']['item_title'],
-                        'description' => $itemData['title']['item_desc'] 
+                        'description' => $itemData['title']['item_desc'],
                     ];
-                    $quote->items()->create($title);
-                } 
+                    dd($titleData);
+                    // Save both fields (item_title and item_desc) in the same row
+                    $quote->items()->create($titleData);
+                }
+        
+                // Handle description (item_description)
+                if (isset($itemData['description']['item_description'])) {
+                    $descriptionData = [
+                        'quote_id' => $quote->id,  // Assuming you have a Quote model
+                        'type' => 1,  // Define the type if necessary
+                        'section_type' => 'description',  // Section type is 'description'
+                        'title' => '',  // No title for description
+                        'description' => $itemData['description']['item_description'],
+                    ];
+        
+                    // Save the description in a separate row
+                    $quote->items()->create($descriptionData);
+                }
 
-                if(!empty($itemData['description']['item_description'])){
-                    $description = [
-                        'quote_id' => $quote->id,
-                        'type' => 1,
-                        'section_type' => "description",
-                        'description' => $itemData['description']['item_description']
-                    ];
-                    $quote->items()->create($description);
-                } 
-            
-                
+         
+
+
+                // if(!empty($itemData["title"]["item_title"])){
+                //     $title = [
+                //         'quote_id' => $quote->id,
+                //         'type' => 1,
+                //         'section_type' => "title",
+                //         'title' => $itemData["title"]["item_title"],
+                //         'description' => $itemData["title"]["item_desc"] 
+                //     ];
+                //     // dd($title);
+                //     $quote->items()->create($title);
+                // } 
+
+                // if(!empty($itemData["description"]["item_description"])){
+                //     $description = [
+                //         'quote_id' => $quote->id,
+                //         'type' => 1,
+                //         'section_type' => "description",
+                //         'description' => $itemData["description"]["item_description"]
+                //     ];
+
+                //     // dd($description);
+                //     $quote->items()->create($description);
+                // } 
             }
 
 

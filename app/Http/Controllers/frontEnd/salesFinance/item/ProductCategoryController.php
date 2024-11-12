@@ -89,5 +89,14 @@ class ProductCategoryController extends Controller
             'message' => $delete ? 'Product category deletd successfully.' : 'Product category could not be deletd.'
         ]);
     }
+
+    public function getCategoriesList(){
+        $data = Product_category::getProductCategory(Auth::user()->home_id);
+        
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
    
 }

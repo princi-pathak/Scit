@@ -8,34 +8,14 @@ use Illuminate\View\Component;
 
 class JobTitleModel extends Component
 {
-    public $modalId;
-    public $modalTitle;
-    public $formId;
-    public $inputId;
-    public $statusId;
-    public $saveButtonId;
-    public $placeholderText;
+   
 
     /**
      * Create a new component instance.
      */
-    public function __construct( 
-        string $modalId = 'defaultModalId',
-        string $modalTitle = 'Job Title - Add',
-        string $formId = 'defaultFormId',
-        string $inputId = 'defaultInputId',
-        string $statusId = 'defaultStatusId',
-        string $saveButtonId = 'defaultSaveButtonId',
-        string $placeholderText = 'Default Placeholder' 
-    )
+    public function __construct( )
     {
-        $this->modalId = $modalId;
-        $this->modalTitle = $modalTitle;
-        $this->formId = $formId;
-        $this->inputId = $inputId;
-        $this->statusId = $statusId;
-        $this->saveButtonId = $saveButtonId;
-        $this->placeholderText = $placeholderText;
+       
     }
 
     /**
