@@ -1373,19 +1373,11 @@
                                                     <th>Source Ref</th>
                                                     <th>Note(s)</th>
                                                     <th>Customer Visible</th>
-                                                    <th>Actioned</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                </tr>
+                                            <tbody id="crm_customer_complaint">
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -1544,12 +1536,12 @@
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Contact </label>
                         <div class="col-sm-8">
-                            <select class="form-control editInput" name="notes_contact" id="notes_contact">
+                            <select class="form-control editInput" name="notes_contact" id="notes_contact" class="notes_contact">
                                 
                             </select>
                         </div>
                         <div class="col-sm-1">
-                            <a href="#!" class="formicon" id="contact_add"><i class="fa-solid fa-square-plus"></i></a>
+                            <a href="#!" class="formicon" id="contact_add" class="contact_add"><i class="fa-solid fa-square-plus"></i></a>
                         </div>
 
                     </div>
@@ -1628,6 +1620,152 @@
         </div>
     </div>
 </div>
+<!-- CRM Add compliants Modal Start -->
+<div class="modal fade" id="compliantsModal" tabindex="-1" role="dialog" aria-labelledby="compliantsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="compliantsModalLabel">Complaint</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCrmComplaintBtn" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form  id="crm_lead_complaint_form">
+                    @csrf
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <div class="col-form-label">
+                                <button type="button" class="profileDrop" id="search_contacts">Search Contacts</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Customer<span class="radStar ">*</span></label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="complaint_customer_id" id="complaint_customer_id">
+                                @foreach($customer as $value)
+                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Contact </label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="comaplint_contact" id="comaplint_contact" class="notes_contact">
+                                
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="#!" class="formicon" id="contact_add" class="contact_add"><i class="fa-solid fa-square-plus"></i></a>
+                        </div>
+
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
+                        <div class="col-sm-8">
+                            <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
+                            <select class="form-control editInput" name="crm_section_type_id" id="lead_complaint_crm">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="#!" class="formicon" id="openCrmTypeModelComplaints"><i class="fa-solid fa-square-plus"></i></a>
+                        </div>
+
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
+                        <div class="col-sm-9">
+                            <div class="col-form-label">
+                                <div id="complaintEditor">
+                                </div>
+                                <textarea name="compliant" id="CRMComplaint" style="display: none;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2 row">
+                        <label for="" class="col-sm-3 col-form-label">Notify? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="notify" id="notify_complaint1" value="0" checked>
+                            <label class="form-check-label editInput" for="notify_complaint1"> No </label>
+                            <input class="form-check-input" type="radio" name="notify" id="notify_complaint2" value="1">
+                            <label class="form-check-label editInput" for="notify_complaint2"> Yes </label>
+                        </div>
+                    </div>
+                    <div id="notification_complaint_div">
+                        <div class="mb-2 row">
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <div class="col-sm-9">
+                                <select name="user_id" class="form-control editInput" id="user_notifiy">
+                                    <option value=""></option>
+                                    @foreach($users as $value)
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <div class="col-sm-9">
+                                <label for="calls_complaint_who1" class="editInput">
+                                    <input type="checkbox" name="notification" id="calls_complaint_who1" value="1" checked> Notification (User Only)
+                                </label>
+                                <label for="calls_complaint_who2" class="editInput">
+                                    <input type="checkbox" name="sms" id="calls_complaint_who2" value="1"> SMS
+                                </label>
+                                <label for="calls_complaint_who3" class="editInput">
+                                    <input type="checkbox" name="email" id="calls_complaint_who3" value="1" checked> Email
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmComplaintBtn">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMLeadComplaint">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CRM Types Modal Complaint Start -->
+<div class="modal fade" id="crmTypeModelComplaint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="">
+                    @csrf
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control editInput" name="title" id="type_title_complaint" value="">
+                            <input type="hidden" class="form-control editInput" name="crm_section_complaint" id="crm_section_complaint" value="4">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
+                        <div class="col-sm-9">
+                            <input type="color" class="form-control editInput" name="colour_code" id="colour_code_complaint" value="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMTypesComplaint">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- CRM Types Modal Notes Start -->
 <div class="modal fade" id="crmTypeModelNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -1673,6 +1811,7 @@
             </div>
             <div class="modal-body">
                 <form action="" id="crm_section_type_form">
+                    @csrf
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
@@ -1821,7 +1960,7 @@
 <!-- CRM Add Email Modal End -->
   <!--  Modal start here -->
   <div class="modal fade" id="task_type_modal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog">
             <div class="modal-content add_Customer">
                 <div class="modal-header">
                     <h5 class="modal-title" id="customerModalLabel">Task Type - Add</h5>
@@ -1833,7 +1972,7 @@
                     <div class="alert alert-success text-center success_message" style="display:none;height:50px">
                         <p id="message"></p>
                     </div>
-                        <div class="col-md-6 col-lg-6 col-xl-6">
+                        <div class="col-md-6 col-lg-12 col-xl-12">
                             <div class="formDtail">
                                 <form id="task_type_form_data" class="customerForm">
                                     <input type="hidden" name="id" id="id">
@@ -2209,11 +2348,13 @@ $('.delete_checkbox').on('click', function() {
                     console.log(data)
                     $('.customer_name').text(data.customer.name);
                     $("#notes_customer_id").val(data.customer.id);
+                    $("#complaint_customer_id").val(data.customer.id);
                     // 
                     var selectHTML='';
                     $.each(data.contact, function(index, contact) {
                             selectHTML += '<option value="' + contact.id + '">' + contact.contact_name + '</option>';
                             $("#notes_contact").html(selectHTML);
+                            $("#comaplint_contact").html(selectHTML);
                         });
                 },
                 error: function(xhr, status, error) {
@@ -2548,18 +2689,29 @@ job_input.addEventListener('input', function() {
             getCRMTypeData();
             $('#NewNotesModel').modal('show');
         }
+        const openComplaintsModel = document.getElementById('openComplaintsModel');
+        const compliantsModal = document.getElementById('compliantsModal');
+        openComplaintsModel.onclick = function() {
+            getCRMTypeData();
+            $('#compliantsModal').modal('show');
+        }
          // CRM Section Type ADD model in Complaints Js Start for model  show
          const openCrmTypeModelNotes = document.getElementById('openCrmTypeModelNotes');
         const crmTypeModelNotes = document.getElementById('crmTypeModelNotes');
         openCrmTypeModelNotes.onclick = function() {
             $('#crmTypeModelNotes').modal('show');
         }
+        const openCrmTypeModelComplaints = document.getElementById('openCrmTypeModelComplaints');
+        const crmTypeModelComplaint = document.getElementById('crmTypeModelComplaint');
+        openCrmTypeModelComplaints.onclick = function() {
+            $('#crmTypeModelComplaint').modal('show');
+        }
 
         $(".job_title_modal").on('click', function(){
             $("#job_title_form")[0].reset();
             $("#job_modaltitle").modal('show');
         });
-        $("#contact_add").on('click', function(){
+        $(".contact_add").on('click', function(){
             $('#contact_modal').modal('show');
         });
         
@@ -2573,9 +2725,9 @@ job_input.addEventListener('input', function() {
                 const lead_notes_crm = document.getElementById('lead_notes_crm');
                 const lead_complaint_crm = document.getElementById('lead_complaint_crm');
 
-                // selectElement.innerHTML = '';
-                // lead_notes_crm.innerHTML = '';
-                // lead_complaint_crm.innerHTML = '';
+                selectElement.innerHTML = '';
+                lead_notes_crm.innerHTML = '';
+                lead_complaint_crm.innerHTML = '';
 
                 response.Data.forEach(index => {
                     const option = document.createElement('option');
@@ -2935,15 +3087,57 @@ job_input.addEventListener('input', function() {
                 var formData = $('#crm_lead_complaint_form').serialize();
                 // console.log(formData);
                 $.ajax({
-                    url: '{{ route("lead.ajax.saveCRMLeadComplaint") }}',
+                    url: '{{ url("save_crm_customer_complaints") }}',
                     method: 'POST',
                     data: formData,
                     // processData: false,  
                     // contentType: false,  
                     success: function(response) {
-                        alert(response.message);
-                        getComplaintDataAjax();
-                        // $('#compliantsModal').modal('hide');
+                        console.log(response);
+                        
+                        if(response.vali_error){
+                            alert(response.vali_error);
+                            return false;
+                        }else if(response.success){
+                            const responseData = response.data; 
+                            const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
+                            var visibilityCell = '';
+
+                            if (responseData.customer_visibility == "0") {
+                                visibilityCell += '<span class="grayCheck" onclick="customer_visibility1('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            } else if (responseData.customer_visibility == "1") {
+                                visibilityCell += '<span class="grencheck" onclick="customer_visibility1('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            }
+                            var contact;
+                            if(responseData.contact == ''){
+                                contact=responseData.customer_name;
+                            }else{
+                                contact=responseData.contact;
+                            }
+
+                            var html = '<tr>' +
+                                '<td>' + date + '</td>' +
+                                '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                                '<td>' + contact + '</td>' +  
+                                '<td>'+ responseData.type +'</td>' +        
+                                '<td></td>' +        
+                                '<td>' + responseData.notes + '</td>' +
+                                '<td id="visible_complaint'+responseData.id+'">' + visibilityCell + '</td>' +
+                                '<td><i class="fa fa-phone"></i> ' +
+                                '<i class="fa fa-envelope"></i> ' +
+                                '<i class="fa fa-list-ul"></i> ' +
+                                '<i class="fa fa-file"></i> ' +
+                                '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                                '</tr>';
+                            $("#crm_customer_complaint").append(html);
+                            $("#notification_complaint_div").hide();
+                            $('#compliantsModal').modal('hide');
+                            $('#notify_complaint1').prop('checked',true);
+
+                            editor.setData('');
+                        } else {
+                            alert("Something went wrong");
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -3058,16 +3252,49 @@ job_input.addEventListener('input', function() {
             var title = $('#type_title_notes').val();
             var colourCode = $('#colour_code_notes').val();
             var crmSection = $('#crm_section_notes').val();
-
+            var token='<?php echo csrf_token();?>'
             var formData = {
                 title: title,
                 colour_code: colourCode,
-                crm_section: crmSection
+                crm_section: crmSection,
+                _token:token
             };
             console.log(formData);
             addCRMTypes(formData, 3);
         });
+        $('#saveCRMTypesComplaint').on('click', function() {
+            var title = $('#type_title_complaint').val();
+            var colourCode = $('#colour_code_complaint').val();
+            var crmSection = $('#crm_section_complaint').val();
+            var token='<?php echo csrf_token();?>'
+            var formData = {
+                title: title,
+                colour_code: colourCode,
+                crm_section: crmSection,
+                _token:token
+            };
+            console.log(formData);
+            addCRMTypes(formData, 4);
+        });
+        // Ajax Call for saving CRM section Type
+        $('#saveCRMTypes').on('click', function() {
+            var formData = $('#crm_section_type_form').serialize();
+            $.ajax({
+                url: '{{ route("lead.ajax.saveCRMSectionType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#crmTypeModel').modal('hide');
+                    getCRMTypeData();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
         function addCRMTypes(formData, type) {
+            // alert(type)
             $.ajax({
                 url: '{{ route("lead.ajax.saveCRMSectionType") }}',
                 method: 'POST',
@@ -3472,6 +3699,7 @@ job_input.addEventListener('input', function() {
             });
         }
     }
+    
     function save_contact(){
         var token='<?php echo csrf_token();?>'
         var default_billing; 
@@ -3515,10 +3743,47 @@ job_input.addEventListener('input', function() {
                     console.log(data);
                     $("#contact_modal").modal('hide');
                     $("#notes_contact").append(data);
+                    $("#comaplint_contact").append(data);
                 }
             });
         }
     }
+    function default_address(){
+        var check;
+        if ($('#contact_default_address').is(':checked')) {
+            check=1;
+        }else {
+            check=0;
+        }
+        var token='<?php echo csrf_token();?>'
+        var customer_id=$("#contact_customer_id").val();
+        if(customer_id == null || customer_id == ''){
+            alert("please select Customer");
+            $('#contact_default_address').prop('checked',false);
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "{{url('/default_address')}}",
+            data: {check:check,customer_id:customer_id,_token:token},
+            success: function(data) {
+                console.log(data);
+                if(check == 1){
+                    $("#contact_address").val(data.details.address);
+                    $("#contact_city").val(data.details.city);
+                    $("#contact_country_input").val(data.details.country);
+                    $("#contact_pincode").val(data.details.postal_code);
+                }else{
+                    $("#contact_address").val('');
+                    $("#contact_city").val('');
+                    $("#contact_country_input").val('');
+                    $("#contact_pincode").val('');
+                }
+                $("#contact_country_code").html(data.reslut);
+            }
+        });
+    }
+    
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor5-build-classic/ckeditor.js"></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
