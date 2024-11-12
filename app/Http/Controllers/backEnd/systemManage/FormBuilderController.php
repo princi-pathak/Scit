@@ -146,18 +146,17 @@ class FormBuilderController extends Controller
                 $form_reminder_day = $data['form_reminder_day'];
             }
 
-            if (isset($request->form_img)) {
-                $imageName = $request->form_img;
-            } else {
+            if (isset($request->form_image)) {
                 $image = $request->file('form_image');
-
-                // Create a unique file name
                 $imageName = time() . '.' . $image->extension();
 
                 // Move the file to the public/images directory
                 $image->move(public_path('images/formio'), $imageName);
+            } else {
+                $imageName = $request->form_img;
             }
 
+         
 
             if (!empty($form)) {
 
