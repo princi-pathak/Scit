@@ -23,6 +23,7 @@ use App\Models\Crm_customer_call;
 use App\Models\Crm_customer_task;
 use App\Models\Crm_customer_note;
 use App\Models\Crm_customer_email;
+use App\Models\CrmCustomerComplaint;
 use App\Models\Construction_currency;
 use App\Models\Construction_tax_rate;
 use App\Models\Constructor_customer_site;
@@ -795,6 +796,61 @@ class CustomerController extends Controller
             ];
         }
         return response()->json(['success' =>true,'data'=>$data]);
+    }
+    public function save_crm_customer_complaints(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'complaint_customer_id' => 'required',
+            'crm_section_type_id' => 'required',
+            'compliant' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        if ($request->notify == 1) {
+            $validator = Validator::make($request->all(), [
+                'user_id' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['vali_error' => $validator->errors()->first()]);
+            }
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
+            $notification = $sms = $email = null;
+        }
+        $values = [
+            'home_id' => Auth::user()->home_id,
+            'customer_id' => $request->complaint_customer_id,
+            'contact' => $request->comaplint_contact,
+            'crm_section_type_id' => $request->crm_section_type_id,
+            'notes' => $request->compliant,
+            'notify' => $request->notify,
+            'user_id' => $request->user_id,
+            'notification' => $notification,
+            'sms' => $sms,
+            'email' => $email,
+            'customer_visibility'=>0,
+        ];
+        
+        try{
+            $crm_customer_complaint = CrmCustomerComplaint::save_customer_complaint($values);
+            $task_type=CRMSectionType::find($crm_customer_complaint->crm_section_type_id);
+            $customer=Customer::find($crm_customer_complaint->customer_id);
+            $contact=Constructor_additional_contact::find($crm_customer_complaint->contact);
+            $data=$crm_customer_complaint;
+            $data['type']=$task_type->title;
+            $data['customer_name']=$customer->name;
+            $data['contact']=$customer->contact_name ?? "";
+            return response()->json(['success' =>true,'data'=>$data]);
+        }catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
    
 }
