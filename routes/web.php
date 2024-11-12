@@ -519,6 +519,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/item/add_product_category','saveProductCategoryData')->name('item.saveProductCategoryData');
 		Route::post('/item/change_product_category_status','changeProductCategoryStatus')->name('item.changeProductCategoryStatus');
 		Route::post('/item/delete_product_category','deleteProductCategory')->name('item.delete_product_category');
+		Route::get('/item/get_product_categories','getCategoriesList')->name('item.ajax.getCategoriesList');
+
 	});
 	Route::controller(ProductController::class)->group(function(){
 		Route::get('/item/products','productlist')->name('item.products');
@@ -536,6 +538,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/item/getproductimage','getproductimage')->name('item.getproductimage');
 		Route::post('/item/saveproductimages','saveproductimages')->name('item.saveproductimages');
 		Route::post('/item/deleteproductimage','deleteproductimage')->name('item.deleteproductimage');
+		Route::post('/item/getProductList','getProductList')->name('item.ajax.getProductList');
+		
 	});
 
 

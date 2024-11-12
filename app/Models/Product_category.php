@@ -79,8 +79,12 @@ class Product_category extends Model
 
     public static function deleteProductCategory(array $productCategoryID)
     {
-        $productCategory = self::whereIn('id', $productCategoryID)->update(['deleted_at' => now()]);
+        return self::whereIn('id', $productCategoryID)->update(['deleted_at' => now()]);
         //$productCategory->deleted_at = date('Y-m-d H:i:s');
-        return $productCategory;
+         
+    }
+
+    public static function getProductCategory($home_id){
+        return self::where('status', 1)->where('deleted_at', null)->where('home_id', $home_id)->get();
     }
 }
