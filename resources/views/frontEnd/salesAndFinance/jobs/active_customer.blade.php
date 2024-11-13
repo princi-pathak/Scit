@@ -72,6 +72,25 @@
     color: #D1822B;
 }
 
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+.pagination li {
+    margin: 0 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+}
+.pagination .active {
+    background-color: #007bff;
+    color: white;
+}
+.pagination li:hover {
+    background-color: #f0f0f0;
+}
+    
 @keyframes showItem {
     0% {
         opacity: 0;
@@ -632,6 +651,9 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link " id="pills-complaints-tab" data-bs-toggle="pill" data-bs-target="#pills-complaints" type="button" role="tab" aria-controls="pills-complaints" aria-selected="false">Complaints</button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link " id="pills-contacts-tab" data-bs-toggle="pill" data-bs-target="#pills-contacts" type="button" role="tab" aria-controls="pills-contacts" aria-selected="false">Contacts</button>
+                    </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-fullHistory" role="tabpanel" aria-labelledby="pills-fullHistory-tab" tabindex="0">
@@ -660,7 +682,7 @@
                                                     <th>Customer Visible</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="crm_customer_all_data">
                                                 <tr>
                                                     <td></td>
                                                     <td> </td>
@@ -672,6 +694,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <ul class="pagination" id="pagination"></ul>
                                     </div>
                                 </div>
                             </div>
@@ -1380,6 +1403,47 @@
                                                 
                                             </tbody>
                                         </table>
+                                        <div id="pagination-controls"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="tab-pane fade" id="pills-contacts" role="tabpanel" aria-labelledby="pills-contacts-tab" tabindex="0">
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Contacts</label>
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <div class="jobsection mt-3">
+                                        <a href="#" class="profileDrop p-2 crmNewBtn contact_add" id="openContactsModel"> New</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form class="searchForm" action="">
+                                        <div class="input-group mb-3  mt-3">
+                                            <input type="text" class="form-control editInput" placeholder="Keyword to search" name="email">
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="crmLeadComplaintsTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>By</th>
+                                                    <th>Contact</th>
+                                                    <th>Type</th>
+                                                    <th>Note(s)</th>
+                                                    <th>Customer Visible</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="crm_customer_contact">
+                                                
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -1519,7 +1583,7 @@
                         <label for="type_title" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
                             <div class="col-form-label">
-                                <button type="button" class="profileDrop" id="search_contacts">Search Contacts</button>
+                                <button type="button" class="profileDrop search_contacts" id="search_contacts">Search Contacts</button>
                             </div>
                         </div>
                     </div>
@@ -1541,7 +1605,7 @@
                             </select>
                         </div>
                         <div class="col-sm-1">
-                            <a href="#!" class="formicon" id="contact_add" class="contact_add"><i class="fa-solid fa-square-plus"></i></a>
+                            <a href="#!" class="formicon contact_add" id="contact_add"><i class="fa-solid fa-square-plus"></i></a>
                         </div>
 
                     </div>
@@ -1636,7 +1700,7 @@
                         <label for="type_title" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
                             <div class="col-form-label">
-                                <button type="button" class="profileDrop" id="search_contacts">Search Contacts</button>
+                                <button type="button" class="profileDrop search_contacts" id="search_contacts1">Search Contacts</button>
                             </div>
                         </div>
                     </div>
@@ -1658,7 +1722,7 @@
                             </select>
                         </div>
                         <div class="col-sm-1">
-                            <a href="#!" class="formicon" id="contact_add" class="contact_add"><i class="fa-solid fa-square-plus"></i></a>
+                            <a href="#!" class="formicon contact_add" id="contact_add1"><i class="fa-solid fa-square-plus"></i></a>
                         </div>
 
                     </div>
@@ -2013,7 +2077,226 @@
         </div>
     </div>
                     <!-- end here -->
-    <!-- Contact Modal start here -->
+    
+        
+      <!-- Search Modal start here -->
+      <div class="modal fade" id="search_contactsModal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thirdModalLabel">All Contacts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body crmModelCont pt-2">
+                    <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-search_customers-tab" data-bs-toggle="pill" data-bs-target="#pills-search_customers" type="button" role="tab" aria-controls="pills-search_customers" aria-selected="true">Customers</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link " id="pills-search_suppliers-tab" data-bs-toggle="pill" data-bs-target="#pills-search_suppliers" type="button" role="tab" aria-controls="pills-search_suppliers" aria-selected="false">Suppliers</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link " id="pills-search_users-tab" data-bs-toggle="pill" data-bs-target="#pills-search_users" type="button" role="tab" aria-controls="pills-search_users" aria-selected="false">Users</button>
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-search_customers" role="tabpanel" aria-labelledby="pills-search_customers-tab" tabindex="0">
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Customer Contacts</label>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    Search:
+                                    <div class="jobsection  mt-3">
+                                        <select name="" class="form-control editInput" id="">
+                                            <option value="1">All</option>
+                                            <option value="2">Customer Related</option>
+                                            <option value="3">Quote Related</option>
+                                            <option value="4">Job Related</option>
+                                            <option value="5">Invoice Related</option>
+                                                                                
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    <form class="searchForm" action="">
+                                        <div class="input-group mb-3 mt-3">
+                                            <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="col-form-label">
+                                        <button type="button" class="profileDrop contact_add" id="search_contacts">Add Contact</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="CRMFullHistoryData">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Company</th>
+                                                    <th>Contact Name</th>
+                                                    <th>Full Name</th>
+                                                    <th>Email Address</th>
+                                                    <th>Telephone</th>
+                                                    <th>Mobile</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="customer_contact_list">
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-search_suppliers" role="tabpanel" aria-labelledby="pills-search_suppliers-tab" tabindex="0">
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Supplier Contacts</label>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    Search:
+                                    <div class="jobsection  mt-3">
+                                        <select name="" class="form-control editInput" id="">
+                                            <option value="1">All</option>
+                                            <option value="2">Customer Related</option>
+                                            <option value="3">Quote Related</option>
+                                            <option value="4">Job Related</option>
+                                            <option value="5">Invoice Related</option>
+                                                                                
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    <form class="searchForm" action="">
+                                        <div class="input-group mb-3 mt-3">
+                                            <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="col-form-label">
+                                        <button type="button" class="profileDrop search_contacts" id="search_contacts">Add Contact</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="CRMFullHistoryData">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Company</th>
+                                                    <th>Contact Name</th>
+                                                    <th>Full Name</th>
+                                                    <th>Email Address</th>
+                                                    <th>Telephone</th>
+                                                    <th>Mobile</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="supplier_contact_list">
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-search_users" role="tabpanel" aria-labelledby="pills-search_users-tab" tabindex="0">
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">User Contacts</label>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    Search:
+                                    <div class="jobsection  mt-3">
+                                        <select name="" class="form-control editInput" id="">
+                                            <option value="1">All</option>
+                                            <option value="2">Customer Related</option>
+                                            <option value="3">Quote Related</option>
+                                            <option value="4">Job Related</option>
+                                            <option value="5">Invoice Related</option>
+                                                                                
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    <form class="searchForm" action="">
+                                        <div class="input-group mb-3 mt-3">
+                                            <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="col-form-label">
+                                        <button type="button" class="profileDrop search_contacts" id="search_contacts">Add Contact</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="CRMFullHistoryData">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Company</th>
+                                                    <th>Contact Name</th>
+                                                    <th>Full Name</th>
+                                                    <th>Email Address</th>
+                                                    <th>Telephone</th>
+                                                    <th>Mobile</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="user_contact_list">
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+      <!-- end here -->
+       <!-- Contact Modal start here -->
     <div class="modal fade" id="contact_modal" tabindex="-1" aria-labelledby="customerModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-xl">
@@ -2213,7 +2496,7 @@
                 </div>
             </div>
         <!-- end here -->
-         <!-- Job title Modal start -->
+          <!-- Job title Modal start -->
      <div class="modal fade" id="job_modaltitle" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content add_Customer">
@@ -2336,6 +2619,8 @@ $('.delete_checkbox').on('click', function() {
             get_all_crm_customer_email(id);
             get_all_crm_customer_task(id);
             get_all_crm_customer_note(id);
+            get_all_crm_customer_complaint(id,pageUrl = '{{ url("get_all_crm_customer_complaint") }}');
+            get_all_crm_customer_contacts(id);
         }
     }
     function get_customer_details(id){
@@ -2681,6 +2966,11 @@ job_input.addEventListener('input', function() {
         $('#openThirdModal2').on('click', function() {
             $('#task_type_modal').modal('show');
         });
+        $('.search_contacts').on('click', function(){
+            var id=$('.customer_id').val();
+            GetCustomerWithAlldetails(id);
+            $("#search_contactsModal").modal('show');
+        })
 
         // Notes model show and hide
         const openNotesModel = document.getElementById('openNotesModel');
@@ -3112,16 +3402,21 @@ job_input.addEventListener('input', function() {
                             if(responseData.contact == ''){
                                 contact=responseData.customer_name;
                             }else{
-                                contact=responseData.contact;
+                                contact=responseData.customer_name+'<br><b>Contact:</b>'+responseData.contact;
                             }
-
+                            let notify='';
+                            if(responseData.notify == 1){
+                                notify += '<br><b>Notify:</b> <?php echo Auth::user()->name; ?><br><b>Send As:</b> ' + (responseData.sms == 1 ? "SMS," : "") + (responseData.notification == 1 ? " Notification," : "") + (responseData.email == 1 ? " Email" : "");
+                            }else{
+                                notify='';
+                            }
                             var html = '<tr>' +
                                 '<td>' + date + '</td>' +
                                 '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
                                 '<td>' + contact + '</td>' +  
                                 '<td>'+ responseData.type +'</td>' +        
                                 '<td></td>' +        
-                                '<td>' + responseData.notes + '</td>' +
+                                '<td>' + responseData.notes + notify+'</td>' +
                                 '<td id="visible_complaint'+responseData.id+'">' + visibilityCell + '</td>' +
                                 '<td><i class="fa fa-phone"></i> ' +
                                 '<i class="fa fa-envelope"></i> ' +
@@ -3359,6 +3654,7 @@ job_input.addEventListener('input', function() {
                     '</tr>';
 
                     // Append each row to the table body
+                    full_history(data);
                     tableBody.append(html);
                 });
             },
@@ -3508,6 +3804,126 @@ job_input.addEventListener('input', function() {
                         '</tr>';
 
                     // Append each row to the table body
+                    tableBody.append(html);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+    function get_all_crm_customer_complaint(id,pageUrl = '{{ url("get_all_crm_customer_complaint") }}'){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {
+                id: id,_token:token
+            },
+            success: function(response) {
+                console.log(response);
+                var data = response.data;
+                var pagination = response.pagination;
+                var tableBody = $("#crm_customer_complaint"); 
+                tableBody.empty();
+                
+                data.forEach(function(item) {
+                    var date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+                    
+                    var visibilityCell = '';
+                    if (item.customer_visibility === 0) {
+                        visibilityCell = '<span class="grayCheck" onclick="customer_visibility1('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    } else if (item.customer_visibility === 1) {
+                        visibilityCell = '<span class="grencheck" onclick="customer_visibility1('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    }
+                    
+                    var contact = item.contact === '' ? item.customer_name : item.customer_name + '<br><b>Contact:</b>' + item.contact;
+                    
+                    let notify = '';
+                    if (item.notify == 1) {
+                        notify += '<br><b>Notify:</b> <?php echo Auth::user()->name; ?><br><b>Send As:</b> ' 
+                                + (item.sms == 1 ? "SMS," : "") 
+                                + (item.notification == 1 ? " Notification," : "") 
+                                + (item.email == 1 ? " Email" : "");
+                    }
+
+                    var html = '<tr>' +
+                        '<td>' + date + '</td>' +
+                        '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                        '<td>' + contact + '</td>' +  
+                        '<td>' + item.type + '</td>' +        
+                        '<td></td>' +        
+                        '<td>' + item.notes + notify + '</td>' +
+                        '<td id="visible_complaint' + item.id + '">' + visibilityCell + '</td>' +
+                        '<td><i class="fa fa-phone"></i> ' +
+                        '<i class="fa fa-envelope"></i> ' +
+                        '<i class="fa fa-list-ul"></i> ' +
+                        '<i class="fa fa-file"></i> ' +
+                        '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                        '</tr>';
+                    
+                    tableBody.append(html);
+                });
+
+                var paginationControls = $("#pagination-controls");
+                paginationControls.empty();
+                if (pagination.prev_page_url) {
+                    paginationControls.append('<button class="profileDrop" onclick="get_all_crm_customer_complaint(' + id + ', \'' + pagination.prev_page_url + '\')">Previous</button>');
+                }
+                if (pagination.next_page_url) {
+                    paginationControls.append('<button class="profileDrop" onclick="get_all_crm_customer_complaint(' + id + ', \'' + pagination.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+    function get_all_crm_customer_contacts(id){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: '{{ url("get_all_crm_customer_contacts") }}',
+            method: 'POST',
+            data: {
+                id: id,_token:token
+            },
+            success: function(response) {
+                console.log(response);
+                var data = response.data;
+                var tableBody = $("#crm_customer_contact"); 
+                tableBody.empty();
+                
+                data.forEach(function(item) {
+                    
+                    var date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+                    
+              
+                    var visibilityCell = '';
+                    if (item.customer_visibility === 0) {
+                        visibilityCell = '<span class="grayCheck" onclick="customer_visibility1('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    } else if (item.customer_visibility === 1) {
+                        visibilityCell = '<span class="grencheck" onclick="customer_visibility1('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    }
+                    var contact;
+                    if(item.contact == ''){
+                        contact=item.customer_name;
+                    }else{
+                        contact=item.contact;
+                    }
+
+                    var html = '<tr>' +
+                        '<td>' + date + '</td>' +
+                        '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                        '<td>' + contact + '</td>' +       
+                        '<td></td>' +        
+                        '<td></td>' +
+                        '<td>' + visibilityCell + '</td>' +
+                        '<td><i class="fa fa-phone"></i> ' +
+                        '<i class="fa fa-envelope"></i> ' +
+                        '<i class="fa fa-list-ul"></i> ' +
+                        '<i class="fa fa-file"></i> ' +
+                        '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                        '</tr>';
                     tableBody.append(html);
                 });
             },
@@ -3744,6 +4160,7 @@ job_input.addEventListener('input', function() {
                     $("#contact_modal").modal('hide');
                     $("#notes_contact").append(data);
                     $("#comaplint_contact").append(data);
+                    get_all_crm_customer_contacts(customer_id);
                 }
             });
         }
@@ -3783,7 +4200,111 @@ job_input.addEventListener('input', function() {
             }
         });
     }
+    function GetCustomerWithAlldetails(id){
+        var customer_id = id;
+        var token = '<?php echo csrf_token(); ?>'
+        $.ajax({
+            type: "POST",
+            url: "{{url('get_customer_details_front')}}",
+            data: {
+                customer_id: customer_id,
+                _token: token
+            },
+            success: function(data) {
+                console.log(data);
+                
+                if (data.customers && data.customers.length > 0) {
+                var customerData = data.customers[0];
+
+                // Populate contact options
+                var contact = '';
+                if (customerData.additional_contact && Array.isArray(customerData.additional_contact)) {
+                    for (let i = 0; i < customerData.additional_contact.length; i++) {
+                        contact += '<tr><td>CUSTOMER</td><td>' + customerData.name + '</td><td>' + customerData.name + '</td><td>' + (customerData.additional_contact[i].contact_name ?? "") + '</td><td>' + (customerData.additional_contact[i].email ?? "") + '</td><td>' + (customerData.additional_contact[i].telephone ?? "") + '</td><td>' + (customerData.additional_contact[i].mobile ?? "") + '</td></tr>';
+                    }
+                }
+                document.getElementById('customer_contact_list').innerHTML = contact;
+            }
+
+
+
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+    function full_history(data) {
+    var tableBody = $("#crm_customer_all_data");
+    const itemsPerPage = 10;
+    let currentPage = 1;
+
     
+    function displayData(page) {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const itemsToShow = data.slice(startIndex, endIndex);
+
+        tableBody.empty();
+
+        itemsToShow.forEach(function(item) {
+            var date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+
+            var visibilityCell = '';
+            if (item.customer_visibility === 0) {
+                visibilityCell = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+            } else if (item.customer_visibility === 1) {
+                visibilityCell = '<span class="greenCheck"><i class="fa-solid fa-circle-check"></i></span>';
+            }
+
+            var html = '<tr>' +
+                '<td>' + date + '</td>' +
+                '<td>' + '<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>' + '</td>' +
+                '<td>' + (item.telephone || '-') + '</td>' +
+                '<td>' + (item.type || '-') + '</td>' +
+                '<td>' + (item.notes || '-') + '</td>' +
+                '<td>' + visibilityCell + '</td>' +
+                '<td>' +
+                    '<i class="fa fa-phone"></i> ' +
+                    '<i class="fa fa-envelope"></i> ' +
+                    '<i class="fa fa-list-ul"></i> ' +
+                    '<i class="fa fa-file"></i> ' +
+                    '<i class="fa fa-exclamation-triangle"></i>' +
+                '</td>' +
+            '</tr>';
+
+            tableBody.append(html);
+        });
+    }
+
+    function setupPagination() {
+        const pageCount = Math.ceil(data.length / itemsPerPage);
+        const pagination = $("#pagination");
+        pagination.empty();
+
+        for (let i = 1; i <= pageCount; i++) {
+            const pageItem = $('<li>').text(i);
+            pageItem.on('click', function() {
+                currentPage = i;
+                displayData(currentPage);
+                updatePagination();
+            });
+            pagination.append(pageItem);
+        }
+
+        updatePagination();
+    }
+
+    function updatePagination() {
+        const pageItems = $(".pagination li");
+        pageItems.removeClass('active');
+        pageItems.eq(currentPage - 1).addClass('active');
+    }
+
+    displayData(currentPage);
+    setupPagination();
+}
+
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor5-build-classic/ckeditor.js"></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
