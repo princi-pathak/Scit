@@ -301,7 +301,7 @@ $access_rights = explode(',', $rights);
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="{{ url('/item/product_categories') }}" class="dropdown-item">Product Categories</a>
                                     <a href="{{ url('/item/products') }}" class="dropdown-item">Products</a>
-                                    <a href="#!" class="dropdown-item">Product Groups</a>
+                                    <a href="{{ url('/item/item-groups') }}" class="dropdown-item">Product Groups</a>
                                     <a href="#!" class="dropdown-item">Catalogues</a>
                                 </div>
                             </div>
