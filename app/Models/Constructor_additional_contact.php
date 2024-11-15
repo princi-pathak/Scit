@@ -36,6 +36,6 @@ class Constructor_additional_contact extends Model
         return $insert->id;
     }
     public static function getAllcrmContacts($id){
-        return self::where('customer_id',$id)->get();
+        return self::where('customer_id',$id);
     }
 }
