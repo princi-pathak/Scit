@@ -1,4 +1,5 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="container-fluid">
     <div class="row">
@@ -160,11 +161,12 @@
             </div>
             <div class="modal-body ">
                 <div class="contantbodypopup p-0">
+                    <div class="error-message" id="error-message"></div>
                     <form action="" id="add_product_group_form">
-                        <div class="row">
+                        <div class="row pt-3">
                             <div class="col-lg-6">
                                 <div class="mb-2 row">
-                                    <label for="inputCity" class="col-sm-4 col-form-label">Product Group*</label>
+                                    <label for="inputCity" class="col-sm-4 col-form-label">Product Group<span class="radStar">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control editInput" name="name" id="inputCity" value="">
                                     </div>
@@ -195,13 +197,13 @@
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Cost Price</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="cost_price" id="inputCity" value="0.00">
+                                        <input type="text" class="form-control editInput" name="cost_price" id="inputCity" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Price</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" id="inputCity" value="0.00">
+                                        <input type="text" class="form-control editInput" id="price" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
                                     </div>
                                 </div>
                             </div>
@@ -210,7 +212,7 @@
                                 <div class="mb-3 row">
                                     <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                                        <input type="text" class="form-control editInput" id="" placeholder="Type to add product">
                                     </div>
                                     <div class="col-sm-7">
                                         <div class="plusandText">
@@ -260,13 +262,13 @@
 </div>
 
 <script>
-        function saveProductGroup() {
+    function saveProductGroup() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        FormData = $('#add_product_group_form').seralize();
+        FormData = $('#add_product_group_form').serialize();
         $.ajax({
             url: '{{ route("item.ajax.saveProductGroup") }}',
             method: 'Post',
@@ -276,11 +278,21 @@
             },
             error: function(xhr, status, error) {
                 console.error(error);
+                if (xhr.status === 422) {
+                    // Get the errors object from the response
+                    const errors = xhr.responseJSON.errors;
+
+                    // Extract the first error message
+                    const firstErrorKey = Object.keys(errors)[0];
+                    const firstErrorMessage = errors[firstErrorKey][0];
+
+                    document.getElementById('error-message').style.display = 'block'
+                    // Display the first error message to the user
+                    $('#error-message').text(firstErrorMessage).show(); // Assuming you have an element with ID 'error-message'
+                }
             }
         });
     }
 </script>
-
-
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

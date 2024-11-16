@@ -373,20 +373,25 @@ if (isset($form)) {
                                     <form class="form-horizontal" id="" method="post" action="{{ $action }}" enctype="multipart/form-data">
                                     
                                         <div class="form-group">
-                                            <label class="col-lg-2 control-label mrtp70">Select an image to upload </label>
+                                            <!-- <label class="col-lg-2 control-label mrtp70">Select an image to upload </label>
                                             <div class="col-lg-6">
                                                 <input type="file" class="form-control mrtp80" id="image" name="form_image">
+                                            </div> -->
+
+                                            <label class="col-lg-2 control-label">Check if image upload </label>
+                                            <div class="col-lg-6">
+                                                <input type="checkbox" class="" id="image" value="1" {{ isset($form->is_image) && $form->is_image == 1 ? 'checked' : '' }} name="is_imageUpload">
                                             </div>
 
                                             @if(isset($form->image))
-                                                <div class="col-lg-4">
+                                                <!-- <div class="col-lg-4">
                                                     <div class="uploadPopImg"><img id="preview" class="my-2" src="{{ url('public/images/formio/'. $form->image)}}" width="100px"></div>
                                                     <input type="hidden" class="form-control mrtp80" id="form_img" name="form_img" value="{{ $form->image }}">
-                                                </div>
+                                                </div> -->
                                             @else
-                                                <div class="col-lg-4">
+                                                <!-- <div class="col-lg-4">
                                                     <div class="uploadPopImg"><img id="preview" class="my-2" src="" width="100px"></div>
-                                                </div>
+                                                </div> -->
                                             @endif
 
                                         </div>
@@ -524,48 +529,6 @@ if (isset($form)) {
     });
 </script>
 
-<script>
-  var imgfile = "0";
-  document.getElementById('image').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      console.log(file.lastModified);
-      console.log(file);
-      if (!file) return;
-
-      const img = new Image();
-      const objectURL = URL.createObjectURL(file);
-      img.src = objectURL;
-      
-      img.onload = function() {
-        const width = img.naturalWidth;
-        const height = img.naturalHeight;
-        const aspectRatio = width / height;
-        const validImageTypes = ['image/jpeg','image/jpg', 'image/png', 'image/gif'];
-        if (!validImageTypes.includes(file.type)) {
-          //messageDiv.textContent = 'Invalid file type. Please upload a JPEG, PNG, or GIF image.';
-          //return;
-          const fileInput = document.getElementById('image');
-          fileInput.value = '';
-          document.getElementById('image_error').textContent = "Invalid file type. Please upload a JPG, JPEG, PNG, or GIF image.";
-          document.getElementById('preview').style.display = 'none';
-          // Clean up if the ratio is invalid
-          URL.revokeObjectURL(objectURL);
-          imgfile="1";
-        }else{
-          document.getElementById('preview').src = objectURL;
-          document.getElementById('preview').style.display = 'block';
-          document.getElementById('image_error').style.display = 'none';
-          imgfile="0";
-        }
-          
-      };
-
-      img.onerror = function() {
-          document.getElementById('image_error').textContent = 'Failed to load image.';
-          document.getElementById('preview').style.display = 'none';
-      };
-  });
-</script>
 
 
 @endsection

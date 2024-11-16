@@ -1,17 +1,16 @@
-<?php 
+<?php
 
-    
 
-    // $alert_dynamic_form = App\DynamicForm::alertDynamicForm();
 
-    //     echo "<pre>"; print_r($alert_dynamic_form); die;
+// $alert_dynamic_form = App\DynamicForm::alertDynamicForm();
+
+//     echo "<pre>"; print_r($alert_dynamic_form); die;
 
 ?>
 
 
 
 <style type="text/css">
-
     .header-dys {
 
         width: 60%;
@@ -26,7 +25,7 @@
 
     }
 
-    
+
 
     .select-dyslexia select {
 
@@ -36,15 +35,15 @@
 
 
 
-.form-group.has-feedback {
+    .form-group.has-feedback {
 
-padding: 0px 15px 10px 15px;    
+        padding: 0px 15px 10px 15px;
 
-}
+    }
 
 
 
-/* .col-form-label {
+    /* .col-form-label {
 
 width: 20%;
 
@@ -64,27 +63,32 @@ float: right;
 
 
 
-.sel_design_layout{
+    .sel_design_layout {
 
-    border: 1px solid #1f88b5;
+        border: 1px solid #1f88b5;
 
-    box-shadow: none;
+        box-shadow: none;
 
-    color: #fff;
+        color: #fff;
 
-    background: #1f88b5;
+        background: #1f88b5;
 
-}
+    }
 
 
 
-.top-nav img {
+    .top-nav img {
 
-    border: 2px solid #d9d9d9;
+        border: 2px solid #d9d9d9;
 
-    object-fit: cover;
+        object-fit: cover;
 
-}
+
+
+        
+    }
+
+
 
 
 
@@ -98,7 +102,7 @@ float: right;
 
         <button type="button" class="navbar-toggle hr-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 
-        <span class="fa fa-bars"></span>
+            <span class="fa fa-bars"></span>
 
         </button>
 
@@ -128,15 +132,13 @@ float: right;
 
                 <?php
 
-                    if(Auth::check()) {
+                if (Auth::check()) {
 
-                        $design_layout_id = Auth::user()->design_layout;
+                    $design_layout_id = Auth::user()->design_layout;
+                } else {
 
-                    } else {
-
-                        $design_layout_id = '0';
-
-                    }
+                    $design_layout_id = '0';
+                }
 
                 ?>
 
@@ -144,9 +146,17 @@ float: right;
 
                     <select class="form-control sel_design_layout" name="design_layout_id">
 
-                        <option value="0" <?php if(isset($design_layout_id)) { if($design_layout_id == '0')  { echo "selected";  } } ?>>Normal</option>
+                        <option value="0" <?php if (isset($design_layout_id)) {
+                                                if ($design_layout_id == '0') {
+                                                    echo "selected";
+                                                }
+                                            } ?>>Normal</option>
 
-                        <option value="1" <?php if(isset($design_layout_id)) { if($design_layout_id == '1')  { echo "selected";  } } ?>>Dyslexia</option>
+                        <option value="1" <?php if (isset($design_layout_id)) {
+                                                if ($design_layout_id == '1') {
+                                                    echo "selected";
+                                                }
+                                            } ?>>Dyslexia</option>
 
                     </select>
 
@@ -166,19 +176,18 @@ float: right;
 
                             <?php
 
-                                $user_image = Auth::user()->image;
+                            $user_image = Auth::user()->image;
 
-                                if(empty($user_image)){
+                            if (empty($user_image)) {
 
-                                    $user_image = 'default_user.jpg';
+                                $user_image = 'default_user.jpg';
+                            }
 
-                                } 
+                            $current_path = Request::path();
 
-                                $current_path = Request::path();
+                            $user_id = Auth::user()->id;
 
-                                $user_id = Auth::user()->id;
-
-                            ?> 
+                            ?>
 
                             <img alt="" src="{{ userProfileImagePath.'/'.$user_image }}">
 
@@ -194,13 +203,13 @@ float: right;
 
                             @if(Auth::user()->user_type == 'A')
 
-                                <li><a href="{{ url('agent/welcome') }}"> <i class="fa fa-home"></i> Change Home </a></li>
+                            <li><a href="{{ url('agent/welcome') }}"> <i class="fa fa-home"></i> Change Home </a></li>
 
                             @endif
 
                             <li><a href="#" class="add_user"> <i class=" fa fa-user"></i> Add user </a></li>
 
-                            <li><a href="#dynmicFormModal" data-toggle="modal" > <i class="fa fa-bolt"></i> Forms  </a></li>
+                            <li><a href="#dynmicFormModal" data-toggle="modal"> <i class="fa fa-bolt"></i> Forms </a></li>
 
                             <li><a href="{{ url('/general-admin') }}"><i class="fa fa-cogs"></i> General Admin </a></li>
 
@@ -235,53 +244,48 @@ float: right;
 @include('frontEnd.common.handover_logbook')
 
 
-
 <script>
-
-    $(".add_user").click(function(){
+    $(".add_user").click(function() {
 
         $('#addServiceUserModal').modal('show');
 
     });
-
 </script>
 
 
 
 <script>
+    $(document).ready(function() {
 
-    $(document).ready(function(){
-
-        $(document).on('change','.sel_design_layout', function() {
-
+        $(document).on('change', '.sel_design_layout', function() {
 
 
-            var design_layout_id   = $('select[name=design_layout_id]').val();
 
-            var normal_layout_id   = "{{ url('/change-design-layout/0') }}";
+            var design_layout_id = $('select[name=design_layout_id]').val();
+
+            var normal_layout_id = "{{ url('/change-design-layout/0') }}";
 
             var dyslexia_layout_id = "{{ url('/change-design-layout/1') }}";
 
-            var no_layout_id       = "{{ url('/') }}";
+            var no_layout_id = "{{ url('/') }}";
 
-            if(design_layout_id == '0') {
+            if (design_layout_id == '0') {
 
-                location.href = normal_layout_id; 
+                location.href = normal_layout_id;
 
-            } else if(design_layout_id == '1') {
+            } else if (design_layout_id == '1') {
 
-                location.href = dyslexia_layout_id; 
+                location.href = dyslexia_layout_id;
 
             } else {
 
-                location.href = no_layout_id; 
+                location.href = no_layout_id;
 
             }
 
         });
 
     });
-
 </script>
 
 
@@ -289,12 +293,11 @@ float: right;
 
 
 <script type="text/javascript">
-
-    $(".hndovr_logbk").click(function(){
+    $(".hndovr_logbk").click(function() {
 
         $('.submt-srvc-user').click();
 
-    // $(document).on('click','.hndovr_logbk',function(){
+        // $(document).on('click','.hndovr_logbk',function(){
 
         // $('#ServiceUserlistModal').modal('show');
 
@@ -302,6 +305,52 @@ float: right;
 
     });
 
-   
+
+
 
 </script>
+
+<!-- <script>
+    var imgfile = "0";
+    document.getElementById('image').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        alert(file);
+        console.log(file.lastModified);
+        console.log(file);
+        if (!file) return;
+
+        const img = new Image();
+        const objectURL = URL.createObjectURL(file);
+        img.src = objectURL;
+
+        img.onload = function() {
+            const width = img.naturalWidth;
+            const height = img.naturalHeight;
+            const aspectRatio = width / height;
+            const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+            if (!validImageTypes.includes(file.type)) {
+                //messageDiv.textContent = 'Invalid file type. Please upload a JPEG, PNG, or GIF image.';
+                //return;
+                const fileInput = document.getElementById('image');
+                fileInput.value = '';
+                document.getElementById('image_error').textContent = "Invalid file type. Please upload a JPG, JPEG, PNG, or GIF image.";
+                document.getElementById('preview').style.display = 'none';
+                // Clean up if the ratio is invalid
+                URL.revokeObjectURL(objectURL);
+                imgfile = "1";
+            } else {
+                document.getElementById('preview').src = objectURL;
+                document.getElementById('preview').style.display = 'block';
+                document.getElementById('image_error').style.display = 'none';
+                imgfile = "0";
+            }
+
+        };
+
+        img.onerror = function() {
+            document.getElementById('image_error').textContent = 'Failed to load image.';
+            document.getElementById('preview').style.display = 'none';
+        };
+    });
+</script> -->
+

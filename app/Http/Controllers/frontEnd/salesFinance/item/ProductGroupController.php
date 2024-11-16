@@ -15,6 +15,7 @@ class ProductGroupController extends Controller
     }
 
     public function saveProductGroup(Request $request){
+
         $validator = Validator::make($request->all(), [
             'title' => 'required'
         ]);
@@ -22,11 +23,11 @@ class ProductGroupController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $saveData = ProductGroup::updateOrCreate(['id'=>$request->id ?? null],array_merge($request->all(), ['home_id' => Auth::user()->home_id]));
+        $saveData = ProductGroup:: saveProductGroup($request->all(), Auth::user()->home_id);
 
         return response()->json([
             'success' => (bool) $saveData,
-            'message' => $saveData ? 'Region added successfully.' :'Error in region add.'
+            'message' => $saveData ? 'Product group added successfully.' :'Product Group does not added.'
         ]);
     }
 }

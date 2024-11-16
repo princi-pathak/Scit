@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductGroup extends Model
 {
@@ -20,4 +22,8 @@ class ProductGroup extends Model
         'price',
         'status',
     ];
+
+    public static function saveProductGroup($data, $home_id){
+        return self::updateOrCreate(['id'=> $data->id ?? null],array_merge($data->all(), ['home_id' => $home_id]));
+    }
 }

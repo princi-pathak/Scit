@@ -248,15 +248,15 @@ function PrintDiv(th)
        var divContents = document.getElementById("formiotest").innerHTML;  
     
 
-    var inputField = document.getElementById("imageName");
-    if (inputField.value.trim() === "") {
-      var divContentImage = "";
-    } else {
-      var divContentImage = document.getElementById('formiotestimage').innerHTML;
-    }
+    // var inputField = document.getElementById("imageName");
+    // if (inputField.value.trim() === "") {
+    //   var divContentImage = "";
+    // } else {
+    //   var divContentImage = document.getElementById('formiotestimage').innerHTML;
+    // }
 
 
-       console.log(divContentImage);
+      //  console.log(divContentImage);
        var printWindow = window.open('', '', 'height=600,width=600');  
        printWindow.document.write('<html><head><title>Print DIV Content</title>'); 
       printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">'); 
@@ -269,8 +269,10 @@ function PrintDiv(th)
        printWindow.document.write('<img src="'+ finalpath +'" style="height:80px;">');     
        printWindow.document.write('<img src="{{url('/public/images/scits.png')}}" style="float:right;height:80px;">');
        printWindow.document.write('</div>');    
-       printWindow.document.write(divContents);  
-       printWindow.document.write(divContentImage);  
+       printWindow.document.write(divContents); 
+       printWindow.document.write("<canvas id='canv2' style='height: 80px; display :none'></canvas>"); 
+      
+      //  printWindow.document.write(divContentImage);  
        printWindow.document.write('</div>');
        printWindow.document.write('<div class="footer">'); 
        printWindow.document.write('<div class="footer-section-area">'); 

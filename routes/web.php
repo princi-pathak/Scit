@@ -631,7 +631,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	//not
 	Route::match(['get', 'post'], '/service/dynamic-forms', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@index');
-
+	Route::post('/saveFormDotIoImage', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@saveFormDotIoImage')->name('saveFormDotIoImage');
 	Route::post('/service/dynamic-form/save', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@save_form');
 	Route::post('/service/dynamic-form/edit', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@edit_form');
 	Route::post('/service/dynamic-form/view/pattern', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@view_form_pattern');
@@ -1517,6 +1517,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	//form-builder
 	Route::match(['get', 'post'], '/form-builder', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@index');
 	Route::match(['get', 'post'], '/form-builder/add', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@add');
+
+	
 	Route::match(['get', 'post'], '/form-builder/edit/{form_id}', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@edit');
 	Route::match(['get', 'post'], '/form-builder/delete/{form_id}', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@delete');
 
