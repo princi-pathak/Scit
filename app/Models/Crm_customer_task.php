@@ -18,6 +18,6 @@ class Crm_customer_task extends Model
         );
     }
     public static function getAllcrmTask($id){
-        return self::where('customer_id',$id)->get();
+        return self::where('customer_id',$id);
     }
 }

@@ -341,4 +341,15 @@ class ProductController extends Controller
             'data' => $data ? $data : 'No data.'
         ]);
     }
+
+    public function getProductCounts(){
+        $data['product'] = Product::getProductListCountType(1);
+        $data['service'] = Product::getProductListCountType(2);
+        $data['consumable'] = Product::getProductListCountType(3);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }   
 }

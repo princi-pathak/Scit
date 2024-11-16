@@ -19,6 +19,6 @@ class Crm_customer_email extends Model
     }
 
     public static function getAllcrmEmail($id){
-        return self::where('customer_id',$id)->get();
+        return self::where('customer_id',$id);
     }
 }

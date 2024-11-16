@@ -488,9 +488,9 @@ class CustomerController extends Controller
         }
     }
     public function get_all_crm_customer_call(Request $request){
-        $getAllcrmlist=Crm_customer_call::getAllcrmlist($request->id);
+        $getAllcrmlist_call=Crm_customer_call::getAllcrmlist($request->id)->orderBy('id', 'desc')->paginate(10);
         $data=array();
-        foreach($getAllcrmlist as $val){
+        foreach($getAllcrmlist_call as $val){
             $type=CRMSectionType::find($val->crm_type_id);
             $data[]=[
                 'customer_visibility'=>$val->customer_visibility,
@@ -499,7 +499,18 @@ class CustomerController extends Controller
                 'type'=>$type->title
             ];
         }
-        return response()->json(['success' =>true,'data'=>$data]);
+        // return response()->json(['success' =>true,'data'=>$data]);
+        return response()->json([
+            'success' => true, 'data' => $data, 
+            'pagination' => [
+                    'total' => $getAllcrmlist_call->total(),
+                    'current_page' => $getAllcrmlist_call->currentPage(),
+                    'last_page' => $getAllcrmlist_call->lastPage(),
+                    'per_page' => $getAllcrmlist_call->perPage(),
+                    'next_page_url' => $getAllcrmlist_call->nextPageUrl(),
+                    'prev_page_url' => $getAllcrmlist_call->previousPageUrl(),
+                ]
+        ]);
     }
     public function save_crm_customer_email(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -587,9 +598,9 @@ class CustomerController extends Controller
     }
     public function get_all_crm_customer_email(Request $request){
         // echo "<pre>";print_r($request->id);die;
-        $getAllcrmlist=Crm_customer_email::getAllcrmEmail($request->id);
+        $getAllcrmlistEmail=Crm_customer_email::getAllcrmEmail($request->id)->orderBy('id', 'desc')->paginate(10);
         $data=array();
-        foreach($getAllcrmlist as $val){
+        foreach($getAllcrmlistEmail as $val){
             $customer_detail=Customer::find($val->customer_id);
             $user_detail=User::find($val->to);
             $data[]=[
@@ -603,7 +614,18 @@ class CustomerController extends Controller
                 'send_email'=>$user_detail->email ?? "",
             ];
         }
-        return response()->json(['success' =>true,'data'=>$data]);
+        return response()->json([
+            'success' => true, 'data' => $data, 
+            'pagination' => [
+                    'total' => $getAllcrmlistEmail->total(),
+                    'current_page' => $getAllcrmlistEmail->currentPage(),
+                    'last_page' => $getAllcrmlistEmail->lastPage(),
+                    'per_page' => $getAllcrmlistEmail->perPage(),
+                    'next_page_url' => $getAllcrmlistEmail->nextPageUrl(),
+                    'prev_page_url' => $getAllcrmlistEmail->previousPageUrl(),
+                ]
+        ]);
+        // return response()->json(['success' =>true,'data'=>$data]);
     }
     public function visibility_change(Request $request){
         try{
@@ -688,10 +710,10 @@ class CustomerController extends Controller
         return $data;
     }
     public function get_all_crm_customer_task(Request $request){
-        $getAllcrmlist=Crm_customer_task::getAllcrmTask($request->id);
-        // echo "<pre>";print_r($getAllcrmlist);die;
+        $getAllcrmlistTask=Crm_customer_task::getAllcrmTask($request->id)->orderBy('id', 'desc')->paginate(10);
+        // echo "<pre>";print_r($getAllcrmlistTask);die;
         $data=array();
-        foreach($getAllcrmlist as $val){
+        foreach($getAllcrmlistTask as $val){
             $task_type=Task_type::find($val->task_type_id);
             $customer=Customer::find($val->customer_id);
             $data[]=[
@@ -717,7 +739,18 @@ class CustomerController extends Controller
                 'customer_name'=>$customer->name
             ];
         }
-        return response()->json(['success' =>true,'data'=>$data]);
+        return response()->json([
+            'success' => true, 'data' => $data, 
+            'pagination' => [
+                    'total' => $getAllcrmlistTask->total(),
+                    'current_page' => $getAllcrmlistTask->currentPage(),
+                    'last_page' => $getAllcrmlistTask->lastPage(),
+                    'per_page' => $getAllcrmlistTask->perPage(),
+                    'next_page_url' => $getAllcrmlistTask->nextPageUrl(),
+                    'prev_page_url' => $getAllcrmlistTask->previousPageUrl(),
+                ]
+        ]);
+        // return response()->json(['success' =>true,'data'=>$data]);
     }
     public function save_crm_customer_notes(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -775,10 +808,10 @@ class CustomerController extends Controller
         }
     }
     public function get_all_crm_customer_note(Request $request){
-        $getAllcrmlist=Crm_customer_note::getAllcrmNotes($request->id);
-        // echo "<pre>";print_r($getAllcrmlist);die;
+        $getAllcrmlistNotes=Crm_customer_note::getAllcrmNotes($request->id)->orderBy('id', 'desc')->paginate(10);
+        // echo "<pre>";print_r($getAllcrmlistNotes);die;
         $data=array();
-        foreach($getAllcrmlist as $val){
+        foreach($getAllcrmlistNotes as $val){
             $task_type=CRMSectionType::find($val->crm_section_type_id);
             $customer=Customer::find($val->customer_id);
             $contact=Constructor_additional_contact::find($val->contact);
@@ -795,7 +828,18 @@ class CustomerController extends Controller
                 'customer_name'=>$customer->name
             ];
         }
-        return response()->json(['success' =>true,'data'=>$data]);
+        return response()->json([
+            'success' => true, 'data' => $data, 
+            'pagination' => [
+                    'total' => $getAllcrmlistNotes->total(),
+                    'current_page' => $getAllcrmlistNotes->currentPage(),
+                    'last_page' => $getAllcrmlistNotes->lastPage(),
+                    'per_page' => $getAllcrmlistNotes->perPage(),
+                    'next_page_url' => $getAllcrmlistNotes->nextPageUrl(),
+                    'prev_page_url' => $getAllcrmlistNotes->previousPageUrl(),
+                ]
+        ]);
+        // return response()->json(['success' =>true,'data'=>$data]);
     }
     public function save_crm_customer_complaints(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -851,6 +895,99 @@ class CustomerController extends Controller
         }catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
+    }
+    public function get_all_crm_customer_complaint(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        // $getAllcrmlist=CrmCustomerComplaint::getAllcrmComplaint($request->id);
+        // $data=array();
+        // foreach($getAllcrmlist as $val){
+        //     $task_type=CRMSectionType::find($val->crm_section_type_id);
+        //     $customer=Customer::find($val->customer_id);
+        //     $contact=Constructor_additional_contact::find($val->contact);
+        //     $data[]=[
+        //         'id'=>$val->id,
+        //         'home_id'=>$val->home_id,
+        //         'customer_id'=>$val->customer_id,
+        //         'contact'=>$contact->contact_name ?? "",
+        //         'crm_section_type_id'=>$val->crm_section_type_id,
+        //         'notes'=>$val->notes,
+        //         'customer_visibility'=>$val->customer_visibility,
+        //         'user_id'=>$val->user_id,
+        //         'type'=>$task_type->title,
+        //         'customer_name'=>$customer->name,
+        //         'notify'=>$val->notify,
+        //         'sms'=>$val->sms,
+        //         'notification'=>$val->notification,
+        //         'email'=>$val->email
+        //     ];
+        // }
+        // return response()->json(['success' =>true,'data'=>$data]);
+    // $getAllcrmlist = CrmCustomerComplaint::where('customer_id', $request->id)->paginate(10);
+    $getAllcrmlist = CrmCustomerComplaint::where('customer_id', $request->id)
+                  ->orderBy('id', 'desc')
+                  ->paginate(10);
+
+    $data = [];
+    foreach ($getAllcrmlist as $val) {
+        $task_type = CRMSectionType::find($val->crm_section_type_id);
+        $customer = Customer::find($val->customer_id);
+        $contact = Constructor_additional_contact::find($val->contact);
+
+        $data[] = [
+            'id' => $val->id,
+            'home_id' => $val->home_id,
+            'customer_id' => $val->customer_id,
+            'contact' => $contact->contact_name ?? "",
+            'crm_section_type_id' => $val->crm_section_type_id,
+            'notes' => $val->notes,
+            'customer_visibility' => $val->customer_visibility,
+            'user_id' => $val->user_id,
+            'type' => $task_type->title,
+            'customer_name' => $customer->name,
+            'notify' => $val->notify,
+            'sms' => $val->sms,
+            'notification' => $val->notification,
+            'email' => $val->email,
+        ];
+    }
+
+    return response()->json([
+        'success' => true, 'data' => $data, 
+        'pagination' => [
+                'total' => $getAllcrmlist->total(),
+                'current_page' => $getAllcrmlist->currentPage(),
+                'last_page' => $getAllcrmlist->lastPage(),
+                'per_page' => $getAllcrmlist->perPage(),
+                'next_page_url' => $getAllcrmlist->nextPageUrl(),
+                'prev_page_url' => $getAllcrmlist->previousPageUrl(),
+            ]
+    ]);
+    }
+    public function get_all_crm_customer_contacts(Request $request){
+        $contact_list=Constructor_additional_contact::getAllcrmContacts($request->id)->orderBy('id', 'desc')->paginate(10);
+        $data=array();
+        foreach($contact_list as $val){
+            $customer=Customer::find($val->customer_id);
+            $data[]=[
+                'id'=>$val->id,
+                'customer_id'=>$request->id,
+                'contact'=>$val->contact_name ?? "",
+                'crm_section_type_id'=>'',
+                'customer_name'=>$customer->name ?? ""
+            ];
+        }
+        // return response()->json(['success' =>true,'data'=>$data]);
+        return response()->json([
+            'success' => true, 'data' => $data, 
+            'pagination' => [
+                    'total' => $contact_list->total(),
+                    'current_page' => $contact_list->currentPage(),
+                    'last_page' => $contact_list->lastPage(),
+                    'per_page' => $contact_list->perPage(),
+                    'next_page_url' => $contact_list->nextPageUrl(),
+                    'prev_page_url' => $contact_list->previousPageUrl(),
+                ]
+        ]);
     }
    
 }

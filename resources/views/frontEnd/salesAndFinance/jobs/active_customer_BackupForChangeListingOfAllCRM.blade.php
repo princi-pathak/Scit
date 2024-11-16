@@ -671,7 +671,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3 mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text editInput">Search</button>
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -721,7 +721,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text editInput">Search</button>
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -742,7 +742,6 @@
                                             <tbody id="customer_crmData">
                                             </tbody>
                                         </table>
-                                        <div id="pagination-controls-call"></div>
                                     </div>
                                 </div>
                             </div>
@@ -773,7 +772,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text editInput">Search</button>
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -803,7 +802,6 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <div id="pagination-controls-email"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1291,7 +1289,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Keywords to search" name="email">
-                                            <button type="button" class="input-group-text editInput">Search</button>
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1331,7 +1329,6 @@
                                             <tbody id="crm_customer_task">
                                             </tbody>
                                         </table>
-                                        <div id="pagination-controls-task"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1350,7 +1347,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text editInput">Search</button>
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1372,7 +1369,6 @@
                                                 
                                             </tbody>
                                         </table>
-                                        <div id="pagination-controls-note"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1391,7 +1387,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Keyword to search" name="email">
-                                            <button type="button" class="input-group-text editInput">Search</button>
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1433,7 +1429,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Keyword to search" name="email">
-                                            <button type="button" class="input-group-text editInput">Search</button>
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1455,7 +1451,6 @@
                                                 
                                             </tbody>
                                         </table>
-                                        <div id="pagination-controls-contact"></div>
                                     </div>
                                 </div>
                             </div>
@@ -2112,20 +2107,21 @@
                         </li>
                         
                     </ul>
-                    <div class="tab-content" id="pills-tabContent">
+                </div>
+                <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-search_customers" role="tabpanel" aria-labelledby="pills-search_customers-tab" tabindex="0">
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Customer Contacts</label>
                             <div class="row">
-                                    <label class="col-sm-1  mt-3 col-form-label">Search:</label>
                                 <div class="col-sm-3">
-                                   
+                                    Search:
                                     <div class="jobsection  mt-3">
                                         <select name="" class="form-control editInput" id="">
                                             <option value="1">All</option>
-                                            <option value="2">Customer</option>
-                                            <option value="3">Supplier</option>
-                                            <option value="4">User</option>
+                                            <option value="2">Customer Related</option>
+                                            <option value="3">Quote Related</option>
+                                            <option value="4">Job Related</option>
+                                            <option value="5">Invoice Related</option>
                                                                                 
                                         </select>
                                     </div>
@@ -2135,12 +2131,12 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3 mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text editInput">Search</button>
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="mb-3 mt-3">
+                                    <div class="col-form-label">
                                         <button type="button" class="profileDrop contact_add" id="search_contacts">Add Contact</button>
                                     </div>
                                 </div>
@@ -2184,14 +2180,15 @@
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Supplier Contacts</label>
                             <div class="row">
-                                <label class="col-sm-1  mt-3 col-form-label">Search:</label>
                                 <div class="col-sm-3">
+                                    Search:
                                     <div class="jobsection  mt-3">
                                         <select name="" class="form-control editInput" id="">
                                             <option value="1">All</option>
-                                            <option value="2">Customer</option>
-                                            <option value="3">Supplier</option>
-                                            <option value="4">User</option>
+                                            <option value="2">Customer Related</option>
+                                            <option value="3">Quote Related</option>
+                                            <option value="4">Job Related</option>
+                                            <option value="5">Invoice Related</option>
                                                                                 
                                         </select>
                                     </div>
@@ -2201,13 +2198,13 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3 mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text editInput">Search</button>
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="mb-3 mt-3">
-                                        <button type="button" class="profileDrop contact_add" id="search_contacts">Add Contact</button>
+                                    <div class="col-form-label">
+                                        <button type="button" class="profileDrop search_contacts" id="search_contacts">Add Contact</button>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
@@ -2246,15 +2243,15 @@
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">User Contacts</label>
                             <div class="row">
-                            <label class="col-sm-1  mt-3 col-form-label">Search:</label>
                                 <div class="col-sm-3">
-                                    
+                                    Search:
                                     <div class="jobsection  mt-3">
                                         <select name="" class="form-control editInput" id="">
                                             <option value="1">All</option>
-                                            <option value="2">Customer</option>
-                                            <option value="3">Supplier</option>
-                                            <option value="4">User</option>
+                                            <option value="2">Customer Related</option>
+                                            <option value="3">Quote Related</option>
+                                            <option value="4">Job Related</option>
+                                            <option value="5">Invoice Related</option>
                                                                                 
                                         </select>
                                     </div>
@@ -2264,13 +2261,13 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3 mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text editInput">Search</button>
+                                            <button type="button" class="input-group-text sarchBtn">Search</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="mb-3 mt-3">
-                                        <button type="button" class="profileDrop contact_add" id="search_contacts">Add Contact</button>
+                                    <div class="col-form-label">
+                                        <button type="button" class="profileDrop search_contacts" id="search_contacts">Add Contact</button>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
@@ -2306,8 +2303,6 @@
                     </div>
 
                 </div>
-                </div>
-                
             </div>
         </div>
     </div>
@@ -2631,12 +2626,12 @@ $('.delete_checkbox').on('click', function() {
             // $("#form_data")[0].reset();
             $("#CRMPop").modal('show');
             get_customer_details(id);
-            get_all_crm_customer_call(id,pageUrl = '{{ url("get_all_crm_customer_call") }}');
-            get_all_crm_customer_email(id,pageUrl = '{{ url("get_all_crm_customer_email") }}');
-            get_all_crm_customer_task(id,pageUrl = '{{ url("get_all_crm_customer_task") }}');
-            get_all_crm_customer_note(id,pageUrl = '{{ url("get_all_crm_customer_note") }}');
+            get_all_crm_customer_call(id);
+            get_all_crm_customer_email(id);
+            get_all_crm_customer_task(id);
+            get_all_crm_customer_note(id);
             get_all_crm_customer_complaint(id,pageUrl = '{{ url("get_all_crm_customer_complaint") }}');
-            get_all_crm_customer_contacts(id,pageUrl = '{{ url("get_all_crm_customer_contacts") }}');
+            get_all_crm_customer_contacts(id);
         }
     }
     function get_customer_details(id){
@@ -3123,7 +3118,29 @@ job_input.addEventListener('input', function() {
                         return false;
                     }else if(data.success){
                             const responseData = data.data[0]; 
-                            get_all_crm_customer_call(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_call") }}');
+                            const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
+                            var visibilityCell = '';
+
+                            if (responseData.customer_visibility == "0") {
+                                visibilityCell += '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+                            } else if (responseData.customer_visibility == "1") {
+                                visibilityCell += '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+                            }
+
+                            var html = '<tr>' +
+                                '<td>' + date + '</td>' +
+                                '<td><?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?></td>' +
+                                '<td>' + responseData.telephone + '</td>' +  
+                                '<td>' + data.data.type + '</td>' +        
+                                '<td>' + responseData.notes + '</td>' +
+                                '<td>' + visibilityCell + '</td>' +
+                                '<td><i class="fa fa-phone"></i> ' +
+                                '<i class="fa fa-envelope"></i> ' +
+                                '<i class="fa fa-list-ul"></i> ' +
+                                '<i class="fa fa-file"></i> ' +
+                                '<i class="fa fa-exclamation-triangle"></i></td>' +
+                                '</tr>';
+                            $("#customer_crmData").append(html);
                             $('#callsModal').modal('hide');
                         } else {
                             alert("Something went wrong");
@@ -3231,7 +3248,29 @@ job_input.addEventListener('input', function() {
                         return false;
                     }else if(data.success){
                             const responseData = data.data; 
-                            get_all_crm_customer_email(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_email") }}');
+                            const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
+                            var visibilityCell = '';
+
+                            if (responseData.customer_visibility == "0") {
+                                visibilityCell += '<span class="grayCheck" onclick="customer_visibility('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            } else if (responseData.customer_visibility == "1") {
+                                visibilityCell += '<span class="grencheck" onclick="customer_visibility('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            }
+
+                            var html = '<tr>' +
+                                '<td>' + date + '</td>' +
+                                '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                                '<td>' + responseData.name + '<br>Email:'+responseData.customer_email + '</td>' +  
+                                '<td>System</td>' +        
+                                '<td>Eamil sent to' + responseData.send_email + 'from'+ responseData.name +'</td>' +
+                                '<td id="visible_check'+responseData.id+'">' + visibilityCell + '</td>' +
+                                '<td><i class="fa fa-phone"></i> ' +
+                                '<i class="fa fa-envelope"></i> ' +
+                                '<i class="fa fa-list-ul"></i> ' +
+                                '<i class="fa fa-file"></i> ' +
+                                '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                                '</tr>';
+                            $("#crm_customer_email").append(html);
                             $('#NewEmailModel').modal('hide');
                         } else {
                             alert("Something went wrong");
@@ -3282,7 +3321,35 @@ job_input.addEventListener('input', function() {
                         return false;
                     }else if(response.success){
                             const responseData = response.data; 
-                            get_all_crm_customer_note(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_note") }}');
+                            const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
+                            var visibilityCell = '';
+
+                            if (responseData.customer_visibility == "0") {
+                                visibilityCell += '<span class="grayCheck" onclick="customer_visibility1('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            } else if (responseData.customer_visibility == "1") {
+                                visibilityCell += '<span class="grencheck" onclick="customer_visibility1('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            }
+                            var contact;
+                            if(responseData.contact == ''){
+                                contact=responseData.customer_name;
+                            }else{
+                                contact=responseData.contact;
+                            }
+
+                            var html = '<tr>' +
+                                '<td>' + date + '</td>' +
+                                '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                                '<td>' + contact + '</td>' +  
+                                '<td>'+ responseData.type +'</td>' +        
+                                '<td>' + responseData.notes + '</td>' +
+                                '<td id="visible_note'+responseData.id+'">' + visibilityCell + '</td>' +
+                                '<td><i class="fa fa-phone"></i> ' +
+                                '<i class="fa fa-envelope"></i> ' +
+                                '<i class="fa fa-list-ul"></i> ' +
+                                '<i class="fa fa-file"></i> ' +
+                                '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                                '</tr>';
+                            $("#crm_customer_note").append(html);
                             $('#NewNotesModel').modal('hide');
                         } else {
                             alert("Something went wrong");
@@ -3334,7 +3401,41 @@ job_input.addEventListener('input', function() {
                             return false;
                         }else if(response.success){
                             const responseData = response.data; 
-                            get_all_crm_customer_complaint(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_complaint") }}');
+                            const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
+                            var visibilityCell = '';
+
+                            if (responseData.customer_visibility == "0") {
+                                visibilityCell += '<span class="grayCheck" onclick="customer_visibility1('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            } else if (responseData.customer_visibility == "1") {
+                                visibilityCell += '<span class="grencheck" onclick="customer_visibility1('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                            }
+                            var contact;
+                            if(responseData.contact == ''){
+                                contact=responseData.customer_name;
+                            }else{
+                                contact=responseData.customer_name+'<br><b>Contact:</b>'+responseData.contact;
+                            }
+                            let notify='';
+                            if(responseData.notify == 1){
+                                notify += '<br><b>Notify:</b> <?php echo Auth::user()->name; ?><br><b>Send As:</b> ' + (responseData.sms == 1 ? "SMS," : "") + (responseData.notification == 1 ? " Notification," : "") + (responseData.email == 1 ? " Email" : "");
+                            }else{
+                                notify='';
+                            }
+                            var html = '<tr>' +
+                                '<td>' + date + '</td>' +
+                                '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                                '<td>' + contact + '</td>' +  
+                                '<td>'+ responseData.type +'</td>' +        
+                                '<td></td>' +        
+                                '<td>' + responseData.notes + notify+'</td>' +
+                                '<td id="visible_complaint'+responseData.id+'">' + visibilityCell + '</td>' +
+                                '<td><i class="fa fa-phone"></i> ' +
+                                '<i class="fa fa-envelope"></i> ' +
+                                '<i class="fa fa-list-ul"></i> ' +
+                                '<i class="fa fa-file"></i> ' +
+                                '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                                '</tr>';
+                            $("#crm_customer_complaint").append(html);
                             $("#notification_complaint_div").hide();
                             $('#compliantsModal').modal('hide');
                             $('#notify_complaint1').prop('checked',true);
@@ -3376,7 +3477,42 @@ job_input.addEventListener('input', function() {
                         return false;
                     } else {
                         const responseData = data.data;
-                        get_all_crm_customer_task(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_task") }}');
+                        const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
+                        const start_date = moment(responseData.start_date).format('DD/MM/YYYY HH:mm');
+
+                        // Check if the row with the same task id already exists
+                        var existingRow = $('#crm_customer_task tr[data-task-id="' + responseData.id + '"]');
+                        
+                        // Prepare the row HTML content
+                        var html = '<tr data-task-id="' + responseData.id + '">' + // Added data-task-id attribute
+                            '<td> </td>' +
+                            '<td>' + start_date + '</td>' +
+                            '<td><?php echo Auth::user()->name; ?></td>' +
+                            '<td>' + responseData.customer_name + '</td>' +
+                            '<td>' + responseData.type + '</td>' +
+                            '<td>' + responseData.title + '</td>' +
+                            '<td>' + responseData.notes + '</td>' +
+                            '<td>' + responseData.customer_name + '</td>' +
+                            '<td>' + date + '</td>' +
+                            '<td><?php echo Auth::user()->name; ?></td>' +
+                            '<td>' +
+                                '<img src="<?php echo url('public/frontEnd/jobs/images/pencil.png');?>" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#secondModal" class="modal_data_crm_task image_style" ' +
+                                'data-id="'+responseData.id+'" data-title="'+responseData.title+'" data-user_id="'+responseData.user_id+'" data-task_type_id="'+responseData.task_type_id+'" data-start_date="'+responseData.start_date+'" ' +
+                                'data-start_time="'+responseData.start_time+'" data-end_date="'+responseData.end_date+'" data-end_time="'+responseData.end_time+'" data-is_recurring="'+responseData.is_recurring+'" data-notify="'+responseData.notify+'" ' +
+                                'data-notification="'+responseData.notification+'" data-email="'+responseData.email+'" data-sms="'+responseData.sms+'" data-notify_date="'+responseData.notify_date+'" data-notify_time="'+responseData.notify_time+'" data-notes="'+responseData.notes+'">&emsp;' +
+                                '<img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="crm_task_delete image_style" data-delete="'+responseData.id+'">' +
+                            '</td>' +
+                        '</tr>';
+
+                        if (existingRow.length > 0) {
+                            // If the row exists, replace the existing row with the updated one
+                            existingRow.replaceWith(html);
+                        } else {
+                            // If it's a new task, append the row
+                            $("#crm_customer_task").append(html);
+                        }
+
+                        // Close the modal after saving
                         $('#secondModal').modal('hide');
                     }
                 },
@@ -3487,10 +3623,10 @@ job_input.addEventListener('input', function() {
 </script>
 
 <script>
-    function get_all_crm_customer_call(id,pageUrl){
+    function get_all_crm_customer_call(id){
         var token='<?php echo csrf_token();?>'
         $.ajax({
-            url: pageUrl,
+            url: '{{ url("get_all_crm_customer_call") }}',
             method: 'POST',
             data: {
                 id: id,_token:token
@@ -3498,7 +3634,6 @@ job_input.addEventListener('input', function() {
             success: function(response) {
                 console.log(response.data);
                 var data = response.data;
-                var paginationCall = response.pagination;
                 var tableBody = $("#customer_crmData"); 
                 tableBody.empty();
                 
@@ -3530,28 +3665,19 @@ job_input.addEventListener('input', function() {
                     '</tr>';
 
                     // Append each row to the table body
-                    // 
-                    // full_history(data);
+                    full_history(data);
                     tableBody.append(html);
                 });
-                var paginationControlsClll = $("#pagination-controls-call");
-                paginationControlsClll.empty();
-                if (paginationCall.prev_page_url) {
-                    paginationControlsClll.append('<button class="profileDrop" onclick="get_all_crm_customer_call(' + id + ', \'' + paginationCall.prev_page_url + '\')">Previous</button>');
-                }
-                if (paginationCall.next_page_url) {
-                    paginationControlsClll.append('<button class="profileDrop" onclick="get_all_crm_customer_call(' + id + ', \'' + paginationCall.next_page_url + '\')">Next</button>');
-                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
         });
     }
-    function get_all_crm_customer_email(id,pageUrl){
+    function get_all_crm_customer_email(id){
         var token='<?php echo csrf_token();?>'
         $.ajax({
-            url: pageUrl,
+            url: '{{ url("get_all_crm_customer_email") }}',
             method: 'POST',
             data: {
                 id: id,_token:token
@@ -3559,7 +3685,6 @@ job_input.addEventListener('input', function() {
             success: function(response) {
                 console.log(response);
                 var data = response.data;
-                var paginationEmail = response.pagination;
                 var tableBody = $("#crm_customer_email"); 
                 tableBody.empty();
                 
@@ -3593,24 +3718,16 @@ job_input.addEventListener('input', function() {
                     // Append each row to the table body
                     tableBody.append(html);
                 });
-                var paginationControlsEmail = $("#pagination-controls-email");
-                paginationControlsEmail.empty();
-                if (paginationEmail.prev_page_url) {
-                    paginationControlsEmail.append('<button class="profileDrop" onclick="get_all_crm_customer_email(' + id + ', \'' + paginationEmail.prev_page_url + '\')">Previous</button>');
-                }
-                if (paginationEmail.next_page_url) {
-                    paginationControlsEmail.append('<button class="profileDrop" onclick="get_all_crm_customer_email(' + id + ', \'' + paginationEmail.next_page_url + '\')">Next</button>');
-                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
         });
     }
-    function get_all_crm_customer_task(id,pageUrl){
+    function get_all_crm_customer_task(id){
         var token='<?php echo csrf_token();?>'
         $.ajax({
-            url: pageUrl,
+            url: '{{ url("get_all_crm_customer_task") }}',
             method: 'POST',
             data: {
                 id: id,_token:token
@@ -3619,7 +3736,6 @@ job_input.addEventListener('input', function() {
                 console.log(response);
                 var data = response.data;
                 var tableBody = $("#crm_customer_task"); 
-                var paginationTask = response.pagination;
                 tableBody.empty();
                 
                 data.forEach(function(item) {
@@ -3646,24 +3762,16 @@ job_input.addEventListener('input', function() {
                                 '</tr>';
                     tableBody.append(html);
                 });
-                var paginationControlsTask = $("#pagination-controls-task");
-                paginationControlsTask.empty();
-                if (paginationTask.prev_page_url) {
-                    paginationControlsTask.append('<button class="profileDrop" onclick="get_all_crm_customer_task(' + id + ', \'' + paginationTask.prev_page_url + '\')">Previous</button>');
-                }
-                if (paginationTask.next_page_url) {
-                    paginationControlsTask.append('<button class="profileDrop" onclick="get_all_crm_customer_task(' + id + ', \'' + paginationTask.next_page_url + '\')">Next</button>');
-                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
         });
     }
-    function get_all_crm_customer_note(id,pageUrl){
+    function get_all_crm_customer_note(id){
         var token='<?php echo csrf_token();?>'
         $.ajax({
-            url: pageUrl,
+            url: '{{ url("get_all_crm_customer_note") }}',
             method: 'POST',
             data: {
                 id: id,_token:token
@@ -3671,7 +3779,6 @@ job_input.addEventListener('input', function() {
             success: function(response) {
                 console.log(response);
                 var data = response.data;
-                var paginationNotes = response.pagination;
                 var tableBody = $("#crm_customer_note"); 
                 tableBody.empty();
                 
@@ -3710,14 +3817,6 @@ job_input.addEventListener('input', function() {
                     // Append each row to the table body
                     tableBody.append(html);
                 });
-                var paginationControlsNotes = $("#pagination-controls-note");
-                paginationControlsNotes.empty();
-                if (paginationNotes.prev_page_url) {
-                    paginationControlsNotes.append('<button class="profileDrop" onclick="get_all_crm_customer_note(' + id + ', \'' + paginationNotes.prev_page_url + '\')">Previous</button>');
-                }
-                if (paginationNotes.next_page_url) {
-                    paginationControlsNotes.append('<button class="profileDrop" onclick="get_all_crm_customer_note(' + id + ', \'' + paginationNotes.next_page_url + '\')">Next</button>');
-                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3791,10 +3890,10 @@ job_input.addEventListener('input', function() {
             }
         });
     }
-    function get_all_crm_customer_contacts(id,pageUrl){
+    function get_all_crm_customer_contacts(id){
         var token='<?php echo csrf_token();?>'
         $.ajax({
-            url: pageUrl,
+            url: '{{ url("get_all_crm_customer_contacts") }}',
             method: 'POST',
             data: {
                 id: id,_token:token
@@ -3802,7 +3901,6 @@ job_input.addEventListener('input', function() {
             success: function(response) {
                 console.log(response);
                 var data = response.data;
-                var paginationContact = response.pagination;
                 var tableBody = $("#crm_customer_contact"); 
                 tableBody.empty();
                 
@@ -3839,14 +3937,6 @@ job_input.addEventListener('input', function() {
                         '</tr>';
                     tableBody.append(html);
                 });
-                var paginationControlsContact = $("#pagination-controls-contact");
-                paginationControlsContact.empty();
-                if (paginationContact.prev_page_url) {
-                    paginationControlsContact.append('<button class="profileDrop" onclick="get_all_crm_customer_contacts(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
-                }
-                if (paginationContact.next_page_url) {
-                    paginationControlsContact.append('<button class="profileDrop" onclick="get_all_crm_customer_contacts(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
-                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -4081,7 +4171,7 @@ job_input.addEventListener('input', function() {
                     $("#contact_modal").modal('hide');
                     $("#notes_contact").append(data);
                     $("#comaplint_contact").append(data);
-                    get_all_crm_customer_contacts(customer_id,pageUrl = '{{ url("get_all_crm_customer_contacts") }}');
+                    get_all_crm_customer_contacts(customer_id);
                 }
             });
         }

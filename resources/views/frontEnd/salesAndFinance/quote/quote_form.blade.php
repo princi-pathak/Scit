@@ -3048,7 +3048,6 @@
                     setSiteAddressDetails(response.id);
                     $('#quoteTypeModal').modal('hide');
                     getQuoteType(document.getElementById('quoteType'));
-
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -3106,7 +3105,6 @@
                 data: formData,
                 success: function(response) {
                     console.log(response);
-
                     alert(response.message);
                     setCustomerBillingData(response.lastid);
                     $('#add_customer_contact_modal').modal('hide');
@@ -3243,13 +3241,13 @@
 
 
 
-    function itemsAddProductModal(th) {
-        $("#productform")[0].reset();
-        $(".needs-validationp").removeClass('was-validated');
-        $('#producttype').val(th);
-        //$('#taxratepopup').css('display','block');
-        $('#itemsAddProductModal').modal('show');
-    }
+    // function itemsAddProductModal(th) {
+    //     $("#productform")[0].reset();
+    //     $(".needs-validationp").removeClass('was-validated');
+    //     $('#producttype').val(th);
+    //     //$('#taxratepopup').css('display','block');
+    //     $('#itemsAddProductModal').modal('show');
+    // }
 
     function additemsCatagoryModal(th) {
         //alert();

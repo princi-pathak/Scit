@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Auth, DB;
 use App\DynamicFormBuilder, App\DynamicForm, App\ServiceUser, App\DynamicFormLocation, App\Notification, App\ServiceUserLogBook, App\LogBook, App\EarningScheme, APP\ServiceUserRisk;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 //App\ServiceUser, App\Admin, App\Home, App\LogBook;
 //use Hash, Session;
@@ -30,12 +31,10 @@ class DynamicFormController extends Controller
     {
         $data = $request->input();
 
-
         if (!empty($data)) {
+            // dd($request);
 
             $form_insert_id = DynamicForm::saveForm($data);
-
-
 
             if ($form_insert_id != 0) {
 
@@ -61,7 +60,7 @@ class DynamicFormController extends Controller
                             'category_name' => 'Visitor',
                             'category_icon' => 'fa fa-users',
                             // 'date' => date('Y-m-d H:i:s', strtotime($data['date'])),
-                            'date' => null,   
+                            'date' => null,
                             // 'details'=>$data['details'],
                             'details' => null,
                             'home_id' => Auth::user()->home_id,
@@ -287,8 +286,7 @@ class DynamicFormController extends Controller
         if (!empty($data)) {
             $home_id = Auth::user()->home_id;
             $dynamic_form_id = $request->dynamic_form_id;
-            $form            = DynamicForm::where('dynamic_form.id', $dynamic_form_id)
-                ->first();
+            $form            = DynamicForm::where('dynamic_form.id', $dynamic_form_id)->first();
             //join('service_user as su','su.id','=','dynamic_form.service_user_id') ->where('su.home_id',$home_id)
             // echo "<pre>";
             //  print_r(json_encode($data['data']));
@@ -304,6 +302,7 @@ class DynamicFormController extends Controller
             $form->details             = null;
             // $form->time             = $data['time'];
             $form->time             = null;
+            $form->image_path                 =  $data['formImage'];
             $form->pattern_data        = json_encode($data['data']);
             // $form->alert_status     = $data['alert_status']; 
             // $form->alert_date       = $data['alert_date']; 
@@ -397,7 +396,7 @@ class DynamicFormController extends Controller
 
         foreach ($dyn_forms as $key => $value) {
 
-            
+
             $title = DynamicFormBuilder::where('id', $value->form_builder_id)->value('title');
 
             // if ($value->date == '') {
@@ -452,7 +451,7 @@ class DynamicFormController extends Controller
 
             //                         <!-- <input type="hidden" name="su_bmp_id[]" value="' . $value->id . '" disabled="disabled" class="edit_bmp_id_' . $value->id . '"> -->
             //                         <input type="text" class="form-control" name="" disabled value="' . $value->title . ' ' . $start_brct . $date . ' ' . $value->time . $end_brct . '" maxlength="255"/> 
-                                     
+
             //                         <span class="input-group-addon cus-inpt-grp-addon clr-blue settings">
             //                             <i class="fa fa-cog"></i>
             //                             <div class="pop-notifbox">
@@ -573,9 +572,33 @@ class DynamicFormController extends Controller
         $dynamic_form_idformio = $request->dynamic_form_idformio;
         $res = DB::table('dynamic_form')
             ->join('dynamic_form_builder', 'dynamic_form.form_builder_id', '=', 'dynamic_form_builder.id')
-            ->select('dynamic_form_builder.pattern', 'dynamic_form.pattern_data')->where('dynamic_form.id', $dynamic_form_idformio)
+            ->select('dynamic_form_builder.pattern', 'dynamic_form.pattern_data', 'dynamic_form.image_path')->where('dynamic_form.id', $dynamic_form_idformio)
             ->get();
-            
+
         return $res;
+    }
+
+    public function saveFormDotIoImage(Request $request)
+    {
+        // dd($request);
+        // Check if an image is uploaded
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+        
+            // Generate a unique filename using timestamp
+            $fileName = time() . '_' . $image->getClientOriginalName();
+        
+            // Define the target path in the public folder
+            $publicPath = public_path('images/formio/' . $fileName);
+        
+            // Move the image to the public folder
+            $image->move(public_path('images/formio'), $fileName);
+        
+            // Return success response with the public file path
+            return response()->json(['success' => true, 'file_path' => 'images/formio/' . $fileName]);
+        }
+
+        // Return error response if no file is uploaded
+        return response()->json(['success' => false, 'message' => 'No image uploaded.'], 400);
     }
 }
