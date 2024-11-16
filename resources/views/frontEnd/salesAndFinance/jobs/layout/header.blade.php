@@ -285,9 +285,9 @@ $access_rights = explode(',', $rights);
                                             <span><i class="fa fa-users"></i> Suppliers</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('supplier_add')}}"><i class="fa fa-plus"></i>New Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{url('suppliers?list_mode=Active')}}"><i class="fa fa-check-circle"></i>Active Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{url('suppliers?list_mode=INActive')}}"><i class="fa fa-times-circle"></i>Inactive Customers</a></li>
+                                            <li><a class="dropdown-item" href="#!"><i class="fa fa-plus"></i>New Customers</a></li>
+                                            <li><a class="dropdown-item" href="#!"><i class="fa fa-check-circle"></i>Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="#!"><i class="fa fa-times-circle"></i>Inactive Customers</a></li>
                                         </ul>
                                     </li>
                                 </ul>

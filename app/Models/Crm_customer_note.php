@@ -18,6 +18,6 @@ class Crm_customer_note extends Model
         );
     }
     public static function getAllcrmNotes($id){
-        return self::where('customer_id',$id)->get();
+        return self::where('customer_id',$id);
     }
 }
