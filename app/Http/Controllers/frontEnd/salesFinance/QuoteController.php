@@ -272,7 +272,21 @@ class QuoteController extends Controller
                 }
 
          
-
+                // 'quote_id' => $quote->id,
+                // 'type' => 1,
+                // 'section_type' => $itemData['itemDetails'],
+                // 'product_id' => $itemData['product_id'],
+                // 'title' => $itemData['item_title'],
+                // 'decritption' => $itemData['item_desc'],
+                // 'account_code' => $itemData['account_code'],
+                // 'quantity' => $itemData['quantity'],
+                // 'cost_price' => $itemData['cost_price'],
+                // 'price' => $itemData['price'],
+                // 'markup' => $itemData['markup'],
+                // 'VAT' => $itemData['VAT'],
+                // 'discount' => $itemData['discount'],
+                // 'amount' => $itemData['amount'],
+                // 'profit' => $itemData['profit']
 
                 // if(!empty($itemData["title"]["item_title"])){
                 //     $title = [

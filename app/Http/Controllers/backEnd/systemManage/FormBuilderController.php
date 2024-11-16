@@ -77,13 +77,19 @@ class FormBuilderController extends Controller
                 return redirect()->back()->with('error', 'No input field added in the form.');
             }
 
-            $image = $request->file('form_image');
+            // $image = $request->file('form_image');
 
-            // Create a unique file name
-            $imageName = time() . '.' . $image->extension();
+            // // Create a unique file name
+            // $imageName = time() . '.' . $image->extension();
 
-            // Move the file to the public/images directory
-            $image->move(public_path('images/formio'), $imageName);
+            // // Move the file to the public/images directory
+            // $image->move(public_path('images/formio'), $imageName);
+
+            if(isset($request->is_imageUpload)){
+                $is_imageUpload = $request->is_imageUpload;
+            } else {
+                $is_imageUpload = null;
+            }
 
 
 
@@ -97,7 +103,7 @@ class FormBuilderController extends Controller
                 $form->location_ids = $data['form_location_ids'];
                 $form->pattern      = json_encode($data['formdata']);
                 $form->alert_field  =  $data['alert_field'];
-                $form->image        =  $imageName;
+                $form->is_image     = $is_imageUpload;
                 $form->reminder_day =  $data['form_reminder_day'];
                 $form->send_to      =  $data['send_to'];
 
@@ -146,17 +152,22 @@ class FormBuilderController extends Controller
                 $form_reminder_day = $data['form_reminder_day'];
             }
 
-            if (isset($request->form_image)) {
-                $image = $request->file('form_image');
-                $imageName = time() . '.' . $image->extension();
+            // if (isset($request->form_image)) {
+            //     $image = $request->file('form_image');
+            //     $imageName = time() . '.' . $image->extension();
 
-                // Move the file to the public/images directory
-                $image->move(public_path('images/formio'), $imageName);
+            //     // Move the file to the public/images directory
+            //     $image->move(public_path('images/formio'), $imageName);
+            // } else {
+            //     $imageName = $request->form_img;
+            // }
+
+            
+            if(isset($request->is_imageUpload)){
+                $is_imageUpload = $request->is_imageUpload;
             } else {
-                $imageName = $request->form_img;
+                $is_imageUpload = null;
             }
-
-         
 
             if (!empty($form)) {
 
@@ -166,7 +177,7 @@ class FormBuilderController extends Controller
                 $form->pattern      = json_encode($data['formdata']);
                 $form->alert_field  =  $data['alert_field'];
                 $form->home_ids     =  $data['form_home_ids'];
-                $form->image        =   $imageName;
+                $form->is_image     =  $is_imageUpload;
                 $form->reminder_day  =  $form_reminder_day;
                 $form->send_to       =  $data['send_to'];
                 $form->logtype      =  $data['logtypes'];
