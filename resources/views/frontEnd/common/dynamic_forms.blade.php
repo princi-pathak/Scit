@@ -98,6 +98,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <!-- alert messages -->
                             @include('frontEnd.common.popup_alert_messages')
 
+                            
+
                             <div class="dynamic-form-fields">
 
                             </div>
@@ -322,7 +324,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
     </div>
 </div>
 <!-- Su Daily Log Book Modal End -->
-
 <!-- dynamic form script start -->
 <script>
     $(document).ready(function() {
@@ -501,11 +502,11 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
                     if (resp == "true") {
 
-                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                        // const hideImageDivs = document.getElementsByClassName('hideImageDiv');
 
-                        for (let i = 0; i < hideImageDivs.length; i++) {
-                            hideImageDivs[i].style.display = "none";
-                        }
+                        // for (let i = 0; i < hideImageDivs.length; i++) {
+                        //     hideImageDivs[i].style.display = "none";
+                        // }
 
                         console.log("true");
                         $('#' + form_id + ' span.popup_success_txt').text('Record has been Added Successfully');
@@ -612,11 +613,11 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
                     if (resp == true) {
 
-                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                        // const hideImageDivs = document.getElementsByClassName('hideImageDiv');
 
-                            for (let i = 0; i < hideImageDivs.length; i++) {
-                                hideImageDivs[i].style.display = "none";
-                            }
+                        //     for (let i = 0; i < hideImageDivs.length; i++) {
+                        //         hideImageDivs[i].style.display = "none";
+                        //     }
 
                         $('#' + model_id).modal('hide');
                         $('#' + previous_model_id).modal('show');
@@ -711,27 +712,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     if (isAuthenticated(resp) == false) {
                         return false;
                     }
-
-                    // if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
-                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-                    //     const imagePreviews = document.getElementsByClassName('imagePreview');
-
-                    //     // Show or hide the image preview for each form
-                    //     for (let i = 0; i < hideImageDivs.length; i++) {
-                    //         hideImageDivs[i].style.display = "block";
-                    //     }
-
-                    //     // Set the src attribute for each image preview
-                    //     for (let i = 0; i < imagePreviews.length; i++) {
-                    //         imagePreviews[i].src = resp['image'];
-                    //     }
-                    // } else {
-                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-
-                    //     for (let i = 0; i < hideImageDivs.length; i++) {
-                    //         hideImageDivs[i].style.display = "none";
-                    //     }
-                    // }
 
                     var response = resp['response'];
                     var form_builder_id = resp['form_builder_id'];
@@ -1289,7 +1269,7 @@ $(document).ready(function(){
             //dataType: "json",
         };
         $.ajax(settings).done(function(response) {
-            // console.log(response[0].pattern);
+            console.log(response);
             if (isAuthenticated(response) == false) {
                 return false;
             }
@@ -1324,5 +1304,7 @@ $(document).ready(function(){
                     break;
             }
         });
+
+        
     });
 </script>

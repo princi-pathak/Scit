@@ -16,6 +16,7 @@ use App\Http\Controllers\backEnd\ManagersController;
 use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as FrontendProductCategoryController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductController;
+use App\Http\Controllers\frontEnd\salesFinance\Item\ProductGroupController;
 use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
 
 
@@ -500,9 +501,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/getRegions', 'getRegions')->name('quote.ajax.getRegions');
 
 		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
-
 		Route::post('/quote/saveQuoteData', 'store');
-
 		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 
 
@@ -522,25 +521,65 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/item/get_product_categories','getCategoriesList')->name('item.ajax.getCategoriesList');
 
 	});
-	Route::controller(ProductController::class)->group(function(){
-		Route::get('/item/products','productlist')->name('item.products');
-		Route::get('/item/products/active','productlist')->name('item.products.active');
-		Route::get('/item/products/inactive','productlist')->name('item.products.inactive');
-		Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
-		Route::post('/item/generateproductcode','generateproductcode')->name('item.generateproductcode');
-		Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
-		Route::post('/item/taxratelist','taxratelist')->name('item.taxratelist');
-		Route::post('/item/account_code','account_code')->name('item.account_code');
-		Route::post('/item/saveproductdata','saveproductdata')->name('item.saveproductdata');
-		Route::post('/item/changeProductStatus','changeProductStatus')->name('item.changeProductStatus');
-		Route::post('/item/deleteProduct','deleteProduct')->name('item.deleteProduct');
-		Route::post('/item/getproductdata','getproductdata')->name('item.getproductdata');
-		Route::post('/item/getproductimage','getproductimage')->name('item.getproductimage');
-		Route::post('/item/saveproductimages','saveproductimages')->name('item.saveproductimages');
-		Route::post('/item/deleteproductimage','deleteproductimage')->name('item.deleteproductimage');
-		Route::post('/item/getProductList','getProductList')->name('item.ajax.getProductList');
+	
+		// Route::controller(ProductController::class)->group(function(){
+		// 	Route::get('/item/products','productlist')->name('item.products');
+		// 	Route::get('/item/products/active','productlist')->name('item.products.active');
+		// 	Route::get('/item/products/inactive','productlist')->name('item.products.inactive');
+		// 	Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
+		// 	Route::post('/item/generateproductcode','generateproductcode')->name('item.generateproductcode');
+		// 	Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
+		// 	Route::post('/item/taxratelist','taxratelist')->name('item.taxratelist');
+		// 	Route::post('/item/account_code','account_code')->name('item.account_code');
+		// 	Route::post('/item/saveproductdata','saveproductdata')->name('item.saveproductdata');
+		// 	Route::post('/item/changeProductStatus','changeProductStatus')->name('item.changeProductStatus');
+		// 	Route::post('/item/deleteProduct','deleteProduct')->name('item.deleteProduct');
+		// 	Route::post('/item/getproductdata','getproductdata')->name('item.getproductdata');
+		// 	Route::post('/item/getproductimage','getproductimage')->name('item.getproductimage');
+		// 	Route::post('/item/saveproductimages','saveproductimages')->name('item.saveproductimages');
+		// 	Route::post('/item/deleteproductimage','deleteproductimage')->name('item.deleteproductimage');
+		// 	Route::post('/item/getProductList','getProductList')->name('item.ajax.getProductList');
+		// 	Route::get('/item/getProductCounts','getProductCounts')->name('item.ajax.getProductCounts');
+		// });
+
+		Route::controller(ProductController::class)->prefix('item')->name('item.')->group(function () {
+    
+			// GET routes
+			Route::get('/products', 'productlist')->name('products');
+			Route::get('/products/active', 'productlist')->name('products.active');
+			Route::get('/products/inactive', 'productlist')->name('products.inactive');
+			Route::get('/getProductCounts', 'getProductCounts')->name('ajax.getProductCounts');
+			
+			// POST routes for product-related actions
+			Route::post('/productcategorylist', 'productcategorylist')->name('productcategorylist');
+			Route::post('/generateproductcode', 'generateproductcode')->name('generateproductcode');
+			Route::post('/saveTaxrateData', 'saveTaxrateData')->name('saveTaxrateData');
+			Route::post('/taxratelist', 'taxratelist')->name('taxratelist');
+			Route::post('/account_code', 'account_code')->name('account_code');
+			Route::post('/saveproductdata', 'saveproductdata')->name('saveproductdata');
+			Route::post('/changeProductStatus', 'changeProductStatus')->name('changeProductStatus');
+			Route::post('/deleteProduct', 'deleteProduct')->name('deleteProduct');
+			Route::post('/getproductdata', 'getproductdata')->name('getproductdata');
+			
+			// POST routes for product image actions
+			Route::post('/getproductimage', 'getproductimage')->name('getproductimage');
+			Route::post('/saveproductimages', 'saveproductimages')->name('saveproductimages');
+			Route::post('/deleteproductimage', 'deleteproductimage')->name('deleteproductimage');
+			
+			// Additional POST route
+			Route::post('/getProductList', 'getProductList')->name('ajax.getProductList');
+		});
 		
-	});
+
+		Route::controller(ProductGroupController::class)->prefix('item')->name('item.')->group(function () {
+    
+			// GET routes
+			Route::get('/item-groups', 'productGroupList');
+
+			// post routes
+			Route::post('/saveProductGroup', 'saveProductGroup')->name('ajax.saveProductGroup');
+	
+		});
 
 
 	// ------------- Personal Management - My profile ---------------------// 
@@ -592,7 +631,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	//not
 	Route::match(['get', 'post'], '/service/dynamic-forms', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@index');
-
+	Route::post('/saveFormDotIoImage', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@saveFormDotIoImage')->name('saveFormDotIoImage');
 	Route::post('/service/dynamic-form/save', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@save_form');
 	Route::post('/service/dynamic-form/edit', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@edit_form');
 	Route::post('/service/dynamic-form/view/pattern', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@view_form_pattern');
@@ -1478,6 +1517,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	//form-builder
 	Route::match(['get', 'post'], '/form-builder', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@index');
 	Route::match(['get', 'post'], '/form-builder/add', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@add');
+
+	
 	Route::match(['get', 'post'], '/form-builder/edit/{form_id}', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@edit');
 	Route::match(['get', 'post'], '/form-builder/delete/{form_id}', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@delete');
 

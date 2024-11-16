@@ -63,6 +63,10 @@ class Product extends Model
     }
 
     public static function getProductList($type){
-        return self::join('product_categories', 'products.cat_id', '=','product_categories.id')->where('product_type', $type)->select('products.id','products.cat_id', 'products.product_code', 'products.product_name', 'product_categories.name', 'products.description')->get();
+        return self::join('product_categories', 'products.cat_id', '=','product_categories.id')->where('product_type', $type)->select('products.id','products.cat_id', 'products.product_code', 'products.product_name', 'product_categories.name', 'products.description')->where('products.deleted_at', null)->where('products.status', 1)->get();
+    }
+
+    public static function getProductListCountType($type){
+        return self::where('product_type', $type)->where('deleted_at', null)->where('status', 1)->count();
     }
 }

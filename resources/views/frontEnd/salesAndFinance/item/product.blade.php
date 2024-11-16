@@ -24,7 +24,7 @@
         {{-- <div id="importExportpopup" class="importExportMrgin">
             <div class="popup-content">
                 <div class="popupTitle">
-                    <span class="">Import/Export - Produc</span>
+                    <span class="">Import/Export - Product</span>
                     <span class="close" id="closeimportExportPopup">&times;</span>
                 </div>
                 <div class="contantbodypopup">
@@ -46,14 +46,10 @@
                                             <label class="col-form-label">Download an empty template to add new products or prices</label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <label class="importTemp">Product & price <a href="#!">
-                                                            <span class="material-symbols-outlined">download</span>
-                                                        </a> </label>
+                                                    <label class="importTemp">Product & price <a href="#!"> <span class="material-symbols-outlined">download</span></a></label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label class="importTemp"> Supplier & price <a href="#!">
-                                                            <span class="material-symbols-outlined">download</span>
-                                                        </a> </label>
+                                                    <label class="importTemp"> Supplier & price <a href="#!"> <span class="material-symbols-outlined">download</span> </a> </label>
                                                 </div>
                                             </div>
                                         </div>
