@@ -18,7 +18,7 @@ class Crm_customer_call extends Model
         );
     }
     public static function getAllcrmlist($id){
-        return self::where('customer_id',$id)->get();
+        return self::where('customer_id', $id);
     }
     
 }
