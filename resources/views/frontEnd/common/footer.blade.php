@@ -21,19 +21,25 @@
 
 <script>
   function upload() {
-    var imgcanvas = document.getElementById("canv1");
-    // var imgcanvas2 = document.getElementById("canv2");
-    imgcanvas.style.display = "block";
-    // imgcanvas2.style.display = "block";
     var fileinput = document.getElementById("finput");
-    console.log(fileinput);
     var image = new SimpleImage(fileinput);
-
     console.log("Image name:", image);
     const fileName = fileinput.files[0].name;
 
     const formData = new FormData();
     formData.append('image', fileinput.files[0]);
+
+    const reader = new FileReader();
+
+    // When the file is loaded, set the image source to the file's data
+    reader.onload = function(e) {
+      const preview = document.getElementById('formImagePreview');
+      console.log(preview);
+      preview.src = e.target.result;
+      preview.style.display = 'block'; // Show the image
+    };
+
+    reader.readAsDataURL(fileinput.files[0]);
 
     fetch('{{ route("saveFormDotIoImage") }}', {
         method: 'POST',
@@ -50,7 +56,6 @@
             elements.forEach(element => {
                 element.value =  data.file_path;
             });
-
             // alert('Image uploaded successfully!');
         } else {
             alert('Failed to upload image: ' + data.message);
@@ -60,32 +65,35 @@
         console.error('Error:', error);
         alert('An error occurred while uploading the image.');
     });
-    // document.getElementById('uploded_image') = fileName;
-    console.log("File Name:", fileName);
-    image.drawTo(imgcanvas);
-    // image.drawTo(imgcanvas2);
-    
   } 
 
   function uploadImageFun() {
-    var imgcanvas = document.getElementById("canv2");
-    // var imgcanvas2 = document.getElementById("canv2");
-    imgcanvas.style.display = "block";
-    // imgcanvas2.style.display = "block";
+ 
     var fileinput = document.getElementById("finput2");
     console.log(fileinput);
     var image = new SimpleImage(fileinput);
 
     console.log("Image name:", image);
-    const fileName = fileinput.files[0].name;
+    const fileName2 = fileinput.files[0].name;
 
-    document.getElementById('previousImage').style.display = "none";
-    const formData = new FormData();
-    formData.append('image', fileinput.files[0]);
+    const formDataEdit = new FormData();
+    formDataEdit.append('image', fileinput.files[0]);
+
+    const reader = new FileReader();
+
+    // When the file is loaded, set the image source to the file's data
+    reader.onload = function(e) {
+      const preview2 = document.getElementById('previousImage');
+      console.log(preview2);
+      preview2.src = e.target.result;
+      preview2.style.display = 'block'; // Show the image
+    };
+
+    reader.readAsDataURL(fileinput.files[0]);
 
     fetch('{{ route("saveFormDotIoImage") }}', {
         method: 'POST',
-        body: formData,
+        body: formDataEdit,
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token
         }
@@ -99,7 +107,6 @@
               elements.value = "";
                 element.value =  data.file_path;
             });
-
             // alert('Image uploaded successfully!');
         } else {
             alert('Failed to upload image: ' + data.message);
@@ -109,10 +116,7 @@
         console.error('Error:', error);
         alert('An error occurred while uploading the image.');
     });
-    // document.getElementById('uploded_image') = fileName;
-    console.log("File Name:", fileName);
-    image.drawTo(imgcanvas);
-    // image.drawTo(imgcanvas2);
+    console.log("File Name:", fileName2);
     
   } 
 

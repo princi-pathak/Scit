@@ -197,13 +197,13 @@
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Cost Price</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="cost_price" id="inputCity" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
+                                        <input type="text" class="form-control editInput" name="cost" id="inputCity" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Price</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" id="price" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
+                                        <input type="text" class="form-control editInput" id="price" name="price" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
                                     </div>
                                 </div>
                             </div>
@@ -212,7 +212,8 @@
                                 <div class="mb-3 row">
                                     <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control editInput" id="" placeholder="Type to add product">
+                                        <input type="text" class="form-control editInput" id="search-product" placeholder="Type to add product">
+                                        <div class="parent-container"></div>
                                     </div>
                                     <div class="col-sm-7">
                                         <div class="plusandText">
@@ -225,7 +226,7 @@
                                     </div>
                                 </div>
                                 <div class="productDetailTable">
-                                    <table class="table" id="containerA">
+                                    <table class="table" id="productListTable">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Code</th>
@@ -238,11 +239,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td colspan="7">
-                                                    <label class="red_sorryText"> Sorry, no records to show </label>
-                                                </td>
-                                            </tr>
+                                          
                                         </tbody>
                                     </table>
                                 </div>
@@ -263,11 +260,7 @@
 
 <script>
     function saveProductGroup() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+
         FormData = $('#add_product_group_form').serialize();
         $.ajax({
             url: '{{ route("item.ajax.saveProductGroup") }}',
@@ -293,6 +286,197 @@
             }
         });
     }
+
+    $(document).ready(function() {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#search-product').on('keyup', function() {
+            // alert();
+            let query = $(this).val();
+            const divList = document.querySelector('.parent-container');
+
+            if (query === '') {
+                // If search input is blank, clear the list
+                divList.innerHTML = '';
+            }
+
+            // Make an AJAX call only if query length > 2
+            if (query.length > 2) {
+                $.ajax({
+                    url: "{{ route('item.ajax.searchProduct') }}", // Laravel route
+                    method: 'GET',
+                    data: {
+                        query: query
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // $('#results').html(response);
+                        divList.innerHTML = "";
+                        const div = document.createElement('div');
+                        div.className = 'container'; // Optional: Add a class to the div for styling
+
+                        // Step 2: Create a ul (unordered list)
+                        const ul = document.createElement('ul');
+                        ul.id = "productList";
+                        // Step 3: Loop through the data and create li (list item) for each entry
+                        response.forEach(item => {
+                            const li = document.createElement('li'); // Create a new li element
+                            li.textContent = item.product_name; // Set the text of the li item
+                            li.id = item.id;
+                            li.className = "editInput";
+                            ul.appendChild(li); // Append the li to the ul
+                        });
+
+                        // Step 4: Append the ul to the div
+                        div.appendChild(ul);
+
+                        // Step 5: Append the div to the parent container in the HTML
+                        divList.appendChild(div);
+
+                        ul.addEventListener('click', function(event) {
+                            // Check if the clicked element is an <li> (to avoid triggering on other child elements)
+                            if (event.target.tagName.toLowerCase() === 'li') {
+                                const selectedId = event.target.id; // Get the ID of the clicked <li>
+                                console.log('Selected Product ID:', selectedId); // Print the ID of the selected product
+                                getProductData(selectedId);
+                            }
+                        });
+
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            } else {
+                $('#results').empty(); // Clear results if the input is empty
+            }
+        });
+
+    });
+
+    function getProductData(selectedId) {
+        $.ajax({
+            url: '{{ route("item.ajax.getProductFromId") }}',
+            method: 'Post',
+            data: {
+                id: selectedId
+            },
+            success: function(response) {
+                console.log(response);
+                populateTable(response.data, 'productListTable');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
+    function populateTable(data, tableId) {
+        // Get the table body element
+        const tableBody = document.querySelector(`#${tableId} tbody`);
+
+        // Check if data array is empty
+        if (data.length === 0) {
+            // Create a row to display the "No products found" message
+            const noDataRow = document.createElement('tr');
+            const noDataCell = document.createElement('td');
+
+            // Span across all columns in the table (adjust the colspan if your table has more columns)
+            noDataCell.setAttribute('colspan', 4);
+            noDataCell.textContent = 'No products found';
+            noDataCell.style.textAlign = 'center'; // Center the message
+
+            // Append the cell to the row and the row to the table body
+            noDataRow.appendChild(noDataCell);
+            tableBody.appendChild(noDataRow);
+        } else {
+            // Populate rows as usual if data is not empty
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                // Create cells and append them to the row
+                const codeCell = document.createElement('td');
+                codeCell.textContent = item.product_code;
+                row.appendChild(codeCell);
+
+                // Create a hidden input field for the product ID
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.className = 'product_id';
+                hiddenInput.name = 'product_ids[]'; // For form submission
+                hiddenInput.value = item.id; // Set the product ID
+                row.appendChild(hiddenInput);
+
+                const nameCell = document.createElement('td');
+                nameCell.innerHTML = item.product_name;
+                row.appendChild(nameCell);
+
+                const costCell = document.createElement('td');
+                const inputCost = document.createElement('input');
+                inputCost.type = 'text'; // Set input type
+                inputCost.className = 'cost_price';
+                inputCost.name = 'cost_price'; // Set input name (useful for form submission)
+                inputCost.value = item.cost_price; // Set the default value (optional)
+                costCell.appendChild(inputCost);
+                row.appendChild(costCell);
+
+                const priceCell = document.createElement('td');
+                const inputPrice = document.createElement('input');
+                inputPrice.type = 'text'; // Set input type
+                inputPrice.className = 'price';
+                inputPrice.addEventListener('input', function() {
+                    updateAmount(row);
+                });
+                inputPrice.name = 'price'; // Set input name (useful for form submission)
+                inputPrice.value = item.price; // Set the default value (optional)
+                priceCell.appendChild(inputPrice);
+                row.appendChild(priceCell);
+
+                const qtyCell = document.createElement('td');
+                const inputQty = document.createElement('input');
+                inputQty.type = 'text'; // Set input type
+                inputQty.className = 'qty';
+                inputQty.addEventListener('input', function() {
+                    updateAmount(row);
+                });
+                inputQty.name = 'qty'; // Set input name (useful for form submission)
+                inputQty.value = '1'; // Set the default value (optional)
+                qtyCell.appendChild(inputQty);
+                row.appendChild(qtyCell);
+
+                const amountCell = document.createElement('td');
+                amountCell.innerHTML = item.price;
+                amountCell.className = "price";
+                row.appendChild(amountCell);
+
+                const deleteCell = document.createElement('td');
+                deleteCell.innerHTML = '<i class="fas fa-times fa-2x" style="color: red;"></i>';
+                row.appendChild(deleteCell);
+
+                // Append the row to the table body
+                tableBody.appendChild(row);
+            });
+        }
+    }
+
+    // Function to update the amount in the row
+function updateAmount(row) {
+    const priceInput = row.querySelector('.price');
+    const qtyInput = row.querySelector('.qty');
+    const amountCell = row.querySelector('td:nth-last-child(2)'); // Assuming the last cell is the amount cell
+
+    const price = parseFloat(priceInput.value) || 0;  // Default to 0 if not a valid number
+    const qty = parseInt(qtyInput.value) || 0;        // Default to 0 if not a valid number
+
+    const amount = price * qty;  // Calculate the amount
+
+    amountCell.textContent = amount.toFixed(2); // Update the amount cell with the calculated amount
+}
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

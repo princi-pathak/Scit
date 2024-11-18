@@ -544,7 +544,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
         });
 
         $('.e-sbt-dyn-form-btn').click(function() {
-            alert("hello");
             var model_id = $(this).closest('.modal').attr('id');
             var previous_model_id = $(this).closest('.modal').find('.previous_modal_btn').attr('pre_modal');
             var logged_box = $('#' + previous_model_id).find('.logged-box');

@@ -69,4 +69,8 @@ class Product extends Model
     public static function getProductListCountType($type){
         return self::where('product_type', $type)->where('deleted_at', null)->where('status', 1)->count();
     }
+
+    public static function getProductFromId($id){
+        return self::where('id', $id)->select('product_name', 'cost_price', 'price', 'product_code', 'id')->get();
+    }
 }
