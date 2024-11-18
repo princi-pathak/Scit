@@ -11,6 +11,7 @@ class Constructor_additional_contact extends Model
     protected $table = 'constructor_additional_contacts';
 
     protected $fillable = [
+        'home_id',
         'customer_id',
         'contact_name',
         'job_title_id',
@@ -24,6 +25,7 @@ class Constructor_additional_contact extends Model
         'default_billing',
         'fax',
         'country_id',
+        'userType',
         'status',
     ];
 

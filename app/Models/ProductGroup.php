@@ -14,7 +14,6 @@ class ProductGroup extends Model
     protected $fillable = [
         'home_id',
         'user_id',
-        'home_id',
         'name',
         'description',
         'code',
@@ -23,7 +22,7 @@ class ProductGroup extends Model
         'status',
     ];
 
-    public static function saveProductGroup($data, $home_id){
-        return self::updateOrCreate(['id'=> $data->id ?? null],array_merge($data->all(), ['home_id' => $home_id]));
+    public static function saveProductGroup($data, $home_id, $user_id){
+        return self::updateOrCreate(['id'=> $data->id ?? null],array_merge($data->all(), ['home_id' => $home_id, 'user_id' => $user_id]));
     }
 }

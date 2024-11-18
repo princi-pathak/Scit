@@ -326,6 +326,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('save_crm_customer_complaints','save_crm_customer_complaints');
 		Route::post('get_all_crm_customer_complaint','get_all_crm_customer_complaint');
 		Route::post('get_all_crm_customer_contacts','get_all_crm_customer_contacts');
+		Route::post('getAllCustomerList','getAllCustomerList');
+		Route::post('getAllSupplierList','getAllSupplierList');
+		Route::post('getAllUserList','getAllUserList');
+		Route::post('GetCustomerWithContact','GetCustomerWithContact');
 	});
 
 	// General section Front 
@@ -570,6 +574,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			
 			// Additional POST route
 			Route::post('/getProductList', 'getProductList')->name('ajax.getProductList');
+
+			Route::get('/searchProduct', 'searchProduct')->name('ajax.searchProduct');
+			Route::post('/getProductFromId', 'getProductFromId')->name('ajax.getProductFromId');
+			
 		});
 		
 
@@ -580,6 +588,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 			// post routes
 			Route::post('/saveProductGroup', 'saveProductGroup')->name('ajax.saveProductGroup');
+		
+			
 	
 		});
 
