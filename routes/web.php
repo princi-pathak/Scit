@@ -570,6 +570,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			
 			// Additional POST route
 			Route::post('/getProductList', 'getProductList')->name('ajax.getProductList');
+
+			Route::get('/searchProduct', 'searchProduct')->name('ajax.searchProduct');
+			Route::post('/getProductFromId', 'getProductFromId')->name('ajax.getProductFromId');
+			
 		});
 		
 
@@ -580,6 +584,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 			// post routes
 			Route::post('/saveProductGroup', 'saveProductGroup')->name('ajax.saveProductGroup');
+		
+			
 	
 		});
 
