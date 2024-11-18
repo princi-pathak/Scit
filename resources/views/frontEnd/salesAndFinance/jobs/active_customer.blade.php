@@ -1390,7 +1390,7 @@
                                 <div class="col-sm-3">
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
-                                            <input type="text" class="form-control editInput" placeholder="Keyword to search" name="email">
+                                            <input type="text" class="form-control editInput search_data_email" onkeyup="searchDataWithEmail('Complaints')" placeholder="Keyword to search" name="email">
                                             <button type="button" class="input-group-text editInput">Search</button>
                                         </div>
                                     </form>
@@ -2141,7 +2141,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="mb-3 mt-3">
-                                        <button type="button" class="profileDrop contact_add" id="search_contacts">Add Contact</button>
+                                        <button type="button" class="profileDrop" onclick="get_contactModal(1)" id="search_contacts">Add Contact</button>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
@@ -2207,7 +2207,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="mb-3 mt-3">
-                                        <button type="button" class="profileDrop contact_add" id="search_contacts">Add Contact</button>
+                                        <button type="button" class="profileDrop" onclick="get_contactModal(2)" id="search_contacts">Add Contact</button>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
@@ -2237,6 +2237,10 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
+                                <div class="col-sm-12 d-flex justify-content-end mt-4">
+                                    <button type="button" class="profileDrop me-2" onclick="insertSelectedContact()">Insert</button>
+                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -2270,7 +2274,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="mb-3 mt-3">
-                                        <button type="button" class="profileDrop contact_add" id="search_contacts">Add Contact</button>
+                                        <button type="button" class="profileDrop" onclick="get_contactModal(3)" id="search_contacts">Add Contact</button>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
@@ -2301,6 +2305,10 @@
                                         </table>
                                     </div>
                                 </div>
+                                <div class="col-sm-12 d-flex justify-content-end mt-4">
+                                    <button type="button" class="profileDrop me-2" onclick="insertSelectedContact()">Insert</button>
+                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2327,8 +2335,9 @@
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <div class="formDtail">
                                         <form id="contact_form">
+                                            <input type="hidden" id="userType" value="1">
                                             <div class="mb-2 row">
-                                                <label for="inputProject" class="col-sm-3 col-form-label">Customer<span class="radStar">*</span></label>
+                                                <label for="inputProject" class="col-sm-3 col-form-label CustomerLabel">Customer<span class="radStar">*</span></label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control editInput selectOptions" id="contact_customer_id">
                                                         <option selected disabled>Select Customer</option>
@@ -2983,8 +2992,7 @@ job_input.addEventListener('input', function() {
             $('#task_type_modal').modal('show');
         });
         $('.search_contacts').on('click', function(){
-            var id=$('.customer_id').val();
-            GetCustomerWithAlldetails(id);
+            GetCustomerWithContact();
             $("#search_contactsModal").modal('show');
         })
 
@@ -3018,8 +3026,61 @@ job_input.addEventListener('input', function() {
             $("#job_modaltitle").modal('show');
         });
         $(".contact_add").on('click', function(){
+            $('#contact_form')[0].reset();
+            $("#contact_address").val('');
             $('#contact_modal').modal('show');
         });
+        function get_contactModal(userType){
+            $('#contact_form')[0].reset();
+            $("#userType").val(userType);
+            var url='';
+            var CustomerLabel='';
+            if(userType == 1){
+                CustomerLabel='Customer<span class="radStar">*</span>';
+                url='{{ url("getAllCustomerList") }}';
+            }else if(userType == 2){    
+                CustomerLabel='Supplier<span class="radStar">*</span>';
+                url='{{ url("getAllSupplierList") }}';
+            }else{
+                CustomerLabel='User<span class="radStar">*</span>';
+                url='{{ url("getAllUserList") }}';
+            }
+            $('.CustomerLabel').html(CustomerLabel);
+            var token='<?php echo csrf_token();?>'
+            $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {_token:token},
+                    success: function(data) {
+                        console.log(data);
+                         if(data.success){
+                            var data = data.data;
+                            var selectBody = $("#contact_customer_id"); 
+                            selectBody.empty();
+                            var contact_html='<option selected disabled>Please Select</option>';
+                            if(userType == 1){
+                                data.forEach(function(item) {
+                                    contact_html+='<option value="'+ item.id +'">'+ item.name +'</option>';
+                                });
+                            }else if(userType == 2){    
+                               data.forEach(function(item) {
+                                contact_html+='<option value="'+ item.id +'">'+ item.name +'</option>';
+                                });
+                            }else{
+                                data.forEach(function(item) {
+                                    contact_html+='<option value="'+ item.id +'">'+ item.name +'</option>';
+                                });
+                            }
+                            selectBody.html(contact_html);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            $("#contact_address").val('');
+            $('#contact_modal').modal('show');
+        }
         
         function getCRMTypeData() {
         $.ajax({
@@ -4057,6 +4118,7 @@ job_input.addEventListener('input', function() {
         var country=$("#contact_country_input").val();
         var postcode=$("#contact_pincode").val();
         var country_id=$("#contact_country_id").val();
+        var userType=$("#userType").val();
         if(customer_id == '' || customer_id == null){
             $("#contact_customer_id").css('border','1px solid red');
             return false;
@@ -4075,13 +4137,14 @@ job_input.addEventListener('input', function() {
             $.ajax({
                 type: "POST",
                 url: "{{url('/contact_save')}}",
-                data: {country_id:country_id,postcode:postcode,country:country,city:city,address:address,fax:fax,mobile:mobile,telephone:telephone,email:email,job_title_id:job_title_id,contact_name:contact_name,customer_id:customer_id,default_billing:default_billing,_token:token},
+                data: {userType:userType,country_id:country_id,postcode:postcode,country:country,city:city,address:address,fax:fax,mobile:mobile,telephone:telephone,email:email,job_title_id:job_title_id,contact_name:contact_name,customer_id:customer_id,default_billing:default_billing,_token:token},
                 success: function(data) {
                     console.log(data);
                     $("#contact_modal").modal('hide');
                     $("#notes_contact").append(data);
                     $("#comaplint_contact").append(data);
-                    get_all_crm_customer_contacts(customer_id,pageUrl = '{{ url("get_all_crm_customer_contacts") }}');
+                    get_all_crm_customer_contacts(customer_id,pageUrl = '{{ url("get_all_crm_customer_contacts") }}');   
+                    GetCustomerWithContact();
                 }
             });
         }
@@ -4121,34 +4184,42 @@ job_input.addEventListener('input', function() {
             }
         });
     }
-    function GetCustomerWithAlldetails(id){
-        var customer_id = id;
+    function GetCustomerWithContact(){
         var token = '<?php echo csrf_token(); ?>'
         $.ajax({
             type: "POST",
-            url: "{{url('get_customer_details_front')}}",
+            url: "{{url('GetCustomerWithContact')}}",
             data: {
-                customer_id: customer_id,
                 _token: token
             },
-            success: function(data) {
-                console.log(data);
-                
-                if (data.customers && data.customers.length > 0) {
-                var customerData = data.customers[0];
-
-                // Populate contact options
-                var contact = '';
-                if (customerData.additional_contact && Array.isArray(customerData.additional_contact)) {
-                    for (let i = 0; i < customerData.additional_contact.length; i++) {
-                        contact += '<tr onclick="select_row(this, ' + customerData.additional_contact[i].id + ', \'' + customerData.additional_contact[i].contact_name + '\')" class="contact-row"><td>CUSTOMER</td><td>' + customerData.name + '</td><td>' + customerData.name + '</td><td>' + (customerData.additional_contact[i].contact_name ?? "") + '</td><td>' + (customerData.additional_contact[i].email ?? "") + '</td><td>' + (customerData.additional_contact[i].telephone ?? "") + '</td><td>' + (customerData.additional_contact[i].mobile ?? "") + '</td></tr>';
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if (response.data.length > 0) {
+                var ContactData=response.data;
+                // console.log(customerData);return false;
+                var customer_contact = '';
+                var supplier_contact = '';
+                var user_contact = '';
+                for (let i = 0; i < ContactData.length; i++) {
+                    var customerData = ContactData[i].customers;
+                    var user=ContactData[i].user;
+                    if(ContactData[i].userType == 1){
+                        customer_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>CUSTOMER</td><td>' + customerData.name + '</td><td>' + (customerData.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
+                    }else if(ContactData[i].userType == 2){
+                        supplier_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>Supplier</td><td>' + customerData.name + '</td><td>' + (customerData.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
+                    }else if(ContactData[i].userType == 3){
+                        user_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>User</td><td>' + user.name + '</td><td>' + (user.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
+                    }else{
+                        alert("Something is wrong");
+                        return false;
                     }
+                    
                 }
-                document.getElementById('customer_contact_list').innerHTML = contact;
-            }
-
-
-
+                document.getElementById('customer_contact_list').innerHTML = customer_contact;
+                document.getElementById('supplier_contact_list').innerHTML = supplier_contact;
+                document.getElementById('user_contact_list').innerHTML = user_contact;
+                }
             },
             error: function(xhr, status, error) {
                 console.log(error);
@@ -4251,6 +4322,17 @@ job_input.addEventListener('input', function() {
     setupPagination();
 }
 
+</script>
+<!-- Searching Via Email data -->
+<script>
+function searchDataWithEmail(text){
+    var search_data_email=$('.search_data_email').val();
+    if(search_data_email.length > 3){
+        if(text == 'Complaints'){
+            alert(search_data_email)
+        }
+    }
+}
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor5-build-classic/ckeditor.js"></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

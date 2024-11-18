@@ -215,7 +215,6 @@
         $.ajax({
             url: '{{ route("item.ajax.getCategoriesList") }}',
             method: 'GET',
-            // data: formData,
             success: function(response) {
                 console.log(response);
                 var productCat = document.getElementById('product_categories');
@@ -291,6 +290,15 @@
                 const codeCell = document.createElement('td');
                 codeCell.textContent = item.product_code;
                 row.appendChild(codeCell);
+                // Create a hidden input field for the product ID
+
+               // Create a hidden input field for the product ID
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.className  = 'product_id';
+                hiddenInput.name = 'product_ids[]'; // For form submission
+                hiddenInput.value = item.id; // Set the product ID
+                row.appendChild(hiddenInput);
 
                 const categoryCell = document.createElement('td');
                 categoryCell.innerHTML = item.name;

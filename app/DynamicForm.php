@@ -56,20 +56,19 @@ class DynamicForm extends Model //FormBuilder
             $formdata .= "<input type='hidden' value='" . $form_builder_id . "' id='formid'>";
             $formdata .= "<input type='hidden' value='" . $home_id . "' id='home_id'>";
             $formdata .= "<input type='hidden' value='.$form_pattern.' id='getdatamodel'>";
-            // $formdata .= "<input type='hidden' value='". $form->image."' id='imageName'>";
 
-
-            $path ="public/images/formio/";
             if($form->is_image == "1"){
-                $formdata .= '   <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                  <div class="uploadimg222">
-                                    <input type="hidden" name="formImage" class="uploded_image">                           
-                                        <canvas id="canv1" style="height: 80px; display :none"></canvas>
-                                            <input type="file" multiple="false" accept="image/*" name="form_image" class="form-control finput" id="finput" onchange="upload()">
+                $formdata .= '  <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="uploadimg222">
+                                        <input type="hidden" name="formImage" class="uploded_image">                           
+                                        <div id="previewContainer" style="overflow: hidden; margin-bottom: 20px;">
+                                            <img id="formImagePreview" style="display :none; width:100%;" alt="Image Preview">  
+                                        </div>
+                                        <input type="file" multiple="false" accept="image/*" name="form_image" class="form-control finput" id="finput" onchange="upload()">
                                     </div> 
                                 </div>';
-            }
-            
+                            }
+
             //  echo "<pre>";   print_r($form->alert_field);  echo "<pre>";
             if ($form->alert_field == '1') {
                 $static_field = '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
@@ -150,8 +149,8 @@ class DynamicForm extends Model //FormBuilder
             }
             $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12 cog-panel' id='formiotest'></div>";
             $formdata .= '';
-        
-            
+
+         
             $result['response']         = true;
             $result['form_builder_id']  = $form_builder_id;
             $result['pattern']          = $formdata;
@@ -249,31 +248,23 @@ class DynamicForm extends Model //FormBuilder
             $formdata .= $static_fields;
             $total_fields = 0;
             $formdata .= "<input type='hidden' value='" . $dynamic_form_id . "' id='dynamic_form_idformio'>";
-            // $formdata .= "<input type='hidden' value='". $form_builder->image."' id='imageName'>";
 
-            // if(!empty($form_info->image)){
-            //     $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12" id="formiotestimage">
-            //                     <div class="uploadPopImg mt-0 hideImageDiv" ><img class="my-2 imagePreview" src="'.asset('public/images/formio/' . $form_info->image).'" width="100px"></div>
-            //                 </div>';    
-            // }
-
+      
             if($form_builder->is_image == "1"){
 
-                $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                    <div class="uploadimg222">';
+                $formdata .='<div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                <div class="uploadimg222">
+                                    <input type="hidden" name="formImage" class="uploded_image">                           
+                                    <div id="previewContainer2" style="overflow: hidden; margin-bottom: 20px;">';
+                                        // Check if a previous image exists
+                                        if (!empty($form_info->image_path)) {
+                                            $formdata .= '<img src="'.url("/public/".$form_info->image_path).'" alt="Uploaded Image" id="previousImage" style=" width:100%;">';
+                                        }
 
-                // Check if a previous image exists
-                if (!empty($form_info->image_path)) {
-                    $formdata .= '<img src="'.url("/public/".$form_info->image_path).'" alt="Uploaded Image" id="previousImage" style="height: 80px; ">';
-                }
-
-                $formdata .= '
-                    <input type="hidden" name="formImage" class="uploded_image">                           
-                    <canvas id="canv2" style="height: 80px; display:none;"></canvas>
-                    <input type="file" multiple="false" accept="image/*" name="form_image" class="form-control finput" id="finput2" onchange="uploadImageFun()">
-                    </div>
-                </div>';
-                
+                $formdata .= '      </div>
+                                    <input type="file" multiple="false" accept="image/*" name="form_image" class="form-control finput" id="finput2" onchange="uploadImageFun()">
+                                </div>
+                            </div>';
             }
             
             //echo '<pre>'; print_r($static_fields); die;
