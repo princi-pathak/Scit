@@ -684,7 +684,10 @@ class JobController extends Controller
     }
     public function contact_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $insert=Constructor_additional_contact::saveCustomerAdditional($request->all());
+        $data=$request->all();
+        $data['home_id']=Auth::user()->home_id;
+        // echo "<pre>";print_r($data);die;
+        $insert=Constructor_additional_contact::saveCustomerAdditional($data);
         $data=Constructor_additional_contact::find($insert);
         if($data){
             if($data->status ==1){
