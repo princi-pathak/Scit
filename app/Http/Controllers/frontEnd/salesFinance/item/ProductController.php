@@ -351,5 +351,26 @@ class ProductController extends Controller
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data.'
         ]);
-    }   
+    }  
+    
+    public function searchProduct(Request $request){
+        $query = $request->get('query');
+
+        // Fetch data from database (replace `YourModel` with your actual model)
+        $results = Product::where('product_name', 'LIKE', "%{$query}%")->select('id', 'product_name')->get();
+
+        // Return the results as JSON or a rendered view
+        return response()->json($results); // For JSON response
+    }
+
+    public function getProductFromId(Request $request){
+       $data =  Product::getProductFromId($request->id);
+
+       return response()->json([
+        'success' => (bool) $data,
+        'data' => $data ? $data : 'No data.'
+    ]);
+
+    }
+
 }
