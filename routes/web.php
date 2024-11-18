@@ -326,6 +326,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('save_crm_customer_complaints','save_crm_customer_complaints');
 		Route::post('get_all_crm_customer_complaint','get_all_crm_customer_complaint');
 		Route::post('get_all_crm_customer_contacts','get_all_crm_customer_contacts');
+		Route::post('getAllCustomerList','getAllCustomerList');
+		Route::post('getAllSupplierList','getAllSupplierList');
+		Route::post('getAllUserList','getAllUserList');
+		Route::post('GetCustomerWithContact','GetCustomerWithContact');
 	});
 
 	// General section Front 

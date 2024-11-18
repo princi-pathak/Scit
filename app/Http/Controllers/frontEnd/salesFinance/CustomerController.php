@@ -107,8 +107,10 @@ class CustomerController extends Controller
     public function save_contact(Request $request)
     {
         // echo "<pre>";print_r($request->all());die;
+        $data=$request->all();
+        $data['auth_login_id']=Auth::user()->home_id;
         try {
-            $customer = Constructor_additional_contact::saveCustomerAdditional($request->all());
+            $customer = Constructor_additional_contact::saveCustomerAdditional($data);
             echo "done";
         } catch (\Exception $e) {
             Log::error('Error saving Tag: ' . $e->getMessage());
@@ -988,6 +990,44 @@ class CustomerController extends Controller
                     'prev_page_url' => $contact_list->previousPageUrl(),
                 ]
         ]);
+    }
+    public function GetCustomerWithContact(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id = Auth::user()->home_id;
+        // if($customer_id->userType == 1){
+        //     $data=Constructor_additional_contact::where('customer_id',$customer_id)->orderBy('id', 'desc')->paginate(10);
+        // }else if($customer_id->userType == 1)
+        $contact=Constructor_additional_contact::where('home_id',$home_id)->orderBy('id', 'desc')->get();
+        // echo "<pre>";print_r($contact);die;
+        $arrya=array();
+        foreach($contact as $val){
+            $customer_id=Customer::find($val->customer_id);
+            $user=User::find($val->customer_id);
+            $data[]=[
+                'customers'=>$customer_id,
+                'user'=>$user,
+                'id'=>$val->id,
+                'home_id'=>$val->home_id,
+                'customer_id'=>$val->customer_id,
+                'contact_name'=>$val->contact_name,
+                'email'=>$val->email,
+                'telephone'=>$val->telephone,
+                'mobile'=>$val->mobile,
+                'userType'=>$val->userType
+            ];
+        }
+        return response()->json(['success'=>true,'data'=>$data]);
+        
+    }
+    public function getAllCustomerList(Request $request){
+        $home_id = Auth::user()->home_id;
+        $customer = Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
+        return response()->json(['success'=>true,'data'=>$customer]);
+    }
+    public function getAllUserList(Request $request){
+        $home_id = Auth::user()->home_id;
+        $users = User::getHomeUsers($home_id);
+        return response()->json(['success'=>true,'data'=>$users]);
     }
    
 }
