@@ -1482,7 +1482,37 @@
                 <form action="" class="customerForm" id="CRM_calls_form">
                     @csrf
                     <div class="mb-2 row">
-                        <input type="hidden" name="call_customer_id" id="call_customer_id" class="customer_id">
+                        <label for="type_title" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <div class="col-form-label">
+                                <button type="button" class="profileDrop search_contacts" id="search_contacts">Search Contacts</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Customer<span class="radStar ">*</span></label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="call_customer_id" id="call_customer_id">
+                                @foreach($customer as $value)
+                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Contact </label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="call_contact" id="call_contact" class="notes_contact">
+                                
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="#!" class="formicon contact_add" id="contact_add"><i class="fa-solid fa-square-plus"></i></a>
+                        </div>
+
+                    </div>
+                    <div class="mb-2 row">
+                        <!-- <input type="hidden" name="call_customer_id" id="call_customer_id" class="customer_id"> -->
                         <label for="" class="col-sm-3 col-form-label">Direction </label>
                         <div class="col-sm-9">
                             <input class="form-check-input" type="radio" name="direction" id="direction_radio1" value="0" checked>
@@ -2646,6 +2676,7 @@ $('.delete_checkbox').on('click', function() {
             get_all_crm_customer_note(id,pageUrl = '{{ url("get_all_crm_customer_note") }}');
             get_all_crm_customer_complaint(id,pageUrl = '{{ url("get_all_crm_customer_complaint") }}');
             get_all_crm_customer_contacts(id,pageUrl = '{{ url("get_all_crm_customer_contacts") }}');
+            full_history();
         }
     }
     function get_customer_details(id){
@@ -2658,12 +2689,14 @@ $('.delete_checkbox').on('click', function() {
                     console.log(data)
                     $('.customer_name').text(data.customer.name);
                     $("#notes_customer_id").val(data.customer.id);
+                    $("#call_customer_id").val(data.customer.id);
                     $("#complaint_customer_id").val(data.customer.id);
                     // 
                     var selectHTML='';
                     $.each(data.contact, function(index, contact) {
                             selectHTML += '<option value="' + contact.id + '">' + contact.contact_name + '</option>';
                             $("#notes_contact").html(selectHTML);
+                            $("#call_contact").html(selectHTML);
                             $("#comaplint_contact").html(selectHTML);
                         });
                 },
@@ -3186,6 +3219,7 @@ job_input.addEventListener('input', function() {
                             const responseData = data.data[0]; 
                             get_all_crm_customer_call(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_call") }}');
                             $('#callsModal').modal('hide');
+                            full_history()
                         } else {
                             alert("Something went wrong");
                         }
@@ -3592,7 +3626,7 @@ job_input.addEventListener('input', function() {
 
                     // Append each row to the table body
                     // 
-                    // full_history(data);
+                    // full_history();
                     tableBody.append(html);
                 });
                 var paginationControlsClll = $("#pagination-controls-call");
@@ -4251,76 +4285,27 @@ job_input.addEventListener('input', function() {
             alert("Please select a contact row first.");
         }
     }
-    function full_history(data) {
-    var tableBody = $("#crm_customer_all_data");
-    const itemsPerPage = 10;
-    let currentPage = 1;
-
-    
-    function displayData(page) {
-        const startIndex = (page - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const itemsToShow = data.slice(startIndex, endIndex);
-
-        tableBody.empty();
-
-        itemsToShow.forEach(function(item) {
-            var date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
-
-            var visibilityCell = '';
-            if (item.customer_visibility === 0) {
-                visibilityCell = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
-            } else if (item.customer_visibility === 1) {
-                visibilityCell = '<span class="greenCheck"><i class="fa-solid fa-circle-check"></i></span>';
+    function full_history() {
+        var tableBody = $("#crm_customer_all_data");
+        var token = '<?php echo csrf_token(); ?>'
+        $.ajax({
+            type: "POST",
+            url: "{{url('GetFullHistory')}}",
+            data: {
+                _token: token
+            },
+            success: function(response) {
+                console.log(response);
+                return false;
+                if (response.data.length > 0) {
+                
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
             }
-
-            var html = '<tr>' +
-                '<td>' + date + '</td>' +
-                '<td>' + '<?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?>' + '</td>' +
-                '<td>' + (item.telephone || '-') + '</td>' +
-                '<td>' + (item.type || '-') + '</td>' +
-                '<td>' + (item.notes || '-') + '</td>' +
-                '<td>' + visibilityCell + '</td>' +
-                '<td>' +
-                    '<i class="fa fa-phone"></i> ' +
-                    '<i class="fa fa-envelope"></i> ' +
-                    '<i class="fa fa-list-ul"></i> ' +
-                    '<i class="fa fa-file"></i> ' +
-                    '<i class="fa fa-exclamation-triangle"></i>' +
-                '</td>' +
-            '</tr>';
-
-            tableBody.append(html);
         });
     }
-
-    function setupPagination() {
-        const pageCount = Math.ceil(data.length / itemsPerPage);
-        const pagination = $("#pagination");
-        pagination.empty();
-
-        for (let i = 1; i <= pageCount; i++) {
-            const pageItem = $('<li>').text(i);
-            pageItem.on('click', function() {
-                currentPage = i;
-                displayData(currentPage);
-                updatePagination();
-            });
-            pagination.append(pageItem);
-        }
-
-        updatePagination();
-    }
-
-    function updatePagination() {
-        const pageItems = $(".pagination li");
-        pageItems.removeClass('active');
-        pageItems.eq(currentPage - 1).addClass('active');
-    }
-
-    displayData(currentPage);
-    setupPagination();
-}
 
 </script>
 <!-- Searching Via Email data -->

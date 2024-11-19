@@ -190,7 +190,7 @@
                 </li> 
                 <!-- Sales and Finanace -->
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders')){ echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense')){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i>
                         <span>Sales & Finance</span>
                     </a>
@@ -199,6 +199,7 @@
                         <li class="{{ ($page == 'quotes') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/quotes') }}">Quotes </a></li>
                         <li class="{{ ($page == 'invoices') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Invoices </a></li>
                         <li class="{{ ($page == 'purchase_orders') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Purchase Orders </a></li>
+                        <li class="{{ ($page == 'Expense') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/expense') }}">Expenses </a></li>
                     </ul>
                 </li>
                 <!-- Jobs -->

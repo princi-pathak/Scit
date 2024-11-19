@@ -18,6 +18,7 @@ use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductGroupController;
 use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
+use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
 
 
 
@@ -330,6 +331,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('getAllSupplierList','getAllSupplierList');
 		Route::post('getAllUserList','getAllUserList');
 		Route::post('GetCustomerWithContact','GetCustomerWithContact');
+		Route::post('GetFullHistory','GetFullHistory');
 	});
 
 	// General section Front 
@@ -1849,6 +1851,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 		});
 	});
+	Route::controller(ExpenseControllerAdmin::class)->group(function() {
+		Route::prefix('sales-finance/expense')->group(function() {
+			Route::match(['get', 'post'],'/', 'index');
+		});
+	});
+	// Route::match(['get', 'post'], '/job_recurring_list', 'App\Http\Controllers\backEnd\JobsController@job_recurring_list');
 });
 
 //super admin path
