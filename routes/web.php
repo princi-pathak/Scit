@@ -304,7 +304,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/supplier_add', 'supplier_add');
 	});
 	Route::controller(ExpenseController::class)->group(function(){
-		Route::get('/expenses','expenses');
+		Route::match(['get','post'],'/expenses','expenses');
 		Route::post('/find_project','find_project');
 		Route::post('/find_job','find_job');
 		Route::post('/find_appointment','find_appointment');

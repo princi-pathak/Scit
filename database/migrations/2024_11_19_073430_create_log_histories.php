@@ -17,11 +17,9 @@ return new class extends Migration
             $table->string('taskId')->comment('this is tell about what action performed by user');
             $table->string('userId');
             $table->string('userType')->comment('1 Customer,2 Supplier,3 User');
-            $table->string('contactId')->nullable();
             $table->string('type');
-            $table->text('notes')->nullable();
+            $table->json('notes')->nullable();
             $table->string('status')->nullable();
-            $table->string('customerVisible')->nullable();
             $table->text('modelName');
             $table->softDeletes();
             $table->timestamps();

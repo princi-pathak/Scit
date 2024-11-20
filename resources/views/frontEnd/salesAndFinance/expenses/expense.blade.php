@@ -100,12 +100,21 @@
 
         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
             <div class="jobsection">
+                <?php 
+                    if($paidWithAuthCount>0){
+                        $paid_count=$paidWithAuthCount;
+                        $auth_count=$authorisedCount-$paidWithAuthCount;
+                    }else{
+                        $paid_count=$paidCount;
+                        $auth_count=$authorisedCount;
+                    }
+                ?>
                 <a href="#" class="profileDrop" onclick="modal_show()">Add</a>
-                <a href="#" class="profileDrop">Unauthorised (0)</a>
-                <a href="#" class="profileDrop">Authorised (0)</a>
-                <a href="#" class="profileDrop">Rejected (0)</a>
-                <a href="#" class="profileDrop">Paid (0)</a>
-                <a href="#" class="profileDrop">All (0)</a>
+                <a href="{{url('expenses?key=authorised&value=0')}}" class="profileDrop bgcolor" id="bgcolor1">Unauthorised ({{$unauthorisedCount}})</a>
+                <a href="{{url('expenses?key=authorised&value=1')}}" class="profileDrop bgcolor" id="bgcolor2">Authorised ({{$auth_count}})</a>
+                <a href="{{url('expenses?key=reject&value=1')}}" class="profileDrop bgcolor" id="bgcolor3">Rejected ({{$rejectCount}})</a>
+                <a href="{{url('expenses?key=paid&value=1')}}" class="profileDrop bgcolor" id="bgcolor4">Paid ({{$paid_count}})</a>
+                <a href="{{url('expenses')}}" class="profileDrop bgcolor" id="bgcolor5">All ({{$expenseCount}})</a>
                 <!-- <a href="#" class="profileDrop" id="impExpClickbtnPopup">Import/Export</a> -->
             </div>
         </div>
@@ -903,6 +912,24 @@ job_input.addEventListener('input', function() {
 </script>
 <script>
     $(document).ready(function(){
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+        const key = params.get('key');
+        const value = params.get('value');
+        console.log('Key:', key);
+        console.log('Value:', value);
+        $('.bgcolor').css("background-color","");
+        if (key === 'authorised' && value == 0) {
+            $("#bgcolor1").css("background-color", "#494949");
+        } else if (key === 'authorised' && value == 1) {
+            $("#bgcolor2").css("background-color", "#494949");
+        } else if (key === 'reject' && value == 1) {
+            $("#bgcolor3").css("background-color", "#494949");
+        } else if (key === 'paid' && value == 1) {
+            $("#bgcolor4").css("background-color", "#494949");
+        } else {
+            $("#bgcolor5").css("background-color", "#494949");
+        }
         setTimeout(function() {
             $('.alert').hide();
         }, 3000);

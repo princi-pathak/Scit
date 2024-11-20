@@ -4286,26 +4286,119 @@ job_input.addEventListener('input', function() {
         }
     }
     function full_history() {
-        var tableBody = $("#crm_customer_all_data");
-        var token = '<?php echo csrf_token(); ?>'
+    var tableBody = $("#crm_customer_all_data");
+    const itemsPerPage = 10;
+    let currentPage = 1;
+    let data = [];
+
+    // Fetch data from the server
+    function fetchData() {
+        const token = '{{ csrf_token() }}';
+
         $.ajax({
             type: "POST",
-            url: "{{url('GetFullHistory')}}",
+            url: "{{ url('GetFullHistory') }}",
             data: {
                 _token: token
             },
             success: function(response) {
                 console.log(response);
-                return false;
-                if (response.data.length > 0) {
-                
+                if (response.success && response.callHistoryData.length > 0) {
+                    data = response.callHistoryData;
+                    setupPagination();
+                    displayData(currentPage);
+                } else {
+                    tableBody.empty().append('<tr><td colspan="7" class="text-center">No history available</td></tr>');
+                    $("#pagination").empty();
                 }
             },
             error: function(xhr, status, error) {
-                console.log(error);
+                console.error("Error: ", error);
             }
         });
     }
+
+    // Display data in the table
+    function displayData(page) {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const itemsToShow = data.slice(startIndex, endIndex);
+
+        tableBody.empty();
+
+        itemsToShow.forEach(function(item) {
+            const date = moment(item.date).format('DD/MM/YYYY HH:mm');
+
+            // Visibility cell based on customer visibility status
+            var visibilityCell = '';
+            if (item.customer_visibility == 0) {
+                visibilityCell = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+            } else if (item.customer_visibility == 1) {
+                visibilityCell = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+            }
+
+            let notes = '';
+            try {
+                const notesObj = JSON.parse(item.notes); // Parsing the JSON stored in 'notes'
+
+                // If notes contains a message and send_as data
+                const message = notesObj.message || '';
+                const notify = notesObj.notify || 'Unknown';
+                const sendAs = notesObj.send_as ? notesObj.send_as.join(', ') : 'Unknown';
+
+                // Format the notes
+                notes = `${message}<br><b>Notify:</b> ${notify}<br><b>Send As:</b> ${sendAs}`;
+            } catch (e) {
+                console.error("Error parsing notes: ", e);
+                notes = item.notes || '-'; // If parsing fails, show the raw notes or default '-'
+            }
+
+            const html = '<tr>' +
+                '<td>' + date + '</td>' +
+                '<td>' + item.by + '</td>' +
+                '<td>' + (item.contact || '-') + '</td>' +
+                '<td>' + (item.type || '-') + '</td>' +
+                '<td>' + notes + '</td>' +  // Display formatted notes
+                '<td></td>' + // Empty column, customize as needed
+                '<td>' + visibilityCell + '</td>' +
+            '</tr>';
+
+            tableBody.append(html);
+        });
+    }
+
+    // Set up pagination
+    function setupPagination() {
+        const pageCount = Math.ceil(data.length / itemsPerPage);
+        const pagination = $("#pagination");
+        pagination.empty();
+
+        for (let i = 1; i <= pageCount; i++) {
+            const pageItem = $('<li>').text(i).addClass('page-item');
+            if (i === currentPage) {
+                pageItem.addClass('active');
+            }
+            pageItem.on('click', function() {
+                currentPage = i;
+                displayData(currentPage);
+                updatePagination();
+            });
+            pagination.append(pageItem);
+        }
+
+        updatePagination();
+    }
+
+    // Update the pagination UI
+    function updatePagination() {
+        $("#pagination li").removeClass('active');
+        $("#pagination li").eq(currentPage - 1).addClass('active');
+    }
+
+    fetchData(); // Call fetchData to load the data when the page loads
+}
+
+
 
 </script>
 <!-- Searching Via Email data -->

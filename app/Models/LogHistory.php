@@ -9,7 +9,7 @@ class LogHistory extends Model
 {
     use HasFactory;
     protected $table="log_histories";
-    protected $fillable=['home_id', 'taskId', 'userId', 'userType', 'contactId', 'type', 'notes', 'status', 'customerVisible', 'modelName'];
+    protected $fillable=['home_id', 'taskId', 'userId', 'userType', 'type', 'notes', 'status', 'modelName'];
 
     public static function saveLogHistory(array $data)
     {
