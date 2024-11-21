@@ -1,6 +1,12 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+    .parent-container {
+        position: absolute;
+        background: #fff;
+    }
+</style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 col-lg-4 col-xl-4 ">
@@ -239,7 +245,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -261,11 +267,30 @@
 <script>
     function saveProductGroup() {
 
+        const tableRows = document.querySelectorAll('#productListTable tbody tr');
+        const products = [];
+
+        // Loop through each row to gather data
+        tableRows.forEach(row => {
+            const product = {
+                code: row.cells[0].textContent.trim(),
+                product: row.cells[1].textContent.trim(),
+                codePrice: row.querySelector('.cost_price').value,
+                price: row.querySelector('.product_price').value,
+                qty: row.querySelector('.qty').value,
+                // amount: row.querySelector('.amount').value,
+            };
+
+            products.push(product); // Add product to the array
+        });
+
+        console.log(products);
+
         FormData = $('#add_product_group_form').serialize();
         $.ajax({
             url: '{{ route("item.ajax.saveProductGroup") }}',
             method: 'Post',
-            data: FormData,
+            data: {FormData: FormData, products: JSON.stringify({ products })},
             success: function(response) {
                 console.log(response);
             },
@@ -295,7 +320,6 @@
             }
         });
         $('#search-product').on('keyup', function() {
-            // alert();
             let query = $(this).val();
             const divList = document.querySelector('.parent-container');
 
@@ -338,6 +362,8 @@
                         divList.appendChild(div);
 
                         ul.addEventListener('click', function(event) {
+                            divList.innerHTML = '';
+                            document.getElementById('search-product').value = '';
                             // Check if the clicked element is an <li> (to avoid triggering on other child elements)
                             if (event.target.tagName.toLowerCase() === 'li') {
                                 const selectedId = event.target.id; // Get the ID of the clicked <li>
@@ -367,7 +393,7 @@
             },
             success: function(response) {
                 console.log(response);
-                populateTable(response.data, 'productListTable');
+                productGroupTable(response.data, 'productListTable');
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -376,7 +402,7 @@
     }
 
 
-    function populateTable(data, tableId) {
+    function productGroupTable(data, tableId) {
         // Get the table body element
         const tableBody = document.querySelector(`#${tableId} tbody`);
 
@@ -419,8 +445,8 @@
                 const costCell = document.createElement('td');
                 const inputCost = document.createElement('input');
                 inputCost.type = 'text'; // Set input type
-                inputCost.className = 'cost_price';
-                inputCost.name = 'cost_price'; // Set input name (useful for form submission)
+                inputCost.className = 'cost_price input50';
+                inputCost.name = 'cost_price[]'; // Set input name (useful for form submission)
                 inputCost.value = item.cost_price; // Set the default value (optional)
                 costCell.appendChild(inputCost);
                 row.appendChild(costCell);
@@ -428,11 +454,11 @@
                 const priceCell = document.createElement('td');
                 const inputPrice = document.createElement('input');
                 inputPrice.type = 'text'; // Set input type
-                inputPrice.className = 'price';
+                inputPrice.className = 'product_price input50';
                 inputPrice.addEventListener('input', function() {
                     updateAmount(row);
                 });
-                inputPrice.name = 'price'; // Set input name (useful for form submission)
+                inputPrice.name = 'product_price[]'; // Set input name (useful for form submission)
                 inputPrice.value = item.price; // Set the default value (optional)
                 priceCell.appendChild(inputPrice);
                 row.appendChild(priceCell);
@@ -440,11 +466,11 @@
                 const qtyCell = document.createElement('td');
                 const inputQty = document.createElement('input');
                 inputQty.type = 'text'; // Set input type
-                inputQty.className = 'qty';
+                inputQty.className = 'qty input50';
                 inputQty.addEventListener('input', function() {
                     updateAmount(row);
                 });
-                inputQty.name = 'qty'; // Set input name (useful for form submission)
+                inputQty.name = 'qty[]'; // Set input name (useful for form submission)
                 inputQty.value = '1'; // Set the default value (optional)
                 qtyCell.appendChild(inputQty);
                 row.appendChild(qtyCell);
@@ -455,7 +481,7 @@
                 row.appendChild(amountCell);
 
                 const deleteCell = document.createElement('td');
-                deleteCell.innerHTML = '<i class="fas fa-times fa-2x" style="color: red;"></i>';
+                deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
                 row.appendChild(deleteCell);
 
                 // Append the row to the table body
@@ -464,19 +490,35 @@
         }
     }
 
+    document.querySelector("#productListTable").addEventListener("click", function(e) {
+        if (e.target && e.target.classList.contains("deleteRow")) {
+            // Remove the parent row of the clicked delete button
+            const row = e.target.closest("tr");
+            if (row) {
+                row.remove();
+            }
+        }
+    });
+
     // Function to update the amount in the row
-function updateAmount(row) {
-    const priceInput = row.querySelector('.price');
-    const qtyInput = row.querySelector('.qty');
-    const amountCell = row.querySelector('td:nth-last-child(2)'); // Assuming the last cell is the amount cell
+    function updateAmount(row) {
+        const priceInput = row.querySelector('.price');
+        const qtyInput = row.querySelector('.qty');
+        const amountCell = row.querySelector('td:nth-last-child(2)'); // Assuming the last cell is the amount cell
+        const price = parseFloat(priceInput.value) || 0; // Default to 0 if not a valid number
+        const qty = parseInt(qtyInput.value) || 0; // Default to 0 if not a valid number
+        const amount = price * qty; // Calculate the amount
 
-    const price = parseFloat(priceInput.value) || 0;  // Default to 0 if not a valid number
-    const qty = parseInt(qtyInput.value) || 0;        // Default to 0 if not a valid number
+        amountCell.textContent = amount.toFixed(2); // Update the amount cell with the calculated amount
+    }
 
-    const amount = price * qty;  // Calculate the amount
-
-    amountCell.textContent = amount.toFixed(2); // Update the amount cell with the calculated amount
-}
+    document.querySelector("#listAllProduct").addEventListener("click", function(e) {
+        const productIds = document.getElementById('selectedProductIds').value;
+        const productIdsArray = JSON.parse(productIds || '[]');
+        productIdsArray.forEach(id => {
+            getProductData(id); // Call the function for each ID
+        });
+    });
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
