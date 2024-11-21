@@ -196,7 +196,7 @@
                                             <div class="col-md-4 col-sm-12 col-xs-12 cog-panel p-0 ">
                                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 settingFlex">
                                                     <div>
-                                                        {{$value->task}}
+                                                        {{  \Carbon\Carbon::parse($value->created_at)->format('d-m-Y H:i:s') }}
 
                                                     </div>
                                                     <div>

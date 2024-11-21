@@ -12,13 +12,46 @@
     }
     .producthidemessage{display:none}
     .producthidemessagedanger{display:none}  
+   .Img_Title{
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+   }
+    .uploadImgSec{
+        padding: 0;
+        list-style: none;
+    }
+    .uploadImgSec li{
+        width: 112px;
+        border: 1px solid #ddd;
+        display: inline-block;
+        margin-bottom: 4px;
+        position: relative;
+    }
+    .uploadImgSec li img {
+        width: 100%;
+    }
+    .imgclose{
+        position: absolute;
+        top: -13px;
+        right: 0;
+        color: #f00;
+        font-size: 27px;
+        text-decoration: none;
+    }
+    .productimages{
+        display: none;
+    }
+    .productuploadedit{
+        display: none;
+    }
 </style>
 <div class="modal fade" id="itemsAddProductModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
     aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title" id="customerModalLabel">Add Product</h5>
+                <h5 class="modal-title" id="customerModalLabel">Product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -33,9 +66,15 @@
                             <div class="mb-2 row">
                                 <label for="inputName" class="col-sm-4 col-form-label">Customer</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control editInput selectOptions" id="getCustomerList" name="customer_only" required>
-                                        <option>-All-</option>
-                                    </select>
+                                    <div id="customerlist">
+                                        <select class="form-control editInput selectOptions" id="getCustomerList" name="customer_only">
+                                            <option value="">-All-</option>
+                                        </select>
+                                    </div>
+                                    <div id="onecustomer">
+                                        <label class="editInput"><input type="checkbox" name="customer_only" value=""> Yes Display for this customer only</label>
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="mb-2 row">
@@ -43,7 +82,7 @@
                                     Category</label>
                                 <div class="col-sm-7">
                                     <select class="form-control editInput selectOptions" id="productcategorylist" name="cat_id">
-                                        <option>- Any Category -</option>
+                                        <option value="">- Any Category -</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-1 ps-0">
@@ -57,7 +96,7 @@
                                     Name*</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control editInput" name="product_name" id="productname"
-                                        value="">
+                                        value="" required>
                                 </div>
                             </div>
 
@@ -76,8 +115,6 @@
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div> --}}
                             </div>
-
-
 
                             <div class="mb-2 row">
                                 <label for="product_code" class="col-sm-4 col-form-label">Product
@@ -114,14 +151,14 @@
                                 <label for="inputMobile" class="col-sm-4 col-form-label">Price
                                     *</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control editInput" id="price" name="price" value="">
+                                    <input type="text" class="form-control editInput" id="price" name="price" value="" required>
                                 </div>
                             </div>
 
                             <div class="mb-2 row">
                                 <label for="inputCounty" class="col-sm-4 col-form-label">Description</label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control textareaInput" name="address" id="description" name="description" rows="3"
+                                    <textarea class="form-control textareaInput"  id="description" name="description" rows="3"
                                         placeholder="Description"></textarea>
                                 </div>
                             </div>
@@ -132,7 +169,7 @@
                                 </label>
                                 <div class="col-sm-8">
                                     <span class="oNOfswich">
-                                        <input type="checkbox" name="show_temp" value="1" checked>
+                                        <input type="checkbox" name="show_temp" id="show_temp" value="1" checked>
                                     </span>
                                 </div>
                             </div>
@@ -158,7 +195,7 @@
                                     <div class="col-sm-7">
                                         <select class="form-control editInput selectOptions" id="salestax"
                                             onclick="taxratelist(1)" name="tax_rate">
-                                            <option>-Please Select-</option>
+                                            <option value="20">Vat-20</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1 ps-0">
@@ -175,7 +212,7 @@
                                     <div class="col-sm-7">
                                         <select class="form-control editInput selectOptions" id="purchasetax"
                                             onclick="taxratelist(2)" name="tax_id">
-                                            <option>-Please Select-</option>
+                                            <option value="">-Please Select-</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1 ps-0">
@@ -204,7 +241,7 @@
                                     <div class="col-sm-8">
                                         <select class="form-control editInput selectOptions" id="salesaccountcode"
                                             onclick="accountcode(1)" name="sales_acc_code">
-                                            <option>--Please Select--</option>
+                                            <option value="">--Please Select--</option>
                                         </select>
                                     </div>
                                 </div>
@@ -215,7 +252,7 @@
                                     <div class="col-sm-8">
                                         <select class="form-control editInput selectOptions" id="purchaseaccountcode"
                                             onclick="accountcode(2)" name="purchase_acc_code">
-                                            <option>--Please Select--</option>
+                                            <option value="">--Please Select--</option>
                                         </select>
                                     </div>
                                 </div>
@@ -225,7 +262,7 @@
                                     <div class="col-sm-8">
                                         <select class="form-control editInput selectOptions" id="Expenseaccountcode"
                                             onclick="accountcode(3)" name="expense_acc_code">
-                                            <option>--Please Select--</option>
+                                            <option value="">--Please Select--</option>
                                         </select>
                                     </div>
                                 </div>
@@ -252,7 +289,36 @@
                                     <label for="attachment" class="col-sm-4 col-form-label">Attachment</label>
                                     <div class="col-sm-8">
                                         <input type="file" class="form-control editInput" id="attachment" name="attachment">
+                                        <input type="button" class="profileDrop productuploadedit" onclick="uploadproductimage()" value="Upload Image">
                                     </div>
+                                    
+                                </div>
+                                <div class="mb-2 row productimages">
+                                    
+                                    <div class="col-sm-12">
+                                        <label class="Img_Title">Images</label>
+                                        <ul class="uploadImgSec" id="image-list">
+                                             {{-- <li> 
+                                                <img src="{{url('public/product/1729249431.jpg')}}" alt="uploadImg"> 
+                                                <a href="#!" class="imgclose">×</a>
+                                            </li>
+                                            <li> 
+                                                <img src="{{url('public/product/1729249431.jpg')}}" alt="uploadImg"> 
+                                                <a href="#!" class="imgclose">×</a>
+                                            </li>
+                                            <li> 
+                                                <img src="{{url('public/product/1729249431.jpg')}}" alt="uploadImg"> 
+                                                <a href="#!" class="imgclose">×</a>
+                                            </li>
+                                            <li> 
+                                                <img src="{{url('public/product/1729249431.jpg')}}" alt="uploadImg"> 
+                                                <a href="#!" class="imgclose">×</a>
+                                            </li> --}}
+                                             
+
+                                        </ul>                                       
+                                    </div>
+                                    
                                 </div>
 
                             
@@ -289,6 +355,7 @@
         </div>
     </div>
 </div>
+
 <script>
     (function () {
 'use strict';
@@ -329,7 +396,10 @@ Array.prototype.slice.call(forms)
                     $('.productsuccess').text(data.message);
                     $(".productsuccess").show('slow' , 'linear').delay(3000).fadeOut(function(){
                         if(producttype==1){
-                            //location.reload();
+                            location.reload();
+                        }
+                        if(producttype==3){
+                            location.reload();
                         }
                         
                     });
@@ -351,8 +421,20 @@ Array.prototype.slice.call(forms)
 })();
 </script>
 @include('frontEnd.salesAndFinance.item.common.addtaxrate')
+@include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
+@include('frontEnd.salesAndFinance.item.common.uploadproductimage')
 
-
+<script>
+    function additemsCatagoryModal(th){
+        //alert();
+        $('#category_name').val('');
+        $('#parentcategory').val('');
+        $('#product_category_status').val(1);
+        $('#productCategoryID').val('');
+        $('#productCategorytype').val(th);
+        $('#itemsCatagoryModal').modal('show');
+    }
+</script>
 
 <script>
     var dataLoaded = false;
@@ -472,7 +554,7 @@ Array.prototype.slice.call(forms)
                     // Loop through the data and append options to the select box
                     $.each(data, function(index, category) {
                         $select.append($('<option>', {
-                            value: category.id, // Assuming the id field
+                            value: category.tax_rate, // Assuming the id field
                             text: category.name // Assuming the name field
                         }));
                     });
@@ -560,5 +642,157 @@ Array.prototype.slice.call(forms)
             }
 
         });
+    }
+</script>
+<script>
+    function itemsAddProductModal(th,id=null){
+        alert(th)
+        if(th==1){
+            $('#attachment,#generateproductcode,#customerlist').css('display','block');
+            $('.productimages,.productuploadedit,#onecustomer').css('display','none');
+            $("#productform")[0].reset();
+        }else if(th==3){
+            $('#attachment,#generateproductcode,#onecustomer').css('display','none');
+            $('.productimages,.productuploadedit,#customerlist').css('display','block');
+            getproductdetailbyID(id);
+            getallproductimages(id);
+        }else if(th==2){            
+            $('#attachment,#generateproductcode,#onecustomer').css('display','block');
+            $('.productimages,.productuploadedit,#customerlist').css('display','none');
+            $("#productform")[0].reset();
+        }        
+        $(".needs-validationp").removeClass('was-validated');
+        $('#producttype').val(th);
+        $('#itemsAddProductModal').modal('show');
+    }
+
+    function getproductdetailbyID(id){
+        var token = "<?= csrf_token() ?>";
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('item.getproductdata') }}',
+            data: {
+                product_id:id,
+                _token: token
+            },
+            success: function(data) {
+                console.log(data.product_name);
+                $('#getCustomerList').html($('<option>', {
+                    value: data.customer_only, // Assuming the id field
+                    text: data.customer_name // Assuming the name field
+                }));
+                $('#productcategorylist').html($('<option>', {
+                    value: data.cat_id, // Assuming the id field
+                    text: data.cat_name // Assuming the name field
+                }));
+                $('#product_type').val(data.product_type);
+                // $('#product_type').html($('<option>', {
+                //     value: data.product_type, // Assuming the id field
+                //     text: data.product_type_name // Assuming the name field
+                // }));
+                $('#productname').val(data.product_name);
+                $('#product_code').val(data.product_code);
+                $('#cost_price').val(data.cost_price);
+                $('#margin').val(data.margin);
+                $('#price').val(data.price);
+                $('#description').val(data.description);
+                $('#show_temp').val(data.show_temp);
+                $('#bar_code').val(data.bar_code);
+                $('#nominal_code').val(data.nominal_code);
+                $('#location').val(data.location);
+
+                $('#salestax').html($('<option>', {
+                    value: data.tax_rate, // Assuming the id field
+                    text: data.tax_rate_name // Assuming the name field
+                }));
+                $('#purchasetax').html($('<option>', {
+                    value: data.tax_id, // Assuming the id field
+                    text: data.ptax_rate_name // Assuming the name field
+                }));
+                $('#salesaccountcode').html($('<option>', {
+                    value: data.sales_acc_code, // Assuming the id field
+                    text: data.sales_acc_name // Assuming the name field
+                }));
+                $('#purchaseaccountcode').html($('<option>', {
+                    value: data.purchase_acc_code, // Assuming the id field
+                    text: data.purchase_acc_name // Assuming the name field
+                }));
+                $('#Expenseaccountcode').html($('<option>', {
+                    value: data.expense_acc_code, // Assuming the id field
+                    text: data.expense_acc_name // Assuming the name field
+                }));
+                $('#status').val(data.status)
+                $('#productID').val(data.id)
+                
+            }
+
+        });
+    }
+
+    function getallproductimages(id){
+        var token = "<?= csrf_token() ?>";
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('item.getproductimage') }}',
+            data: {
+                product_id:id,
+                _token: token
+            },
+            success: function(data) {
+                console.log(data);
+                // Assuming `data` is an array of image URLs
+                var imageList = $('#image-list'); // Change this to your actual <ul> or <ol> ID
+                imageList.empty(); // Clear existing images
+
+                // Iterate over the image URLs and create <li> elements
+                data.forEach(function(imageUrl) {
+                    console.log(imageUrl.imagename)
+                    imgurl = "{{url('public/product')}}/"+imageUrl.imagename;
+                    var image = '<li><img src="'+imgurl+'" alt="uploadImg"><a href="#!" class="imgclose" onclick="deleteimage('+id+','+imageUrl.id+')">×</a></li>';
+                    // var listItem = $('<li></li>');
+                    // var image = $('<img>').attr('src', imageUrl);
+                    
+                    // listItem.append(image);
+                    imageList.append(image);
+                });
+                
+            }
+
+        });
+
+    }
+</script>
+<script>
+    function uploadproductimage(){
+        $("#productimage_form")[0].reset();
+        $(".needs-validationi").removeClass('was-validated');
+        var productname = $('#productname').val();
+        var productid = $('#productID').val();
+        $(".imgproname").text(productname);
+        $("#imgproduct_id").val(productid);
+        $('#uploadproductimagemodal').modal('show');
+    }
+</script>
+<script>
+    function deleteimage(productid,productimgid){
+        //alert(productid)
+        //alert(productimgid)
+        var token = "<?= csrf_token() ?>";
+        if(confirm("Are you sure want to delete this?")){
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('item.deleteproductimage') }}',
+                data: {
+                    productimgid:productimgid,
+                    _token: token
+                },
+                success: function(data) {
+                    console.log(data);
+                    getallproductimages(productid)
+                    
+                }
+
+            });
+        }
     }
 </script>

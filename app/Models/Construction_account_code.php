@@ -14,17 +14,12 @@ class Construction_account_code extends Model
     protected $fillable=['home_id','name','departmental_code','status'];
 
     public static function getAllAccount_Codes($home_id){
-        $data = self::whereNull('deleted_at')->where('home_id',$home_id)->get();
-        return $data;
+        return self::whereNull('deleted_at')->where('home_id',$home_id)->get();
     }
 
     public static function saveAccount_Codes($data){
-        try {
-            $Task_type=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
-            return $Task_type;
-        }catch (\Exception $e) {
-            Log::error('Error saving Payment Type: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
-        }
+        
+        return self::updateOrCreate(['id' => $data['id'] ?? null],$data);
+
     }
 }

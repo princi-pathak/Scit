@@ -87,10 +87,11 @@
                         
                             <div class="dynamic-form-fields"> </div>
 
-                            
+                            <!-- <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="uploadPopImg mt-0 hideImageDiv" id=""><img class="my-2 imagePreview" src="" width="100px"></div>
+                            </div> -->
 
                             <div class="modal-footer m-t-0 m-b-15 modal-bttm">
-                                
                                 <input type="hidden" name="location_id" value="{{ $this_location_id }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn btn-default" type="button" data-dismiss="modal" aria-hidden="true"> Cancel </button>
@@ -319,24 +320,28 @@
         });
 
         $('.sbt-dyn-form-btn-health').click(function(){
+            // alert("dfdsf");
             var model_id        = $(this).closest('.modal').attr('id');            
             var form_id         = $(this).closest('form').attr('id');
-            //alert(form_id); //return false;
+            // alert(form_id); //return false;
             var service_user    = $('#'+model_id+' .su_n_id');
-            var form_builder    = $('#'+model_id+' .dynamic_form_select');
-            //alert(form_builder); return false;
-            var static_title    = $('#'+model_id+' .static_title');
-            
-            var static_title_vl = static_title.val();
-            if(static_title_vl == undefined){
-                return false;
-            } 
-
             var service_user_id = service_user.val().trim();
             // alert(service_user_id); 
+            // alert(service_user.val().trim()); 
+            var form_builder    = $('#'+model_id+' .dynamic_form_select');
+            // alert(form_builder); return false;
             var form_builder_id = form_builder.val().trim();
-            //alert(form_builder_id); return false;
-            var static_title_vl = static_title_vl.trim();
+            // alert(form_builder_id); return false;
+            // var static_title    = $('#'+model_id+' .static_title');
+            
+            // var static_title_vl = static_title.val();
+            // alert(static_title_vl); return false;
+
+            // if(static_title_vl == undefined){
+            //     return false;
+            // } 
+
+            // var static_title_vl = static_title_vl.trim();
             // alert(static_title_vl); return false;
             var err = 0;
 
@@ -354,12 +359,12 @@
                 form_builder.parent().removeClass('red_border');
             }
 
-            if(static_title_vl == '') { 
-                static_title.addClass('red_border');
-                err = 1;
-            } else{
-                static_title.removeClass('red_border');
-            }
+            // if(static_title_vl == '') { 
+            //     static_title.addClass('red_border');
+            //     err = 1;
+            // } else{
+            //     static_title.removeClass('red_border');
+            // }
 
             if(err == 1){
                 return false;

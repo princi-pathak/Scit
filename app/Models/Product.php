@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Models\Construction_tax_rate;
 
@@ -11,7 +12,7 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'home_id', 'adder_id', 'customer_only', 'cat_id','product_type', 'product_name', 'cost_price', 'margin', 'price', 'tax_rate', 'qty', 'description', 'product_code', 'show_temp', 'bar_code', 'tax_id', 'nominal_code', 'sales_acc_code', 'purchase_acc_code', 'expense_acc_code', 'location', 'attachment', 'status'
+        'home_id', 'adder_id', 'customer_only', 'cat_id','product_type', 'product_name', 'cost_price', 'margin', 'price', 'tax_rate', 'qty', 'description', 'product_code', 'show_temp', 'bar_code', 'tax_id', 'nominal_code', 'sales_acc_code', 'purchase_acc_code', 'expense_acc_code', 'location', 'attachment', 'status','deleted_at'
     ];
     public static function product_detail($id){
         $data=DB::table('products as pr')
@@ -35,14 +36,41 @@ class Product extends Model
          
     }
 
-    public static function saveProductdata(array $data, $productID = null){
-        // $data['home_id'] = Auth::user()->home_id;        
-        // return self::updateOrCreate(['id' => $productCategoryID], $data);
+    public static function saveProductdata(array $data, $productID = null){        
         $data['home_id'] = Auth::user()->home_id;
         $data['adder_id'] = Auth::user()->id;
-        // Use updateOrCreate to either update an existing record or create a new one
-        $product = self::updateOrCreate(['id' => $productID], $data);
-        // Return the ID of the created or updated product category
-        return $product->id;
+        // if(isset($data['attachment'])){
+        //     $imageName = time().'.'.$data['attachment']->extension();      
+        //     $data['attachment']->move(public_path('product'), $imageName); 
+        // }else{
+        //     $imageName = "";
+        // }
+        // $data['attachment'] = $imageName;   
+        return self::updateOrCreate(['id' => $productID], $data);
+    }
+    public static function changeProductStatus($productID,$status)
+    {
+        $product = self::find($productID);
+        $product->status = $status;
+        return $product->save();
+    }
+
+    public static function deleteProduct(array $productID)
+    {
+        $product = self::whereIn('id', $productID)->update(['deleted_at' => now()]);
+        //$productCategory->deleted_at = date('Y-m-d H:i:s');
+        return $product;
+    }
+
+    public static function getProductList($type){
+        return self::join('product_categories', 'products.cat_id', '=','product_categories.id')->where('product_type', $type)->select('products.id','products.cat_id', 'products.product_code', 'products.product_name', 'product_categories.name', 'products.description')->where('products.deleted_at', null)->where('products.status', 1)->get();
+    }
+
+    public static function getProductListCountType($type){
+        return self::where('product_type', $type)->where('deleted_at', null)->where('status', 1)->count();
+    }
+
+    public static function getProductFromId($id){
+        return self::where('id', $id)->select('product_name', 'cost_price', 'price', 'product_code', 'id')->get();
     }
 }

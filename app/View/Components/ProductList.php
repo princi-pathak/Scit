@@ -11,9 +11,14 @@ class ProductList extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public $modalId;
+    public $modalTitle;
+    public function __construct(  
+        string $modalId = 'defaultModalId',
+        string $modalTitle = 'Product List' )
     {
-        //
+        $this->modalId = $modalId;
+        $this->modalTitle = $modalTitle;
     }
 
     /**

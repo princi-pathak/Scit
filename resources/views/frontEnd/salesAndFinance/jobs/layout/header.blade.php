@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCITS</title>
+    <title>{{ PROJECT_NAME }} @yield('title','') </title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ url('public/images/favicon.ico') }}">
     <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="https://www.ville-pont-eveque.fr/tools/library/DataTables/extensions/Select/css/select.dataTables.css" />
     <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
     <!-- <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css"> -->
     <!-- <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script> -->
@@ -284,9 +285,9 @@ $access_rights = explode(',', $rights);
                                             <span><i class="fa fa-users"></i> Suppliers</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('supplier_add')}}"><i class="fa fa-plus"></i>New Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{url('suppliers?list_mode=Active')}}"><i class="fa fa-check-circle"></i>Active Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{url('suppliers?list_mode=INActive')}}"><i class="fa fa-times-circle"></i>Inactive Customers</a></li>
+                                            <li><a class="dropdown-item" href="#!"><i class="fa fa-plus"></i>New Customers</a></li>
+                                            <li><a class="dropdown-item" href="#!"><i class="fa fa-check-circle"></i>Active Customers</a></li>
+                                            <li><a class="dropdown-item" href="#!"><i class="fa fa-times-circle"></i>Inactive Customers</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -300,8 +301,8 @@ $access_rights = explode(',', $rights);
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="{{ url('/item/product_categories') }}" class="dropdown-item">Product Categories</a>
                                     <a href="{{ url('/item/products') }}" class="dropdown-item">Products</a>
-                                    <a href="#!" class="dropdown-item">Product Groups</a>
-                                    <a href="#!" class="dropdown-item">Catalogues</a>
+                                    <a href="{{ url('/item/catalogues') }}" class="dropdown-item">Catalogues</a>
+                                    <a href="{{ url('/item/item-groups') }}" class="dropdown-item">Product Groups</a>
                                 </div>
                             </div>
 
@@ -919,7 +920,7 @@ $access_rights = explode(',', $rights);
                                                 <div class="modal-body">
                                                     <form action="" id="">
                                                         <div class="mb-3 row">
-                                                            <label for="inputJobRef" class="col-sm-3 col-form-label">Task Type <span class="red-text">*</span></label>
+                                                            <label for="inputJobRef" class="col-sm-3 col-form-label">Task Type <span class="radStar ">*</span></label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" name="title" class="form-control editInput" id="inputJobRef" value="" placeholder="Task Type">
                                                             </div>
@@ -1141,7 +1142,7 @@ $access_rights = explode(',', $rights);
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                            <label for="calls_type" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                             <div class="col-sm-7">
                                 <select name="crm_type_id" class="form-control editInput">
                                     <option value="">Select</option>
@@ -1152,7 +1153,7 @@ $access_rights = explode(',', $rights);
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                            <label for="calls_notes" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <div id="UserEditor">
                                 </div>
@@ -1177,7 +1178,7 @@ $access_rights = explode(',', $rights);
                         </div>
                         <div class="">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                         <option value=""></option>
@@ -1185,7 +1186,7 @@ $access_rights = explode(',', $rights);
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput"><input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only) </label>
                                     <label for="calls_notify_who2" class="editInput"><input type="checkbox" name="sms" id="calls_notify_who2" value="1"> SMS </label>
@@ -1225,7 +1226,7 @@ $access_rights = explode(',', $rights);
                 <div class="modal-body">
                     <form action="" id="">
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control editInput" name="title" id="type_title" value="">
                                 <input type="hidden" class="form-control editInput" name="crm_section" id="" value="1">
@@ -1260,7 +1261,7 @@ $access_rights = explode(',', $rights);
                 <div class="modal-body">
                     <form action="" id="" enctype='multipart/form-data'>
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">To <span class="red-text">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">To <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="hidden" class="form-control editInput" name="crm_lead_email_id" id="">
                                 <input type="text" class="form-control editInput" name="to" id="" value="">
@@ -1273,13 +1274,13 @@ $access_rights = explode(',', $rights);
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Subject <span class="red-text">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Subject <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control editInput" name="subject" id="">
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Message <span class="red-text">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Message <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <div class="col-form-label">
                                     <div id="">
@@ -1312,7 +1313,7 @@ $access_rights = explode(',', $rights);
                         </div>
                         <div id="user_notification_email_div">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="notify_user" class="form-control editInput" id="user_notifiy">
                                         <option value=""></option>
@@ -1320,7 +1321,7 @@ $access_rights = explode(',', $rights);
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -1366,14 +1367,14 @@ $access_rights = explode(',', $rights);
                 <div class="modal-body">
                     <form action="" id="">
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="hidden" class="form-control editInput" name="crm_lead_notes_id" id="">
                                 <select class="form-control editInput" name="crm_section_type_id" id=""></select>
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <div class="col-form-label">
                                     <div id="userNotesEditor">
@@ -1400,7 +1401,7 @@ $access_rights = explode(',', $rights);
                         </div>
                         <div id="user_notification_notes_div">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="user_id" class="form-control editInput" id="">
                                         <option>dfgdfg</option>
@@ -1409,7 +1410,7 @@ $access_rights = explode(',', $rights);
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_notify_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="calls_notify_who1" value="1"> Notification (User Only)
@@ -1455,7 +1456,7 @@ $access_rights = explode(',', $rights);
                 <div class="modal-body">
                     <form action="" id="">
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="red-text">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
                                 <select class="form-control editInput" name="crm_section_type_id" id="">
@@ -1464,7 +1465,7 @@ $access_rights = explode(',', $rights);
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="red-text">*</span> </label>
+                            <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
                             <div class="col-sm-9">
                                 <div class="col-form-label">
                                     <div id="userComplaintEditor">
@@ -1491,7 +1492,7 @@ $access_rights = explode(',', $rights);
                         </div>
                         <div id="">
                             <div class="mb-2 row">
-                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="red-text">*</span> </label>
+                                <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <select name="user_id" class="form-control editInput" id="user_notifiy">
                                         <option value="">default1</option>
@@ -1500,7 +1501,7 @@ $access_rights = explode(',', $rights);
                                 </div>
                             </div>
                             <div class="mb-2 row">
-                                <label class="col-sm-3 col-form-label">Send As<span class="red-text">*</span> </label>
+                                <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
                                 <div class="col-sm-9">
                                     <label for="calls_complaint_who1" class="editInput">
                                         <input type="checkbox" name="notification" id="" value="1"> Notification (User Only)

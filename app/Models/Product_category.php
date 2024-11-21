@@ -45,13 +45,9 @@ class Product_category extends Model
 
     public static function saveProductCategoryData(array $data, $productCategoryID = null)
     {
-        // $data['home_id'] = Auth::user()->home_id;        
-        // return self::updateOrCreate(['id' => $productCategoryID], $data);
-        $data['home_id'] = Auth::user()->home_id;
-        // Use updateOrCreate to either update an existing record or create a new one
-        $productCategory = self::updateOrCreate(['id' => $productCategoryID], $data);
-        // Return the ID of the created or updated product category
-        return $productCategory->id;
+        $data['home_id'] = Auth::user()->home_id;        
+        return self::updateOrCreate(['id' => $productCategoryID], $data);
+        
     }
     public static function checkproductcategoryname($category_name,$productCategoryID = null)
     {
@@ -83,8 +79,12 @@ class Product_category extends Model
 
     public static function deleteProductCategory(array $productCategoryID)
     {
-        $productCategory = self::whereIn('id', $productCategoryID)->update(['deleted_at' => now()]);
+        return self::whereIn('id', $productCategoryID)->update(['deleted_at' => now()]);
         //$productCategory->deleted_at = date('Y-m-d H:i:s');
-        return $productCategory;
+         
+    }
+
+    public static function getProductCategory($home_id){
+        return self::where('status', 1)->where('deleted_at', null)->where('home_id', $home_id)->get();
     }
 }
