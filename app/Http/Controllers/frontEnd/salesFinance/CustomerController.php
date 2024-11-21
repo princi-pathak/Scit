@@ -30,6 +30,7 @@ use App\Models\Constructor_customer_site;
 use App\Models\Construction_customer_login;
 use App\Models\Constructor_additional_contact;
 use App\Models\CustomerBillingAddress;
+use App\Models\LogHistory;
 
 class CustomerController extends Controller
 {
@@ -469,6 +470,7 @@ class CustomerController extends Controller
         $values = [
             'home_id' => Auth::user()->home_id,
             'customer_id' => $request->call_customer_id,
+            'contact_id' => $request->call_contact,
             'direction' => $request->direction,
             'telephone' => $phone,
             'crm_type_id' => $request->crm_type_id,
@@ -483,7 +485,29 @@ class CustomerController extends Controller
         try{
             $customer_call= Crm_customer_call::save_customer_call($values);
             $type=CRMSectionType::find($customer_call->crm_type_id);
-            $data=['type'=>$type->title,$customer_call];
+            
+            $notes = $customer_call->notes; // Default notes value
+            if ($customer_call->notify == 1) {
+                $notification = ($customer_call->notification == 1) ? "Notification" : "";
+                $sms = ($customer_call->sms == 1) ? "SMS" : "";
+                $email = ($customer_call->email == 1) ? "Email" : "";
+                $sendAsTypes = array_filter([$notification, $email, $sms]);
+                
+                $notes=['message'=>$customer_call->notes,'notify'=>Auth::user()->name,'send_as'=>$sendAsTypes];
+            }
+            $log_history = [
+                'home_id' => Auth::user()->home_id,
+                'taskId' => $customer_call->id,
+                'userId' => $request->call_customer_id,
+                'userType' => 1,
+                'type' => $type->title,
+                'notes' => json_encode($notes),
+                'status' => '',
+                'modelName' => 'Crm_customer_call',
+            ];
+            // echo "<pre>";print_r($log_history);die;
+            $LogHistory=LogHistory::saveLogHistory($log_history);
+            $data=['type'=>$type->title,$customer_call,'LogHistory'=>$LogHistory];
             return response()->json(['success' =>true,'data'=>$data]);
         }catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -1028,6 +1052,37 @@ class CustomerController extends Controller
         $home_id = Auth::user()->home_id;
         $users = User::getHomeUsers($home_id);
         return response()->json(['success'=>true,'data'=>$users]);
+    }
+    public function GetFullHistory(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id = Auth::user()->home_id;
+        $LogHistory=LogHistory::whereNull('deleted_at')->where('home_id',$home_id)->orderBy('id','DESC')->get();
+        $callHistoryData=array();
+        foreach($LogHistory as $val){
+            if($val->modelName == 'Crm_customer_call'){
+                $data=$this->call_history($val->taskId,$val->notes);
+                array_push($callHistoryData,$data);
+            }
+        }
+        return response()->json(['success'=>true,'callHistoryData'=>$callHistoryData]);
+    }
+    private function call_history($taskId,$notes){
+        $call_history=Crm_customer_call::find($taskId);
+        
+        $type=CRMSectionType::find($call_history->crm_type_id);
+        $contact=Constructor_additional_contact::find($call_history->contact_id);
+        $data=[
+            'date'=>$call_history->created_at,
+            'by'=>Auth::user()->name.'<br>('.Auth::user()->email.')',
+            'contact'=>$contact->contact_name,
+            'customer_visibility'=>$call_history->customer_visibility,
+            'type'=>$type->title,
+            'notes'=>$notes,
+            'status'=>$call_history->status ?? "",
+            'customer_visible'=>$call_history->customer_visibility,
+            'modelName' => 'Crm_customer_call',
+        ];
+        return $data;
     }
    
 }

@@ -34,8 +34,12 @@
     // When the file is loaded, set the image source to the file's data
     reader.onload = function(e) {
       const preview = document.getElementById('formImagePreview');
+      const formImageHide = document.getElementById('previewContainer');
+      
       console.log(preview);
       preview.src = e.target.result;
+
+      formImageHide.style.display = 'block'; // Show the image
       preview.style.display = 'block'; // Show the image
     };
 
@@ -84,9 +88,12 @@
     // When the file is loaded, set the image source to the file's data
     reader.onload = function(e) {
       const preview2 = document.getElementById('previousImage');
+      const previewContainer2 = document.getElementById('previewContainer2');
+      
       console.log(preview2);
       preview2.src = e.target.result;
       preview2.style.display = 'block'; // Show the image
+      previewContainer2.style.display = 'block'; // Show the image
     };
 
     reader.readAsDataURL(fileinput.files[0]);
