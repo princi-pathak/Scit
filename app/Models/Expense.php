@@ -20,6 +20,6 @@ class Expense extends Model
             );
     }
     public static function getAllExpense($home_id){
-        return self::where(['home_id'=>$home_id,'deleted_at'=>null,'reject'=>0]);
+        return self::where(['home_id'=>$home_id,'deleted_at'=>null]);
     }
 }

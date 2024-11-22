@@ -136,7 +136,7 @@
                     method: 'POST',
                     data: formData,
                     success: function(response) {
-                        alert(response);
+                        alert(response.message);
                         $('#secondModal').modal('hide');
                         location.reload();
                     },

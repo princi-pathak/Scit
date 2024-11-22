@@ -21,21 +21,22 @@ class ExpenseControllerAdmin extends Controller
         $page = 'Expense';
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
-        // echo "<pre>";print_r($admin);die;
+        // echo "<pre>";print_r($request->all());die;
         $key=$request->key;
         $value=$request->value;
         if($home_id){
             if(isset($key) && isset($value)){
-                if($key === 'authorised' && $value == 1){
-                    $expense_query=Expense::getAllExpense($home_id)->where(["$key"=>$value,'paid'=>0]);
-                }else{
+                if($key === 'reject' && $value == 1){
                     $expense_query=Expense::getAllExpense($home_id)->where("$key",$value);
+                }else if($key === 'authorised' && $value == 1){
+                    $expense_query=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'paid'=>0]);
+                }else{
+                    $expense_query=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0]);
                 }
                 
             }else{
                 $expense_query=Expense::getAllExpense($home_id);
             }
-            // $expense_query=Expense::getAllExpense($home_id);
             $search = '';
 
             if(isset($request->limit)) {
@@ -55,11 +56,10 @@ class ExpenseControllerAdmin extends Controller
                 $expense_query = $expense_query->where('title','like','%'.$search.'%');
             }
             $expense = $expense_query->paginate($limit);
-            $data['authorisedCount']=Expense::getAllExpense($home_id)->where('authorised',1)->count();
-            $data['unauthorisedCount']=Expense::getAllExpense($home_id)->where('authorised',0)->count();
+            $data['authorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>1,'reject'=>0,'paid'=>0])->count();
+            $data['unauthorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>0,'reject'=>0,'paid'=>0])->count();
             $data['rejectCount']=Expense::getAllExpense($home_id)->where('reject',1)->count();
-            $data['paidCount']=Expense::getAllExpense($home_id)->where('paid',1)->count();
-            $data['paidWithAuthCount']=Expense::getAllExpense($home_id)->where(['paid'=>1,'authorised'=>1])->count();
+            $data['paidCount']=Expense::getAllExpense($home_id)->where(['paid'=>1,'reject'=>0])->count();
             $data['expenseCount']=Expense::getAllExpense($home_id)->count();
             $data['expense']=$expense;
             $data['limit']=$limit;
@@ -123,7 +123,7 @@ class ExpenseControllerAdmin extends Controller
         return $data;
     }
     public function expense_image_delete(Request $request){
-        echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());die;
         try {
             $expense_record=Expense::find($request->id);    
             File::delete(public_path('images/expense/' . $expense_record->attachments));
@@ -135,24 +135,11 @@ class ExpenseControllerAdmin extends Controller
             return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
         }
     }
-    public function reject_expense(Request $request){
-        echo "<pre>";print_r($request->all());die;
-        $id=base64_decode($request->key);
-        try {
-            $expense_reject=Expense::find($id);    
-            $expense_reject->reject=1;
-            $expense_reject->save();
-            return redirect()->back()->with('message','Expense Rejected');
-        }
-        catch (\Exception $e) {
-            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
-        }
-    }
     public function expense_delete(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $id=base64_decode($request->id);
         $delete= Expense::where('id', $id)->update(['deleted_at' => Carbon::now()]);
-        Session::flash('success','Job Deleted Successfully Done');
+        Session::flash('success','Expense Deleted Successfully Done');
         echo "done";
     }
     public function expense_reject(Request $request){
@@ -162,7 +149,7 @@ class ExpenseControllerAdmin extends Controller
         $table=Expense::find($id);
         $table->reject=$reject;
         $table->save();
-        Session::flash('success','Successfully Done');
+        Session::flash('success','Changes Successfully Done');
         echo "done";
     }
     public function expense_save(Request $request){

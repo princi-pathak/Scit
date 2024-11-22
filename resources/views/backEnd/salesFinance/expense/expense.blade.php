@@ -27,15 +27,7 @@
                         <div class="adv-table editable-table ">
                          <div class="row"> 
                           <div class="col-lg-12">  
-                          <?php 
-                                if($paidWithAuthCount>0){
-                                    $paid_count=$paidWithAuthCount;
-                                    $auth_count=$authorisedCount-$paidWithAuthCount;
-                                }else{
-                                    $paid_count=$paidCount;
-                                    $auth_count=$authorisedCount;
-                                }
-                            ?>
+                          
                             <div class="">
                                 <div class="btn-group mr-3">
                                     <a href="javascript:void(0)" onclick="modal_show()">
@@ -55,7 +47,7 @@
                                 <div class="btn-group mr-3">
                                     <a href="{{ url('admin/sales-finance/expense?key=authorised&value=1') }}">
                                         <button id="bgcolor2" class="btn btn-primary bgcolor">
-                                        Authorised ({{$auth_count}}) 
+                                        Authorised ({{$authorisedCount}}) 
                                         </button>
                                     </a>    
                                 </div>
@@ -69,7 +61,7 @@
                                 <div class="btn-group mr-3">
                                     <a href="{{ url('admin/sales-finance/expense?key=paid&value=1') }}">
                                         <button id="bgcolor4" class="btn btn-primary bgcolor">
-                                        Paid ({{$paid_count}}) 
+                                        Paid ({{$paidCount}}) 
                                         </button>
                                     </a>    
                                 </div>
@@ -168,9 +160,9 @@
                                             </td>
                                             <td>
                                                 @if($value->reject == 1)
-                                                    <a href="javascript:" onclick="reject('{{base64_encode($value->id)}}',0)" class="btn btn-success">Yes</a>
+                                                    <a href="javascript:" onclick="reject('{{base64_encode($value->id)}}',0)" class="btn btn-success">No</a>
                                                 @else
-                                                <a href="javascript:" class="btn btn-danger" onclick="reject('{{base64_encode($value->id)}}',1)">No</a>
+                                                <a href="javascript:" class="btn btn-danger" onclick="reject('{{base64_encode($value->id)}}',1)">Yes</a>
                                                 @endif
                                             </td>
                                             <td class="action-icn">

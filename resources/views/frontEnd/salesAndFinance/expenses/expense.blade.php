@@ -100,20 +100,12 @@
 
         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
             <div class="jobsection">
-                <?php 
-                    if($paidWithAuthCount>0){
-                        $paid_count=$paidWithAuthCount;
-                        $auth_count=$authorisedCount-$paidWithAuthCount;
-                    }else{
-                        $paid_count=$paidCount;
-                        $auth_count=$authorisedCount;
-                    }
-                ?>
+                
                 <a href="#" class="profileDrop" onclick="modal_show()">Add</a>
                 <a href="{{url('expenses?key=authorised&value=0')}}" class="profileDrop bgcolor" id="bgcolor1">Unauthorised ({{$unauthorisedCount}})</a>
-                <a href="{{url('expenses?key=authorised&value=1')}}" class="profileDrop bgcolor" id="bgcolor2">Authorised ({{$auth_count}})</a>
+                <a href="{{url('expenses?key=authorised&value=1')}}" class="profileDrop bgcolor" id="bgcolor2">Authorised ({{$authorisedCount}})</a>
                 <a href="{{url('expenses?key=reject&value=1')}}" class="profileDrop bgcolor" id="bgcolor3">Rejected ({{$rejectCount}})</a>
-                <a href="{{url('expenses?key=paid&value=1')}}" class="profileDrop bgcolor" id="bgcolor4">Paid ({{$paid_count}})</a>
+                <a href="{{url('expenses?key=paid&value=1')}}" class="profileDrop bgcolor" id="bgcolor4">Paid ({{$paidCount}})</a>
                 <a href="{{url('expenses')}}" class="profileDrop bgcolor" id="bgcolor5">All ({{$expenseCount}})</a>
                 <!-- <a href="#" class="profileDrop" id="impExpClickbtnPopup">Import/Export</a> -->
             </div>

@@ -144,7 +144,7 @@ thead#flowhead {
                                                 @if($val->status == 1)
                                                     <a href="javascript:void(0)" onclick="status_change('{{base64_encode($val->id)}}',0)" class="btn btn-success">Active</a>
                                                 @else
-                                                <a href="javascript:void(0)" class="btn btn-danger" onclick="status_change('{{base64_encode($val->id)}}',1)">In-Active</a>
+                                                <a href="javascript:void(0)" class="btn btn-danger" onclick="status_change('{{base64_encode($val->id)}}',1)">Inactive</a>
                                                 @endif
                                             </td>
                                             <td class="action-icn">
