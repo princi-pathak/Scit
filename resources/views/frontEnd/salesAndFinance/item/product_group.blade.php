@@ -142,10 +142,29 @@
                             <th></th>
                         </tr>
                     </thead>
-
                     <tbody>
-
-
+                        @foreach($productGroups as $productGroup)
+                            <tr>
+                                <td></td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $productGroup->name }}</td>
+                                <td>{{ $productGroup->description }}</td>
+                                <td>{{ $productGroup->cost }}</td>
+                                <td>{{ $productGroup->price }}</td>
+                                <td>{{ $productGroup->status }}</td>
+                                <td>
+                                    <div class="d-inline-flex align-items-center ">
+                                        <div class="nav-item dropdown">
+                                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                Action
+                                            </a>
+                                            <div class="dropdown-menu fade-up m-0">
+                                                <a href="#!" class="dropdown-item">Edit Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
 
@@ -203,13 +222,13 @@
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Cost Price</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="cost" id="inputCity" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
+                                        <input type="text" class="form-control editInput" name="cost" id="costPrice" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Price</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" id="price" name="price" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
+                                        <input type="text" class="form-control editInput" id="productPrice" name="price" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
                                     </div>
                                 </div>
                             </div>
@@ -270,12 +289,15 @@
         const tableRows = document.querySelectorAll('#productListTable tbody tr');
         const products = [];
 
+
         // Loop through each row to gather data
         tableRows.forEach(row => {
+            const productIdField = row.querySelector('.product_id');
             const product = {
                 code: row.cells[0].textContent.trim(),
                 product: row.cells[1].textContent.trim(),
-                codePrice: row.querySelector('.cost_price').value,
+                product_id: productIdField ? productIdField.value : null,
+                cost_price: row.querySelector('.cost_price').value,
                 price: row.querySelector('.product_price').value,
                 qty: row.querySelector('.qty').value,
                 // amount: row.querySelector('.amount').value,
@@ -290,9 +312,22 @@
         $.ajax({
             url: '{{ route("item.ajax.saveProductGroup") }}',
             method: 'Post',
-            data: {FormData: FormData, products: JSON.stringify({ products })},
+            data: {
+                FormData: FormData,
+                products: JSON.stringify({
+                    products
+                })
+            },
             success: function(response) {
                 console.log(response);
+                document.getElementById('error-message').style.display = 'block';
+                $('#error-message').text(response.message).show();
+
+                setTimeout(function() {
+                    $('#itemsCatagoryModal').modal('hide');
+                }, 3000); // Adjust delay if needed
+
+
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -307,6 +342,9 @@
                     document.getElementById('error-message').style.display = 'block'
                     // Display the first error message to the user
                     $('#error-message').text(firstErrorMessage).show(); // Assuming you have an element with ID 'error-message'
+                    setTimeout(function() {
+                        $('#error-message').fadeOut(); // Use fadeOut for a smooth effect
+                    }, 3000);
                 }
             }
         });
@@ -324,7 +362,6 @@
             const divList = document.querySelector('.parent-container');
 
             if (query === '') {
-                // If search input is blank, clear the list
                 divList.innerHTML = '';
             }
 
@@ -424,7 +461,7 @@
             // Populate rows as usual if data is not empty
             data.forEach(item => {
                 const row = document.createElement('tr');
-
+                calculateCostPrice();
                 // Create cells and append them to the row
                 const codeCell = document.createElement('td');
                 codeCell.textContent = item.product_code;
@@ -486,6 +523,8 @@
 
                 // Append the row to the table body
                 tableBody.appendChild(row);
+
+
             });
         }
     }
@@ -499,6 +538,35 @@
             }
         }
     });
+
+    function calculateCostPrice() {
+        const inputs = document.querySelectorAll('.cost_price');
+        const product_price = document.querySelectorAll('.product_price');
+
+        // Add an event listener to each input field
+        inputs.forEach(input => {
+            console.log(input);
+            input.addEventListener('input', function() {
+                calculateSum(inputs, 'costPrice'); // Pass 'inputs' to the function
+            });
+        });
+
+        product_price.forEach(input => {
+            console.log(input);
+            input.addEventListener('input', function() {
+                calculateSum(product_price, 'productPrice'); // Pass 'product_price' to the function
+            });
+        });
+    }
+
+    function calculateSum(inputs, appendPlace) {
+        let total = 0;
+        inputs.forEach(input => {
+            total += parseFloat(input.value) || 0; // Add value or 0 if empty
+        });
+        console.log(total);
+        document.getElementById(appendPlace).value = total; // Display total
+    }
 
     // Function to update the amount in the row
     function updateAmount(row) {

@@ -11,10 +11,11 @@ use Illuminate\Validation\Rule;
 use App\Models\ProductCatalogue;
 use App\Models\ProductCataloguePrice;
 use App\User;
+use App\Models\Product_category;
 
 class CataloguesController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $page = "item";
         $path = $request->path();
         $segments = explode('/', $path);
