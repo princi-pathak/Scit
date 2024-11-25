@@ -205,8 +205,6 @@
 
 <script>
     function openProductListModal() {
-        // document.getElementById('job_title_id').setAttribute('data-jobTitle-id', appendJobTitle);
-
         $.ajax({
             url: '{{ route("item.ajax.getCategoriesList") }}',
             method: 'GET',
@@ -235,7 +233,7 @@
             url: '{{ route("item.ajax.getProductCounts") }}',
             method: 'GET',
             success: function(response) {
-                console.log(response.data);
+                console.log("CountPeoduct", response.data);
                 document.getElementById('productCount').textContent = response.data.product.toString().padStart(2, '0');
                 document.getElementById('serviceCount').textContent = response.data.service.toString().padStart(2, '0');
                 document.getElementById('consumableCount').textContent = response.data.consumable.toString().padStart(2, '0');
