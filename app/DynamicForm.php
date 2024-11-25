@@ -253,6 +253,7 @@ class DynamicForm extends Model //FormBuilder
                     $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="uploadimg222">
                                         <input type="hidden" name="formImage" class="uploded_image">                           
+                                        <input type="hidden" name="formImage2" class="" value="'.$form_info->image_path.'">                           
                                         <div id="previewContainer2" style="overflow: hidden; margin-bottom: 20px; height: 300px;">';
                     // Check if a previous image exists
                     if (!empty($form_info->image_path)) {

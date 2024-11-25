@@ -295,9 +295,12 @@ class DynamicFormController extends Controller
 
             if(isset($data['formImage'])){
                 $formImage = $data['formImage'];
+            } else if(isset($data['formImage2'])) {
+                $formImage = $data['formImage2'];
             } else {
                 $formImage = null;
             }
+
             if (!empty($data['date'])) {
                 $form->date         = date('Y-m-d', strtotime($data['date']));
             }
