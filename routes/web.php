@@ -356,7 +356,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/tax_rate', 'tax_rate');
 		Route::post('/save_tax_rate', 'save_tax_rate');
 		Route::get('/getAccountCode', 'getAccountCode')->name('Invoice.ajax.getAccountCode');
+		Route::get('/getActiveAccountCode', 'getActiveAccountCode')->name('Invoice.ajax.getActiveAccountCode');
+		Route::get('/getTaxRate', 'getActiveTaxRate')->name('invoice.ajax.getActiveTaxRate');
 
+		
+		
 		
 
 	});
