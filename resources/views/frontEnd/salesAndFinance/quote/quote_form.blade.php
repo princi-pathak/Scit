@@ -11,6 +11,14 @@
     td.borderNone {
         border: none;
     }
+
+    .tableAmountRight {
+        text-align: right;
+    }
+
+    .totleBold {
+        font-weight: 600;
+    }
 </style>
 
 
@@ -26,15 +34,15 @@
 
         <div class="row">
             <div class="col-lg-12">
-                        @if(session('error'))
+                @if(session('error'))
                 <div class="alert alert-danger">
                     {{ session('error') }}
                 </div>
-            @endif
+                @endif
 
-            @foreach ($errors->all() as $error)
+                @foreach ($errors->all() as $error)
                 <div class="alert alert-danger">{{ $error }}</div>
-            @endforeach
+                @endforeach
                 <form action="{{ url('/quote/saveQuoteData') }}" method="post" class="customerForm mt-3">
                     @csrf
                     <div class="newJobForm card">
@@ -411,7 +419,7 @@
                                             <label for="inputJobRef" class="col-sm-3 col-form-label">Quote Ref</label>
                                             <div class="col-sm-9">
                                                 <input type="hidden" name="quote_ref">
-                                                <input type="text" class="form-control-plaintext editInput"  id="inputName" value="Auto generate" readonly>
+                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -626,7 +634,7 @@
                                         <div class="col-sm-7">
                                             <div class="plusandText">
                                                 <a href="#!" class="formicon" id="openAddProductModal" onclick="itemsAddProductModal(2)"><i class="fa-solid fa-square-plus"></i> </a>
-                                                <span class="afterPlusText"> (Type to view product or <a href="#!" onclick="openProductListModal()" >Click here</a> to view all assets)</span>
+                                                <span class="afterPlusText"> (Type to view product or <a href="#!" onclick="openProductListModal()">Click here</a> to view all assets)</span>
                                             </div>
                                         </div>
                                     </div>
@@ -668,19 +676,19 @@
                                 </div>
 
 
-                                 <!-- insrt Image Modal -->
-                                 <div class="modal fade" id="attachmentsPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <!-- insrt Image Modal -->
+                                <div class="modal fade" id="attachmentsPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Insert Image</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Insert Image</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                            
-                                                <p class="uploadImg"> 
+
+                                                <p class="uploadImg">
                                                     <i class="fa fa-cloud-upload"></i>
-                                                <input type="file" multiple="false" accept="image/*" id="finput" onchange="upload()">
+                                                    <input type="file" multiple="false" accept="image/*" id="finput" onchange="upload()">
                                                 </p>
                                                 <canvas id="canv1"></canvas>
                                             </div>
@@ -693,11 +701,11 @@
                                         </div>
                                     </div>
                                 </div>
-                               <!-- End insrt Image Modal -->
+                                <!-- End insrt Image Modal -->
 
                                 <div class="col-sm-12">
                                     <div class="productDetailTable">
-                                        <table class="table mb-0" id="containerA">
+                                        <table class="table mb-0" id="quoteProducts">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Code </th>
@@ -718,7 +726,7 @@
                                                     <th>Markup(%)</th>
                                                     <th>VAT(%) </th>
                                                     <th>Discount </th>
-                                                    <th>Amount </th>
+                                                    <th class="tableAmountRight">Amount </th>
                                                     <th>Profit </th>
                                                     <th></th>
                                                 </tr>
@@ -2383,6 +2391,7 @@
             }
         });
     }
+
     function getProductData(selectedId) {
         $.ajax({
             url: '{{ route("item.ajax.getProductFromId") }}',
@@ -2391,11 +2400,297 @@
                 id: selectedId
             },
             success: function(response) {
-                console.log("response.data",response.data);
-                // productGroupTable(response.data, 'productListTable');
+                console.log("response.data", response.data);
+                quoteProductTable(response.data, 'quoteProducts');
             },
             error: function(xhr, status, error) {
                 console.error(error);
+            }
+        });
+    }
+
+    function getAccountCode() {
+        $.ajax({
+            url: '{{ route("Invoice.ajax.getActiveAccountCode") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log("response.getActiveAccountCode", response.data);
+                // Ensure response.data contains the account codes
+                if (Array.isArray(response.data)) {
+                    // Iterate over all Account Code dropdowns and populate them
+                    document.querySelectorAll('#accoutCodeList').forEach(dropdown => {
+                        dropdown.innerHTML = ''; // Clear existing options
+
+                        const optionInitial = document.createElement('option');
+                        optionInitial.textContent = "-No Department-"; // Use appropriate key from your response
+                        dropdown.appendChild(optionInitial);
+                        // Append new options
+                        response.data.forEach(code => {
+                            const option = document.createElement('option');
+                            option.value = code.id; // Use appropriate key from your response
+                            option.textContent = code.departmental_code + "-" + code.name; // Use appropriate key from your response
+                            dropdown.appendChild(option);
+                        });
+                    });
+                } else {
+                    console.error("Invalid response format");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function tableFootForProduct() {
+
+        if (!isFooterAppended) { // Check the flag
+            // const tableFoot = document.getElementsByClassName('add_table_insrt33');
+            const tableFoot = document.querySelector('.add_table_insrt33');
+
+            tableFoot.innerHTML += ` <tr>
+                    <td colspan="10" class="borderNone"></td>
+                    <td>Sub Total (exc. VAT)</td>
+                    <td class="tableAmountRight">$90.00</td>
+                </tr>
+                <tr>
+                    <td colspan="10" class="borderNone"></td>
+                    <td>
+                        <div class="discountInput">
+                            <span>Discount</span><input type="text" class="form-control editInput input50" value="0">
+                            <span>%</span>
+                        </div>
+                    </td>
+                    <td class="tableAmountRight">$0.00</td>
+                </tr>
+                <tr>
+                    <td colspan="10" class="borderNone"></td>
+                    <td>
+                        Apply overall markup
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="10" class="borderNone"></td>
+                    <td>VAT</td>
+                    <td class="tableAmountRight">$18.00</td>
+                </tr>
+                <tr>
+                <td colspan="10" class="borderNone"></td>
+                    <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)</strong></td>
+                    <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold">$108.00</td>
+                </tr>
+                <tr>
+                <td colspan="10" class="borderNone"></td>
+                    <td>Profit</td>
+                    <td class="tableAmountRight">$-10.00</td>
+                </tr>
+                <tr>
+                <td colspan="10" class="borderNone"></td>
+                    <td>Margin</td>
+                    <td class="tableAmountRight">-11.11%</td>
+                </tr>
+                <tr>
+                <td colspan="10" class="borderNone"></td>
+                    <td>Deposit</td>
+                    <td class="tableAmountRight">$0.00</td>
+                </tr>
+                <tr>
+                <td colspan="10" class="borderNone"></td>
+                    <td>Refund</td>
+                    <td class="tableAmountRight">$0.00</td>
+                </tr>
+                <tr>
+                <td colspan="10" class="borderNone"></td>
+                    <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)</strong></td>
+                    <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold">$108.00</td>
+                </tr>`;
+        }
+
+
+
+    }
+
+    function taxRate() {
+        $.ajax({
+            url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log("response.data", response.data);
+                if (Array.isArray(response.data)) {
+                    // Iterate over all Account Code dropdowns and populate them
+                    document.querySelectorAll('#getTaxRate').forEach(dropdown => {
+                        dropdown.innerHTML = ''; // Clear existing options
+
+                        const optionInitial = document.createElement('option');
+                        optionInitial.textContent = "Please Select"; // Use appropriate key from your response
+                        dropdown.appendChild(optionInitial);
+                        // Append new options
+                        response.data.forEach(code => {
+                            const option = document.createElement('option');
+                            option.value = code.id; // Use appropriate key from your response
+                            option.textContent = code.name; // Use appropriate key from your response
+                            dropdown.appendChild(option);
+                        });
+                    });
+                } else {
+                    console.error("Invalid response format");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function calculateRowValues(row) {
+        // Get input values from the row
+        const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+        const price = parseFloat(row.querySelector('.price').value) || 0;
+        const costPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
+        const priceMarkup = parseFloat(row.querySelector('.priceMarkup').value) || 0;
+        const discount = parseFloat(row.querySelector('.discount').value) || 0;
+        const vat = parseFloat(row.querySelector('.vat').value) || 0;
+
+        // Calculate selling price (Cost Price + Markup - Discount)
+        const markupAmount = (price * priceMarkup) / 100; // Percentage markup
+        const sellingPrice = price + markupAmount - discount;
+
+        // Calculate Amount (Quantity × Selling Price)
+        const amount = quantity * sellingPrice;
+
+        // Calculate VAT amount
+        const vatAmount = (amount * vat) / 100;
+
+        // Calculate Profit ((Selling Price - Cost Price) × Quantity)
+        const profit = (sellingPrice - costPrice) * quantity;
+        console.log("profit", profit);
+
+        // Update row output fields
+        row.querySelector('.amount').textContent = amount.toFixed(2); // Show amount
+        // row.querySelector('.vatAmount').textContent = vatAmount.toFixed(2); // Show VAT amount
+        row.querySelector('.profit').textContent = profit.toFixed(2); // Show profit
+    }
+
+    // Attach listeners when the DOM is loaded
+    // document.addEventListener('DOMContentLoaded', attachCalculationListeners);
+    // // Function to attach event listeners for calculation
+    // function attachCalculationListeners() {
+    //     document.querySelectorAll('.add_table_insrt').forEach(row => {
+    //         row.querySelectorAll('.quantity, .costPrice, .price, .priceMarkup, .discount, .vat').forEach(input => {
+    //             input.addEventListener('input', () => calculateRowValues(row)); // Call function on input change
+    //         });
+    //     });
+    // }
+
+    let isFooterAppended = false;
+
+    function quoteProductTable(data, tableId) {
+        // Populate rows as usual if data is not empty
+        data.forEach(item => {
+
+            const tableBody = document.querySelector(`#${tableId} tbody`);
+            const table = document.querySelector(`#${tableId}`);
+            const node = document.createElement("tr");
+            node.classList.add("add_table_insrt");
+            node.innerHTML = `<td>
+                    <div class="CSPlus">
+                        <span class="plusandText">
+                            <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                            <input type="text" class="form-control editInput input80" value="${item.product_code}">
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput" value="${item.product_name}">
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="2" placeholder="Address"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <select class="form-control editInput selectOptions" onclick="getAccountCode();" id="accoutCodeList">
+                            <option>-No Department-</option> 
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class=""><input type="text" class="form-control editInput input50 quantity" value="1"></div>
+                </td>
+                <td>
+                    <div class=""> <input type="text" class="form-control editInput input50 costPrice" value="${item.cost_price}"></div>
+                </td>
+                <td>
+                    <div class="calculatorIcon">
+                        <span class="plusandText">
+                            <a href="#!" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput input50 price" value="${item.price}">
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput input50 priceMarkup" value="0">
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <select class="form-control editInput selectOptions vat" onclick="taxRate();" id="getTaxRate">
+                            <option>Please Select</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex">
+                        <input type="text" class="form-control editInput input50 me-2 discount" value="0">
+                        <select class="form-control editInput selectOptions input50" id="inputCustomer">
+                            <option>Please Select</option>
+                            <option>%</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <span class="amount">$00.00</span>
+                </td>
+                <td>
+                    <span class="profit">$00.00</span>
+                    <div class="minusnmber pt-1">(-11.11%)</div>
+                </td>
+                <td>
+                    <div class="statuswating">
+                        <span class="oNOfswich">
+                            <input type="checkbox">
+                        </span>
+                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                    </div>
+                </td>`;
+
+            tableFootForProduct();
+            isFooterAppended = true;
+
+
+            // const tableBody2 = document.querySelector(".add_table_insrt");
+            // const tableBodyFoot = document.querySelector(".add_table_insrt33");
+
+            if (tableBody) {
+                tableBody.appendChild(node);
+                calculateRowValues(node);
+                // tableBodyFoot.appendChild(tableFoot);
+                // Add event listener to the close button
+                const closeButton = node.querySelector('.closeappend');
+                closeButton.addEventListener('click', function() {
+                    node.remove(); // Remove the row when close button is clicked
+                });
+            } else {
+                console.error("Table body with ID 'add_table_insrt' not found.");
             }
         });
     }
@@ -2635,7 +2930,7 @@
         });
     }
 
-    
+
 
     function setSiteDeliveryDetails(id) {
         $.ajax({
@@ -3097,9 +3392,9 @@
             });
         });
 
-        $('#accoutCodeList').on('click', function() {
-            getAccountCode(document.getElementById('accoutCodeList'));
-        });
+        // $('#accoutCodeList').on('click', function() {
+        //     getAccountCode(document.getElementById('accoutCodeList'));
+        // });
 
 
         // Save Customer Data
@@ -3344,179 +3639,179 @@
     // **************************End Product Cetagory
 
     //**************insrtProduct
-    function insrtProduct() {
-        const node = document.createElement("tr");
+    // function insrtProduct() {
+    //     const node = document.createElement("tr");
 
-        node.classList.add("add_table_insrt");
-        node.innerHTML = `
+    //     node.classList.add("add_table_insrt");
+    //     node.innerHTML = `
 
-         <td>
-            <div class="CSPlus">
-                <span class="plusandText">
-                    <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                    <input type="text" class="form-control editInput input80" value="CS-0001">
-                </span>
-            </div>
-        </td>
-        <td>
-            <div class="">
-                <input type="hidden" name="item[][itemDetails]" value="product">
-                <input type="text" class="form-control editInput" value="CS-0001">
-            </div>
-        </td>
-        <td>
-            <div class="">
-                <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="2" placeholder="Address"></textarea>
-            </div>
-        </td>
-        <td>
-            <div class="">
-                <select class="form-control editInput selectOptions" id="accoutCodeList">
-                    <option>No account</option>
-                    <option>Default</option>
-                    <option>Default</option>
-                </select>
-            </div>
-        </td>
-        <td>
-            <div class=""><input type="text" class="form-control editInput input50" value="1"></div>
-        </td>
-        <td>
-            <div class=""> <input type="text" class="form-control editInput input50" value="100.00"></div>
-        </td>
-        <td>
-            <div class="calculatorIcon">
-                <span class="plusandText">
-                    <a href="#!" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
-                </span>
-            </div>
-        </td>
-        <td>
-            <div class="">
-                <input type="text" class="form-control editInput input50" value="90.00">
-            </div>
-        </td>
-        <td>
-            <div class="">
-                <input type="text" class="form-control editInput input50" value="0">
-            </div>
-        </td>
-        <td>
-            <div class="">
-                <select class="form-control editInput selectOptions" id="inputCustomer">
-                    <option>Please Select</option>
-                    <option>Default</option>
-                    <option>Default</option>
-                </select>
-            </div>
-        </td>
-        <td>
-            <div class="d-flex">
-                <input type="text" class="form-control editInput input50 me-2" value="0">
-                <select class="form-control editInput selectOptions input50" id="inputCustomer">
-                    <option>Please Select</option>
-                    <option>Default</option>
-                    <option>Default</option>
-                </select>
-            </div>
-        </td>
-        <td>
-            <span>$90.00</span>
-        </td>
-        <td>
-            <span>$-10.00</span>
-            <div class="minusnmber pt-1">(-11.11%)</div>
-        </td>
-        <td>
-            <div class="statuswating">
-                <span class="oNOfswich">
-                    <input type="checkbox">
-                </span>
-                <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
-            </div>
-        </td>
-               
-            `;
+    //      <td>
+    //         <div class="CSPlus">
+    //             <span class="plusandText">
+    //                 <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+    //                 <input type="text" class="form-control editInput input80" value="CS-0001">
+    //             </span>
+    //         </div>
+    //     </td>
+    //     <td>
+    //         <div class="">
+    //             <input type="hidden" name="item[][itemDetails]" value="product">
+    //             <input type="text" class="form-control editInput" value="CS-0001">
+    //         </div>
+    //     </td>
+    //     <td>
+    //         <div class="">
+    //             <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="2" placeholder="Address"></textarea>
+    //         </div>
+    //     </td>
+    //     <td>
+    //         <div class="">
+    //             <select class="form-control editInput selectOptions" id="accoutCodeList">
+    //                 <option>No account</option>
+    //                 <option>Default</option>
+    //                 <option>Default</option>
+    //             </select>
+    //         </div>
+    //     </td>
+    //     <td>
+    //         <div class=""><input type="text" class="form-control editInput input50" value="1"></div>
+    //     </td>
+    //     <td>
+    //         <div class=""> <input type="text" class="form-control editInput input50" value="100.00"></div>
+    //     </td>
+    //     <td>
+    //         <div class="calculatorIcon">
+    //             <span class="plusandText">
+    //                 <a href="#!" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
+    //             </span>
+    //         </div>
+    //     </td>
+    //     <td>
+    //         <div class="">
+    //             <input type="text" class="form-control editInput input50" value="90.00">
+    //         </div>
+    //     </td>
+    //     <td>
+    //         <div class="">
+    //             <input type="text" class="form-control editInput input50" value="0">
+    //         </div>
+    //     </td>
+    //     <td>
+    //         <div class="">
+    //             <select class="form-control editInput selectOptions" id="inputCustomer">
+    //                 <option>Please Select</option>
+    //                 <option>Default</option>
+    //                 <option>Default</option>
+    //             </select>
+    //         </div>
+    //     </td>
+    //     <td>
+    //         <div class="d-flex">
+    //             <input type="text" class="form-control editInput input50 me-2" value="0">
+    //             <select class="form-control editInput selectOptions input50" id="inputCustomer">
+    //                 <option>Please Select</option>
+    //                 <option>Default</option>
+    //                 <option>Default</option>
+    //             </select>
+    //         </div>
+    //     </td>
+    //     <td>
+    //         <span>$90.00</span>
+    //     </td>
+    //     <td>
+    //         <span>$-10.00</span>
+    //         <div class="minusnmber pt-1">(-11.11%)</div>
+    //     </td>
+    //     <td>
+    //         <div class="statuswating">
+    //             <span class="oNOfswich">
+    //                 <input type="checkbox">
+    //             </span>
+    //             <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
+    //         </div>
+    //     </td>
 
-        // const tableFoot = document.getElementsByClassName('add_table_insrt33');
-        const tableFoot = document.querySelector('.add_table_insrt33');
+    //         `;
 
-        tableFoot.innerHTML += ` 
-        
-        <tr>
+    //     // const tableFoot = document.getElementsByClassName('add_table_insrt33');
+    //     const tableFoot = document.querySelector('.add_table_insrt33');
 
-                                                  <td colspan="12" class="borderNone"></td>
-                                                    <td>Sub Total (exc. VAT)</td>
-                                                    <td>$90.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="12" class="borderNone"></td>
-                                                    <td>
-                                                        <div class="discountInput">
-                                                            <span>Discount</span><input type="text" class="form-control editInput input50" value="0">
-                                                            <span>%</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>$0.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="12" class="borderNone"></td>
-                                                    <td>
-                                                        Apply overall markup
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="12" class="borderNone"></td>
-                                                    <td>VAT</td>
-                                                    <td>$18.00</td>
-                                                </tr>
-                                                <tr>
-                                                <td colspan="12" class="borderNone"></td>
-                                                    <td><strong>Total(inc.VAT)</strong></td>
-                                                    <td><strong>$108.00</strong></td>
-                                                </tr>
-                                                <tr>
-                                                <td colspan="12" class="borderNone"></td>
-                                                    <td>Profit</td>
-                                                    <td>$-10.00</td>
-                                                </tr>
-                                                <tr>
-                                                <td colspan="12" class="borderNone"></td>
-                                                    <td>Margin</td>
-                                                    <td>-11.11%</td>
-                                                </tr>
-                                                <tr>
-                                                <td colspan="12" class="borderNone"></td>
-                                                    <td>Deposit</td>
-                                                    <td>$0.00</td>
-                                                </tr>
-                                                <tr>
-                                                <td colspan="12" class="borderNone"></td>
-                                                    <td>Refund</td>
-                                                    <td>$0.00</td>
-                                                </tr>
-                                                <tr>
-                                                <td colspan="12" class="borderNone"></td>
-                                                    <td><strong>Outstanding (inc.VAT)</strong></td>
-                                                    <td><strong>$108.00</strong></td>
-                                                </tr>
-        `;
-        const tableBody = document.querySelector(".add_table_insrt");
-        // const tableBodyFoot = document.querySelector(".add_table_insrt33");
+    //     tableFoot.innerHTML += ` 
 
-        if (tableBody) {
-            tableBody.appendChild(node);
-            // tableBodyFoot.appendChild(tableFoot);
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_table_insrt' not found.");
-        }
-    }
+    //     <tr>
+
+    //                                               <td colspan="12" class="borderNone"></td>
+    //                                                 <td>Sub Total (exc. VAT)</td>
+    //                                                 <td>$90.00</td>
+    //                                             </tr>
+    //                                             <tr>
+    //                                                 <td colspan="12" class="borderNone"></td>
+    //                                                 <td>
+    //                                                     <div class="discountInput">
+    //                                                         <span>Discount</span><input type="text" class="form-control editInput input50" value="0">
+    //                                                         <span>%</span>
+    //                                                     </div>
+    //                                                 </td>
+    //                                                 <td>$0.00</td>
+    //                                             </tr>
+    //                                             <tr>
+    //                                                 <td colspan="12" class="borderNone"></td>
+    //                                                 <td>
+    //                                                     Apply overall markup
+    //                                                 </td>
+    //                                                 <td></td>
+    //                                             </tr>
+    //                                             <tr>
+    //                                                 <td colspan="12" class="borderNone"></td>
+    //                                                 <td>VAT</td>
+    //                                                 <td>$18.00</td>
+    //                                             </tr>
+    //                                             <tr>
+    //                                             <td colspan="12" class="borderNone"></td>
+    //                                                 <td><strong>Total(inc.VAT)</strong></td>
+    //                                                 <td><strong>$108.00</strong></td>
+    //                                             </tr>
+    //                                             <tr>
+    //                                             <td colspan="12" class="borderNone"></td>
+    //                                                 <td>Profit</td>
+    //                                                 <td>$-10.00</td>
+    //                                             </tr>
+    //                                             <tr>
+    //                                             <td colspan="12" class="borderNone"></td>
+    //                                                 <td>Margin</td>
+    //                                                 <td>-11.11%</td>
+    //                                             </tr>
+    //                                             <tr>
+    //                                             <td colspan="12" class="borderNone"></td>
+    //                                                 <td>Deposit</td>
+    //                                                 <td>$0.00</td>
+    //                                             </tr>
+    //                                             <tr>
+    //                                             <td colspan="12" class="borderNone"></td>
+    //                                                 <td>Refund</td>
+    //                                                 <td>$0.00</td>
+    //                                             </tr>
+    //                                             <tr>
+    //                                             <td colspan="12" class="borderNone"></td>
+    //                                                 <td><strong>Outstanding (inc.VAT)</strong></td>
+    //                                                 <td><strong>$108.00</strong></td>
+    //                                             </tr>
+    //     `;
+    //     const tableBody = document.querySelector(".add_table_insrt");
+    //     // const tableBodyFoot = document.querySelector(".add_table_insrt33");
+
+    //     if (tableBody) {
+    //         tableBody.appendChild(node);
+    //         // tableBodyFoot.appendChild(tableFoot);
+    //         // Add event listener to the close button
+    //         const closeButton = node.querySelector('.closeappend');
+    //         closeButton.addEventListener('click', function() {
+    //             node.remove(); // Remove the row when close button is clicked
+    //         });
+    //     } else {
+    //         console.error("Table body with ID 'add_table_insrt' not found.");
+    //     }
+    // }
     // ************End of InsrtProduct
     //**************insrtTitle
     function insrtTitle() {
@@ -4068,10 +4363,10 @@
     }
 </script>
 <script>
-        function upload(){
-            var imgcanvas = document.getElementById("canv1");
-            var fileinput = document.getElementById("finput");
-            var image = new SimpleImage(fileinput);
-            image.drawTo(imgcanvas);
-        }
-     </script>
+    function upload() {
+        var imgcanvas = document.getElementById("canv1");
+        var fileinput = document.getElementById("finput");
+        var image = new SimpleImage(fileinput);
+        image.drawTo(imgcanvas);
+    }
+</script>

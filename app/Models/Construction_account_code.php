@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 
 
 class Construction_account_code extends Model
@@ -17,9 +16,11 @@ class Construction_account_code extends Model
         return self::whereNull('deleted_at')->where('home_id',$home_id)->get();
     }
 
-    public static function saveAccount_Codes($data){
-        
-        return self::updateOrCreate(['id' => $data['id'] ?? null],$data);
+    public static function getActiveAccountCode($home_id){
+        return self::whereNull('deleted_at')->where('home_id',$home_id)->select('id', 'name', 'departmental_code')->where('status', 1)->get();
+    }
 
+    public static function saveAccount_Codes($data){
+        return self::updateOrCreate(['id' => $data['id'] ?? null],$data);
     }
 }
