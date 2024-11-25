@@ -4,7 +4,7 @@ namespace App\Http\Controllers\frontEnd\salesFinance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Construction_account_code;
@@ -65,4 +65,29 @@ class InvoiceController extends Controller
             'data' => $data ? $data : 'No data.'
         ]);
     }
+
+    public function getActiveAccountCode(){
+        $data =  Construction_account_code::getActiveAccountCode(Auth::user()->home_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function getActiveTaxRate(){
+        $data = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+
+
+
+    
+
+    
 }

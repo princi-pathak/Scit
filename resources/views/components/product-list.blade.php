@@ -278,6 +278,7 @@
                             productIds = productIds.filter(id => id !== productId);
                         }
                         productIdsInput.value = JSON.stringify(productIds);
+                        getProductData(productId);
                     }
                 });
 
