@@ -626,7 +626,7 @@
                                         <div class="col-sm-7">
                                             <div class="plusandText">
                                                 <a href="#!" class="formicon" id="openAddProductModal" onclick="itemsAddProductModal(2)"><i class="fa-solid fa-square-plus"></i> </a>
-                                                <span class="afterPlusText"> (Type to view product or <a href="#!" id="openABCProductModal">Click here</a> to view all assets)</span>
+                                                <span class="afterPlusText"> (Type to view product or <a href="#!" onclick="openProductListModal()" >Click here</a> to view all assets)</span>
                                             </div>
                                         </div>
                                     </div>
@@ -2356,6 +2356,14 @@
     CKEDITOR.replace('textarea11', editor_config);
     //Text Editer
 
+    document.querySelector("#listAllProduct").addEventListener("click", function(e) {
+        const productIds = document.getElementById('selectedProductIds').value;
+        const productIdsArray = JSON.parse(productIds || '[]');
+        productIdsArray.forEach(id => {
+            getProductData(id); // Call the function for each ID
+        });
+    });
+
     function getCustomerType() {
         $.ajax({
             url: '{{ route("quote.ajax.getCustomerType") }}',
@@ -2369,6 +2377,22 @@
                     option.text = user.title;
                     get_customer_type.appendChild(option);
                 });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+    function getProductData(selectedId) {
+        $.ajax({
+            url: '{{ route("item.ajax.getProductFromId") }}',
+            method: 'Post',
+            data: {
+                id: selectedId
+            },
+            success: function(response) {
+                console.log("response.data",response.data);
+                // productGroupTable(response.data, 'productListTable');
             },
             error: function(xhr, status, error) {
                 console.error(error);

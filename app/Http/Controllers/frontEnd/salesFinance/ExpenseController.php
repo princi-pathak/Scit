@@ -16,15 +16,35 @@ use App\Models\Construction_job_appointment;
 
 class ExpenseController extends Controller
 {
-    public function expenses(){
+    public function expenses(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $key=$request->key;
+        $value=$request->value;
         $home_id=Auth::user()->home_id;
         $data['user_id']=Auth::user()->id;
         $data['users'] = User::getHomeUsers($home_id);
         $data['rate']=Construction_tax_rate::getAllTax_rate($home_id,'Active');
         $data['customer']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
         $data['home_id']=$home_id;
-        $data['expense']=Expense::getAllExpense($home_id);
+        if(isset($key) && isset($value)){
+            if($key === 'reject' && $value == 1){
+                $data['expense']=Expense::getAllExpense($home_id)->where("$key",$value)->get();
+            }else if($key === 'authorised' && $value == 1){
+                $data['expense']=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'paid'=>0])->get();
+            }else{
+                $data['expense']=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0])->get();
+            }
+            
+        }else{
+            $data['expense']=Expense::getAllExpense($home_id)->get();
+        }
         // echo "<pre>";print_r($data['expense']);die;
+        $data['authorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>1,'reject'=>0,'paid'=>0])->count();
+        $data['unauthorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>0,'reject'=>0,'paid'=>0])->count();
+        $data['rejectCount']=Expense::getAllExpense($home_id)->where('reject',1)->count();
+        $data['paidCount']=Expense::getAllExpense($home_id)->where(['paid'=>1,'reject'=>0])->count();
+        $data['expenseCount']=Expense::getAllExpense($home_id)->count();
+        // echo "<pre>";print_r($data['paidWithAuthCount']);die;
         return view('frontEnd.salesAndFinance.expenses.expense',$data);
     }
     public function find_project(Request $request){

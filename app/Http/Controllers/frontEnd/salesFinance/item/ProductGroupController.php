@@ -7,29 +7,41 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ProductGroup;
+use App\Models\ProductGroupProduct;
+use App\Http\Requests\ProductGroupRequest;
+
 
 class ProductGroupController extends Controller
 {
     public function productGroupList(){
-        $data = array();
+        $data['productGroups'] = ProductGroup::getProductGroupData(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.Item.product_group', $data);
     }
 
-    public function saveProductGroup(Request $request){
+    public function saveProductGroup(ProductGroupRequest $request){
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        $validated = $request->validated();
+        parse_str($request->input('FormData'), $formData);
+        $productsData = json_decode($request->input('products'), true);
+
+        $saveData = ProductGroup:: saveProductGroup($formData, Auth::user()->home_id, Auth::user()->id );
+
+        if ($saveData) {
+            // Save the ProductGroupProduct data only if ProductGroup is saved
+            $saveProduct = ProductGroupProduct::saveProductGroupData($saveData->id, $productsData);
+        
+            return response()->json([
+                'success' => (bool) $saveProduct,
+                'message' => $saveProduct ? 'Product group added successfully.' : 'Product Group products could not be added.'
+            ]);
+        } else {
+            // If ProductGroup is not saved, return a failure response
+            return response()->json([
+                'success' => false,
+                'message' => 'Product Group could not be added.'
+            ]);
         }
 
-        $saveData = ProductGroup:: saveProductGroup($request, Auth::user()->home_id, Auth::user()->id );
-
-        return response()->json([
-            'success' => (bool) $saveData,
-            'message' => $saveData ? 'Product group added successfully.' :'Product Group does not added.'
-        ]);
     }
 
    

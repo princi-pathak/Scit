@@ -18,6 +18,7 @@ use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductController;
 use App\Http\Controllers\frontEnd\salesFinance\Item\ProductGroupController;
 use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
+use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
 
 
 
@@ -303,7 +304,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/supplier_add', 'supplier_add');
 	});
 	Route::controller(ExpenseController::class)->group(function(){
-		Route::get('/expenses','expenses');
+		Route::match(['get','post'],'/expenses','expenses');
 		Route::post('/find_project','find_project');
 		Route::post('/find_job','find_job');
 		Route::post('/find_appointment','find_appointment');
@@ -330,6 +331,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('getAllSupplierList','getAllSupplierList');
 		Route::post('getAllUserList','getAllUserList');
 		Route::post('GetCustomerWithContact','GetCustomerWithContact');
+		Route::post('GetFullHistory','GetFullHistory');
 	});
 
 	// General section Front 
@@ -1849,6 +1851,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 		});
 	});
+	Route::controller(ExpenseControllerAdmin::class)->group(function() {
+		Route::prefix('sales-finance/expense')->group(function() {
+			Route::match(['get', 'post'],'/', 'index');
+			Route::post('find_project','find_project');
+			Route::post('find_job','find_job');
+			Route::post('find_appointment','find_appointment');
+			Route::post('expense_save','expense_save');
+			Route::post('expense_image_delete','expense_image_delete');
+			Route::post('expense_delete','expense_delete');
+			Route::post('expense_reject','expense_reject');
+		});
+	});
+	// Route::match(['get', 'post'], '/job_recurring_list', 'App\Http\Controllers\backEnd\JobsController@job_recurring_list');
 });
 
 //super admin path

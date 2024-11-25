@@ -37,6 +37,9 @@ border:none;
 .input-group-addon.remove-addon {
 padding: 5px 0px 15px 0px;    
 }
+.radStar {
+    color: red;
+}
 </style>
  <section id="main-content" class="">
     <section class="wrapper">
@@ -51,24 +54,24 @@ padding: 5px 0px 15px 0px;
                             <form class="form-horizontal" id="form_data">
                             <label>Appointment Rejection Category Details</label> 
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Appointment Status*</label>
+                                <label class="col-lg-3 control-label">Appointment Status<span class="radStar">*</span></label>
                                 <div class="col-lg-9">
                                     <select name="status" id="status" class="form-control">
                                         <option value="" selected disabled>None</option>
-                                        <option value="Declined">Declined</option>
-                                        <option value="Follow On">Follow On</option>
-                                        <option value="Abandoned">Abandoned</option>
-                                        <option value="No Access">No Access</option>
-                                        <option value="Cancelled">Cancelled</option>
+                                        <option value="Declined" <?php if(isset($rejection) && $rejection->appointment_id == "Declined"){echo "selected";}?>>Declined</option>
+                                        <option value="Follow On" <?php if(isset($rejection) && $rejection->appointment_id == "Follow On"){echo "selected";}?>>Follow On</option>
+                                        <option value="Abandoned" <?php if(isset($rejection) && $rejection->appointment_id == "Abandoned"){echo "selected";}?>>Abandoned</option>
+                                        <option value="No Access" <?php if(isset($rejection) && $rejection->appointment_id == "No Access"){echo "selected";}?>>No Access</option>
+                                        <option value="Cancelled" <?php if(isset($rejection) && $rejection->appointment_id == "Cancelled"){echo "selected";}?>>Cancelled</option>
                                     </select>
                                     <p style="color:red;display:none" id="statusError">* Appointment Status is Required Field *</p>
                                 </div>
                             </div>                            
                                           
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Category*</label>
+                                <label class="col-lg-3 control-label">Category<span class="radStar">*</span></label>
                                 <div class="col-lg-9">
-                                    <input type="text" id="name" name="name" class="form-control">
+                                    <input type="text" id="name" name="name" class="form-control" value="<?php if(isset($rejection)){echo $rejection->name;}?>">
                                     <p style="color:red;display:none" id="nameError">* Category is Required Field *</p>
                                 </div>
                             </div> 

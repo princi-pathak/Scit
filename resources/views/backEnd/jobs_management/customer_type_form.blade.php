@@ -37,6 +37,9 @@ border:none;
 .input-group-addon.remove-addon {
 padding: 5px 0px 15px 0px;    
 }
+.radStar {
+    color:red;
+}
 </style>
  <section id="main-content" class="">
     <section class="wrapper">

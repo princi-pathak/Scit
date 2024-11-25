@@ -190,7 +190,7 @@
                 </li> 
                 <!-- Sales and Finanace -->
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders')){ echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'Leads') || ($page == 'quotes') || ($page == 'jobs') || ($page == 'projects') || ($page == 'invoices') || ($page == 'purchase_orders') || ($page == 'Expense')){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i>
                         <span>Sales & Finance</span>
                     </a>
@@ -199,6 +199,7 @@
                         <li class="{{ ($page == 'quotes') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/quotes') }}">Quotes </a></li>
                         <li class="{{ ($page == 'invoices') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Invoices </a></li>
                         <li class="{{ ($page == 'purchase_orders') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/invoices') }}">Purchase Orders </a></li>
+                        <li class="{{ ($page == 'Expense') ? 'active' : '' }}"><a href="{{ url('admin/sales-finance/expense') }}">Expenses </a></li>
                     </ul>
                 </li>
                 <!-- Jobs -->
@@ -219,7 +220,7 @@
                 </li>
                 <!-- Setting Section Start -->
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'tags') || ($page == 'task_type') || ($page == 'regions') || ($page == 'payment_types') || ($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type') || ($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') || ($page == 'job_title') || ($page == 'customer_type') ){ echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'tags') || ($page == 'task_type') || ($page == 'regions') || ($page == 'payment_types') || ($page == 'Lead Reject Type') || ($page == 'Lead Status') || ($page == 'Lead Sources') || ($page == 'lead_task_type') || ($page == 'lead_notes_type') || ($page == 'jobs_type_list') || ($page == 'job_appointment_type') || ($page == 'job_rejection_categories') || ($page == 'job_title') || ($page == 'customer_type') || ($page == 'attachment_types') ){ echo 'active'; } ?>" >
                         <i class="fa fa-cogs"></i>
                         <span>Setting</span>
                     </a>

@@ -24,7 +24,7 @@
                                     <div id="editable-sample_length" class="dataTables_length">
                                         <div class="btn-group">
                                             <a href="#" data-toggle="modal" class="open-modal" data-target="#secondModal">
-                                                <button id="editable-sample_new" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+                                                <button id="editable-sample_new" class="btn btn-primary">Add Task Type <i class="fa fa-plus"></i></button>
                                             </a>
                                         </div>
                                     </div>
