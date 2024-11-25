@@ -522,6 +522,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(CataloguesController::class)->group(function () {
 
 		Route::get('/item/catalogues', 'index')->name('catalogues.index');
+		Route::post('/item/catalogues_save', 'catalogues_save');
 		
 	});
 

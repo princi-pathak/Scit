@@ -71,6 +71,6 @@ class Product extends Model
     }
 
     public static function getProductFromId($id){
-        return self::where('id', $id)->select('product_name', 'cost_price', 'price', 'product_code', 'id')->get();
+        return self::where('id', $id)->select('product_name', 'cost_price', 'price', 'product_code', 'id', 'product_type')->get();
     }
 }

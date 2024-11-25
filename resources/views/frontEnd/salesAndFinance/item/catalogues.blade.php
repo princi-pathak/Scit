@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="jobsection">
-                    <a href="#" class="profileDrop" onclick="itemsAddCatalogueModal(1)">Add</a>
+                    <a href="javascript:void(0)" class="profileDrop" onclick="itemsAddCatalogueModal(1)">Add</a>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                             </tr>
                         </thead>
     
-                        <tbody>
+                        <tbody id="CatalogueDataList">
                             
     
                         </tbody>
