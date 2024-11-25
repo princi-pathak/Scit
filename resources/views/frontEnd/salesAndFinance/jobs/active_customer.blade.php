@@ -196,6 +196,9 @@
     .days_check .form-check-input {
         margin-top: 2px;
     }
+    #CRMPop td .fa {
+        color:#0877bd;
+    }
 </style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
@@ -387,23 +390,23 @@
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-6 col-xl-6">
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense Name<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense Name<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="title" name="title" value="" placeholder="Expense Name">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Net Amount<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Net Amount<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="amount" name="amount" value="" placeholder="Net Amount">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
                                                                     <label for="inputProject"
-                                                                        class="col-sm-3 col-form-label">Vat<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                        class="col-sm-4 col-form-label">Vat<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <select class="form-control editInput selectOptions"
                                                                             id="vat" name="vat">
                                                                             <option value="0" selected>Custom VAT Amount</option>
@@ -414,29 +417,29 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Vat Amount</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Vat Amount</label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="vat_amount" name="vat_amount" value="" onkeyup="calculate_vat()">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Gross Amount<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Gross Amount<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="gross_amount" name="gross_amount" value="" disabled>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense Date<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense Date<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="date" class="form-control editInput"
                                                                             id="expense_date" name="expense_date" value="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense By</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense By</label>
+                                                                    <div class="col-sm-8">
                                                                         <select class="form-control editInput selectOptions"
                                                                             id="user_id" name="user_id">
                                                                             @foreach($users as $user_val)
@@ -447,8 +450,8 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Reference</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Reference</label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="reference" name="reference" value="">
                                                                     </div>
@@ -548,14 +551,14 @@
                                                     <div class="row">
                                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                                             <div class="mb-2 row">
-                                                                <label for="inputName" class="col-sm-3 col-form-label">Notes</label>
-                                                                <div class="col-sm-9">
+                                                                <label for="inputName" class="col-sm-2 col-form-label">Notes</label>
+                                                                <div class="col-sm-10">
                                                                     <textarea class="form-control textareaInput" name="notes" id="notes" rows="3" ></textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="mb-2 row">
-                                                                <label for="inputName" class="col-sm-3 col-form-label">Attachments</label>
-                                                                <div class="col-sm-9">
+                                                                <label for="inputName" class="col-sm-2 col-form-label">Attachments</label>
+                                                                <div class="col-sm-10">
                                                                     <input type="file" class="editInput"
                                                                         id="attachments" name="attachments" value="">
                                                                     <p>(Max file size 25 MB)</p>
@@ -883,7 +886,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Start Date <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" name="start_date" id="TaskStartDate">
+                                                                            <input type="date" class="form-control editInput" name="start_date" id="TaskStartDate" onchange="setMinEndDate()" min="">
                                                                         </div>
                                                                         <div class="col-sm-4">
                                                                             <input type="time" class="form-control editInput" name="start_time" id="TaskStartTime">
@@ -892,7 +895,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">End Date <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" name="end_date" id="TaskEndDate" value="">
+                                                                            <input type="date" class="form-control editInput" name="end_date" id="TaskEndDate" value="" min="" disabled>
                                                                         </div>
                                                                         <div class="col-sm-4">
                                                                             <input type="time" class="form-control editInput" name="end_time" id="TaskEndTime" value="">
@@ -2154,8 +2157,8 @@
                                         <select name="" class="form-control editInput" id="">
                                             <option value="1">All</option>
                                             <option value="2">Customer</option>
-                                            <option value="3">Supplier</option>
-                                            <option value="4">User</option>
+                                            <option value="3">Contacts</option>
+                                            <option value="4">Customer Sites</option>
                                                                                 
                                         </select>
                                     </div>
@@ -2219,9 +2222,8 @@
                                     <div class="jobsection  mt-3">
                                         <select name="" class="form-control editInput" id="">
                                             <option value="1">All</option>
-                                            <option value="2">Customer</option>
-                                            <option value="3">Supplier</option>
-                                            <option value="4">User</option>
+                                            <option value="2">Supplier</option>
+                                            <option value="3">Contacts</option>
                                                                                 
                                         </select>
                                     </div>
@@ -2286,9 +2288,8 @@
                                     <div class="jobsection  mt-3">
                                         <select name="" class="form-control editInput" id="">
                                             <option value="1">All</option>
-                                            <option value="2">Customer</option>
-                                            <option value="3">Supplier</option>
-                                            <option value="4">User</option>
+                                            <option value="2">User</option>
+                                            <option value="3">Contacts</option>
                                                                                 
                                         </select>
                                     </div>
@@ -3028,6 +3029,14 @@ job_input.addEventListener('input', function() {
             GetCustomerWithContact();
             $("#search_contactsModal").modal('show');
         })
+
+        mainCheckbox.addEventListener('change', function() {
+            if (mainCheckbox.checked) {
+                optionsDiv.style.display = 'block';
+            } else {
+                optionsDiv.style.display = 'none';
+            }
+        });
 
         // Notes model show and hide
         const openNotesModel = document.getElementById('openNotesModel');
@@ -3930,7 +3939,7 @@ job_input.addEventListener('input', function() {
                         '<i class="fa fa-envelope"></i> ' +
                         '<i class="fa fa-list-ul"></i> ' +
                         '<i class="fa fa-file"></i> ' +
-                        '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                        '<i class="fa fa-exclamation-triangle"></i></td>' +
                         '</tr>';
                     tableBody.append(html);
                 });
@@ -4022,20 +4031,27 @@ job_input.addEventListener('input', function() {
         let isRunning = false;
 
         function toggleTimer() {
-            if (isRunning) {
-                // Pause the timer
-                clearInterval(timerInterval);
-                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-play"></i> Start';
-            } else {
-                // Start the timer with an interval of 100ms for faster updates
-                timerInterval = setInterval(function() {
-                    elapsedSeconds++;
-                    document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
-                    document.getElementById('start_time').value = formatTime(elapsedSeconds);
-                }, 100); // Now the timer updates every 100 milliseconds
-                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
+            var staticEmail=$("input[name=title_timer]").val();
+            if(staticEmail == ''){
+                alert("Please fill all required field");
+                return false;
+            }else{
+                if (isRunning) {
+                    // Pause the timer
+                    clearInterval(timerInterval);
+                    document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-play"></i> Start';
+                } else {
+                    // Start the timer with an interval of 100ms for faster updates
+                    timerInterval = setInterval(function() {
+                        elapsedSeconds++;
+                        document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+                        document.getElementById('start_time').value = formatTime(elapsedSeconds);
+                    }, 100); // Now the timer updates every 100 milliseconds
+                    document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
+                }
+                isRunning = !isRunning; // Toggle the running state
             }
-            isRunning = !isRunning; // Toggle the running state
+            
         }
 
         function formatTime(seconds) {
@@ -4411,6 +4427,17 @@ function searchDataWithEmail(text){
         }
     }
 }
+</script>
+<script>
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("TaskStartDate").setAttribute("min", today);
+    document.getElementById("TaskEndDate").setAttribute("min", today);
+
+    function setMinEndDate() {
+        $('#TaskEndDate').removeAttr('disabled');
+        const startDate = document.getElementById("TaskStartDate").value;
+        document.getElementById("TaskEndDate").setAttribute("min", startDate);
+    }
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor5-build-classic/ckeditor.js"></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
