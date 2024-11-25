@@ -22,13 +22,12 @@ class Construction_tax_rate extends Model
 
     public static function getAllTax_rate($home_id,$mode){
         $status = ($mode == 'Active') ? 1 : 0;
+        $query = self::whereNull('deleted_at')->where(['home_id'=>$home_id]);
         if($mode){
-            $data = self::whereNull('deleted_at')->where(['home_id'=>$home_id,'status'=>$status])->get();
+            return $query->where('status', $status)->get();
         }else{
-            $data = self::whereNull('deleted_at')->where(['home_id'=>$home_id])->get();
+            return $query->get();
         }
-        
-        return $data;
     }
 
     public static function saveTax_rate($data){
