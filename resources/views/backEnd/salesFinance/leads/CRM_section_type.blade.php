@@ -1,6 +1,15 @@
 @extends('backEnd.layouts.master')
 @section('title',' CRM Section Type')
 @section('content')
+<style>
+    .colorBox {
+    background: red;
+    height: 20px;
+    width: 20px;
+    /* border-radius: 50%; */
+    margin: auto;
+}
+</style>
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">
@@ -55,7 +64,11 @@
                                                     @default {{-- No output if none of the cases match --}}
                                                 @endswitch
                                             </td>                                         
-                                            <td>{{ $value->color_code }} </td>
+                                            <td>
+                                                @if($value->color_code) 
+                                                <div class="colorBox" style="background-color: {{ $value->color_code }}"></div>
+                                                @endif
+                                             </td>
                                             <td> @switch($value->crm_section)
                                                     @case(1) <i class="fa fa-phone"></i>   @break
                                                     @case(2) <i class="fa fa-envelope-o"></i> @break

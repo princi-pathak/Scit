@@ -116,7 +116,7 @@
                                                 @if($value->status == 1)
                                                     <a href="javascript:" onclick="status_change('{{base64_encode($value->id)}}',0)" class="btn btn-success">Active</a>
                                                 @else
-                                                <a href="javascript:" class="btn btn-danger" onclick="status_change('{{base64_encode($value->id)}}',1)">In-Active</a>
+                                                <a href="javascript:" class="btn btn-danger" onclick="status_change('{{base64_encode($value->id)}}',1)">Inactive</a>
                                                 @endif
                                             </td>
                                             <td class="action-icn">

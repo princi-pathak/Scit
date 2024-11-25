@@ -35,6 +35,7 @@ use App\Models\Construction_job_appointment_type;
 use App\Models\Construction_product_supplier_list;
 use App\Models\construction_appointment_rejection_category;
 use App\Models\Region;
+use App\Models\LogHistory;
 use DB,Auth,Session,Validator;
 
 class JobController extends Controller
