@@ -12,6 +12,7 @@ use App\Models\ProductCatalogue;
 use App\Models\ProductCataloguePrice;
 use App\User;
 use App\Models\Product_category;
+use App\Models\Product;
 
 class CataloguesController extends Controller
 {
@@ -39,5 +40,40 @@ class CataloguesController extends Controller
         }
         $product_categories_list = $productcategory_array;
         return view('frontEnd.salesAndFinance.item.catalogues', compact('product_categories', 'page', 'lastSegment', 'users', 'product_categories_list'));
+    }
+    public function catalogues_save(Request $request){
+        echo "<pre>";print_r($request->all());die;
+            if(empty($request->tableData)){
+                $catlogueTable=['home_id'=>Auth::user()->home_id,'user_id'=>Auth::user()->id,'name'=>$request->productname,'description'=>$request->description,'catalogue_type'=>$request->type,'status'=>$request->status];
+                try {
+                    $catlogueSave=ProductCatalogue::CatalogueSave($catlogueTable);
+                    return response()->json(['success' => true, 'data' => $catlogueSave]);
+                }catch (\Exception $e) {
+                    return response()->json(['success' => false, 'message' => $e->getMessage()]);
+                }
+            }else{
+                foreach($request->tableData as $val){
+                     $cataloguePriceTable=[
+                            'product_catalogue_id'=>$request->catalogue_id,
+                            'product_id'=>$val['id'],
+                            'product_code'=>$val['product_code'],
+                            'product_name'=>$val['product_name'],
+                            'default_price'=>$val['price'],
+                            'catalogue_price'=>$val['custom_price'],
+                            'product_type'=>$val['product_type'],
+                            'status'=>1
+                        ];
+                    try {
+                        $cataloguePriceSave=ProductCataloguePrice::ProductCatalogueSave($cataloguePriceTable);
+                        return response()->json(['success' => true, 'data' => $cataloguePriceSave]);
+                    }catch (\Exception $e) {
+                    return response()->json(['success' => false, 'message' => $e->getMessage()]);
+                }
+                    
+                }
+                
+            }
+            
+        
     }
 }
