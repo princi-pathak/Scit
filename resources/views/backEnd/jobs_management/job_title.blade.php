@@ -142,11 +142,11 @@ thead#flowhead {
                                                 @if($val->status == 1)
                                                     <a href="javascript:void(0)" onclick="status_change('{{base64_encode($val->id)}}',0)" class="btn btn-success">Active</a>
                                                 @else
-                                                <a href="javascript:void(0)" class="btn btn-danger" onclick="status_change('{{base64_encode($val->id)}}',1)">In-Active</a>
+                                                <a href="javascript:void(0)" class="btn btn-danger" onclick="status_change('{{base64_encode($val->id)}}',1)">Inactive</a>
                                                 @endif
                                             </td>
                                             <td class="action-icn">
-                                                <a href="{{ url('admin/customer_type_add?key=')}}{{base64_encode($val->id)}}" class="edit"><span style= "font-size: 13px; color: #000;"><span style= "color: #000"><i data-toggle="tooltip" title="Edit" class="fa fa-edit fa-lg"></i></span></a> &nbsp &nbsp &nbsp 
+                                                <a href="{{ url('admin/job_title_add?key=')}}{{base64_encode($val->id)}}" class="edit"><span style= "font-size: 13px; color: #000;"><span style= "color: #000"><i data-toggle="tooltip" title="Edit" class="fa fa-edit fa-lg"></i></span></a> &nbsp &nbsp &nbsp 
 
                                                 <a href="javascript:void(0)" onclick="delete_job('{{base64_encode($val->id)}}')" class="text-danger"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o fa-lg"></i></a>
                                              

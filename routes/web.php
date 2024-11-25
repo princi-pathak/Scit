@@ -1854,6 +1854,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::controller(ExpenseControllerAdmin::class)->group(function() {
 		Route::prefix('sales-finance/expense')->group(function() {
 			Route::match(['get', 'post'],'/', 'index');
+			Route::post('find_project','find_project');
+			Route::post('find_job','find_job');
+			Route::post('find_appointment','find_appointment');
+			Route::post('expense_save','expense_save');
+			Route::post('expense_image_delete','expense_image_delete');
+			Route::post('expense_delete','expense_delete');
+			Route::post('expense_reject','expense_reject');
 		});
 	});
 	// Route::match(['get', 'post'], '/job_recurring_list', 'App\Http\Controllers\backEnd\JobsController@job_recurring_list');

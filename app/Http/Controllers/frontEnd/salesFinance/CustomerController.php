@@ -731,7 +731,7 @@ class CustomerController extends Controller
         }
     }
     public function get_customer_details(Request $request){
-        $data['contact']=Constructor_additional_contact::where('customer_id',$request->id)->get();
+        $data['contact']=Constructor_additional_contact::where(['customer_id'=>$request->id,'deleted_at'=>null])->get();
         $data['customer']=Customer::find($request->id);
         return $data;
     }
@@ -1021,7 +1021,7 @@ class CustomerController extends Controller
         // if($customer_id->userType == 1){
         //     $data=Constructor_additional_contact::where('customer_id',$customer_id)->orderBy('id', 'desc')->paginate(10);
         // }else if($customer_id->userType == 1)
-        $contact=Constructor_additional_contact::where('home_id',$home_id)->orderBy('id', 'desc')->get();
+        $contact=Constructor_additional_contact::where('home_id',$home_id)->where('deleted_at',null)->orderBy('id', 'desc')->get();
         // echo "<pre>";print_r($contact);die;
         $arrya=array();
         foreach($contact as $val){

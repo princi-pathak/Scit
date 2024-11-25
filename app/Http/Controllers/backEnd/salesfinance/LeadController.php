@@ -219,7 +219,7 @@ class LeadController extends Controller
             'status' => 'required',
         ]);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return response()->json(['errors' => $validator->errors()->first()]);
         }
         LeadSource::updateOrCreate(['id' => $request->lead_source_id], array_merge($request->all(), ['home_id' =>  Session::get('scitsAdminSession')->home_id]));
         if(isset($request->lead_source_id)){

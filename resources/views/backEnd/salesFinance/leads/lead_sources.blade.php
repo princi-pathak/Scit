@@ -112,7 +112,7 @@
             $('#status').val(1);
             $('.modal-title').text('');
             $('#saveChanges').text('');
-
+            $('#title').css('border','');
             if (itemId) {
                 // Editing existing record
                 $('#lead_source_id').val(itemId);
@@ -129,21 +129,35 @@
         });
 
         $('#saveChanges').on('click', function() {
-            var formData = $('#lead_source_form').serialize();
-
-            $.ajax({
-                url: '{{ route("leads.ajax.saveLeadSource") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    $('#secondModal').modal('hide');
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
+            var title= $("#title").val();
+            if(title == ''){
+                $("#title").css('border','1px solid red');
+                $(window).scrollTop($('#title').position().top);
+                return false;
+            }else{
+                var formData = $('#lead_source_form').serialize();
+                $.ajax({
+                    url: '{{ route("leads.ajax.saveLeadSource") }}',
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        if(response.errors){
+                            // alert(response.errors);
+                            $("#title").css('border','1px solid red');
+                            $(window).scrollTop($('#title').position().top);
+                            return false;
+                        }else{
+                            alert(response.message);
+                            $('#secondModal').modal('hide');
+                            location.reload();
+                        }
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
         });
     });
 </script>

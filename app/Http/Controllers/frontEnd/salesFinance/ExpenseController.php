@@ -27,21 +27,22 @@ class ExpenseController extends Controller
         $data['customer']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
         $data['home_id']=$home_id;
         if(isset($key) && isset($value)){
-            if($key === 'authorised' && $value == 1){
-                $data['expense']=Expense::getAllExpense($home_id)->where(["$key"=>$value,'paid'=>0])->get();
-            }else{
+            if($key === 'reject' && $value == 1){
                 $data['expense']=Expense::getAllExpense($home_id)->where("$key",$value)->get();
+            }else if($key === 'authorised' && $value == 1){
+                $data['expense']=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'paid'=>0])->get();
+            }else{
+                $data['expense']=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0])->get();
             }
             
         }else{
             $data['expense']=Expense::getAllExpense($home_id)->get();
         }
         // echo "<pre>";print_r($data['expense']);die;
-        $data['authorisedCount']=Expense::getAllExpense($home_id)->where('authorised',1)->count();
-        $data['unauthorisedCount']=Expense::getAllExpense($home_id)->where('authorised',0)->count();
+        $data['authorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>1,'reject'=>0,'paid'=>0])->count();
+        $data['unauthorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>0,'reject'=>0,'paid'=>0])->count();
         $data['rejectCount']=Expense::getAllExpense($home_id)->where('reject',1)->count();
-        $data['paidCount']=Expense::getAllExpense($home_id)->where('paid',1)->count();
-        $data['paidWithAuthCount']=Expense::getAllExpense($home_id)->where(['paid'=>1,'authorised'=>1])->count();
+        $data['paidCount']=Expense::getAllExpense($home_id)->where(['paid'=>1,'reject'=>0])->count();
         $data['expenseCount']=Expense::getAllExpense($home_id)->count();
         // echo "<pre>";print_r($data['paidWithAuthCount']);die;
         return view('frontEnd.salesAndFinance.expenses.expense',$data);

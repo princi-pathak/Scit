@@ -100,20 +100,12 @@
 
         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
             <div class="jobsection">
-                <?php 
-                    if($paidWithAuthCount>0){
-                        $paid_count=$paidWithAuthCount;
-                        $auth_count=$authorisedCount-$paidWithAuthCount;
-                    }else{
-                        $paid_count=$paidCount;
-                        $auth_count=$authorisedCount;
-                    }
-                ?>
+                
                 <a href="#" class="profileDrop" onclick="modal_show()">Add</a>
                 <a href="{{url('expenses?key=authorised&value=0')}}" class="profileDrop bgcolor" id="bgcolor1">Unauthorised ({{$unauthorisedCount}})</a>
-                <a href="{{url('expenses?key=authorised&value=1')}}" class="profileDrop bgcolor" id="bgcolor2">Authorised ({{$auth_count}})</a>
+                <a href="{{url('expenses?key=authorised&value=1')}}" class="profileDrop bgcolor" id="bgcolor2">Authorised ({{$authorisedCount}})</a>
                 <a href="{{url('expenses?key=reject&value=1')}}" class="profileDrop bgcolor" id="bgcolor3">Rejected ({{$rejectCount}})</a>
-                <a href="{{url('expenses?key=paid&value=1')}}" class="profileDrop bgcolor" id="bgcolor4">Paid ({{$paid_count}})</a>
+                <a href="{{url('expenses?key=paid&value=1')}}" class="profileDrop bgcolor" id="bgcolor4">Paid ({{$paidCount}})</a>
                 <a href="{{url('expenses')}}" class="profileDrop bgcolor" id="bgcolor5">All ({{$expenseCount}})</a>
                 <!-- <a href="#" class="profileDrop" id="impExpClickbtnPopup">Import/Export</a> -->
             </div>
@@ -303,23 +295,23 @@
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-6 col-xl-6">
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense Name<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense Name<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="title" name="title" value="" placeholder="Expense Name">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Net Amount<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Net Amount<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="amount" name="amount" value="" placeholder="Net Amount">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
                                                                     <label for="inputProject"
-                                                                        class="col-sm-3 col-form-label">Vat<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                        class="col-sm-4 col-form-label">Vat<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <select class="form-control editInput selectOptions"
                                                                             id="vat" name="vat">
                                                                             <option value="0" selected>Custom VAT Amount</option>
@@ -330,29 +322,29 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Vat Amount</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Vat Amount</label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="vat_amount" name="vat_amount" value="" onkeyup="calculate_vat()">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Gross Amount<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Gross Amount<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="gross_amount" name="gross_amount" value="" disabled>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense Date<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense Date<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="date" class="form-control editInput"
                                                                             id="expense_date" name="expense_date" value="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense By</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense By</label>
+                                                                    <div class="col-sm-8">
                                                                         <select class="form-control editInput selectOptions"
                                                                             id="user_id" name="user_id">
                                                                             @foreach($users as $user_val)
@@ -363,8 +355,8 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Reference</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Reference</label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="reference" name="reference" value="">
                                                                     </div>
@@ -464,14 +456,14 @@
                                                     <div class="row">
                                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                                             <div class="mb-2 row">
-                                                                <label for="inputName" class="col-sm-3 col-form-label">Notes</label>
-                                                                <div class="col-sm-9">
+                                                                <label for="inputName" class="col-sm-2 col-form-label">Notes</label>
+                                                                <div class="col-sm-10">
                                                                     <textarea class="form-control textareaInput" name="notes" id="notes" rows="3" ></textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="mb-2 row">
-                                                                <label for="inputName" class="col-sm-3 col-form-label">Attachments</label>
-                                                                <div class="col-sm-9">
+                                                                <label for="inputName" class="col-sm-2 col-form-label">Attachments</label>
+                                                                <div class="col-sm-10">
                                                                     <input type="file" class="editInput"
                                                                         id="attachments" name="attachments" value="">
                                                                     <p>(Max file size 25 MB)</p>

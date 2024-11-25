@@ -51,10 +51,10 @@ padding: 5px 0px 15px 0px;
                             <form class="form-horizontal" id="form_data">
                             <label>Job Title Details</label>                           
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Job Title*</label>
+                                <label class="col-lg-3 control-label">Job Title<span class="radStar ">*</span></label>
                                 <div class="col-lg-9">
                                     <input type="text" id="name" name="name" class="form-control" placeholder="Job Title" value="<?php if(isset($type)){echo $type->name;}?>">
-                                    <p style="color:red;display:none" id="nameError">*Jbo Title is Required Field *</p>
+                                    <p style="color:red;display:none" id="nameError">* Job Title is required field *</p>
                                 </div>
                             </div> 
                            
