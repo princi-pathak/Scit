@@ -292,17 +292,26 @@ class DynamicFormController extends Controller
             //  print_r(json_encode($data['data']));
             //($data['data']==null)?"hello" +die() :json_encode($data['data']);
             //  die();
+
+            if(isset($data['formImage'])){
+                $formImage = $data['formImage'];
+            } else if(isset($data['formImage2'])) {
+                $formImage = $data['formImage2'];
+            } else {
+                $formImage = null;
+            }
+
             if (!empty($data['date'])) {
                 $form->date         = date('Y-m-d', strtotime($data['date']));
             }
 
             // $form->title             = $data['title'];
-            $form->title             = null;
+            $form->title                = null;
             // $form->details             = $data['details'];
-            $form->details             = null;
+            $form->details              = null;
             // $form->time             = $data['time'];
-            $form->time             = null;
-            $form->image_path                 =  $data['formImage'];
+            $form->time                = null;
+            $form->image_path          =  $formImage;
             $form->pattern_data        = json_encode($data['data']);
             // $form->alert_status     = $data['alert_status']; 
             // $form->alert_date       = $data['alert_date']; 

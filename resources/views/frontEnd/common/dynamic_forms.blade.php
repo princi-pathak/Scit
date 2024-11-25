@@ -625,6 +625,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         $('#' + previous_model_id + ' .popup_success').show();
                         setTimeout(function() {
                             $('#' + previous_model_id + ' .popup_success').fadeOut()
+                            location.reload()
                         }, 5000);
 
                         $('#' + previous_model_id + ' .dyn-logged-btn').click();

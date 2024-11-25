@@ -22,6 +22,7 @@
                                 <div class="py-4">
                                     <div class="row">
                                         <div class="col-lg-3">
+                                            <input type="hidden" id="selectedProductIds" name="product_ids" value="[]">
                                             <select class="form-control editInput selectOptions" id="product_categories">
                                                 <option>--Any Category--</option>
                                             </select>
@@ -67,12 +68,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="insrt_product_and_detail">
-                                                    <!-- <tr>
-                                                        <td>T3-0001 </td>
-                                                        <td>General </td>
-                                                        <td><a href="#!" onclick="insrtProduct()" data-bs-dismiss="modal" aria-label="Close">TEst 331</a> </td>
-                                                        <td>Test </td>
-                                                    </tr> -->
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -201,7 +197,7 @@
             <!-- end modal body -->
             <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn profileDrop">Save changes</button>
+                <button type="button" class="btn profileDrop" id="listAllProduct">Save changes</button>
             </div>
         </div>
     </div>
@@ -209,9 +205,6 @@
 
 <script>
     function openProductListModal() {
-        // document.getElementById('job_title_id').setAttribute('data-jobTitle-id', appendJobTitle);
-
-
         $.ajax({
             url: '{{ route("item.ajax.getCategoriesList") }}',
             method: 'GET',
@@ -219,7 +212,6 @@
                 console.log(response);
                 var productCat = document.getElementById('product_categories');
                 productCat.innerHTML = '';
-
                 let newOption = document.createElement('option');
                 newOption.text = "-Any Category-";
                 productCat.appendChild(newOption);
@@ -237,12 +229,11 @@
 
         getproductsOnType(1, 'setProductInTable');
 
-
         $.ajax({
             url: '{{ route("item.ajax.getProductCounts") }}',
             method: 'GET',
             success: function(response) {
-                console.log(response.data);
+                console.log("CountPeoduct", response.data);
                 document.getElementById('productCount').textContent = response.data.product.toString().padStart(2, '0');
                 document.getElementById('serviceCount').textContent = response.data.service.toString().padStart(2, '0');
                 document.getElementById('consumableCount').textContent = response.data.consumable.toString().padStart(2, '0');
@@ -252,53 +243,47 @@
             }
         });
 
-
         $('#productModalBAC').modal('show');
     }
 
     function populateTable(data, tableId) {
-        // Get the table body element
         const tableBody = document.querySelector(`#${tableId} tbody`);
         tableBody.innerHTML = ''; // Clear the table body
 
-        // Check if data array is empty
         if (data.length === 0) {
-            // Create a row to display the "No products found" message
             const noDataRow = document.createElement('tr');
             const noDataCell = document.createElement('td');
 
-            // Span across all columns in the table (adjust the colspan if your table has more columns)
             noDataCell.setAttribute('colspan', 4);
             noDataCell.textContent = 'No products found';
             noDataCell.style.textAlign = 'center'; // Center the message
 
-            // Append the cell to the row and the row to the table body
             noDataRow.appendChild(noDataCell);
             tableBody.appendChild(noDataRow);
         } else {
-            // Populate rows as usual if data is not empty
             data.forEach(item => {
-                // Create a new row
                 const row = document.createElement('tr');
-                row.setAttribute('data-href', 'https://example.com/page1');
+                row.setAttribute('data-id', item.id);
 
-                row.addEventListener('click', () => {
-                    alert(`You clicked on a row with URL: ${row.getAttribute('data-href')}`);
+                row.addEventListener('click', (event) => {
+                    if (event.target && event.target.nodeName === 'TD') {
+                        const clickedRow = event.target.parentNode;
+                        const productInput = clickedRow.querySelector('input.product_id');
+                        const productId = parseInt(clickedRow.getAttribute('data-id'));
+                        const productIdsInput = document.getElementById('selectedProductIds');
+                        let productIds = JSON.parse(productIdsInput.value || '[]');
+                        if (!productIds.includes(productId)) {
+                            productIds.push(productId);
+                        } else {
+                            productIds = productIds.filter(id => id !== productId);
+                        }
+                        productIdsInput.value = JSON.stringify(productIds);
+                    }
                 });
 
-                // Create cells and append them to the row
                 const codeCell = document.createElement('td');
                 codeCell.textContent = item.product_code;
                 row.appendChild(codeCell);
-                // Create a hidden input field for the product ID
-
-               // Create a hidden input field for the product ID
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.className  = 'product_id';
-                hiddenInput.name = 'product_ids[]'; // For form submission
-                hiddenInput.value = item.id; // Set the product ID
-                row.appendChild(hiddenInput);
 
                 const categoryCell = document.createElement('td');
                 categoryCell.innerHTML = item.name;
@@ -312,7 +297,6 @@
                 descriptionCell.textContent = item.description;
                 row.appendChild(descriptionCell);
 
-                // Append the row to the table body
                 tableBody.appendChild(row);
             });
         }
