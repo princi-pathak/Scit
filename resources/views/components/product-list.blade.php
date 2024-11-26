@@ -197,7 +197,7 @@
             <!-- end modal body -->
             <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn profileDrop" id="listAllProduct">Save changes</button>
+                <!-- <button type="button" class="btn profileDrop" id="listAllProduct">Save changes</button> -->
             </div>
         </div>
     </div>

@@ -629,8 +629,9 @@
                                     <div class="mb-3 row">
                                         <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                                            <input type="text" class="form-control editInput" id="search-product" placeholder="Type to add product">
                                         </div>
+                                        <div class="parent-container"></div>
                                         <div class="col-sm-7">
                                             <div class="plusandText">
                                                 <a href="#!" class="formicon" id="openAddProductModal" onclick="itemsAddProductModal(2)"><i class="fa-solid fa-square-plus"></i> </a>
@@ -824,7 +825,7 @@
                                                             <div class="col-sm-7">
                                                                 <div class="plusandText">
                                                                     <a href="#!" class="formicon" id="cost_product_popup"><i class="fa-solid fa-square-plus"></i></a>
-                                                                    <span class="afterPlusText"> (Type to view product or <a href="#!">Click here</a> to view all assets)</span>
+                                                                    <span class="afterPlusText"> (Type to view product or <a href="#!" onclick="openProductListModal()">Click here</a> to view all assets)</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2364,12 +2365,83 @@
     CKEDITOR.replace('textarea11', editor_config);
     //Text Editer
 
-    document.querySelector("#listAllProduct").addEventListener("click", function(e) {
-        const productIds = document.getElementById('selectedProductIds').value;
-        const productIdsArray = JSON.parse(productIds || '[]');
-        productIdsArray.forEach(id => {
-            getProductData(id); // Call the function for each ID
+    // document.querySelector("#listAllProduct").addEventListener("click", function(e) {
+    //     const productIds = document.getElementById('selectedProductIds').value;
+    //     const productIdsArray = JSON.parse(productIds || '[]');
+    //     productIdsArray.forEach(id => {
+    //         getProductData(id); // Call the function for each ID
+    //     });
+    // });
+
+    $(document).ready(function() {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
+        $('#search-product').on('keyup', function() {
+            let query = $(this).val();
+            const divList = document.querySelector('.parent-container');
+
+            if (query === '') {
+                divList.innerHTML = '';
+            }
+
+            // Make an AJAX call only if query length > 2
+            if (query.length > 2) {
+                $.ajax({
+                    url: "{{ route('item.ajax.searchProduct') }}", // Laravel route
+                    method: 'GET',
+                    data: {
+                        query: query
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // $('#results').html(response);
+                        divList.innerHTML = "";
+                        const div = document.createElement('div');
+                        div.className = 'container'; // Optional: Add a class to the div for styling
+
+                        // Step 2: Create a ul (unordered list)
+                        const ul = document.createElement('ul');
+                        ul.id = "productList";
+                        // Step 3: Loop through the data and create li (list item) for each entry
+                        response.forEach(item => {
+                            const li = document.createElement('li'); // Create a new li element
+                            li.textContent = item.product_name; // Set the text of the li item
+                            li.id = item.id;
+                            li.className = "editInput";
+                            ul.appendChild(li); // Append the li to the ul
+                        });
+
+                        // Step 4: Append the ul to the div
+                        div.appendChild(ul);
+
+                        // Step 5: Append the div to the parent container in the HTML
+                        divList.appendChild(div);
+
+                        ul.addEventListener('click', function(event) {
+                            divList.innerHTML = '';
+                            document.getElementById('search-product').value = '';
+                            // Check if the clicked element is an <li> (to avoid triggering on other child elements)
+                            if (event.target.tagName.toLowerCase() === 'li') {
+                                const selectedId = event.target.id; // Get the ID of the clicked <li>
+                                console.log('Selected Product ID:', selectedId); // Print the ID of the selected product
+                                getProductData(selectedId);
+                            }
+                        });
+
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            } else {
+                $('#results').empty(); // Clear results if the input is empty
+            }
+        });
+
     });
 
     function getCustomerType() {
@@ -2442,75 +2514,6 @@
         });
     }
 
-    function tableFootForProduct() {
-
-        if (!isFooterAppended) { // Check the flag
-            // const tableFoot = document.getElementsByClassName('add_table_insrt33');
-            const tableFoot = document.querySelector('.add_table_insrt33');
-
-            tableFoot.innerHTML += ` <tr>
-                    <td colspan="10" class="borderNone"></td>
-                    <td>Sub Total (exc. VAT)</td>
-                    <td class="tableAmountRight">$90.00</td>
-                </tr>
-                <tr>
-                    <td colspan="10" class="borderNone"></td>
-                    <td>
-                        <div class="discountInput">
-                            <span>Discount</span><input type="text" class="form-control editInput input50" value="0">
-                            <span>%</span>
-                        </div>
-                    </td>
-                    <td class="tableAmountRight">$0.00</td>
-                </tr>
-                <tr>
-                    <td colspan="10" class="borderNone"></td>
-                    <td>
-                        Apply overall markup
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="10" class="borderNone"></td>
-                    <td>VAT</td>
-                    <td class="tableAmountRight">$18.00</td>
-                </tr>
-                <tr>
-                <td colspan="10" class="borderNone"></td>
-                    <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)</strong></td>
-                    <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold">$108.00</td>
-                </tr>
-                <tr>
-                <td colspan="10" class="borderNone"></td>
-                    <td>Profit</td>
-                    <td class="tableAmountRight">$-10.00</td>
-                </tr>
-                <tr>
-                <td colspan="10" class="borderNone"></td>
-                    <td>Margin</td>
-                    <td class="tableAmountRight">-11.11%</td>
-                </tr>
-                <tr>
-                <td colspan="10" class="borderNone"></td>
-                    <td>Deposit</td>
-                    <td class="tableAmountRight">$0.00</td>
-                </tr>
-                <tr>
-                <td colspan="10" class="borderNone"></td>
-                    <td>Refund</td>
-                    <td class="tableAmountRight">$0.00</td>
-                </tr>
-                <tr>
-                <td colspan="10" class="borderNone"></td>
-                    <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)</strong></td>
-                    <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold">$108.00</td>
-                </tr>`;
-        }
-
-
-
-    }
-
     function taxRate() {
         $.ajax({
             url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
@@ -2524,12 +2527,16 @@
 
                         const optionInitial = document.createElement('option');
                         optionInitial.textContent = "Please Select"; // Use appropriate key from your response
+                        optionInitial.value = 0;
                         dropdown.appendChild(optionInitial);
                         // Append new options
                         response.data.forEach(code => {
                             const option = document.createElement('option');
                             option.value = code.id; // Use appropriate key from your response
                             option.textContent = code.name; // Use appropriate key from your response
+                            if (code.id === 2) {
+                                option.selected = true; // Select the option where id = 2
+                            }
                             dropdown.appendChild(option);
                         });
                     });
@@ -2543,15 +2550,109 @@
         });
     }
 
+    function tableFootForProduct() {
+
+        if (!isFooterAppended) { // Check the flag
+            // const tableFoot = document.getElementsByClassName('add_table_insrt33');
+            const tableFoot = document.querySelector('.add_table_insrt33');
+
+            tableFoot.innerHTML += `<tr>
+                                        <td colspan="10" class="borderNone"></td>
+                                        <td>Sub Total (exc. VAT)</td>
+                                        <td class="tableAmountRight" id="footAmount">$90.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10" class="borderNone"></td>
+                                        <td>
+                                            <div class="discountInput">
+                                                <span>Discount</span><input type="text" class="form-control onchange="calculateRowValues();" editInput input50" value="0">
+                                                <span>%</span>
+                                            </div>
+                                        </td>
+                                        <td class="tableAmountRight" id="footDiscount">$0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10" class="borderNone"></td>
+                                        <td>
+                                            <span id="markUpLinkRemove"><a href="#!" onclick="applyMarkup();"> Apply overall markup</a> </span>
+                                            
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10" class="borderNone"></td>
+                                        <td>VAT</td>
+                                        <td class="tableAmountRight" id="footVatAmount">$18.00</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)</strong></td>
+                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">$108.00</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td>Profit</td>
+                                        <td class="tableAmountRight" id="footProfit">$-10.00</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td>Margin</td>
+                                        <td class="tableAmountRight" id="footMargin">-11.11%</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td>Deposit</td>
+                                        <td class="tableAmountRight" id="footDeposit">$0.00</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td>Refund</td>
+                                        <td class="tableAmountRight" id="footRefund">$0.00</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)</strong></td>
+                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">$108.00</td>
+                                    </tr>`;
+        }
+    }
+
+    function applyMarkup() {
+        document.getElementById('markUpLinkRemove').innerHTML = '';
+        document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
+    }
+
+    function getTaxRateOnTaxId(taxID){
+        $.ajax({
+            url: '{{ route("invoice.ajax.getTaxRateOnTaxId") }}',
+            method: 'Post',
+            data: {
+                id: 2
+            },
+            success: function(response) {
+                console.log("response.data", response.data);
+                document.querySelector('.selectedTaxID').value = response.data;
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
+
     function calculateRowValues(row) {
+  
+        getTaxRateOnTaxId();
         // Get input values from the row
         const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
         const price = parseFloat(row.querySelector('.price').value) || 0;
         const costPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
         const priceMarkup = parseFloat(row.querySelector('.priceMarkup').value) || 0;
         const discount = parseFloat(row.querySelector('.discount').value) || 0;
-        const vat = parseFloat(row.querySelector('.vat').value) || 0;
-
+        // const vat = row.querySelector('.selectedTaxID').value;
+        // const vat = parseFloat(row.querySelector('.discount').value) || 0;
+        const vat = 20;
         // Calculate selling price (Cost Price + Markup - Discount)
         const markupAmount = (price * priceMarkup) / 100; // Percentage markup
         const sellingPrice = price + markupAmount - discount;
@@ -2566,22 +2667,21 @@
         const profit = (sellingPrice - costPrice) * quantity;
         console.log("profit", profit);
 
+        const margin = (profit / sellingPrice)*100;
+
         // Update row output fields
         row.querySelector('.amount').textContent = amount.toFixed(2); // Show amount
+        document.getElementById('footAmount').textContent = amount.toFixed(2);
+        document.getElementById('footProfit').textContent = profit.toFixed(2);
+        document.getElementById('footVatAmount').textContent = vatAmount.toFixed(2);
+        document.getElementById('footTotalDiscountVat').textContent = (amount + vatAmount).toFixed(2);
+        document.getElementById('footMargin').textContent = margin.toFixed(2)+'%';
+        // document.getElementById('footVatAmount').textContent = vatAmount
+        document.getElementById('footOutstandingAmount').textContent = (amount+vatAmount).toFixed(2);
         // row.querySelector('.vatAmount').textContent = vatAmount.toFixed(2); // Show VAT amount
         row.querySelector('.profit').textContent = profit.toFixed(2); // Show profit
+        row.querySelector('.footRowMargin').textContent = '('+margin.toFixed(2)+'%'+')'; // Show profit
     }
-
-    // Attach listeners when the DOM is loaded
-    // document.addEventListener('DOMContentLoaded', attachCalculationListeners);
-    // // Function to attach event listeners for calculation
-    // function attachCalculationListeners() {
-    //     document.querySelectorAll('.add_table_insrt').forEach(row => {
-    //         row.querySelectorAll('.quantity, .costPrice, .price, .priceMarkup, .discount, .vat').forEach(input => {
-    //             input.addEventListener('input', () => calculateRowValues(row)); // Call function on input change
-    //         });
-    //     });
-    // }
 
     let isFooterAppended = false;
 
@@ -2592,6 +2692,7 @@
             const tableBody = document.querySelector(`#${tableId} tbody`);
             const table = document.querySelector(`#${tableId}`);
             const node = document.createElement("tr");
+            taxRate();
             node.classList.add("add_table_insrt");
             node.innerHTML = `<td>
                     <div class="CSPlus">
@@ -2619,10 +2720,10 @@
                     </div>
                 </td>
                 <td>
-                    <div class=""><input type="text" class="form-control editInput input50 quantity" value="1"></div>
+                    <div class=""><input type="text" class="form-control editInput input50 quantity" onchange="calculateRowValues();" value="1"></div>
                 </td>
                 <td>
-                    <div class=""> <input type="text" class="form-control editInput input50 costPrice" value="${item.cost_price}"></div>
+                    <div class=""> <input type="text" class="form-control editInput input50 costPrice" onchange="calculateRowValues();" value="${item.cost_price}"></div>
                 </td>
                 <td>
                     <div class="calculatorIcon">
@@ -2633,7 +2734,7 @@
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput input50 price" value="${item.price}">
+                        <input type="text" class="form-control editInput input50 price" onchange="calculateRowValues();" value="${item.price}">
                     </div>
                 </td>
                 <td>
@@ -2643,6 +2744,7 @@
                 </td>
                 <td>
                     <div class="">
+                        <input type="hidden" class="selectedTaxID">
                         <select class="form-control editInput selectOptions vat" onclick="taxRate();" id="getTaxRate">
                             <option>Please Select</option>
                         </select>
@@ -2662,7 +2764,7 @@
                 </td>
                 <td>
                     <span class="profit">$00.00</span>
-                    <div class="minusnmber pt-1">(-11.11%)</div>
+                    <div class="minusnmber pt-1 footRowMargin">(-11.11%)</div>
                 </td>
                 <td>
                     <div class="statuswating">
@@ -2672,13 +2774,8 @@
                         <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                     </div>
                 </td>`;
-
             tableFootForProduct();
             isFooterAppended = true;
-
-
-            // const tableBody2 = document.querySelector(".add_table_insrt");
-            // const tableBodyFoot = document.querySelector(".add_table_insrt33");
 
             if (tableBody) {
                 tableBody.appendChild(node);

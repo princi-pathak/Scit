@@ -84,7 +84,15 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function getTaxRateOnTaxId(Request $request){
 
+        $data = Construction_tax_rate::getTaxRateOnId($request->id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
 
 
     
