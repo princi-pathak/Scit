@@ -144,26 +144,26 @@
                     </thead>
                     <tbody>
                         @foreach($productGroups as $productGroup)
-                            <tr>
-                                <td></td>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $productGroup->name }}</td>
-                                <td>{{ $productGroup->description }}</td>
-                                <td>{{ $productGroup->cost }}</td>
-                                <td>{{ $productGroup->price }}</td>
-                                <td>{{ $productGroup->status }}</td>
-                                <td>
-                                    <div class="d-inline-flex align-items-center ">
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                                Action
-                                            </a>
-                                            <div class="dropdown-menu fade-up m-0">
-                                                <a href="#!" class="dropdown-item">Edit Details</a>
-                                            </div>
+                        <tr>
+                            <td></td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $productGroup->name }}</td>
+                            <td>{{ $productGroup->description }}</td>
+                            <td>{{ $productGroup->cost }}</td>
+                            <td>{{ $productGroup->price }}</td>
+                            <td>{{ $productGroup->status }}</td>
+                            <td>
+                                <div class="d-inline-flex align-items-center ">
+                                    <div class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                            Action
+                                        </a>
+                                        <div class="dropdown-menu fade-up m-0">
+                                            <a href="#!" class="dropdown-item">Edit Details</a>
                                         </div>
                                     </div>
-                            </tr>
+                                </div>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -186,7 +186,7 @@
             </div>
             <div class="modal-body ">
                 <div class="contantbodypopup p-0">
-                    <div class="error-message" id="error-message"></div>
+                    <div class="" id="message"></div>
                     <form action="" id="add_product_group_form">
                         <div class="row pt-3">
                             <div class="col-lg-6">
@@ -319,15 +319,32 @@
                 })
             },
             success: function(response) {
-                console.log(response);
-                document.getElementById('error-message').style.display = 'block';
-                $('#error-message').text(response.message).show();
+                // Show the message div
+                const messageDiv = document.getElementById('message');
+                messageDiv.style.display = 'block';
 
+                // Check if the response was successful
+                if (response.success) {
+                    // Success scenario
+                    messageDiv.classList.remove('error-message');
+                    messageDiv.classList.add('success-message');
+                    messageDiv.textContent = response.message;
+
+                    // Optionally hide the modal after success
+                    setTimeout(function() {
+                        $('#itemsCatagoryModal').modal('hide');
+                    }, 3000); // Adjust delay if needed
+                } else {
+                    // Failure scenario
+                    messageDiv.classList.remove('success-message');
+                    messageDiv.classList.add('error-message');
+                    messageDiv.textContent = response.message;
+                }
+
+                // Hide the message after some time
                 setTimeout(function() {
-                    $('#itemsCatagoryModal').modal('hide');
-                }, 3000); // Adjust delay if needed
-
-
+                    $(messageDiv).fadeOut(); // Smooth fade-out effect
+                }, 3000)
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -339,11 +356,12 @@
                     const firstErrorKey = Object.keys(errors)[0];
                     const firstErrorMessage = errors[firstErrorKey][0];
 
-                    document.getElementById('error-message').style.display = 'block'
-                    // Display the first error message to the user
-                    $('#error-message').text(firstErrorMessage).show(); // Assuming you have an element with ID 'error-message'
+                    document.getElementById('message').style.display = 'block'
+                    document.getElementById('message').classList.add('error-message');
+                    document.getElementById('message').textContent = firstErrorMessage;
+
                     setTimeout(function() {
-                        $('#error-message').fadeOut(); // Use fadeOut for a smooth effect
+                        $('#message').fadeOut(); // Use fadeOut for a smooth effect
                     }, 3000);
                 }
             }
