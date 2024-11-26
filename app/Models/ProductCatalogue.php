@@ -17,7 +17,10 @@ class ProductCatalogue extends Model
              $data
          );
     }
-    public static function GetAllCatalogue($home_id){
+    public static function getAllCatalogue($home_id){
         return self::where(['home_id'=>$home_id,'deleted_at'=>null]);
+    }
+    public function productCataloguePrices(){
+        return $this->hasMany(ProductCataloguePrice::class, 'product_catalogue_id')->whereNull('deleted_at');
     }
 }

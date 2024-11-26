@@ -826,6 +826,8 @@ class JobsController extends Controller
         echo "done";
     }
     public function product_add(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
         $key=base64_decode($request->key);
         if($key){
             $task='Edit';
@@ -845,11 +847,12 @@ class JobsController extends Controller
         $data['del_status']=0;
         $data['product_count']=Product::count();
         $data['data']=['Ram','Deena','Harsh'];
-        // echo "<pre>";print_r($data['product_count']);die;
+        $data['customer']=Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
+        // echo "<pre>";print_r($data['customer']);die;
         return view('backEnd.jobs_management.product_form',$data);
     }
     public function product_save_data(Request $request){
-        // echo "<pre>";print_r($request->all());die;
+        echo "<pre>";print_r($request->all());die;
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
         $supplier_id=$request->supplier_id;

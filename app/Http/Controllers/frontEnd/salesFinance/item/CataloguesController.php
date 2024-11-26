@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session, DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\ProductCatalogue;
@@ -39,23 +40,30 @@ class CataloguesController extends Controller
             array_push($productcategory_array,$arr);
         }
         $product_categories_list = $productcategory_array;
-        return view('frontEnd.salesAndFinance.item.catalogues', compact('product_categories', 'page', 'lastSegment', 'users', 'product_categories_list'));
+        $catalogues = ProductCatalogue::withCount('productCataloguePrices')->where(['home_id' => Auth::user()->home_id,'deleted_at'=>null])->get();
+        // echo "<pre>";print_r($catalogues);die;
+        return view('frontEnd.salesAndFinance.item.catalogues', compact('product_categories', 'page', 'lastSegment', 'users', 'product_categories_list', 'catalogues'));
     }
     public function catalogues_save(Request $request){
-        echo "<pre>";print_r($request->all());die;
-            if(empty($request->tableData)){
-                $catlogueTable=['home_id'=>Auth::user()->home_id,'user_id'=>Auth::user()->id,'name'=>$request->productname,'description'=>$request->description,'catalogue_type'=>$request->type,'status'=>$request->status];
+        // echo "<pre>";print_r($request->all());die;
+            if($request->TabId == 0){
+                $catlogueTable=['id'=>$request->catalogue_id ?? null,'home_id'=>Auth::user()->home_id,'user_id'=>Auth::user()->id,'name'=>$request->productname,'description'=>$request->description,'catalogue_type'=>$request->type,'status'=>$request->status];
+                // echo "<pre>";print_r($catlogueTable);die;
                 try {
                     $catlogueSave=ProductCatalogue::CatalogueSave($catlogueTable);
+                    // $catlogueSave=['id'=>1];
                     return response()->json(['success' => true, 'data' => $catlogueSave]);
                 }catch (\Exception $e) {
                     return response()->json(['success' => false, 'message' => $e->getMessage()]);
                 }
             }else{
+                // echo count($request->tableData);die;
+                $cataloguePriceResults = [];
                 foreach($request->tableData as $val){
                      $cataloguePriceTable=[
+                            'id'=>$val['id'] ?? null,
                             'product_catalogue_id'=>$request->catalogue_id,
-                            'product_id'=>$val['id'],
+                            'product_id'=>$val['product_id'],
                             'product_code'=>$val['product_code'],
                             'product_name'=>$val['product_name'],
                             'default_price'=>$val['price'],
@@ -64,16 +72,25 @@ class CataloguesController extends Controller
                             'status'=>1
                         ];
                     try {
-                        $cataloguePriceSave=ProductCataloguePrice::ProductCatalogueSave($cataloguePriceTable);
-                        return response()->json(['success' => true, 'data' => $cataloguePriceSave]);
+                            $cataloguePriceSave=ProductCataloguePrice::productCatalogueSave($cataloguePriceTable);
+                            $cataloguePriceResults[] = $cataloguePriceSave;
                     }catch (\Exception $e) {
-                    return response()->json(['success' => false, 'message' => $e->getMessage()]);
-                }
+                        return response()->json(['success' => false, 'message' => $e->getMessage()]);
+                    }
                     
                 }
+                return response()->json(['success' => true, 'data' => $cataloguePriceResults]);
                 
             }
             
         
+    }
+    public function ProductCataloguePriceList(Request $request){
+        $catalogues = ProductCataloguePrice::where(['product_catalogue_id'=>$request->cat_id,'status'=>1,'deleted_at'=>null])->get();
+        return response()->json(['data'=>$catalogues]);
+    }
+    public function ProductCataloguePriceDelete(Request $request){
+        $delete=ProductCataloguePrice::where('id', $request->id)->update(['deleted_at' => Carbon::now()]);
+        echo "done";
     }
 }
