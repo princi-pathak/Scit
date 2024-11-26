@@ -96,7 +96,7 @@
                                 <div class="mb-2 row">
                                     <label for="inputName" class="col-sm-2 col-form-label">Status</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control editInput selectOptions" id="status" name="status">
+                                        <select class="form-control editInput selectOptions" id="catalogue_status" name="catalogue_status">
                                             <option value="1">Active</option>
                                             <option value="0">Inactive</option>
                                         </select>
@@ -122,24 +122,24 @@
                                             <div class="col-sm-6">
                                                 <form class="searchForm" action="">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                                        <input type="text" class="form-control editInput" placeholder="Your Catalogue" name="email">
                                                         <button type="button" class="input-group-text editInput">Search</button>
                                                     </div>
                                                 </form>
                                             </div>
                                             <div class="col-sm-3">
-                                                    <div class="nav-item dropdown" style="margin-left:100px">
-                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            Action
-                                                        </a>
-                                                        <div class="dropdown-menu fade-up m-0" style="display:none">
-                                                            <a href="javascript:void(0)" class="dropdown-item">Delete</a>
-                                                            <hr class="dropdown-divider">
-                                                            <a href="javasrcript:void(0)" class="dropdown-item">Import</a>
-                                                            <hr class="dropdown-divider">
-                                                            <a href="javascript:void(0)" class="dropdown-item">Export</a>
-                                                        </div>
+                                                <div class="nav-item dropdown" style="margin-left:100px">
+                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Action
+                                                    </a>
+                                                    <div class="dropdown-menu fade-up m-0" style="display:none">
+                                                        <a href="javascript:void(0)" class="dropdown-item">Delete</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="javasrcript:void(0)" class="dropdown-item">Import</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="javascript:void(0)" class="dropdown-item">Export</a>
                                                     </div>
+                                                </div>
                                             </div>
                                         </div>
                                 
@@ -188,6 +188,7 @@
         // $("#productform")[0].reset();        
         // $(".needs-validationp").removeClass('was-validated');
         // $('#producttype').val(th);
+        $("#nav-profile-tab").hide();
         $('#itemsAddCatalogueModal').modal('show');
     }
 </script>
@@ -211,7 +212,7 @@
                                     <input type="text" value="`+formattedPrice+`" name="item_catalogue_item_prices[]" class="text item_price numericOnly catalogueItemCustomPrice" data-item_id="11" tabindex="1">
                                 </td>
                                 <td>
-                                    <img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="data_delete image_style" data-delete="`+data.id+`">
+                                    <img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="data_delete image_style">
                                 </td>
                             </tr>`;
                 $("#CatalogueData").append(html);
@@ -223,14 +224,36 @@
         });
     }
     $(document).on('click', '.data_delete', function() {
+        
         var id = $(this).data('delete');
-        $(this).closest('tr').remove();
+        if(confirm("Are you sure to delete it?")){
+            $(this).closest('tr').remove();
+            if(id){
+                $.ajax({
+                    url: '{{ url("item/ProductCataloguePriceDelete") }}',
+                    method: 'Post',
+                    data: {
+                        id: id,_token:'{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+        }
+        
     });
 
     $('#submitCatalogue').on('click', function () {
         var productname=$("#productname").val();
         var description=$("#description").val();
-        var status=$("#status").val();
+        var status=$('#catalogue_status option:selected').val();
+        
+        // alert(status)
         var type=$("#type").val();
         var catalogue_id=$("#catalogue_id").val();
         var TabId=$("#TabId").val();
@@ -243,7 +266,8 @@
         $('#CatalogueData tr').each(function () {
             const row = $(this);
             let rowData = {
-                id: row.find('input[name="product_id"]').val(),
+                id:row.find('input[name="ProductCatPrice"]').val(),
+                product_id: row.find('input[name="product_id"]').val(),
                 product_type: row.find('input[name="product_type"]').val(),
                 product_code: row.find('td:eq(0)').contents().filter(function () {
                     return this.nodeType === Node.TEXT_NODE;
@@ -262,23 +286,23 @@
             type: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
-                tableData: tableData,productname:productname,description:description,status:status,type:type,catalogue_id:catalogue_id
+                tableData: tableData,productname:productname,description:description,status:status,type:type,catalogue_id:catalogue_id,TabId:TabId
             },
             success: function (response) {
-                alert('Data saved successfully!');
-                if(TabId == 0){
+                console.log(response);
+                if(TabId == 0 && response.success == true){
+                    alert('Data saved successfully!');
                     $("#nav-home-tab").removeClass('active');
                     $("#nav-home").removeClass('active show');
                     $("#nav-profile-tab").show().addClass('active');
                     $("#nav-profile").addClass('active show');
                     $("#catalogue_id").val(response.data.id);
-                    TabId.val(1);
+                    $("#TabId").val(1);
+                }else if(response.success == false){
+                    alert("Something went wrong. Please try later!");
                 }else{
                     location.reload();
                 }
-                
-                console.log(response);
-                
             },
             error: function (error) {
                 alert('An error occurred while saving the data.');
