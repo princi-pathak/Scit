@@ -74,4 +74,9 @@ class Construction_tax_rate extends Model
         $taxRate->status = $status;
         return $taxRate->save();
     }
+
+    public static function getTaxRateOnId($id){
+        $tax = self::find($id);
+        return $tax->tax_rate;
+    }
 }
