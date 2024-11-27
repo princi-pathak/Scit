@@ -258,10 +258,11 @@
                         </tr>
                     <?php }?>
                     </tbody>
-                    <tr>
-                        <th colspan="2"></th>
-                        <th colspan="16">Page Sub Total:</th>
-                    </tr>
+                    @if(count($expense)>0)
+                        <tr>
+                            <th colspan="2"></th>
+                            <th colspan="16">Page Sub Total:</th>
+                        </tr>
                         <tr>
                             <td colspan="9"></td>
                             
@@ -269,11 +270,12 @@
                             <td>£<?php echo number_format($vat_amount,2, '.', '');?></td>
                             <td colspan="8">£<?php echo number_format($gross_amount,2, '.', '');?></td>
                         </tr>
+                    @endif
                 </table>
                 <!-- Modal start here -->
                 <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel"
                         aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
+                        <div class="modal-dialog modal-lg">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="customerModalLabel">Expense</h5>
@@ -466,7 +468,7 @@
                                                                 <div class="col-sm-10">
                                                                     <input type="file" class="editInput"
                                                                         id="attachments" name="attachments" value="">
-                                                                    <p>(Max file size 25 MB)</p>
+                                                                    <p class="editInput">(Max file size 25 MB)</p>
                                                                     <p id="fileSizeError" style="color: red; display: none;">File larger than 25 MB.</p>
                                                                     <p id="file_name"></p>
                                                                 </div>

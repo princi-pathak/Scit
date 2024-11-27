@@ -6,6 +6,10 @@
         position: absolute;
         background: #fff;
     }
+    #productListTable th, 
+    #productListTable td {
+        text-align: center;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -266,6 +270,7 @@
                                         <tbody>
 
                                         </tbody>
+                                        <tfoot class="table totlepayment add_table_insrt33" id="containerA">
                                     </table>
                                 </div>
                             </div>
@@ -456,11 +461,11 @@
         });
     }
 
-
+    var totalAmount=0;
     function productGroupTable(data, tableId) {
         // Get the table body element
         const tableBody = document.querySelector(`#${tableId} tbody`);
-
+        
         // Check if data array is empty
         if (data.length === 0) {
             // Create a row to display the "No products found" message
@@ -531,10 +536,10 @@
                 row.appendChild(qtyCell);
 
                 const amountCell = document.createElement('td');
-                amountCell.innerHTML = item.price;
+                amountCell.innerHTML = '£'+ parseFloat(item.price).toFixed(2);
                 amountCell.className = "price";
                 row.appendChild(amountCell);
-
+                totalAmount=totalAmount+Number(item.price);
                 const deleteCell = document.createElement('td');
                 deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
                 row.appendChild(deleteCell);
@@ -544,6 +549,13 @@
 
 
             });
+            var htmlCode=`<tr>
+                                <td colspan="4"></td>
+                                <td>Total</td><td id="GrandTotalAmount">£`+parseFloat(totalAmount).toFixed(2)+`</td>
+                                <td></td>
+                          </tr>`;
+            $("#containerA").html(htmlCode);
+            console.log("html "+totalAmount) 
         }
     }
 
@@ -553,6 +565,15 @@
             const row = e.target.closest("tr");
             if (row) {
                 row.remove();
+                const amountCell = row.querySelector(".price");
+                const amount = parseFloat(amountCell.textContent.replace(/[^\d.]/g, "")) || 0;
+                totalAmount -= amount;
+                if(totalAmount === 0){
+                   $("#containerA").hide();
+                }else{
+                    $("#containerA").show();
+                }
+                document.getElementById("GrandTotalAmount").textContent = "£" + totalAmount.toFixed(2);
             }
         }
     });
@@ -582,20 +603,31 @@
         inputs.forEach(input => {
             total += parseFloat(input.value) || 0; // Add value or 0 if empty
         });
-        console.log(total);
+        // console.log(total);
         document.getElementById(appendPlace).value = total; // Display total
     }
 
     // Function to update the amount in the row
     function updateAmount(row) {
-        const priceInput = row.querySelector('.price');
+        // console.log(row)
+        // const priceInput = row.querySelector('.price');
+        const priceInput = row.querySelector('.product_price');
         const qtyInput = row.querySelector('.qty');
         const amountCell = row.querySelector('td:nth-last-child(2)'); // Assuming the last cell is the amount cell
         const price = parseFloat(priceInput.value) || 0; // Default to 0 if not a valid number
-        const qty = parseInt(qtyInput.value) || 0; // Default to 0 if not a valid number
+        const qty = parseInt(qtyInput.value) || 1; // Default to 0 if not a valid number
         const amount = price * qty; // Calculate the amount
+        amountCell.textContent = '£'+amount.toFixed(2); // Update the amount cell with the calculated amount
 
-        amountCell.textContent = amount.toFixed(2); // Update the amount cell with the calculated amount
+        var calculation=0;
+        $('.price').each(function () {
+            const priceText = $(this).text();
+            const numericValue = parseFloat(priceText.replace(/[^\d.]/g, ''));
+            // console.log(typeof(numericValue));
+            calculation=calculation+numericValue;
+        });
+        totalAmount=calculation;
+        document.getElementById('GrandTotalAmount').innerHTML='£'+totalAmount.toFixed(2);
     }
 
     document.querySelector("#listAllProduct").addEventListener("click", function(e) {
