@@ -39,57 +39,60 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                                    <thead>
-                                        <tr>
-                                            <th>Full Name</th>
-                                            <th>Company Name</th>
-                                            <th>Email Address</th>
-                                            <th>Telephone</th>
-                                            <th>Mobile</th>
-                                            <th>Website</th>
-                                            <th>Address</th>
-                                            <th>City</th>
-                                            <th>Country</th>
-                                            <th>Postcode</th>
-                                            <th>Lead Ref</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($customers as $customer)
-                                        <tr>
-                                            <td>{{ $customer->contact_name }}</td>
-                                            <td>{{ $customer->name }}</td>
-                                            <td>{{ $customer->email }}</td>
-                                            <td>{{ $customer->telephone }}</td>
-                                            <td>{{ $customer->mobile }}</td>
-                                            <td>{{ $customer->website }}</td>
-                                            <td>{{ $customer->address }}</td>
-                                            <td>{{ $customer->city }}</td>
-                                            <td>{{ $customer->country }}</td>
-                                            <td>{{ $customer->postal_code }}</td>
-                                            <td>{{ $customer->lead_ref }}</td>
-                                            <td>@switch($customer->status)
-                                                @case(1) Contact Later @break
-                                                @case(2) Contacted @break
-                                                @case(3) New @break
-                                                @case(4) Pre Qualified @break
-                                                @case(5) Qualified @break
-                                                @case(6) Rejected @break
-                                                @default {{-- No output if none of the cases match --}}
-                                                @endswitch
-                                            </td>
-                                            <td> <a href="{{ url('admin/sales-finance/leads/authorized').'/'.$customer->id }}" class=""><span style="color: #000;"><i data-toggle="tooltip" title="Authorized" class="fa fa-lock"></i></a> | <a href="{{ url('admin/sales-finance/leads/edit').'/'.$customer->id }}" class="edit"><span style="color: #000;"><i data-toggle="tooltip" title="Edit" class="fa fa-edit"></i></a> | <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-lead_ref="{{ $customer->lead_ref }}" data-target="#rejectModal" class="fa fa-times open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/convert_to_customer').'/'.$customer->customer_id }}" class="reject"><i data-toggle="modal" title="Convert to Customer Only" data-target="#secondModal" class="fa fa-exchange"></i></a>
-                                                <!-- <a href="" class="delete"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o"></i></a> -->
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover table-bordered" id="editable-sample">
+                                            <thead>
+                                                <tr>
+                                                    <th>Full Name</th>
+                                                    <th>Company Name</th>
+                                                    <th>Email Address</th>
+                                                    <th>Telephone</th>
+                                                    <th>Mobile</th>
+                                                    <th>Website</th>
+                                                    <th>Address</th>
+                                                    <th>City</th>
+                                                    <th>Country</th>
+                                                    <th>Postcode</th>
+                                                    <th>Lead Ref</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($customers as $customer)
+                                                <tr>
+                                                    <td>{{ $customer->contact_name }}</td>
+                                                    <td>{{ $customer->name }}</td>
+                                                    <td>{{ $customer->email }}</td>
+                                                    <td>{{ $customer->telephone }}</td>
+                                                    <td>{{ $customer->mobile }}</td>
+                                                    <td>{{ $customer->website }}</td>
+                                                    <td>{{ $customer->address }}</td>
+                                                    <td>{{ $customer->city }}</td>
+                                                    <td>{{ $customer->country }}</td>
+                                                    <td>{{ $customer->postal_code }}</td>
+                                                    <td>{{ $customer->lead_ref }}</td>
+                                                    <td>@switch($customer->status)
+                                                        @case(1) Contact Later @break
+                                                        @case(2) Contacted @break
+                                                        @case(3) New @break
+                                                        @case(4) Pre Qualified @break
+                                                        @case(5) Qualified @break
+                                                        @case(6) Rejected @break
+                                                        @default {{-- No output if none of the cases match --}}
+                                                        @endswitch
+                                                    </td>
+                                                    <td> <a href="{{ url('admin/sales-finance/leads/authorized').'/'.$customer->id }}" class=""><span style="color: #000;"><i data-toggle="tooltip" title="Authorized" class="fa fa-lock"></i></a> | <a href="{{ url('admin/sales-finance/leads/edit').'/'.$customer->id }}" class="edit"><span style="color: #000;"><i data-toggle="tooltip" title="Edit" class="fa fa-edit"></i></a> | <a href="#" class="reject"><i data-toggle="modal" title="Reject" data-lead_ref="{{ $customer->lead_ref }}" data-target="#rejectModal" class="fa fa-times open-modal"></i></a> | <a href="{{ url('admin/sales-finance/leads/convert_to_customer').'/'.$customer->customer_id }}" class="reject"><i data-toggle="modal" title="Convert to Customer Only" data-target="#secondModal" class="fa fa-exchange"></i></a>
+                                                        <!-- <a href="" class="delete"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o"></i></a> -->
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
