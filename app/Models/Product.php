@@ -38,7 +38,7 @@ class Product extends Model
 
     public static function saveProductdata(array $data, $productID = null){     
         $admin   = Session::get('scitsAdminSession');   
-        $data['home_id'] = Auth::user()->home_id ?? $admin->home_id;;
+        $data['home_id'] = Auth::user()->home_id ?? $admin->home_id;
         $data['adder_id'] = Auth::user()->id ?? null;
         // if(isset($data['attachment'])){
         //     $imageName = time().'.'.$data['attachment']->extension();      
