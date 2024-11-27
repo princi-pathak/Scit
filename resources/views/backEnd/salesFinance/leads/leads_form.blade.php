@@ -33,125 +33,127 @@ if (isset($lead)) {
 
                         <form class="form-horizontal" role="form" method="Post" action="{{ $action }}" id="add_leads_form">
                             @csrf
-                            <div class="row main_Form">
-                                <div class="col-md-4">
-                                    <label class="formTitle">Lead Details</label>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Lead Ref.</label>
-                                        <div class="col-lg-9">
-                                            <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->id)) ? $lead->id : '' }}">
-                                            <input type="hidden" name="customer_id" value="{{ (isset($lead->customer_id)) ? $lead->customer_id : '' }}">
-                                            <input type="text" name="lead_ref" class="form-control" placeholder="Auto Generate" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" maxlength="255" readonly>
+                            <div class="main_Form">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="formTitle">Lead Details</label>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Lead Ref.</label>
+                                            <div class="col-lg-9">
+                                                <input type="hidden" name="lead_id" id="lead_id" value="{{ (isset($lead->id)) ? $lead->id : '' }}">
+                                                <input type="hidden" name="customer_id" value="{{ (isset($lead->customer_id)) ? $lead->customer_id : '' }}">
+                                                <input type="text" name="lead_ref" class="form-control" placeholder="Auto Generate" value="{{ (isset($lead->lead_ref)) ? $lead->lead_ref : '' }}" maxlength="255" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Assign To</label>
+                                            <div class="col-lg-9">
+                                                <select name="assign_to" id="assign_to" class="form-control">
+                                                    <option value="0">-Not Assigned-</option>
+                                                    @foreach($users as $value)
+                                                    <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Source</label>
+                                            <div class="col-lg-9">
+                                                <select name="source" class="form-control" id="">
+                                                    <option value="0">None</option>
+                                                    @foreach($sources as $value)
+                                                    <option value="{{ $value->id }}" {{ isset($lead->source) && $lead->source == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Status</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control" name="status">
+                                                    @foreach($status as $value)
+                                                    <option value="{{ $value->id }}" @if($value->id == 6) disabled @endif {{ isset($lead->status) && $lead->status == $value->id ? 'selected' : '' }} >{{ $value->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Preferred date to call</label>
+                                            <div class="col-lg-5">
+                                                <input type="date" name="prefer_date" class="form-control" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}">
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <input type="time" name="prefer_time" class="form-control" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Assign To</label>
-                                        <div class="col-lg-9">
-                                            <select name="assign_to" id="assign_to" class="form-control">
-                                                <option value="0">-Not Assigned-</option>
-                                                @foreach($users as $value)
-                                                <option value="{{ $value->id }}" {{ isset($lead->assign_to) && $lead->assign_to  == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
-                                                @endforeach
-                                            </select>
+                                    <div class="col-md-4">
+                                        <label class="formTitle">Data Feilds</label>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Full Name *</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="name" class="form-control" id="inputName" placeholder="Full Name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}" maxlength="255">
+                                                <span id="fullNameError" class="error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Company Name</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="company_name" class="form-control" placeholder="Company Name" value="{{ (isset($lead->name)) ? $lead->name : '' }}" maxlength="255">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Email Address *</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email Address" value="{{ (isset($lead->email)) ? $lead->email : '' }}" maxlength="255">
+                                                <span id="emailError" class="error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Telephone *</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="telephone" class="form-control" id="inputTelephone" placeholder="Telephone" value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" maxlength="255">
+                                                <span id="phoneError" class="error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Mobile</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="mobile" class="form-control" placeholder="Mobile" value="{{ (isset($lead->mobile)) ? $lead->mobile : '' }}" maxlength="255">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Source</label>
-                                        <div class="col-lg-9">
-                                            <select name="source" class="form-control" id="">
-                                                <option value="0">None</option>
-                                                @foreach($sources as $value)
-                                                <option value="{{ $value->id }}" {{ isset($lead->source) && $lead->source == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                                @endforeach
-                                            </select>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Website</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="website" class="form-control" placeholder="Website" value="{{ (isset($lead->website)) ? $lead->website : '' }}" maxlength="255">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Status</label>
-                                        <div class="col-lg-9">
-                                            <select class="form-control" name="status">
-                                                @foreach($status as $value)
-                                                <option value="{{ $value->id }}" @if($value->id == 6) disabled @endif {{ isset($lead->status) && $lead->status == $value->id ? 'selected' : '' }} >{{ $value->title }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Preferred date to call</label>
-                                        <div class="col-lg-5">
-                                            <input type="date" name="prefer_date" class="form-control" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}">
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="time" name="prefer_time" class="form-control" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="formTitle">Data Feilds</label>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Full Name *</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" name="name" class="form-control" id="inputName" placeholder="Full Name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}" maxlength="255">
-                                            <span id="fullNameError" class="error"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Company Name</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" name="company_name" class="form-control" placeholder="Company Name" value="{{ (isset($lead->name)) ? $lead->name : '' }}" maxlength="255">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Email Address *</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email Address" value="{{ (isset($lead->email)) ? $lead->email : '' }}" maxlength="255">
-                                            <span id="emailError" class="error"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Telephone *</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" name="telephone" class="form-control" id="inputTelephone" placeholder="Telephone" value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" maxlength="255">
-                                            <span id="phoneError" class="error"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Mobile</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" name="mobile" class="form-control" placeholder="Mobile" value="{{ (isset($lead->mobile)) ? $lead->mobile : '' }}" maxlength="255">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Website</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" name="website" class="form-control" placeholder="Website" value="{{ (isset($lead->website)) ? $lead->website : '' }}" maxlength="255">
-                                        </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Address</label>
-                                        <div class="col-lg-9">
-                                            <textarea name="address" class="form-control" id="" placeholder="Address" rows="3">{{ (isset($lead->address)) ? $lead->address : '' }}</textarea>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Address</label>
+                                            <div class="col-lg-9">
+                                                <textarea name="address" class="form-control" id="" placeholder="Address" rows="3">{{ (isset($lead->address)) ? $lead->address : '' }}</textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">City</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" name="city" class="form-control" placeholder="City" value="{{ (isset($lead->city)) ? $lead->city : '' }}" maxlength="255">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">City</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="city" class="form-control" placeholder="City" value="{{ (isset($lead->city)) ? $lead->city : '' }}" maxlength="255">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Country</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" name="country" class="form-control" placeholder="Country" value="{{ (isset($lead->country)) ? $lead->country : '' }}" maxlength="255">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Country</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="country" class="form-control" placeholder="Country" value="{{ (isset($lead->country)) ? $lead->country : '' }}" maxlength="255">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">Postal Code</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" name="postal_code" class="form-control" placeholder="Postal Code" value="{{ (isset($lead->postal_code)) ? $lead->postal_code : '' }}" maxlength="255">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Postal Code</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="postal_code" class="form-control" placeholder="Postal Code" value="{{ (isset($lead->postal_code)) ? $lead->postal_code : '' }}" maxlength="255">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +178,7 @@ if (isset($lead)) {
                                                 <div class="tabheadingTitle">
                                                     <h3>Notes - </h3>
                                                 </div>
-                                                <div class="tabform">
+                                                <form class="tabform">
                                                     <div class="form-group">
                                                         <label for="inputPassword1" class="col-lg-1 col-sm-2 control-label">Type</label>
                                                         <div class="col-lg-4">
@@ -191,6 +193,7 @@ if (isset($lead)) {
                                                         </div>
                                                         <div class="col-lg-1" id="inputPlusCircle">
                                                             <a href="#notesModel" data-toggle="modal"><i class="fa  fa-plus-circle"></i> </a>
+                                                        </div>
                                                         </div>
                                                         <!-- modal -->
                                                         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="notesModel" class="modal fade">
@@ -228,7 +231,7 @@ if (isset($lead)) {
                                                             </div>
                                                         </div>
                                                         <!-- end Popup  -->
-                                                    </div>
+                                                    
                                                     <div class="form-group">
                                                         <div class="col-lg-8">
                                                             <textarea class="form-control" name="notes" id="notes" rows="4" cols="70"></textarea>
@@ -239,8 +242,8 @@ if (isset($lead)) {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="">
+                                                </form>
+                                                <div class="extra_Information">
                                                     <table class="table">
                                                         <thead>
                                                             <tr class="active">
