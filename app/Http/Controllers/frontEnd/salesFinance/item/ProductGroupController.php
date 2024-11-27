@@ -13,36 +13,46 @@ use App\Http\Requests\ProductGroupRequest;
 
 class ProductGroupController extends Controller
 {
-    public function productGroupList(){
+    public function productGroupList()
+    {
         $data['productGroups'] = ProductGroup::getProductGroupData(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.Item.product_group', $data);
     }
 
-    public function saveProductGroup(ProductGroupRequest $request){
+    public function saveProductGroup(ProductGroupRequest $request)
+    {
 
         $validated = $request->validated();
         parse_str($request->input('FormData'), $formData);
         $productsData = json_decode($request->input('products'), true);
 
-        $saveData = ProductGroup:: saveProductGroup($formData, Auth::user()->home_id, Auth::user()->id );
+        $saveData = ProductGroup::saveProductGroup($formData, Auth::user()->home_id, Auth::user()->id);
 
         if ($saveData) {
-            // Save the ProductGroupProduct data only if ProductGroup is saved
-            $saveProduct = ProductGroupProduct::saveProductGroupData($saveData->id, $productsData);
-        
-            return response()->json([
-                'success' => (bool) $saveProduct,
-                'message' => $saveProduct ? 'Product group added successfully.' : 'Product Group products could not be added.'
-            ]);
+            // Check if products data exists
+            if (!empty($productsData['products']) && is_array($productsData['products'])) {
+                // Save the ProductGroupProduct data only if products are provided
+                $saveProduct = ProductGroupProduct::saveProductGroupData($saveData->id, $productsData);
+
+                return response()->json([
+                    'success' => (bool) $saveProduct,
+                    'message' => $saveProduct ? 'Product group and products added successfully.' : 'Product Group products could not be added.',
+                ]);
+            } else {
+                // No products data, return success for ProductGroup only
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product group added successfully (no products provided).',
+                ]);
+            }
         } else {
             // If ProductGroup is not saved, return a failure response
             return response()->json([
                 'success' => false,
-                'message' => 'Product Group could not be added.'
+                'message' => 'Product Group could not be added.',
             ]);
+
+            // return response()->json(['errors' => $validator->errors()], 422);
         }
-
     }
-
-   
 }

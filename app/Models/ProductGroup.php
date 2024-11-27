@@ -27,6 +27,6 @@ class ProductGroup extends Model
     }
 
     public static function getProductGroupData($home_id){
-        return self::where('home_id', $home_id)->where('deleted_at', null)->get();
+        return self::where('home_id', $home_id)->where('deleted_at', null)->orderBy('created_at', 'desc')->get();
     }
 }
