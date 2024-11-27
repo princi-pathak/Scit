@@ -1760,8 +1760,11 @@ form .page .btns button.next {
 .input80{
   width: 80px;
 }
-.minusnmber{
+.minusnmberRed{
   color: #f00;
+}
+.minusnmberGreen{
+  color: rgb(0, 128, 0);
 }
 .totlepayment{
   width: 300px;
@@ -1821,7 +1824,7 @@ span.oNOfswich {
 }
 
 .oNOfswich input[type="checkbox"]:checked {
-  background: #00ed64;
+  background: #818181;
 }
 .CSPlus .plusandText{
  align-items: center;
