@@ -2553,19 +2553,17 @@
     function tableFootForProduct() {
 
         if (!isFooterAppended) { // Check the flag
-            // const tableFoot = document.getElementsByClassName('add_table_insrt33');
             const tableFoot = document.querySelector('.add_table_insrt33');
-
             tableFoot.innerHTML += `<tr>
                                         <td colspan="10" class="borderNone"></td>
                                         <td>Sub Total (exc. VAT)</td>
-                                        <td class="tableAmountRight" id="footAmount">$90.00</td>
+                                        <td class="tableAmountRight" id="footAmount">$00.00</td>
                                     </tr>
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
                                         <td>
                                             <div class="discountInput">
-                                                <span>Discount</span><input type="text" class="form-control onchange="calculateRowValues();" editInput input50" value="0">
+                                                <span>Discount</span><input type="text" class="form-control editInput input50" onchange="calculateRowValues();" value="0">
                                                 <span>%</span>
                                             </div>
                                         </td>
@@ -2582,7 +2580,7 @@
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
                                         <td>VAT</td>
-                                        <td class="tableAmountRight" id="footVatAmount">$18.00</td>
+                                        <td class="tableAmountRight" id="footVatAmount">$00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
@@ -2592,7 +2590,7 @@
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Profit</td>
-                                        <td class="tableAmountRight" id="footProfit">$-10.00</td>
+                                        <td class="tableAmountRight" id="footProfit">$00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
@@ -2622,7 +2620,7 @@
         document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
     }
 
-    function getTaxRateOnTaxId(taxID){
+    function getTaxRateOnTaxId(taxID) {
         $.ajax({
             url: '{{ route("invoice.ajax.getTaxRateOnTaxId") }}',
             method: 'Post',
@@ -2639,18 +2637,65 @@
         });
     }
 
+    function calculateRowsValue(table) {
+        const rows = table.querySelectorAll('tbody tr'); // Select all rows in the table body
+        let data = [];
+
+        let totalQuantity = 0;
+        let totalCostPrice = 0;
+        let totalPrice = 0;
+        let totalMarkup = 0;
+        let totalVAT = 0;
+        let totalProfit = 0;
+        let totalDiscount = 0;
+
+        rows.forEach(row => {
+            totalQuantity += parseInt(row.querySelector('.quantity').value);
+            totalCostPrice += parseInt(row.querySelector('.costPrice').value);
+            totalPrice += parseInt(row.querySelector('.price').value);
+            totalMarkup += parseInt(row.querySelector('.priceMarkup').value);
+            totalVAT += 20;
+            let profitElement = row.querySelector('.profit');
+            if (profitElement) {
+                const profitValue = profitElement.textContent.trim(); // Get text content and remove extra spaces
+                const numericProfit = parseFloat(profitValue.replace("$", "")); // Remove "$" and convert to number
+                console.log(numericProfit); // Logs 100 as a number
+                totalProfit += numericProfit; // Add to totalProfit
+            } else {
+                console.error('Profit element not found in this row:', row);
+            }
+
+            totalDiscount += parseInt(row.querySelector('.discount').value);
+        });
+
+        const doller = '$';
+        console.log("Total Quantity: ", totalQuantity);
+        console.log("Total Cost Price: ", totalCostPrice);
+        console.log("Total Price: ", totalPrice);
+        console.log("Total Markup: ", totalMarkup);
+        console.log("Total VAT: ", totalVAT);
+        console.log("Total Discount: ", totalDiscount);
+        const footTotalDiscountVat = totalPrice + totalVAT + totalDiscount;
+        document.getElementById('footAmount').textContent = doller + totalPrice.toFixed(2);
+        document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
+        document.getElementById('footTotalDiscountVat').textContent = doller + footTotalDiscountVat.toFixed(2);
+        document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
+        document.getElementById('footOutstandingAmount').textContent = doller + footTotalDiscountVat.toFixed(2);
 
 
-    function calculateRowValues(row) {
-  
+    }
+
+
+    function calculateRowValues(row, table) {
+
         getTaxRateOnTaxId();
+
         // Get input values from the row
         const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
         const price = parseFloat(row.querySelector('.price').value) || 0;
         const costPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
         const priceMarkup = parseFloat(row.querySelector('.priceMarkup').value) || 0;
         const discount = parseFloat(row.querySelector('.discount').value) || 0;
-        // const vat = row.querySelector('.selectedTaxID').value;
         // const vat = parseFloat(row.querySelector('.discount').value) || 0;
         const vat = 20;
         // Calculate selling price (Cost Price + Markup - Discount)
@@ -2667,20 +2712,40 @@
         const profit = (sellingPrice - costPrice) * quantity;
         console.log("profit", profit);
 
-        const margin = (profit / sellingPrice)*100;
+        const margin = (profit / sellingPrice) * 100;
+
+        const doller = '$';
 
         // Update row output fields
-        row.querySelector('.amount').textContent = amount.toFixed(2); // Show amount
-        document.getElementById('footAmount').textContent = amount.toFixed(2);
-        document.getElementById('footProfit').textContent = profit.toFixed(2);
-        document.getElementById('footVatAmount').textContent = vatAmount.toFixed(2);
-        document.getElementById('footTotalDiscountVat').textContent = (amount + vatAmount).toFixed(2);
-        document.getElementById('footMargin').textContent = margin.toFixed(2)+'%';
-        // document.getElementById('footVatAmount').textContent = vatAmount
-        document.getElementById('footOutstandingAmount').textContent = (amount+vatAmount).toFixed(2);
+        row.querySelector('.amount').textContent = doller + amount.toFixed(2); // Show amount
+        row.querySelector('.profit').textContent = doller + profit.toFixed(2); // Show profit
+
+        if (margin >= 0) {
+            row.querySelector('.footRowMargin').classList.add('minusnmberGreen');
+        } else {
+            row.querySelector('.footRowMargin').classList.add('minusnmberRed');
+        }
+        row.querySelector('.footRowMargin').textContent = '(' + margin.toFixed(2) + '%' + ')'; // Show profit
+
+        calculateRowsValue(table);
+
+
+        // // Total profit calculation with the previous profit
+        // let footProfit = document.getElementById('footProfit').textContent;
+        // const previousProfit = footProfit.replace("$", "");
+        // const newProfit  = parseFloat(profit.toFixed(2)) + parseFloat(previousProfit);
+        // document.getElementById('footProfit').textContent = doller + newProfit.toFixed(2);
+
+        // // Total VAT amount calculation with previous VAT
+        // let footVATAmount = document.getElementById('footVatAmount').textContent;
+        // const previouVatAmount = footVATAmount.replace("$", "");
+        // const newVatAmount  = parseFloat(vatAmount.toFixed(2)) + parseFloat(previouVatAmount);
+        // document.getElementById('footVatAmount').textContent = doller + newVatAmount.toFixed(2);
+
+        // document.getElementById('footTotalDiscountVat').textContent = doller + (newAmount + newVatAmount).toFixed(2);
+        // document.getElementById('footMargin').textContent = margin.toFixed(2) + '%';
+        // document.getElementById('footOutstandingAmount').textContent = doller + (newAmount + newVatAmount).toFixed(2);
         // row.querySelector('.vatAmount').textContent = vatAmount.toFixed(2); // Show VAT amount
-        row.querySelector('.profit').textContent = profit.toFixed(2); // Show profit
-        row.querySelector('.footRowMargin').textContent = '('+margin.toFixed(2)+'%'+')'; // Show profit
     }
 
     let isFooterAppended = false;
@@ -2723,7 +2788,8 @@
                     <div class=""><input type="text" class="form-control editInput input50 quantity" onchange="calculateRowValues();" value="1"></div>
                 </td>
                 <td>
-                    <div class=""> <input type="text" class="form-control editInput input50 costPrice" onchange="calculateRowValues();" value="${item.cost_price}"></div>
+                    <div class=""> <input type="text" class="form-control editInput input50 costPrice" onchange="calculateRowValues();" value="${parseFloat(item.cost_price || 0).toFixed(2)}"
+></div>
                 </td>
                 <td>
                     <div class="calculatorIcon">
@@ -2734,7 +2800,7 @@
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput input50 price" onchange="calculateRowValues();" value="${item.price}">
+                        <input type="text" class="form-control editInput input50 price" onchange="calculateRowValues();" value="${parseFloat(item.price || 0).toFixed(2)}">
                     </div>
                 </td>
                 <td>
@@ -2745,7 +2811,7 @@
                 <td>
                     <div class="">
                         <input type="hidden" class="selectedTaxID">
-                        <select class="form-control editInput selectOptions vat" onclick="taxRate();" id="getTaxRate">
+                        <select class="form-control editInput selectOptions vat" id="getTaxRate">
                             <option>Please Select</option>
                         </select>
                     </div>
@@ -2764,7 +2830,7 @@
                 </td>
                 <td>
                     <span class="profit">$00.00</span>
-                    <div class="minusnmber pt-1 footRowMargin">(-11.11%)</div>
+                    <div class="pt-1 footRowMargin">(00.00%)</div>
                 </td>
                 <td>
                     <div class="statuswating">
@@ -2779,17 +2845,28 @@
 
             if (tableBody) {
                 tableBody.appendChild(node);
-                calculateRowValues(node);
+                calculateRowValues(node, table);
                 // tableBodyFoot.appendChild(tableFoot);
                 // Add event listener to the close button
                 const closeButton = node.querySelector('.closeappend');
                 closeButton.addEventListener('click', function() {
-                    node.remove(); // Remove the row when close button is clicked
+                    node.remove(); // Remove the row when close button is clicked 
+                    clearFooter(table);
+                    calculateRowsValue(table);
                 });
             } else {
                 console.error("Table body with ID 'add_table_insrt' not found.");
             }
         });
+    }
+
+    function clearFooter(table) {
+        const tableBody = table.querySelector('tbody');
+        const tableFoot = table.querySelector('tfoot');
+        if (tableBody && tableBody.children.length === 0 && tableFoot) {
+            tableFoot.innerHTML = ''; // Clear the footer
+            isFooterAppended = false; // Reset the flag
+        }
     }
 
     function getQuoteType(quoteType) {
