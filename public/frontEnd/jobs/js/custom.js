@@ -63,6 +63,7 @@ $(document).ready(function() {
           },
           info: "Showing _START_ to _END_ of _TOTAL_ entries",
           infoEmpty: "No entries available",
+          emptyTable: '<span style="color: red; font-weight: bold;">Sorry, there are no items available</span>',
           infoFiltered: "(filtered from _MAX_ total entries)",
           lengthMenu: "Show _MENU_ entries",
           search: "Search:",
