@@ -44,6 +44,10 @@ p.floatLeft.redText.marginTop8px.marginBottom10 {
 thead#flowhead {
     background: #eee;
 }
+.noti_button.firstPopBtn{
+    text-align: right;
+    padding: 0 9px 6px 0px;
+}
 </style>
 
 <!--main content start-->
@@ -69,20 +73,20 @@ thead#flowhead {
                             </div>
                            </div>
                            <div class="col-lg-6">
-                            <div class="cog-btn-main-area">
+                            <!-- <div class="cog-btn-main-area">
                              <a class="btn btn-primary" href="#" data-toggle="dropdown">
                                     <i class="fa fa-cog fa-fw"></i>
                                 </a>
                                 <ul class="dropdown-menu pull-right">
                                     
                                 </ul>   
-                            </div>
+                            </div> -->
                            </div>
                           </div>
                             <div class="space15"></div>
 
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-9">
                                     <div id="editable-sample_length" class="dataTables_length">
                                         <form method='post' action="{{ $page_url }}" id="records_per_page_form">
                                             <label>
@@ -97,7 +101,7 @@ thead#flowhead {
                                         </form>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <form method='post' action="{{ $page_url }}">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="dataTables_filter" id="editable-sample_filter">
@@ -212,7 +216,7 @@ thead#flowhead {
                                     </tbody>
                                 </table>
                         </div>
-                        <div class="noti_button" style="margin-left:60%">
+                        <div class="noti_button firstPopBtn">
                             <input type="submit" class="btn btn-primary" value="Save"></input>
                             <a href="javascript:" class="btn btn-primary" onclick="document.getElementById('workflowModal').style.display='none'">Cancel</a>
                         </div>
