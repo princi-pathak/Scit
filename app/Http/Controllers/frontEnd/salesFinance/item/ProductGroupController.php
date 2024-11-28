@@ -21,11 +21,11 @@ class ProductGroupController extends Controller
 
     public function saveProductGroup(ProductGroupRequest $request)
     {
-
+        // echo "<pre>";print_r($request->all());die;
         $validated = $request->validated();
         parse_str($request->input('FormData'), $formData);
         $productsData = json_decode($request->input('products'), true);
-
+        $isUpdate = !empty($formData['id']);
         $saveData = ProductGroup::saveProductGroup($formData, Auth::user()->home_id, Auth::user()->id);
 
         if ($saveData) {
@@ -33,11 +33,18 @@ class ProductGroupController extends Controller
             if (!empty($productsData['products']) && is_array($productsData['products'])) {
                 // Save the ProductGroupProduct data only if products are provided
                 $saveProduct = ProductGroupProduct::saveProductGroupData($saveData->id, $productsData);
-
-                return response()->json([
-                    'success' => (bool) $saveProduct,
-                    'message' => $saveProduct ? 'Product group and products added successfully.' : 'Product Group products could not be added.',
-                ]);
+                if($isUpdate){
+                    return response()->json([
+                        'success' => true,
+                        'message' =>'Product group updated successfully.',
+                    ]);
+                }else{
+                    return response()->json([
+                        'success' => (bool) $saveProduct,
+                        'message' => $saveProduct ? 'Product group and products added successfully.' : 'Product Group products could not be added.',
+                    ]);
+                }
+                
             } else {
                 // No products data, return success for ProductGroup only
                 return response()->json([
@@ -55,4 +62,16 @@ class ProductGroupController extends Controller
             // return response()->json(['errors' => $validator->errors()], 422);
         }
     }
+
+    public function ProductGroupProductsList(Request $request){
+        $home_id=Auth::user()->home_id;
+        $ProductGroupProduct=ProductGroupProduct::getProductGroupProductData($home_id)->where('product_group_id',$request->id)->get();
+        return response()->json(['data'=>$ProductGroupProduct]);
+    }
+    public function ProductGroupProductsdetails(Request $request){
+        $home_id=Auth::user()->home_id;
+        $ProductGroupProduct=ProductGroup::ProductGroup($home_id)->where('id',$request->id)->get();
+        return response()->json(['data'=>$ProductGroupProduct]);
+    }
+    
 }

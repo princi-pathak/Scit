@@ -223,10 +223,9 @@
                                             <table class="table" id="setGroupInTable">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th>Code</th>
-                                                        <th>Category </th>
-                                                        <th>Product</th>
+                                                        <th>Product Group</th>
                                                         <th>Description </th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="insrt_product_and_detail">
@@ -248,7 +247,139 @@
         </div>
     </div>
 </div>
+<!-- CalculatePop Modal -->
+<div class="modal fade" id="calculatePop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerModalLabel">Product Group: </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4 class="contTitle text-start">Product</h4>
+                <div class="productDetailTable mt-2">
+                    <table class="table" id="containerA">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Group Code</th>
+                                <th>Group Product </th>
+                                <th>Group Description</th>
+                                <th>Qty</th>
+                                <th>Cost Price($)</th>
+                                <th>Price($)</th>
+                                <th>Amount($) </th>
+                                <th>Profit($)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="CSPlus">
+                                        <span class="plusandText">
+                                            <input type="text" class="form-control editInput input80" value="">
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput" value="">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <textarea class="form-control textareaInput rounded-0" name="address" id="inputAddress" rows="1" placeholder="Address"></textarea>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput input50" value="">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput input50" value="">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput input50" value="">
+                                    </div>
+                                </td>
 
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput input50" value="">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput input50" value="">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="contTitle text-start">Cost</h4>
+                <div class="mb-3 mt-2 row">
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="plusandText">
+                            <a href="#!" class="formicon" id="cost_product_popup"><i class="fa-solid fa-square-plus"></i></a>
+                            <span class="afterPlusText"> (Type to view product or <a href="#!" onclick="openProductListModal()">Click here</a> to view all assets)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="costProdut">
+                    <div class="productDetailTable">
+                        <table class="table" id="containerA">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Product </th>
+                                    <th>Description</th>
+                                    <th>Qty</th>
+                                    <th>Cost Price($)</th>
+                                    <th>Price($)</th>
+                                    <th>Amount($) </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="addProduvtBg text-center">
+                                            <h5 class="addproductCentertext">Add products as costs to get started! <br>Search Products or
+                                                <a href="#!">click here</a> to view all products.
+                                            </h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td>Totale</td>
+                                    <td>0</td>
+                                    <td>$0.00</td>
+                                    <td>$0.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End off Modal-body -->
+            <div class="modal-footer customer_Form_Popup">
+                <button type="button" class="profileDrop">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End offCalculatePop Modal -->
 <script>
     function openProductListModal() {
         $.ajax({
@@ -283,6 +414,7 @@
                 document.getElementById('productCount').textContent = response.data.product.toString().padStart(2, '0');
                 document.getElementById('serviceCount').textContent = response.data.service.toString().padStart(2, '0');
                 document.getElementById('consumableCount').textContent = response.data.consumable.toString().padStart(2, '0');
+                document.getElementById('groupCount').textContent = response.data.product_group.toString().padStart(2, '0');
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -293,6 +425,9 @@
     }
 
     function populateTable(data, tableId) {
+        // console.log(data.type);return false;
+        var type=data.type;
+        var data=data.data;
         const tableBody = document.querySelector(`#${tableId} tbody`);
         tableBody.innerHTML = ''; // Clear the table body
 
@@ -310,40 +445,70 @@
             data.forEach(item => {
                 const row = document.createElement('tr');
                 row.setAttribute('data-id', item.id);
-
-                row.addEventListener('click', (event) => {
-                    if (event.target && event.target.nodeName === 'TD') {
-                        const clickedRow = event.target.parentNode;
-                        const productInput = clickedRow.querySelector('input.product_id');
-                        const productId = parseInt(clickedRow.getAttribute('data-id'));
-                        const productIdsInput = document.getElementById('selectedProductIds');
-                        let productIds = JSON.parse(productIdsInput.value || '[]');
-                        if (!productIds.includes(productId)) {
-                            productIds.push(productId);
-                        } else {
-                            productIds = productIds.filter(id => id !== productId);
+                if(type == 4){
+                    row.addEventListener('click', (event) => {
+                        if (event.target && event.target.nodeName === 'TD') {
+                            const clickedRow = event.target.parentNode;
+                            const productInput = clickedRow.querySelector('input.product_id');
+                            const productId = parseInt(clickedRow.getAttribute('data-id'));
+                            const productIdsInput = document.getElementById('selectedProductIds');
+                            let productIds = JSON.parse(productIdsInput.value || '[]');
+                            if (!productIds.includes(productId)) {
+                                productIds.push(productId);
+                            } else {
+                                productIds = productIds.filter(id => id !== productId);
+                            }
+                            productIdsInput.value = JSON.stringify(productIds);
+                            // getProductData(productId);
+                            
                         }
-                        productIdsInput.value = JSON.stringify(productIds);
-                        getProductData(productId);
-                    }
-                });
+                    });
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = item.name;
+                    row.appendChild(nameCell);
 
-                const codeCell = document.createElement('td');
-                codeCell.textContent = item.product_code;
-                row.appendChild(codeCell);
+                    const descriptionCell = document.createElement('td');
+                    descriptionCell.textContent = item.description;
+                    row.appendChild(descriptionCell);
 
-                const categoryCell = document.createElement('td');
-                categoryCell.innerHTML = item.name;
-                row.appendChild(categoryCell);
+                    const ModalCell = document.createElement('td');
+                    ModalCell.innerHTML = '<a href="javascript:void(0)" class="formicon" id="openPopupButton" onclick="get_modal('+item.id+')"><i class="fa-solid fa-square-plus"></i></a>';
+                    row.appendChild(ModalCell);
+                }else{
+                    row.addEventListener('click', (event) => {
+                        if (event.target && event.target.nodeName === 'TD') {
+                            const clickedRow = event.target.parentNode;
+                            const productInput = clickedRow.querySelector('input.product_id');
+                            const productId = parseInt(clickedRow.getAttribute('data-id'));
+                            const productIdsInput = document.getElementById('selectedProductIds');
+                            let productIds = JSON.parse(productIdsInput.value || '[]');
+                            if (!productIds.includes(productId)) {
+                                productIds.push(productId);
+                            } else {
+                                productIds = productIds.filter(id => id !== productId);
+                            }
+                            productIdsInput.value = JSON.stringify(productIds);
+                            getProductData(productId);
+                            
+                        }
+                    });
 
-                const productCell = document.createElement('td');
-                productCell.textContent = item.product_name;
-                row.appendChild(productCell);
+                    const codeCell = document.createElement('td');
+                    codeCell.textContent = item.product_code;
+                    row.appendChild(codeCell);
 
-                const descriptionCell = document.createElement('td');
-                descriptionCell.textContent = item.description;
-                row.appendChild(descriptionCell);
+                    const categoryCell = document.createElement('td');
+                    categoryCell.innerHTML = item.name;
+                    row.appendChild(categoryCell);
 
+                    const productCell = document.createElement('td');
+                    productCell.textContent = item.product_name;
+                    row.appendChild(productCell);
+
+                    const descriptionCell = document.createElement('td');
+                    descriptionCell.textContent = item.description;
+                    row.appendChild(descriptionCell);
+                }
                 tableBody.appendChild(row);
             });
         }
@@ -363,7 +528,25 @@
             },
             success: function(response) {
                 console.log(response);
-                populateTable(response.data, tableId);
+                populateTable(response, tableId);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+    function get_modal(id){
+        $("#calculatePop").modal('show');
+        // customerModalLabel
+        $.ajax({
+            url: '{{ url("item/ProductGroupProductsdetails") }}',
+            method: 'Post',
+            data: {
+                id: id,_token:'{{ csrf_token() }}'
+            },
+            success: function(response) {
+                console.log(response);
+                // populateTable(response, tableId);
             },
             error: function(xhr, status, error) {
                 console.error(error);

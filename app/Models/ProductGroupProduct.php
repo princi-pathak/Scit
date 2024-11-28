@@ -21,9 +21,11 @@ class ProductGroupProduct extends Model
     public static function saveProductGroupData($group_id, $productData){
 
         $products = $productData['products'];
-
+        // echo "<pre>";print_r($products);die;
         foreach ($products as $product) {
-            return  self::create([
+            $data=  self::updateOrCreate(
+                ['id' => $product['id'] ?? null],
+                [
                 'product_group_id' => $group_id,
                 'product_id' => $product['product_id'],
                 'product_code' => $product['code'],
@@ -34,5 +36,12 @@ class ProductGroupProduct extends Model
                 'status' => 1,
             ]);
         }
+        return $data;
+    }
+    public static function getProductGroupProductData($home_id){
+        return self::where('deleted_at', null);
+    }
+    public static function ProductGroupProduct(){
+        return $this->belongsTo(ProductGroup::class, 'product_group_id')->whereNull('deleted_at');
     }
 }
