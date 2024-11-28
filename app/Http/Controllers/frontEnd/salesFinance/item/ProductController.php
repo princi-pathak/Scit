@@ -13,6 +13,8 @@ use App\Models\Product;
 use App\Models\Construction_tax_rate;
 use App\Models\Construction_account_code;
 use App\Models\ProductImage;
+use App\Models\ProductGroup;
+use App\Models\ProductGroupProduct;
 use App\Customer;
 use App\User;
 
@@ -334,10 +336,16 @@ class ProductController extends Controller
     }
 
     public function getProductList(Request $request){
-        $data = Product::getProductList($request->type);
+        // echo "<pre>";print_r($request->all());die;
+        if($request->type == 4){
+            $data = ProductGroup::getProductGroupData(Auth::user()->home_id);   
+        }else{
+            $data = Product::getProductList($request->type);
+        }
 
         return response()->json([
             'success' => (bool) $data,
+            'type'=>$request->type ?? null,
             'data' => $data ? $data : 'No data.'
         ]);
     }
@@ -346,7 +354,8 @@ class ProductController extends Controller
         $data['product'] = Product::getProductListCountType(1);
         $data['service'] = Product::getProductListCountType(2);
         $data['consumable'] = Product::getProductListCountType(3);
-
+        $product_group= ProductGroup::getProductGroupData(Auth::user()->home_id); 
+         $data['product_group']=count($product_group);
         return response()->json([
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data.'
