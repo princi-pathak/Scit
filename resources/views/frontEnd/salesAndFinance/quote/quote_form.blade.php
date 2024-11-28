@@ -2441,7 +2441,6 @@
                 $('#results').empty(); // Clear results if the input is empty
             }
         });
-
     });
 
     function getCustomerType() {
@@ -2550,10 +2549,11 @@
         });
     }
 
-    function tableFootForProduct() {
+    function tableFootForProduct(tableName) {
+        const table = document.querySelector(`#${tableName}`);
 
-        if (!isFooterAppended) { // Check the flag
-            const tableFoot = document.querySelector('.add_table_insrt33');
+        if (!isFooterAppended) {
+            const tableFoot = table.querySelector('.add_table_insrt33');
             tableFoot.innerHTML += `<tr>
                                         <td colspan="10" class="borderNone"></td>
                                         <td>Sub Total (exc. VAT)</td>
@@ -2563,11 +2563,11 @@
                                         <td colspan="10" class="borderNone"></td>
                                         <td>
                                             <div class="discountInput">
-                                                <span>Discount</span><input type="text" class="form-control editInput input50" onchange="calculateRowValues();" value="0">
+                                                <span>Discount</span><input type="text" class="form-control editInput input50 discountInputField" id="discountInput" value="0" data-table="${tableName}">
                                                 <span>%</span>
                                             </div>
                                         </td>
-                                        <td class="tableAmountRight" id="footDiscount">$0.00</td>
+                                        <td class="tableAmountRight" id="footDiscount">$00.00</td>
                                     </tr>
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
@@ -2585,7 +2585,7 @@
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)</strong></td>
-                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">$108.00</td>
+                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">$00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
@@ -2595,25 +2595,53 @@
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Margin</td>
-                                        <td class="tableAmountRight" id="footMargin">-11.11%</td>
+                                        <td class="tableAmountRight" id="footMargin">00.00%</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Deposit</td>
-                                        <td class="tableAmountRight" id="footDeposit">$0.00</td>
+                                        <td class="tableAmountRight" id="footDeposit">$00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Refund</td>
-                                        <td class="tableAmountRight" id="footRefund">$0.00</td>
+                                        <td class="tableAmountRight" id="footRefund">$00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)</strong></td>
-                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">$108.00</td>
+                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">$00.00</td>
                                     </tr>`;
+            isFooterAppended = true;
+
+            // Ensure the input is correctly selected
+            const discountInput = table.querySelector('#discountInput');
+            if (!discountInput) {
+                console.error('Discount input not found.');
+                return;
+            }
+
+            // Attach the event listener
+            discountInput.addEventListener('input', function() {
+                const discountValue = parseFloat(this.value) || 0;
+
+                // Update all elements with the class "discount"
+                document.querySelectorAll('.discount').forEach(discountElement => {
+                    discountElement.value = discountValue.toFixed(2); // Format to 2 decimal places
+                });
+
+                // Call calculateRowsValue function
+                if (typeof calculateRowsValue === 'function') {
+                    calculateRowsValue(table);
+                } else {
+                    console.error('calculateRowsValue function is not defined.');
+                }
+            });
+
         }
     }
+
+
 
     function applyMarkup() {
         document.getElementById('markUpLinkRemove').innerHTML = '';
@@ -2646,37 +2674,51 @@
         let totalPrice = 0;
         let totalMarkup = 0;
         let totalVAT = 0;
+        const vatAmount = 20;
+        let totalVATAmount = 0;
         let totalProfit = 0;
         let totalDiscount = 0;
-
+        let profitElement;
+        let profitValue;
+        let numericProfit;
+        let price = 0;
         rows.forEach(row => {
             totalQuantity += parseInt(row.querySelector('.quantity').value);
-            totalCostPrice += parseInt(row.querySelector('.costPrice').value);
             totalPrice += parseInt(row.querySelector('.price').value);
+            totalDiscount += parseInt(row.querySelector('.discount').value);
+            totalCostPrice += parseInt(row.querySelector('.costPrice').value);
             totalMarkup += parseInt(row.querySelector('.priceMarkup').value);
-            totalVAT += 20;
-            let profitElement = row.querySelector('.profit');
+            profitElement = row.querySelector('.profit');
             if (profitElement) {
-                const profitValue = profitElement.textContent.trim(); // Get text content and remove extra spaces
-                const numericProfit = parseFloat(profitValue.replace("$", "")); // Remove "$" and convert to number
-                console.log(numericProfit); // Logs 100 as a number
-                totalProfit += numericProfit; // Add to totalProfit
-            } else {
-                console.error('Profit element not found in this row:', row);
+                profitValue = profitElement.textContent.trim();
+                numericProfit = parseFloat(profitValue.replace("$", ""));
+                totalProfit += numericProfit;
             }
+            totalVAT = (totalPrice * vatAmount) / 100;
+            console.log(totalVAT);
+            // totalVATAmount +=totalVAT;
+
 
             totalDiscount += parseInt(row.querySelector('.discount').value);
         });
-
-        const doller = '$';
         console.log("Total Quantity: ", totalQuantity);
         console.log("Total Cost Price: ", totalCostPrice);
         console.log("Total Price: ", totalPrice);
         console.log("Total Markup: ", totalMarkup);
         console.log("Total VAT: ", totalVAT);
         console.log("Total Discount: ", totalDiscount);
-        const footTotalDiscountVat = totalPrice + totalVAT + totalDiscount;
-        document.getElementById('footAmount').textContent = doller + totalPrice.toFixed(2);
+        console.log("Total Profit: ", totalProfit);
+
+        const doller = '$';
+
+        priceAndQuantity = (totalPrice * totalQuantity);
+        discount = (priceAndQuantity * totalDiscount)/ 100;
+        price = priceAndQuantity - discount;
+
+        const footTotalDiscountVat = price + totalVAT + discount;
+        const margin = (totalProfit / footTotalDiscountVat) * 100;
+        console.log(margin);
+        document.getElementById('footAmount').textContent = doller + price.toFixed(2);
         document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
         document.getElementById('footTotalDiscountVat').textContent = doller + footTotalDiscountVat.toFixed(2);
         document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
@@ -2728,24 +2770,6 @@
         row.querySelector('.footRowMargin').textContent = '(' + margin.toFixed(2) + '%' + ')'; // Show profit
 
         calculateRowsValue(table);
-
-
-        // // Total profit calculation with the previous profit
-        // let footProfit = document.getElementById('footProfit').textContent;
-        // const previousProfit = footProfit.replace("$", "");
-        // const newProfit  = parseFloat(profit.toFixed(2)) + parseFloat(previousProfit);
-        // document.getElementById('footProfit').textContent = doller + newProfit.toFixed(2);
-
-        // // Total VAT amount calculation with previous VAT
-        // let footVATAmount = document.getElementById('footVatAmount').textContent;
-        // const previouVatAmount = footVATAmount.replace("$", "");
-        // const newVatAmount  = parseFloat(vatAmount.toFixed(2)) + parseFloat(previouVatAmount);
-        // document.getElementById('footVatAmount').textContent = doller + newVatAmount.toFixed(2);
-
-        // document.getElementById('footTotalDiscountVat').textContent = doller + (newAmount + newVatAmount).toFixed(2);
-        // document.getElementById('footMargin').textContent = margin.toFixed(2) + '%';
-        // document.getElementById('footOutstandingAmount').textContent = doller + (newAmount + newVatAmount).toFixed(2);
-        // row.querySelector('.vatAmount').textContent = vatAmount.toFixed(2); // Show VAT amount
     }
 
     let isFooterAppended = false;
@@ -2785,11 +2809,10 @@
                     </div>
                 </td>
                 <td>
-                    <div class=""><input type="text" class="form-control editInput input50 quantity" onchange="calculateRowValues();" value="1"></div>
+                    <div class=""><input type="text" class="form-control editInput input50 quantity" value="1"></div>
                 </td>
                 <td>
-                    <div class=""> <input type="text" class="form-control editInput input50 costPrice" onchange="calculateRowValues();" value="${parseFloat(item.cost_price || 0).toFixed(2)}"
-></div>
+                    <div class=""><input type="text" class="form-control editInput input50 costPrice" onchange="calculateRowValues();" value="${parseFloat(item.cost_price || 0).toFixed(2)}"></div>
                 </td>
                 <td>
                     <div class="calculatorIcon">
@@ -2840,12 +2863,13 @@
                         <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                     </div>
                 </td>`;
-            tableFootForProduct();
+            tableFootForProduct(tableId);
             isFooterAppended = true;
 
             if (tableBody) {
                 tableBody.appendChild(node);
                 calculateRowValues(node, table);
+                attachRowEventListeners(node, table)
                 // tableBodyFoot.appendChild(tableFoot);
                 // Add event listener to the close button
                 const closeButton = node.querySelector('.closeappend');
@@ -2860,6 +2884,15 @@
         });
     }
 
+    function attachRowEventListeners(row, table) {
+        // Attach change events for quantity, costPrice, price, etc.
+        row.querySelector('.quantity')?.addEventListener('input', () => calculateRowValues(row, table));
+        row.querySelector('.costPrice')?.addEventListener('input', () => calculateRowValues(row, table));
+        row.querySelector('.price')?.addEventListener('input', () => calculateRowValues(row, table));
+        row.querySelector('.discount')?.addEventListener('input', () => calculateRowValues(row, table));
+        row.querySelector('.vat')?.addEventListener('change', () => calculateRowValues(row, table));
+    }
+
     function clearFooter(table) {
         const tableBody = table.querySelector('tbody');
         const tableFoot = table.querySelector('tfoot');
@@ -2868,6 +2901,8 @@
             isFooterAppended = false; // Reset the flag
         }
     }
+
+
 
     function getQuoteType(quoteType) {
         $.ajax({
