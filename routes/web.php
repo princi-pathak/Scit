@@ -593,6 +593,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 			// post routes
 			Route::post('/saveProductGroup', 'saveProductGroup')->name('ajax.saveProductGroup');
+			Route::post('/ProductGroupProductsList','ProductGroupProductsList');
+			Route::post('/ProductGroupProductsdetails','ProductGroupProductsdetails');
 		
 			
 	

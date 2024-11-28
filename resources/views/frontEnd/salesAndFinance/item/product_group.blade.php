@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
             <div class="jobsection">
-                <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#itemsCatagoryModal">Add</a>
+                <a href="javascript:void(0)" class="profileDrop" onclick="open_productgroupmodal()">Add</a>
             </div>
         </div>
 
@@ -125,8 +125,8 @@
                 <div class="markendDelete">
                     <div class="row">
                         <div class="col-md-7">
-                            <div class="jobsection d-flex">
-                                <input type="button" class="profileDrop" id="getCheckedValues" value="Delete">
+                            <div class="jobsection">
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                 <span class="alert text-danger text-center deletemsg"></span>
                             </div>
                         </div>
@@ -149,13 +149,19 @@
                     <tbody>
                         @foreach($productGroups as $productGroup)
                         <tr>
-                            <td></td>
+                            <td class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$productGroup->id}}"></td>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $productGroup->name }}</td>
                             <td>{{ $productGroup->description }}</td>
                             <td>{{ $productGroup->cost }}</td>
                             <td>{{ $productGroup->price }}</td>
-                            <td>{{ $productGroup->status }}</td>
+                            <td>
+                                @if($productGroup->status == 1)
+                                    <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
+                                @else
+                                    <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>
+                                @endif
+                            </td>
                             <td>
                                 <div class="d-inline-flex align-items-center ">
                                     <div class="nav-item dropdown">
@@ -163,7 +169,7 @@
                                             Action
                                         </a>
                                         <div class="dropdown-menu fade-up m-0">
-                                            <a href="#!" class="dropdown-item">Edit Details</a>
+                                            <a href="javascript:void(0)" class="dropdown-item fetch_data" data-id="{{$productGroup->id}}" data-home_id="{{$productGroup->home_id}}" data-name="{{$productGroup->name}}" data-description="{{$productGroup->description}}" data-code="{{$productGroup->code}}" data-cost="{{$productGroup->cost}}" data-price="{{$productGroup->price}}" data-status="{{$productGroup->status}}">Edit Details</a>
                                         </div>
                                     </div>
                                 </div>
@@ -192,18 +198,19 @@
                 <div class="contantbodypopup p-0">
                     <div class="" id="message"></div>
                     <form action="" id="add_product_group_form">
+                        <input type="hidden" id="id" name="id">
                         <div class="row pt-3">
                             <div class="col-lg-6">
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-4 col-form-label">Product Group<span class="radStar">*</span></label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control editInput" name="name" id="inputCity" value="">
+                                        <input type="text" class="form-control editInput" name="name" id="name" value="">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-4 col-form-label">Description</label>
                                     <div class="col-sm-8">
-                                        <textarea class="form-control textareaInput" name="description" id="inputAddress" rows="3" placeholder=""></textarea>
+                                        <textarea class="form-control textareaInput" name="description" id="description" rows="3" placeholder=""></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -211,13 +218,13 @@
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Code</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" id="inputCity" name="code" value="">
+                                        <input type="text" class="form-control editInput" id="code" name="code" value="">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Status</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control editInput selectOptions" status="status" id="inputCustomer">
+                                        <select class="form-control editInput selectOptions" status="status" id="status">
                                             <option> Active </option>
                                             <option> Inactive </option>
                                         </select>
@@ -226,13 +233,13 @@
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Cost Price</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="cost" id="costPrice" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
+                                        <input type="text" class="form-control editInput" name="cost" id="costPrice" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="0.00">
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Price</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" id="productPrice" name="price" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="">
+                                        <input type="text" class="form-control editInput" id="productPrice" name="price" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="0.00">
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +253,7 @@
                                     </div>
                                     <div class="col-sm-7">
                                         <div class="plusandText">
-                                            <span class="afterPlusText"> (Type to add product or <a href="#!" onclick="openProductListModal();" id="proClickHerePopup">Click here</a> to view all product)</span>
+                                            <span class="afterPlusText"> (Type to add product or <a href="javascript:void(0)" onclick="openProductListModal();" id="proClickHerePopup">Click here</a> to view all product)</span>
                                         </div>
 
                                         <!--Start (Type to add product or Popup -->
@@ -260,14 +267,14 @@
                                             <tr>
                                                 <th>Code</th>
                                                 <th>Product </th>
-                                                <th>Code Price</th>
+                                                <th>Cost Price</th>
                                                 <th>Price </th>
                                                 <th>Qty</th>
                                                 <th>Amount </th>
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="product_group_products_list">
 
                                         </tbody>
                                         <tfoot class="table totlepayment add_table_insrt33" id="containerA">
@@ -298,7 +305,10 @@
         // Loop through each row to gather data
         tableRows.forEach(row => {
             const productIdField = row.querySelector('.product_id');
+            const id = row.querySelector('.ids');
+            // console.log(row);
             const product = {
+                id: id ? id.value : null,
                 code: row.cells[0].textContent.trim(),
                 product: row.cells[1].textContent.trim(),
                 product_id: productIdField ? productIdField.value : null,
@@ -325,6 +335,7 @@
             },
             success: function(response) {
                 // Show the message div
+                console.log(response);
                 const messageDiv = document.getElementById('message');
                 messageDiv.style.display = 'block';
 
@@ -334,10 +345,11 @@
                     messageDiv.classList.remove('error-message');
                     messageDiv.classList.add('success-message');
                     messageDiv.textContent = response.message;
-
+                    
                     // Optionally hide the modal after success
                     setTimeout(function() {
                         $('#itemsCatagoryModal').modal('hide');
+                        location.reload();
                     }, 3000); // Adjust delay if needed
                 } else {
                     // Failure scenario
@@ -462,6 +474,8 @@
     }
 
     var totalAmount=0;
+    var GrandCostPrice=0;
+    var GrandPrice=0;
     function productGroupTable(data, tableId) {
         // Get the table body element
         const tableBody = document.querySelector(`#${tableId} tbody`);
@@ -482,9 +496,13 @@
             tableBody.appendChild(noDataRow);
         } else {
             // Populate rows as usual if data is not empty
+            const emptyErrorRow = document.getElementById('EmptyError');
+            if (emptyErrorRow) {
+                emptyErrorRow.remove();
+            }
             data.forEach(item => {
                 const row = document.createElement('tr');
-                calculateCostPrice();
+                // calculateCostPrice();
                 // Create cells and append them to the row
                 const codeCell = document.createElement('td');
                 codeCell.textContent = item.product_code;
@@ -508,6 +526,7 @@
                 inputCost.className = 'cost_price input50';
                 inputCost.name = 'cost_price[]'; // Set input name (useful for form submission)
                 inputCost.value = item.cost_price; // Set the default value (optional)
+                GrandCostPrice=GrandCostPrice+Number(item.cost_price);
                 costCell.appendChild(inputCost);
                 row.appendChild(costCell);
 
@@ -520,6 +539,7 @@
                 });
                 inputPrice.name = 'product_price[]'; // Set input name (useful for form submission)
                 inputPrice.value = item.price; // Set the default value (optional)
+                GrandPrice=GrandPrice+Number(item.price);
                 priceCell.appendChild(inputPrice);
                 row.appendChild(priceCell);
 
@@ -536,7 +556,7 @@
                 row.appendChild(qtyCell);
 
                 const amountCell = document.createElement('td');
-                amountCell.innerHTML = '£'+ parseFloat(item.price).toFixed(2);
+                amountCell.innerHTML = '$'+ parseFloat(item.price).toFixed(2);
                 amountCell.className = "price";
                 row.appendChild(amountCell);
                 totalAmount=totalAmount+Number(item.price);
@@ -549,13 +569,15 @@
 
 
             });
+            $("#costPrice").val(parseFloat(GrandCostPrice).toFixed(2));
+            $("#productPrice").val(parseFloat(GrandPrice).toFixed(2));
             var htmlCode=`<tr>
                                 <td colspan="4"></td>
-                                <td>Total</td><td id="GrandTotalAmount">£`+parseFloat(totalAmount).toFixed(2)+`</td>
+                                <td>Total</td><td id="GrandTotalAmount">$`+parseFloat(totalAmount).toFixed(2)+`</td>
                                 <td></td>
                           </tr>`;
             $("#containerA").html(htmlCode);
-            console.log("html "+totalAmount) 
+            // console.log("html "+totalAmount) 
         }
     }
 
@@ -569,43 +591,45 @@
                 const amount = parseFloat(amountCell.textContent.replace(/[^\d.]/g, "")) || 0;
                 totalAmount -= amount;
                 if(totalAmount === 0){
+                    $("#costPrice").val('0.00');
                    $("#containerA").hide();
                 }else{
                     $("#containerA").show();
                 }
-                document.getElementById("GrandTotalAmount").textContent = "£" + totalAmount.toFixed(2);
+                document.getElementById("GrandTotalAmount").textContent = "$" + totalAmount.toFixed(2);
+                $("#productPrice").val(totalAmount.toFixed(2));
             }
         }
     });
 
-    function calculateCostPrice() {
-        const inputs = document.querySelectorAll('.cost_price');
-        const product_price = document.querySelectorAll('.product_price');
+    // function calculateCostPrice() {
+    //     const inputs = document.querySelectorAll('.cost_price');
+    //     const product_price = document.querySelectorAll('.product_price');
 
-        // Add an event listener to each input field
-        inputs.forEach(input => {
-            console.log(input);
-            input.addEventListener('input', function() {
-                calculateSum(inputs, 'costPrice'); // Pass 'inputs' to the function
-            });
-        });
+    //     // Add an event listener to each input field
+    //     inputs.forEach(input => {
+    //         console.log(input);
+    //         input.addEventListener('input', function() {
+    //             calculateSum(inputs, 'costPrice'); // Pass 'inputs' to the function
+    //         });
+    //     });
 
-        product_price.forEach(input => {
-            console.log(input);
-            input.addEventListener('input', function() {
-                calculateSum(product_price, 'productPrice'); // Pass 'product_price' to the function
-            });
-        });
-    }
+    //     product_price.forEach(input => {
+    //         console.log('price'+input);
+    //         input.addEventListener('input', function() {
+    //             calculateSum(product_price, 'productPrice'); // Pass 'product_price' to the function
+    //         });
+    //     });
+    // }
 
-    function calculateSum(inputs, appendPlace) {
-        let total = 0;
-        inputs.forEach(input => {
-            total += parseFloat(input.value) || 0; // Add value or 0 if empty
-        });
-        // console.log(total);
-        document.getElementById(appendPlace).value = total; // Display total
-    }
+    // function calculateSum(inputs, appendPlace) {
+    //     let total = 0;
+    //     inputs.forEach(input => {
+    //         total += parseFloat(input.value) || 0; // Add value or 0 if empty
+    //     });
+    //     // console.log(total);
+    //     document.getElementById(appendPlace).value = total; // Display total
+    // }
 
     // Function to update the amount in the row
     function updateAmount(row) {
@@ -617,7 +641,7 @@
         const price = parseFloat(priceInput.value) || 0; // Default to 0 if not a valid number
         const qty = parseInt(qtyInput.value) || 1; // Default to 0 if not a valid number
         const amount = price * qty; // Calculate the amount
-        amountCell.textContent = '£'+amount.toFixed(2); // Update the amount cell with the calculated amount
+        amountCell.textContent = '$'+amount.toFixed(2); // Update the amount cell with the calculated amount
 
         var calculation=0;
         $('.price').each(function () {
@@ -627,7 +651,8 @@
             calculation=calculation+numericValue;
         });
         totalAmount=calculation;
-        document.getElementById('GrandTotalAmount').innerHTML='£'+totalAmount.toFixed(2);
+        document.getElementById('GrandTotalAmount').innerHTML='$'+totalAmount.toFixed(2);
+        $("#productPrice").val(totalAmount.toFixed(2));
     }
 
     document.querySelector("#listAllProduct").addEventListener("click", function(e) {
@@ -638,5 +663,184 @@
         });
     });
 </script>
+<script>
+    $('.fetch_data').on('click', function(){
+        
+        var id=$(this).data('id');
+        var name=$(this).data('name');
+        var description=$(this).data('description');
+        var code=$(this).data('code');
+        var cost=$(this).data('cost');
+        var price=$(this).data('price');
+        var status=$(this).data('status');
 
+        $("#id").val(id);
+        $("#name").val(name);
+        $("#description").val(description);
+        $("#code").val(code);
+        $("#status").val(status);
+        $("#costPrice").val(cost);
+        $("#productPrice").val(price);
+
+        $.ajax({
+            url: '{{ url("item/ProductGroupProductsList") }}',
+            method: 'Post',
+            data: {
+                _token:'{{ csrf_token() }}',id:id 
+            },
+            success: function(response) {
+                console.log(response);
+                const tableBody = document.querySelector(`#productListTable tbody`);
+                if (response.data.length === 0) {
+                    const noDataRow = document.createElement('tr');
+                    noDataRow.id='EmptyError'
+                        const noDataCell = document.createElement('td');
+                        noDataCell.setAttribute('colspan', 7);
+                        noDataCell.innerHTML = '<span class="text-center" style="color:red">Sorry, there are no items available</span>';
+                        noDataCell.style.textAlign = 'center';
+                        noDataRow.appendChild(noDataCell);
+                        tableBody.appendChild(noDataRow);
+                }else{
+                    tableBody.innerHTML = '';
+                    totalAmount=0;
+                    response.data.forEach(item => {
+                            const row = document.createElement('tr');
+                            const codeCell = document.createElement('td');
+                            codeCell.textContent = item.product_code;
+                            row.appendChild(codeCell);
+
+                            const hiddenInputId = document.createElement('input');
+                            hiddenInputId.type = 'hidden';
+                            hiddenInputId.className = 'ids';
+                            hiddenInputId.name = 'ids[]'; 
+                            hiddenInputId.value = item.id;
+                            row.appendChild(hiddenInputId);
+
+                            const hiddenInput = document.createElement('input');
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.className = 'product_id';
+                            hiddenInput.name = 'product_ids[]'; 
+                            hiddenInput.value = item.product_id;
+                            row.appendChild(hiddenInput);
+
+                            const nameCell = document.createElement('td');
+                            nameCell.innerHTML = item.product_name;
+                            row.appendChild(nameCell);
+
+                            const costCell = document.createElement('td');
+                            const inputCost = document.createElement('input');
+                            inputCost.type = 'text'; 
+                            inputCost.className = 'cost_price input50';
+                            inputCost.name = 'cost_price[]'; 
+                            inputCost.value = item.cost_price;
+                            GrandCostPrice=GrandCostPrice+Number(item.cost_price);
+                            costCell.appendChild(inputCost);
+                            row.appendChild(costCell);
+
+                            const priceCell = document.createElement('td');
+                            const inputPrice = document.createElement('input');
+                            inputPrice.type = 'text'; 
+                            inputPrice.className = 'product_price input50';
+                            inputPrice.addEventListener('input', function() {
+                                updateAmount(row);
+                            });
+                            inputPrice.name = 'product_price[]'; 
+                            inputPrice.value = item.price;
+                            GrandPrice=GrandPrice+Number(item.price);
+                            priceCell.appendChild(inputPrice);
+                            row.appendChild(priceCell);
+
+                            const qtyCell = document.createElement('td');
+                            const inputQty = document.createElement('input');
+                            inputQty.type = 'text'; 
+                            inputQty.className = 'qty input50';
+                            inputQty.addEventListener('input', function() {
+                                updateAmount(row);
+                            });
+                            inputQty.name = 'qty[]';
+                            inputQty.value = item.quantity; 
+                            qtyCell.appendChild(inputQty);
+                            row.appendChild(qtyCell);
+
+                            const amountCell = document.createElement('td');
+                            amountCell.innerHTML = '$'+ item.quantity*parseFloat(item.price).toFixed(2);
+                            amountCell.className = "price";
+                            row.appendChild(amountCell);
+                            totalAmount=totalAmount+Number(item.price)*item.quantity;
+                            const deleteCell = document.createElement('td');
+                            deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
+                            row.appendChild(deleteCell);
+                            tableBody.appendChild(row);
+
+                        });
+                        $("#costPrice").val(parseFloat(cost).toFixed(2));
+                        $("#productPrice").val(parseFloat(price).toFixed(2));
+                        var htmlCode=`<tr>
+                                            <td colspan="4"></td>
+                                            <td>Total</td><td id="GrandTotalAmount">$`+parseFloat(totalAmount).toFixed(2)+`</td>
+                                            <td></td>
+                                    </tr>`;
+                        $("#containerA").html(htmlCode); 
+                     
+                    }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+        $("#itemsCatagoryModal").modal('show');
+    });
+    function open_productgroupmodal(){
+        $('#add_product_group_form')[0].reset();
+        const tableBody = document.querySelector(`#productListTable tbody`);
+        const tableFoot = document.querySelector(`#productListTable tfoot`);
+        tableBody.innerHTML = '';
+        tableFoot.innerHTML = '';
+        $("#itemsCatagoryModal").modal('show');
+    }
+</script>
+<script>
+   $("#deleteSelectedRows").on('click', function() {
+    let ids = [];
+    
+    $('.delete_checkbox:checked').each(function() {
+        ids.push($(this).val());
+    });
+    if(ids.length == 0){
+        alert("Please check the checkbox for delete");
+    }else{
+        if(confirm("Are you sure to delete?")){
+            // console.log(ids);
+            var token='<?php echo csrf_token();?>'
+            var model='ProductGroup';
+            $.ajax({
+                type: "POST",
+                url: "{{url('/bulk_delete')}}",
+                data: {ids:ids,model:model,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if(data){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    }
+    
+});
+$('.delete_checkbox').on('click', function() {
+    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+        $('#selectAll').prop('checked', true);
+    } else {
+        $('#selectAll').prop('checked', false);
+    }
+});
+ </script> 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
