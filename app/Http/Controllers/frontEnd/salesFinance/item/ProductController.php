@@ -5,16 +5,13 @@ namespace App\Http\Controllers\frontEnd\salesFinance\Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Session, DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use App\Models\Product_category;
 use App\Models\Product;
 use App\Models\Construction_tax_rate;
 use App\Models\Construction_account_code;
 use App\Models\ProductImage;
 use App\Models\ProductGroup;
-use App\Models\ProductGroupProduct;
 use App\Customer;
 use App\User;
 
