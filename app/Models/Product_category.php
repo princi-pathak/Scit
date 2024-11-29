@@ -9,7 +9,9 @@ use Session;
 class Product_category extends Model
 {
     use HasFactory;
+    protected $table="product_categories";
     protected $fillable = ['home_id','name', 'cat_id', 'status'];
+    protected $appends = ['full_category'];
     public function parent()
     {
         return $this->belongsTo(Product_category::class, 'cat_id');

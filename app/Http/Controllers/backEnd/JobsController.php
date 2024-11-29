@@ -562,7 +562,7 @@ class JobsController extends Controller
             $task='Add';
         }
         $data['cat']=Product_category::find($key);
-        $data['category']=Product_category::with('parent', 'children')->where('status',1)->get();
+        $data['category']=Product_category::with('parent', 'children')->where('status',1)->whereNull('deleted_at')->get();
         $data['task']=$task;
         $data['page']='product_category';
         $data['del_status']=0;
@@ -570,24 +570,6 @@ class JobsController extends Controller
     }
     public function product_cat_save_data(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        // $admin   = Session::get('scitsAdminSession');
-        // $home_id = $admin->home_id;
-        // if($request->id == ''){
-        //     $table=new Product_category;
-        //     $table->home_id=$home_id;
-        //     $table->name=$request->name;
-        //     $table->cat_id=$request->catetgory_id;
-        //     $table->save();
-        //     Session::flash('success','Added Successfully Done');
-        //     echo "done";
-        // }else {
-        //     $table=Product_category::find($request->id);
-        //     $table->home_id=$home_id;
-        //     $table->name=$request->name;
-        //     $table->save();
-        //     Session::flash('success','Updated Successfully Done');
-        //     echo "done";
-        // }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -596,12 +578,12 @@ class JobsController extends Controller
         }
         if(Product_category::checkproductcategoryname($request->name,$request->productCategoryID)==0){
             try{
-                // $saveData = Product_category::saveProductCategoryData($request->all(), $request->productCategoryID);
-                $saveData=['id'=>1,'name'=>$request->name];
+                Product_category::saveProductCategoryData($request->all(), $request->productCategoryID);
+                $Data=Product_category::with('parent', 'children')->where('status',1)->whereNull('deleted_at')->get();
                 if($request->productCategoryID){
-                    return response()->json(['success'=>true,'message'=>'Product Category Updated Successfully Done.','data'=>$saveData]);
+                    return response()->json(['success'=>true,'message'=>'Product Category Updated Successfully Done.','data'=>$Data]);
                 }else{
-                    return response()->json(['success'=>true,'message'=>'Product Category Added Successfully Done.','data'=>$saveData]);
+                    return response()->json(['success'=>true,'message'=>'Product Category Added Successfully Done.','data'=>$Data]);
                 }
                 
             }catch (\Exception $e) {
@@ -662,9 +644,6 @@ class JobsController extends Controller
     public function product_delete(Request $request){
         $id=base64_decode($request->id);
         $delete= Product::where('id', $id)->update(['deleted_at' => Carbon::now()]);
-        // $table=Product::find($id);
-        // $table->status=2;
-        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";  
     }
@@ -807,30 +786,52 @@ class JobsController extends Controller
         return view('backEnd.jobs_management.tax_form',$data);
     }
     public function tax_save_data(Request $request){
-        // echo "<pre>";print_r($request->all());die;
+        echo "<pre>";print_r($request->all());die;
         $admin   = Session::get('scitsAdminSession');
         $home_id = $admin->home_id;
-        if($request->id == '')
-        {
-            $table=new Construction_tax_rate;
-            $table->home_id=$home_id;
-            $table->name=$request->name;
-            $table->tax_rate=$request->tax_rate;
-            $table->tax_code=$request->tax_code;
-            $table->exp_date=$request->exp_date;
-            $table->save();
-            Session::flash('success','Addedd Successfully Done');
-            echo "done";
-        }else {
-            $table=Construction_tax_rate::find($request->id);
-            $table->home_id=$home_id;
-            $table->name=$request->name;
-            $table->tax_rate=$request->tax_rate;
-            $table->tax_code=$request->tax_code;
-            $table->exp_date=$request->exp_date;
-            $table->save();
-            Session::flash('success','Updated Successfully Done');
-            echo "done";
+        // if($request->id == '')
+        // {
+        //     $table=new Construction_tax_rate;
+        //     $table->home_id=$home_id;
+        //     $table->name=$request->name;
+        //     $table->tax_rate=$request->tax_rate;
+        //     $table->tax_code=$request->tax_code;
+        //     $table->exp_date=$request->exp_date;
+        //     $table->save();
+        //     Session::flash('success','Addedd Successfully Done');
+        //     echo "done";
+        // }else {
+        //     $table=Construction_tax_rate::find($request->id);
+        //     $table->home_id=$home_id;
+        //     $table->name=$request->name;
+        //     $table->tax_rate=$request->tax_rate;
+        //     $table->tax_code=$request->tax_code;
+        //     $table->exp_date=$request->exp_date;
+        //     $table->save();
+        //     Session::flash('success','Updated Successfully Done');
+        //     echo "done";
+        // }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->first()]);
+        }
+        if(Construction_tax_rate::checkTaxRatename($request->taxratename,$request->taxrateID)==0){
+            $saveData = Construction_tax_rate::saveTaxRateData($request->all(), $request->taxrateID);
+
+            // Return the appropriate response
+            return response()->json([
+                'success' => (bool)1,
+                'message' => $saveData ? 'The Tax Rate has been saved successfully.' : 'Tax Rate could not be created.',
+                'lastid' => $saveData->id
+            ]);
+        }else{
+            return response()->json([
+                'success' => 0,
+                'message' => 'This Tax Rate already exist.',
+                'lastid' => 0
+            ]);
         }
     }
     public function tax_status_change(Request $request){
