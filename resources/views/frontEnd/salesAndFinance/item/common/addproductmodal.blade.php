@@ -646,7 +646,7 @@ Array.prototype.slice.call(forms)
 </script>
 <script>
     function itemsAddProductModal(th,id=null){
-        alert(th)
+        // alert(th)
         if(th==1){
             $('#attachment,#generateproductcode,#customerlist').css('display','block');
             $('.productimages,.productuploadedit,#onecustomer').css('display','none');
