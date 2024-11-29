@@ -53,7 +53,7 @@ padding: 5px 0px 15px 0px;
                             
                                
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Name*</label>
+                                <label class="col-lg-3 control-label">Name<span class="radStar ">*</span></label>
                                 <div class="col-lg-9">
                                     <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="<?php if(isset($cat)){echo $cat->name;}?>" maxlength="255">
                                     <p style="color:red;display:none" id="nameError">* Name is Required Field *</p>
@@ -69,7 +69,17 @@ padding: 5px 0px 15px 0px;
                                         <?php }?>
                                     </select>
                                 </div>
-                            </div>    
+                            </div>  
+                            <div class="row form-group">
+                                <label class="col-lg-3 control-label">Status</label>
+                                <div class="col-lg-9">
+                                <select id="product_category_status" name="product_category_status" class="form-control editInput">
+                                    <option value="1" <?php if(isset($cat) && $cat->status == 1){echo 'selected';}?>>Active</option>
+                                    <option value="0" <?php if(isset($cat) && $cat->status == 0){echo 'selected';}?>>Inactive</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="alert text-center" id="cat_message" style="display:none">Save successfully done</div>  
 							<div class="form-actions">
 								<div class="row">
 									<div class="col-lg-offset-3 col-lg-10">
@@ -98,6 +108,7 @@ padding: 5px 0px 15px 0px;
         var name=$("#name").val();
         var id=$('#id').val();
         var catetgory_id=$('#catetgory_id').val();
+        var product_category_status=$('#product_category_status').val();
         var token='<?php echo csrf_token();?>'
         if(name == ''){
             $("#nameError").show();
@@ -106,13 +117,32 @@ padding: 5px 0px 15px 0px;
             $.ajax({  
                 type:"POST",
                 url:"{{url('admin/product_cat_save_data')}}",
-                data:{id:id,name:name,catetgory_id:catetgory_id,_token:token},
+                data:{productCategoryID:id,name:name,catetgory_id:catetgory_id,status:product_category_status,_token:token},
                 success:function(data)
                 {
                     console.log(data);
-                    if($.trim(data)=="done"){
-                        window.location.href='<?php echo url('admin/product_category');?>';
+                    const cat_message=$('#cat_message').show();
+                    if(data.errors){
+                        cat_message.text(data.errors);
+                        cat_message.addClass('alert-danger').css('border','1px solid red');
+                        setTimeout(function() {
+                            $('#cat_message').fadeOut(3000);
+                        }, 3000);
+                    }else if(data.success == true){
+                        cat_message.text(data.message);
+                        cat_message.addClass('alert-success').css('border','1px solid green');
+                        setTimeout(function() {
+                            window.location.href='<?php echo url('admin/product_category');?>';
+                        }, 3000);
+                    }else{
+                        alert("Something went wrong. Please try again later");
+                        location.reload();
                     }
+                    
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
                 }
             }); 
         }

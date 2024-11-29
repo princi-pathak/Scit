@@ -2549,6 +2549,31 @@
         });
     }
 
+
+
+
+    function applyMarkup() {
+        document.getElementById('markUpLinkRemove').innerHTML = '';
+        document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
+    }
+
+    function getTaxRateOnTaxId(taxID) {
+        $.ajax({
+            url: '{{ route("invoice.ajax.getTaxRateOnTaxId") }}',
+            method: 'Post',
+            data: {
+                id: 2
+            },
+            success: function(response) {
+                console.log("response.data", response.data);
+                document.querySelector('.selectedTaxID').value = response.data;
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
     function tableFootForProduct(tableName) {
         const table = document.querySelector(`#${tableName}`);
 
@@ -2642,144 +2667,110 @@
     }
 
 
-
-    function applyMarkup() {
-        document.getElementById('markUpLinkRemove').innerHTML = '';
-        document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
-    }
-
-    function getTaxRateOnTaxId(taxID) {
-        $.ajax({
-            url: '{{ route("invoice.ajax.getTaxRateOnTaxId") }}',
-            method: 'Post',
-            data: {
-                id: 2
-            },
-            success: function(response) {
-                console.log("response.data", response.data);
-                document.querySelector('.selectedTaxID').value = response.data;
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
     function calculateRowsValue(table) {
-        const rows = table.querySelectorAll('tbody tr'); // Select all rows in the table body
-        let data = [];
+        const rows = table.querySelectorAll('tbody tr');
 
         let totalQuantity = 0;
         let totalCostPrice = 0;
         let totalPrice = 0;
         let totalMarkup = 0;
+
         let totalVAT = 0;
-        const vatAmount = 20;
-        let totalVATAmount = 0;
+        const vat = 20;
+
         let totalProfit = 0;
         let totalDiscount = 0;
+
         let profitElement;
         let profitValue;
         let numericProfit;
+        let totalMargin = 0;
+
         let price = 0;
+
+        const doller = '$';
+
         rows.forEach(row => {
-            totalQuantity += parseInt(row.querySelector('.quantity').value);
-            totalPrice += parseInt(row.querySelector('.price').value);
-            totalDiscount += parseInt(row.querySelector('.discount').value);
-            totalCostPrice += parseInt(row.querySelector('.costPrice').value);
-            totalMarkup += parseInt(row.querySelector('.priceMarkup').value);
-            profitElement = row.querySelector('.profit');
-            if (profitElement) {
-                profitValue = profitElement.textContent.trim();
-                numericProfit = parseFloat(profitValue.replace("$", ""));
-                totalProfit += numericProfit;
+
+            getTaxRateOnTaxId();
+
+            // Get input values from the row
+            totalQuantity = parseInt(row.querySelector('.quantity').value) || 0;
+            totalPrice = parseFloat(row.querySelector('.price').value) || 0;
+            discount = parseInt(row.querySelector('.discount').value) || 0;
+            totalCostPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
+            totalMarkup = parseInt(row.querySelector('.priceMarkup').value) || 0;
+            
+            // Calculate selling price (Cost Price + Markup - Discount)
+       
+            markupAmount = (totalPrice * totalMarkup) / 100; // Percentage markup
+            console.log(markupAmount);
+            discountAmount = (totalPrice * discount) / 100; // Discount as a percentage
+            console.log(discountAmount);
+            totalDiscount += discountAmount ;
+            sellingPrice = totalPrice + markupAmount - discountAmount;
+            console.log("sellingPrice", sellingPrice);
+            
+            // Calculate Amount (Quantity × Selling Price)
+            amount = totalQuantity * sellingPrice;
+            console.log(amount);
+            price += amount;
+
+            // Calculate VAT amount
+            vatAmount = (amount * vat) / 100;
+            console.log(vatAmount);
+            totalVAT += vatAmount; 
+            // Calculate Profit ((Selling Price - Cost Price) × Quantity)
+            profit = (sellingPrice - totalCostPrice) * totalQuantity;
+            console.log(sellingPrice);
+            totalProfit += profit ;
+
+            // Calculate margin
+            margin = parseFloat((profit / sellingPrice) * 100);
+            totalMargin += margin;
+            console.log(margin);
+
+            row.querySelector('.amount').textContent = doller + amount.toFixed(2); 
+
+            // Update row output fields
+            row.querySelector('.profit').textContent = doller + profit.toFixed(2); 
+
+            if (margin >= 0) {
+                row.querySelector('.footRowMargin').classList.add('minusnmberGreen');
+            } else {
+                row.querySelector('.footRowMargin').classList.add('minusnmberRed');
             }
-            totalVAT = (totalPrice * vatAmount) / 100;
-            console.log(totalVAT);
-            // totalVATAmount +=totalVAT;
+            row.querySelector('.footRowMargin').textContent = '(' + margin.toFixed(2) + '%' + ')';
 
-
-            totalDiscount += parseInt(row.querySelector('.discount').value);
         });
         console.log("Total Quantity: ", totalQuantity);
         console.log("Total Cost Price: ", totalCostPrice);
-        console.log("Total Price: ", totalPrice);
+        console.log("Total Price: ", price);
         console.log("Total Markup: ", totalMarkup);
         console.log("Total VAT: ", totalVAT);
         console.log("Total Discount: ", totalDiscount);
         console.log("Total Profit: ", totalProfit);
-
-        const doller = '$';
-
-        priceAndQuantity = (totalPrice * totalQuantity);
-        discount = (priceAndQuantity * totalDiscount)/ 100;
-        price = priceAndQuantity - discount;
-
-        const footTotalDiscountVat = price + totalVAT + discount;
-        const margin = (totalProfit / footTotalDiscountVat) * 100;
-        console.log(margin);
+        console.log("Total totalMargin: ", totalMargin);
+        
         document.getElementById('footAmount').textContent = doller + price.toFixed(2);
+        document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
         document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
-        document.getElementById('footTotalDiscountVat').textContent = doller + footTotalDiscountVat.toFixed(2);
+        document.getElementById('footTotalDiscountVat').textContent = doller + (price + totalVAT) .toFixed(2);
         document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
-        document.getElementById('footOutstandingAmount').textContent = doller + footTotalDiscountVat.toFixed(2);
-
-
+        document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
+        document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
     }
 
-
-    function calculateRowValues(row, table) {
-
-        getTaxRateOnTaxId();
-
-        // Get input values from the row
-        const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
-        const price = parseFloat(row.querySelector('.price').value) || 0;
-        const costPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
-        const priceMarkup = parseFloat(row.querySelector('.priceMarkup').value) || 0;
-        const discount = parseFloat(row.querySelector('.discount').value) || 0;
-        // const vat = parseFloat(row.querySelector('.discount').value) || 0;
-        const vat = 20;
-        // Calculate selling price (Cost Price + Markup - Discount)
-        const markupAmount = (price * priceMarkup) / 100; // Percentage markup
-        const sellingPrice = price + markupAmount - discount;
-
-        // Calculate Amount (Quantity × Selling Price)
-        const amount = quantity * sellingPrice;
-
-        // Calculate VAT amount
-        const vatAmount = (amount * vat) / 100;
-
-        // Calculate Profit ((Selling Price - Cost Price) × Quantity)
-        const profit = (sellingPrice - costPrice) * quantity;
-        console.log("profit", profit);
-
-        const margin = (profit / sellingPrice) * 100;
-
-        const doller = '$';
-
-        // Update row output fields
-        row.querySelector('.amount').textContent = doller + amount.toFixed(2); // Show amount
-        row.querySelector('.profit').textContent = doller + profit.toFixed(2); // Show profit
-
-        if (margin >= 0) {
-            row.querySelector('.footRowMargin').classList.add('minusnmberGreen');
-        } else {
-            row.querySelector('.footRowMargin').classList.add('minusnmberRed');
-        }
-        row.querySelector('.footRowMargin').textContent = '(' + margin.toFixed(2) + '%' + ')'; // Show profit
-
-        calculateRowsValue(table);
-    }
 
     let isFooterAppended = false;
 
     function quoteProductTable(data, tableId) {
+        const table = document.querySelector(`#${tableId}`);
         // Populate rows as usual if data is not empty
         data.forEach(item => {
 
             const tableBody = document.querySelector(`#${tableId} tbody`);
-            const table = document.querySelector(`#${tableId}`);
+      
             const node = document.createElement("tr");
             taxRate();
             node.classList.add("add_table_insrt");
@@ -2787,32 +2778,32 @@
                     <div class="CSPlus">
                         <span class="plusandText">
                             <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                            <input type="text" class="form-control editInput input80" value="${item.product_code}">
+                            <input type="text" class="form-control editInput input80" name="products[][product_code]" value="${item.product_code}">
                         </span>
                     </div>
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput" value="${item.product_name}">
+                        <input type="text" class="form-control editInput" name="products[][product_name]" value="${item.product_name}">
                     </div>
                 </td>
                 <td>
                     <div class="">
-                        <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="2" placeholder="Address"></textarea>
+                        <textarea class="form-control textareaInput" name="address" id="inputAddress" name="products[][description]" rows="2" placeholder="Description"></textarea>
                     </div>
                 </td>
                 <td>
                     <div class="">
-                        <select class="form-control editInput selectOptions" onclick="getAccountCode();" id="accoutCodeList">
+                        <select class="form-control editInput selectOptions" onclick="getAccountCode();" name="products[][account_code]" id="accoutCodeList">
                             <option>-No Department-</option> 
                         </select>
                     </div>
                 </td>
                 <td>
-                    <div class=""><input type="text" class="form-control editInput input50 quantity" value="1"></div>
+                    <div class=""><input type="text" class="form-control editInput input50 quantity" name="products[][quntity]" value="1"></div>
                 </td>
                 <td>
-                    <div class=""><input type="text" class="form-control editInput input50 costPrice" onchange="calculateRowValues();" value="${parseFloat(item.cost_price || 0).toFixed(2)}"></div>
+                    <div class=""><input type="text" class="form-control editInput input50 costPrice" name="products[][cost_price]" value="${parseFloat(item.cost_price || 0).toFixed(2)}"></div>
                 </td>
                 <td>
                     <div class="calculatorIcon">
@@ -2823,26 +2814,26 @@
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput input50 price" onchange="calculateRowValues();" value="${parseFloat(item.price || 0).toFixed(2)}">
+                        <input type="text" class="form-control editInput input50 price" name="products[][price]" value="${parseFloat(item.price || 0).toFixed(2)}">
                     </div>
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput input50 priceMarkup" value="0">
+                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[][markup]" value="${parseFloat(item.margin || 0).toFixed(2)}">
                     </div>
                 </td>
                 <td>
                     <div class="">
                         <input type="hidden" class="selectedTaxID">
-                        <select class="form-control editInput selectOptions vat" id="getTaxRate">
+                        <select class="form-control editInput selectOptions vat" name="products[][vat]" id="getTaxRate">
                             <option>Please Select</option>
                         </select>
                     </div>
                 </td>
                 <td>
                     <div class="d-flex">
-                        <input type="text" class="form-control editInput input50 me-2 discount" value="0">
-                        <select class="form-control editInput selectOptions input50" id="inputCustomer">
+                        <input type="text" class="form-control editInput input50 me-2 discount" name="products[][discount]" value="0">
+                        <select class="form-control editInput selectOptions input50" name="products[][discount_type]" id="">
                             <option>Please Select</option>
                             <option>%</option>
                         </select>
@@ -2863,15 +2854,14 @@
                         <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                     </div>
                 </td>`;
+
             tableFootForProduct(tableId);
             isFooterAppended = true;
 
             if (tableBody) {
                 tableBody.appendChild(node);
-                calculateRowValues(node, table);
+              
                 attachRowEventListeners(node, table)
-                // tableBodyFoot.appendChild(tableFoot);
-                // Add event listener to the close button
                 const closeButton = node.querySelector('.closeappend');
                 closeButton.addEventListener('click', function() {
                     node.remove(); // Remove the row when close button is clicked 
@@ -2882,15 +2872,16 @@
                 console.error("Table body with ID 'add_table_insrt' not found.");
             }
         });
+        calculateRowsValue(table);
     }
 
     function attachRowEventListeners(row, table) {
         // Attach change events for quantity, costPrice, price, etc.
-        row.querySelector('.quantity')?.addEventListener('input', () => calculateRowValues(row, table));
-        row.querySelector('.costPrice')?.addEventListener('input', () => calculateRowValues(row, table));
-        row.querySelector('.price')?.addEventListener('input', () => calculateRowValues(row, table));
-        row.querySelector('.discount')?.addEventListener('input', () => calculateRowValues(row, table));
-        row.querySelector('.vat')?.addEventListener('change', () => calculateRowValues(row, table));
+        row.querySelector('.quantity')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.costPrice')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.price')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.discount')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.vat')?.addEventListener('change', () => calculateRowsValue(table));
     }
 
     function clearFooter(table) {
@@ -2901,8 +2892,6 @@
             isFooterAppended = false; // Reset the flag
         }
     }
-
-
 
     function getQuoteType(quoteType) {
         $.ajax({
@@ -3331,39 +3320,6 @@
             customerSiteDelivery.appendChild(option4);
 
             removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
-            // const option3 = document.createElement('option');
-            // option3.value = getCustomerListValue.value;
-            // option3.text = "Same as customer";
-            // const option4 = option3.cloneNode(true);
-            // customerSiteDetails.appendChild(option3);
-            // customerSiteDelivery.appendChild(option4);
-
-            // console.log(getCustomerListValue.value);
-
-            // $.ajax({
-            //     url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
-            //     method: 'POST',
-            //     data: {
-            //         id: getCustomerListValue.value
-            //     },
-            //     success: function(response) {
-            //         console.log(response.message);
-
-            //         response.data.forEach(user => {
-            //             const option = document.createElement('option');
-            //             option.value = user.id;
-            //             option.text = user.site_name;
-            //             const option1 = option.cloneNode(true);
-            //             customerSiteDetails.appendChild(option);
-            //             customerSiteDelivery.appendChild(option1);
-            //         });
-
-            //     },
-            //     error: function(xhr, status, error) {
-            //         console.error(error);
-            //     }
-            // });
-
         });
 
         $('#AddQuoteButton').on('click', function() {
@@ -3389,32 +3345,6 @@
             }
         });
 
-        // Ajax Call for saving Customer Type 
-
-
-        // ajax call for saving customer contact on billing details
-        // $('#saveJobTitle').on('click', function() {
-        //     var customer_job_titile_id = document.getElementById('customer_job_titile_id');
-        //     saveFormData(
-        //         'add_job_title_form', // formId
-        //         '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
-        //         'customer_job_title_modal', // modalId
-        //         getCustomerJobTitle, // callback function after success
-        //         customer_job_titile_id
-        //     );
-        // });
-
-        // // ajax call for saving customer contact on billing details
-        // $('#saveSiteDetailsJobTitle').on('click', function() {
-        //     var customer_job_titile_id = document.getElementById('siteJobTitle');
-        //     saveFormData(
-        //         'add_site_details_job_title_form', // formId
-        //         '{{ route("customer.ajax.saveJobTitle") }}', // saveUrl
-        //         'siteDetailJobTitle', // modalId
-        //         getCustomerJobTitle, // callback function after success
-        //         customer_job_titile_id
-        //     );
-        // });
 
         $('#saveQuoteTag').on('click', function() {
             var quoteTag = document.getElementById('quoteTag');

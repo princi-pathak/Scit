@@ -127,7 +127,7 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            <div class="col-sm-3">
+                                            <!-- <div class="col-sm-3">
                                                 <div class="nav-item dropdown" style="margin-left:100px">
                                                     <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Action
@@ -140,7 +140,7 @@
                                                         <a href="javascript:void(0)" class="dropdown-item">Export</a>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                 
                                 <div class="border mt-2"></div>

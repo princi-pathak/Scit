@@ -31,7 +31,7 @@ class ProductGroup extends Model
         return self::where('home_id', $home_id)->where('deleted_at', null)->orderBy('created_at', 'desc')->get();
     }
 
-    public static function ProductGroup(){
+    public function productGroupProduct(){
         return $this->hasMany(ProductGroupProduct::class, 'product_group_id')->whereNull('deleted_at');
     }
 
