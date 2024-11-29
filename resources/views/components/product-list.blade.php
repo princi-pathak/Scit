@@ -1,3 +1,19 @@
+<style>
+    .addProduvtBg.costUpdatePop {
+        padding: 10px;
+        background-color: #edf6fb;
+        margin: 0;
+    }
+    .addProduvtBg.costUpdatePop p {
+        font-size: 13px;
+        margin-bottom: 0;
+        color: #168fdb;
+    }
+    .addProduvtBg.costUpdatePop a.udateBtn{
+
+    }
+</style>
+
 <!-- Because you are alive, everything is possible. - Thich Nhat Hanh -->
 <div class="modal fade" id="productModalBAC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="productModalBACLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -252,7 +268,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title" id="customerModalLabel">Product Group: </h5>
+                <h5 class="modal-title" id="productGroupModalLabel"> </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -271,60 +287,24 @@
                                 <th>Profit($)</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="CSPlus">
-                                        <span class="plusandText">
-                                            <input type="text" class="form-control editInput input80" value="">
-                                        </span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
-                                        <input type="text" class="form-control editInput" value="">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
-                                        <textarea class="form-control textareaInput rounded-0" name="address" id="inputAddress" rows="1" placeholder="Address"></textarea>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
-                                        <input type="text" class="form-control editInput input50" value="">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
-                                        <input type="text" class="form-control editInput input50" value="">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
-                                        <input type="text" class="form-control editInput input50" value="">
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="">
-                                        <input type="text" class="form-control editInput input50" value="">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
-                                        <input type="text" class="form-control editInput input50" value="">
-                                    </div>
-                                </td>
-                            </tr>
+                        <tbody id="productGroupModalData">
+                        
                         </tbody>
                     </table>
                 </div>
 
-                <h4 class="contTitle text-start">Cost</h4>
+                <h4 class="contTitle text-start">Products</h4>
+                <div class="addProduvtBg costUpdatePop row">
+                 <div class="col-md-10">
+                    <p>One or moere product prices have been changed. Select 'Update' next to each item to use the default product price. <br>Alternatively select 'Update All Prices' to use the default product price for all items.</p>
+                  </div>
+                    <div class="col-md-2">
+                       <a href="#!" class="profileDrop">Update All Prices </a>
+                    </div>
+                </div>
                 <div class="mb-3 mt-2 row">
                     <div class="col-sm-3">
-                        <input type="text" class="form-control editInput" id="inputCountry" placeholder="Type to add product">
+                        <input type="text" class="form-control editInput" id="inputCountry" placeholder="Search Product">
                     </div>
                     <div class="col-sm-7">
                         <div class="plusandText">
@@ -346,24 +326,22 @@
                                     <th>Cost Price($)</th>
                                     <th>Price($)</th>
                                     <th>Amount($) </th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <!-- <tr>
                                     <td colspan="7">
-                                        <div class="addProduvtBg text-center">
-                                            <h5 class="addproductCentertext">Add products as costs to get started! <br>Search Products or
-                                                <a href="#!">click here</a> to view all products.
-                                            </h5>
-                                        </div>
+                                        
                                     </td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td colspan="3"></td>
                                     <td>Totale</td>
                                     <td>0</td>
                                     <td>$0.00</td>
                                     <td>$0.00</td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -373,7 +351,8 @@
             </div>
             <!-- End off Modal-body -->
             <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="profileDrop">Save</button>
+                <button type="button" class="profileDrop">Add as Group</button>
+                <button type="button" class="profileDrop">Add as Item</button>
                 <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -537,7 +516,6 @@
     }
     function get_modal(id){
         $("#calculatePop").modal('show');
-        // customerModalLabel
         $.ajax({
             url: '{{ url("item/ProductGroupProductsdetails") }}',
             method: 'Post',
@@ -545,8 +523,64 @@
                 id: id,_token:'{{ csrf_token() }}'
             },
             success: function(response) {
-                console.log(response);
-                // populateTable(response, tableId);
+                if (response.data && response.data.length > 0 && response.data[0].name) {
+                    var productGroupModalData=response.data[0];
+                    document.getElementById('productGroupModalLabel').innerHTML='Product Group: '+productGroupModalData.name;
+                    var productGroupModalDesign='';
+                    productGroupModalData.product_group_product.forEach(item => {
+                        const amount=item.price*item.quantity;
+                        const profit=amount-item.cost_price;
+                        productGroupModalDesign+=`<tr>
+                                <td>
+                                    <div class="CSPlus">
+                                        <span class="plusandText">
+                                            <input type="text" class="form-control editInput input80" name="modal_code" id="modal_code" value="`+item.product_code+`">
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput" name="modal_group_product" id="modal_group_product" value="`+item.product_name+`">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <textarea class="form-control textareaInput rounded-0" name="modal_description" id="modal_description" rows="1" placeholder="Description">`+productGroupModalData.description+`</textarea>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput input50" id="modal_qty" name="modal_qty" value="`+item.quantity+`">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput input50" id="modal_cost" name="modal_cost" value="`+item.cost_price+`">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput input50" id="modal_price" name="modal_price" value="`+item.price+`">
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput input50" id="modal_amount" name="modal_amount" value="`+amount+`">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="text" class="form-control editInput input50" id="modal_profit" name="modal_profit" value="`+profit+`">
+                                    </div>
+                                </td>
+                            </tr>`;
+                    });
+                    $('#productGroupModalData').html(productGroupModalDesign);
+                }else{
+                    document.getElementById('productGroupModalLabel').innerHTML='Product Group: ';
+                    $('#productGroupModalData').html('<tr><td colspan="8" class="text-center" style="color:red">Sorry, there are no items available</td></tr>');
+                }
             },
             error: function(xhr, status, error) {
                 console.error(error);

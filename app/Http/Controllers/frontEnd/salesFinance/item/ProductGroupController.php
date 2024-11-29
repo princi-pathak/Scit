@@ -70,7 +70,7 @@ class ProductGroupController extends Controller
     }
     public function ProductGroupProductsdetails(Request $request){
         $home_id=Auth::user()->home_id;
-        $ProductGroupProduct=ProductGroup::ProductGroup($home_id)->where('id',$request->id)->get();
+        $ProductGroupProduct=ProductGroup::with('productGroupProduct')->where('id',$request->id)->get();
         return response()->json(['data'=>$ProductGroupProduct]);
     }
     

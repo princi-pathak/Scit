@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Session;
 class Product_category extends Model
 {
     use HasFactory;
@@ -40,18 +41,20 @@ class Product_category extends Model
     }
     public function getChildrenCountAttribute()
     {
-        return $this->children()->count();
+        return $this->children()->whereNull('deleted_at')->count();
     }
 
     public static function saveProductCategoryData(array $data, $productCategoryID = null)
     {
-        $data['home_id'] = Auth::user()->home_id;        
+        $admin   = Session::get('scitsAdminSession');
+        $data['home_id'] = Auth::user()->home_id ?? $admin->home_id;        
         return self::updateOrCreate(['id' => $productCategoryID], $data);
         
     }
     public static function checkproductcategoryname($category_name,$productCategoryID = null)
     {
-        $homeId = Auth::user()->home_id;
+        $admin   = Session::get('scitsAdminSession');
+        $homeId = Auth::user()->home_id ?? $admin->home_id;
 
         // If no product category ID is provided, count categories with the same name
         if (empty($productCategoryID)) {
