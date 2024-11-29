@@ -19,6 +19,8 @@ use Illuminate\Database\QueryException;
 use App\User;
 use Illuminate\Support\Facades\Log;
 
+use App\Http\Requests\QuoteRequest;
+
 class QuoteController extends Controller
 {
 
@@ -219,7 +221,6 @@ class QuoteController extends Controller
     }
 
     public function store(Request $request){
-        // dd($request);
         try {
             $validator = Validator::make($request->all(), [
                 'customer_id' => 'required',
