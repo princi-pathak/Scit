@@ -37,7 +37,7 @@ class ProductController extends Controller
         }else{
             $productstatus = 1;
         }
-        $productlist = Product::where('home_id',Auth::user()->home_id)->where('adder_id',Auth::user()->id)->where('status',$productstatus)->where('deleted_at',NULL)->get();
+        $productlist = Product::where('home_id',Auth::user()->home_id)->where('adder_id',Auth::user()->id)->where('status',$productstatus)->where('deleted_at',NULL)->orderBy('id','DESC')->get();
         foreach($productlist as $product_val){
             $arr['id'] = $product_val->id;
             $arr['customer_only'] = $product_val->customer_only;

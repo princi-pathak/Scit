@@ -40,7 +40,7 @@ class CataloguesController extends Controller
             array_push($productcategory_array,$arr);
         }
         $product_categories_list = $productcategory_array;
-        $catalogues = ProductCatalogue::withCount('productCataloguePrices')->where(['home_id' => Auth::user()->home_id,'deleted_at'=>null])->get();
+        $catalogues = ProductCatalogue::withCount('productCataloguePrices')->where(['home_id' => Auth::user()->home_id,'deleted_at'=>null])->orderBy('id','DESC')->get();
         // echo "<pre>";print_r($catalogues);die;
         return view('frontEnd.salesAndFinance.item.catalogues', compact('product_categories', 'page', 'lastSegment', 'users', 'product_categories_list', 'catalogues'));
     }

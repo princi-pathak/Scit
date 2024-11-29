@@ -4,7 +4,7 @@ namespace App\Http\Controllers\backEnd;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Session,DB;
+use Session,DB,Validator;
 use Carbon\Carbon;
 use App\Customer;
 use App\Models\Job;
@@ -570,23 +570,49 @@ class JobsController extends Controller
     }
     public function product_cat_save_data(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $admin   = Session::get('scitsAdminSession');
-        $home_id = $admin->home_id;
-        if($request->id == ''){
-            $table=new Product_category;
-            $table->home_id=$home_id;
-            $table->name=$request->name;
-            $table->cat_id=$request->catetgory_id;
-            $table->save();
-            Session::flash('success','Added Successfully Done');
-            echo "done";
-        }else {
-            $table=Product_category::find($request->id);
-            $table->home_id=$home_id;
-            $table->name=$request->name;
-            $table->save();
-            Session::flash('success','Updated Successfully Done');
-            echo "done";
+        // $admin   = Session::get('scitsAdminSession');
+        // $home_id = $admin->home_id;
+        // if($request->id == ''){
+        //     $table=new Product_category;
+        //     $table->home_id=$home_id;
+        //     $table->name=$request->name;
+        //     $table->cat_id=$request->catetgory_id;
+        //     $table->save();
+        //     Session::flash('success','Added Successfully Done');
+        //     echo "done";
+        // }else {
+        //     $table=Product_category::find($request->id);
+        //     $table->home_id=$home_id;
+        //     $table->name=$request->name;
+        //     $table->save();
+        //     Session::flash('success','Updated Successfully Done');
+        //     echo "done";
+        // }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->first()]);
+        }
+        if(Product_category::checkproductcategoryname($request->name,$request->productCategoryID)==0){
+            try{
+                // $saveData = Product_category::saveProductCategoryData($request->all(), $request->productCategoryID);
+                $saveData=['id'=>1,'name'=>$request->name];
+                if($request->productCategoryID){
+                    return response()->json(['success'=>true,'message'=>'Product Category Updated Successfully Done.','data'=>$saveData]);
+                }else{
+                    return response()->json(['success'=>true,'message'=>'Product Category Added Successfully Done.','data'=>$saveData]);
+                }
+                
+            }catch (\Exception $e) {
+                return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            }
+        }else{
+            return response()->json([
+                'success' => false,
+                'errors' => 'This Product category already exist.',
+                'lastid' => 0
+            ]);
         }
     }
     public function product_list(Request $request){
@@ -836,10 +862,10 @@ class JobsController extends Controller
         }
         $data['product']=Product::find($key);
         // $data['product_category']=Product_category::where('status',1)->get();
-        $data['product_category']=Product_category::with('parent', 'children')->where('status',1)->get();
+        $data['product_category']=Product_category::with('parent', 'children')->where('status',1)->whereNull('deleted_at')->get();
         // echo "<pre>";print_r($data['product_category']);die;
-        $data['tax']=Construction_tax_rate::where('status',1)->get();
-        $data['acc_code']=Construction_account_code::where('status',1)->get();
+        $data['tax']=Construction_tax_rate::where(['deleted_at'=>null,'status'=>1])->get();
+        $data['acc_code']=Construction_account_code::where(['deleted_at'=>null,'status'=>1])->get();
         $data['supplier']=Construction_product_supplier_list::where('product_id',$key)->get();
         // echo "<pre>";print_r($data['supplier']);die;
         $data['task']=$task;
@@ -945,7 +971,7 @@ class JobsController extends Controller
                    $res.='</select>
                 </td>
                 <td><input type="text" id="part_number" name="part_number[]"></td>
-                <td><span class="currency">£</span><input type="text" id="cost_price_supplier" name="cost_price_supplier[]"></td>
+                <td><span class="currency">$</span><input type="text" id="cost_price_supplier" name="cost_price_supplier[]"></td>
                 <td class="delete_row">X</td>
             </tr>';
         echo $res;
