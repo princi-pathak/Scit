@@ -288,7 +288,7 @@ if (isset($lead)) {
                                                         <div class="modal-content">
                                                             <div class="modal-header terques-bg">
                                                                 <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                                                <h4 class="modal-title pupTitle">Add Task</h4>
+                                                                <h4 class="modal-title pupTitle"></h4>
                                                             </div>
                                                             <div class="modal-body">
 
