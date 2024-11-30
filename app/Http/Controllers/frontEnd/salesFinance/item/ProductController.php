@@ -5,16 +5,13 @@ namespace App\Http\Controllers\frontEnd\salesFinance\Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Session, DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use App\Models\Product_category;
 use App\Models\Product;
 use App\Models\Construction_tax_rate;
 use App\Models\Construction_account_code;
 use App\Models\ProductImage;
 use App\Models\ProductGroup;
-use App\Models\ProductGroupProduct;
 use App\Customer;
 use App\User;
 
@@ -37,7 +34,7 @@ class ProductController extends Controller
         }else{
             $productstatus = 1;
         }
-        $productlist = Product::where('home_id',Auth::user()->home_id)->where('adder_id',Auth::user()->id)->where('status',$productstatus)->where('deleted_at',NULL)->get();
+        $productlist = Product::where('home_id',Auth::user()->home_id)->where('adder_id',Auth::user()->id)->where('status',$productstatus)->where('deleted_at',NULL)->orderBy('id','DESC')->get();
         foreach($productlist as $product_val){
             $arr['id'] = $product_val->id;
             $arr['customer_only'] = $product_val->customer_only;

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use DB,Session;
 use App\Models\Construction_tax_rate;
 
 class Product extends Model
@@ -72,6 +72,6 @@ class Product extends Model
     }
 
     public static function getProductFromId($id){
-        return self::where('id', $id)->select('product_name', 'cost_price', 'price', 'product_code', 'id', 'product_type')->get();
+        return self::where('id', $id)->select('product_name', 'cost_price', 'price', 'product_code', 'id', 'product_type', 'margin')->get();
     }
 }

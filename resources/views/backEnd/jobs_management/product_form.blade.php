@@ -70,6 +70,9 @@ input.form-control {
     top: 10px;
     cursor: pointer;
 }
+.noti_button {
+    margin-left: 75%;
+}
 </style>
  <section id="main-content" class="">
     <section class="wrapper">
@@ -110,7 +113,7 @@ input.form-control {
                                             
                                         </div>
                                         <div class="col-lg-2" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(1)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal('product_category_modal')"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>    
                                     <div class="form-group">
@@ -143,7 +146,7 @@ input.form-control {
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Cost Price</label>
                                         <div class="col-lg-9 d-flex align-items-center">
-                                            <span class="currency">£</span>
+                                            <span class="currency">$</span>
                                             <input type="text" name="cost_price" id="cost_price" class="form-control" placeholder="Cost Price" value="<?php if(isset($product)){echo $product->cost_price;}else{}?>">
                                         </div>
                                     </div> 
@@ -159,7 +162,7 @@ input.form-control {
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Price<span class="radStar">*</span></label>
                                         <div class="col-lg-9 d-flex align-items-center">
-                                            <span class="currency">£</span>
+                                            <span class="currency">$</span>
                                             <input type="text" name="price" id="price" class="form-control" value="<?php if(isset($product)){echo $product->price;}else{}?>">
                                         </div>
                                     </div>
@@ -202,7 +205,7 @@ input.form-control {
                                             
                                         </div>
                                         <div class="col-lg-2" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(1)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal(2)"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -218,7 +221,7 @@ input.form-control {
                                             
                                         </div>
                                         <div class="col-lg-2" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(1)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal(3)"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -301,7 +304,7 @@ input.form-control {
                                                 </select>
                                             </td>
                                             <td><input type="text" id="part_number" name="part_number[]" value="{{$v->part_number}}"></td>
-                                            <td><span class="currency">£</span><input type="text" id="cost_price_supplier" name="cost_price_supplier[]" value="{{$v->cost_price_supplier}}"></td>
+                                            <td><span class="currency">$</span><input type="text" id="cost_price_supplier" name="cost_price_supplier[]" value="{{$v->cost_price_supplier}}"></td>
                                             <td class="delete_row">X</td>
                                         </tr>
                                         <?php }?>
@@ -330,6 +333,63 @@ input.form-control {
                 </section>
             </div>
         </div>
+         <!-- Product Category Modal start -->
+         <div class="modal fade in" id="product_category_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle">Add - Product Category </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="from_outside_border">
+                                    <div class="alert text-center" id="cat_message" style="display:none"></div>
+                                    <form id="product_category_form">
+                                        @csrf
+                                        
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Product Category<span class="radStar ">*</span></label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="product_category_name" id="product_category_name" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Parent Category</label>
+                                            <div class="col-lg-9">
+                                            <select id="product_cat_id" name="product_cat_id" class="form-control editInput">
+                                                <option disabled selected>-Any Category-</option>
+                                                @foreach($product_category as $cat)
+                                                <option value="{{$cat->id}}" <?php if(isset($product) && $product->cat_id == $cat->id){echo "selected";}else{}?>>{{$cat->full_category}}</option>
+                                                @endforeach
+                                            </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Status</label>
+                                            <div class="col-lg-9">
+                                            <select id="product_category_status" name="product_category_status" class="form-control editInput">
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class="noti_button">
+                                            <a href="javascript:" class="btn btn-primary" onclick="save_product_category()">Save</a>
+                                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- end here -->
 	</section>
 </section>	
 <script>
@@ -353,7 +413,6 @@ input.form-control {
         firstErrorField.focus();
         return false;
     } else {
-        return false;
         $.ajax({
             type: "POST",
             url: "{{url('admin/product_save_data')}}",
@@ -390,11 +449,66 @@ function suplier_row(){
 </script>					
 <script>
     function gerate_code(){
+        var name=$('#name');
+        if(name.val() == ''){
+            name.css('border','1px solid red');
+            return false;
+        }
+        name.css('border','');
         var product_count='<?php echo $product_count+1;?>'
         var name=$("#name").val();
         var firstTwoLetters = name.substring(0, 2).toUpperCase();
         $("#product_code").val(""+firstTwoLetters+"-000"+product_count);
         $("#generate").hide();
+    }
+</script>
+<script>
+    function get_modal(modal){
+        $("#" + modal)[0].reset();
+        $("#"+modal).modal('show');
+    }
+</script>
+<script>
+    function save_product_category(){
+        var product_category_name=$("#product_category_name").val();
+        var product_cat_id=$("#product_cat_id").val();
+        var product_category_status=$("#product_category_status").val();
+        if(product_category_name == ''){
+            $("#product_category_name").css('border','1px solid red');
+            // return false;
+        }else{
+            $("#product_category_name").css('border','');
+            $.ajax({
+            type: "POST",
+            url: "{{url('admin/product_cat_save_data')}}",
+            data: {name:product_category_name,cat_id:product_cat_id,status:product_category_status,_token:'{{ csrf_token() }}'},
+            success: function(data) {
+                console.log(data);
+                const cat_message=$('#cat_message').show();
+                if(data.errors){
+                    cat_message.text(data.errors);
+                    cat_message.addClass('alert-danger').css('border','1px solid red');
+                    setTimeout(function() {
+                        $('#cat_message').fadeOut(3000);
+                    }, 3000);
+                }else if(data.success === true){
+                        cat_message.text(data.message);
+                        cat_message.addClass('alert-success').css('border','1px solid green');
+                        setTimeout(function() {
+                            $('#cat_message').fadeOut();
+                            $('#product_category_modal').modal('hide');
+                        }, 3000);
+                }else{
+                    alert("Something went wrong. Please try again later");
+                }
+                
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+            }
+        });
+        }
     }
 </script>
 @endsection

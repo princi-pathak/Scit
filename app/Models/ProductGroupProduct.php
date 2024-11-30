@@ -41,7 +41,7 @@ class ProductGroupProduct extends Model
     public static function getProductGroupProductData($home_id){
         return self::where('deleted_at', null);
     }
-    public static function ProductGroupProduct(){
+    public function productGroup(){
         return $this->belongsTo(ProductGroup::class, 'product_group_id')->whereNull('deleted_at');
     }
 }
