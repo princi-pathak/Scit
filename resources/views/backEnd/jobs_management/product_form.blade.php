@@ -205,7 +205,7 @@ input.form-control {
                                             
                                         </div>
                                         <div class="col-lg-2" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(2)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal('tax_rate_modal')"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -221,7 +221,7 @@ input.form-control {
                                             
                                         </div>
                                         <div class="col-lg-2" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(3)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal('tax_rate_modal')"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -390,6 +390,70 @@ input.form-control {
             </div>
         </div>
          <!-- end here -->
+           <!-- Tax Rate Modal start -->
+         <div class="modal fade in" id="tax_rate_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle">Add - Tax Rate </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="from_outside_border">
+                                    <div class="alert text-center" id="tax_message" style="display:none"></div>
+                                    <form id="tax_rate_form">
+                                        @csrf
+                                        
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Tax Rate Name<span class="radStar ">*</span></label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="tax_rate_name" id="tax_rate_name" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Tax Rate<span class="radStar ">*</span></label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="tax_rate" id="tax_rate" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Status</label>
+                                            <div class="col-lg-9">
+                                            <select id="tax_rate_status" name="tax_rate_status" class="form-control editInput">
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">External Taxt Code</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="external_tax_code" id="external_tax_code" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <label class="col-lg-3 control-label">Expiry Date</label>
+                                            <div class="col-lg-9">
+                                                <input type="date" name="expiry_date" id="expiry_date" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="noti_button">
+                                            <a href="javascript:" class="btn btn-primary" onclick="save_tax_rate()">Save</a>
+                                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- end here -->
 	</section>
 </section>	
 <script>
@@ -464,7 +528,6 @@ function suplier_row(){
 </script>
 <script>
     function get_modal(modal){
-        $("#" + modal)[0].reset();
         $("#"+modal).modal('show');
     }
 </script>
@@ -475,39 +538,105 @@ function suplier_row(){
         var product_category_status=$("#product_category_status").val();
         if(product_category_name == ''){
             $("#product_category_name").css('border','1px solid red');
-            // return false;
+            return false;
         }else{
             $("#product_category_name").css('border','');
             $.ajax({
-            type: "POST",
-            url: "{{url('admin/product_cat_save_data')}}",
-            data: {name:product_category_name,cat_id:product_cat_id,status:product_category_status,_token:'{{ csrf_token() }}'},
-            success: function(data) {
-                console.log(data);
-                const cat_message=$('#cat_message').show();
-                if(data.errors){
-                    cat_message.text(data.errors);
-                    cat_message.addClass('alert-danger').css('border','1px solid red');
-                    setTimeout(function() {
-                        $('#cat_message').fadeOut(3000);
-                    }, 3000);
-                }else if(data.success === true){
-                        cat_message.text(data.message);
-                        cat_message.addClass('alert-success').css('border','1px solid green');
+                type: "POST",
+                url: "{{url('admin/product_cat_save_data')}}",
+                data: {name:product_category_name,cat_id:product_cat_id,status:product_category_status,_token:'{{ csrf_token() }}'},
+                success: function(data) {
+                    console.log(data);
+                    const cat_message=$('#cat_message').show();
+                    if(data.errors){
+                        cat_message.text(data.errors);
+                        cat_message.addClass('alert-danger').css('border','1px solid red');
                         setTimeout(function() {
-                            $('#cat_message').fadeOut();
-                            $('#product_category_modal').modal('hide');
+                            cat_message.removeClass('alert-danger').css('border','');
+                            $('#cat_message').fadeOut(3000);
                         }, 3000);
-                }else{
-                    alert("Something went wrong. Please try again later");
+                    }else if(data.success === true){
+                            cat_message.text(data.message);
+                            cat_message.addClass('alert-success').css('border','1px solid green');
+                            updateCategoryDropdown(data.data);
+                            setTimeout(function() {
+                                cat_message.removeClass('alert-danger').css('border','');
+                                document.getElementById('product_category_form').reset();
+                                $('#cat_message').fadeOut();
+                                $('#product_category_modal').modal('hide');
+                            }, 3000);
+                    }else{
+                        alert("Something went wrong. Please try again later");
+                    }
+                    
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
                 }
-                
-            },
-            error: function(xhr, status, error) {
-                var errorMessage = xhr.status + ': ' + xhr.statusText;
-                alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
-            }
+            });
+        }
+    }
+    function updateCategoryDropdown(categories) {
+        // console.log(categories);return false;
+        let $dropdown = $('#product_category');
+        let $product_cat_id = $('#product_cat_id');
+        $dropdown.empty();
+        $product_cat_id.empty();
+        $dropdown.append('<option disabled selected>-Any Category-</option>');
+
+        categories.forEach(category => {
+            console.log(category.full_category);
+            let fullCategory = category.full_category ? category.full_category : category.name;
+            $dropdown.append(`<option value="${category.id}">${fullCategory}</option>`);
+            $product_cat_id.append(`<option value="${category.id}">${fullCategory}</option>`);
         });
+    }
+    function save_tax_rate(){
+        var tax_rate_name=$("#tax_rate_name").val();
+        var tax_rate=$("#tax_rate").val();
+        var tax_rate_status=$("#tax_rate_status").val();
+        var external_tax_code=$("#external_tax_code").val();
+        var expiry_date=$("#expiry_date").val();
+        if(product_category_name == ''){
+            $("#product_category_name").css('border','1px solid red');
+            return false;
+        }else{
+            $("#product_category_name").css('border','');
+            $.ajax({
+                type: "POST",
+                url: "{{url('admin/tax_rate_status')}}",
+                data: {name:product_category_name,cat_id:product_cat_id,status:product_category_status,_token:'{{ csrf_token() }}'},
+                success: function(data) {
+                    console.log(data);
+                    const tax_message=$('#tax_message').show();
+                    if(data.errors){
+                        tax_message.text(data.errors);
+                        tax_message.addClass('alert-danger').css('border','1px solid red');
+                        setTimeout(function() {
+                            tax_message.removeClass('alert-danger').css('border','');
+                            $('#tax_message').fadeOut(3000);
+                        }, 3000);
+                    }else if(data.success === true){
+                            tax_message.text(data.message);
+                            tax_message.addClass('alert-success').css('border','1px solid green');
+                            updateCategoryDropdown(data.data);
+                            setTimeout(function() {
+                                tax_message.removeClass('alert-danger').css('border','');
+                                document.getElementById('product_category_form').reset();
+                                $('#tax_message').fadeOut();
+                                $('#product_category_modal').modal('hide');
+                            }, 3000);
+                    }else{
+                        alert("Something went wrong. Please try again later");
+                    }
+                    
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
         }
     }
 </script>
