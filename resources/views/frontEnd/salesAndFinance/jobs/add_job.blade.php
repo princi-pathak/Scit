@@ -1347,7 +1347,7 @@
                         <div class="mb-3 row">
                             <label for="inputJobRef" class="col-sm-3 col-form-label">Description</label>
                             <div class="col-sm-9">
-                                <textarea name="project_description" id="project_description" class="form-control"></textarea>
+                                <textarea name="project_description" id="project_description" class="form-control editInput"></textarea>
                             </div>
                         </div>
                         <div class="mb-3 row">
