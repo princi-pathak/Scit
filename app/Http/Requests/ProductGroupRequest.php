@@ -22,14 +22,7 @@ class ProductGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required', // Define the validation rule here
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'The name field is mandatory.', // Custom error message
+            'name.required' => 'The name field is mandatory.',
         ];
     }
 }
