@@ -67,4 +67,9 @@ class Quote extends Model
 
        return Quote::updateOrCreate(['id' => $request['customer_id']] , $quoteData);
     }
+
+    public function products()
+    {
+        return $this->hasMany(QuoteProduct::class);
+    }
 }

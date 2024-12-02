@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Session;
 
 class Construction_tax_rate extends Model
 {
@@ -42,14 +43,18 @@ class Construction_tax_rate extends Model
 
     public static function saveTaxRateData(array $data, $taxRateID = null)
     {
-        $data['home_id'] = Auth::user()->home_id;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $data['home_id'] = Auth::user()->home_id ?? $home_id;
         return self::updateOrCreate(['id' => $taxRateID], $data);
         // Return the ID of the created or updated product category
         //return $taxRate->id;
     }
     public static function checkTaxRatename($taxrate_name,$taxRateID = null)
     {
-        $homeId = Auth::user()->home_id;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $homeId = Auth::user()->home_id ?? $home_id;
 
         // If no product category ID is provided, count categories with the same name
         if (empty($taxRateID)) {

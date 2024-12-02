@@ -482,7 +482,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(FrontendQuoteController::class)->group(function () {
 
 		Route::get('/quote/dashboard', 'dashboard')->name('quote.dashboard');
-		Route::get('/quote/quotes', 'create')->name('quote.quotes');
+		Route::get('/quote/add', 'create')->name('quote.quotes');
+		Route::get('/quote/add-details', 'details')->name('quote.details');
 		Route::get('/quote/draft', 'index')->name('quote.draft');
 
 		// Add Quote Types
@@ -512,7 +513,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/quote/saveQuoteData', 'store');
 		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 
-
+		Route::get('/quote/edit/{id}', 'edit')->name('quote.edit');
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {
@@ -1294,6 +1295,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/tax_delete', 'App\Http\Controllers\backEnd\JobsController@tax_delete');
 	Route::get('/product_add', 'App\Http\Controllers\backEnd\JobsController@product_add');
 	Route::post('/product_save_data', 'App\Http\Controllers\backEnd\JobsController@product_save_data');
+	Route::get('/catalogue','App\Http\Controllers\backEnd\JobsController@catalogue');
+	Route::post('/save_catalogue','App\Http\Controllers\backEnd\JobsController@save_catalogue');
 	Route::post('/supplier_result', 'App\Http\Controllers\backEnd\JobsController@supplier_result');
 	Route::match(['get', 'post'], '/customer_list', 'App\Http\Controllers\backEnd\JobsController@customer_list');
 	Route::match(['get', 'post'], '/project_list', 'App\Http\Controllers\backEnd\JobsController@project_list');
