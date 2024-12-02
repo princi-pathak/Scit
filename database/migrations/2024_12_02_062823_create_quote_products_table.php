@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('quote_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->string('product_code')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->integer('account_code')->nullable();
