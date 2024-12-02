@@ -1294,6 +1294,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/tax_delete', 'App\Http\Controllers\backEnd\JobsController@tax_delete');
 	Route::get('/product_add', 'App\Http\Controllers\backEnd\JobsController@product_add');
 	Route::post('/product_save_data', 'App\Http\Controllers\backEnd\JobsController@product_save_data');
+	Route::get('/catalogue','App\Http\Controllers\backEnd\JobsController@catalogue');
+	Route::post('/save_catalogue','App\Http\Controllers\backEnd\JobsController@save_catalogue');
 	Route::post('/supplier_result', 'App\Http\Controllers\backEnd\JobsController@supplier_result');
 	Route::match(['get', 'post'], '/customer_list', 'App\Http\Controllers\backEnd\JobsController@customer_list');
 	Route::match(['get', 'post'], '/project_list', 'App\Http\Controllers\backEnd\JobsController@project_list');

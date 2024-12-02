@@ -85,6 +85,7 @@ input.form-control {
                     <div class="panel-body">
                         <div class="">
                             <form class="form-horizontal" id="form_data">
+                            <div class="alert text-center" id="product_message" style="display:none"></div>
                             <label>Product Details</label>
                             <div class="row">
                                 <div class="col-lg-6">
@@ -94,7 +95,7 @@ input.form-control {
                                             <select class="form-control" name="Customer_id" id="Customer_id">
                                                 <option disabled selected>-All-</option>
                                                 @foreach($customer as $cust_val)
-                                                    <option value="{{$cust_val->id}}">{{$cust_val->name}}</option>
+                                                    <option value="{{$cust_val->id}}" <?php if(isset($product) && $product->customer_only == $cust_val->id){echo "selected";}else{}?>>{{$cust_val->name}}</option>
                                                 @endforeach
                                                 
                                             </select>
@@ -119,7 +120,7 @@ input.form-control {
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Product Name<span class="radStar ">*</span></label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="<?php if(isset($product)){echo $product->product_name;}else{}?>" maxlength="255">
+                                            <input type="text" name="product_name" id="name" class="form-control" placeholder="Name" value="<?php if(isset($product)){echo $product->product_name;}else{}?>" maxlength="255">
                                             
                                         </div>
                                     </div>
@@ -127,9 +128,9 @@ input.form-control {
                                         <label class="col-lg-3 control-label">Product Type</label>
                                         <div class="col-lg-9">
                                         <select class="form-control" id="product_type" name="product_type">
-                                            <option value="1">Product</option>
-                                            <option value="2">Services</option>
-                                            <option value="3">Consumable</option>
+                                            <option value="1" <?php if(isset($product) && $product->product_type == 1){echo "selected";}else{}?>>Product</option>
+                                            <option value="2" <?php if(isset($product) && $product->product_type == 2){echo "selected";}else{}?>>Services</option>
+                                            <option value="3" <?php if(isset($product) && $product->product_type == 3){echo "selected";}else{}?>>Consumable</option>
                                         </select>
                                         </div>
                                     </div> 
@@ -139,9 +140,11 @@ input.form-control {
                                             <input type="text" name="product_code" id="product_code" class="form-control" placeholder="Product Code" value="<?php if(isset($product)){echo $product->product_code;}else{}?>" maxlength="255">
                                             
                                         </div>
+                                        <?php if(isset($product)){}else{?>
                                         <div class="col-lg-3">
                                             <input type="button" value="Generate" id="generate" class="btn btn-primary" onclick="gerate_code()">
                                         </div>
+                                        <?php }?>
                                     </div>         
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Cost Price</label>
@@ -177,7 +180,7 @@ input.form-control {
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Show On Template</label>
                                         <div class="col-lg-9">
-                                            <input type="checkbox" class="" id="show_temp" name="show_temp">
+                                            <input type="checkbox" class="" id="show_temp" name="show_temp" <?php if(isset($product) && $product->show_temp == 1){echo "checked";}else{}?>>
                                         </div>
                                     </div>
                                 </div>
@@ -227,7 +230,7 @@ input.form-control {
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Nominal Code</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="nominal_code" name="nominal_code" value="<?php if(isset($product) && $product->tax_rate == $val->id){echo $product->nominal_code;}else{}?>">
+                                            <input type="text" class="form-control" id="nominal_code" name="nominal_code" value="<?php if(isset($product)){echo $product->nominal_code;}else{}?>">
                                             
                                         </div>
                                     </div>
@@ -296,6 +299,7 @@ input.form-control {
                                             <?php foreach($supplier as $v){?>
                                         <tr>
                                             <td>
+                                                <input type="hidden" id="product_supplier_list_id" name="product_supplier_list_id[]" value="<?php echo $v->id; ?>">
                                                 <select id="supplier_id" name="supplier_id[]" class="form-control">
                                                     <option selected disabled>Select Supplier</option>
                                                     <?php $inc=1; foreach($data as $d){?>
@@ -315,7 +319,7 @@ input.form-control {
                                             <div class="col-lg-offset-2 col-lg-10">
                                             <div class="add-admin-btn-area">   
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                <input type="hidden" name="id" id="id" value="<?php if(isset($product)){echo $product->id;}else{}?>">
+                                                <input type="hidden" name="productID" id="id" value="<?php if(isset($product)){echo $product->id;}else{}?>">
                                                 <button type="button" class="btn btn-primary save-btn" onclick="get_save_data()">Save</button>
 
                                                 <a href="{{ url('admin/product_list') }}">
@@ -415,7 +419,7 @@ input.form-control {
                                         <div class="row form-group">
                                             <label class="col-lg-3 control-label">Tax Rate<span class="radStar ">*</span></label>
                                             <div class="col-lg-9">
-                                                <input type="text" name="tax_rate" id="tax_rate" class="form-control">
+                                                <input type="text" name="tax_rateModal" id="tax_rateModal" class="form-control">
                                             </div>
                                         </div>
 
@@ -465,10 +469,10 @@ input.form-control {
 
     var firstErrorField = null;
 
-    if (name == '' || name == null) {
+    if (token == '' || token == null) {
         $("#name").css('border','1px solid red');
         if (!firstErrorField) firstErrorField = $('#name');
-    }else if(price == ''){
+    }else if(token == ''){
         $("#name").css('border','');
         $("#price").css('border','1px solid red');
         if (!firstErrorField) firstErrorField = $('#price');
@@ -487,9 +491,33 @@ input.form-control {
             processData: false,
             success: function(data) {
                 console.log(data);
-                if ($.trim(data) == "done") {
-                    window.location.href = '<?php echo url('admin/product_list');?>';
-                }
+                const product_message=$('#product_message').show();
+                    if(data.errors){
+                        $("html, body").animate({ scrollTop: 0 }, "slow");
+                        product_message.text(data.errors);
+                        product_message.addClass('alert-danger').css('border','1px solid red');
+                        setTimeout(function() {
+                            product_message.removeClass('alert-danger').css('border','');
+                            $('#product_message').fadeOut();
+                            product_message.text('');
+                        }, 3000);
+                    }else if(data.success === true){
+                            product_message.text(data.message);
+                            product_message.addClass('alert-success').css('border','1px solid green');
+                            setTimeout(function() {
+                                product_message.removeClass('alert-danger').css('border','');
+                                document.getElementById('product_category_form').reset();
+                                product_message.text('');
+                                window.location.href = '<?php echo url('admin/product_list');?>';
+                            }, 3000);
+                    }else{
+                        alert("Something went wrong. Please try again later");
+                    }
+                    
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
             }
         });
     }
@@ -594,19 +622,24 @@ function suplier_row(){
     }
     function save_tax_rate(){
         var tax_rate_name=$("#tax_rate_name").val();
-        var tax_rate=$("#tax_rate").val();
+        var tax_rate=$("#tax_rateModal").val();
         var tax_rate_status=$("#tax_rate_status").val();
         var external_tax_code=$("#external_tax_code").val();
         var expiry_date=$("#expiry_date").val();
-        if(product_category_name == ''){
-            $("#product_category_name").css('border','1px solid red');
+        var status=$("#tax_rate_status").val();
+        if(tax_rate_name == ''){
+            $("#tax_rate_name").css('border','1px solid red');
+            return false;
+        }else if(tax_rate == ''){
+            $("#tax_rateModal").css('border','1px solid red');
             return false;
         }else{
-            $("#product_category_name").css('border','');
+            $("#tax_rate_name").css('border','');
+            $("#tax_rateModal").css('border','');
             $.ajax({
                 type: "POST",
-                url: "{{url('admin/tax_rate_status')}}",
-                data: {name:product_category_name,cat_id:product_cat_id,status:product_category_status,_token:'{{ csrf_token() }}'},
+                url: "{{url('admin/tax_save_data')}}",
+                data: {name:tax_rate_name,tax_rate:tax_rate,tax_code:external_tax_code,exp_date:expiry_date,status:status,_token:'{{ csrf_token() }}'},
                 success: function(data) {
                     console.log(data);
                     const tax_message=$('#tax_message').show();
@@ -615,15 +648,16 @@ function suplier_row(){
                         tax_message.addClass('alert-danger').css('border','1px solid red');
                         setTimeout(function() {
                             tax_message.removeClass('alert-danger').css('border','');
-                            $('#tax_message').fadeOut(3000);
+                            $('#tax_message').fadeOut();
                         }, 3000);
                     }else if(data.success === true){
                             tax_message.text(data.message);
                             tax_message.addClass('alert-success').css('border','1px solid green');
-                            updateCategoryDropdown(data.data);
+                            $("#tax_id").append('<option value="'+data.data.id+'">'+data.data.name+'</option>')
+                            $("#tax_rate").append('<option value="'+data.data.id+'">'+data.data.name+'</option>')
                             setTimeout(function() {
                                 tax_message.removeClass('alert-danger').css('border','');
-                                document.getElementById('product_category_form').reset();
+                                document.getElementById('tax_rate_form').reset();
                                 $('#tax_message').fadeOut();
                                 $('#product_category_modal').modal('hide');
                             }, 3000);

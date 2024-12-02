@@ -36,7 +36,8 @@ class Product extends Model
          
     }
 
-    public static function saveProductdata(array $data, $productID = null){     
+    public static function saveProductdata(array $data, $productID = null){   
+        // echo "<pre>";print_r($data);die;
         $admin   = Session::get('scitsAdminSession');   
         $data['home_id'] = Auth::user()->home_id ?? $admin->home_id;
         $data['adder_id'] = Auth::user()->id ?? null;
