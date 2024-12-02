@@ -418,6 +418,7 @@
                                         <div class="mb-3 row">
                                             <label for="inputJobRef" class="col-sm-3 col-form-label">Quote Ref</label>
                                             <div class="col-sm-9">
+                                                <input type="hidden" name="quote_id">
                                                 <input type="hidden" name="quote_ref">
                                                 <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
                                             </div>
@@ -439,13 +440,13 @@
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Date <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control editInput textareaInput" name="quota_date" id="" required>
+                                            <input type="date" class="form-control editInput textareaInput" value="<?= date('Y-m-d'); ?>" name="quota_date" id="" required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputAddress" class="col-sm-3 col-form-label">Expiry Date</label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control editInput textareaInput" name="expiry_date" id="">
+                                            <input type="date" class="form-control editInput textareaInput" name="expiry_date" value="{{ \Carbon\Carbon::now()->addMonth(1)->format('Y-m-d') }}" id="">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -2494,11 +2495,12 @@
 
                         const optionInitial = document.createElement('option');
                         optionInitial.textContent = "-No Department-"; // Use appropriate key from your response
+                        optionInitial.value = ""; 
                         dropdown.appendChild(optionInitial);
                         // Append new options
                         response.data.forEach(code => {
                             const option = document.createElement('option');
-                            option.value = code.id; // Use appropriate key from your response
+                            option.value = code.id; 
                             option.textContent = code.departmental_code + "-" + code.name; // Use appropriate key from your response
                             dropdown.appendChild(option);
                         });
@@ -2763,14 +2765,14 @@
 
 
     let isFooterAppended = false;
+    let rowIndex = 0;
 
     function quoteProductTable(data, tableId) {
         const table = document.querySelector(`#${tableId}`);
         // Populate rows as usual if data is not empty
         data.forEach(item => {
-
+            console.log("1", rowIndex);
             const tableBody = document.querySelector(`#${tableId} tbody`);
-      
             const node = document.createElement("tr");
             taxRate();
             node.classList.add("add_table_insrt");
@@ -2778,32 +2780,33 @@
                     <div class="CSPlus">
                         <span class="plusandText">
                             <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                            <input type="text" class="form-control editInput input80" name="products[][product_code]" value="${item.product_code}">
+                            <input type="hidden" name="products[${rowIndex}][id]" value="${item.id}">
+                            <input type="text" class="form-control editInput input80" name="products[${rowIndex}][product_code]" value="${item.product_code}">
                         </span>
                     </div>
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput" name="products[][product_name]" value="${item.product_name}">
+                        <input type="text" class="form-control editInput" name="products[${rowIndex}][product_name]" value="${item.product_name}">
                     </div>
                 </td>
                 <td>
                     <div class="">
-                        <textarea class="form-control textareaInput" name="address" id="inputAddress" name="products[][description]" rows="2" placeholder="Description"></textarea>
+                        <textarea class="form-control textareaInput" id="inputAddress" name="products[${rowIndex}][description]" rows="2" placeholder="Description"></textarea>
                     </div>
                 </td>
                 <td>
                     <div class="">
-                        <select class="form-control editInput selectOptions" onclick="getAccountCode();" name="products[][account_code]" id="accoutCodeList">
+                        <select class="form-control editInput selectOptions" onclick="getAccountCode();" name="products[${rowIndex}][account_code]" id="accoutCodeList">
                             <option>-No Department-</option> 
                         </select>
                     </div>
                 </td>
                 <td>
-                    <div class=""><input type="text" class="form-control editInput input50 quantity" name="products[][quntity]" value="1"></div>
+                    <div class=""><input type="text" class="form-control editInput input50 quantity" name="products[${rowIndex}][quantity]" value="1"></div>
                 </td>
                 <td>
-                    <div class=""><input type="text" class="form-control editInput input50 costPrice" name="products[][cost_price]" value="${parseFloat(item.cost_price || 0).toFixed(2)}"></div>
+                    <div class=""><input type="text" class="form-control editInput input50 costPrice" name="products[${rowIndex}][cost_price]" value="${parseFloat(item.cost_price || 0).toFixed(2)}"></div>
                 </td>
                 <td>
                     <div class="calculatorIcon">
@@ -2814,26 +2817,26 @@
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput input50 price" name="products[][price]" value="${parseFloat(item.price || 0).toFixed(2)}">
+                        <input type="text" class="form-control editInput input50 price" name="products[${rowIndex}][price]" value="${parseFloat(item.price || 0).toFixed(2)}">
                     </div>
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[][markup]" value="${parseFloat(item.margin || 0).toFixed(2)}">
+                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${parseFloat(item.margin || 0).toFixed(2)}">
                     </div>
                 </td>
                 <td>
                     <div class="">
                         <input type="hidden" class="selectedTaxID">
-                        <select class="form-control editInput selectOptions vat" name="products[][vat]" id="getTaxRate">
+                        <select class="form-control editInput selectOptions vat" name="products[${rowIndex}][VAT]" id="getTaxRate">
                             <option>Please Select</option>
                         </select>
                     </div>
                 </td>
                 <td>
                     <div class="d-flex">
-                        <input type="text" class="form-control editInput input50 me-2 discount" name="products[][discount]" value="0">
-                        <select class="form-control editInput selectOptions input50" name="products[][discount_type]" id="">
+                        <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="0">
+                        <select class="form-control editInput selectOptions input50" name="" id="">
                             <option>Please Select</option>
                             <option>%</option>
                         </select>
@@ -2857,10 +2860,13 @@
 
             tableFootForProduct(tableId);
             isFooterAppended = true;
+            rowIndex++;
+            console.log('2', rowIndex);
 
             if (tableBody) {
                 tableBody.appendChild(node);
               
+
                 attachRowEventListeners(node, table)
                 const closeButton = node.querySelector('.closeappend');
                 closeButton.addEventListener('click', function() {
@@ -2871,6 +2877,7 @@
             } else {
                 console.error("Table body with ID 'add_table_insrt' not found.");
             }
+           
         });
         calculateRowsValue(table);
     }

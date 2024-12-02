@@ -1,5 +1,5 @@
 <style>    
-    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    .add_catalogue .nav-tabs .nav-item.show .nav-link, .add_catalogue .nav-tabs .nav-link.active {
         color: #ffffff;
         background-color: #0877bd;
         border-color: var(--bs-nav-tabs-link-active-border-color);
@@ -8,7 +8,7 @@
         border: 1px solid #0877bd;
         border-radius: 5px;
     }
-    .nav-tabs .nav-link {
+    .add_catalogue .nav-tabs .nav-link {
         border: var(--bs-nav-tabs-border-width) solid #0877bd;
         color: #0877bd;
         border-bottom: none;

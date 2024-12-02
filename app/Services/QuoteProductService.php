@@ -1,35 +1,31 @@
 <?php
 namespace App\Services;
 
-use App\Models\Item;
+use App\Models\QuoteProduct;
 
-class ItemService
+class QuoteProductService
 {
-    public function saveItems(array $items, int $quoteId): void
+    public function saveItems(array $products, int $quoteId): void
     {
-        foreach ($items as $itemData) {
-            if (isset($itemData['title']['item_title']) || isset($itemData['description']['item_description'])) {
-                $itemDataToSave = [
-                    'quote_id' => $quoteId,
-                    'type' => 1, // Customize this as needed
-                    'section_type' => $this->getSectionType($itemData),
-                    'title' => $itemData['title']['item_title'] ?? null,
-                    'description' => $itemData['description']['item_description'] ?? null,
-                ];
+        // dd($products);
+        foreach ($products as $productData) {
+            // dd($productData);
+            $accountCode = $productData['account_code'] === '-No Department-' ? null : $productData['account_code'];
 
-                Item::create($itemDataToSave);
-            }
+            QuoteProduct::create([
+                'quote_id' => $quoteId,
+                'product_id' => $productData['id'],
+                'product_code' => $productData['product_code'],
+                'title' => $productData['product_name'],
+                'description' => $productData['description'] ?? null,
+                'account_code' => $accountCode,
+                'quantity' => $productData['quantity'],
+                'cost_price' => $productData['cost_price'],
+                'price' => $productData['price'],
+                'markup' => $productData['markup'],
+                'VAT' => $productData['VAT'],
+                'discount' => $productData['discount'],
+            ]);
         }
-    }
-
-    private function getSectionType(array $itemData): string
-    {
-        if (isset($itemData['title']['item_title'])) {
-            return 'title';
-        } elseif (isset($itemData['description']['item_description'])) {
-            return 'description';
-        }
-
-        return 'unknown'; // Default type
     }
 }

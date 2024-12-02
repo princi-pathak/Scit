@@ -482,7 +482,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(FrontendQuoteController::class)->group(function () {
 
 		Route::get('/quote/dashboard', 'dashboard')->name('quote.dashboard');
-		Route::get('/quote/quotes', 'create')->name('quote.quotes');
+		Route::get('/quote/add', 'create')->name('quote.quotes');
+		Route::get('/quote/add-details', 'details')->name('quote.details');
 		Route::get('/quote/draft', 'index')->name('quote.draft');
 
 		// Add Quote Types
@@ -512,7 +513,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/quote/saveQuoteData', 'store');
 		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 
-
+		Route::get('/quote/edit/{id}', 'edit')->name('quote.edit');
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {
