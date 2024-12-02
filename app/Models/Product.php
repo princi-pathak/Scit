@@ -15,7 +15,7 @@ class Product extends Model
         'home_id', 'adder_id', 'customer_only', 'cat_id','product_type', 'product_name', 'cost_price', 'margin', 'price', 'tax_rate', 'qty', 'description', 'product_code', 'show_temp', 'bar_code', 'tax_id', 'nominal_code', 'sales_acc_code', 'purchase_acc_code', 'expense_acc_code', 'location', 'attachment', 'status','deleted_at'
     ];
     public static function product_detail($id){
-        $data=DB::table('products as pr')
+        $data = DB::table('products as pr')
         ->select('pr.*','cat.id as cat_id','cat.name')
         ->join('product_categories as cat','cat.id','=','pr.cat_id')
         ->where('pr.id',$id)->first();
