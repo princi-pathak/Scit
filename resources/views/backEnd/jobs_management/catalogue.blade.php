@@ -198,6 +198,7 @@ thead#flowhead {
                         <div class="alert text-center" id="catlogue_message" style="display:none"></div>
                             <input type="hidden" id="id" name="id">
                             <input type="hidden" id="TabId" name="TabId">
+                            <input type="hidden" id="catalogue_id" name="catalogue_id">
                             @csrf
                             <div class="custom-fieldset"> 
                                 <ul class="nav nav-tabs">
@@ -242,7 +243,7 @@ thead#flowhead {
                                     <div id="menu1" class="tab-pane fade">
                                     <div class="row" style="margin-top:10px;">
                                         <div class="col-md-2">
-                                            <a href="javascript:void(0)" class="btn btn-primary"> Add Item</a>
+                                            <a href="javascript:void(0)" onclick="add_item()" class="btn btn-primary"> Add Item</a>
                                         </div>
                                         <div class="col-md-2">
                                            <a href="javascript:void(0)" class="btn btn-primary">Import</a>
@@ -268,14 +269,8 @@ thead#flowhead {
                                             </tr>
                                             
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>123</td>
-                                                <td>Ram</td>
-                                                <td>100</td>
-                                                <td>200</td>
-                                                <td>X</td>
-                                            </tr>
+                                        <tbody id="CatalogueData">
+                                            
                                         </tbody>
                                     </table>
                                     </div>
@@ -297,6 +292,7 @@ thead#flowhead {
 </div>
 
         <!-- page end-->
+         @include('backEnd.common.product_list')
     </section>
 </section>
 <!--main content end-->
@@ -359,6 +355,41 @@ thead#flowhead {
         $("#description").val(description);
         $("#catalogue_type").val(catalogue_type);
         $("#status").val(status);
+        $("#catalogue_id").val(id);
+        $.ajax({
+            url: '{{ url("admin/ProductCataloguePriceList") }}',
+            method: 'Post',
+            data: {
+                _token:'{{ csrf_token() }}',cat_id:id 
+            },
+            success: function(response) {
+                // console.log(response.data);
+                var html1='';
+                if (response.data.length === 0) {
+                    html1 = `<tr><td colspan="5" class="text-center" style="color:red">Sorry, there are no items available</td></tr>`;
+                }else{
+                    response.data.forEach((item) => {
+                        var formattedPrice1 = parseFloat(item.catalogue_price).toFixed(2); 
+                        html1+=`  <tr> 
+                                    <td scope="row">`+ (item.product_code ?? "") +`<input type="hidden" name="product_id" id="product_id" value="`+ item.product_id +`"> <input type="hidden" name="product_type" id="product_type" value="`+ item.product_type +`"><input type="hidden" name="ProductCatPrice" id="ProductCatPrice" value="`+item.id+`"></td> 
+                                    <td>`+item.product_name+`</td> 
+                                    <td class="text-end">£`+item.default_price+`</td> 
+                                    <td class="text-center">
+                                        <input type="text" value="`+formattedPrice1+`" name="item_catalogue_item_prices[]" class="text item_price numericOnly catalogueItemCustomPrice" data-item_id="11" tabindex="1">
+                                    </td>
+                                    <td>
+                                        <img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="data_delete image_style" data-delete="`+item.id+`">
+                                    </td>
+                                </tr>`;
+                        
+                    });  
+                }
+                $("#CatalogueData").html(html1); 
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
         open_model(id);
    });
    function getSaveData(){
@@ -368,11 +399,29 @@ thead#flowhead {
         var catalogue_type=$("#catalogue_type").val();
         var status=$("#status").val();
         var TabId=$("#TabId").val();
+        var catalogue_id=$("#catalogue_id").val();
         var token='<?php echo csrf_token();?>'
+        let tableData = [];
+        $('#CatalogueData tr').each(function () {
+        const row = $(this);
+            let rowData = {
+                id:row.find('input[name="ProductCatPrice"]').val(),
+                product_id: row.find('input[name="product_id"]').val(),
+                product_type: row.find('input[name="product_type"]').val(),
+                product_code: row.find('td:eq(0)').contents().filter(function () {
+                    return this.nodeType === Node.TEXT_NODE;
+                }).text().trim(),
+                product_name: row.find('td:eq(1)').text().trim(),
+                price: row.find('td:eq(2)').text().replace('£', '').trim(),
+                custom_price: row.find('input[name="item_catalogue_item_prices[]"]').val()
+            };
+        tableData.push(rowData);
+        });
+        // console.log(tableData);return false;
         $.ajax({  
             type:"POST",
             url:"{{url('admin/save_catalogue')}}",
-            data:{id:id,name:name,description:description,catalogue_type:catalogue_type,status:status,TabId:TabId,_token:token},
+            data:{id:id,name:name,description:description,catalogue_type:catalogue_type,status:status,TabId:TabId,tableData:tableData,catalogue_id:catalogue_id,_token:token},
             success:function(data)
             {
                 console.log(data);
@@ -387,6 +436,7 @@ thead#flowhead {
                     }, 3000);
                 }else if(TabId == 0 && data.success === true){
                     $("#TabId").val(1);
+                    $("#catalogue_id").val(data.data.id);
                     $("#tabclick").show();
                     $("#catalogue").removeClass('active');
                     $("#cataloguePrice").addClass('active');
@@ -416,6 +466,37 @@ thead#flowhead {
    function tabClick(value){
     $("#TabId").val(value);
 }
+function getProductData(selectedId) {
+    // console.log(selectedId);return false;
+        $.ajax({
+            url: '{{ url("admin/getProductSelectId") }}',
+            method: 'Post',
+            data: {
+                id: selectedId
+            },
+            success: function(response) {
+                console.log(response.data[0]);
+                var data=response.data[0];
+                var formattedPrice = parseFloat(data.price).toFixed(2);
+                var html=`  <tr> 
+                                <td scope="row">`+ (data.product_code ?? "") +`<input type="hidden" name="product_id" id="product_id" value="`+ data.id +`"> <input type="hidden" name="product_type" id="product_type" value="`+ data.product_type +`"></td> 
+                                <td>`+data.product_name+`</td> 
+                                <td class="text-end">£`+data.price+`</td> 
+                                <td class="text-center">
+                                    <input type="text" value="`+formattedPrice+`" name="item_catalogue_item_prices[]" class="text item_price numericOnly catalogueItemCustomPrice" data-item_id="11" tabindex="1">
+                                </td>
+                                <td>
+                                    <img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="data_delete image_style">
+                                </td>
+                            </tr>`;
+                $("#CatalogueData").append(html);
+                $("#ProductListModal").modal('hide');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 </script>
 
 @endsection
