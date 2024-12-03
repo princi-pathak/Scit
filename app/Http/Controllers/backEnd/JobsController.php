@@ -14,10 +14,13 @@ use App\Models\Country;
 use App\Models\Job_type;
 use App\Models\Work_flow;
 use App\Models\Job_title;
+use App\Models\ProductGroup;
 use App\Models\Job_recurring;
 use App\Models\Product_category;
 use App\Models\ProductCatalogue;
+use App\Models\ProductGroupProduct;
 use App\Models\Construction_tax_rate;
+use App\Models\ProductCataloguePrice;
 use App\Models\Workflow_notification;
 use App\Models\Construction_account_code;
 use App\Models\Construction_jobassign_product;
@@ -955,7 +958,7 @@ class JobsController extends Controller
             $data['catalogue']=$catalogue;
             $data['limit']=$limit;
             $data['search']=$search;
-            $data['page']='cataogue';
+            $data['page']='catalogue';
             return view('backEnd.jobs_management.catalogue',$data);
         }else {
             return redirect('admin/')->with('error',NO_HOME_ERR);
@@ -1012,6 +1015,149 @@ class JobsController extends Controller
             return response()->json(['success' => true, 'data' => $cataloguePriceResults]);
             
         }
+    }
+    public function getCategoryList(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $data = Product_category::getProductCategory($home_id);
+        
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+    public function getProduct_List(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($request->type == 4){
+            $data = ProductGroup::getProductGroupData($home_id);   
+        }else{
+            $data = Product::getProductList($request->type);
+        }
+
+        return response()->json([
+            'success' => (bool) $data,
+            'type'=>$request->type ?? null,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+    public function getProductListCounts(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $data['product'] = Product::getProductListCountType(1);
+        $data['service'] = Product::getProductListCountType(2);
+        $data['consumable'] = Product::getProductListCountType(3);
+        $product_group= ProductGroup::getProductGroupData($home_id); 
+         $data['product_group']=count($product_group);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+    public function getProductSelectId(Request $request){
+        $data =  Product::getProductFromId($request->id);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+    public function ProductCataloguePriceList(Request $request){
+        $catalogues = ProductCataloguePrice::where(['product_catalogue_id'=>$request->cat_id,'status'=>1,'deleted_at'=>null])->get();
+        return response()->json(['data'=>$catalogues]);
+    }
+    public function ProductGroupProductsdetail(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $ProductGroupProduct=ProductGroup::with('productGroupProduct')->where('id',$request->id)->get();
+        return response()->json(['data'=>$ProductGroupProduct]);
+    }
+    public function product_group(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $query = ProductGroup::where('home_id',$home_id)->whereNull('deleted_at')->orderBy('id','DESC');
+
+            $search = '';
+
+            if(isset($request->limit)) {
+                $limit = $request->limit;
+                Session::put('page_record_limit',$limit);
+            } else {
+
+                if(Session::has('page_record_limit')){
+                    $limit = Session::get('page_record_limit');
+                } else{
+                    $limit = 20;
+                }
+            }
+            if(isset($request->search))
+            {
+                $search      = trim($request->search);
+                $query = $query->where('project_name','like','%'.$search.'%');
+            }
+            $product_group = $query->paginate($limit);
+            $data['product_group']=$product_group;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='product_group';
+            return view('backEnd.jobs_management.productGroup',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
+    }
+    public function save_productGroup(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->first()]);
+        }
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $productsData = json_decode($request->input('products'), true);
+        $formData=[
+            'id'=>$request->id ?? null,
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'code'=>$request->code,
+            'status'=>$request->status,
+            'cost'=>$request->cost,
+            'price'=>$request->price
+        ];
+        try {
+            $saveData = ProductGroup::saveProductGroup($formData, $home_id, 0);
+            // $catlogueSave=['id'=>1];
+            if (!empty($productsData['products']) && is_array($productsData['products'])) {
+                $saveProduct = ProductGroupProduct::saveProductGroupData($saveData->id, $productsData);
+                if($request->id){
+                    return response()->json([
+                        'success' => true,
+                        'message' =>'Product group updated successfully.',
+                    ]);
+                }else{
+                    return response()->json([
+                        'success' => (bool) $saveProduct,
+                        'message' => $saveProduct ? 'Product group and products added successfully.' : 'Product Group products could not be added.',
+                    ]);
+                }
+                
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product group added successfully (no products provided).',
+                ]);
+            } 
+        }catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+    public function ProductGroupProductsList(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $ProductGroupProduct=ProductGroupProduct::getProductGroupProductData($home_id)->where('product_group_id',$request->id)->get();
+        return response()->json(['data'=>$ProductGroupProduct]);
     }
     public function customer_list(Request $request){
         echo 1;die;

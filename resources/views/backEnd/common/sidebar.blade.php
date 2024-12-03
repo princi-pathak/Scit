@@ -204,7 +204,7 @@
                 </li>
                 <!-- Jobs -->
                 <li class="sub-menu">
-                    <a href="javascript:;" class="<?php if(($page == 'jobs_list') || ($page == 'work_flow_list') || ($page == 'product_list') || ($page == 'project_list') || ($page == 'product_category') || ($page == 'account_codes') || ($page == 'tax_rate') || ($page == 'customer_list') || ($page == 'supplier_list') || ($page == 'job_recurring_list') || ($page == 'catalogue') ) { echo 'active'; } ?>" >
+                    <a href="javascript:;" class="<?php if(($page == 'jobs_list') || ($page == 'work_flow_list') || ($page == 'product_list') || ($page == 'project_list') || ($page == 'product_category') || ($page == 'account_codes') || ($page == 'tax_rate') || ($page == 'customer_list') || ($page == 'supplier_list') || ($page == 'job_recurring_list') || ($page == 'catalogue') || ($page == 'product_group')) { echo 'active'; } ?>" >
                         <i class="fa fa-briefcase"></i>
                         <span>Jobs</span>
                     </a>
@@ -213,6 +213,7 @@
                         <li class="{{ ($page == 'job_recurring_list') ? 'active' : '' }}"><a href="{{ url('admin/job_recurring_list') }}">Job Recurring </a></li>
                         <li class="{{ ($page == 'product_category') ? 'active' : '' }}"><a href="{{ url('admin/product_category') }}">Product Category </a></li>
                         <li class="{{ ($page == 'catalogue') ? 'active' : '' }}"><a href="{{ url('admin/catalogue') }}">Catalogue</a></li>
+                        <li class="{{ ($page == 'product_group') ? 'active' : '' }}"><a href="{{ url('admin/product_group') }}">Product Group</a></li>
                         <li class="{{ ($page == 'product_list') ? 'active' : '' }}"><a href="{{ url('admin/product_list') }}">Product </a></li>
                         <li class="{{ ($page == 'project_list') ? 'active' : '' }}"><a href="{{ url('admin/project_list') }}">Project </a></li>
                         <li class="{{ ($page == 'account_codes') ? 'active' : '' }}"><a href="{{ url('admin/account_codes') }}">Account Codes </a></li>
