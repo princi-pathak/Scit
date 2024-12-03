@@ -1297,6 +1297,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/product_save_data', 'App\Http\Controllers\backEnd\JobsController@product_save_data');
 	Route::get('/catalogue','App\Http\Controllers\backEnd\JobsController@catalogue');
 	Route::post('/save_catalogue','App\Http\Controllers\backEnd\JobsController@save_catalogue');
+	Route::get('/getCategoryList','App\Http\Controllers\backEnd\JobsController@getCategoryList');
+	Route::post('/getProduct_List','App\Http\Controllers\backEnd\JobsController@getProduct_List');
+	Route::get('/getProductListCounts','App\Http\Controllers\backEnd\JobsController@getProductListCounts');
+	Route::post('/getProductSelectId','App\Http\Controllers\backEnd\JobsController@getProductSelectId');
+	Route::post('/ProductCataloguePriceList','App\Http\Controllers\backEnd\JobsController@ProductCataloguePriceList');
+	Route::post('/ProductGroupProductsdetail','App\Http\Controllers\backEnd\JobsController@ProductGroupProductsdetail');
+	Route::match(['get','post'],'/product_group','App\Http\Controllers\backEnd\JobsController@product_group');
+	Route::post('/save_productGroup','App\Http\Controllers\backEnd\JobsController@save_productGroup');
+	Route::post('/ProductGroupProductsList','App\Http\Controllers\backEnd\JobsController@ProductGroupProductsList');
 	Route::post('/supplier_result', 'App\Http\Controllers\backEnd\JobsController@supplier_result');
 	Route::match(['get', 'post'], '/customer_list', 'App\Http\Controllers\backEnd\JobsController@customer_list');
 	Route::match(['get', 'post'], '/project_list', 'App\Http\Controllers\backEnd\JobsController@project_list');
