@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
 use App\Models\Constructor_customer_site;
 use App\Models\Constructor_additional_contact;
+use Illuminate\Support\Facades\App;
 
 class Customer extends Model
 {
@@ -161,5 +162,9 @@ class Customer extends Model
     //     return self::where('id', $id)->get();
     // }
 
+    public function quotes()
+    {
+        return $this->hasMany(\App\Models\Quote::class);
+    }
   
 }

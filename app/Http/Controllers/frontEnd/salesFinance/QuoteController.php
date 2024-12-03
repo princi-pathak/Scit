@@ -55,6 +55,8 @@ class QuoteController extends Controller
     public function index()
     {
         $data['page'] = "quotes";
+        $data['quotes'] = Quote::getQuoteData(Auth::user()->home_id);
+        // dd($data['quotes']);
         return view('frontEnd.salesAndFinance.quote.draft', $data);
     }
 
@@ -280,10 +282,12 @@ class QuoteController extends Controller
 
     public function edit($id)
     {
-
-        $page = 'Quote';
-     
-        return view('frontEnd.salesAndFinance.quote.quote_form');
+        $data['page'] = "quotes";
+        $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
+        $data['countries'] = Country::getCountriesNameCode();
+        $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id', Auth::user()->home_id)->where('status', 1)->where('deleted_at', NULL)->get();
+        // dd($data['product_categories']);
+        return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }
     public function getUsersList()
     {
