@@ -29,7 +29,6 @@ return new class extends Migration
             $table->integer('source')->nullable();
             $table->date('performed_job_date')->nullable();
             $table->string('period')->nullable();
-            $table->integer('quote_status');
             $table->string('tags')->nullable();
             $table->text('extra_information')->nullable();
             $table->text('customer_notes')->nullable();
@@ -41,7 +40,6 @@ return new class extends Migration
             $table->decimal('deposit', 10, 2)->nullable();
             $table->decimal('profit', 10, 2)->nullable();
             $table->decimal('outstanding', 10, 2)->nullable();
-            $table->string('quotes')->nullable();
             $table->string('converted_to')->nullable()->comment('Converted To Invoice, Converted To Job');
             $table->enum('status', ['Draft', 'Processed', 'Accepted', 'Rejected'])->default('Draft');
             $table->timestamps();
