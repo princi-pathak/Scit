@@ -53,14 +53,14 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Quote Ref</label>
                                         <div class="col-sm-9">
-                                            <input type="hidden" name="quote_ref">
+                                            <!-- <input type="hidden" name="quote_ref"> -->
                                             <input type="text" class="form-control-plaintext editInput" id="" value="Auto generate" readonly>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Customer<span class="radStar">*</span></label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput selectOptions" id="getCustomerList">
+                                            <select class="form-control editInput selectOptions" name="customer_id" id="getCustomerList">
                                                 <option value="">Select Customer</option>
                                             </select>
                                         </div>
@@ -84,6 +84,7 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Contact </label>
                                         <div class="col-sm-7">
+                                            <input type="hidden" id="billing_add_id" name="billing_add_id">
                                             <select class="form-control editInput selectOptions" disabled id="billingDetailContact">
                                                 <option>Select Customer First</option>
                                             </select>
@@ -183,10 +184,11 @@
                                     <div class="mb-3 row">
                                         <label for="inputJobRef" class="col-sm-3 col-form-label">Site</label>
                                         <div class="col-sm-7">
+                                            <!-- <input type="hidden" id="customer_site_id" name="customer_site_id"> -->
                                             <select class="form-control editInput selectOptions" disabled id="customerSiteDetails">
                                                 <option>-Not Assigned-</option>
                                             </select>
-                                            <input type="hidden" name="customer_id" id="siteCustomerId">
+                                            <input type="hidden" name="site_add_id" id="siteCustomerId">
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
@@ -290,7 +292,7 @@
                                         <div class="mb-3 row">
                                             <label for="inputCustomer" class="col-sm-3 col-form-label">Project </label>
                                             <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions" id="">
+                                                <select class="form-control editInput selectOptions" name="project_id" id="">
                                                     <option value="">None</option>
                                                     <option value="1">Test 1</option>
                                                     <option value="2">Test 2</option>
@@ -310,7 +312,7 @@
                                         <div class="mb-3 row">
                                             <label for="inputName" class="col-sm-3 col-form-label">Site </label>
                                             <div class="col-sm-7">
-                                                <input type="hidden" name="" id="customerSiteDeliveryId">
+                                                <input type="hidden" name="site_delivery_add_id" id="site_delivery_add_id">
                                                 <select class="form-control editInput selectOptions" id="customerSiteDelivery">
                                                     <option>Same As Customer</option>
                                                 </select>
@@ -419,7 +421,7 @@
                                             <label for="inputJobRef" class="col-sm-3 col-form-label">Quote Ref</label>
                                             <div class="col-sm-9">
                                                 <input type="hidden" name="quote_id">
-                                                <input type="hidden" name="quote_ref">
+                                                <!-- <input type="hidden" name="quote_ref"> -->
                                                 <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
                                             </div>
                                         </div>
@@ -427,7 +429,7 @@
                                     <div class="mb-3 row">
                                         <label for="quoteType" class="col-sm-3 col-form-label">Quote Type </label>
                                         <div class="col-sm-7">
-                                            <select class="form-control editInput" name="quote_type" id="quoteType">
+                                            <select class="form-control editInput" name="quota_type" id="quoteType">
                                                 <option value="">-Select-</option>
                                             </select>
                                         </div>
@@ -1807,6 +1809,7 @@
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="formDtail">
                                 <div class="mb-2 row">
+                                    <input type="hidden" name="customer_id" id="customer_id_site_add">
                                     <label for="inputName" class="col-sm-4 col-form-label">Customer </label>
                                     <div class="col-sm-8">
                                         <label for="inputAddress" class="col-form-label"><span id="setSiteAddress"></span> </label>
@@ -2104,10 +2107,11 @@
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="formDtail">
                                 <div class="mb-2 row">
+                                    <input type="hidden" name="customer_id" id="customer_id_site_delivery">
                                     <label for="inputName" class="col-sm-4 col-form-label">Customer </label>
                                     <div class="col-sm-8">
                                         <label for="inputAddress" class="col-form-label"><span id="setSiteDeliveryAddress"></span> </label>
-                                        <input type="hidden" name="customer_id" id="siteCustomerDeliveryId">
+                                        <!-- <input type="hidden" name="customer_id" id="siteCustomerDeliveryId"> -->
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -2495,12 +2499,12 @@
 
                         const optionInitial = document.createElement('option');
                         optionInitial.textContent = "-No Department-"; // Use appropriate key from your response
-                        optionInitial.value = ""; 
+                        optionInitial.value = "";
                         dropdown.appendChild(optionInitial);
                         // Append new options
                         response.data.forEach(code => {
                             const option = document.createElement('option');
-                            option.value = code.id; 
+                            option.value = code.id;
                             option.textContent = code.departmental_code + "-" + code.name; // Use appropriate key from your response
                             dropdown.appendChild(option);
                         });
@@ -2583,7 +2587,7 @@
             const tableFoot = table.querySelector('.add_table_insrt33');
             tableFoot.innerHTML += `<tr>
                                         <td colspan="10" class="borderNone"></td>
-                                        <td>Sub Total (exc. VAT)</td>
+                                        <td>Sub Total (exc. VAT) <input type="hidden" name="sub_total" id="InputFootAmount"></td>
                                         <td class="tableAmountRight" id="footAmount">$00.00</td>
                                     </tr>
                                     <tr>
@@ -2606,17 +2610,17 @@
                                     </tr>
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
-                                        <td>VAT</td>
+                                        <td>VAT<input type="hdden" name="vat_amount" id="InputFootVatAmount"></td>
                                         <td class="tableAmountRight" id="footVatAmount">$00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
-                                        <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)</strong></td>
+                                        <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)<input type="hidden" name="total" id="inputFootTotalDiscountVat"></strong></td>
                                         <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">$00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
-                                        <td>Profit</td>
+                                        <td>Profit<input type="hidden" name="profit" id="inputFootProfit"></td>
                                         <td class="tableAmountRight" id="footProfit">$00.00</td>
                                     </tr>
                                     <tr>
@@ -2636,7 +2640,7 @@
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
-                                        <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)</strong></td>
+                                        <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)<input type="hidden" name="outstanding" id="inputFootOutstandingAmount"></strong></td>
                                         <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">$00.00</td>
                                     </tr>`;
             isFooterAppended = true;
@@ -2702,17 +2706,17 @@
             discount = parseInt(row.querySelector('.discount').value) || 0;
             totalCostPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
             totalMarkup = parseInt(row.querySelector('.priceMarkup').value) || 0;
-            
+
             // Calculate selling price (Cost Price + Markup - Discount)
-       
+
             markupAmount = (totalPrice * totalMarkup) / 100; // Percentage markup
             console.log(markupAmount);
             discountAmount = (totalPrice * discount) / 100; // Discount as a percentage
             console.log(discountAmount);
-            totalDiscount += discountAmount ;
+            totalDiscount += discountAmount;
             sellingPrice = totalPrice + markupAmount - discountAmount;
             console.log("sellingPrice", sellingPrice);
-            
+
             // Calculate Amount (Quantity × Selling Price)
             amount = totalQuantity * sellingPrice;
             console.log(amount);
@@ -2721,21 +2725,21 @@
             // Calculate VAT amount
             vatAmount = (amount * vat) / 100;
             console.log(vatAmount);
-            totalVAT += vatAmount; 
+            totalVAT += vatAmount;
             // Calculate Profit ((Selling Price - Cost Price) × Quantity)
             profit = (sellingPrice - totalCostPrice) * totalQuantity;
             console.log(sellingPrice);
-            totalProfit += profit ;
+            totalProfit += profit;
 
             // Calculate margin
             margin = parseFloat((profit / sellingPrice) * 100);
             totalMargin += margin;
             console.log(margin);
 
-            row.querySelector('.amount').textContent = doller + amount.toFixed(2); 
+            row.querySelector('.amount').textContent = doller + amount.toFixed(2);
 
             // Update row output fields
-            row.querySelector('.profit').textContent = doller + profit.toFixed(2); 
+            row.querySelector('.profit').textContent = doller + profit.toFixed(2);
 
             if (margin >= 0) {
                 row.querySelector('.footRowMargin').classList.add('minusnmberGreen');
@@ -2753,14 +2757,21 @@
         console.log("Total Discount: ", totalDiscount);
         console.log("Total Profit: ", totalProfit);
         console.log("Total totalMargin: ", totalMargin);
-        
+
         document.getElementById('footAmount').textContent = doller + price.toFixed(2);
+        document.getElementById('InputFootAmount').value = price.toFixed(2);
         document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
         document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
-        document.getElementById('footTotalDiscountVat').textContent = doller + (price + totalVAT) .toFixed(2);
+        document.getElementById('InputFootVatAmount').value = totalVAT.toFixed(2);
+        document.getElementById('footTotalDiscountVat').textContent = doller + (price + totalVAT).toFixed(2);
+        document.getElementById('inputFootTotalDiscountVat').value = (price + totalVAT).toFixed(2);
         document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
+        document.getElementById('inputFootProfit').value =  totalProfit.toFixed(2);
         document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
         document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
+        document.getElementById('inputFootOutstandingAmount').value =  (price + totalVAT).toFixed(2);
+
+        
     }
 
 
@@ -2865,7 +2876,7 @@
 
             if (tableBody) {
                 tableBody.appendChild(node);
-              
+
 
                 attachRowEventListeners(node, table)
                 const closeButton = node.querySelector('.closeappend');
@@ -2877,7 +2888,7 @@
             } else {
                 console.error("Table body with ID 'add_table_insrt' not found.");
             }
-           
+
         });
         calculateRowsValue(table);
     }
@@ -3056,13 +3067,13 @@
                 id: id
             },
             success: function(response) {
-                console.log(response.data);
+                console.log("getCustomerDetails", response.data);
                 var contactData = response.data[0];
                 // billing details data set
+                // setFieldValues([], contactData.id);
 
+                setFieldValues(['billing_add_id', 'site_delivery_add_id','siteCustomerId', 'customer_id_site_delivery'], contactData.id);
                 setFieldValues(['billingDetailsName', 'customerSiteName', 'customerSiteDeliveryName'], contactData.contact_name);
-                setFieldValues(['customer_contact_id', 'siteCustomerId', 'siteCustomerDeliveryId'], contactData.id);
-                customer_contact_id
                 setTextContent(['setCustomerName', 'setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany', 'setSiteDeliveryAddress'], contactData.name);
                 setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
                 setFieldValues(['billingDetailsEmail', 'customerSiteDeliveryEmail'], contactData.email);
@@ -3071,6 +3082,7 @@
                 setFieldValues(['billingCustomerPostcode', 'customerSitePostCode', 'customerSiteDeliveryPostCode'], contactData.postal_code);
                 setFieldValues(['billingCustomerTelephone', 'customerSiteTelephone', 'customerSiteDeliveryTelephone'], contactData.telephone);
                 setFieldValues(['billingCustomerMobile', 'customerSiteMobile', 'customerSiteDeliveryMobile'], contactData.mobile);
+                // customer_contact_id
 
                 selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
                 selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
@@ -3212,6 +3224,7 @@
 
                 // Set the new option as selected
                 newOption.selected = true;
+                setFieldValues(['billing_add_id', 'siteCustomerId', 'site_delivery_add_id'], response.data[0].id);
 
                 // billing details data set
                 document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
@@ -3387,6 +3400,8 @@
                     },
                     success: function(response) {
                         console.log(response.data);
+
+                        // document.getElementById('customer_site_id').value = response.data[0].id;
                         document.getElementById('siteCustomerId').value = response.data[0].id;
                         document.getElementById('customerSiteName').value = response.data[0].contact_name;
                         document.getElementById('customerSiteAddress').value = response.data[0].address;
@@ -3422,7 +3437,7 @@
                     },
                     success: function(response) {
                         console.log(response.data);
-                        document.getElementById('customerSiteDeliveryId').value = response.data[0].id;
+                        document.getElementById('site_delivery_add_id').value = response.data[0].id;
                         document.getElementById('customerSiteDeliveryName').value = response.data[0].contact_name;
                         document.getElementById('customerSiteDeliveryAdd').value = response.data[0].address;
                         document.getElementById('customerSiteDeliveryPostCode').value = response.data[0].postal_code;
@@ -3642,6 +3657,11 @@
             getCustomerJobTitle(customer_job_titile_id);
             getCountriesList(setBillingAddressTelephoneCountryCode);
             getCountriesList(setBillingAddressMobileCountryCode);
+            var getCustomerList = document.getElementById('getCustomerList').value
+            document.getElementById('customer_contact_id').value = getCustomerList;
+            document.getElementById('customer_id_site_add').value = getCustomerList;
+            document.getElementById('customer_id_site_delivery').value = getCustomerList;
+
             $('#add_customer_contact_modal').modal('show');
         }
     }
@@ -3671,9 +3691,7 @@
         $('#add_site_delivery_address_modal').modal('show');
     });
 
-    // $('#OpenSiteDeliveryAddressJobTitleModel').on('click', function() {
-    //     $('#siteDetailJobTitle').modal('show');
-    // });
+
 
     $('#openABCProductModal').on('click', function() {
         $('#productModalBAC').modal('show');
@@ -3683,36 +3701,20 @@
         $('#quoteTagModal').modal('show');
     });
 
-    // $('#OpenAddAccountCodeModal').on('click', function() {
-    //     $('#accountCodeModal').modal('show');
-    // });
+
 
     $('#new_Attachment_open_model').on('click', function() {
         $('#new_Attachment_model').modal('show');
     });
 
-    // $('#openSiteDeliveryRegionModal').on('click', function() {
-    //     $('#site_delivery_region_modal').modal('show');
-    // });
-
-
-
-    // $('.getUsersList').on('click', function() {
-    //     // $('#new_Attachment_model').modal('show');
-    //     alert();
-    //     getUsersList(document.getElementById('getUsersList'));
-    // });
 
 
 
 
-    // function itemsAddProductModal(th) {
-    //     $("#productform")[0].reset();
-    //     $(".needs-validationp").removeClass('was-validated');
-    //     $('#producttype').val(th);
-    //     //$('#taxratepopup').css('display','block');
-    //     $('#itemsAddProductModal').modal('show');
-    // }
+
+
+
+
 
     function additemsCatagoryModal(th) {
         //alert();

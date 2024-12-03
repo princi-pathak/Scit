@@ -7,6 +7,7 @@ class QuoteService
 {
     public function saveQuoteData(array $data, string $quoteRefId, int $homeId): Quote
     {
+        // dd( array_merge(['home_id' => $homeId, 'quote_ref' => $quoteRefId], $data));
         return Quote::updateOrCreate( ['id' => $data['quote_id']], array_merge(['home_id' => $homeId, 'quote_ref' => $quoteRefId], $data));
     }
 
