@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 
 class Quote extends Model
 {
@@ -21,8 +21,8 @@ class Quote extends Model
         'quota_type',
         'quota_date',
         'expiry_date',
-        'customer_ref', 
-        'customer_job_ref', 
+        'customer_ref',
+        'customer_job_ref',
         'purchase_order_ref',
         'source',
         'performed_job_date',
@@ -90,14 +90,51 @@ class Quote extends Model
     }
     public function customer()
     {
-        return $this->belongsTo(\App\Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
-    public static function getQuoteData($homeId){
-        return self::where('status', 'Draft')
-                // ->join('customers.id','=','quotes.customer_id')
-                // ->select('quotes.*', 'customers.name')
-                ->where('home_id', $homeId)
-                ->get();
+    // public function siteAddress()
+    // {
+    //     return $this->belongsTo(Constructor_customer_site::class, 'site_add_id');
+    // }
+
+    public static function getQuoteData($lastSegment, $homeId)
+    {
+        
+        $quotes =  Quote::with(['customer'])
+        ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
+        ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
+        ->where('quotes.home_id', $homeId)
+        ->select('quotes.*', 'constructor_customer_sites.address as site_address', 
+                 DB::raw("CASE 
+                        WHEN quotes.customer_id = quotes.site_add_id THEN customers.address 
+                        ELSE constructor_customer_sites.address 
+                    END as customer_address")
+                )
+        ->get();
+
+        $quoteArr = array();
+        foreach ($quotes as $quote) {
+                $quote['id'] = $quote->id;
+                $quote['quote_ref'] = $quote->quote_ref;
+                $quote['quote_date'] = $quote->quote_date;
+                $quote['name'] = $quote->customer->name;
+            if ($quote->customer_id == $quote->site_add_id) {
+                // Logic if customer_id equals site_add_id
+                $quote['address'] =  $quote->customer_address; // or whatever processing needed
+            } else {
+                // Logic if they are different
+                $quote['address'] =  $quote->site_address; // or whatever processing needed
+            }
+            $quote['sub_total'] = $quote->sub_total;
+            $quote['vat_amount'] = $quote->vat_amount;
+            $quote['total'] = $quote->total;
+            $quote['deposit'] = $quote->deposit;
+            $quote['profit'] = $quote->profit;
+            $quote['outstanding'] = $quote->outstanding;
+            array_push($quoteArr, $quote);
+        }
+        return $quoteArr;
+
     }
 }

@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\QuoteType;
 use App\Models\Quote;
-use App\Models\QuoteProduct;
-
 use App\Models\QuoteSource;
 use App\Models\QuoteRejectType;
 use App\Models\Customer_type;
@@ -52,11 +50,16 @@ class QuoteController extends Controller
         // dd($data['product_categories']);
         return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }
-    public function index()
+    public function index(Request $request)
     {
         $data['page'] = "quotes";
-        $data['quotes'] = Quote::getQuoteData(Auth::user()->home_id);
+        $path = $request->path();
+        $segments = explode('/', $path);
+        $lastSegment = end($segments);
+        $data['lastSegment'] = $lastSegment;
+        $data['quotes'] = Quote::getQuoteData($lastSegment, Auth::user()->home_id);
         // dd($data['quotes']);
+     
         return view('frontEnd.salesAndFinance.quote.draft', $data);
     }
 
