@@ -15,22 +15,8 @@
             </div>
         </div>
 
-        <div class="row">
+        @include('frontEnd.salesAndFinance.quote.quote_buttons')
 
-            <div class="col-md-8 col-lg-8 col-xl-8 px-3">
-                <div class="jobsection">
-                    <a href="#" class="profileDrop">New Quotes</a>
-                    <a href="#" class="profileDrop">Draft <span>(5)</span></a>
-                    <a href="#" class="profileDrop">Actioned<span>(8)</span></a>
-                    <a href="#" class="profileDrop">Converted<span>(15)</span></a>
-                    <a href="#" class="profileDrop">Call back<span>(76)</span></a>
-                    <a href="#" class="profileDrop">Accsepted<span>(32)</span></a>
-                    <a href="#" class="profileDrop">Rejected<span>(2)</span></a>
-                    <a href="#" class="profileDrop">Sales Appointments</a>
-                </div>
-            </div>
-
-        </div>
         <di class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
@@ -75,51 +61,55 @@
                                 <th></th>
                             </tr>
                         </thead>
-
+                      
                         <tbody>
-                            @foreach($quotes as $value)
-                            <tr>
-                                <td></td>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $value->quote_ref }}</td>
-                                <td>{{ $value->quota_date }}</td>
-                                <td></td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>{{ $value->sub_total }}</td>
-                                <td>{{ $value->vat_amount }}</td>
-                                <td>{{ $value->total }}</td>
-                                <td>{{ $value->deposit }}</td>
-                                <td>{{ $value->outstanding }}</td>
-                                <td>{{ $value->profit }}</td>
-                                <td>
-                                    <div class="d-inline-flex align-items-center ">
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                                Action
-                                            </a>
-                                            <div class="dropdown-menu fade-up m-0">
-                                                <a href="" class="dropdown-item">Edit Details</a>
-                                                <a href="#" class="dropdown-item">Send SMS</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="#" class="dropdown-item set_value_on_CRM_model" class="dropdown-item">CRM History</a>
-                                                <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
-                                                <a href="#" class="dropdown-item">Send for Authorization</a>
-                                                <a href="#" class="dropdown-item">Send to Quote</a>
-                                                <a href="#" class="dropdown-item">Send to Job</a>
-                                                <a href="#" class="dropdown-item">Convert to Customer Only</a>
+                            @if(!empty($quotes))
+                                @foreach($quotes as $value)
+                                <tr>
+                                    <td></td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $value->quote_ref ?? '-'}}</td>
+                                    <td>{{ $value->quota_date }}</td>
+                                    <td>{{ $value->customer->name ?? '' }}</td>
+                                    <td>{{ $value->customer_address }}</td>
+                                    <td>1</td>
+                                    <td>&#163;{{ $value->sub_total ?? '00.00' }}</td>
+                                    <td>&#163;{{ $value->vat_amount ?? '00.00'}}</td>
+                                    <td>&#163;{{ $value->total ?? '00.00'}}</td>
+                                    <td>&#163;{{ $value->deposit ??  '00.00'}}</td>
+                                    <td>&#163;{{ $value->outstanding ?? '00.00' }}</td>
+                                    <td>&#163;{{ $value->profit ?? '00.00' }}</td>
+                                    <td>
+                                        <div class="d-inline-flex align-items-center ">
+                                            <div class="nav-item dropdown">
+                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                    Action
+                                                </a>
+                                                <div class="dropdown-menu fade-up m-0">
+                                                    <a href="" class="dropdown-item">Edit Details</a>
+                                                    <a href="#" class="dropdown-item">Send SMS</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="#" class="dropdown-item set_value_on_CRM_model" class="dropdown-item">CRM History</a>
+                                                    <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
+                                                    <a href="#" class="dropdown-item">Send for Authorization</a>
+                                                    <a href="#" class="dropdown-item">Send to Quote</a>
+                                                    <a href="#" class="dropdown-item">Send to Job</a>
+                                                    <a href="#" class="dropdown-item">Convert to Customer Only</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
+                                    </td>
+                                </tr>
+                                @endforeach
+                            @else
                             <tr>
                                 <td></td>
                                 <td colspan="12">
                                     <label class="red_sorryText"> Sorry, there are no items available.. </label>
                                 </td>
                             </tr>
+                            @endif
+                            
                         </tbody>
                     </table>
 

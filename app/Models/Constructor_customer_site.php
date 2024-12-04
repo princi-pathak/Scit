@@ -33,6 +33,12 @@ class Constructor_customer_site extends Model
         'status',
     ];
 
+    // public function quotes()
+    // {
+    //     return $this->hasMany(Quote::class, 'site_add_id');
+    // }
+ 
+
     public static function saveCustomerAdditional(array $data)
     {
         $insert=self::updateOrCreate(['id' => $data['id'] ?? null], $data);
@@ -43,10 +49,10 @@ class Constructor_customer_site extends Model
         return self::where('customer_id', $id)->select('id', 'site_name')->get();
     }
 
-   
-
     public static function getCustomerSiteDetails($id) {
         return self::where('id', $id)->get();
     }
+
+ 
 
 }
