@@ -28,7 +28,7 @@ class ExpenseControllerAdmin extends Controller
             if(isset($key) && isset($value)){
                 if($key === 'reject' && $value == 1){
                     $expense_query=Expense::getAllExpense($home_id)->where("$key",$value);
-                }else if($key === 'authorised' && $value == 1){
+                }else if($key === 'authorised'){
                     $expense_query=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'paid'=>0]);
                 }else{
                     $expense_query=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0]);

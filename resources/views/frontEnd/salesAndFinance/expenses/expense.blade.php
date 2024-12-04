@@ -86,6 +86,14 @@
 .select2-container .select2-selection--multiple{
     min-height:32px !important;
  }
+ .parent-container {
+    position: absolute;
+    background: #fff;
+    width:190px;
+}
+#productList li:hover{
+    cursor: pointer;
+}
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -111,25 +119,103 @@
             </div>
         </div>
     </div>
+
+
+
+   
+
+
+
     <di class="row">
+    <div class="col-lg-12">
+        <div class="maimTable">
+            <div class="printExpt">
+                <div class="prntExpbtn">
+                    <a href="#!">Print</a>
+                    <a href="#!">Export</a>
+                </div>
+                <div class="searchFilter">
+                    <a href="javascript:void(0)" onclick="hideShowDiv()" class="hidebtn">Hide Search Filter</a>
+                </div>
+
+            </div>
+            <div class="searchJobForm" id="divTohide">
+                <form id="search_dataForm" class="p-4">
+                    <div class="row justify-content-center">
+                        <div class="col-md-3">
+                            <div class="row form-group mb-2">
+                                <label class="col-md-4 col-form-label text-end">Expense By:</label>
+                                <div class="col-md-8">
+                                    <select class="form-control editInput selectOptions" id="expenseBy">
+                                        <option selected disabled></option>
+                                        <option value="{{Auth::user()->id}}">{{Auth::user()->name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row form-group mb-2">
+                                <label class="col-md-4 col-form-label text-end">Expense Date:</label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control editInput" id="start_date" >
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control editInput" id="end_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row form-group mb-2">
+                                <label class="col-md-4 col-form-label text-end">Customer:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control editInput" id="customer_name" placeholder="Type Customer Name">
+                                    <input type="hidden" id="selectedId" name="selectedId">
+                                    <div class="parent-container"></div>
+                                </div>
+                            </div>
+                            <div class="row form-group mb-2">
+                                <label class="col-md-4 col-form-label text-end">Keywords:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control editInput" id="keywords" keywords="" placeholder="Keywords to seacrh">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row form-group mb-2">
+                                <label class="col-md-4 col-form-label text-end">Billable:</label>
+                                <div class="col-md-8">
+                                    <select class="form-control editInput selectOptions" id="billable">
+                                        <option selected disabled>--Any--</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="pageTitleBtn justify-content-center">
+                                <a href="javascript:void(0)" onclick="searchBtn()" class="profileDrop px-3">Search </a>
+                                <a href="javascript:void(0)" onclick="clearBtn()" class="profileDrop px-3">Clear</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+
+        </div> <!-- End off main Table -->
+    </div>
         <div class="col-lg-12">
             <div class="maimTable mt-2 table_responsive">
-                <div class="printExpt">
-                    <div class="prntExpbtn">
-                        <a href="#!">Print</a>
-                        <a href="#!">Export</a>
-                    </div>
-                    <div class="searchFilter">
-                        <a href="#!">Show Search Filter</a>
-                    </div>
-
-                </div>
-                <!-- <div class="markendDelete">
+             
+                
+                <div class="markendDelete">
                     <div class="row">
                         <div class="col-md-7">
                             <div class="jobsection d-flex">
-                                <a href="#" class="profileDrop">Delete</a>
-                                <div class="pageTitleBtn p-0">
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                <!-- <div class="pageTitleBtn p-0">
                                     <div class="nav-item dropdown">
                                         <a href="#" class="nav-link dropdown-toggle profileDrop"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -143,33 +229,22 @@
                                                 product codes</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <!-- <div class="col-md-5">
                             <div class="pageTitleBtn p-0">
                                 <a href="#" class="profileDrop"> <i class="material-symbols-outlined">
                                         settings </i></a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
-                </div> -->
+                </div>
                 @if(session('message'))
                 <div class="alert alert-success text-center success_message mt-3 m-auto" style="height:50px; width:50%">
                     <p>{{ session('message') }}</p>
                 </div>
                 @endif
-                <div class="markendDelete">
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <div class="jobsection">
-                                        <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
-                                      
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
 
                 <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                     <thead>
@@ -928,6 +1003,170 @@ job_input.addEventListener('input', function() {
             $('.alert').hide();
         }, 3000);
     })
+</script>
+<script>
+    $("#expenseBy").on('change', function(){
+        var expenseBy = $(this).find('option:selected');
+        if (expenseBy.val()) {
+            $(this).prop('disabled', true);
+        }
+    });
+    function clearBtn(){
+        $("#search_dataForm")[0].reset();
+    }
+    function searchBtn(){
+        var expenseBy=$("#expenseBy").val();
+        var customer_name=$("#customer_name").val();
+        var selectedId=$("#selectedId").val();
+        var billable=$("#billable").val();
+        var start_date=$("#start_date").val();
+        var end_date=$("#end_date").val();
+        var keywords=$("#keywords").val();
+        const Httpurl = new URL(window.location.href);
+        const params = new URLSearchParams(Httpurl.search);
+        const key = params.get('key');
+        const value = params.get('value');
+        $.ajax({
+            url: "{{ url('searchExpenses') }}",
+            method: 'post',
+            data: {
+                expenseBy: expenseBy,customer_name:customer_name,selectedId:selectedId,billable:billable,start_date:start_date,end_date:end_date,keywords:keywords,key:key,value:value,_token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                console.log(response);
+                return false;
+                divList.innerHTML = "";
+                const div = document.createElement('div');
+                div.className = 'container';
+
+                
+                const ul = document.createElement('ul');
+                ul.id = "productList";
+                if(response.data.length >0){
+                    response.data.forEach(item => {
+                        const li = document.createElement('li'); 
+                        li.textContent = item.name; 
+                        li.id = item.id;
+                        li.name = item.name;
+                        li.className = "editInput";
+                        ul.appendChild(li); 
+                        const hr = document.createElement('hr');
+                        // hr.className='dropdown-divider';
+                        ul.appendChild(hr);
+                    });
+
+                    div.appendChild(ul);
+
+                    divList.appendChild(div);
+
+                    ul.addEventListener('click', function(event) {
+                        divList.innerHTML = '';
+                        document.getElementById('customer_name').value = '';
+                        if (event.target.tagName.toLowerCase() === 'li') {
+                            const selectedId = event.target.id;
+                            const selectedName = event.target.name;
+                            console.log('Selected Customer ID:', selectedId);
+                            console.log('Selected Customer Name:', selectedName);
+                            $("#customer_name").val(selectedName);
+                            $("#selectedId").val(selectedId);
+                            // getCustomerData(selectedId,selectedName);
+                        }
+                    });
+                }else{
+                    const Errorli = document.createElement('li'); 
+                    Errorli.textContent = 'Sorry Data Not found'; 
+                    Errorli.id = 'searchError';
+                    Errorli.className = "editInput";
+                    ul.appendChild(Errorli); 
+                    div.appendChild(ul);
+                    divList.appendChild(div);
+                }
+
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+            }
+        }); 
+    }
+</script>
+<script>
+    $(document).ready(function() {
+        $('#customer_name').on('keyup', function() {
+            let search_query = $(this).val();
+            const divList = document.querySelector('.parent-container');
+
+            if (search_query === '') {
+                divList.innerHTML = '';
+            }
+            if (search_query.length > 2) {
+                $.ajax({
+                    url: "{{ url('searchCustomerName') }}",
+                    method: 'post',
+                    data: {
+                        search_query: search_query,_token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // return false;
+                        divList.innerHTML = "";
+                        const div = document.createElement('div');
+                        div.className = 'container';
+
+                      
+                        const ul = document.createElement('ul');
+                        ul.id = "productList";
+                        if(response.data.length >0){
+                            response.data.forEach(item => {
+                                const li = document.createElement('li'); 
+                                li.textContent = item.name; 
+                                li.id = item.id;
+                                li.name = item.name;
+                                li.className = "editInput";
+                                ul.appendChild(li); 
+                                const hr = document.createElement('hr');
+                                // hr.className='dropdown-divider';
+                                ul.appendChild(hr);
+                            });
+
+                            div.appendChild(ul);
+
+                            divList.appendChild(div);
+
+                            ul.addEventListener('click', function(event) {
+                                divList.innerHTML = '';
+                                document.getElementById('customer_name').value = '';
+                                if (event.target.tagName.toLowerCase() === 'li') {
+                                    const selectedId = event.target.id;
+                                    const selectedName = event.target.name;
+                                    console.log('Selected Customer ID:', selectedId);
+                                    console.log('Selected Customer Name:', selectedName);
+                                    $("#customer_name").val(selectedName);
+                                    $("#selectedId").val(selectedId);
+                                    // getCustomerData(selectedId,selectedName);
+                                }
+                            });
+                        }else{
+                            const Errorli = document.createElement('li'); 
+                            Errorli.textContent = 'Sorry Data Not found'; 
+                            Errorli.id = 'searchError';
+                            Errorli.className = "editInput";
+                            ul.appendChild(Errorli); 
+                            div.appendChild(ul);
+                            divList.appendChild(div);
+                        }
+
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            } else {
+                divList.innerHTML = '';
+                $('#results').empty();
+            }
+        });
+
+    });
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
