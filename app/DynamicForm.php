@@ -60,7 +60,7 @@ class DynamicForm extends Model //FormBuilder
             if ($form->is_image == "1") {
                 $formdata .= '  <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                                     <div class="uploadimg222">
-                                        <input type="hidden" name="formImage" class="uploded_image">                           
+                                        <input type="hidden" name="formImage" class="uploded_image" id="imageName">                           
                                         <div id="previewContainer" class="formImageHide" style="overflow: hidden; margin-bottom: 20px; height: 300px; display :none;">
                                             <img id="formImagePreview" style=" width:100%; object-fit: contain; height: 100%;" alt="Image Preview">  
                                         </div>
@@ -251,8 +251,8 @@ class DynamicForm extends Model //FormBuilder
             if ($form_builder->is_image == "1") {
                 if ($form_info->image_path !== null) {
                     $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                                    <div class="uploadimg222">
-                                        <input type="hidden" name="formImage" class="uploded_image">                           
+                                    <div class="uploadimg222"> 
+                                        <input type="hidden" name="formImage" class="uploded_image" id="imageName">                           
                                         <input type="hidden" name="formImage2" class="" value="'.$form_info->image_path.'">                           
                                         <div id="previewContainer2" style="overflow: hidden; margin-bottom: 20px; height: 300px;">';
                     // Check if a previous image exists
@@ -267,7 +267,7 @@ class DynamicForm extends Model //FormBuilder
                 } else {
                     $formdata .= '  <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                         <div class="uploadimg222">
-                            <input type="hidden" name="formImage" class="uploded_image">                           
+                            <input type="hidden" name="formImage" class="uploded_image" id="imageName">                           
                             <div id="previewContainer" class="formImageHide" style="overflow: hidden; margin-bottom: 20px; height: 300px; display :none;">
                                 <img id="formImagePreview" style=" width:100%; object-fit: contain; height: 100%;" alt="Image Preview">  
                             </div>

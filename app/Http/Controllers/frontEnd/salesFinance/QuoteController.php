@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers\frontEnd\salesFinance;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
+
+use App\Http\Controllers\Controller;
+
+use App\Http\Requests\QuoteRequest;
+
+use App\Services\QuoteService;
+use App\Services\QuoteProductService;
+
 use App\Models\QuoteType;
-use App\Models\Quote;
 use App\Models\QuoteSource;
 use App\Models\QuoteRejectType;
 use App\Models\Customer_type;
@@ -15,14 +23,9 @@ use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Product_category;
-use Illuminate\Database\QueryException;
 use App\User;
-use Illuminate\Support\Facades\Log;
 
-use App\Services\QuoteService;
-use App\Services\QuoteProductService;
 
-use App\Http\Requests\QuoteRequest;
 
 class QuoteController extends Controller
 {
@@ -57,7 +60,7 @@ class QuoteController extends Controller
         $segments = explode('/', $path);
         $lastSegment = end($segments);
         $data['lastSegment'] = $lastSegment;
-        $data['quotes'] = Quote::getQuoteData($lastSegment, Auth::user()->home_id);
+        $data['quotes'] = $this->quoteService->getQuoteData($lastSegment, Auth::user()->home_id);
         // dd($data['quotes']);
      
         return view('frontEnd.salesAndFinance.quote.draft', $data);
@@ -289,8 +292,10 @@ class QuoteController extends Controller
         $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
         $data['countries'] = Country::getCountriesNameCode();
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id', Auth::user()->home_id)->where('status', 1)->where('deleted_at', NULL)->get();
-        // dd($data['product_categories']);
-        return view('frontEnd.salesAndFinance.quote.quote_form', $data);
+        $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id); 
+  
+        // dd($data);
+        return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
     public function getUsersList()
     {

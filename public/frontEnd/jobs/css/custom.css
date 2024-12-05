@@ -2234,3 +2234,6 @@ ul#productList {
   height: 156px;
   overflow: auto;
 }
+.page-btn-selected{
+  background-color: #474747;
+}

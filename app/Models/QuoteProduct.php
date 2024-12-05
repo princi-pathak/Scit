@@ -27,4 +27,7 @@ class QuoteProduct extends Model
     {
         return $this->belongsTo(Quote::class);
     }
+    public static function editQuotePageProduct($quote_id){
+        return self::where('quote_id', $quote_id)->get();
+    }
 }

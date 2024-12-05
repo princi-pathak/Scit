@@ -7,11 +7,9 @@ class QuoteProductService
 {
     public function saveItems(array $products, int $quoteId): void
     {
-        // dd($products);
         foreach ($products as $productData) {
-            // dd($productData);
             $accountCode = $productData['account_code'] === '-No Department-' ? null : $productData['account_code'];
-
+            
             QuoteProduct::create([
                 'quote_id' => $quoteId,
                 'product_id' => $productData['id'],
