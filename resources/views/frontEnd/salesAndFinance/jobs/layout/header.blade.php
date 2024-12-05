@@ -114,8 +114,7 @@ $access_rights = explode(',', $rights);
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1"><a href="{{ url('/quote/dashboard') }}" class="dropdown-item"><span><i class="fa fa-dashboard"></i> Dashboard</span></a></li>
                                     <li class="nav-item1"><a href="{{ url('/quote/add') }}" class="dropdown-item"><span><i class="fa fa-plus"></i> New Quote</span></a></li>
-                                    <li class="nav-item1"><a href="{{ url('/quote/add-details') }}" class="dropdown-item"><span><i class="fa fa-plus"></i> New Quote Details</span></a></li>
-                                    
+                                    <!-- <li class="nav-item1"><a href="{{ url('/quote/add-details') }}" class="dropdown-item"><span><i class="fa fa-plus"></i> New Quote Details</span></a></li> -->
                                     <li class="nav-item1"><a href="{{ url('/quote/draft') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Draft Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Actioned Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Call Back Quote</span></a></li>
