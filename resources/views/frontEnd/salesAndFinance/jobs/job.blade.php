@@ -116,7 +116,19 @@
                                     <td><span class="danger">Dave Taylor-26/04/2017 16:00-23:00 General - Awaiting</span></td>
                                     <td>{{$val->complete_by}}</td>
                                     <td>Appointed</td>
-                                    <td><a href="#!" class="profileDrop dropdown-toggle">Action</a></td>
+                                    <td>
+                                        <div class="pageTitleBtn p-0">
+                                            <div class="nav-item dropdown">
+                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Action
+                                                </a>
+                                                <div class="dropdown-menu fade-up m-0">
+                                                    <a href="{{url('job_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item col-form-label">Edit</a>
+                                                    <!-- <hr class="dropdown-divider"> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                <?php }?>
                             </tbody>

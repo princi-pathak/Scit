@@ -14,12 +14,20 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-xl-4 ">
                         <div class="pageTitle">
+                            @if(isset($key) && $key !='')
+                            <h3 class="header_text">{{$job_details->job_ref}}</h3>
+                            @else
                             <h3 class="header_text">New Jobs</h3>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-4">
                         <div class="alert alert-primary mt-1 mb-0 text-center" id="message_save" style="display:none">
+                        @if(isset($key) && $key !='')
                             <span>Job Added Successfully Done!</span>
+                        @else
+                            <span>Job Updated Successfully Done!</span>
+                        @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-4 px-3">
@@ -40,12 +48,8 @@
                                     <div class="formDtail">
                                         <h4 class="contTitle">Customer Details</h4>
                                        @csrf
-                                        <input type="hidden" id="id" name="id">
+                                        <input type="hidden" id="id" name="id" value="<?php if(isset($key) && $key !=''){echo $job_details->id;}?>">
                                         <input type="hidden" id="home_id" name="home_id" value="{{$home_id}}">
-                                        <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id}}">
-                                        <input type="hidden" id="last_job_id" name="last_job_id" value="<?php if (isset($last_job_id)) {
-                                                                                                    echo $last_job_id->id;
-                                                                                                } ?>">
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer"
                                                     class="col-sm-3 col-form-label">Customer<span
@@ -54,7 +58,7 @@
                                                 <select class="form-control editInput selectOptions" id="customer_id" name="customer_id" required onchange="get_customer_details()">
                                                     <option selected disabled>Select Customer</option>
                                                     <?php foreach ($customers as $cust) { ?>
-                                                        <option value="{{$cust->id}}">{{$cust->name}}</option>
+                                                        <option value="{{$cust->id}}" <?php if(isset($job_details) && $job_details->customer_id == $cust->id){echo "selected";}?>>{{$cust->name}}</option>
                                                     <?php } ?>
                                                 </select>
                                                     <!-- <input type="text"  id="staticEmail"> -->
@@ -76,8 +80,11 @@
                                                     class="col-sm-3 col-form-label">Project</label>
                                                 <div class="col-sm-7">
                                                     <select class="form-control editInput selectOptions"
-                                                    id="project_id" name="project_id" disabled>
+                                                    id="project_id" name="project_id" <?php if(!isset($key) && $key ==''){echo 'disabled';}?> >
                                                         <option>None</option>
+                                                        @foreach($projects as $project)
+                                                            <option value="{{$project->id}}" <?php if(isset($job_details) && $job_details->project_id == $project->id){echo 'selected';}?>>{{$project->project_name}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
@@ -90,8 +97,11 @@
                                                     class="col-sm-3 col-form-label">Contact</label>
                                                 <div class="col-sm-7">
                                                     <select class="form-control editInput selectOptions"
-                                                    id="contact_id" name="contact_id" disabled>
+                                                    id="contact_id" name="contact_id" <?php if(!isset($key) && $key ==''){echo 'disabled';}?>>
                                                         <option>Default</option>
+                                                        @foreach($additional_contact as $addContact)
+                                                            <option value="{{$addContact->id}}" <?php if(isset($job_details) && $job_details->contact_id == $addContact->id){echo 'selected';}?>>{{$addContact->contact_name}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
@@ -103,13 +113,13 @@
                                                 <label for="inputName" class="col-sm-3 col-form-label">Name<span
                                                 class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" name="name" id="name">
+                                                    <input type="text" class="form-control editInput" name="name" id="name" value="<?php if(isset($job_details) && $job_details !=''){echo $job_details->name;}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="email" name="email">
+                                                    <input type="text" class="form-control editInput" id="email" name="email" value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->email ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
@@ -122,7 +132,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control editInput" id="telephone" name="telephone" required>
+                                                    <input type="text" class="form-control editInput" id="telephone" name="telephone" required value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->telephone ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
@@ -134,7 +144,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control editInput" id="contact" name="contact" required>
+                                                    <input type="text" class="form-control editInput" id="contact" name="contact" required value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->contact ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -143,26 +153,26 @@
                                                     class="radStar">*</span></label>
                                                 <div class="col-sm-9">
                                                     <textarea class="form-control textareaInput" id="address" name="address" rows="3"
-                                                        ></textarea>
+                                                        ><?php if(isset($job_details) && $job_details !=''){echo ($job_details->address ?? "");}?></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCity" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="city" name="city">
+                                                    <input type="text" class="form-control editInput" id="city" name="city" value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->city ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCounty" class="col-sm-3 col-form-label">County</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="country" name="country">
+                                                    <input type="text" class="form-control editInput" id="country" name="country" value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->country ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPincode"
                                                     class="col-sm-3 col-form-label">Pincode</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="pincode" name="pincode">
+                                                    <input type="text" class="form-control editInput" id="pincode" name="pincode" value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->pincode ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
@@ -172,7 +182,7 @@
                                                     <select class="form-control editInput selectOptions" id="country_id" name="country_id" required>
                                                         <option selected disabled>Select Country</option>
                                                         <?php foreach ($country as $country_val) { ?>
-                                                            <option value="{{$country_val->id}}" class="country_code">{{$country_val->name}}</option>
+                                                            <option value="{{$country_val->id}}" class="country_code" <?php if(isset($job_details) && $job_details->country_id == $country_val->id){echo "selected";}?> >{{$country_val->name}}</option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -188,8 +198,11 @@
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Site</label>
                                                 <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions get_site_result" required
-                                                    disabled id="site_id" name="site_id">
+                                                <?php if(!isset($key) && $key ==''){echo 'disabled';}?> id="site_id" name="site_id">
                                                     <option selected>Default</option>
+                                                    @foreach($site as $siteVal)
+                                                        <option value="{{$siteVal->id}}" <?php if(isset($job_details) && $job_details->site_id == $siteVal->id){echo "selected";}?>>{{$siteVal->site_name}}</option>
+                                                    @endforeach
                                                 </select>
                                                     <!-- <input type="text"  id="staticEmail"> -->
                                                 </div>
@@ -207,7 +220,7 @@
                                                 <select class="form-control editInput selectOptions get_region_result" id="region" name="region" required>
                                                     <option selected disabled>Select Region</option>
                                                     <?php foreach($region as $site_region){?>
-                                                        <option value="{{$site_region->id}}">{{$site_region->title}}</option>
+                                                        <option value="{{$site_region->id}}" <?php if(isset($job_details) && $job_details->region == $site_region->id){echo "selected";}?>>{{$site_region->title}}</option>
                                                     <?php }?>
                                                 </select>
                                                 </div>
@@ -234,13 +247,13 @@
                                                 <label for="inputName" class="col-sm-3 col-form-label">Contact
                                                     Name</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="conatact_name" name="conatact_name">
+                                                    <input type="text" class="form-control editInput" id="conatact_name" name="conatact_name" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->conatact_name ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="site_email" name="site_email">
+                                                    <input type="text" class="form-control editInput" id="site_email" name="site_email" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_email ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
@@ -253,7 +266,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control editInput" id="site_telephone" name="site_telephone" required>
+                                                <input type="text" class="form-control editInput" id="site_telephone" name="site_telephone" required value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_telephone ?? "");}?>">
                                             </div>
                                         </div>
                                         <div class="mb-3 row field">
@@ -265,7 +278,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control editInput" id="site_mobile" name="site_mobile" required>
+                                                <input type="text" class="form-control editInput" id="site_mobile" name="site_mobile" required value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_mobile ?? "");}?>">
                                             </div>
                                         </div>
                                             <div class="mb-3 row">
@@ -273,26 +286,26 @@
                                                     class="col-sm-3 col-form-label">Address<span class="radStar">*</span></label>
                                                 <div class="col-sm-9">
                                                     <textarea class="form-control textareaInput" id="site_address" name="site_address" rows="3"
-                                                        ></textarea>
+                                                        ><?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_address ?? "");}?></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCity" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="site_city" name="site_city">
+                                                    <input type="text" class="form-control editInput" id="site_city" name="site_city" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_city ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCounty" class="col-sm-3 col-form-label">County</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="site_country" name="site_country">
+                                                    <input type="text" class="form-control editInput" id="site_country" name="site_country" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_country ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPincode"
                                                     class="col-sm-3 col-form-label">Pincode</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="site_pincode" name="site_pincode">
+                                                    <input type="text" class="form-control editInput" id="site_pincode" name="site_pincode" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_pincode ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -302,7 +315,7 @@
                                                 <select class="form-control editInput selectOptions" id="site_country_id" name="site_country_id" required>
                                                     <option selected disabled>Select Country</option>
                                                     <?php foreach ($country as $country_v) { ?>
-                                                        <option value="{{$country_v->id}}">{{$country_v->name}}</option>
+                                                        <option value="{{$country_v->id}}" <?php if(isset($job_details) && $job_details->site_country_id == $country_v->id){echo "selected";}?>>{{$country_v->name}}</option>
                                                     <?php } ?>
                                                 </select>
                                                 </div>
@@ -310,7 +323,7 @@
                                             <div class="mb-3 row">
                                                 <label for="inputAddress" class="col-sm-3 col-form-label">Notes</label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" id="notes" name="notes" rows="3" placeholder="Site Notes"></textarea>
+                                                    <textarea class="form-control textareaInput" id="notes" name="notes" rows="3" placeholder="Site Notes"><?php if(isset($job_details) && $job_details!= ''){echo $job_details->notes;}?></textarea>
                                                 </div>
                                             </div>
                                         <!-- </form> -->
@@ -324,7 +337,7 @@
                                                 <label for="inputJobRef" class="col-sm-3 col-form-label">Job Ref</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control-plaintext editInput"
-                                                        id="inputJobRef" value="Auto generate" readonly>
+                                                        id="inputJobRef" <?php if(isset($job_details) && $job_details!= ''){echo 'value="'.$job_details->job_ref.'"';}else{echo 'value="Auto generate"';}?> readonly>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -332,7 +345,7 @@
                                                     Ref</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput textareaInput"
-                                                    id="customer_ref" name="customer_ref" placeholder="Customer Ref if any">
+                                                    id="customer_ref" name="customer_ref" placeholder="Customer Ref if any" value="<?php if(isset($job_details) && $job_details!= ''){echo $job_details->customer_ref;}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -340,7 +353,7 @@
                                                     Ref</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput textareaInput"
-                                                    id="cust_job_ref" name="cust_job_ref" placeholder="Customer Job if any">
+                                                    id="cust_job_ref" name="cust_job_ref" placeholder="Customer Job if any" value="<?php if(isset($job_details) && $job_details!= ''){echo $job_details->cust_job_ref;}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -348,7 +361,7 @@
                                                     Ref</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control editInput textareaInput"
-                                                    id="purchase_order_ref" name="purchase_order_ref" placeholder="Purchase Order Ref if any">
+                                                    id="purchase_order_ref" name="purchase_order_ref" placeholder="Purchase Order Ref if any" value="<?php if(isset($job_details) && $job_details!= ''){echo $job_details->purchase_order_ref;}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -358,7 +371,7 @@
                                                 <select class="form-control editInput selectOptions" id="job_type" name="job_type" required>
                                                     <option selected disabled>Please Select</option>
                                                     <?php foreach ($job_type as $type) { ?>
-                                                        <option value="{{$type->id}}">{{$type->name}}</option>
+                                                        <option value="{{$type->id}}" <?php if(isset($job_details) && $job_details->job_type == $type->id){echo 'selected';}?>>{{$type->name}}</option>
                                                     <?php } ?>
                                                 </select>
                                                 </div>
@@ -374,8 +387,8 @@
                                                 <select class="form-control editInput selectOptions"
                                                     id="priorty" name="priorty">
                                                     <option selected disabled>None</option>
-                                                    <option value="1">Normal</option>
-                                                    <option value="2">Medium</option>
+                                                    <option value="1" <?php if(isset($job_details) && $job_details->priorty == 1){echo 'selected';}?>>Normal</option>
+                                                    <option value="2" <?php if(isset($job_details) && $job_details->priorty == 2){echo 'selected';}?>>Medium</option>
                                                 </select>
                                                 </div>
                                             </div>
@@ -385,8 +398,8 @@
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox"
-                                                        name="alert_customer" id="alert_customer" value="0"
-                                                        required>
+                                                        name="alert_customer" id="alert_customer"
+                                                        required <?php if(isset($job_details) && $job_details->alert_customer == 1){echo 'checked value="1"';}else{echo 'value="0"';}?>>
                                                     <label class="form-check-label checkboxtext" for="checkalrt">By
                                                         Email</label>
                                                 </div>
@@ -395,10 +408,9 @@
                                             <div class="mb-3 row field">
                                                 <label class="col-sm-3 col-form-label">On Rout SMS Alert</label>
                                                 <div class="col-sm-9">
-
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                            name="on_route_sms" id="on_route_sms" value="1"
+                                                            name="on_route_sms" id="on_route_sms" <?php if(isset($job_details) && $job_details->on_route_sms == 1){echo 'checked';}else{echo 'unchecked';}?> value="1"
                                                             required>
                                                         <label class="form-check-label checkboxtext"
                                                             for="inlineRadio1">Yes</label>
@@ -406,7 +418,7 @@
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
                                                             name="on_route_sms" id="on_route_sms" value="2"
-                                                            checked>
+                                                             <?php if(isset($job_details) && $job_details->on_route_sms == 1){echo 'unchecked';}else{echo 'checked';}?>>
                                                         <label class="form-check-label checkboxtext"
                                                             for="inlineRadio2">No</label>
                                                     </div>
@@ -418,21 +430,21 @@
                                                     Date<span class="radStar">*</span></label>
                                                 <div class="col-sm-4">
                                                     <input type="date" class="form-control editInput"
-                                                    id="start_date" name="start_date">
+                                                    id="start_date" name="start_date" value="<?php if(isset($job_details) && $job_details != ''){echo $job_details->start_date;}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputMobile" class="col-sm-3 col-form-label">Complete
                                                     By<span class="radStar">*</span></label>
                                                 <div class="col-sm-4">
-                                                    <input type="date" class="form-control editInput" id="complete_by" name="complete_by">
+                                                    <input type="date" class="form-control editInput" id="complete_by" name="complete_by" value="<?php if(isset($job_details) && $job_details != ''){echo $job_details->complete_by;}?>">
                                                 </div>
                                             </div>
 
                                             <div class="mb-3 row">
                                                 <label for="inputCountry" class="col-sm-3 col-form-label">Tags</label>
                                                 <div class="col-sm-7">
-                                                    <input type="text" class="form-control editInput" id="tags" name="tags">
+                                                    <input type="text" class="form-control editInput" id="tags" name="tags" value="<?php if(isset($job_details) && $job_details != ''){echo $job_details->tags;}?>">
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <a href="#!" class="formicon"><i
@@ -453,7 +465,7 @@
                                                 <label for="exampleInputEmail1" class="col-form-label">Short
                                                     Description<span class="radStar">*</span> <span>(max 250 charecters)</span></label>
                                                 <textarea class="form-control textareaInput" name="short_decinc"
-                                                    id="short_decinc" rows="2" placeholder="Site Notes" onkeyup="get_char()"></textarea>
+                                                    id="short_decinc" rows="2" placeholder="Site Notes" onkeyup="get_char()"><?php if(isset($job_details) && $job_details != ''){echo $job_details->short_decinc;}?></textarea>
                                             </div>
 
                                             <div class="mb-3">
@@ -862,7 +874,11 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-xl-4 ">
                         <div class="pageTitle">
+                            @if(isset($key) && $key !='')
+                            <h3 class="header_text">{{$job_details->job_ref}}</h3>
+                            @else
                             <h3 class="header_text">New Jobs</h3>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -2372,7 +2388,7 @@ const openPopupButton = document.getElementById('openPopupButton');
                 $('#contact_id').removeAttr('disabled');
                 $('#site_id').removeAttr('disabled');
                 if (data.customers && data.customers.length > 0) {
-                var customerData = data.customers[0]; // Fetch first customer
+                var customerData = data.customers[0];
 
                 $("#name").val(customerData.name);
                 $("#email").val(customerData.email);
@@ -2448,9 +2464,6 @@ const openPopupButton = document.getElementById('openPopupButton');
                 $('#contact_id').removeAttr('disabled');
                 $('#site_id').removeAttr('disabled');
             }
-
-
-
             },
             error: function(xhr, status, error) {
                 console.log(error);
@@ -3184,9 +3197,12 @@ const openPopupButton = document.getElementById('openPopupButton');
                     $("#message_save").show();
                     setTimeout(() => {
                         $("#message_save").hide();
-                    }, 300);
+                    }, 3000);
                     $("#id").val(data.id);
                     $(".header_text").text(data.job_ref)
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
                 }
             });
         }

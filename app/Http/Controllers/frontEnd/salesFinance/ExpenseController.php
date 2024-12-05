@@ -199,7 +199,6 @@ class ExpenseController extends Controller
             }
         }
 
-        // Apply additional filters
         if ($request->filled('expenseBy')) {
             $query->where('user_id', $expenseBy);
         }
@@ -224,7 +223,8 @@ class ExpenseController extends Controller
             });
         }
         $expenses = $query->get();
-        $data='';
+        // echo "<pre>";print_r($expenses);die;
+        $array_data='';
         $net_amount=0;
         $vat_amount=0;
         $gross_amount=0;
@@ -232,8 +232,8 @@ class ExpenseController extends Controller
             $net_amount=$net_amount+$val->amount;
             $vat_amount=$vat_amount+$val->vat_amount;
             $gross_amount=$gross_amount+$val->gross_amount;
-            $user = App\User::find($val->user_id)->name;
-            $job = App\Models\Job::find($val->job_id);
+            $user = User::find($val->user_id)->name;
+            $job = Job::find($val->job_id);
             if(isset($job)){
                 if($job->site_id == 'default' || $job->site_id == ''){
                     $site = Constructor_customer_site::where('customer_id',$job->customer_id)->orderBy('id','DESC')->first(); 
@@ -241,16 +241,16 @@ class ExpenseController extends Controller
                     $site = Constructor_customer_site::find($job->site_id);
                 }
             }
-            $data .= '<tr>
+            $array_data .= '<tr>
                         <td><input type="checkbox" class="delete_checkbox" value="' . $val->id . '"></td>
                         <td>' . ++$key . '</td>
-                        <td>' . htmlspecialchars($val->expense_date) . '</td>
-                        <td>' . htmlspecialchars($user) . '</td>
-                        <td>' . htmlspecialchars($val->title) . '</td>
-                        <td>' . htmlspecialchars($val->reference) . '</td>
-                        <td>' . $val->job ?? "-" . '</td>
-                        <td>' . htmlspecialchars($site_name) . '</td>
-                        <td>' . htmlspecialchars($val->notes) . '</td>
+                        <td>' . $val->expense_date . '</td>
+                        <td>' . $user . '</td>
+                        <td>' . $val->title . '</td>
+                        <td>' . ($val->reference ?? "") . '</td>
+                        <td>' . ($val->job ?? "-") . '</td>
+                        <td>' . ($site->site_name ?? "") . '</td>
+                        <td>' . ($val->notes ?? "") . '</td>
                         <td>£ ' . number_format($val->amount, 2) . '</td>
                         <td>£ ' . number_format($val->vat_amount, 2) . '</td>
                         <td>£ ' . number_format($val->gross_amount, 2) . '</td>
@@ -261,17 +261,17 @@ class ExpenseController extends Controller
                         <td>';
                         
                     if (!empty($val->attachments)) {
-                        $data .= '<a href="' . url('public/images/expense/' . htmlspecialchars($val->attachments)) . '" target="_blank" style="text-decoration:none">
+                        $array_data .= '<a href="' . url('public/images/expense/' . htmlspecialchars($val->attachments)) . '" target="_blank" style="text-decoration:none">
                             View
                         </a>';
                     }
 
-                    $data .= '</td>
+                    $array_data .= '</td>
                         <td>' . htmlspecialchars($val->created_at) . '</td>
                         <td>
                             <div class="pageTitleBtn p-0">
                                 <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
                                         Action
                                     </a>
                                     <div class="dropdown-menu fade-up m-0">
@@ -305,7 +305,7 @@ class ExpenseController extends Controller
                     </tr>';
         }
 
-        return response()->json(['data' => $expenses]);
+        return response()->json(['data' => $array_data,'net_amount'=>$net_amount,'vat_amount'=>$vat_amount,'gross_amount'=>$gross_amount]);
     
     }
 }
