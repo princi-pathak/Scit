@@ -12,7 +12,7 @@ class CustomerBillingAddress extends Model
         'customer_id',
         'default_billing',
         'contact_name',
-        'job_title_id', 
+        'job_title_id',
         'email',
         'telephone',
         'telephone_country_code',
@@ -27,15 +27,24 @@ class CustomerBillingAddress extends Model
         'country'
     ];
 
-    public static function saveCustomerContactDetails(array $data){
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class, 'billing_add_id');
+    }
+
+    public static function saveCustomerContactDetails(array $data)
+    {
         return self::updateOrCreate(['id' => $data['customer_id']], $data);
     }
 
-    public static function getCustomerBillingAddress($id){
+    public static function getCustomerBillingAddress($id)
+    {
         return self::where('customer_id', $id)->select('id', 'contact_name')->get();
     }
 
-    public static function getCustomerBillingAddressData($id){
+    public static function getCustomerBillingAddressData($id)
+    {
         return self::where('id', $id)->get();
     }
+
 }
