@@ -272,7 +272,7 @@
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody id="expense_data">
                        <?php 
                         $net_amount=0;
                         $vat_amount=0;
@@ -334,16 +334,16 @@
                     <?php }?>
                     </tbody>
                     @if(count($expense)>0)
-                        <tr>
+                        <tr class="calcualtionShowHide">
                             <th colspan="2"></th>
                             <th colspan="16">Page Sub Total:</th>
                         </tr>
-                        <tr>
+                        <tr class="calcualtionShowHide">
                             <td colspan="9"></td>
                             
-                            <td>£<?php echo number_format($net_amount,2, '.', '');?></td>
-                            <td>£<?php echo number_format($vat_amount,2, '.', '');?></td>
-                            <td colspan="8">£<?php echo number_format($gross_amount,2, '.', '');?></td>
+                            <td id="Tablenet_amount">£<?php echo number_format($net_amount,2, '.', '');?></td>
+                            <td id="Tablevat_amount">£<?php echo number_format($vat_amount,2, '.', '');?></td>
+                            <td id="Tablegross_amount" colspan="8">£<?php echo number_format($gross_amount,2, '.', '');?></td>
                         </tr>
                     @endif
                 </table>
@@ -807,7 +807,8 @@ $('.delete_checkbox').on('click', function() {
 });
  </script> 
  <script>
-    $(".fetch_data").on('click', function(){
+    // $(".fetch_data").on('click', function(){
+    $(document).on('click', '.fetch_data', function() {
         var id = $(this).data('id');
         var title = $(this).data('title');
         var amount = $(this).data('amount');
@@ -1026,6 +1027,27 @@ job_input.addEventListener('input', function() {
         const params = new URLSearchParams(Httpurl.search);
         const key = params.get('key');
         const value = params.get('value');
+        let isEmpty = true;
+        $("#search_dataForm").find("input, select, textarea").each(function() {
+            if ($(this).val() && $(this).val().trim() !== "") {
+                isEmpty = false;
+                return false;
+            }
+        });
+
+        if (isEmpty) {
+            alert("Please fill in at least one field before searching.");
+            return false;
+        }
+        if(start_date != '' && end_date == ''){
+            alert("Please choose both date");
+            return false;
+        }
+        if(start_date == '' && end_date != ''){
+            alert("Please choose both date");
+            return false;
+        }
+        
         $.ajax({
             url: "{{ url('searchExpenses') }}",
             method: 'post',
@@ -1034,54 +1056,36 @@ job_input.addEventListener('input', function() {
             },
             success: function(response) {
                 console.log(response);
-                return false;
-                divList.innerHTML = "";
-                const div = document.createElement('div');
-                div.className = 'container';
-
-                
-                const ul = document.createElement('ul');
-                ul.id = "productList";
-                if(response.data.length >0){
-                    response.data.forEach(item => {
-                        const li = document.createElement('li'); 
-                        li.textContent = item.name; 
-                        li.id = item.id;
-                        li.name = item.name;
-                        li.className = "editInput";
-                        ul.appendChild(li); 
-                        const hr = document.createElement('hr');
-                        // hr.className='dropdown-divider';
-                        ul.appendChild(hr);
-                    });
-
-                    div.appendChild(ul);
-
-                    divList.appendChild(div);
-
-                    ul.addEventListener('click', function(event) {
-                        divList.innerHTML = '';
-                        document.getElementById('customer_name').value = '';
-                        if (event.target.tagName.toLowerCase() === 'li') {
-                            const selectedId = event.target.id;
-                            const selectedName = event.target.name;
-                            console.log('Selected Customer ID:', selectedId);
-                            console.log('Selected Customer Name:', selectedName);
-                            $("#customer_name").val(selectedName);
-                            $("#selectedId").val(selectedId);
-                            // getCustomerData(selectedId,selectedName);
-                        }
-                    });
+                // return false;
+                var table = $('#exampleOne').DataTable();
+                table.destroy();
+                if(response.data.length>0){
+                    $("#expense_data").html(response.data);
+                    $("#Tablenet_amount").text("£"+response.net_amount);
+                    $("#Tablevat_amount").text("£"+response.vat_amount);
+                    $("#Tablegross_amount").text("£"+response.gross_amount);
                 }else{
-                    const Errorli = document.createElement('li'); 
-                    Errorli.textContent = 'Sorry Data Not found'; 
-                    Errorli.id = 'searchError';
-                    Errorli.className = "editInput";
-                    ul.appendChild(Errorli); 
-                    div.appendChild(ul);
-                    divList.appendChild(div);
+                    $("#expense_data").html(response.data);
+                    $(".calcualtionShowHide").hide();
                 }
-
+                // $('#exampleOne').DataTable();
+                $('#exampleOne').DataTable({
+                    order: [[1, 'asc']],
+                    language: {
+                        paginate: {
+                            previous: "Previous",
+                            next: "Next"
+                        },
+                        info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                        infoEmpty: "No entries available",
+                        emptyTable: '<span style="color: red; font-weight: bold;">Sorry, there are no items available</span>',
+                        infoFiltered: "(filtered from _MAX_ total entries)",
+                        lengthMenu: "Show _MENU_ entries",
+                        search: "Search:",
+                        zeroRecords: "No matching records found"
+                    },
+                    paging: true
+                });
             },
             error: function(xhr) {
                 console.error(xhr.responseText);
@@ -1153,6 +1157,9 @@ job_input.addEventListener('input', function() {
                             ul.appendChild(Errorli); 
                             div.appendChild(ul);
                             divList.appendChild(div);
+                            setTimeout(function() {
+                                divList.innerHTML = '';
+                            }, 1000);
                         }
 
                     },
@@ -1167,6 +1174,24 @@ job_input.addEventListener('input', function() {
         });
 
     });
+    $("#end_date").change(function () {
+      var startDate = document.getElementById("start_date").value;
+      var endDate = document.getElementById("end_date").value;
+
+      if ((Date.parse(startDate) >= Date.parse(endDate))) {
+          alert("End date should be greater than Start date");
+          document.getElementById("end_date").value = "";
+      }
+  });
+  $("#start_date").change(function () {
+      var startDate = document.getElementById("start_date").value;
+      var endDate = document.getElementById("end_date").value;
+
+      if ((Date.parse(endDate) <= Date.parse(startDate))) {
+          alert("Start date should be less than End date");
+          document.getElementById("start_date").value = "";
+      }
+  });
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

@@ -67,10 +67,13 @@ class JobController extends Controller
         $data['page']="job_index";
         return view('frontEnd.salesAndFinance.jobs.index',$data);
     }
-    public function job_list(){
-        $data['job']=Job::whereNull('deleted_at')->get();
+    public function job_list(Request $request){
+        $lastSegment = request()->segment(request()->segments() ? count(request()->segments()) : 1);
+        $home_id = Auth::user()->home_id;
+        $data['job']=Job::getAllJob($home_id)->get();
         $data['access_rights']=$this->access_rights();
-        // echo "<pre>";print_r($data['access_rights']);die;
+        $data['lastSegment']=$lastSegment;
+        // echo "<pre>";print_r($data['job']);die;
         return view('frontEnd.salesAndFinance.jobs.job',$data);
     }
     public function job_type(Request $request){
@@ -238,22 +241,18 @@ class JobController extends Controller
     public function jobs_create(Request $request){
         // echo 1;die;
         // echo "<pre>";print_r(Auth::user());die;
-        if($request->key == '') {
-            $task="Added";
-        }else {
-            $task="Eddited";
-        }
-        $key=$request->key;
-        $data['task']=$task;
-        $data['projects']=Project::where('status',1)->get();
-        $data['last_job_id']=Job::orderBy('id','DESC')->first();
-        $data['job_details']=Job::find($key);
-        $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1])->get();
+        $home_id = Auth::user()->home_id;
+        $user_id=Auth::user()->id;
+        $key=base64_decode($request->key);
+        $data['key']=$key;
+        $data['projects']=Project::where(['status'=>1,'home_id'=>$home_id])->get();
+        $job_details=Job::find($key);
+        $data['job_details']=$job_details;
+        $data['additional_contact'] = Constructor_additional_contact::where('home_id', $home_id)->get();
+        $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1,'deleted_at'=>null])->get();
         $data['job_type']=Job_type::where('status',1)->get();
         $data['country']=Country::all_country_list();
         // echo "<pre>";print_r($data['country']);die;
-        $home_id = Auth::user()->home_id;
-        $user_id=Auth::user()->id;
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')
         ->join('product_categories as cat','cat.id','=','pr.cat_id')
         ->where(['pr.home_id'=>$home_id,'pr.adder_id'=>$user_id])->get();
@@ -268,14 +267,15 @@ class JobController extends Controller
         $data['category']=Product_category::with('parent', 'children')->where('status',1)->get();
         $data['account_code']=Construction_account_code::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['sales_tax']=Construction_tax_rate::where(['home_id'=>$home_id,'status'=>1])->get();
-        // $data['site']=Constructor_customer_site::where('customer_id',$user_id)->get();
-        // echo "<pre>";print_r($data['region']);die;
+        $data['site']=Constructor_customer_site::where('customer_id',$job_details->customer_id)->get();
+        // echo "<pre>";print_r($data['site']);die;
         return view('frontEnd.salesAndFinance.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
-        // echo "<pre>";print_r($request->all());die;
-        $home_id=$request->home_id;
-
+        echo "<pre>";print_r($request->all());die;
+        $home_id = Auth::user()->home_id;
+        $user_id=Auth::user()->id;
+        
         if ($request->hasFile('attachments')) {
             $imageName = time().'.'.$request->attachments->extension();      
             $request->attachments->move(public_path('images/jobs'), $imageName);
@@ -284,7 +284,16 @@ class JobController extends Controller
         } else {
             $requestData = $request->all();
         }
-        $job_id=Job::job_save($requestData);
+        $last_job_id=Job::orderBy('id','DESC')->first();
+        $requestData['last_job_id'] = $last_job_id;
+        $requestData['user_id'] = $user_id;
+        $requestData['home_id'] = $home_id;
+        try {
+            $job_id=Job::job_save($requestData);
+        } catch (\Exception $e) {
+            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+        }
+        
         // echo "<pre>";print_r($job_id);die;
         if(isset($request->quantity) && $request->quantity !=''){
             $job_product= $this->save_job_product($job_id,$request->all());
@@ -377,11 +386,6 @@ class JobController extends Controller
             $table->qty=$data['quantity'][$i];
             $table->save();
         }
-        
-        // $job_table=Job::find($request->id);
-        // $job_table->pay_amount=$request->final_amount;
-        // $job_table->save();
-        // echo "done";
         return true;
     }
     public function get_save_appointment($job_detail,$data){
