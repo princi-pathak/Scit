@@ -49,7 +49,7 @@ class QuoteController extends Controller
         $data['page'] = "quotes";
         $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
         $data['countries'] = Country::getCountriesNameCode();
-        $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id', Auth::user()->home_id)->where('status', 1)->where('deleted_at', NULL)->get();
+        $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id);
         // dd($data['product_categories']);
         return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }
@@ -271,7 +271,6 @@ class QuoteController extends Controller
                 return redirect()->route('quotes.quotes')->with('success', $message);
             }
 
-
             Log::info('This is an informational message.', [$quote]);
             $data = array();
             return view('frontEnd.salesAndFinance.quote.draft', $data);
@@ -291,10 +290,8 @@ class QuoteController extends Controller
         $data['page'] = "quotes";
         $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
         $data['countries'] = Country::getCountriesNameCode();
-        $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id', Auth::user()->home_id)->where('status', 1)->where('deleted_at', NULL)->get();
-        $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id); 
-  
-        // dd($data);
+        $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id); 
+        $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);   
         return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
     public function getUsersList()
