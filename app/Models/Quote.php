@@ -55,6 +55,11 @@ class Quote extends Model
         return $this->belongsTo(CustomerBillingAddress::class, 'billing_add_id');
     }
 
+    public function siteAddress()
+    {
+        return $this->belongsTo(Constructor_customer_site::class, 'billing_add_id');
+    }
+
  
 
 }
