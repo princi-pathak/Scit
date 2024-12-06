@@ -1,5 +1,17 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
 
+
+
+<style>
+    .maimTable.draftTable .dataTables_wrapper .dataTables_length, .maimTable.draftTable .dataTables_info, .maimTable.draftTable .paging_simple_numbers {
+    display: none;
+}
+tfoot.draftFoot tr th {
+    font-size: 12px;
+}
+</style>
+
+
 <section class="main_section_page px-3">
     <div class="container-fluid">
         <div class="row">
@@ -19,7 +31,7 @@
 
         <di class="row">
             <div class="col-lg-12">
-                <div class="maimTable">
+                <div class="maimTable draftTable">
                     <div class="printExpt">
                         <div class="prntExpbtn">
                             <a href="#!">Print</a>
@@ -140,17 +152,17 @@
                             </tr>
                             @endif
                         </tbody>
-                        <tfoot>
+                        <tfoot class="draftFoot">
                             <tr>
-                                <td></td>
-                                <td colspan="6">Page Sub Total</td>
-                                <td>&#163;{{ number_format($subTotal, 2) }}</td>
-                                <td>&#163;{{ number_format($vat, 2) }}</td>
-                                <td>&#163;{{ number_format($total, 2) }}</td>
-                                <td>&#163;{{ number_format($deposit, 2) }}</td>
-                                <td>&#163;{{ number_format($outstanding, 2) }}</td>
-                                <td>&#163;{{ number_format($profit, 2) }}</td>
-                                <td></td>
+                                <th></th>
+                                <th colspan="6">Page Sub Total</th>
+                                <th>&#163;{{ number_format($subTotal, 2) }}</th>
+                                <th>&#163;{{ number_format($vat, 2) }}</th>
+                                <th>&#163;{{ number_format($total, 2) }}</th>
+                                <th>&#163;{{ number_format($deposit, 2) }}</th>
+                                <th>&#163;{{ number_format($outstanding, 2) }}</th>
+                                <th>&#163;{{ number_format($profit, 2) }}</th>
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table>
