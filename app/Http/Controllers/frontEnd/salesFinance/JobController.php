@@ -36,6 +36,7 @@ use App\Models\Construction_product_supplier_list;
 use App\Models\construction_appointment_rejection_category;
 use App\Models\Region;
 use App\Models\LogHistory;
+use App\Models\Tag;
 use DB,Auth,Session,Validator;
 
 class JobController extends Controller
@@ -244,12 +245,17 @@ class JobController extends Controller
         $home_id = Auth::user()->home_id;
         $user_id=Auth::user()->id;
         $key=base64_decode($request->key);
+        // echo $key;die;
         $data['key']=$key;
         $data['projects']=Project::where(['status'=>1,'home_id'=>$home_id])->get();
         $job_details=Job::find($key);
         $data['job_details']=$job_details;
         $data['additional_contact'] = Constructor_additional_contact::where('home_id', $home_id)->get();
+        $data['tag'] = Tag::getAllTag($home_id);
+        // $product_details=Product::product_detail($request->id);
+        // $tax=Product::tax_detail($home_id);
         $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1,'deleted_at'=>null])->get();
+        $data['job_appointment']=Construction_job_appointment::where(['job_id'=>$key,'status'=>1,'deleted_at'=>null])->get();
         $data['job_type']=Job_type::where('status',1)->get();
         $data['country']=Country::all_country_list();
         // echo "<pre>";print_r($data['country']);die;
@@ -267,12 +273,20 @@ class JobController extends Controller
         $data['category']=Product_category::with('parent', 'children')->where('status',1)->get();
         $data['account_code']=Construction_account_code::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['sales_tax']=Construction_tax_rate::where(['home_id'=>$home_id,'status'=>1])->get();
-        $data['site']=Constructor_customer_site::where('customer_id',$job_details->customer_id)->get();
-        // echo "<pre>";print_r($data['site']);die;
+        $customerId = optional($job_details)->customer_id;
+        $customer_details=optional(Customer::find($customerId));
+        $data['site']=Constructor_customer_site::where('customer_id',$customerId)->get();
+        $data['customer_profession']=Job_title::find($customer_details->job_title);
+        $data['contact_name']=$customer_details->contact_name;
+        // $customer_details=Customer::with('sites','additional_contact','customer_project')->where('id', $customerId)->first();
+        // $data['site']=$customer_details->sites;
+        // $data['customer_project']=$customer_details->customer_project;
+        // echo "<pre>";print_r($customer_profession);die;
+        // echo "<pre>";print_r($data['sales_tax']);die;
         return view('frontEnd.salesAndFinance.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
-        echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());die;
         $home_id = Auth::user()->home_id;
         $user_id=Auth::user()->id;
         
@@ -284,10 +298,11 @@ class JobController extends Controller
         } else {
             $requestData = $request->all();
         }
-        $last_job_id=Job::orderBy('id','DESC')->first();
-        $requestData['last_job_id'] = $last_job_id;
+        $last_job_id=optional(Job::orderBy('id','DESC')->first());
+        $requestData['last_job_id'] = $last_job_id->id;
         $requestData['user_id'] = $user_id;
         $requestData['home_id'] = $home_id;
+        // echo "<pre>";print_r($requestData);die;
         try {
             $job_id=Job::job_save($requestData);
         } catch (\Exception $e) {
@@ -304,7 +319,7 @@ class JobController extends Controller
         }
         // echo "<pre>";print_r($job_product);die;
         
-        return response()->json($job_id);
+        return response()->json(['success'=>true, 'data'=>$job_id]);
 
     }
     public function get_customer_details_front(Request $request){
@@ -343,15 +358,15 @@ class JobController extends Controller
         $product_details=Product::product_detail($request->id);
         $tax=Product::tax_detail($home_id);
         $html.= '<tr>
-                <td>'.$product_details->product_code.'</td>
-                <td>'.$product_details->product_name.'</td>
-                <td>'.$product_details->description.'</td>
+                <td>'.$product_details->product_code.'<input type="hidden" id="product_codejob" name="product_codejob[]" value="'.$product_details->product_code.'"></td>
+                <td>'.$product_details->product_name.'<input type="hidden" id="product_namejob" name="product_namejob[]" value="'.$product_details->product_name.'"></td>
+                <td>'.$product_details->description.'<input type="hidden" id="descriptionjob" name="descriptionjob[]" value="'.$product_details->description.'"></td>
                 <td><input type="text" class="" value="'.$product_details->qty.'" name="quantity[]" id="quantity"></td>
-                <td>'.$product_details->cost_price.'</td>
-                <td>'.$product_details->price.'</td>
+                <td>'.$product_details->cost_price.'<input type="hidden" id="cost_pricejob" name="cost_pricejob[]" value="'.$product_details->cost_price.'"></td>
+                <td>'.$product_details->price.'<input type="hidden" id="pricejob" name="pricejob[]" value="'.$product_details->price.'"></td>
                 <td><input type="text" class="" value="0" name="discount[]"></td>';
 
-        $html.= '<td><select id="" name="">';
+        $html.= '<td><select id="vatjob" name="vatjob[]">';
         foreach($tax as $taxv){
         $html.= '<option value="'.$taxv->id.'">'.$taxv->name.'</option>';
         }
@@ -377,13 +392,24 @@ class JobController extends Controller
         
     }
     public function save_job_product($job_detail,$data){
-        // echo "<pre>";print_r($job_detail);die;
+        // echo "<pre>";print_r($data);die;
         $quantity=$data['quantity'];
         for($i=0;$i<count($quantity);$i++){
-            $table=new Construction_jobassign_product;
+            if(array_key_exists('idjobasign',$data) && $data['idjobasign'] !=''){
+                $table=Construction_jobassign_product::find($data['idjobasign'][$i]);
+            }else{
+                $table=new Construction_jobassign_product;
+            }
             $table->job_id=$job_detail['id'];
             $table->product_id=$data['product_detail_id'][$i];
             $table->qty=$data['quantity'][$i];
+            $table->code=$data['product_codejob'][$i];
+            $table->description=$data['descriptionjob'][$i];
+            $table->cost_price=$data['cost_pricejob'][$i];
+            $table->price=$data['pricejob'][$i];
+            $table->discount=$data['discount'][$i];
+            $table->vat=$data['vatjob'][$i];
+            $table->product_name=$data['product_namejob'][$i];
             $table->save();
         }
         return true;
@@ -394,7 +420,7 @@ class JobController extends Controller
             'user_id'=>$data['Appointmentuser_id'],
             'home_id'=>$data['home_id'],
             'job_id'=>$job_detail['id'],
-            'appointment_type_id'=>$data['appointment_type_id'],
+            'appointment_type_id'=>$data['appointment_type_id'] ?? null,
             'start_date'=>$data['appointment_start_date'],
             'start_time'=>$data['start_time'],
             'end_date'=>$data['end_date'],
