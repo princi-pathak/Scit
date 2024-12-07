@@ -66,7 +66,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="#!" id="OpenAddCustomerModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                <a href="javascript:void(0)" id="OpenAddCustomerModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -91,14 +91,14 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="#!" id="OpenAddCustomerContact" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                <a href="javascript:void(0)" id="OpenAddCustomerContact" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputEmail" class="col-sm-3 col-form-label"> Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" id="billingDetailsName" placeholder="Company Name">
+                                            <input type="text" class="form-control editInput" id="billingDetailsName" placeholder="Full Name">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -127,7 +127,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="plusandText">
-                                                <a href="#!" class="formicon"><i class="fa-solid fa-magnifying-glass-location"></i></a>
+                                                <a href="javascript:void(0)" class="formicon"><i class="fa-solid fa-magnifying-glass-location"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +192,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="#!" id="openCustomerSiteAddress" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                <a href="javascript:void(0)" id="openCustomerSiteAddress" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -233,7 +233,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="plusandText">
-                                                <a href="#!" class="formicon"><i class="fa-solid fa-magnifying-glass-location"></i> </a>
+                                                <a href="javascript:void(0)" class="formicon"><i class="fa-solid fa-magnifying-glass-location"></i> </a>
                                             </div>
                                         </div>
                                     </div>
@@ -300,7 +300,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="plusandText">
-                                                    <a href="#!" id="" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                    <a href="javascript:void(0)" id="" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -319,7 +319,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="plusandText">
-                                                    <a href="#!" id="openSiteDeliveryModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                    <a href="javascript:void(0)" id="openSiteDeliveryModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -333,7 +333,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="plusandText">
-                                                    <a href="#!" id="" onclick="openRegionModal('siteDeliveryRegions');" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                    <a href="javascript:void(0)" id="" onclick="openRegionModal('siteDeliveryRegions');" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1444,10 +1444,10 @@
 
                                 <div class="col-sm-12 mb-3 mt-2">
                                     <div class=" p-0">
-                                        <a href="#" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
-                                        <a href="#" class="profileDrop">Upload Multi Attachment</a>
-                                        <a href="#" class="profileDrop">Preview Attachment(s)</a>
-                                        <a href="#" class="profileDrop">Download Attachment</a>
+                                        <a href="javascript:void(0)" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
+                                        <a href="javascript:void(0)" class="profileDrop">Upload Multi Attachment</a>
+                                        <a href="javascript:void(0)" class="profileDrop">Preview Attachment(s)</a>
+                                        <a href="javascript:void(0)" class="profileDrop">Download Attachment</a>
 
                                     </div>
                                 </div>
@@ -2603,7 +2603,7 @@
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
                                         <td>
-                                            <span id="markUpLinkRemove"><a href="#!" onclick="applyMarkup();"> Apply overall markup</a> </span>
+                                            <span id="markUpLinkRemove"><a href="javascript:void(0)" onclick="applyMarkup();"> Apply overall markup</a> </span>
                                             
                                         </td>
                                         <td></td>
@@ -2790,7 +2790,7 @@
             node.innerHTML = `<td>
                     <div class="CSPlus">
                         <span class="plusandText">
-                            <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                            <a href="javascript:void(0)" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
                             <input type="hidden" name="products[${rowIndex}][id]" value="${item.id}">
                             <input type="text" class="form-control editInput input80" name="products[${rowIndex}][product_code]" value="${item.product_code}">
                         </span>
@@ -2822,7 +2822,7 @@
                 <td>
                     <div class="calculatorIcon">
                         <span class="plusandText">
-                            <a href="#!" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
+                            <a href="javascript:void(0)" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
                         </span>
                     </div>
                 </td>
@@ -2865,7 +2865,7 @@
                         <span class="oNOfswich">
                             <input type="checkbox">
                         </span>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                     </div>
                 </td>`;
 
@@ -3970,7 +3970,7 @@
                 <td>
                     <div class="CSPlus">
                         <span class="plusandText">
-                            <a href="#!" onclick="insrtTitle()" class="formicon pt-0 me-2">
+                            <a href="javascript:void(0)" onclick="insrtTitle()" class="formicon pt-0 me-2">
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                             <label>Title*:</label>
@@ -3986,7 +3986,7 @@
                         <span class="oNOfswich">
                             <input type="checkbox">
                         </span>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                     </div>
                 </td> 
             </form>
@@ -4015,7 +4015,7 @@
                 <div class="d-flex">
                     <div class="CSPlus">
                         <span class="plusandText pt-1">
-                            <a href="#!" onclick="insrtImgappend()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                            <a href="javascript:void(0)" onclick="insrtImgappend()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
                             <label></label>
                         </span>
                     </div>
@@ -4031,7 +4031,7 @@
                     <span class="oNOfswich">
                         <input type="checkbox">
                     </span>
-                    <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                    <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                 </div>
             </td>            
         `;
@@ -4061,7 +4061,7 @@
                 <div class="d-flex">
                     <div class="CSPlus">
                         <span class="plusandText pt-1">
-                            <a href="#!" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
+                            <a href="javascript:void(0)" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
                         </span>
                     </div>
                     <input type="text" class="form-control editInput" name="item[][description][item_description]" id="" placeholder="Type to add product">
@@ -4072,7 +4072,7 @@
                     <span class="oNOfswich">
                         <input type="checkbox">
                     </span>
-                    <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                    <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                 </div>
             </td>                     
         `;
@@ -4102,7 +4102,7 @@
                     <div class="d-flex">
                     <div class="CSPlus">
                         <span class="plusandText pt-1">
-                            <a href="#!" onclick="insrtSection()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                            <a href="javascript:void(0)" onclick="insrtSection()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
                             <label class="secTitle">Section Title* :</label>
                         </span>
                     </div>
@@ -4113,10 +4113,10 @@
                             <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
                                 + Section Insert </a>
                             <div class="dropdown-menu fade-up m-0">
-                                <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Section Product</a>
-                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionTtle()">insert Section Title</a>
-                                <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">insert Section Image</a>
-                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionDescription()">insert Section Description</a>
+                                <a href="javascript:void(0)" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Section Product</a>
+                                <a href="javascript:void(0)" class="dropdown-item col-form-label" onclick="insrtSectionTtle()">insert Section Title</a>
+                                <a href="javascript:void(0)" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">insert Section Image</a>
+                                <a href="javascript:void(0)" class="dropdown-item col-form-label" onclick="insrtSectionDescription()">insert Section Description</a>
                             </div>
                         </div>
                     </div>
@@ -4125,7 +4125,7 @@
                         <span class="oNOfswich">
                             <input type="checkbox">
                         </span>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                     </div>
                     </div>
 
@@ -4140,7 +4140,7 @@
                                         <div class="tableplusBTN">
                                             <span>Account Code </span>
                                             <span class="plusandText ps-3">
-                                                <a href="#!" id="openSectionAccountCode" class="formicon pt-0"> <i class="fa-solid fa-square-plus"></i> </a>
+                                                <a href="javascript:void(0)" id="openSectionAccountCode" class="formicon pt-0"> <i class="fa-solid fa-square-plus"></i> </a>
                                             </span>
                                         </div>
                                     </th>
@@ -4161,7 +4161,7 @@
                             <td>
                     <div class="CSPlus">
                         <span class="plusandText">
-                            <a href="#!" class="formicon pt-0 me-2" onclick="insrtProduct()"> <i
+                            <a href="javascript:void(0)" class="formicon pt-0 me-2" onclick="insrtProduct()"> <i
                                     class="fa-solid fa-square-plus"></i> </a>
                             <input type="text"
                                 class="form-control editInput input80"
@@ -4207,7 +4207,7 @@
                 <td>
                     <div class="calculatorIcon">
                         <span class="plusandText">
-                            <a href="#!" class="formicon pt-0"
+                            <a href="javascript:void(0)" class="formicon pt-0"
                                 data-bs-toggle="modal"
                                 data-bs-target="#calculatePop"> <span
                                     class="material-symbols-outlined">
@@ -4263,7 +4263,7 @@
                         <span class="oNOfswich">
                             <input type="checkbox">
                         </span>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                     </div>
                 </td>    
                         </tr>
@@ -4295,7 +4295,7 @@
                         <td>
                     <div class="CSPlus">
                         <span class="plusandText">
-                            <a href="#!" onclick="insrtSectionTtle()" class="formicon pt-0 me-2">
+                            <a href="javascript:void(0)" onclick="insrtSectionTtle()" class="formicon pt-0 me-2">
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                             <label>Title*:</label>
@@ -4339,7 +4339,7 @@
                         <div class="d-flex">
                             <div class="CSPlus">
                                 <span class="plusandText pt-1">
-                                    <a href="#!" onclick="insrtSectionImg()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                                    <a href="javascript:void(0)" onclick="insrtSectionImg()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
                                     <label></label>
                                 </span>
                             </div>
@@ -4354,7 +4354,7 @@
                             <span class="oNOfswich">
                                 <input type="checkbox">
                             </span>
-                            <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                            <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                         </div>
                     </td>  
                     `;
@@ -4381,7 +4381,7 @@
                             <div class="d-flex">
                                 <div class="CSPlus">
                                     <span class="plusandText pt-1">
-                                        <a href="#!" onclick="insrtSectionDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
+                                        <a href="javascript:void(0)" onclick="insrtSectionDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
                                     </span>
                                 </div>
                                 <input type="hidden" name="item[][itemDetails]" value="section_description">
@@ -4393,7 +4393,7 @@
                                 <span class="oNOfswich">
                                     <input type="checkbox">
                                 </span>
-                                <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                                <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                             </div>
                         </td>   
                     `;
@@ -4423,7 +4423,7 @@
                             <option>Select user</option>
                             <option>Default</option>
                         </select>
-                        <a href="#!" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
+                        <a href="javascript:void(0)" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
                     </div>
                     <div class="alertBy">
                         <label><strong>Alert By :</strong></label>
@@ -4486,7 +4486,7 @@
                     <div class="statuswating">
 
                         <div><label for="inputPurchase" class="col-sm-3 col-form-label">Awaiting</label></div>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
                     </div>
                       <div class="tabheadingTitle">
                          <label for="inputPurchase" class="col-sm-3 col-form-label"><input type="checkbox">Dispatch Now</label>

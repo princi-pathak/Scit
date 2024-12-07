@@ -43,7 +43,7 @@
     function saveJobTitle() {
 
         let JobTitleId = document.getElementById('job_title_id').getAttribute('data-jobTitle-id');
-     
+
         var formData = $('#jobTitleForm').serialize();
         $.ajax({
             url: '{{ route("customer.ajax.saveJobTitle") }}', // Define the URL route for saving
@@ -69,6 +69,11 @@
             success: function(response) {
                 console.log("jxcnjfjnfnk", response.data);
                 jobTitle.innerHTML = '';
+
+                const optionJob = document.createElement('option');
+                optionJob.text = "Please Select";
+                optionJob.appendChild(option);
+
                 response.data.forEach(user => {
                     const option = document.createElement('option');
                     option.value = user.id;
@@ -81,5 +86,4 @@
             }
         });
     }
-
 </script>

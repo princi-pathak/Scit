@@ -93,7 +93,7 @@ class QuoteService
             'internal_notes' => $quote->internal_notes,
             'sub_total' => $quote->sub_total,
             'vat_amount' => $quote->vat_amount,
-            'total' => $quote->total,
+            'total_amount' => $quote->total,
             'deposit' => $quote->deposit,
             'outstanding' => $quote->outstanding,
             'status' => $quote->status,
@@ -107,6 +107,11 @@ class QuoteService
                 'mobile_country_code' => $quote->customer->mobile_country_code,
                 'mobile' => $quote->customer->mobile,
                 'email' => $quote->customer->email,
+                'address' => $quote->customer->address,
+                'postal_code' => $quote->customer->postal_code,
+                'city' => $quote->customer->city,
+                'country' => $quote->customer->country,
+                'country_code' => $quote->customer->country_code,
             ],
             'products' => $quote->products->map(function ($product) {
                 return [
@@ -126,7 +131,6 @@ class QuoteService
             })->toArray(),
             'total' => $quote->total_amount,
         ];
-
     }
    
 }

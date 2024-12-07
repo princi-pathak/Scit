@@ -52,13 +52,13 @@
                                         <label for="inputName" class="col-sm-3 col-form-label">Quote Ref</label>
                                         <div class="col-sm-9">
                                             <input type="hidden" name="quote_id" value="{{ $quoteData['id'] }}">
-                                            <input type="text" class="form-control-plaintext editInput"  id="" value="{{ $quoteData['quote_ref'] }}" readonly>
+                                            <input type="text" class="form-control-plaintext editInput" id="" value="{{ $quoteData['quote_ref'] }}" readonly>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Customer<span class="radStar">*</span></label>
                                         <div class="col-sm-7">
-                                            <input type="hidden" value="{{ $quoteData['quote_ref'] }}" id="setCustomerId">
+                                            <input type="hidden" value="{{ $quoteData['customer']['customer.id'] }}" id="setCustomerId">
                                             <select class="form-control editInput selectOptions" name="customer_id" id="getCustomerList">
                                                 <option value="">Select Customer</option>
                                             </select>
@@ -77,54 +77,54 @@
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="formDtail">
                                     <h4 class="contTitle mb-3">Billing Details</h4>
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Contact </label>
                                         <div class="col-sm-7">
-                                            <input type="hidden" value="{{ $quoteData['billing_add_id'] }}" id="">
+                                            <input type="hidden" value="{{ $quoteData['billing_add_id'] }}" id="edit_customer_billing_id">
                                             <input type="hidden" id="billing_add_id" name="billing_add_id">
-                                            <select class="form-control editInput selectOptions" disabled id="billingDetailContact">
+                                            <select class="form-control editInput selectOptions" id="billingDetailContact">
                                                 <option>Select Customer First</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="#!" id="OpenAddCustomerContact" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                <a href="javascript:void(0)" id="OpenAddCustomerContact" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputEmail" class="col-sm-3 col-form-label"> Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" id="billingDetailsName" placeholder="Company Name">
+                                            <input type="text" class="form-control editInput" value="{{ $quoteData['customer']['contact_name'] ?? '' }}" id="billingDetailsName" placeholder="Full Name">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputAddress" class="col-sm-3 col-form-label">Address <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control textareaInput" name="address" id="billingDetailsAddress" rows="3" placeholder="Address"></textarea>
+                                            <textarea class="form-control textareaInput" name="address" id="billingDetailsAddress" rows="3" placeholder="Address">{{ $quoteData['customer']['address'] ?? '' }}</textarea>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="billingCustomerCity" class="col-sm-3 col-form-label">City </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerCity" placeholder="City">
+                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerCity" value="{{ $quoteData['customer']['city'] ?? '' }}" placeholder="City">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">County</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerCounty" placeholder="County">
+                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerCounty" value="{{ $quoteData['customer']['country'] ?? '' }}" placeholder="County">
                                         </div>
                                     </div>
 
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">Postcode</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerPostcode" placeholder="Postcode">
+                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerPostcode" value="{{ $quoteData['customer']['postal_code'] ?? '' }}" placeholder="Postcode">
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="plusandText">
@@ -138,12 +138,12 @@
                                             <select class="form-control editInput selectOptions" name="telephone_country_code" id="billingCustomerTelephoneCode">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['telephone_country_code']) && $quoteData['customer']['telephone_country_code'] == $value->id) ? 'selected' : '' }}> + {{ $value->code }} - {{ $value->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="billingCustomerTelephone" placeholder="Telephone">
+                                            <input type="text" class="form-control editInput" id="billingCustomerTelephone" value="{{ $quoteData['customer']['telephone'] ?? '' }}" placeholder="Telephone">
                                         </div>
                                     </div>
 
@@ -153,26 +153,27 @@
                                             <select class="form-control editInput selectOptions" name="mobile_country_code" id="billingCustomerMobileCode">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['mobile_country_code']) && $quoteData['customer']['mobile_country_code'] == $value->id) ? 'selected' : '' }}> + {{ $value->code }} - {{ $value->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="billingCustomerMobile" placeholder="Mobile">
+                                            <input type="text" class="form-control editInput" id="billingCustomerMobile" value="{{ $quoteData['customer']['mobile'] ?? '' }}" placeholder="Mobile">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Email Address</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" id="billingDetailsEmail" placeholder="Email Address">
+                                            <input type="text" class="form-control editInput" id="billingDetailsEmail" value="{{ $quoteData['customer']['email'] ?? '' }}" placeholder="Email Address">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Country</label>
                                         <div class="col-sm-9">
+                                            <input type="hidden" value="{{ $quoteData['customer']['country_code'] ?? '' }}" id="edit_country_code">
                                             <select class="form-control editInput" name="" id="billingCustomerCountry">
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['country_code']) && $quoteData['customer']['country_code'] == $value->id) ? 'selected' : '' }}>{{ $value->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -185,52 +186,52 @@
                                     <div class="mb-3 row">
                                         <label for="inputJobRef" class="col-sm-3 col-form-label">Site</label>
                                         <div class="col-sm-7">
-                                            <!-- <input type="hidden" id="customer_site_id" name="customer_site_id"> -->
-                                            <select class="form-control editInput selectOptions" disabled id="customerSiteDetails">
-                                                <option>-Not Assigned-</option>
+                                            <input type="hidden" id="edit_customer_site_id" name="{{ $quoteData['site_add_id'] }}">
+                                            <select class="form-control editInput selectOptions" id="customerSiteDetails">
+                                                <option>Same As Customer</option>
                                             </select>
                                             <input type="hidden" name="site_add_id" id="siteCustomerId">
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="#!" id="openCustomerSiteAddress" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                <a href="javascript:void(0)" id="openCustomerSiteAddress" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="customerSiteName" class="col-sm-3 col-form-label">Name </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteName" placeholder="Name">
+                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteName" value="{{ $quoteData['customer']['contact_name'] ?? '' }}" placeholder="Name">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="customerSiteCompany" class="col-sm-3 col-form-label">Company </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCompany" placeholder="Company">
+                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCompany" value="{{ $quoteData['customer']['name'] ?? '' }}" placeholder="Company">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputAddress" class="col-sm-3 col-form-label">Address</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control textareaInput" name="address" id="customerSiteAddress" rows="3" placeholder="Address"></textarea>
+                                            <textarea class="form-control textareaInput" name="address" id="customerSiteAddress" rows="3" placeholder="Address">{{ $quoteData['customer']['address'] ?? '' }}</textarea>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="customerSiteCity" class="col-sm-3 col-form-label">City </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCity" placeholder="City">
+                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCity" value="{{ $quoteData['customer']['name'] ?? '' }}" placeholder="City">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">County </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCounty" placeholder="County">
+                                            <input type="text" class="form-control editInput textareaInput" value="{{ $quoteData['customer']['country'] ?? '' }}" id="customerSiteCounty" placeholder="County">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">Postcode </label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSitePostCode" placeholder="Postcode">
+                                            <input type="text" class="form-control editInput textareaInput" id="customerSitePostCode" value="{{ $quoteData['customer']['postal_code'] ?? '' }}" placeholder="Postcode">
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="plusandText">
@@ -244,12 +245,12 @@
                                             <select class="form-control editInput selectOptions" id="customerSiteTelephoneCode">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['telephone_country_code']) && $quoteData['customer']['telephone_country_code'] == $value->id) ? 'selected' : '' }}> + {{ $value->code }} - {{ $value->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="customerSiteTelephone" placeholder="Telephone ">
+                                            <input type="text" class="form-control editInput" id="customerSiteTelephone" value="{{ $quoteData['customer']['telephone'] ?? '' }}" placeholder="Telephone ">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -258,12 +259,12 @@
                                             <select class="form-control editInput selectOptions" id="customerSiteMobileCode">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['mobile_country_code']) && $quoteData['customer']['mobile_country_code'] == $value->id) ? 'selected' : '' }}> + {{ $value->code }} - {{ $value->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="customerSiteMobile" placeholder="Mobile">
+                                            <input type="text" class="form-control editInput" id="customerSiteMobile" value="{{ $quoteData['customer']['mobile'] ?? '' }}" placeholder="Mobile">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -271,7 +272,7 @@
                                         <div class="col-sm-9">
                                             <select class="form-control editInput" name="" id="customerSiteDetailsCountry">
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['country_code']) && $quoteData['customer']['country_code'] == $value->id) ? 'selected' : '' }}>{{ $value->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -568,6 +569,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
+                                                                        <!-- <?php print_r($quoteData); ?> -->
                                                                         <td>1</td>
                                                                         <td>{{ $quoteData['quote_ref'] }}</td>
                                                                         <td>-</td>
@@ -575,7 +577,7 @@
                                                                         <td>{{ $quoteData['expiry_date'] }}</td>
                                                                         <td>&#163;{{ $quoteData['sub_total'] }}</td>
                                                                         <td>&#163;{{ $quoteData['vat_amount'] }}</td>
-                                                                        <td>&#163;{{ $quoteData['total']}}</td>
+                                                                        <td>&#163;{{ $quoteData['total_amount'] ?? '0.00'}}</td>
                                                                         <td>&#163;{{ $quoteData['deposit'] ?? '0.00' }}</td>
                                                                         <td>&#163;{{ $quoteData['outstanding'] }}</td>
                                                                         <td>{{ $quoteData['status'] }}</td>
@@ -1328,7 +1330,59 @@
                     </div>
                     <!--  -->
                     <div id="hideAttachmentTask">
-                        <!-- *************************Start Task*************************************************** -->
+
+                        <!-- ************************************* Start Attechments ******************************** -->
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Attachments</label>
+                            <div class="row">
+
+                                <div class="col-sm-12 mb-3 mt-2">
+                                    <div class=" p-0">
+                                        <a href="#" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
+                                        <a href="#" class="profileDrop">Upload Multi Attachment</a>
+                                        <a href="#" class="profileDrop">Preview Attachment(s)</a>
+                                        <a href="#" class="profileDrop">Download Attachment</a>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
+                                    <div class="productDetailTable">
+                                        <table class="table" id="containerA">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Type</th>
+                                                    <th>Title </th>
+                                                    <th>Description</th>
+                                                    <th>Section </th>
+                                                    <th>Customer Visible </th>
+                                                    <th>Mobile User Visible </th>
+                                                    <th>File Name</th>
+                                                    <th>Mime Type / Size</th>
+                                                    <th>Created On</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="7">
+                                                        <label class="red_sorryText">
+                                                            Sorry, no attachment(s) found
+                                                        </label>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- ************************************* End Of Attechment ******************************** -->
+
+                        <!-- ******************************* Start Task ***************************** -->
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Tasks</label>
                             <div class="row">
@@ -1436,58 +1490,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- **********************End of Task************************ -->
+                        <!-- ****************************** End of Task ***************************** -->
 
-                        <!-- ***********************************Start Attechments******************************** -->
-                        <div class="newJobForm mt-4">
-                            <label class="upperlineTitle">Attachments</label>
-                            <div class="row">
-
-                                <div class="col-sm-12 mb-3 mt-2">
-                                    <div class=" p-0">
-                                        <a href="#" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
-                                        <a href="#" class="profileDrop">Upload Multi Attachment</a>
-                                        <a href="#" class="profileDrop">Preview Attachment(s)</a>
-                                        <a href="#" class="profileDrop">Download Attachment</a>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
-                                    <div class="productDetailTable">
-                                        <table class="table" id="containerA">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Type</th>
-                                                    <th>Title </th>
-                                                    <th>Description</th>
-                                                    <th>Section </th>
-                                                    <th>Customer Visible </th>
-                                                    <th>Mobile User Visible </th>
-                                                    <th>File Name</th>
-                                                    <th>Mime Type / Size</th>
-                                                    <th>Created On</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="7">
-                                                        <label class="red_sorryText">
-                                                            Sorry, no attachment(s) found
-                                                        </label>
-                                                    </td>
-
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <!-- ***************************************End Of Attechment********************************************** -->
                     </div>
 
 
@@ -1970,7 +1974,7 @@
                                 <div class="mb-2 row">
                                     <label for="inputName" class="col-sm-4 col-form-label">Customer </label>
                                     <div class="col-sm-8">
-                                        <label for="inputAddress" class="col-form-label"><span id="setCustomerName"></span> </label>
+                                        <label for="inputAddress" class="col-form-label"><span id="setCustomerName">{{ $quoteData['customer']['name'] }}</span> </label>
                                         <input type="hidden" name="customer_id" id="customer_contact_id">
                                     </div>
                                 </div>
@@ -2369,17 +2373,13 @@
     CKEDITOR.replace('textarea9', editor_config);
     CKEDITOR.replace('textarea10', editor_config);
     CKEDITOR.replace('textarea11', editor_config);
-    //Text Editer
-
-    // document.querySelector("#listAllProduct").addEventListener("click", function(e) {
-    //     const productIds = document.getElementById('selectedProductIds').value;
-    //     const productIdsArray = JSON.parse(productIds || '[]');
-    //     productIdsArray.forEach(id => {
-    //         getProductData(id); // Call the function for each ID
-    //     });
-    // });
 
     $(document).ready(function() {
+
+        document.getElementById('hideQuoteDetails').style.display = "none";
+        document.getElementById('hideQuoteDiv').style.display = "none";
+        document.getElementById('hideDepositSection').style.display = "none";
+
 
         $.ajaxSetup({
             headers: {
@@ -2447,491 +2447,7 @@
                 $('#results').empty(); // Clear results if the input is empty
             }
         });
-    });
-
-    function getCustomerType() {
-        $.ajax({
-            url: '{{ route("quote.ajax.getCustomerType") }}',
-            success: function(response) {
-                console.log(response.message);
-                const get_customer_type = document.getElementById('get_customer_type');
-                get_customer_type.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.title;
-                    get_customer_type.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getProductData(selectedId) {
-        $.ajax({
-            url: '{{ route("item.ajax.getProductFromId") }}',
-            method: 'Post',
-            data: {
-                id: selectedId
-            },
-            success: function(response) {
-                console.log("response.data", response.data);
-                quoteProductTable(response.data, 'quoteProducts');
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getAccountCode() {
-        $.ajax({
-            url: '{{ route("Invoice.ajax.getActiveAccountCode") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("response.getActiveAccountCode", response.data);
-                // Ensure response.data contains the account codes
-                if (Array.isArray(response.data)) {
-                    // Iterate over all Account Code dropdowns and populate them
-                    document.querySelectorAll('#accoutCodeList').forEach(dropdown => {
-                        dropdown.innerHTML = ''; // Clear existing options
-
-                        const optionInitial = document.createElement('option');
-                        optionInitial.textContent = "-No Department-"; // Use appropriate key from your response
-                        optionInitial.value = "";
-                        dropdown.appendChild(optionInitial);
-                        // Append new options
-                        response.data.forEach(code => {
-                            const option = document.createElement('option');
-                            option.value = code.id;
-                            option.textContent = code.departmental_code + "-" + code.name; // Use appropriate key from your response
-                            dropdown.appendChild(option);
-                        });
-                    });
-                } else {
-                    console.error("Invalid response format");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function taxRate() {
-        $.ajax({
-            url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("response.data", response.data);
-                if (Array.isArray(response.data)) {
-                    // Iterate over all Account Code dropdowns and populate them
-                    document.querySelectorAll('#getTaxRate').forEach(dropdown => {
-                        dropdown.innerHTML = ''; // Clear existing options
-
-                        const optionInitial = document.createElement('option');
-                        optionInitial.textContent = "Please Select"; // Use appropriate key from your response
-                        optionInitial.value = 0;
-                        dropdown.appendChild(optionInitial);
-                        // Append new options
-                        response.data.forEach(code => {
-                            const option = document.createElement('option');
-                            option.value = code.id; // Use appropriate key from your response
-                            option.textContent = code.name; // Use appropriate key from your response
-                            if (code.id === 2) {
-                                option.selected = true; // Select the option where id = 2
-                            }
-                            dropdown.appendChild(option);
-                        });
-                    });
-                } else {
-                    console.error("Invalid response format");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-
-
-
-    function applyMarkup() {
-        document.getElementById('markUpLinkRemove').innerHTML = '';
-        document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
-    }
-
-    function getTaxRateOnTaxId(taxID) {
-        $.ajax({
-            url: '{{ route("invoice.ajax.getTaxRateOnTaxId") }}',
-            method: 'Post',
-            data: {
-                id: 2
-            },
-            success: function(response) {
-                console.log("response.data", response.data);
-                document.querySelector('.selectedTaxID').value = response.data;
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function tableFootForProduct(tableName) {
-        const table = document.querySelector(`#${tableName}`);
-
-        if (!isFooterAppended) {
-            const tableFoot = table.querySelector('.add_table_insrt33');
-            tableFoot.innerHTML += `<tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td>Sub Total (exc. VAT) <input type="hidden" name="sub_total" id="InputFootAmount"></td>
-                                        <td class="tableAmountRight" id="footAmount">$00.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td>
-                                            <div class="discountInput">
-                                                <span>Discount</span><input type="text" class="form-control editInput input50 discountInputField" id="discountInput" value="0" data-table="${tableName}">
-                                                <span>%</span>
-                                            </div>
-                                        </td>
-                                        <td class="tableAmountRight" id="footDiscount">$00.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td>
-                                            <span id="markUpLinkRemove"><a href="#!" onclick="applyMarkup();"> Apply overall markup</a> </span>
-                                            
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td>VAT<input type="hdden" name="vat_amount" id="InputFootVatAmount"></td>
-                                        <td class="tableAmountRight" id="footVatAmount">$00.00</td>
-                                    </tr>
-                                    <tr>
-                                    <td colspan="10" class="borderNone"></td>
-                                        <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)<input type="hidden" name="total" id="inputFootTotalDiscountVat"></strong></td>
-                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">$00.00</td>
-                                    </tr>
-                                    <tr>
-                                    <td colspan="10" class="borderNone"></td>
-                                        <td>Profit<input type="hidden" name="profit" id="inputFootProfit"></td>
-                                        <td class="tableAmountRight" id="footProfit">$00.00</td>
-                                    </tr>
-                                    <tr>
-                                    <td colspan="10" class="borderNone"></td>
-                                        <td>Margin</td>
-                                        <td class="tableAmountRight" id="footMargin">00.00%</td>
-                                    </tr>
-                                    <tr>
-                                    <td colspan="10" class="borderNone"></td>
-                                        <td>Deposit</td>
-                                        <td class="tableAmountRight" id="footDeposit">$00.00</td>
-                                    </tr>
-                                    <tr>
-                                    <td colspan="10" class="borderNone"></td>
-                                        <td>Refund</td>
-                                        <td class="tableAmountRight" id="footRefund">$00.00</td>
-                                    </tr>
-                                    <tr>
-                                    <td colspan="10" class="borderNone"></td>
-                                        <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)<input type="hidden" name="outstanding" id="inputFootOutstandingAmount"></strong></td>
-                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">$00.00</td>
-                                    </tr>`;
-            isFooterAppended = true;
-
-            // Ensure the input is correctly selected
-            const discountInput = table.querySelector('#discountInput');
-            if (!discountInput) {
-                console.error('Discount input not found.');
-                return;
-            }
-
-            // Attach the event listener
-            discountInput.addEventListener('input', function() {
-                const discountValue = parseFloat(this.value) || 0;
-
-                // Update all elements with the class "discount"
-                document.querySelectorAll('.discount').forEach(discountElement => {
-                    discountElement.value = discountValue.toFixed(2); // Format to 2 decimal places
-                });
-
-                // Call calculateRowsValue function
-                if (typeof calculateRowsValue === 'function') {
-                    calculateRowsValue(table);
-                } else {
-                    console.error('calculateRowsValue function is not defined.');
-                }
-            });
-
-        }
-    }
-
-
-    function calculateRowsValue(table) {
-        const rows = table.querySelectorAll('tbody tr');
-
-        let totalQuantity = 0;
-        let totalCostPrice = 0;
-        let totalPrice = 0;
-        let totalMarkup = 0;
-
-        let totalVAT = 0;
-        const vat = 20;
-
-        let totalProfit = 0;
-        let totalDiscount = 0;
-
-        let profitElement;
-        let profitValue;
-        let numericProfit;
-        let totalMargin = 0;
-
-        let price = 0;
-
-        const doller = '$';
-
-        rows.forEach(row => {
-
-            getTaxRateOnTaxId();
-
-            // Get input values from the row
-            totalQuantity = parseInt(row.querySelector('.quantity').value) || 0;
-            totalPrice = parseFloat(row.querySelector('.price').value) || 0;
-            discount = parseInt(row.querySelector('.discount').value) || 0;
-            totalCostPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
-            totalMarkup = parseInt(row.querySelector('.priceMarkup').value) || 0;
-
-            // Calculate selling price (Cost Price + Markup - Discount)
-
-            markupAmount = (totalPrice * totalMarkup) / 100; // Percentage markup
-            console.log(markupAmount);
-            discountAmount = (totalPrice * discount) / 100; // Discount as a percentage
-            console.log(discountAmount);
-            totalDiscount += discountAmount;
-            sellingPrice = totalPrice + markupAmount - discountAmount;
-            console.log("sellingPrice", sellingPrice);
-
-            // Calculate Amount (Quantity × Selling Price)
-            amount = totalQuantity * sellingPrice;
-            console.log(amount);
-            price += amount;
-
-            // Calculate VAT amount
-            vatAmount = (amount * vat) / 100;
-            console.log(vatAmount);
-            totalVAT += vatAmount;
-            // Calculate Profit ((Selling Price - Cost Price) × Quantity)
-            profit = (sellingPrice - totalCostPrice) * totalQuantity;
-            console.log(sellingPrice);
-            totalProfit += profit;
-
-            // Calculate margin
-            margin = parseFloat((profit / sellingPrice) * 100);
-            totalMargin += margin;
-            console.log(margin);
-
-            row.querySelector('.amount').textContent = doller + amount.toFixed(2);
-
-            // Update row output fields
-            row.querySelector('.profit').textContent = doller + profit.toFixed(2);
-
-            if (margin >= 0) {
-                row.querySelector('.footRowMargin').classList.add('minusnmberGreen');
-            } else {
-                row.querySelector('.footRowMargin').classList.add('minusnmberRed');
-            }
-            row.querySelector('.footRowMargin').textContent = '(' + margin.toFixed(2) + '%' + ')';
-
-        });
-        console.log("Total Quantity: ", totalQuantity);
-        console.log("Total Cost Price: ", totalCostPrice);
-        console.log("Total Price: ", price);
-        console.log("Total Markup: ", totalMarkup);
-        console.log("Total VAT: ", totalVAT);
-        console.log("Total Discount: ", totalDiscount);
-        console.log("Total Profit: ", totalProfit);
-        console.log("Total totalMargin: ", totalMargin);
-
-        document.getElementById('footAmount').textContent = doller + price.toFixed(2);
-        document.getElementById('InputFootAmount').value = price.toFixed(2);
-        document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
-        document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
-        document.getElementById('InputFootVatAmount').value = totalVAT.toFixed(2);
-        document.getElementById('footTotalDiscountVat').textContent = doller + (price + totalVAT).toFixed(2);
-        document.getElementById('inputFootTotalDiscountVat').value = (price + totalVAT).toFixed(2);
-        document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
-        document.getElementById('inputFootProfit').value =  totalProfit.toFixed(2);
-        document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
-        document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
-        document.getElementById('inputFootOutstandingAmount').value =  (price + totalVAT).toFixed(2);
-
-        
-    }
-
-
-    let isFooterAppended = false;
-    let rowIndex = 0;
-
-    function quoteProductTable(data, tableId) {
-        const table = document.querySelector(`#${tableId}`);
-        // Populate rows as usual if data is not empty
-        data.forEach(item => {
-            console.log("1", rowIndex);
-            const tableBody = document.querySelector(`#${tableId} tbody`);
-            const node = document.createElement("tr");
-            taxRate();
-            node.classList.add("add_table_insrt");
-            node.innerHTML = `<td>
-                    <div class="CSPlus">
-                        <span class="plusandText">
-                            <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                            <input type="hidden" name="products[${rowIndex}][id]" value="${item.id}">
-                            <input type="text" class="form-control editInput input80" name="products[${rowIndex}][product_code]" value="${item.product_code}">
-                        </span>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput" name="products[${rowIndex}][product_name]" value="${item.product_name}">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <textarea class="form-control textareaInput" id="inputAddress" name="products[${rowIndex}][description]" rows="2" placeholder="Description"></textarea>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <select class="form-control editInput selectOptions" onclick="getAccountCode();" name="products[${rowIndex}][account_code]" id="accoutCodeList">
-                            <option>-No Department-</option> 
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class=""><input type="text" class="form-control editInput input50 quantity" name="products[${rowIndex}][quantity]" value="1"></div>
-                </td>
-                <td>
-                    <div class=""><input type="text" class="form-control editInput input50 costPrice" name="products[${rowIndex}][cost_price]" value="${parseFloat(item.cost_price || 0).toFixed(2)}"></div>
-                </td>
-                <td>
-                    <div class="calculatorIcon">
-                        <span class="plusandText">
-                            <a href="#!" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
-                        </span>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50 price" name="products[${rowIndex}][price]" value="${parseFloat(item.price || 0).toFixed(2)}">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${parseFloat(item.margin || 0).toFixed(2)}">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="hidden" class="selectedTaxID">
-                        <select class="form-control editInput selectOptions vat" name="products[${rowIndex}][VAT]" id="getTaxRate">
-                            <option>Please Select</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="d-flex">
-                        <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="0">
-                        <select class="form-control editInput selectOptions input50" name="" id="">
-                            <option>Please Select</option>
-                            <option>%</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <span class="amount">$00.00</span>
-                </td>
-                <td>
-                    <span class="profit">$00.00</span>
-                    <div class="pt-1 footRowMargin">(00.00%)</div>
-                </td>
-                <td>
-                    <div class="statuswating">
-                        <span class="oNOfswich">
-                            <input type="checkbox">
-                        </span>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                </td>`;
-
-            tableFootForProduct(tableId);
-            isFooterAppended = true;
-            rowIndex++;
-            console.log('2', rowIndex);
-
-            if (tableBody) {
-                tableBody.appendChild(node);
-
-
-                attachRowEventListeners(node, table)
-                const closeButton = node.querySelector('.closeappend');
-                closeButton.addEventListener('click', function() {
-                    node.remove(); // Remove the row when close button is clicked 
-                    clearFooter(table);
-                    calculateRowsValue(table);
-                });
-            } else {
-                console.error("Table body with ID 'add_table_insrt' not found.");
-            }
-
-        });
-        calculateRowsValue(table);
-    }
-
-    function attachRowEventListeners(row, table) {
-        // Attach change events for quantity, costPrice, price, etc.
-        row.querySelector('.quantity')?.addEventListener('input', () => calculateRowsValue(table));
-        row.querySelector('.costPrice')?.addEventListener('input', () => calculateRowsValue(table));
-        row.querySelector('.price')?.addEventListener('input', () => calculateRowsValue(table));
-        row.querySelector('.discount')?.addEventListener('input', () => calculateRowsValue(table));
-        row.querySelector('.vat')?.addEventListener('change', () => calculateRowsValue(table));
-    }
-
-    function clearFooter(table) {
-        const tableBody = table.querySelector('tbody');
-        const tableFoot = table.querySelector('tfoot');
-        if (tableBody && tableBody.children.length === 0 && tableFoot) {
-            tableFoot.innerHTML = ''; // Clear the footer
-            isFooterAppended = false; // Reset the flag
-        }
-    }
-
-    function getQuoteType(quoteType) {
-        $.ajax({
-            url: '{{ route("quote.ajax.getQuoteTypes") }}',
-            success: function(response) {
-                console.log(response.message);
-                quoteType.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.title;
-                    quoteType.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getCustomerList() {
+        const setCustomerId = document.getElementById('setCustomerId').value;
 
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerList") }}',
@@ -2944,6 +2460,10 @@
                     const option = document.createElement('option');
                     option.value = user.id;
                     option.text = user.name;
+                    if (user.id == setCustomerId) {
+                        option.selected = true; // Mark as selected
+                    }
+
                     get_customer_type.appendChild(option);
                 });
             },
@@ -2951,112 +2471,196 @@
                 console.error(error);
             }
         });
-    }
 
-    function getCountriesListCustomer(selectElement) {
-        $.ajax({
-            url: '{{ route("ajax.getCountriesList") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log(response.Data);
-                selectElement.innerHTML = '';
-                response.Data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name;
-                    selectElement.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
 
-    function getTags(tags) {
-        $.ajax({
-            url: '{{ route("General.ajax.getTags") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("jxcnjfjnfnk", response.data);
-                tags.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.title;
-                    tags.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
+        const edit_customer_billing_id = document.getElementById('edit_customer_billing_id').value;
+        if (setCustomerId === edit_customer_billing_id) {
+            $.ajax({
+                url: '{{ route("customer.ajax.getCustomerBillingAddress") }}',
+                method: 'POST',
+                data: {
+                    id: setCustomerId
+                },
+                success: function(response) {
+                    console.log(response.message);
+                    var billingDetailContact = document.getElementById('billingDetailContact');
+                    billingDetailContact.innerHTML = '';
 
-    function getCurrencyData(customer_currency) {
-        $.ajax({
-            url: '{{ route("currency.ajax.getCurrencyData") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("jxcnjfjnfnk", response.data);
-                customer_currency.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name + " - " + user.code;
-                    customer_currency.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
+                    const optionDefault = document.createElement('option');
+                    optionDefault.value = setCustomerId;
+                    optionDefault.text = "Default";
+                    billingDetailContact.appendChild(optionDefault);
 
-    function saveFormData(formId, saveUrl, modalId, callback, callBackValue = null) {
-        var formData = $('#' + formId).serialize();
-        console.log(formData);
-
-        $.ajax({
-            url: saveUrl,
-            method: 'POST',
-            data: formData,
-            success: function(response) {
-                alert(response.message);
-                $('#' + modalId).modal('hide');
-                if (callback && typeof callback === 'function') {
-                    callback(callBackValue);
+                    response.data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.contact_name;
+                        billingDetailContact.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
                 }
+            });
+        } else {
+            setCustomerBillingData(edit_customer_billing_id);
+        }
+
+
+        $('#billingDetailContact').on('change', function() {
+            var selected = document.getElementById('getCustomerList').value;
+            console.log(selected);
+            if ($(this).val() === selected) {
+                getBillingDetailsData($(this).val());
+            } else {
+                setCustomerBillingData($(this).val());
+            }
+        });
+
+
+
+        const edit_site_id = document.getElementById('edit_customer_billing_id').value;
+        if (setCustomerId === edit_customer_billing_id) {
+            $.ajax({
+                url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
+                method: 'POST',
+                data: {
+                    id: setCustomerId
+                },
+                success: function(response) {
+                    console.log(response.data);
+
+                    const optionDefault = document.createElement('option');
+                    optionDefault.value = setCustomerId;
+                    optionDefault.text = "Same As Default";
+                    billingDetailContact.appendChild(optionDefault);
+
+                    response.data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.site_name;
+                        const option1 = option.cloneNode(true);
+                        customerSiteDetails.appendChild(option);
+                        customerSiteDelivery.appendChild(option1);
+                    });
+
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+
+        $('#AddQuoteButton').on('click', function() {
+            var customer = document.getElementById('getCustomerList').value;
+            if (customer === "") {
+                alert('Please select the customer');
+            } else {
+                // getTags(document.getElementById('quoteTag'))
+                // getRegions(document.getElementById('siteDeliveryRegions'));
+                const selectCustomer = document.getElementById('getCustomerList');
+                const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
+                document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
+                document.getElementById('yourQuoteSection').style.display = "none";
+                document.getElementById('hideQuoteDiv').style.display = "block";
+                document.getElementById('hideCustomerDetails').style.display = "none";
+                document.getElementById('hideQuoteDetails').style.display = "block";
+            }
+        });
+
+        $('#saveCustomerContactData').on('click', function() {
+            var formData = $('#add_customer_contact_form').serialize();
+            $.ajax({
+                url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    console.log(response);
+                    alert(response.message);
+                    setCustomerBillingData(response.lastid);
+                    $('#add_customer_contact_modal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        $('#OpenAddCustomerContact').on('click', function() {
+            getCustomerJobTitle(document.getElementById('customer_job_titile_id'));
+            $('#add_customer_contact_modal').modal('show');
+        });
+
+        $('#openCustomerSiteAddress').on('click', function() {
+            var customer = document.getElementById('getCustomerList').value;
+            if (customer === "") {
+                alert('Please select the customer');
+            } else {
+                // getRegions(document.getElementById('getSiteAddressRegion'));
+                // getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
+                // getCustomerJobTitle(document.getElementById('siteJobTitle'));
+                // getCountriesList(document.getElementById('siteAddressMobileCode'));
+                // getCountriesList(document.getElementById('siteAddressTelephoneCode'));
+                $('#add_site_address_modal').modal('show');
+            }
+
+         
+
+        });
+
+        $('#new_Attachment_open_model').on('click', function() {
+                $('#new_Attachment_model').modal('show');
+            });
+
+
+    });
+
+    function setCustomerBillingData(id) {
+        // alert(id)
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response.data);
+
+                let selectElement = document.getElementById('billingDetailContact'); // Get the select element
+
+                // Create and append a new option
+                let newOption = document.createElement('option');
+                newOption.value = response.data[0].id;
+                newOption.text = response.data[0].contact_name;
+                selectElement.appendChild(newOption);
+
+                // Set the new option as selected
+                newOption.selected = true;
+                setFieldValues(['billing_add_id', 'siteCustomerId', 'site_delivery_add_id'], response.data[0].id);
+
+                // billing details data set
+                document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
+                document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
+                document.getElementById('billingDetailsEmail').value = response.data[0].email;
+                document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
+                document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
+                document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
+                document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
+                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
+
+                // Customer Site Address Data Set
+                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
-        });
-    }
-
-
-
-    function selectPrevious(Select, previouslySelected) {
-        // Loop through the options in the select field
-        const options = Select.options;
-
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].value === previouslySelected) {
-                options[i].selected = true; // Set the previously selected country
-                break;
-            }
-        }
-    }
-
-    function setFieldValues(fields, value) {
-        fields.forEach(fieldId => {
-            document.getElementById(fieldId).value = value;
-        });
-    }
-
-    function setTextContent(fields, value) {
-        fields.forEach(fieldId => {
-            document.getElementById(fieldId).textContent = value;
         });
     }
 
@@ -3073,7 +2677,7 @@
                 // billing details data set
                 // setFieldValues([], contactData.id);
 
-                setFieldValues(['billing_add_id', 'site_delivery_add_id','siteCustomerId', 'customer_id_site_delivery'], contactData.id);
+                setFieldValues(['billing_add_id', 'site_delivery_add_id', 'siteCustomerId', 'customer_id_site_delivery'], contactData.id);
                 setFieldValues(['billingDetailsName', 'customerSiteName', 'customerSiteDeliveryName'], contactData.contact_name);
                 setTextContent(['setCustomerName', 'setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany', 'setSiteDeliveryAddress'], contactData.name);
                 setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
@@ -3098,105 +2702,6 @@
                 selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
                 selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
                 selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function setSiteAddressDetails(id) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerSiteDetails") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log(response.data);
-
-                let selectElement = document.getElementById('customerSiteDetails'); // or document.querySelector('[name="mySelectName"]');
-                let customerSiteDelivery = document.getElementById('customerSiteDelivery'); // or document.querySelector('[name="mySelectName"]');
-
-                let newOption = document.createElement('option');
-                newOption.value = response.data[0].id;
-                newOption.text = response.data[0].site_name;
-                const option1 = newOption.cloneNode(true);
-                newOption.selected = true;
-                selectElement.appendChild(newOption);
-                customerSiteDelivery.appendChild(option1);
-
-
-                // document.getElementById('customerSiteDetails');
-                document.getElementById('siteCustomerId').value = response.data[0].id;
-                document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                document.getElementById('customerSiteAddress').value = response.data[0].address;
-                document.getElementById('customerSiteCity').value = response.data[0].city;
-                document.getElementById('customerSiteCounty').value = response.data[0].country;
-                document.getElementById('customerSitePostCode').value = response.data[0].post_code;
-                document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                document.getElementById('customerSiteMobile').value = response.data[0].mobile;
-                document.getElementById('setSiteAddress').textContent = response.data[0].name;
-                document.getElementById('customerSiteCompany').value = response.data[0].company_name;
-                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_id);
-                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-
-
-    function setSiteDeliveryDetails(id) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerSiteDetails") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log(response.data);
-                document.getElementById('siteCustomerId').value = response.data[0].id;
-                document.getElementById('customerSiteDeliveryName').value = response.data[0].contact_name;
-                document.getElementById('customerSiteDeliveryAdd').value = response.data[0].address;
-                document.getElementById('customerSiteDeliveryPostCode').value = response.data[0].post_code;
-                document.getElementById('customerSiteDeliveryTelephone').value = response.data[0].telephone;
-                document.getElementById('customerSiteDeliveryMobile').value = response.data[0].mobile;
-                document.getElementById('customerSiteDeliveryEmail').value = response.data[0].email;
-                document.getElementById('customerSiteDeliveryCompany').value = response.data[0].company_name;
-                selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_id);
-                selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, id) {
-        console.log(id);
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log(response.data);
-                // alert(response.data);    
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.site_name;
-                    const option1 = option.cloneNode(true);
-                    customerSiteDetails.appendChild(option);
-                    customerSiteDelivery.appendChild(option1);
-                });
-
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3252,22 +2757,48 @@
         });
     }
 
-    function getUsersList() {
-        alert();
+
+    function setCustomerBillingData(id) {
+        // alert(id)
         $.ajax({
-            url: '{{ route("quote.ajax.getUsersData") }}',
-            method: 'GET',
+            url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
             success: function(response) {
                 console.log(response.data);
-                const usersList = document.getElementById('getUsersList');
-                // alert(response.data);    
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name;
-                    usersList.appendChild(option);
-                });
 
+                let selectElement = document.getElementById('billingDetailContact'); // Get the select element
+
+                // Create and append a new option
+                let newOption = document.createElement('option');
+                newOption.value = response.data[0].id;
+                newOption.text = response.data[0].contact_name;
+                selectElement.appendChild(newOption);
+
+                // Set the new option as selected
+                newOption.selected = true;
+                setFieldValues(['billing_add_id', 'siteCustomerId', 'site_delivery_add_id'], response.data[0].id);
+
+                // billing details data set
+                document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
+                document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
+                document.getElementById('billingDetailsEmail').value = response.data[0].email;
+                document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
+                document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
+                document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
+                document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
+                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
+
+                // Customer Site Address Data Set
+                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3276,1239 +2807,28 @@
     }
 
 
-    $(document).ready(function() {
+    function selectPrevious(Select, previouslySelected) {
+        // Loop through the options in the select field
+        const options = Select.options;
 
-        getQuoteType(document.getElementById('quoteType'));
-
-        document.getElementById('hideQuoteDiv').style.display = "none";
-        document.getElementById('hideQuoteDetails').style.display = "none";
-        document.getElementById('hideAttachmentTask').style.display = "none";
-        document.getElementById('hideDepositSection').style.display = "none";
-
-
-
-        $('#getCustomerList').on('click', function() {
-            getCustomerList();
-            document.getElementById('customerSiteDetails').removeAttribute('disabled');
-            document.getElementById('billingDetailContact').removeAttribute('disabled');
-
-            const billingDetailContact = document.getElementById('billingDetailContact');
-            billingDetailContact.innerHTML = '';
-
-            var getCustomerListValue = document.getElementById('getCustomerList');
-
-            const option = document.createElement('option');
-            option.value = getCustomerListValue.value;
-            option.text = "Default";
-            billingDetailContact.appendChild(option);
-
-
-            $.ajax({
-                url: '{{ route("customer.ajax.getCustomerBillingAddress") }}',
-                method: 'POST',
-                data: {
-                    id: getCustomerListValue.value
-                },
-                success: function(response) {
-                    console.log(response.message);
-
-                    response.data.forEach(user => {
-                        const option = document.createElement('option');
-                        option.value = user.id;
-                        option.text = user.contact_name;
-                        billingDetailContact.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-
-            getBillingDetailsData(getCustomerListValue.value);
-
-
-            const customerSiteDetails = document.getElementById('customerSiteDetails');
-            const customerSiteDelivery = document.getElementById('customerSiteDelivery');
-
-            customerSiteDetails.innerHTML = '';
-            customerSiteDelivery.innerHTML = '';
-
-            const option3 = document.createElement('option');
-            option3.value = getCustomerListValue.value;
-            option3.text = "Same as customer";
-            const option4 = option3.cloneNode(true);
-            customerSiteDetails.appendChild(option3);
-            customerSiteDelivery.appendChild(option4);
-
-            removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
-        });
-
-        $('#AddQuoteButton').on('click', function() {
-            var customer = document.getElementById('getCustomerList').value;
-            if (customer === "") {
-                alert('Please select the customer');
-            } else {
-                getTags(document.getElementById('quoteTag'))
-                getRegions(document.getElementById('siteDeliveryRegions'));
-                const selectCustomer = document.getElementById('getCustomerList');
-                const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
-                document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
-                document.getElementById('yourQuoteSection').style.display = "none";
-                document.getElementById('hideQuoteDiv').style.display = "block";
-                document.getElementById('hideCustomerDetails').style.display = "none";
-                document.getElementById('hideQuoteDetails').style.display = "block";
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === previouslySelected) {
+                options[i].selected = true; // Set the previously selected country
+                break;
             }
-        });
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-
-        $('#saveQuoteTag').on('click', function() {
-            var quoteTag = document.getElementById('quoteTag');
-            saveFormData(
-                'add_quote_tag_form', // formId
-                '{{ route("General.ajax.saveQuoteTag") }}', // saveUrl
-                'quoteTagModal', // modalId
-                getTags, // callback function after success
-                quoteTag
-            );
-        });
-
-        $('#billingDetailContact').on('change', function() {
-            var selected = document.getElementById('getCustomerList').value;
-            console.log(selected);
-            if ($(this).val() === selected) {
-                getBillingDetailsData($(this).val());
-            } else {
-                setCustomerBillingData($(this).val());
-            }
-        });
-
-        $('#customerSiteDetails').on('change', function() {
-            var selected = document.getElementById('getCustomerList').value;
-            console.log($(this).val());
-            if ($(this).val() === selected) {
-
-                $.ajax({
-                    url: '{{ route("customer.ajax.getCustomerDetails") }}',
-                    method: 'POST',
-                    data: {
-                        id: $(this).val()
-                    },
-                    success: function(response) {
-                        console.log(response.data);
-
-                        // document.getElementById('customer_site_id').value = response.data[0].id;
-                        document.getElementById('siteCustomerId').value = response.data[0].id;
-                        document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                        document.getElementById('customerSiteAddress').value = response.data[0].address;
-                        document.getElementById('customerSiteCity').value = response.data[0].city;
-                        document.getElementById('customerSiteCounty').value = response.data[0].country;
-                        document.getElementById('customerSitePostCode').value = response.data[0].postal_code;
-                        document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                        document.getElementById('customerSiteMobile').value = response.data[0].mobile;
-                        document.getElementById('setSiteAddress').textContent = document.getElementById('customerSiteCompany').value = response.data[0].name;
-                        selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                        selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                        selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                setSiteAddressDetails($(this).val());
-            }
-        });
-
-        $('#customerSiteDelivery').on('change', function() {
-            var selected = document.getElementById('getCustomerList').value;
-            console.log($(this).val());
-            if ($(this).val() === selected) {
-
-                $.ajax({
-                    url: '{{ route("customer.ajax.getCustomerDetails") }}',
-                    method: 'POST',
-                    data: {
-                        id: $(this).val()
-                    },
-                    success: function(response) {
-                        console.log(response.data);
-                        document.getElementById('site_delivery_add_id').value = response.data[0].id;
-                        document.getElementById('customerSiteDeliveryName').value = response.data[0].contact_name;
-                        document.getElementById('customerSiteDeliveryAdd').value = response.data[0].address;
-                        document.getElementById('customerSiteDeliveryPostCode').value = response.data[0].postal_code;
-                        document.getElementById('customerSiteDeliveryTelephone').value = response.data[0].telephone;
-                        document.getElementById('customerSiteDeliveryMobile').value = response.data[0].mobile;
-                        document.getElementById('customerSiteDeliveryEmail').value = response.data[0].email;
-                        document.getElementById('customerSiteDeliveryCompany').value = response.data[0].name;
-                        selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
-                        selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
-                        selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                setSiteDeliveryDetails($(this).val());
-            }
-        });
-
-        $('#saveQuoteSourceQuote').on('click', function() {
-            var formData = $('#add_quote_source_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveQuoteSources") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    $('#quoteSourceModal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-
-        // Ajax Call for saving Customer Type
-        $('#saveCustomerSiteDetails').on('click', function() {
-            var formData = $('#add_customer_site_details_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    // removeAddCustomerSiteAddress(document.getElementById('customerSiteDetails'),document.getElementById('customerSiteDelivery'), response.id);
-                    $('#add_site_address_modal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        $('#saveCustomerSiteDeliveryDetails').on('click', function() {
-            var formData = $('#add_customer_site_delivery_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    $('#add_site_delivery_address_modal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-
-        $('#saveQuoteTypeQuote').on('click', function() {
-            var formData = $('#add_quote_type_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveQuoteType") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    $('#quoteTypeModal').modal('hide');
-                    getQuoteType(document.getElementById('quoteType'));
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Ajax Call for saving Customer Type
-        $('#saveAddCustomerType').on('click', function() {
-            var formData = $('#add_customer_type_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveCustomerType") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    $('#quote_cutomer_type_modal').modal('hide');
-                    getCustomerType();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // $('#accoutCodeList').on('click', function() {
-        //     getAccountCode(document.getElementById('accoutCodeList'));
-        // });
-
-
-        // Save Customer Data
-        $('#SaveCustomerData').on('click', function() {
-            var formData = $('#add_customer_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.SaveCustomerData") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    getCustomerList();
-                    $('#QuotecustomerPop').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Save Customer Data
-        $('#saveCustomerContactData').on('click', function() {
-            var formData = $('#add_customer_contact_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    console.log(response);
-                    alert(response.message);
-                    setCustomerBillingData(response.lastid);
-                    $('#add_customer_contact_modal').modal('hide');
-                    //getBillingDetailsData();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        document.getElementById('same_as_default').addEventListener('change', function() {
-            const isChecked = this.checked;
-            // Show data if checked, else show blank
-            if (isChecked) {
-                var gettext = document.getElementById('billingDetailsAddress').text;
-                console.log(gettext);
-                document.getElementById('cuatomer_address').text = gettext;
-            }
-        });
-    });
-
-    window.onload = function() {
-        var buttons = document.querySelectorAll('.hide-on-load');
-        buttons.forEach(function(button) {
-            button.style.display = 'none';
-        });
-    };
-
-    // js for Add Customer modal open
-    const OpenAddCustomerModal = document.getElementById('OpenAddCustomerModal');
-    const QuotecustomerPop = document.getElementById('QuotecustomerPop');
-
-    OpenAddCustomerModal.onclick = function() {
-        getRegions(document.getElementById('customerRegion'));
-        getCustomerType();
-        getCurrencyData(document.getElementById('customer_currency_id'));
-        getCountriesList(document.getElementById('billingTelephoneCountryCode'));
-        getCountriesList(document.getElementById('billingMobileCountryCode'));
-        getCustomerJobTitle(document.getElementById('customer_job_title_id'));
-        $('#QuotecustomerPop').modal('show');
-    }
-    // js for Add Customer modal open
-
-    // js for Add customer Type modal
-    $('#OpenCustomerTypeModel').on('click', function() {
-        $('#quote_cutomer_type_modal').modal('show');
-    });
-
-    $('#OpenQuoteTypeModel').on('click', function() {
-        $('#quoteTypeModal').modal('show');
-    });
-
-    $('#OpenAddQuoteSourceModal').on('click', function() {
-        $('#quoteSourceModal').modal('show');
-    });
-
-
-
-    // js for Add Customer Contact modal
-    const OpenAddCustomerContact = document.getElementById('OpenAddCustomerContact');
-    const add_customer_contact_modal = document.getElementById('add_customer_contact_modal');
-    var customer_job_titile_id = document.getElementById('customer_job_titile_id');
-    OpenAddCustomerContact.onclick = function() {
-        var customer = document.getElementById('getCustomerList').value;
-        if (customer === "") {
-            alert('Please select the customer');
-        } else {
-            getCountriesListWithNameCode(document.getElementById('getCountryList'));
-            getCustomerJobTitle(customer_job_titile_id);
-            getCountriesList(setBillingAddressTelephoneCountryCode);
-            getCountriesList(setBillingAddressMobileCountryCode);
-            var getCustomerList = document.getElementById('getCustomerList').value
-            document.getElementById('customer_contact_id').value = getCustomerList;
-            document.getElementById('customer_id_site_add').value = getCustomerList;
-            document.getElementById('customer_id_site_delivery').value = getCustomerList;
-
-            $('#add_customer_contact_modal').modal('show');
-        }
-    }
-    // js for Add Customer Contact modal
-
-    // js for Add Site Address modal
-    $('#openCustomerSiteAddress').on('click', function() {
-        var customer = document.getElementById('getCustomerList').value;
-        if (customer === "") {
-            alert('Please select the customer');
-        } else {
-            getRegions(document.getElementById('getSiteAddressRegion'));
-            getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
-            getCustomerJobTitle(document.getElementById('siteJobTitle'));
-            getCountriesList(document.getElementById('siteAddressMobileCode'));
-            getCountriesList(document.getElementById('siteAddressTelephoneCode'));
-            $('#add_site_address_modal').modal('show');
-        }
-    });
-
-    $('#openSiteDeliveryModal').on('click', function() {
-        getCustomerJobTitle(document.getElementById('siteDeliveryJobTitle'));
-        getCountriesList(document.getElementById('siteDeliveryAddressTelephoneCode'));
-        getCountriesList(document.getElementById('siteDeliveryAddressMobileCode'));
-        getRegions(document.getElementById('getSiteDeliveryAddressRegion'));
-        getCountriesListWithNameCode(document.getElementById('siteDeliveryAddressCountry'));
-        $('#add_site_delivery_address_modal').modal('show');
-    });
-
-
-
-    $('#openABCProductModal').on('click', function() {
-        $('#productModalBAC').modal('show');
-    });
-
-    $('#OpenAddQuoteTag').on('click', function() {
-        $('#quoteTagModal').modal('show');
-    });
-
-
-
-    $('#new_Attachment_open_model').on('click', function() {
-        $('#new_Attachment_model').modal('show');
-    });
-
-
-
-
-
-
-
-
-
-
-    function additemsCatagoryModal(th) {
-        //alert();
-        $('#category_name').val('');
-        $('#parentcategory').val('');
-        $('#product_category_status').val(1);
-        $('#productCategoryID').val('');
-        $('#productCategorytype').val(th);
-        $('#itemsCatagoryModal').modal('show');
-    }
-
-    // **************************impExpClickbtnPopup
-
-    const impExpClickbtnPopup = document.getElementById('impExpClickbtnPopup');
-    const importExportpopup = document.getElementById('importExportpopup');
-    const closeimportExportPopup = document.getElementById('closeimportExportPopup');
-
-    impExpClickbtnPopup.addEventListener('click', () => {
-        importExportpopup.style.display = 'block';
-        setTimeout(() => {
-            importExportpopup.style.opacity = '1';
-        }, 50);
-    });
-
-    closeimportExportPopup.addEventListener('click', () => {
-        importExportpopup.style.opacity = '0';
-        setTimeout(() => {
-            importExportpopup.style.display = 'none';
-        }, 300);
-    });
-    // **************************End impExpClickbtnPopup
-    // **************************Purchase Tax Rate
-
-    const purchaseTaxRatePop = document.getElementById('purchaseTaxRatePop');
-    const purchasepopup = document.getElementById('purchasepopup');
-    const closePurchasePopup = document.getElementById('closePurchasePopup');
-
-    purchaseTaxRatePop.addEventListener('click', () => {
-        purchasepopup.style.display = 'block';
-        setTimeout(() => {
-            purchasepopup.style.opacity = '1';
-        }, 50);
-    });
-
-    closePurchasePopup.addEventListener('click', () => {
-        purchasepopup.style.opacity = '0';
-        setTimeout(() => {
-            purchasepopup.style.display = 'none';
-        }, 300);
-    });
-    // **************************End Purchase Tax Rate
-    // **************************Product Cetagory
-    const productCetagoryPopup = document.getElementById('productCetagoryPopup');
-    const cetagpopup = document.getElementById('cetagpopup');
-    const closecatagPopup = document.getElementById('closecatagPopup');
-
-    productCetagoryPopup.addEventListener('click', () => {
-        cetagpopup.style.display = 'block';
-        setTimeout(() => {
-            cetagpopup.style.opacity = '1';
-        }, 50);
-    });
-
-    closecatagPopup.addEventListener('click', () => {
-        cetagpopup.style.opacity = '0';
-        setTimeout(() => {
-            cetagpopup.style.display = 'none';
-        }, 300);
-    });
-    // **************************End Product Cetagory
-
-    //**************insrtProduct
-    // function insrtProduct() {
-    //     const node = document.createElement("tr");
-
-    //     node.classList.add("add_table_insrt");
-    //     node.innerHTML = `
-
-    //      <td>
-    //         <div class="CSPlus">
-    //             <span class="plusandText">
-    //                 <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-    //                 <input type="text" class="form-control editInput input80" value="CS-0001">
-    //             </span>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <input type="hidden" name="item[][itemDetails]" value="product">
-    //             <input type="text" class="form-control editInput" value="CS-0001">
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="2" placeholder="Address"></textarea>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <select class="form-control editInput selectOptions" id="accoutCodeList">
-    //                 <option>No account</option>
-    //                 <option>Default</option>
-    //                 <option>Default</option>
-    //             </select>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class=""><input type="text" class="form-control editInput input50" value="1"></div>
-    //     </td>
-    //     <td>
-    //         <div class=""> <input type="text" class="form-control editInput input50" value="100.00"></div>
-    //     </td>
-    //     <td>
-    //         <div class="calculatorIcon">
-    //             <span class="plusandText">
-    //                 <a href="#!" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
-    //             </span>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <input type="text" class="form-control editInput input50" value="90.00">
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <input type="text" class="form-control editInput input50" value="0">
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <select class="form-control editInput selectOptions" id="inputCustomer">
-    //                 <option>Please Select</option>
-    //                 <option>Default</option>
-    //                 <option>Default</option>
-    //             </select>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="d-flex">
-    //             <input type="text" class="form-control editInput input50 me-2" value="0">
-    //             <select class="form-control editInput selectOptions input50" id="inputCustomer">
-    //                 <option>Please Select</option>
-    //                 <option>Default</option>
-    //                 <option>Default</option>
-    //             </select>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <span>$90.00</span>
-    //     </td>
-    //     <td>
-    //         <span>$-10.00</span>
-    //         <div class="minusnmber pt-1">(-11.11%)</div>
-    //     </td>
-    //     <td>
-    //         <div class="statuswating">
-    //             <span class="oNOfswich">
-    //                 <input type="checkbox">
-    //             </span>
-    //             <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
-    //         </div>
-    //     </td>
-
-    //         `;
-
-    //     // const tableFoot = document.getElementsByClassName('add_table_insrt33');
-    //     const tableFoot = document.querySelector('.add_table_insrt33');
-
-    //     tableFoot.innerHTML += ` 
-
-    //     <tr>
-
-    //                                               <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Sub Total (exc. VAT)</td>
-    //                                                 <td>$90.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                                 <td colspan="12" class="borderNone"></td>
-    //                                                 <td>
-    //                                                     <div class="discountInput">
-    //                                                         <span>Discount</span><input type="text" class="form-control editInput input50" value="0">
-    //                                                         <span>%</span>
-    //                                                     </div>
-    //                                                 </td>
-    //                                                 <td>$0.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                                 <td colspan="12" class="borderNone"></td>
-    //                                                 <td>
-    //                                                     Apply overall markup
-    //                                                 </td>
-    //                                                 <td></td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                                 <td colspan="12" class="borderNone"></td>
-    //                                                 <td>VAT</td>
-    //                                                 <td>$18.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td><strong>Total(inc.VAT)</strong></td>
-    //                                                 <td><strong>$108.00</strong></td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Profit</td>
-    //                                                 <td>$-10.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Margin</td>
-    //                                                 <td>-11.11%</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Deposit</td>
-    //                                                 <td>$0.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Refund</td>
-    //                                                 <td>$0.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td><strong>Outstanding (inc.VAT)</strong></td>
-    //                                                 <td><strong>$108.00</strong></td>
-    //                                             </tr>
-    //     `;
-    //     const tableBody = document.querySelector(".add_table_insrt");
-    //     // const tableBodyFoot = document.querySelector(".add_table_insrt33");
-
-    //     if (tableBody) {
-    //         tableBody.appendChild(node);
-    //         // tableBodyFoot.appendChild(tableFoot);
-    //         // Add event listener to the close button
-    //         const closeButton = node.querySelector('.closeappend');
-    //         closeButton.addEventListener('click', function() {
-    //             node.remove(); // Remove the row when close button is clicked
-    //         });
-    //     } else {
-    //         console.error("Table body with ID 'add_table_insrt' not found.");
-    //     }
-    // }
-    // ************End of InsrtProduct
-    //**************insrtTitle
-    function insrtTitle() {
-        const node = document.createElement("tr");
-        node.classList.add("add_table_insrt");
-        node.innerHTML = `
-            <form>
-                <td>
-                    <div class="CSPlus">
-                        <span class="plusandText">
-                            <a href="#!" onclick="insrtTitle()" class="formicon pt-0 me-2">
-                                <i class="fa-solid fa-square-plus"></i>
-                            </a>
-                            <label>Title*:</label>
-                            <input type="text" class="form-control editInput ms-3" name="item[][title][item_title]" placeholder="Type to add product">
-                        </span>
-                    </div>
-                </td>
-                <td colspan="12">
-                    <input type="text" class="form-control editInput" name="item[][title][item_desc]" placeholder="Type to add product">
-                </td>
-                <td>
-                    <div class="statuswating">
-                        <span class="oNOfswich">
-                            <input type="checkbox">
-                        </span>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                </td> 
-            </form>
-            `;
-        const tableBody = document.querySelector(".add_table_insrt");
-        if (tableBody) {
-            tableBody.appendChild(node);
-
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_table_insrt' not found.");
         }
     }
 
-    //**************insrtImgappend
-    function insrtImgappend() {
-        const node = document.createElement("tr");
-        node.classList.add("add_table_insrt"); // Adding the class to the row
-
-        node.innerHTML = `
-            <td colspan="13">
-                <div class="d-flex">
-                    <div class="CSPlus">
-                        <span class="plusandText pt-1">
-                            <a href="#!" onclick="insrtImgappend()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                            <label></label>
-                        </span>
-                    </div>
-                    <div class="addimg">
-                        <img class="insrtImg" src="assets/imagrs/imgad1.png">
-                        <input type="hidden" name="item[]['image'][]['itemImage']" value="image">
-
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="statuswating">
-                    <span class="oNOfswich">
-                        <input type="checkbox">
-                    </span>
-                    <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                </div>
-            </td>            
-        `;
-
-        // Select the table body using a class instead of an ID
-        const tableBody = document.querySelector(".add_table_insrt");
-
-        if (tableBody) {
-            tableBody.appendChild(node);
-
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when the close button is clicked
-            });
-        } else {
-            console.error("Table body with class 'add_table_insrt' not found.");
-        }
+    function setFieldValues(fields, value) {
+        fields.forEach(fieldId => {
+            document.getElementById(fieldId).value = value;
+        });
     }
 
-    //**************insrtDescription
-    function insrtDescription() {
-        const node = document.createElement("tr");
-        node.classList.add("add_table_insrt");
-        node.innerHTML = `
-            <td colspan="13">
-                <div class="d-flex">
-                    <div class="CSPlus">
-                        <span class="plusandText pt-1">
-                            <a href="#!" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
-                        </span>
-                    </div>
-                    <input type="text" class="form-control editInput" name="item[][description][item_description]" id="" placeholder="Type to add product">
-                </div>
-            </td>
-            <td>
-                <div class="statuswating">
-                    <span class="oNOfswich">
-                        <input type="checkbox">
-                    </span>
-                    <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                </div>
-            </td>                     
-        `;
-
-        // Get table body element
-        const tableBody = document.querySelector(".add_table_insrt");
-        if (tableBody) {
-            tableBody.appendChild(node);
-
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_table_insrt' not found.");
-        }
-    }
-
-    //**************insrt Section Title
-    function insrtSection() {
-        const node = document.createElement("tr");
-        node.classList.add("add_table_insrt");
-        node.innerHTML = `
-            <td colspan="14" class="p-0">
-                <div class="newJobForm">
-                    <div class="d-flex">
-                    <div class="CSPlus">
-                        <span class="plusandText pt-1">
-                            <a href="#!" onclick="insrtSection()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                            <label class="secTitle">Section Title* :</label>
-                        </span>
-                    </div>
-                    <input type="text" class="form-control editInput" name="item[]['section_title_name']" id="inputCountry" placeholder="Type to add product">
-                    
-                    <div class="pageTitleBtn p-0">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                + Section Insert </a>
-                            <div class="dropdown-menu fade-up m-0">
-                                <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Section Product</a>
-                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionTtle()">insert Section Title</a>
-                                <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">insert Section Image</a>
-                                <a href="#!" class="dropdown-item col-form-label" onclick="insrtSectionDescription()">insert Section Description</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="statuswating text-end ps-3">
-                        <span class="oNOfswich">
-                            <input type="checkbox">
-                        </span>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                    </div>
-
-                    <div class="productDetailTable mt-3">
-                        <table class="table" id="containerA">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Code </th>
-                                    <th>Product <i class="fa  fa-info-circle"></i> </th>
-                                    <th>Description</th>
-                                    <th>
-                                        <div class="tableplusBTN">
-                                            <span>Account Code </span>
-                                            <span class="plusandText ps-3">
-                                                <a href="#!" id="openSectionAccountCode" class="formicon pt-0"> <i class="fa-solid fa-square-plus"></i> </a>
-                                            </span>
-                                        </div>
-                                    </th>
-                                    <th>Qty </th>
-                                    <th>Cost Price($) </th>
-                                    <th>Cost Calc</th>
-                                    <th>Price($) </th>
-                                    <th>Markup(%)</th>
-                                    <th>VAT(%) </th>
-                                    <th>Discount </th>
-                                    <th>Amount </th>
-                                    <th>Profit </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody class="add_sectionTitle">
-                                 <tr>
-                            <td>
-                    <div class="CSPlus">
-                        <span class="plusandText">
-                            <a href="#!" class="formicon pt-0 me-2" onclick="insrtProduct()"> <i
-                                    class="fa-solid fa-square-plus"></i> </a>
-                            <input type="text"
-                                class="form-control editInput input80"
-                                value="CS-0001">
-                        </span>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput"
-                            value="CS-0001">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <textarea class="form-control textareaInput" name="address"
-                            id="inputAddress" rows="2"
-                            placeholder="Address"></textarea>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <select class="form-control editInput selectOptions"
-                            id="inputCustomer">
-                            <option>No account</option>
-                            <option>Default</option>
-                            <option>Default</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="1">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="100.00">
-                    </div>
-                </td>
-                <td>
-                    <div class="calculatorIcon">
-                        <span class="plusandText">
-                            <a href="#!" class="formicon pt-0"
-                                data-bs-toggle="modal"
-                                data-bs-target="#calculatePop"> <span
-                                    class="material-symbols-outlined">
-                                    calculate
-                                </span> </a>
-                        </span>
-                    </div>
-
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="90.00">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="0">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <select class="form-control editInput selectOptions"
-                            id="inputCustomer">
-                            <option>Please Select</option>
-                            <option>Default</option>
-                            <option>Default</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="d-flex">
-                        <input type="text"
-                            class="form-control editInput input50 me-2" value="0">
-                        <select class="form-control editInput selectOptions input50"
-                            id="inputCustomer">
-                            <option>Please Select</option>
-                            <option>Default</option>
-                            <option>Default</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <span>$90.00</span>
-                </td>
-                <td>
-                    <span>$-10.00</span>
-                    <div class="minusnmber pt-1">(-11.11%)</div>
-                </td>
-                <td>
-                    <div class="statuswating">
-                        <span class="oNOfswich">
-                            <input type="checkbox">
-                        </span>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                </td>    
-                        </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </td>                    
-            `;
-        // Get table body element 
-        const tableBody = document.querySelector(".add_table_insrt");
-        if (tableBody) {
-            tableBody.appendChild(node);
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_table_insrt' not found.");
-        }
-    }
-
-    //**************Table inner Table insrtSectionTtle
-    function insrtSectionTtle() {
-        const node = document.createElement("tr");
-        node.classList.add("add_sectionTitle");
-        node.innerHTML = `
-                        <td>
-                    <div class="CSPlus">
-                        <span class="plusandText">
-                            <a href="#!" onclick="insrtSectionTtle()" class="formicon pt-0 me-2">
-                                <i class="fa-solid fa-square-plus"></i>
-                            </a>
-                            <label>Title*:</label>
-                            <input type="hidden" name="item[][itemDetails]" value="section_title">
-                            <input type="text" class="form-control editInput ms-3" name="item[][section_title][section_item_title]" placeholder="Type to add product">
-                        </span>
-                    </div>
-                </td>
-                <td colspan="12">
-                    <input type="text" class="form-control editInput" name="item[][section_title][section_item_description]" placeholder="Type to add product">
-                </td>
-                <td>
-                    <div class="statuswating">
-                        <span class="oNOfswich">
-                            <input type="checkbox">
-                        </span>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                </td>   
-            `;
-        // Get table body element
-        const tableBody = document.querySelector(".add_sectionTitle");
-        if (tableBody) {
-            tableBody.appendChild(node);
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_sectionTitle' not found.");
-        }
-    }
-
-    //**************Table inner Table insrtSectionImg
-    function insrtSectionImg() {
-        const node = document.createElement("tr");
-        node.classList.add("add_sectionTitle");
-        node.innerHTML = `
-                    <td colspan="13">
-                        <div class="d-flex">
-                            <div class="CSPlus">
-                                <span class="plusandText pt-1">
-                                    <a href="#!" onclick="insrtSectionImg()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                                    <label></label>
-                                </span>
-                            </div>
-                            <div class="addimg">
-                                <input type="hidden" name="item[][section_image][section_item_image]" value="section_image">
-                                <img class="insrtImg" src="assets/imagrs/imgad1.png">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="statuswating">
-                            <span class="oNOfswich">
-                                <input type="checkbox">
-                            </span>
-                            <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                        </div>
-                    </td>  
-                    `;
-        // Get table body element
-        const tableBody = document.querySelector(".add_sectionTitle");
-        if (tableBody) {
-            tableBody.appendChild(node);
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_sectionTitle' not found.");
-        }
-    }
-
-    //**************Table inner Table insrtSectionDescription
-    function insrtSectionDescription() {
-        const node = document.createElement("tr");
-        node.classList.add("add_sectionTitle");
-        node.innerHTML = `
-                     <td colspan="13">
-                            <div class="d-flex">
-                                <div class="CSPlus">
-                                    <span class="plusandText pt-1">
-                                        <a href="#!" onclick="insrtSectionDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
-                                    </span>
-                                </div>
-                                <input type="hidden" name="item[][itemDetails]" value="section_description">
-                                <input type="text" class="form-control editInput" name="item[][section_description][section_item_description]" id="inputCountry" placeholder="Section Description">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="statuswating">
-                                <span class="oNOfswich">
-                                    <input type="checkbox">
-                                </span>
-                                <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                            </div>
-                        </td>   
-                    `;
-        // Get table body element
-        const tableBody = document.querySelector(".add_sectionTitle");
-        if (tableBody) {
-            tableBody.appendChild(node);
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_sectionTitle' not found.");
-        }
-    }
-
-    //**************insrtTitle
-    function insrtAppoinment() {
-        const node = document.createElement("tr");
-        node.classList.add("add_insrtAppoinment");
-        node.innerHTML = `
-                <td>
-                    <div class="d-flex">
-                        <p class="leftNum">1</p>
-                        <select class="form-control editInput selectOptions onclick="getUsersList();" >
-                            <option>Select user</option>
-                            <option>Default</option>
-                        </select>
-                        <a href="#!" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
-                    </div>
-                    <div class="alertBy">
-                        <label><strong>Alert By :</strong></label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                            <label class="form-check-label" for="inlineCheckbox1">SMS</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                            <label class="form-check-label" for="inlineCheckbox2">Email</label>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="addDateAndTime">
-                        <div class="startDate">
-                            <input type="date" name="date" class=" editInput">
-                            <input type="time" name="time" class=" editInput">
-                        </div>
-                    </div>
-                    <div class="pt-3">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="floatingAppointment" value="option2">
-                            <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="addDateAndTime">
-                        <div class="endDate">
-                            <input type="date" name="date" class=" editInput">
-                            <input type="time" name="time" class=" editInput">
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="addTextarea">
-                        <textarea cols="40" rows="5" placeholder="Type Notes...">Type Notes... </textarea>
-                    </div>
-                </td>
-                <td class="col-2">
-                    <div class="appoinment_type">
-                        <select class="form-control editInput selectOptions" id="">
-                            <option>Select user</option>
-                            <option>Install</option>
-                            <option>Cold Call</option>
-                            <option>Maintenance</option>
-                        </select>
-                    </div>
-                    <div class="Priority">
-                        <label>Priority :</label>
-                        <select class="form-control editInput selectOptions" id="">
-                            <option>Low</option>
-                            <option>Medium</option>
-                            <option>High</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="statuswating">
-
-                        <div><label for="inputPurchase" class="col-sm-3 col-form-label">Awaiting</label></div>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                      <div class="tabheadingTitle">
-                         <label for="inputPurchase" class="col-sm-3 col-form-label"><input type="checkbox">Dispatch Now</label>
-                    </div>
-                    <div class="tabheadingTitle">
-                        <a href="#" class="profileDrop me-3"> Notify</a>
-                    </div>
-                </td>                                         
-            `;
-        const tableBody = document.querySelector(".add_insrtAppoinment");
-        if (tableBody) {
-            tableBody.appendChild(node);
-
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_insrtAppoinment' not found.");
-        }
+    function setTextContent(fields, value) {
+        fields.forEach(fieldId => {
+            document.getElementById(fieldId).textContent = value;
+        });
     }
 </script>
 <script>

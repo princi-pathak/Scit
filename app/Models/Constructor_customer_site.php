@@ -53,6 +53,15 @@ class Constructor_customer_site extends Model
         return self::where('id', $id)->get();
     }
 
+    
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class, 'site_add_id');
+    }
  
+    public function quotesSiteDelievry()
+    {
+        return $this->hasMany(Quote::class, 'site_delivery_add_id');
+    }
 
 }

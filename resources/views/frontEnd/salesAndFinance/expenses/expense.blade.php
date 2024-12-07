@@ -855,9 +855,14 @@ $('.delete_checkbox').on('click', function() {
         $('#notes').val(notes);
         // 
         // $('#attachments').val(attachments);
-        var imgSrc = "{{url('public/frontEnd/jobs/images/delete.png')}}";
-        var text = '&emsp;<img src="' + imgSrc + '" alt="" class="image_delete" data-delete="' + id + '">';
-        $("#file_name").html(attachments + text);
+        if(attachments){
+            var imgSrc = "{{url('public/frontEnd/jobs/images/delete.png')}}";
+            var text = '&emsp;<img src="' + imgSrc + '" alt="" class="image_delete" data-delete="' + id + '">';
+            $("#file_name").html(attachments + text);
+        }else{
+            $("#file_name").html('');
+        }
+        
     });
  </script>
  <script>
