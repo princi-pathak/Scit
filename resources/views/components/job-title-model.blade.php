@@ -63,6 +63,7 @@
     }
 
     function getCustomerJobTitle(jobTitle) {
+        console.log('jobTitle',jobTitle);
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerJobTitle") }}',
             method: 'GET',
@@ -72,7 +73,7 @@
 
                 const optionJob = document.createElement('option');
                 optionJob.text = "Please Select";
-                optionJob.appendChild(option);
+                jobTitle.appendChild(optionJob);
 
                 response.data.forEach(user => {
                     const option = document.createElement('option');
