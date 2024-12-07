@@ -22,13 +22,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-4">
-                        <div class="alert alert-primary mt-1 mb-0 text-center" id="message_save" style="display:none">
-                        @if(isset($key) && $key !='')
-                            <span>Job Added Successfully Done!</span>
-                        @else
-                            <span>Job Updated Successfully Done!</span>
-                        @endif
-                        </div>
+                        <div class="alert alert-primary mt-1 mb-0 text-center" id="message_save" style="display:none"></div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-4 px-3">
                     
@@ -233,14 +227,14 @@
                                                 <label for="inputContact"
                                                     class="col-sm-3 col-form-label">Company</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="company" id="company" class="form-control">
+                                                    <input type="text" name="company" id="company" class="form-control" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->company ?? "");}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Contact</label>
                                                 <div class="col-sm-9">
                                                 <input type="text" class="form-control-plaintext editInput"
-                                                id="profession_name" value="Lisa (Manager)" readonly="">
+                                                id="profession_name" value="<?php if(!empty($contact_name)){echo $contact_name;}else{echo "Lisa";}?> <?php if(!empty($customer_profession)){echo '('.$customer_profession->name.')';}else{echo "(Manager)";}?>" readonly="">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -444,11 +438,16 @@
                                             <div class="mb-3 row">
                                                 <label for="inputCountry" class="col-sm-3 col-form-label">Tags</label>
                                                 <div class="col-sm-7">
-                                                    <input type="text" class="form-control editInput" id="tags" name="tags" value="<?php if(isset($job_details) && $job_details != ''){echo $job_details->tags;}?>">
+                                                    <select class="form-control editInput selectOptions" id="tags" name="tags">
+                                                        <option selected disabled>None</option>
+                                                        @foreach($tag as $tagval)
+                                                            <option value="{{$tagval->id}}" <?php if(isset($job_details) && $job_details->tags == $tagval->id){echo 'selected';}?>>{{$tagval->title}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="#!" class="formicon"><i
-                                                            class="fa-solid fa-square-plus"></i></a>
+                                                    <a href="javascript:void(0)" class="formicon"><i
+                                                            class="fa-solid fa-square-plus" data-bs-toggle="modal" data-bs-target="#TagModal"></i></a>
                                                 </div>
                                             </div>
 
@@ -465,7 +464,7 @@
                                                 <label for="exampleInputEmail1" class="col-form-label">Short
                                                     Description<span class="radStar">*</span> <span>(max 250 charecters)</span></label>
                                                 <textarea class="form-control textareaInput" name="short_decinc"
-                                                    id="short_decinc" rows="2" placeholder="Site Notes" onkeyup="get_char()"><?php if(isset($job_details) && $job_details != ''){echo $job_details->short_decinc;}?></textarea>
+                                                    id="short_decinc" rows="2" placeholder="Short Notes" onkeyup="get_char()"><?php if(isset($job_details) && $job_details != ''){echo $job_details->short_decinc;}?></textarea>
                                             </div>
 
                                             <div class="mb-3">
@@ -527,7 +526,34 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="product_result">
-                                                <tr></tr>
+                                                <?php 
+                                                    $previous_ids=array();
+                                                    $cost_price=0;
+                                                    $amount=0;
+                                                    foreach($jobassign_products as $assignVal){
+                                                        $previous_ids[]=$assignVal->product_id;
+                                                        $cost_price=$cost_price+$assignVal->cost_price;
+                                                        $amount=$amount+$assignVal->price;
+                                                ?>
+                                                    <tr>
+                                                        <input type="hidden" id="idjobasign" name="idjobasign[]" value="{{$assignVal->id}}">
+                                                        <td>{{$assignVal->code}} <input type="hidden" id="product_codejob" name="product_codejob[]" value="{{$assignVal->code}}"></td>
+                                                        <td>{{$assignVal->product_name}}<input type="hidden" id="product_namejob" name="product_namejob[]" value="{{$assignVal->product_name}}"></td>
+                                                        <td>{{$assignVal->description}}<input type="hidden" id="descriptionjob" name="descriptionjob[]" value="{{$assignVal->description}}"></td>
+                                                        <td><input type="text" class="" value="{{$assignVal->qty}}" name="quantity[]" id="quantity"></td>
+                                                        <td>{{$assignVal->cost_price}}<input type="hidden" id="cost_pricejob" name="cost_pricejob[]" value="{{$assignVal->cost_price}}"></td>
+                                                        <td>{{$assignVal->price}}<input type="hidden" id="pricejob" name="pricejob[]" value="{{$assignVal->price}}"></td>
+                                                        <td><input type="text" class="" value="0" name="discount[]"></td>';
+
+                                                        <td><select id="vatjob" name="vatjob[]">
+                                                        <?php foreach($sales_tax as $taxv){?>
+                                                            <option value="{{$taxv->id}}" <?php if($assignVal->vat == $taxv->id){echo "selected";}?>>{{$taxv->name}}</option>
+                                                        <?php } ?>
+                                                        </select></td>
+                                                        <td id="pre_total_amount">{{$assignVal->price}}<input type="hidden" name="final_amount" id="final_amount" value="{{$assignVal->price}}"></td>
+                                                        <td><button type="button" class="btn btn-danger" onclick="removeRow({{$assignVal->id}})">Delete<input type="hidden" value="{{$assignVal->id}}" name="product_detail_id[]" id="product_detail_id"></button></td>
+                                                    </tr>
+                                                <?php }?>
                                                 
                                             </tbody>
                                             <tr>
@@ -535,11 +561,11 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td id="pro_qty">0.00</td>
-                                                    <td id="pro_cost_price">£0.00</td>
+                                                    <td id="pro_cost_price">£{{$cost_price}}</td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td id="total_amount">£0.00</td>
+                                                    <td id="total_amount">£{{$amount}}</td>
                                                 </tr>
                                         </table>
                                     </div>
@@ -629,6 +655,200 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            <?php if(count($job_appointment)>0){$count=1; foreach($job_appointment as $key=>$appointmentVal){?>
+                                                            <tr>
+                                                                <td>
+                                                                    
+                                                                    <div class="d-flex">
+                                                                        <p class="leftNum">{{$count}}</p>
+                                                                        <select class="form-control editInput selectOptions" id="Appointmentuser_id" name="Appointmentuser_id[]">
+                                                                            <option selected disabled>Select user</option>
+                                                                            <?php foreach ($users as $user) { ?>
+                                                                                <option value="{{$user->id}}" <?php if($user->id == $appointmentVal->user_id){echo "selected";}?>>{{$user->name}}</option>
+                                                                            <?php } ?>
+                                                                        </select>
+                                                                        <a href="#!" class="callIcon"><i
+                                                                                class="fa-solid fa-square-phone"></i></a>
+                                                                    </div>
+                                                                    <div class="alertBy">
+                                                                        <label><strong>Alert By
+                                                                                :</strong></label>
+                                                                        <div
+                                                                            class="form-check form-check-inline">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox"
+                                                                                id="alert_by_check_1"
+                                                                                value="0" class="alert_by_check_1">
+                                                                            <label class="form-check-label"
+                                                                                for="inlineCheckbox1">SMS</label>
+                                                                        </div>
+                                                                        <div
+                                                                            class="form-check form-check-inline">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox"
+                                                                                id="alert_by_check_2"
+                                                                                value="1" class="alert_by_check_2">
+                                                                            <label class="form-check-label"
+                                                                                for="inlineCheckbox2">Email</label>
+                                                                        </div>
+                                                                        <input type="hidden" name="alert_by[]" id="alert_by" class="alert_by">
+                                                                    </div>
+                                                                </td>
+                                                                <td class="col-2">
+                                                                    <div class="appoinment_type">
+                                                                        <select
+                                                                            class="form-control editInput selectOptions"
+                                                                            id="appointment_type_id" name="appointment_type_id[]">
+                                                                            <option selected disabled>Select Appointment Type</option>
+                                                                            <?php foreach ($appointment_type as $appointmentv) { ?>
+                                                                                <option value="{{$appointmentv->id}}">{{$appointmentv->name}}</option>
+                                                                            <?php } ?>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="Priority">
+                                                                        <label>Priority :</label>
+                                                                        <select
+                                                                            class="form-control editInput selectOptions"
+                                                                            id="priority" name="priority[]">
+                                                                            <option selected disabled>Select Priority</option>
+                                                                            <option <?php if($appointmentVal->priority == 'Default'){echo "selected";}?>>Default</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="addDateAndTime">
+                                                                        <div class="startDate">
+                                                                            <input type="date" name="appointment_start_date[]"
+                                                                                class=" editInput" value="<?php if($appointmentVal->start_date != ''){echo $appointmentVal->start_date;}?>">
+                                                                            <input type="time" name="start_time[]"
+                                                                                class=" editInput" value="<?php if($appointmentVal->start_time != ''){echo $appointmentVal->start_time;}?>">
+                                                                        </div>
+                                                                        <span class="p-2">To</span>
+                                                                        <div class="endDate">
+                                                                            <input type="date" name="end_date[]"
+                                                                                class=" editInput" value="<?php if($appointmentVal->end_date != ''){echo $appointmentVal->end_date;}?>">
+                                                                            <input type="time" name="end_time[]"
+                                                                                class=" editInput" value="<?php if($appointmentVal->end_time != ''){echo $appointmentVal->end_time;}?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="pt-3">
+                                                                        <div
+                                                                            class="form-check form-check-inline">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox"
+                                                                                id="appointment_checkbox1"
+                                                                                value="option1">
+                                                                            <label class="form-check-label"
+                                                                                for="singleAppointment">Single
+                                                                                Appointment</label>
+                                                                        </div>
+                                                                        <div
+                                                                            class="form-check form-check-inline">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox"
+                                                                                id="appointment_checkbox2"
+                                                                                value="option2">
+                                                                            <label class="form-check-label"
+                                                                                for="floatingAppointment">Floating
+                                                                                Appointment</label>
+                                                                        </div>
+                                                                        <input type="hidden" name="appointment_checkbox[]" id="appointment_checkbox" class="appointment_checkbox">
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="addTextarea">
+                                                                        <textarea cols="40" rows="5" id="appointment_notes" name="appointment_notes[]">
+                                                                        <?php if($appointmentVal->notes != ''){echo $appointmentVal->notes;}?>
+                                                                    </textarea>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="statuswating">
+                                                                        <select
+                                                                            class="form-control editInput selectOptions"
+                                                                            id="appointment_status" name="appointment_status[]">
+                                                                            <option selected disabled>Select Status</option>
+                                                                            <option value="1" <?php if($appointmentVal->appointment_status == 1){echo 'selected';}?>>Awaiting</option>
+                                                                            <option value="2" <?php if($appointmentVal->appointment_status == 2){echo 'selected';}?>>Received</option>
+                                                                            <option value="3" <?php if($appointmentVal->appointment_status == 3){echo 'selected';}?>>Accepted</option>
+                                                                            <option value="4" <?php if($appointmentVal->appointment_status == 4){echo 'selected';}?>>Declined</option>
+                                                                            <option value="5" <?php if($appointmentVal->appointment_status == 5){echo 'selected';}?>>on Route</option>
+                                                                            <option value="6" <?php if($appointmentVal->appointment_status == 6){echo 'selected';}?>>On Site</option>
+                                                                            <option value="7" <?php if($appointmentVal->appointment_status == 7){echo 'selected';}?>>Completed</option>
+                                                                            <option value="8" <?php if($appointmentVal->appointment_status == 8){echo 'selected';}?>>Follow On</option>
+                                                                            <option value="9" <?php if($appointmentVal->appointment_status == 9){echo 'selected';}?>>Abandoned</option>
+                                                                            <option value="10" <?php if($appointmentVal->appointment_status == 10){echo 'selected';}?>>No Access</option>
+                                                                            <option value="11" <?php if($appointmentVal->appointment_status == 11){echo 'selected';}?>>Cancelled</option>
+                                                                            <option value="12" <?php if($appointmentVal->appointment_status == 12){echo 'selected';}?>>On Hold</option>
+                                                                        </select>
+                                                                        <a href="javascript:void(0)" onclick="deleteRow(this)"><i
+                                                                                class="fa-solid fa-circle-xmark"></i></a>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="Priority">
+                                                                        <label><strong>Travel Time
+                                                                                -</strong></label>
+                                                                        <input type="text"
+                                                                            class="form-control editInput"
+                                                                            id="input_time1"
+                                                                            placeholder="" onkeyup="get_time()"><label>
+                                                                            Mins</label>
+                                                                    </div>
+                                                                </td>
+                                                                <td></td>
+                                                                <td>
+                                                                    <div class="Priority">
+                                                                        <label><strong>Appointment Time
+                                                                                -</strong></label>
+                                                                        <input type="text"
+                                                                            class="form-control editInput"
+                                                                            id="input_time2"
+                                                                            placeholder="" onkeyup="get_time()"><label> Mins
+                                                                            <strong>Total Time -</strong>
+                                                                            <font id="time_show">{{$appointmentVal->appointment_time ?? '0h 0mins'}}</font>
+                                                                        </label>
+                                                                    </div>
+                                                                    <input type="hidden" id="appointment_time" class="appointment_time" name="appointment_time[]">
+                                                                </td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr class="del-btn">
+                                                                <td>
+                                                                    <div class="Priority p-0">
+                                                                        <label class="p-0"><strong>Assigned
+                                                                                Products: </strong><a
+                                                                                href="#!">All</a> None</label>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="pageTitleBtn p-0">
+                                                                        <a href="#" class="profileDrop">Asign
+                                                                            Product</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td></td>
+                                                                <td colspan="2">
+                                                                    <div class="pageTitleBtn p-0">
+                                                                        <a href="#" class="profileDrop">Add
+                                                                            Title</a>
+                                                                        <a href="#" class="profileDrop">Show
+                                                                            Variations</a>
+                                                                        <a href="#"
+                                                                            class="profileDrop bg-secondary">Export</a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="del-btn">
+                                                                <td colspan="5" class="padingtableBottom"></td>
+                                                            </tr>
+                                                        <?php $count++; }?>
+                                                        <input type="hidden" id="count_number" value="{{$count}}">
+                                                    <?php }else{?>
                                                             <tr>
                                                                 <td>
                                                                     <input type="hidden" id="count_number" value="1">
@@ -820,6 +1040,7 @@
                                                             <tr class="del-btn">
                                                                 <td colspan="5" class="padingtableBottom"></td>
                                                             </tr>
+                                                            <?php }?>
                                                         </tbody>
                                                         <div id="appointment_result"></div>
 
@@ -838,6 +1059,7 @@
                                         <h4 class="contTitle text-start">Customer Notes</h4>
                                         <div class="mt-3">
                                             <textarea cols="40" rows="5" id="customer_notes" name="customer_notes">
+                                                <?php if(isset($job_details) && $job_details !=''){echo $job_details->customer_notes;}?>
                                               </textarea>
                                         </div>
                                     </div>
@@ -847,6 +1069,7 @@
                                         <h4 class="contTitle text-start">Internal Notes</h4>
                                         <div class="mt-3">
                                             <textarea cols="40" rows="5" id="internal_notes" name="internal_notes">
+                                            <?php if(isset($job_details) && $job_details !=''){echo $job_details->internal_notes;}?>
                                               </textarea>
                                         </div>
                                     </div>
@@ -1332,10 +1555,10 @@
                         <div class="mb-3 row">
                             <label for="inputJobRef" class="col-sm-3 col-form-label">Customer</label>
                             <div class="col-sm-9">
-                            <p id="project_customer_name" class="editInput mb-0"></p>
+                            <p id="project_customer_name" class="editInput mb-0"><?php if(isset($contact_name)){echo $contact_name;}?></p>
                             </div>
                         </div>
-                        <input type="hidden" id="project_customer_id">
+                        <input type="hidden" id="project_customer_id" value="<?php if(isset($job_details) && $job_details !=''){echo $job_details->customer_id;}?>">
                         <div class="mb-3 row">
                             <label for="inputJobRef" class="col-sm-3 col-form-label">Project Name <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
@@ -1403,10 +1626,10 @@
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
                                                 <div class="col-sm-9">
-                                                    <p id="contact_customer_name"></p>
+                                                    <p id="contact_customer_name"><?php if(isset($contact_name)){echo $contact_name;}?></p>
                                                 </div>
                                             </div>
-                                            <input type="hidden" id="contact_customer_id">
+                                            <input type="hidden" id="contact_customer_id" value="<?php if(isset($job_details) && $job_details !=''){echo $job_details->customer_id;}?>">
                                             
                                             <div class="mb-2 row">
                                                 <label class="col-sm-3 col-form-label">Assign
@@ -1994,10 +2217,10 @@
                                             <div class="mb-2 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
                                                 <div class="col-sm-9">
-                                                    <p id="site_customer_name"></p>
+                                                    <p id="site_customer_name"><?php if(isset($contact_name)){echo $contact_name;}?></p>
                                                 </div>
                                             </div>
-                                            <input type="hidden" id="site_customer_id">
+                                            <input type="hidden" id="site_customer_id" value="<?php if(isset($job_details) && $job_details !=''){echo $job_details->customer_id;}?>">
                                             
                                             
 
@@ -2326,6 +2549,61 @@
         </div>
     </div>
      <!-- end here -->
+      <!--  Modal start here -->
+      <div class="modal fade" id="TagModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="customerModalLabel">Tag - Add</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    <div class="alert alert-success text-center success_message" style="display:none;height:50px">
+                        <p id="message"></p>
+                    </div>
+                    <div class="alert alert-danger text-center error_message" style="display:none;height:50px">
+                        <p id="error_message"></p>
+                    </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="formDtail">
+                                <form id="form_data" class="customerForm">
+                                    <div class="mb-2 row">
+
+                                        <label for="inputName" class="col-sm-3 col-form-label">Tag<span class="radStar ">*</span></label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control editInput"
+                                                id="Tagname" name="Tagname" value="">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="inputProject"
+                                            class="col-sm-3 col-form-label">Status</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control editInput selectOptions"
+                                                id="TagStatus" name="TagStatus">
+                                                <option value="1" >Active</option>
+                                                <option value="0">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> <!-- End row -->
+                </div>
+                <div class="modal-footer customer_Form_Popup">
+
+                    <button type="button" class="profileDrop" id="save_data">Save</button>
+                    <!-- <button type="button" class="profileDrop" id="save_dataClose">Save &
+                        Close</button> -->
+                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end here -->
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
@@ -2414,6 +2692,7 @@ const openPopupButton = document.getElementById('openPopupButton');
                 $("#project_customer_id").val(customerData.id);
                 $("#contact_customer_id").val(customerData.id);
                 $("#site_customer_id").val(customerData.id);
+                $("#conatact_name").val(customerData.contact_name);
 
                 // Assuming data.customer_profession is not null
                 if (data.customer_profession) {
@@ -3045,6 +3324,14 @@ const openPopupButton = document.getElementById('openPopupButton');
         });
         $("#temp_result1").hide();
     }
+    $(document).ready(function(){
+        var TablePrevious_ids = JSON.parse('<?php echo json_encode($previous_ids); ?>');
+        // console.log(typeof(TablePrevious_ids));return false;
+        TablePrevious_ids.forEach(function (id) {
+            // selectProduct(id);
+            previous_id.push(Number(id));
+        });
+    });
 
     function removeRow(button) {
         var row = button.parentNode.parentNode;
@@ -3083,7 +3370,7 @@ const openPopupButton = document.getElementById('openPopupButton');
             type: "POST",
             url: "{{url('/new_appointment_add_section')}}",
             data: {
-                count_number: count_number,
+                count_number: count_number-1,
                 _token: token
             },
             success: function(data) {
@@ -3135,6 +3422,7 @@ const openPopupButton = document.getElementById('openPopupButton');
         var start_date=$("#start_date").val();
         var complete_by=$("#complete_by").val();
         var short_decinc=$("#short_decinc").val();
+        var message='<?php if(isset($key) && $key !=''){echo "<span>Job Updated Successfully Done!</span>";}else{echo "<span>Job Added Successfully Done!</span>";}?>'
         // alert(customer_id)
         if(customer_id == null){
             $('#customer_id').css('border','1px solid red');
@@ -3194,12 +3482,22 @@ const openPopupButton = document.getElementById('openPopupButton');
                 success: function(data) {
                     console.log(data);
                     $(window).scrollTop(0);
-                    $("#message_save").show();
-                    setTimeout(() => {
-                        $("#message_save").hide();
-                    }, 3000);
-                    $("#id").val(data.id);
-                    $(".header_text").text(data.job_ref)
+                    if(data.success === true){
+                        $("#message_save").show();
+                        $("#message_save").html(message);
+                        setTimeout(() => {
+                            $("#message_save").hide();
+                        }, 3000);
+                        // $("#id").val(data.id);
+                        // $(".header_text").text(data.job_ref)
+                        // location.href = '<?php echo url('job_edit') . '?key=' . base64_encode('MQ=='); ?>';
+                        var id = parseInt(data.data.id, 10) || 0;
+                        var encodedId = btoa(unescape(encodeURIComponent(id)));
+                        location.href = '<?php echo url('job_edit'); ?>?key=' + encodedId;
+                    }else{
+                        alert("Something went wrong Please try again later");
+                        return false;
+                    }
                 },
                 error: function(xhr) {
                     console.error(xhr.responseText);
@@ -3253,6 +3551,55 @@ const openPopupButton = document.getElementById('openPopupButton');
     }
     $('#supplier_result').on('click', '.delete_row', function() {
         $(this).closest('tr').remove();
+    });
+</script>
+<script>
+    $('#save_data').on('click', function() {
+        var token = '<?php echo csrf_token();?>';
+        var title = $("#Tagname").val().trim();
+        var status = $.trim($('#TagStatus option:selected').val());
+        var message = "Added Successfully Done";
+
+        if (title.includes(',')) {
+            alert("Comma not allowed in the tag, please use _ or - instead");
+            return false;
+        } if (title == '') {
+            $("#Tagname").css('border','1px solid red');
+            return false;
+        } else {
+            $("#Tagname").css('border','');
+            $.ajax({
+                type: "POST",
+                url: '{{ url("/save_tag") }}',
+                data: {title: title, status: status, _token: token},
+                success: function(data) {
+                    console.log(data);
+                    if(data.vali_error){
+                        $("#error_message").text(data.vali_error);
+                        $(".error_message").show();
+                        setTimeout(function() {
+                            $(".error_message").hide();
+                            $("#form_data")[0].reset();
+                        }, 3000);
+                        return false;
+                    }else if(data.data && data.data.original && data.data.original.error){
+                        alert(data.data.original.error);
+                        return false;
+                    }else{
+                        $("#message").text(message);
+                        $(".success_message").show();
+                        $("#tags").append('<option value="'+data.data.id+'">'+data.data.title+'</option>');
+                        setTimeout(function() {
+                            $(".alert").hide();
+                            $("#TagModal").modal('hide');
+                        }, 3000);
+                        
+                    }
+                    
+                }
+                
+            });
+        }
     });
 </script>
 
