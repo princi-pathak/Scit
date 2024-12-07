@@ -92,4 +92,8 @@ class Product_category extends Model
     public static function getProductCategory($home_id){
         return self::where('status', 1)->where('deleted_at', null)->where('home_id', $home_id)->get();
     }
+
+    public static function activeProductCategory($home_id){
+        return self::with('parent', 'children')->where('home_id', $home_id)->where('status', 1)->where('deleted_at', NULL)->get();
+    }   
 }
