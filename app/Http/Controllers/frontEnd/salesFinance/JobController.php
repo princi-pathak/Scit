@@ -71,7 +71,7 @@ class JobController extends Controller
     public function job_list(Request $request){
         $lastSegment = request()->segment(request()->segments() ? count(request()->segments()) : 1);
         $home_id = Auth::user()->home_id;
-        $data['job']=Job::getAllJob($home_id)->get();
+        $data['job']=Job::getAllJob($home_id)->where('user_id',Auth::user()->id)->get();
         $data['access_rights']=$this->access_rights();
         $data['lastSegment']=$lastSegment;
         // echo "<pre>";print_r($data['job']);die;
@@ -104,34 +104,6 @@ class JobController extends Controller
             $html='<option value="'.$result->id.'">'.$result->name.'</option>';
             return $html;
         }else{
-            // $all_data=Job_type::whereNull('deleted_at')->where(['home_id'=>$home_id])->get();
-            // $html = '';
-            // foreach($all_data as $key=>$val){
-            //     $html.='<tr>
-            //                 <td></td>
-            //                 <td>'.++$key.'</td>
-            //                 <td>'.$val->name.'</td>
-            //             <td>' . (($val->status == 1) ? "Yes" : "No") . '</td>
-            //                 <td>'.$val->default_days.'</td>
-            //                 <td><span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span></td>
-            //                 <td>-</td>
-            //                 <td><span class="grencheck"><i class="fa-solid fa-circle-check"></i></span></td>
-            //                 <td> <div class="d-inline-flex align-items-center ">
-            //                         <div class="nav-item dropdown">
-            //                             <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-            //                                 Action
-            //                             </a>
-            //                             <div class="dropdown-menu fade-up m-0">
-            //                                 <a href="javascript:void(0)" onclick="get_model_with_id('.$val->id.')" class="dropdown-item">Edit Details</a>
-            //                                 <hr class="dropdown-divider">
-            //                                 <a href="#!" class="dropdown-item">Manage Workflow</a>
-            //                             </div>
-            //                         </div>
-            //                     </div>
-            //                 </td>
-            //             </tr>';
-
-            // }
             return response()->json(['success'=>'true','message' => "Successfully  Done"], 200);
         }
        } else {
@@ -286,7 +258,7 @@ class JobController extends Controller
         return view('frontEnd.salesAndFinance.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
-        // echo "<pre>";print_r($request->all());die;
+        echo "<pre>";print_r($request->all());die;
         $home_id = Auth::user()->home_id;
         $user_id=Auth::user()->id;
         
@@ -425,12 +397,16 @@ class JobController extends Controller
             'start_time'=>$data['start_time'],
             'end_date'=>$data['end_date'],
             'end_time'=>$data['end_time'],
-            'appointment_checkbox'=>$data['appointment_checkbox'],
+            'floating_appointment'=>$data['floating_appointment'],
+            'single_appointment'=>$data['single_appointment'],
+            'travel_time'=>$data['appointment_time'],
             'appointment_status'=>$data['appointment_status'],
             'appointment_time'=>$data['appointment_time'],
             'priority'=>$data['priority'],
-            'alert_by'=>$data['alert_by'],
-            'notes'=>$data['appointment_notes']
+            'email'=>$data['alert_email_appointment'],
+            'sms'=>$data['alert_sms_appointment'],
+            'notes'=>$data['appointment_notes'],
+            'status'=>1
         ];
         // echo "<pre>";print_r($array_data);die;
         try {
@@ -444,7 +420,7 @@ class JobController extends Controller
     }
     public function new_appointment_add_section(Request $request){
         $home_id = Auth::user()->home_id;
-        $count_number = $request->count_number + 1;
+        $count_number = $request->count_number;
         $users = User::where('is_deleted', 0)->get();
         $appointment_type = Construction_job_appointment_type::where('home_id', $home_id)->get();
     
@@ -463,14 +439,13 @@ class JobController extends Controller
                         <div class="alertBy">
                             <label><strong>Alert By:</strong></label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="alert_by_check_1" value="0">
+                                <input class="form-check-input" type="checkbox" id="alert_sms_appointment'.$count_number.'" value="0" name="alert_sms_appointment[]">
                                 <label class="form-check-label" for="inlineCheckbox1">SMS</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="alert_by_check_2" value="1">
+                                <input class="form-check-input" type="checkbox" id="alert_email_appointment'.$count_number.'" value="0" name="alert_email_appointment[]">
                                 <label class="form-check-label" for="inlineCheckbox2">Email</label>
                             </div>
-                            <input type="hidden" name="alert_by[]" id="alert_by" class="alert_by">
                         </div>
                     </td>
                     <td class="col-2">
@@ -504,14 +479,13 @@ class JobController extends Controller
                         </div>
                         <div class="pt-3">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="appointment_checkbox1" value="option1">
+                                <input class="form-check-input" type="checkbox" id="single_appointment'.$count_number.'" value="0" name="single_appointment[]">
                                 <label class="form-check-label" for="singleAppointment">Single Appointment</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="appointment_checkbox2" value="option2">
+                                <input class="form-check-input" type="checkbox" id="floating_appointment'.$count_number.'" value="0" name="floating_appointment[]">
                                 <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
                             </div>
-                            <input type="hidden" name="appointment_checkbox[]" id="appointment_checkbox" class="appointment_checkbox">
                         </div>
                     </td>
                     <td>

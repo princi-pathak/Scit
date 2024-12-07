@@ -58,7 +58,7 @@
                                                     <!-- <input type="text"  id="staticEmail"> -->
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#customerPop">
+                                                    <a href="javascript:void(0)" class="formicon" data-bs-toggle="modal" data-bs-target="#customerPop">
                                                         <i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                                 <div class="col-sm-1" id="clock" style="display:none">
@@ -677,8 +677,8 @@
                                                                             class="form-check form-check-inline">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox"
-                                                                                id="alert_by_check_1"
-                                                                                value="0" class="alert_by_check_1">
+                                                                                id="alert_sms_appointment{{$count}}"
+                                                                                <?php if($appointmentVal->sms == 1){echo 'checked value="1"';}else{echo 'value="0"';}?> class="alert_by_check_1" name="alert_sms_appointment[]">
                                                                             <label class="form-check-label"
                                                                                 for="inlineCheckbox1">SMS</label>
                                                                         </div>
@@ -686,12 +686,11 @@
                                                                             class="form-check form-check-inline">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox"
-                                                                                id="alert_by_check_2"
-                                                                                value="1" class="alert_by_check_2">
+                                                                                id="alert_email_appointment{{$count}}"
+                                                                                 class="alert_by_check_2" name="alert_email_appointment[]" <?php if($appointmentVal->email == 1){echo 'checked value="1"';}else{echo 'value="0"';}?>>
                                                                             <label class="form-check-label"
                                                                                 for="inlineCheckbox2">Email</label>
                                                                         </div>
-                                                                        <input type="hidden" name="alert_by[]" id="alert_by" class="alert_by">
                                                                     </div>
                                                                 </td>
                                                                 <td class="col-2">
@@ -736,8 +735,8 @@
                                                                             class="form-check form-check-inline">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox"
-                                                                                id="appointment_checkbox1"
-                                                                                value="option1">
+                                                                                id="single_appointment{{$count}}" name="single_appointment[]"
+                                                                                <?php if($appointmentVal->single_appointment == 1){echo 'checked value="1"';}else{echo 'value="0"';}?>>
                                                                             <label class="form-check-label"
                                                                                 for="singleAppointment">Single
                                                                                 Appointment</label>
@@ -746,13 +745,12 @@
                                                                             class="form-check form-check-inline">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox"
-                                                                                id="appointment_checkbox2"
-                                                                                value="option2">
+                                                                                id="floating_appointment{{$count}}" name="floating_appointment[]"
+                                                                                <?php if($appointmentVal->floating_appointment == 1){echo 'checked value="1"';}else{echo 'value="0"';}?>>
                                                                             <label class="form-check-label"
                                                                                 for="floatingAppointment">Floating
                                                                                 Appointment</label>
                                                                         </div>
-                                                                        <input type="hidden" name="appointment_checkbox[]" id="appointment_checkbox" class="appointment_checkbox">
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -870,8 +868,8 @@
                                                                             class="form-check form-check-inline">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox"
-                                                                                id="alert_by_check_1"
-                                                                                value="0">
+                                                                                id="alert_sms_appointment1"
+                                                                                value="0" name="alert_sms_appointment[]">
                                                                             <label class="form-check-label"
                                                                                 for="inlineCheckbox1">SMS</label>
                                                                         </div>
@@ -879,12 +877,11 @@
                                                                             class="form-check form-check-inline">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox"
-                                                                                id="alert_by_check_2"
-                                                                                value="1">
+                                                                                id="alert_email_appointment1"
+                                                                                value="0" name="alert_email_appointment[]">
                                                                             <label class="form-check-label"
                                                                                 for="inlineCheckbox2">Email</label>
                                                                         </div>
-                                                                        <input type="hidden" name="alert_by[]" id="alert_by" class="alert_by">
                                                                     </div>
                                                                 </td>
                                                                 <td class="col-2">
@@ -929,8 +926,8 @@
                                                                             class="form-check form-check-inline">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox"
-                                                                                id="appointment_checkbox1"
-                                                                                value="option1">
+                                                                                id="single_appointment1"
+                                                                                value="0" name="single_appointment[]">
                                                                             <label class="form-check-label"
                                                                                 for="singleAppointment">Single
                                                                                 Appointment</label>
@@ -939,13 +936,12 @@
                                                                             class="form-check form-check-inline">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox"
-                                                                                id="appointment_checkbox2"
-                                                                                value="option2">
+                                                                                id="floating_appointment1"
+                                                                                value="0" name="floating_appointment[]">
                                                                             <label class="form-check-label"
                                                                                 for="floatingAppointment">Floating
                                                                                 Appointment</label>
                                                                         </div>
-                                                                        <input type="hidden" name="appointment_checkbox[]" id="appointment_checkbox" class="appointment_checkbox">
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -3370,7 +3366,7 @@ const openPopupButton = document.getElementById('openPopupButton');
             type: "POST",
             url: "{{url('/new_appointment_add_section')}}",
             data: {
-                count_number: count_number-1,
+                count_number: count_number,
                 _token: token
             },
             success: function(data) {
@@ -3414,6 +3410,34 @@ const openPopupButton = document.getElementById('openPopupButton');
         for (var instance in CKEDITOR.instances) {
             CKEDITOR.instances[instance].updateElement();
         }
+        var countNumber=$("#count_number").val();
+        // alert(countNumber);return false;
+        const length=countNumber-1;
+        for(var i=1; i<=length;i++){
+            if ($('#alert_sms_appointment'+i).is(':checked')) {
+                alert(1)
+                $("#alert_sms_appointment"+i).val(1);
+            }else {
+                alert(0)
+                $("#alert_sms_appointment"+i).val(0);
+            }
+            if ($('#alert_email_appointment'+i).is(':checked')) {
+                $("#alert_email_appointment"+i).val(1);
+            }else {
+                $("#alert_email_appointment"+i).val(0);
+            }
+            if ($('#single_appointment'+i).is(':checked')) {
+                $("#single_appointment"+i).val(1);
+            }else {
+                $("#single_appointment"+i).val(0);
+            }
+            if ($('#floating_appointment'+i).is(':checked')) {
+                $("#floating_appointment"+i).val(1);
+            }else {
+                $("#floating_appointment"+i).val(0);
+            }
+        }
+        
         var customer_id=$("#customer_id").val();
         var name=$("#name").val();
         var address=$("#address").val();
