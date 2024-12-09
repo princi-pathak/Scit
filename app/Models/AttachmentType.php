@@ -45,6 +45,11 @@ class AttachmentType extends Model
         return $data;
     }
 
+    public static function getActiveAttachmentType($home_id){
+        $data = AttachmentType::where('status', 1)->where('home_id', $home_id)->where('deleted_at', null)->get();
+        return $data;
+    }
+
 }
 
 

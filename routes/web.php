@@ -371,7 +371,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/departments','departments');
 		Route::post('/save_department','save_department');
 	});
-  
+	
+	// Forontend Customer Controller
 	Route::controller(CustomerController::class)->group(function () {
 		Route::prefix('customers')->group(function () {
 			Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
@@ -518,6 +519,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 
 		Route::get('/quote/edit/{id}', 'edit')->name('quote.edit');
+		Route::post('quote/saveAttachmentData', 'saveAttachmentData')->name('quote.ajax.saveAttachmentData');
+
+		
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {

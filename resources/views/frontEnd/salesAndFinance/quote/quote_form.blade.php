@@ -2446,6 +2446,310 @@
                 $('#results').empty(); // Clear results if the input is empty
             }
         });
+        // getCustomerList();
+
+        getQuoteType(document.getElementById('quoteType'));
+
+        document.getElementById('hideQuoteDiv').style.display = "none";
+        document.getElementById('hideQuoteDetails').style.display = "none";
+        document.getElementById('hideAttachmentTask').style.display = "none";
+        document.getElementById('hideDepositSection').style.display = "none";
+
+        $('#getCustomerList').on('click', function() {
+            // getCustomerList();
+            document.getElementById('customerSiteDetails').removeAttribute('disabled');
+            document.getElementById('billingDetailContact').removeAttribute('disabled');
+
+            const billingDetailContact = document.getElementById('billingDetailContact');
+            billingDetailContact.innerHTML = '';
+
+            var getCustomerListValue = document.getElementById('getCustomerList');
+
+            const option = document.createElement('option');
+            option.value = getCustomerListValue.value;
+            option.text = "Default";
+            billingDetailContact.appendChild(option);
+
+
+            $.ajax({
+                url: '{{ route("customer.ajax.getCustomerBillingAddress") }}',
+                method: 'POST',
+                data: {
+                    id: getCustomerListValue.value
+                },
+                success: function(response) {
+                    console.log(response.message);
+
+                    response.data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.contact_name;
+                        billingDetailContact.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+            getBillingDetailsData(getCustomerListValue.value);
+
+
+            const customerSiteDetails = document.getElementById('customerSiteDetails');
+            const customerSiteDelivery = document.getElementById('customerSiteDelivery');
+
+            customerSiteDetails.innerHTML = '';
+            customerSiteDelivery.innerHTML = '';
+
+            const option3 = document.createElement('option');
+            option3.value = getCustomerListValue.value;
+            option3.text = "Same as customer";
+            const option4 = option3.cloneNode(true);
+            customerSiteDetails.appendChild(option3);
+            customerSiteDelivery.appendChild(option4);
+
+            removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
+        });
+
+        $('#AddQuoteButton').on('click', function() {
+            var customer = document.getElementById('getCustomerList').value;
+            if (customer === "") {
+                alert('Please select the customer');
+            } else {
+                getTags(document.getElementById('quoteTag'))
+                getRegions(document.getElementById('siteDeliveryRegions'));
+                const selectCustomer = document.getElementById('getCustomerList');
+                const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
+                document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
+                document.getElementById('yourQuoteSection').style.display = "none";
+                document.getElementById('hideQuoteDiv').style.display = "block";
+                document.getElementById('hideCustomerDetails').style.display = "none";
+                document.getElementById('hideQuoteDetails').style.display = "block";
+            }
+        });
+
+        $('#saveQuoteTag').on('click', function() {
+            var quoteTag = document.getElementById('quoteTag');
+            saveFormData(
+                'add_quote_tag_form', // formId
+                '{{ route("General.ajax.saveQuoteTag") }}', // saveUrl
+                'quoteTagModal', // modalId
+                getTags, // callback function after success
+                quoteTag
+            );
+        });
+
+        $('#billingDetailContact').on('change', function() {
+            var selected = document.getElementById('getCustomerList').value;
+            console.log(selected);
+            if ($(this).val() === selected) {
+                getBillingDetailsData($(this).val());
+            } else {
+                setCustomerBillingData($(this).val());
+            }
+        });
+
+        $('#customerSiteDetails').on('change', function() {
+            var selected = document.getElementById('getCustomerList').value;
+            console.log($(this).val());
+            if ($(this).val() === selected) {
+
+                $.ajax({
+                    url: '{{ route("customer.ajax.getCustomerDetails") }}',
+                    method: 'POST',
+                    data: {
+                        id: $(this).val()
+                    },
+                    success: function(response) {
+                        console.log(response.data);
+
+                        // document.getElementById('customer_site_id').value = response.data[0].id;
+                        document.getElementById('siteCustomerId').value = response.data[0].id;
+                        document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                        document.getElementById('customerSiteAddress').value = response.data[0].address;
+                        document.getElementById('customerSiteCity').value = response.data[0].city;
+                        document.getElementById('customerSiteCounty').value = response.data[0].country;
+                        document.getElementById('customerSitePostCode').value = response.data[0].postal_code;
+                        document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                        document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                        document.getElementById('setSiteAddress').textContent = document.getElementById('customerSiteCompany').value = response.data[0].name;
+                        selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                        selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                        selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                setSiteAddressDetails($(this).val());
+            }
+        });
+
+        $('#customerSiteDelivery').on('change', function() {
+            var selected = document.getElementById('getCustomerList').value;
+            console.log($(this).val());
+            if ($(this).val() === selected) {
+
+                $.ajax({
+                    url: '{{ route("customer.ajax.getCustomerDetails") }}',
+                    method: 'POST',
+                    data: {
+                        id: $(this).val()
+                    },
+                    success: function(response) {
+                        console.log(response.data);
+                        document.getElementById('site_delivery_add_id').value = response.data[0].id;
+                        document.getElementById('customerSiteDeliveryName').value = response.data[0].contact_name;
+                        document.getElementById('customerSiteDeliveryAdd').value = response.data[0].address;
+                        document.getElementById('customerSiteDeliveryPostCode').value = response.data[0].postal_code;
+                        document.getElementById('customerSiteDeliveryTelephone').value = response.data[0].telephone;
+                        document.getElementById('customerSiteDeliveryMobile').value = response.data[0].mobile;
+                        document.getElementById('customerSiteDeliveryEmail').value = response.data[0].email;
+                        document.getElementById('customerSiteDeliveryCompany').value = response.data[0].name;
+                        selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
+                        selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
+                        selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                setSiteDeliveryDetails($(this).val());
+            }
+        });
+
+        $('#saveQuoteSourceQuote').on('click', function() {
+            var formData = $('#add_quote_source_form').serialize();
+            $.ajax({
+                url: '{{ route("quote.ajax.saveQuoteSources") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
+                    $('#quoteSourceModal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        // Ajax Call for saving Customer Type
+        $('#saveCustomerSiteDetails').on('click', function() {
+            var formData = $('#add_customer_site_details_form').serialize();
+            $.ajax({
+                url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
+                    // removeAddCustomerSiteAddress(document.getElementById('customerSiteDetails'),document.getElementById('customerSiteDelivery'), response.id);
+                    $('#add_site_address_modal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        $('#saveCustomerSiteDeliveryDetails').on('click', function() {
+            var formData = $('#add_customer_site_delivery_form').serialize();
+            $.ajax({
+                url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
+                    $('#add_site_delivery_address_modal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        $('#saveQuoteTypeQuote').on('click', function() {
+            var formData = $('#add_quote_type_form').serialize();
+            $.ajax({
+                url: '{{ route("quote.ajax.saveQuoteType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
+                    $('#quoteTypeModal').modal('hide');
+                    getQuoteType(document.getElementById('quoteType'));
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        // Ajax Call for saving Customer Type
+        $('#saveAddCustomerType').on('click', function() {
+            var formData = $('#add_customer_type_form').serialize();
+            $.ajax({
+                url: '{{ route("quote.ajax.saveCustomerType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#quote_cutomer_type_modal').modal('hide');
+                    getCustomerType();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+          // Save Customer Data
+          $('#saveCustomerContactData').on('click', function() {
+            var formData = $('#add_customer_contact_form').serialize();
+            $.ajax({
+                url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#add_customer_contact_modal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        
+        // Save Customer Data
+        $('#SaveCustomerData').on('click', function() {
+            var formData = $('#add_customer_form').serialize();
+            $.ajax({
+                url: '{{ route("customer.ajax.SaveCustomerData") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    getCustomerList();
+                    $('#QuotecustomerPop').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+
     });
 
     function getCustomerType() {
@@ -2554,9 +2858,6 @@
             }
         });
     }
-
-
-
 
     function applyMarkup() {
         document.getElementById('markUpLinkRemove').innerHTML = '';
@@ -2672,7 +2973,6 @@
         }
     }
 
-
     function calculateRowsValue(table) {
         const rows = table.querySelectorAll('tbody tr');
 
@@ -2766,14 +3066,13 @@
         document.getElementById('footTotalDiscountVat').textContent = doller + (price + totalVAT).toFixed(2);
         document.getElementById('inputFootTotalDiscountVat').value = (price + totalVAT).toFixed(2);
         document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
-        document.getElementById('inputFootProfit').value =  totalProfit.toFixed(2);
+        document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
         document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
         document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
-        document.getElementById('inputFootOutstandingAmount').value =  (price + totalVAT).toFixed(2);
+        document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
 
-        
+
     }
-
 
     let isFooterAppended = false;
     let rowIndex = 0;
@@ -3072,7 +3371,7 @@
                 // billing details data set
                 // setFieldValues([], contactData.id);
 
-                setFieldValues(['billing_add_id', 'site_delivery_add_id','siteCustomerId', 'customer_id_site_delivery'], contactData.id);
+                setFieldValues(['billing_add_id', 'site_delivery_add_id', 'siteCustomerId', 'customer_id_site_delivery'], contactData.id);
                 setFieldValues(['billingDetailsName', 'customerSiteName', 'customerSiteDeliveryName'], contactData.contact_name);
                 setTextContent(['setCustomerName', 'setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany', 'setSiteDeliveryAddress'], contactData.name);
                 setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
@@ -3273,339 +3572,6 @@
             }
         });
     }
-
-
-    $(document).ready(function() {
-
-        getQuoteType(document.getElementById('quoteType'));
-
-        document.getElementById('hideQuoteDiv').style.display = "none";
-        document.getElementById('hideQuoteDetails').style.display = "none";
-        document.getElementById('hideAttachmentTask').style.display = "none";
-        document.getElementById('hideDepositSection').style.display = "none";
-
-
-
-        $('#getCustomerList').on('click', function() {
-            getCustomerList();
-            document.getElementById('customerSiteDetails').removeAttribute('disabled');
-            document.getElementById('billingDetailContact').removeAttribute('disabled');
-
-            const billingDetailContact = document.getElementById('billingDetailContact');
-            billingDetailContact.innerHTML = '';
-
-            var getCustomerListValue = document.getElementById('getCustomerList');
-
-            const option = document.createElement('option');
-            option.value = getCustomerListValue.value;
-            option.text = "Default";
-            billingDetailContact.appendChild(option);
-
-
-            $.ajax({
-                url: '{{ route("customer.ajax.getCustomerBillingAddress") }}',
-                method: 'POST',
-                data: {
-                    id: getCustomerListValue.value
-                },
-                success: function(response) {
-                    console.log(response.message);
-
-                    response.data.forEach(user => {
-                        const option = document.createElement('option');
-                        option.value = user.id;
-                        option.text = user.contact_name;
-                        billingDetailContact.appendChild(option);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-
-            getBillingDetailsData(getCustomerListValue.value);
-
-
-            const customerSiteDetails = document.getElementById('customerSiteDetails');
-            const customerSiteDelivery = document.getElementById('customerSiteDelivery');
-
-            customerSiteDetails.innerHTML = '';
-            customerSiteDelivery.innerHTML = '';
-
-            const option3 = document.createElement('option');
-            option3.value = getCustomerListValue.value;
-            option3.text = "Same as customer";
-            const option4 = option3.cloneNode(true);
-            customerSiteDetails.appendChild(option3);
-            customerSiteDelivery.appendChild(option4);
-
-            removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
-        });
-
-        $('#AddQuoteButton').on('click', function() {
-            var customer = document.getElementById('getCustomerList').value;
-            if (customer === "") {
-                alert('Please select the customer');
-            } else {
-                getTags(document.getElementById('quoteTag'))
-                getRegions(document.getElementById('siteDeliveryRegions'));
-                const selectCustomer = document.getElementById('getCustomerList');
-                const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
-                document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
-                document.getElementById('yourQuoteSection').style.display = "none";
-                document.getElementById('hideQuoteDiv').style.display = "block";
-                document.getElementById('hideCustomerDetails').style.display = "none";
-                document.getElementById('hideQuoteDetails').style.display = "block";
-            }
-        });
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-
-        $('#saveQuoteTag').on('click', function() {
-            var quoteTag = document.getElementById('quoteTag');
-            saveFormData(
-                'add_quote_tag_form', // formId
-                '{{ route("General.ajax.saveQuoteTag") }}', // saveUrl
-                'quoteTagModal', // modalId
-                getTags, // callback function after success
-                quoteTag
-            );
-        });
-
-        $('#billingDetailContact').on('change', function() {
-            var selected = document.getElementById('getCustomerList').value;
-            console.log(selected);
-            if ($(this).val() === selected) {
-                getBillingDetailsData($(this).val());
-            } else {
-                setCustomerBillingData($(this).val());
-            }
-        });
-
-        $('#customerSiteDetails').on('change', function() {
-            var selected = document.getElementById('getCustomerList').value;
-            console.log($(this).val());
-            if ($(this).val() === selected) {
-
-                $.ajax({
-                    url: '{{ route("customer.ajax.getCustomerDetails") }}',
-                    method: 'POST',
-                    data: {
-                        id: $(this).val()
-                    },
-                    success: function(response) {
-                        console.log(response.data);
-
-                        // document.getElementById('customer_site_id').value = response.data[0].id;
-                        document.getElementById('siteCustomerId').value = response.data[0].id;
-                        document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                        document.getElementById('customerSiteAddress').value = response.data[0].address;
-                        document.getElementById('customerSiteCity').value = response.data[0].city;
-                        document.getElementById('customerSiteCounty').value = response.data[0].country;
-                        document.getElementById('customerSitePostCode').value = response.data[0].postal_code;
-                        document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                        document.getElementById('customerSiteMobile').value = response.data[0].mobile;
-                        document.getElementById('setSiteAddress').textContent = document.getElementById('customerSiteCompany').value = response.data[0].name;
-                        selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                        selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                        selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                setSiteAddressDetails($(this).val());
-            }
-        });
-
-        $('#customerSiteDelivery').on('change', function() {
-            var selected = document.getElementById('getCustomerList').value;
-            console.log($(this).val());
-            if ($(this).val() === selected) {
-
-                $.ajax({
-                    url: '{{ route("customer.ajax.getCustomerDetails") }}',
-                    method: 'POST',
-                    data: {
-                        id: $(this).val()
-                    },
-                    success: function(response) {
-                        console.log(response.data);
-                        document.getElementById('site_delivery_add_id').value = response.data[0].id;
-                        document.getElementById('customerSiteDeliveryName').value = response.data[0].contact_name;
-                        document.getElementById('customerSiteDeliveryAdd').value = response.data[0].address;
-                        document.getElementById('customerSiteDeliveryPostCode').value = response.data[0].postal_code;
-                        document.getElementById('customerSiteDeliveryTelephone').value = response.data[0].telephone;
-                        document.getElementById('customerSiteDeliveryMobile').value = response.data[0].mobile;
-                        document.getElementById('customerSiteDeliveryEmail').value = response.data[0].email;
-                        document.getElementById('customerSiteDeliveryCompany').value = response.data[0].name;
-                        selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
-                        selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
-                        selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                setSiteDeliveryDetails($(this).val());
-            }
-        });
-
-        $('#saveQuoteSourceQuote').on('click', function() {
-            var formData = $('#add_quote_source_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveQuoteSources") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    $('#quoteSourceModal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-
-        // Ajax Call for saving Customer Type
-        $('#saveCustomerSiteDetails').on('click', function() {
-            var formData = $('#add_customer_site_details_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    // removeAddCustomerSiteAddress(document.getElementById('customerSiteDetails'),document.getElementById('customerSiteDelivery'), response.id);
-                    $('#add_site_address_modal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        $('#saveCustomerSiteDeliveryDetails').on('click', function() {
-            var formData = $('#add_customer_site_delivery_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    $('#add_site_delivery_address_modal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-
-        $('#saveQuoteTypeQuote').on('click', function() {
-            var formData = $('#add_quote_type_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveQuoteType") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    $('#quoteTypeModal').modal('hide');
-                    getQuoteType(document.getElementById('quoteType'));
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Ajax Call for saving Customer Type
-        $('#saveAddCustomerType').on('click', function() {
-            var formData = $('#add_customer_type_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveCustomerType") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    $('#quote_cutomer_type_modal').modal('hide');
-                    getCustomerType();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // $('#accoutCodeList').on('click', function() {
-        //     getAccountCode(document.getElementById('accoutCodeList'));
-        // });
-
-
-        // Save Customer Data
-        $('#SaveCustomerData').on('click', function() {
-            var formData = $('#add_customer_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.SaveCustomerData") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    getCustomerList();
-                    $('#QuotecustomerPop').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Save Customer Data
-        $('#saveCustomerContactData').on('click', function() {
-            var formData = $('#add_customer_contact_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    console.log(response);
-                    alert(response.message);
-                    setCustomerBillingData(response.lastid);
-                    $('#add_customer_contact_modal').modal('hide');
-                    //getBillingDetailsData();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        document.getElementById('same_as_default').addEventListener('change', function() {
-            const isChecked = this.checked;
-            // Show data if checked, else show blank
-            if (isChecked) {
-                var gettext = document.getElementById('billingDetailsAddress').text;
-                console.log(gettext);
-                document.getElementById('cuatomer_address').text = gettext;
-            }
-        });
-    });
 
     window.onload = function() {
         var buttons = document.querySelectorAll('.hide-on-load');
