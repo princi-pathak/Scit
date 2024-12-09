@@ -71,7 +71,7 @@ class JobController extends Controller
     public function job_list(Request $request){
         $lastSegment = request()->segment(request()->segments() ? count(request()->segments()) : 1);
         $home_id = Auth::user()->home_id;
-        $data['job']=Job::getAllJob($home_id)->get();
+        $data['job']=Job::getAllJob($home_id)->where('user_id',Auth::user()->id)->get();
         $data['access_rights']=$this->access_rights();
         $data['lastSegment']=$lastSegment;
         // echo "<pre>";print_r($data['job']);die;
@@ -104,34 +104,6 @@ class JobController extends Controller
             $html='<option value="'.$result->id.'">'.$result->name.'</option>';
             return $html;
         }else{
-            // $all_data=Job_type::whereNull('deleted_at')->where(['home_id'=>$home_id])->get();
-            // $html = '';
-            // foreach($all_data as $key=>$val){
-            //     $html.='<tr>
-            //                 <td></td>
-            //                 <td>'.++$key.'</td>
-            //                 <td>'.$val->name.'</td>
-            //             <td>' . (($val->status == 1) ? "Yes" : "No") . '</td>
-            //                 <td>'.$val->default_days.'</td>
-            //                 <td><span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span></td>
-            //                 <td>-</td>
-            //                 <td><span class="grencheck"><i class="fa-solid fa-circle-check"></i></span></td>
-            //                 <td> <div class="d-inline-flex align-items-center ">
-            //                         <div class="nav-item dropdown">
-            //                             <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-            //                                 Action
-            //                             </a>
-            //                             <div class="dropdown-menu fade-up m-0">
-            //                                 <a href="javascript:void(0)" onclick="get_model_with_id('.$val->id.')" class="dropdown-item">Edit Details</a>
-            //                                 <hr class="dropdown-divider">
-            //                                 <a href="#!" class="dropdown-item">Manage Workflow</a>
-            //                             </div>
-            //                         </div>
-            //                     </div>
-            //                 </td>
-            //             </tr>';
-
-            // }
             return response()->json(['success'=>'true','message' => "Successfully  Done"], 200);
         }
        } else {
@@ -353,7 +325,7 @@ class JobController extends Controller
         $home_id = Auth::user()->home_id;
         $user_id=Auth::user()->id;
         $previous_ids=$request->previous_id;
-        $calculation=$this->calculation($previous_ids);
+        // $calculation=$this->calculation($previous_ids);
         // echo "<pre>";print_r($calculation);die;
         $product_details=Product::product_detail($request->id);
         $tax=Product::tax_detail($home_id);
@@ -361,9 +333,9 @@ class JobController extends Controller
                 <td>'.$product_details->product_code.'<input type="hidden" id="product_codejob" name="product_codejob[]" value="'.$product_details->product_code.'"></td>
                 <td>'.$product_details->product_name.'<input type="hidden" id="product_namejob" name="product_namejob[]" value="'.$product_details->product_name.'"></td>
                 <td>'.$product_details->description.'<input type="hidden" id="descriptionjob" name="descriptionjob[]" value="'.$product_details->description.'"></td>
-                <td><input type="text" class="" value="'.$product_details->qty.'" name="quantity[]" id="quantity"></td>
-                <td>'.$product_details->cost_price.'<input type="hidden" id="cost_pricejob" name="cost_pricejob[]" value="'.$product_details->cost_price.'"></td>
-                <td>'.$product_details->price.'<input type="hidden" id="pricejob" name="pricejob[]" value="'.$product_details->price.'"></td>
+                <td><input type="text" class="quantity" value="'.$product_details->qty.'" name="quantity[]" id="quantity"></td>
+                <td>'.$product_details->cost_price.'<input type="hidden" id="cost_pricejob" class="cost_pricejob" name="cost_pricejob[]" value="'.$product_details->cost_price.'"></td>
+                <td>'.$product_details->price.'<input type="hidden" id="pricejob" class="pricejob" name="pricejob[]" value="'.$product_details->price.'"></td>
                 <td><input type="text" class="" value="0" name="discount[]"></td>';
 
         $html.= '<td><select id="vatjob" name="vatjob[]">';
@@ -371,24 +343,33 @@ class JobController extends Controller
         $html.= '<option value="'.$taxv->id.'">'.$taxv->name.'</option>';
         }
         $html.= '</select></td>
-                <td id="pre_total_amount">'.$product_details->price.'<input type="hidden" name="final_amount" id="final_amount" value="'.$product_details->price.'"></td>
-                <td><button type="button" class="btn btn-danger" onclick="removeRow('.$product_details->id.')">Delete<input type="hidden" value="'.$product_details->id.'" name="product_detail_id[]" id="product_detail_id"></button></td>
+                <td id="pre_total_amount" class="pre_total_amount">'.$product_details->price.'</td>
+                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete<input type="hidden" value="'.$product_details->id.'" name="product_detail_id[]" id="product_detail_id"></button></td>
             </tr>';
-        return $data=['calculation'=>$calculation,'html'=>$html];
-
-        $calculation;
+        return $data=['html'=>$html];
        
     }
-    private function calculation($data){
-        // echo "<pre>";print_r($data);die;
-        $cost_price=0;
-        $total_amount_assign=0;
-        for($i=0;$i<count($data);$i++){
-            $product_details=Product::find($data[$i]);
-            $cost_price=$cost_price+$product_details->cost_price;
-            $total_amount_assign=$total_amount_assign+$product_details->price;
+    // private function calculation($data){
+    //     $cost_price=0;
+    //     $total_amount_assign=0;
+    //     for($i=0;$i<count($data);$i++){
+    //         $product_details=Product::find($data[$i]);
+    //         $cost_price=$cost_price+$product_details->cost_price;
+    //         $total_amount_assign=$total_amount_assign+$product_details->price;
+    //     }
+    //    return $data=['cost_price'=>$cost_price,'total_amount_assign'=>$total_amount_assign];
+        
+    // }
+    public function jobassign_productsDelete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id=$request->id;
+        try{
+            Construction_jobassign_product::find($id)->update(['deleted_at' => now()]);
+            return response()->json(['success'=>true,'message'=>'Deleted Successfully done']);
+        }catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-       return $data=['cost_price'=>$cost_price,'total_amount_assign'=>$total_amount_assign];
         
     }
     public function save_job_product($job_detail,$data){
@@ -417,6 +398,7 @@ class JobController extends Controller
     public function get_save_appointment($job_detail,$data){
         // echo "<pre>";print_r($data);die;
         $array_data=[
+            'id'=>$data['appointment_id'] ?? null,
             'user_id'=>$data['Appointmentuser_id'],
             'home_id'=>$data['home_id'],
             'job_id'=>$job_detail['id'],
@@ -425,12 +407,16 @@ class JobController extends Controller
             'start_time'=>$data['start_time'],
             'end_date'=>$data['end_date'],
             'end_time'=>$data['end_time'],
-            'appointment_checkbox'=>$data['appointment_checkbox'],
+            'floating_appointment'=>$data['floating_appointment'],
+            'single_appointment'=>$data['single_appointment'],
+            'travel_time'=>$data['firstinput_time'],
+            'appointment_time'=>$data['secondinput_time'],
             'appointment_status'=>$data['appointment_status'],
-            'appointment_time'=>$data['appointment_time'],
             'priority'=>$data['priority'],
-            'alert_by'=>$data['alert_by'],
-            'notes'=>$data['appointment_notes']
+            'email'=>$data['alert_email_appointment'],
+            'sms'=>$data['alert_sms_appointment'],
+            'notes'=>$data['appointment_notes'],
+            'status'=>1
         ];
         // echo "<pre>";print_r($array_data);die;
         try {
@@ -444,7 +430,7 @@ class JobController extends Controller
     }
     public function new_appointment_add_section(Request $request){
         $home_id = Auth::user()->home_id;
-        $count_number = $request->count_number + 1;
+        $count_number = $request->count_number;
         $users = User::where('is_deleted', 0)->get();
         $appointment_type = Construction_job_appointment_type::where('home_id', $home_id)->get();
     
@@ -452,7 +438,7 @@ class JobController extends Controller
                     <td>
                         <div class="d-flex">
                             <p class="leftNum">'.$count_number.'</p>
-                            <select class="form-control editInput selectOptions" id="user_id" name="user_id[]">
+                            <select class="form-control editInput selectOptions" id="Appointmentuser_id" name="Appointmentuser_id[]">
                                 <option selected disabled>Select user</option>';
                                 foreach($users as $user){
                                     $html .= '<option value="'.$user->id.'">'.$user->name.'</option>';
@@ -463,14 +449,13 @@ class JobController extends Controller
                         <div class="alertBy">
                             <label><strong>Alert By:</strong></label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="alert_by_check_1" value="0">
+                                <input class="form-check-input" type="checkbox" id="alert_sms_appointment'.$count_number.'" value="0" name="alert_sms_appointment[]">
                                 <label class="form-check-label" for="inlineCheckbox1">SMS</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="alert_by_check_2" value="1">
+                                <input class="form-check-input" type="checkbox" id="alert_email_appointment'.$count_number.'" value="0" name="alert_email_appointment[]">
                                 <label class="form-check-label" for="inlineCheckbox2">Email</label>
                             </div>
-                            <input type="hidden" name="alert_by[]" id="alert_by" class="alert_by">
                         </div>
                     </td>
                     <td class="col-2">
@@ -504,14 +489,13 @@ class JobController extends Controller
                         </div>
                         <div class="pt-3">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="appointment_checkbox1" value="option1">
+                                <input class="form-check-input" type="checkbox" id="single_appointment'.$count_number.'" value="0" name="single_appointment[]">
                                 <label class="form-check-label" for="singleAppointment">Single Appointment</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="appointment_checkbox2" value="option2">
+                                <input class="form-check-input" type="checkbox" id="floating_appointment'.$count_number.'" value="0" name="floating_appointment[]">
                                 <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
                             </div>
-                            <input type="hidden" name="appointment_checkbox[]" id="appointment_checkbox" class="appointment_checkbox">
                         </div>
                     </td>
                     <td>
@@ -547,8 +531,8 @@ class JobController extends Controller
                                     -</strong></label>
                             <input type="text"
                                 class="form-control editInput"
-                                id="input_time1"
-                                placeholder="" onkeyup="get_time()"><label>
+                                id="firstinput_time'.$count_number.'" name="firstinput_time[]"
+                                placeholder="" onkeyup="get_time('.$count_number.')"><label>
                                 Mins</label>
                         </div>
                     </td>
@@ -559,12 +543,12 @@ class JobController extends Controller
                                     -</strong></label>
                             <input type="text"
                                 class="form-control editInput"
-                                id="input_time2"
-                                placeholder="" onkeyup="get_time()"><label> Mins
-                                <strong>Total Time -</strong><font id="time_show">0h
+                                id="secondinput_time'.$count_number.'" name="secondinput_time[]"
+                                placeholder="" onkeyup="get_time('.$count_number.')"><label> Mins
+                                <strong>Total Time -</strong><font id="time_show'.$count_number.'">0h
                                 0mins</font> </label>
                         </div>
-                        <input type="hidden" id="appointment_time" class="appointment_time" name="appointment_time[]">
+                        <input type="hidden" id="appointment_time'.$count_number.'" class="appointment_time" name="appointment_time[]">
                     </td>
                     <td></td>
                     <td></td>

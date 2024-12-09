@@ -183,7 +183,7 @@
                             <div class="row form-group mb-2">
                                 <label class="col-md-4 col-form-label text-end">Billable:</label>
                                 <div class="col-md-8">
-                                    <select class="form-control editInput selectOptions" id="billable">
+                                    <select class="form-control editInput selectOptions" id="billable_search">
                                         <option selected disabled>--Any--</option>
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
@@ -294,8 +294,8 @@
                         <tr>
                             <td><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></td>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $val->expense_date }}</td>
-                            <td>{{ $user }}</td>
+                            <td><?php echo  date('d-m-Y',strtotime($val->expense_date));?></td>
+                            <td disabled>{{ $user }}</td>
                             <td>{{ $val->title }}</td>
                             <td>{{ $val->reference }}</td>
                             <td>{{ $val->job ?? "-" }}</td>
@@ -1024,7 +1024,7 @@ job_input.addEventListener('input', function() {
         var expenseBy=$("#expenseBy").val();
         var customer_name=$("#customer_name").val();
         var selectedId=$("#selectedId").val();
-        var billable=$("#billable").val();
+        var billable=$("#billable_search").val();
         var start_date=$("#start_date").val();
         var end_date=$("#end_date").val();
         var keywords=$("#keywords").val();
