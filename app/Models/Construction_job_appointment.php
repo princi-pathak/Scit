@@ -44,10 +44,10 @@ class Construction_job_appointment extends Model
                 'start_time' => $data['start_time'][$i] ?? null,
                 'end_date' => $data['end_date'][$i] ?? null,
                 'end_time' => $data['end_time'][$i] ?? null,
-                'floating_appointment' => $data['floating_appointment'][$i] ?? null,
-                'single_appointment' => $data['single_appointment'][$i] ?? null,
-                'email' => $data['email'][$i] ?? null,
-                'sms' => $data['sms'][$i] ?? null,
+                'floating_appointment' => $data['floating_appointment'][$i] ?? 0,
+                'single_appointment' => $data['single_appointment'][$i] ?? 0,
+                'email' => $data['email'][$i] ?? 0,
+                'sms' => $data['sms'][$i] ?? 0,
                 'appointment_status' => $data['appointment_status'][$i] ?? null,
                 'appointment_time' => $data['appointment_time'][$i] ?? null,
                 'travel_time' => $data['appointment_time'][$i] ?? null,
@@ -57,9 +57,9 @@ class Construction_job_appointment extends Model
             $insert = self::updateOrCreate(
                 ['id' => $data['id'][$i] ?? null],
                 $appointmentData
-            );
-                $result=['id'=>$insert->id];
-                return $result;
+            );      
         }
+        $result=['id'=>$insert->id];
+                return $result;
     }
 }

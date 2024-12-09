@@ -270,6 +270,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/save_job_title', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_job_title');
 	Route::post('/job_title_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_title_edit_form');
 	Route::post('/save_region', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_region');
+	Route::post('/jobassign_productsDelete', 'App\Http\Controllers\frontEnd\salesFinance\JobController@jobassign_productsDelete');
 	// Customer
 	Route::get('/customer_add_edit', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit_save');

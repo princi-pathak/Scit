@@ -523,6 +523,7 @@
                                                     <th>Discount </th>
                                                     <th>VAT(%) </th>
                                                     <th>Amount Assigned To </th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody id="product_result">
@@ -540,18 +541,18 @@
                                                         <td>{{$assignVal->code}} <input type="hidden" id="product_codejob" name="product_codejob[]" value="{{$assignVal->code}}"></td>
                                                         <td>{{$assignVal->product_name}}<input type="hidden" id="product_namejob" name="product_namejob[]" value="{{$assignVal->product_name}}"></td>
                                                         <td>{{$assignVal->description}}<input type="hidden" id="descriptionjob" name="descriptionjob[]" value="{{$assignVal->description}}"></td>
-                                                        <td><input type="text" class="" value="{{$assignVal->qty}}" name="quantity[]" id="quantity"></td>
-                                                        <td>{{$assignVal->cost_price}}<input type="hidden" id="cost_pricejob" name="cost_pricejob[]" value="{{$assignVal->cost_price}}"></td>
-                                                        <td>{{$assignVal->price}}<input type="hidden" id="pricejob" name="pricejob[]" value="{{$assignVal->price}}"></td>
-                                                        <td><input type="text" class="" value="0" name="discount[]"></td>';
+                                                        <td><input type="text" class="quantity" value="{{$assignVal->qty}}" name="quantity[]" id="quantity"></td>
+                                                        <td>{{$assignVal->cost_price}}<input type="hidden" id="cost_pricejob" class="cost_pricejob" name="cost_pricejob[]" value="{{$assignVal->cost_price}}"></td>
+                                                        <td>{{$assignVal->price}}<input type="hidden" id="pricejob" class="pricejob" name="pricejob[]" value="{{$assignVal->price}}"></td>
+                                                        <td><input type="text" class="" value="0" name="discount[]"></td>
 
                                                         <td><select id="vatjob" name="vatjob[]">
                                                         <?php foreach($sales_tax as $taxv){?>
                                                             <option value="{{$taxv->id}}" <?php if($assignVal->vat == $taxv->id){echo "selected";}?>>{{$taxv->name}}</option>
                                                         <?php } ?>
                                                         </select></td>
-                                                        <td id="pre_total_amount">{{$assignVal->price}}<input type="hidden" name="final_amount" id="final_amount" value="{{$assignVal->price}}"></td>
-                                                        <td><button type="button" class="btn btn-danger" onclick="removeRow({{$assignVal->id}})">Delete<input type="hidden" value="{{$assignVal->id}}" name="product_detail_id[]" id="product_detail_id"></button></td>
+                                                        <td id="pre_total_amount" class="pre_total_amount">{{$assignVal->price}}</td>
+                                                        <td><button type="button" class="btn btn-danger" onclick="removeRow(this,{{$assignVal->id}})">Delete<input type="hidden" value="{{$assignVal->id}}" name="product_detail_id[]" id="product_detail_id"></button></td>
                                                     </tr>
                                                 <?php }?>
                                                 
@@ -566,6 +567,7 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td id="total_amount">£{{$amount}}</td>
+                                                    <td></td>
                                                 </tr>
                                         </table>
                                     </div>
@@ -655,10 +657,24 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php if(count($job_appointment)>0){$count=1; foreach($job_appointment as $key=>$appointmentVal){?>
+                                                            <?php 
+                                                            function convertMinutesToTime($minutes) {
+                                                                $hours = floor($minutes / 60);
+                                                                $remainingMinutes = $minutes % 60;
+                                                                return "{$hours}h {$remainingMinutes}min";
+                                                            }
+                                                            $count=1; if(count($job_appointment)>0){ foreach($job_appointment as $key=>$appointmentVal){
+                                                                $travel_time=$appointmentVal->travel_time ?? 0;
+                                                                $appointment_time=$appointmentVal->appointment_time ?? 0;
+                                                                if($travel_time > $appointment_time){
+                                                                    $duration=$travel_time;
+                                                                }else{
+                                                                    $duration=$appointment_time;
+                                                                }
+                                                                ?>
                                                             <tr>
                                                                 <td>
-                                                                    
+                                                                    <input type="hidden" value="{{$appointmentVal->id}}" name="appointment_id[]">
                                                                     <div class="d-flex">
                                                                         <p class="leftNum">{{$count}}</p>
                                                                         <select class="form-control editInput selectOptions" id="Appointmentuser_id" name="Appointmentuser_id[]">
@@ -792,8 +808,8 @@
                                                                                 -</strong></label>
                                                                         <input type="text"
                                                                             class="form-control editInput"
-                                                                            id="input_time1"
-                                                                            placeholder="" onkeyup="get_time()"><label>
+                                                                            id="firstinput_time{{$count}}" name="firstinput_time[]"
+                                                                            placeholder="" value="{{$appointmentVal->travel_time}}" onkeyup="get_time({{$count}})"><label>
                                                                             Mins</label>
                                                                     </div>
                                                                 </td>
@@ -804,13 +820,13 @@
                                                                                 -</strong></label>
                                                                         <input type="text"
                                                                             class="form-control editInput"
-                                                                            id="input_time2"
-                                                                            placeholder="" onkeyup="get_time()"><label> Mins
+                                                                            id="secondinput_time{{$count}}" name="secondinput_time[]"
+                                                                            placeholder="" value="{{$appointmentVal->appointment_time}}" onkeyup="get_time({{$count}})"><label> Mins
                                                                             <strong>Total Time -</strong>
-                                                                            <font id="time_show">{{$appointmentVal->appointment_time ?? '0h 0mins'}}</font>
+                                                                            <font id="time_show{{$count}}">{{ convertMinutesToTime($duration) }}</font>
                                                                         </label>
                                                                     </div>
-                                                                    <input type="hidden" id="appointment_time" class="appointment_time" name="appointment_time[]">
+                                                                    <input type="hidden" id="appointment_time{{$count}}" class="appointment_time" name="appointment_time[]">
                                                                 </td>
                                                                 <td></td>
                                                                 <td></td>
@@ -845,11 +861,10 @@
                                                                 <td colspan="5" class="padingtableBottom"></td>
                                                             </tr>
                                                         <?php $count++; }?>
-                                                        <input type="hidden" id="count_number" value="{{$count}}">
                                                     <?php }else{?>
                                                             <tr>
                                                                 <td>
-                                                                    <input type="hidden" id="count_number" value="1">
+                                                                    <input type="hidden" id="count_number" value="{{$count}}">
                                                                     <div class="d-flex">
                                                                         <p class="leftNum">1</p>
                                                                         <select class="form-control editInput selectOptions" id="Appointmentuser_id" name="Appointmentuser_id[]">
@@ -983,8 +998,8 @@
                                                                                 -</strong></label>
                                                                         <input type="text"
                                                                             class="form-control editInput"
-                                                                            id="input_time1"
-                                                                            placeholder="" onkeyup="get_time()"><label>
+                                                                            id="firstinput_time1" name="firstinput_time[]"
+                                                                            placeholder="" onkeyup="get_time(1)"><label>
                                                                             Mins</label>
                                                                     </div>
                                                                 </td>
@@ -995,14 +1010,14 @@
                                                                                 -</strong></label>
                                                                         <input type="text"
                                                                             class="form-control editInput"
-                                                                            id="input_time2"
-                                                                            placeholder="" onkeyup="get_time()"><label> Mins
+                                                                            id="secondinput_time1" name="secondinput_time[]"
+                                                                            placeholder="" onkeyup="get_time(1)"><label> Mins
                                                                             <strong>Total Time -</strong>
-                                                                            <font id="time_show">0h
+                                                                            <font id="time_show1">0h
                                                                                 0mins</font>
                                                                         </label>
                                                                     </div>
-                                                                    <input type="hidden" id="appointment_time" class="appointment_time" name="appointment_time[]">
+                                                                    <input type="hidden" id="appointment_time1" class="appointment_time" name="appointment_time[]">
                                                                 </td>
                                                                 <td></td>
                                                                 <td></td>
@@ -3313,8 +3328,7 @@ const openPopupButton = document.getElementById('openPopupButton');
             success: function(data) {
                 console.log(data);
                 $("#product_result").append(data.html);
-                $("#pro_cost_price").text(data.calculation.cost_price);
-                $("#total_amount").text(data.calculation.total_amount_assign)
+                UpdateItemDetailsCalculation();
 
             }
         });
@@ -3329,9 +3343,70 @@ const openPopupButton = document.getElementById('openPopupButton');
         });
     });
 
-    function removeRow(button) {
+    function removeRow(button,id=null) {
+        console.log(button);
         var row = button.parentNode.parentNode;
-        row.parentNode.removeChild(row);
+        var finalAmountInput = row.querySelector('#pricejob');
+        var finalCostInput = row.querySelector('#cost_pricejob');
+        var finalAmount = finalAmountInput ? finalAmountInput.value : null;
+        var finalCost = finalCostInput ? finalCostInput.value : null;
+        if(id){
+            var token = '<?php echo csrf_token(); ?>'
+            $.ajax({
+                type: "POST",
+                url: "{{url('jobassign_productsDelete')}}",
+                data: {id:id,_token: token},
+                success: function(data) {
+                    console.log(data);
+                    if(data.success != true){
+                        alert("Something went wrong! Please try later");
+                        return false;
+                    }else{
+                        row.parentNode.removeChild(row);
+                        UpdateItemDetailsCalculation();
+                    }
+                }
+            });
+        }else{
+            row.parentNode.removeChild(row);
+            UpdateItemDetailsCalculation();
+        }
+    }
+    $(".quantity").on('keyup', function(){
+        var qty = $(this).val();
+        var row = $(this).closest('tr');
+        var price = row.find("input#pricejob").val();
+        if(qty != ''){
+            $('#pro_qty').val(qty);
+            var totalPrice = qty * price;
+            // row.find("#pre_total_amount").text(totalPrice.toFixed(2));
+            row.find("#pre_total_amount").text(totalPrice);
+        }else{
+            $('#pro_qty').val('0');
+            row.find("#pre_total_amount").text(price);
+        }
+            var totalAmountAssign=0;
+            $('.pre_total_amount').each(function(index){
+                var amount_assign=$(this).text();
+                totalAmountAssign=totalAmountAssign+Number(amount_assign);
+            });
+            $("#total_amount").text('£' + totalAmountAssign);
+    });
+    function UpdateItemDetailsCalculation(){
+        var updatedCostPrice=0;
+        var updatedGrandAmount=0;
+        $('.cost_pricejob').each(function(){
+            var cost=$(this).val();
+            updatedCostPrice=updatedCostPrice+Number(cost);
+        });
+        $('.pre_total_amount').each(function(index){
+            var amount_assign_total=$(this).text();
+            updatedGrandAmount=updatedGrandAmount+Number(amount_assign_total);
+        });
+
+        $('#pro_cost_price').text('£' + updatedCostPrice);
+        $('#total_amount').text('£' + updatedGrandAmount);
+
     }
 
     function get_data_product() {
@@ -3361,7 +3436,7 @@ const openPopupButton = document.getElementById('openPopupButton');
     function new_appointment() {
         var token = '<?php echo csrf_token(); ?>';
         var count_number = $('#count_number').val();
-
+        count_number++;
         $.ajax({
             type: "POST",
             url: "{{url('/new_appointment_add_section')}}",
@@ -3372,7 +3447,7 @@ const openPopupButton = document.getElementById('openPopupButton');
             success: function(data) {
                 console.log(data);
                 $("#appointment_table tbody").last().append(data);
-                count_number++;
+                // count_number++;
                 $('#count_number').val(count_number);
             },
             error: function(xhr, status, error) {
@@ -3387,9 +3462,9 @@ const openPopupButton = document.getElementById('openPopupButton');
         $(element).closest('tr').remove();
     }
 
-    function get_time() {
-        var input_time1 = $("#input_time1").val();
-        var input_time2 = $("#input_time2").val();
+    function get_time(id) {
+        var input_time1 = $("#firstinput_time"+id).val();
+        var input_time2 = $("#secondinput_time"+id).val();
         var minutes;
         if (input_time2) {
             minutes = input_time2;
@@ -3398,8 +3473,8 @@ const openPopupButton = document.getElementById('openPopupButton');
         }
         var hours = Math.floor(minutes / 60);
         var remainingMinutes = minutes % 60;
-        $("#appointment_time").val(hours + " h " + remainingMinutes + " mins");
-        $("#time_show").text(hours + " h " + remainingMinutes + " mins")
+        $("#appointment_time"+id).val(hours + " h " + remainingMinutes + " mins");
+        $("#time_show"+id).text(hours + " h " + remainingMinutes + " mins")
         // return hours + " hours and " + remainingMinutes + " minutes";
     }
 </script>
@@ -3412,8 +3487,7 @@ const openPopupButton = document.getElementById('openPopupButton');
         }
         var countNumber=$("#count_number").val();
         // alert(countNumber);return false;
-        const length=countNumber-1;
-        for(var i=1; i<=length;i++){
+        for(var i=1; i<=countNumber;i++){
             if ($('#alert_sms_appointment'+i).is(':checked')) {
                 alert(1)
                 $("#alert_sms_appointment"+i).val(1);
