@@ -29,23 +29,23 @@ class ExpenseController extends Controller
         $data['home_id']=$home_id;
         if(isset($key) && isset($value)){
             if($key === 'reject' && $value == 1){
-                $expense=Expense::getAllExpense($home_id)->where("$key",$value)->get();
+                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'user_id'=>Auth::user()->id])->get();
             }else if($key === 'authorised'){
-                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'paid'=>0])->get();
+                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'paid'=>0,'user_id'=>Auth::user()->id])->get();
             }else{
-                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0])->get();
+                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'user_id'=>Auth::user()->id])->get();
             }
             
         }else{
-            $expense=Expense::getAllExpense($home_id)->get();
+            $expense=Expense::getAllExpense($home_id)->where('user_id',Auth::user()->id)->get();
         }
         $data['expense']=$expense;
         // echo "<pre>";print_r($data['expense']);die;
-        $data['authorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>1,'reject'=>0,'paid'=>0])->count();
-        $data['unauthorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>0,'reject'=>0,'paid'=>0])->count();
-        $data['rejectCount']=Expense::getAllExpense($home_id)->where('reject',1)->count();
-        $data['paidCount']=Expense::getAllExpense($home_id)->where(['paid'=>1,'reject'=>0])->count();
-        $data['expenseCount']=Expense::getAllExpense($home_id)->count();
+        $data['authorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>1,'reject'=>0,'paid'=>0,'user_id'=>Auth::user()->id])->count();
+        $data['unauthorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>0,'reject'=>0,'paid'=>0,'user_id'=>Auth::user()->id])->count();
+        $data['rejectCount']=Expense::getAllExpense($home_id)->where(['reject'=>1,'user_id'=>Auth::user()->id])->count();
+        $data['paidCount']=Expense::getAllExpense($home_id)->where(['paid'=>1,'reject'=>0,'user_id'=>Auth::user()->id])->count();
+        $data['expenseCount']=Expense::getAllExpense($home_id)->where('user_id',Auth::user()->id)->count();
         // echo "<pre>";print_r($data['paidWithAuthCount']);die;
         return view('frontEnd.salesAndFinance.expenses.expense',$data);
     }
@@ -222,7 +222,7 @@ class ExpenseController extends Controller
                 ->orWhere('reference', 'LIKE', '%' . $keywords . '%');
             });
         }
-        $expenses = $query->get();
+        $expenses = $query->where('user_id',Auth::user()->id)->get();
         // echo "<pre>";print_r($expenses);die;
         $array_data='';
         $net_amount=0;
@@ -244,7 +244,7 @@ class ExpenseController extends Controller
             $array_data .= '<tr>
                         <td><input type="checkbox" class="delete_checkbox" value="' . $val->id . '"></td>
                         <td>' . ++$key . '</td>
-                        <td>' . $val->expense_date . '</td>
+                        <td>' . date('d-m-Y',strtotime($val->expense_date)) . '</td>
                         <td>' . $user . '</td>
                         <td>' . $val->title . '</td>
                         <td>' . ($val->reference ?? "") . '</td>

@@ -270,6 +270,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/save_job_title', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_job_title');
 	Route::post('/job_title_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_title_edit_form');
 	Route::post('/save_region', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_region');
+	Route::post('/jobassign_productsDelete', 'App\Http\Controllers\frontEnd\salesFinance\JobController@jobassign_productsDelete');
 	// Customer
 	Route::get('/customer_add_edit', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit_save');
@@ -370,7 +371,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/departments','departments');
 		Route::post('/save_department','save_department');
 	});
-  
+	
+	// Forontend Customer Controller
 	Route::controller(CustomerController::class)->group(function () {
 		Route::prefix('customers')->group(function () {
 			Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
@@ -517,6 +519,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 
 		Route::get('/quote/edit/{id}', 'edit')->name('quote.edit');
+		Route::post('quote/saveAttachmentData', 'saveAttachmentData')->name('quote.ajax.saveAttachmentData');
+
+		
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {

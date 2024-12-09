@@ -20,9 +20,12 @@ class Construction_job_appointment extends Model
         'end_date',
         'end_time',
         'notes',
-        'alert_by',
+        'floating_appointment',
+        'travel_time',
+        'email',
+        'sms',
         'priority',
-        'appointment_checkbox',
+        'single_appointment',
         'appointment_time',
         'appointment_status',
         'status',
@@ -41,18 +44,22 @@ class Construction_job_appointment extends Model
                 'start_time' => $data['start_time'][$i] ?? null,
                 'end_date' => $data['end_date'][$i] ?? null,
                 'end_time' => $data['end_time'][$i] ?? null,
-                'appointment_checkbox' => $data['appointment_checkbox'][$i] ?? null,
+                'floating_appointment' => $data['floating_appointment'][$i] ?? 0,
+                'single_appointment' => $data['single_appointment'][$i] ?? 0,
+                'email' => $data['email'][$i] ?? 0,
+                'sms' => $data['sms'][$i] ?? 0,
                 'appointment_status' => $data['appointment_status'][$i] ?? null,
                 'appointment_time' => $data['appointment_time'][$i] ?? null,
+                'travel_time' => $data['appointment_time'][$i] ?? null,
                 'priority'=>$data['priority'][$i] ?? null,
                 'notes'=>$data['notes'][$i] ?? null,
             ];
             $insert = self::updateOrCreate(
                 ['id' => $data['id'][$i] ?? null],
                 $appointmentData
-            );
-                $result=['id'=>$insert->id];
-                return $result;
+            );      
         }
+        $result=['id'=>$insert->id];
+                return $result;
     }
 }

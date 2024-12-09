@@ -12,8 +12,9 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\QuoteRequest;
 
-use App\Services\QuoteService;
-use App\Services\QuoteProductService;
+use App\Services\Quotes\QuoteService;
+use App\Services\Quotes\QuoteProductService;
+use App\Services\Quotes\AttachmentTypeService;
 
 use App\Models\QuoteType;
 use App\Models\QuoteSource;
@@ -23,6 +24,7 @@ use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Product_category;
+use App\Models\AttachmentType;
 use App\User;
 
 
@@ -32,11 +34,13 @@ class QuoteController extends Controller
 
     protected $quoteService;
     protected $itemService;
+    protected $attachmentService;
 
-    public function __construct(QuoteService $quoteService, QuoteProductService $itemService)
+    public function __construct(QuoteService $quoteService, QuoteProductService $itemService, AttachmentTypeService $attachmentService)
     {
         $this->quoteService = $quoteService;
         $this->itemService = $itemService;
+        $this->attachmentService =  $attachmentService;
     }
 
     public function dashboard()
@@ -292,6 +296,8 @@ class QuoteController extends Controller
         $data['countries'] = Country::getCountriesNameCode();
         $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id); 
         $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);   
+        $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
+        // dd($data['attachment_type']);
         return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
     public function getUsersList()
@@ -305,5 +311,17 @@ class QuoteController extends Controller
     }
     public function details(){
         return view('frontEnd.salesAndFinance.quote.add_quote');
+    }
+
+    public function saveAttachmentData(Request $request){
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'title' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $attachmentType = $this->attachmentService->saveAttachmentType($request->all());
     }
 }
