@@ -1338,10 +1338,10 @@
 
                                 <div class="col-sm-12 mb-3 mt-2">
                                     <div class=" p-0">
-                                        <a href="#" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
-                                        <a href="#" class="profileDrop">Upload Multi Attachment</a>
-                                        <a href="#" class="profileDrop">Preview Attachment(s)</a>
-                                        <a href="#" class="profileDrop">Download Attachment</a>
+                                        <a href="javascript:void(0)" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
+                                        <a href="javascript:void(0)" class="profileDrop">Upload Multi Attachment</a>
+                                        <a href="javascript:void(0)" class="profileDrop">Preview Attachment(s)</a>
+                                        <a href="javascript:void(0)" class="profileDrop">Download Attachment</a>
 
                                     </div>
                                 </div>
@@ -1371,7 +1371,6 @@
                                                             Sorry, no attachment(s) found
                                                         </label>
                                                     </td>
-
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1817,7 +1816,7 @@
                                     <input type="hidden" name="customer_id" id="customer_id_site_add">
                                     <label for="inputName" class="col-sm-4 col-form-label">Customer </label>
                                     <div class="col-sm-8">
-                                        <label for="inputAddress" class="col-form-label"><span id="setSiteAddress"></span> </label>
+                                        <label for="inputAddress" class="col-form-label"><span id="setSiteAddress">{{ $quoteData['customer']['name']}}</span> </label>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -2261,39 +2260,52 @@
     <div class="modal-dialog">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title pupTitle">ABCD</h5>
+                <h5 class="modal-title pupTitle">Add Attachment</h5>
                 <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button"></button>
             </div>
             <div class="modal-body">
-                <form role="form" id="">
-
+                <form role="form" id="attachmentTypeForm">
                     <div><span id="error-message" class="error"></span></div>
                     <div class="row form-group">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Quote Type <span class="radStar ">*</span></label>
+                        <label class="col-lg-3 col-sm-3 col-form-label">Quote Ref </label>
                         <div class="col-md-9">
-                            <input type="hidden" name="quote_type_id" id="quote_type_id">
-                            <input type="text" name="title" class="form-control editInput " placeholder="Quote Type" id="title">
+                            <input type="hidden" value="{{ $quoteData['id'] }}" name="quote_id">
+                            <input type="text" class="form-control-plaintext editInput" id="" value="{{ $quoteData['quote_ref'] }}" readonly>
                         </div>
                     </div>
                     <div class="row form-group mt-3">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Number of days</label>
+                        <label class="col-lg-3 col-sm-3 col-form-label">Type</label>
                         <div class="col-md-9">
-                            <input type="text" name="number_of_days" class="form-control editInput " placeholder="Number of days" id="number_of_days" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                        </div>
-                    </div>
-                    <div class="row form-group mt-3">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
-                        <div class="col-md-9">
-                            <select name="status" id="modale_status" class="form-control editInput">
-                                <option value="1">Active</option>
-                                <option value="0">InActive</option>
+                            <select name="type" id="modale_status" class="form-control editInput">
+                                <option value="">Please Select</option>
+                                @foreach($attachment_type as $value)
+                                <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">File Name <span class="radStar ">*</span></label>
+                        <div class="col-md-9">
+                            <input type="file" name="image" class="form-control editInput " placeholder="" id="">
+                        </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Title</label>
+                        <div class="col-md-9">
+                            <input type="text" name="title" class="form-control editInput " placeholder="Title" id="">
+                        </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Description</label>
+                        <div class="col-md-9">
+                            <textarea name="description" class="form-control textareaInput" rows="4" placeholder="Description" id=""></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="btn profileDrop" id="">Save</button>
+                <button type="button" class="btn profileDrop" id="saveAttachmentType">Save</button>
                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
@@ -2587,6 +2599,26 @@
             });
         });
 
+        // Ajax Call for saving Customer Type
+        $('#saveCustomerSiteDetails').on('click', function() {
+            var formData = $('#add_customer_site_details_form').serialize();
+            $.ajax({
+                url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
+                    // removeAddCustomerSiteAddress(document.getElementById('customerSiteDetails'),document.getElementById('customerSiteDelivery'), response.id);
+                    $('#add_site_address_modal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
         $('#OpenAddCustomerContact').on('click', function() {
             getCustomerJobTitle(document.getElementById('customer_job_titile_id'));
             $('#add_customer_contact_modal').modal('show');
@@ -2597,24 +2629,99 @@
             if (customer === "") {
                 alert('Please select the customer');
             } else {
-                // getRegions(document.getElementById('getSiteAddressRegion'));
-                // getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
-                // getCustomerJobTitle(document.getElementById('siteJobTitle'));
-                // getCountriesList(document.getElementById('siteAddressMobileCode'));
-                // getCountriesList(document.getElementById('siteAddressTelephoneCode'));
+                getRegions(document.getElementById('getSiteAddressRegion'));
+                getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
+                getCustomerJobTitle(document.getElementById('siteJobTitle'));
+                getCountriesList(document.getElementById('siteAddressMobileCode'));
+                getCountriesList(document.getElementById('siteAddressTelephoneCode'));
                 $('#add_site_address_modal').modal('show');
             }
 
-         
+
 
         });
 
         $('#new_Attachment_open_model').on('click', function() {
-                $('#new_Attachment_model').modal('show');
-            });
+            $('#new_Attachment_model').modal('show');
+        });
 
+        $('#saveAttachmentType').on('click', function(e) {
+
+            let formData = new FormData($('#attachmentTypeForm')[0]); 
+            console.log(formData);
+        
+            $.ajax({
+                url: '{{ route("quote.ajax.saveAttachmentData") }}', // Replace with your Laravel route URL
+                type: 'POST',
+                data: formData,
+                contentType: false, // Required for FormData
+                processData: false, // Required for FormData
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
+                },
+                success: function(response) {
+                    // Handle success
+                    alert('Attachment saved successfully!');
+                    $('#new_Attachment_model').modal('hide'); // Hide the modal
+                },
+                error: function(xhr) {
+                    // Handle error
+                    const errors = xhr.responseJSON.errors || {
+                        message: xhr.responseJSON.message
+                    };
+                    let errorMessage = 'Error saving the attachment:\n';
+                    for (let key in errors) {
+                        errorMessage += `${errors[key]}\n`;
+                    }
+                    alert(errorMessage);
+                }
+            });
+        });
 
     });
+
+    function setSiteAddressDetails(id) {
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerSiteDetails") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response.data);
+
+                let selectElement = document.getElementById('customerSiteDetails'); // or document.querySelector('[name="mySelectName"]');
+                let customerSiteDelivery = document.getElementById('customerSiteDelivery'); // or document.querySelector('[name="mySelectName"]');
+
+                let newOption = document.createElement('option');
+                newOption.value = response.data[0].id;
+                newOption.text = response.data[0].site_name;
+                const option1 = newOption.cloneNode(true);
+                newOption.selected = true;
+                selectElement.appendChild(newOption);
+                customerSiteDelivery.appendChild(option1);
+
+
+                // document.getElementById('customerSiteDetails');
+                document.getElementById('siteCustomerId').value = response.data[0].id;
+                document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                document.getElementById('customerSiteAddress').value = response.data[0].address;
+                document.getElementById('customerSiteCity').value = response.data[0].city;
+                document.getElementById('customerSiteCounty').value = response.data[0].country;
+                document.getElementById('customerSitePostCode').value = response.data[0].post_code;
+                document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                document.getElementById('setSiteAddress').textContent = response.data[0].name;
+                document.getElementById('customerSiteCompany').value = response.data[0].company_name;
+                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_id);
+                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 
     function setCustomerBillingData(id) {
         // alert(id)

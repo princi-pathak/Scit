@@ -1,11 +1,11 @@
 <?php
-namespace App\Services;
+namespace App\Services\Quotes;
 
 use App\Models\Quote;
 use Illuminate\Support\Facades\DB;
-use App\Models\CustomerBillingAddress;
-use App\Models\Constructor_customer_site;
-use App\Models\QuoteProduct;
+// use App\Models\CustomerBillingAddress;
+// use App\Models\Constructor_customer_site;
+// use App\Models\QuoteProduct;
 
 class QuoteService
 {

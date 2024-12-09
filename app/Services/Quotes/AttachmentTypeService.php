@@ -1,17 +1,16 @@
 <?php
-namespace App\Services;
+namespace App\Services\Quotes;
 
-use App\Models\QuoteProduct;
+use App\Models\QuoteAttachmentType;
 
-class QuoteProductService
+class AttachmentTypeService
 {
-    public function saveItems(array $products, int $quoteId): void
+    public function saveAttachmentType(array $products): void
     {
         foreach ($products as $productData) {
             $accountCode = $productData['account_code'] === '-No Department-' ? null : $productData['account_code'];
             
-            QuoteProduct::create([
-                'quote_id' => $quoteId,
+            QuoteAttachmentType::create([
                 'product_id' => $productData['id'],
                 'product_code' => $productData['product_code'],
                 'title' => $productData['product_name'],

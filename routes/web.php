@@ -518,6 +518,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 
 		Route::get('/quote/edit/{id}', 'edit')->name('quote.edit');
+		Route::post('quote/saveAttachmentData', 'saveAttachmentData')->name('quote.ajax.saveAttachmentData');
+
+		
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {
