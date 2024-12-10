@@ -13,14 +13,19 @@ return new class extends Migration
     {
         Schema::create('quote_attachments', function (Blueprint $table) {
             $table->id();
-            $table->integer('quote_id');
+            $table->unsignedBigInteger('quote_id'); 
             $table->integer('attachment_type')->nullable();
-            $table->string('image_path');
             $table->string('title')->nullable();
             $table->text('description')->nullable();
+            $table->string('original_name');
+            $table->string('timestamp_name');
+            $table->string('mime_type');
+            $table->string('size');
             $table->boolean('mobile_user_visible')->default(0);
+            $table->boolean('customer_visible')->default(0);
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign('quote_id')->references('id')->on('quotes')->onDelete('cascade');
         });
     }
 

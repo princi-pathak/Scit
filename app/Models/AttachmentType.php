@@ -36,7 +36,6 @@ class AttachmentType extends Model
 
     public static function saveAttachment($data)
     {
-        
         $AttachmentType=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
         return $AttachmentType;
     }
@@ -48,6 +47,11 @@ class AttachmentType extends Model
     public static function getActiveAttachmentType($home_id){
         $data = AttachmentType::where('status', 1)->where('home_id', $home_id)->where('deleted_at', null)->get();
         return $data;
+    }
+
+    public function quoteAttachment()
+    {
+        return $this->belongsTo(QuoteAttachment::class, 'attachment_type', 'id'); // Assuming 'attachment_type' is the foreign key
     }
 
 }

@@ -1339,7 +1339,7 @@
                                 <div class="col-sm-12 mb-3 mt-2">
                                     <div class=" p-0">
                                         <a href="javascript:void(0)" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
-                                        <a href="javascript:void(0)" class="profileDrop">Upload Multi Attachment</a>
+                                        <a href="{{ route('quote.addMultiAttachment', ['quote_id' => $quoteData['id']]) }}" class="profileDrop">Upload Multi Attachment</a>
                                         <a href="javascript:void(0)" class="profileDrop">Preview Attachment(s)</a>
                                         <a href="javascript:void(0)" class="profileDrop">Download Attachment</a>
 
@@ -1349,7 +1349,7 @@
                                 <div class="col-sm-12">
                                     <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
                                     <div class="productDetailTable">
-                                        <table class="table" id="containerA">
+                                        <table class="table" id="attachmentTable">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>#</th>
@@ -1362,16 +1362,11 @@
                                                     <th>File Name</th>
                                                     <th>Mime Type / Size</th>
                                                     <th>Created On</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td colspan="7">
-                                                        <label class="red_sorryText">
-                                                            Sorry, no attachment(s) found
-                                                        </label>
-                                                    </td>
-                                                </tr>
+                                               
                                             </tbody>
                                         </table>
                                     </div>
@@ -2276,7 +2271,7 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Type</label>
                         <div class="col-md-9">
-                            <select name="type" id="modale_status" class="form-control editInput">
+                            <select name="attachment_type" id="modale_status" class="form-control editInput">
                                 <option value="">Please Select</option>
                                 @foreach($attachment_type as $value)
                                 <option value="{{ $value->id }}">{{ $value->title }}</option>
@@ -2529,8 +2524,6 @@
             }
         });
 
-
-
         const edit_site_id = document.getElementById('edit_customer_billing_id').value;
         if (setCustomerId === edit_customer_billing_id) {
             $.ajax({
@@ -2647,22 +2640,21 @@
 
         $('#saveAttachmentType').on('click', function(e) {
 
-            let formData = new FormData($('#attachmentTypeForm')[0]); 
+            let formData = new FormData($('#attachmentTypeForm')[0]);
             console.log(formData);
-        
+
             $.ajax({
                 url: '{{ route("quote.ajax.saveAttachmentData") }}', // Replace with your Laravel route URL
                 type: 'POST',
                 data: formData,
                 contentType: false, // Required for FormData
                 processData: false, // Required for FormData
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-                },
                 success: function(response) {
                     // Handle success
-                    alert('Attachment saved successfully!');
+                    alert(response.data);
+                    console.log(response.id);
                     $('#new_Attachment_model').modal('hide'); // Hide the modal
+                    getQuoteAttachments(response.id);
                 },
                 error: function(xhr) {
                     // Handle error
@@ -2679,6 +2671,62 @@
         });
 
     });
+
+    function getQuoteAttachments(attachment_id) {
+        $.ajax({
+            url: '{{ route("quote.ajax.getAttachmentData") }}', // Replace with your Laravel route URL
+            type: 'POST',
+            data: {
+                attachment_id: attachment_id
+            },
+            // contentType: false, // Required for FormData
+            // processData: false, // Required for FormData
+            success: function(response) {
+                // Handle success
+                alert(response);
+                const tableBody = $('#attachmentTable tbody');
+                console.log(tableBody);
+                tableBody.empty(); // Clear existing rows
+
+                // Assuming `response` contains an array of attachments
+                const attachments = Array.isArray(response.data) ? response.data : [response.data];
+
+                attachments.forEach(attachment => {
+                    console.log(attachment);
+                    const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : 'N/A';
+                    const id = attachment.id;
+                    const row = `
+                        <tr>
+                            <td></td>
+                            <td>${attachmentTypeTitle}</td>
+                            <td>${attachment.title || 'N/A'}</td>
+                            <td>${attachment.description || 'N/A'}</td>
+                            <td>Quote</td>
+                            <td> <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> ${attachment.customer_visible}</td>
+                            <td> <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>${attachment.mobile_user_visible}</td>
+                            <td>${attachment.original_name}</td>
+                            <td>${attachment.mime_type} / ${attachment.size} </td>
+                            <td>${new Date(attachment.created_at).toLocaleString()}</td>
+                            <td><i class="fa fa-times"></i></td>
+                        </tr>
+                    `;
+                    console.log(row);
+                    tableBody.append(row);
+                });
+            },
+            error: function(xhr) {
+                // Handle error
+                const errors = xhr.responseJSON.errors || {
+                    message: xhr.responseJSON.message
+                };
+                let errorMessage = 'Error on getting the attachment:\n';
+                for (let key in errors) {
+                    errorMessage += `${errors[key]}\n`;
+                }
+                alert(errorMessage);
+            }
+        });
+    }
 
     function setSiteAddressDetails(id) {
         $.ajax({
