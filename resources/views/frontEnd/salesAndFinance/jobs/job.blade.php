@@ -28,6 +28,7 @@
             <?php if(@$access_rights[311] == 325){?>
             <a href="{{url('jobs_create')}}" class="profileDrop">New Job</a>
             <?php }?>
+            <a href="{{url('jobs_create')}}" class="profileDrop">New Job</a>
             <a href="#" class="profileDrop">Active <span>(<?php echo $active_job;?>)</span></a>
             <a href="#" class="profileDrop">Unassigned<span>(<?php echo $unsigned_job;?>)</span></a>
             <a href="#" class="profileDrop">Action Required<span>(15)</span></a>
@@ -99,22 +100,18 @@
                             </thead>
                                                
                             <tbody>
-                                <?php foreach($job as $key=>$val){
-                                    $customer_name=App\ServiceUser::where('id',$val->customer_id)->first();
-                                    $job_type_detail=App\Models\Job_type::where('id',$val->job_type)->first(); 
-                                    $product_details=App\Models\Product::where('id',$val->product_id)->first();  
-                                ?>
+                                <?php foreach($job as $key=>$val){?>
                                 <tr>
-                                    <td><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></td>
+                                    <td><input type="checkbox" id="" class="delete_checkbox" value="{{$val['id']}}"></td>
                                     <td>{{++$key}}</td>
-                                    <td><a href="#!">{{$val->job_ref}}</a></td>
-                                    <td><?php echo $job_type_detail->name ?? ''; ?></td>
-                                    <td><?php echo $customer_name->name ?? ''; ?></td>
+                                    <td><a href="#!">{{$val['job_ref']}}</a></td>
+                                    <td>{{$val['job_type'] ?? ""}}</td>
+                                    <td>{{$val['customer_name'] ?? ""}}</td>
                                     <td>...</td>
-                                    <td><?php echo $product_details->description ?? ''; ?></td>
-                                    <td>Byme and King Limited 2-3 Euston Grove Wirral SN5 4HU</td>
+                                    <td>{{$val['short_decinc'] ?? ""}}</td>
+                                    <td>{{$val['site'] ?? ""}}</td>
                                     <td><span class="danger">Dave Taylor-26/04/2017 16:00-23:00 General - Awaiting</span></td>
-                                    <td>{{$val->complete_by}}</td>
+                                    <td>{{$val['complete_by']}}</td>
                                     <td>Appointed</td>
                                     <td>
                                         <div class="pageTitleBtn p-0">
@@ -123,7 +120,7 @@
                                                     Action
                                                 </a>
                                                 <div class="dropdown-menu fade-up m-0">
-                                                    <a href="{{url('job_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item col-form-label">Edit</a>
+                                                    <a href="{{url('job_edit?key=')}}{{base64_encode($val['id'])}}" class="dropdown-item col-form-label">Edit</a>
                                                     <!-- <hr class="dropdown-divider"> -->
                                                 </div>
                                             </div>

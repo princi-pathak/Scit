@@ -4,7 +4,7 @@
         <div class="row">
              <div class="col-lg-12">
                 <div class="f_text">
-                    <p><?php echo date('Y');?> © SCIT</p>
+                    <p><?php echo date('Y');?> © SCITS</p>
                 </div>
              </div>
         </div>

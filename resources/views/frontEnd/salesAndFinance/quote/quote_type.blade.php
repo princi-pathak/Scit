@@ -61,7 +61,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if(!$quote_type->isEmpty())
+                            <!-- Ram hide 10/12/2024 -->
+                            <!-- @if(!$quote_type->isEmpty()) -->
                             @foreach ($quote_type as $value)
                             <tr>
                                 <td><input type="checkbox" id="" class="delete_checkbox" value="{{$value->id}}"></td>
@@ -90,11 +91,12 @@
                                 </td>
                             </tr>
                             @endforeach
-                            @else
+                            <!-- Ram hide 10/12/2024 -->
+                            <!-- @else
                             <tr>
-                                <td colspan="10" class="text-center"><strong>Sorry, there are no items available..</strong></td>
+                                <td colspan="6" class="text-center"><strong>Sorry, there are no items available..</strong></td>
                             </tr>
-                            @endif
+                            @endif -->
                         </tbody>
                     </table>
                 </div> <!-- End off main Table -->
