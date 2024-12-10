@@ -70,10 +70,30 @@ class JobController extends Controller
     }
     public function job_list(Request $request){
         $lastSegment = request()->segment(request()->segments() ? count(request()->segments()) : 1);
+        // echo $lastSegment;die;
         $home_id = Auth::user()->home_id;
-        $data['job']=Job::getAllJob($home_id)->where('user_id',Auth::user()->id)->get();
+        $job=Job::getAllJob($home_id)->where('user_id',Auth::user()->id)->get();
         $data['access_rights']=$this->access_rights();
+        $data_arr=array();
+        foreach($job as $val){
+            $customer_name=Customer::where('id',$val->customer_id)->first();
+            $job_type_detail=Job_type::where('id',$val->job_type)->first(); 
+            // $product_details=Product::where('id',$val->product_id)->first();  
+            $site=Constructor_customer_site::where('id',$val->site_id)->first();
+            $customers = Customer::with('sites','additional_contact','customer_project')->where('id', $val->customer_id)->first();
+            $data_arr[]=[
+                'id'=>$val->id,
+                'job_ref'=>$val->job_ref,
+                'customer_name'=>$customer_name->name,
+                'job_type'=>$job_type_detail->name,
+                'site'=>$site->site_name,
+                'short_decinc'=>$val->short_decinc,
+                'complete_by'=>$val->complete_by
+            ];
+        }
+        // echo "<pre>";print_r($data_arr);die;
         $data['lastSegment']=$lastSegment;
+        $data['job']=$data_arr;
         // echo "<pre>";print_r($data['job']);die;
         return view('frontEnd.salesAndFinance.jobs.job',$data);
     }
