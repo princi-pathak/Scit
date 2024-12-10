@@ -370,6 +370,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(Purchase_orderController::class)->group(function(){
 		Route::get('/departments','departments');
 		Route::post('/save_department','save_department');
+		Route::get('/purchase_order','purchase_order');
 	});
 	
 	// Forontend Customer Controller

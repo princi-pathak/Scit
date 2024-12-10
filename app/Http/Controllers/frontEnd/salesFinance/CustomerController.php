@@ -39,20 +39,30 @@ class CustomerController extends Controller
         // echo "<pre>";print_r(Auth::user()->home_id);die;
         // $key = base64_decode($request->key);
         $key = $request->key;
+        // echo $key;die;
         if ($key) {
             $task = 'Edited';
         } else {
             $task = 'Added';
         }
         $data['customer'] = Customer::find($key);
+        if($key){
+            $contact=Constructor_additional_contact::whereNull('deleted_at')->where('customer_id', $key)->get();
+            $site=Constructor_customer_site::whereNull('deleted_at')->where('customer_id', $key)->get();
+            $login=Construction_customer_login::whereNull('deleted_at')->where('customer_id', $key)->get();
+        }else{
+            $contact=array();
+            $site=array();
+            $login=array();
+        }
         $data['task'] = $task;
         $data['page'] = 'customers';
         $data['del_status'] = 0;
         $data['customer_type'] = Customer_type::whereNull('deleted_at')->where('status', 1)->get();
         $data['job_title'] = Job_title::whereNull('deleted_at')->where('status', 1)->get();
-        $data['contact'] = Constructor_additional_contact::whereNull('deleted_at')->where('customer_id', $key)->get();
-        $data['site'] = Constructor_customer_site::whereNull('deleted_at')->where('customer_id', $key)->get();
-        $data['login'] = Construction_customer_login::whereNull('deleted_at')->where('customer_id', $key)->get();
+        $data['contact'] = $contact;
+        $data['site'] = $site;
+        $data['login'] = $login;
         $data['country'] = Country::all_country_list();
         $data['country_code']=Country::getCountriesNameCode();
         $home_id=Auth::user()->home_id;

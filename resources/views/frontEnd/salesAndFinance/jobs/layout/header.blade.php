@@ -248,7 +248,7 @@ $access_rights = explode(',', $rights);
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-columns"></i>Dashboard</span></a></li>
-                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-plus"></i>New Purchase Order</span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('purchase_order')}}"><span><i class="fa fa-plus"></i>New Purchase Order</span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i>Draft Purchase Orders</span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa-solid fa-hourglass"></i>Awaiting Approval Purchase Orders</span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-check"></i>Approved Purchase Orders </span></a></li>
