@@ -8,6 +8,11 @@
     background-color: #efefef;
     margin-right: 5px;
 }
+.calendar_icon {
+    color:red; 
+    display: flex;
+    align-items: center;
+}
 </style>
         <section class="main_section_page px-3">
             <div class="container-fluid">
@@ -15,9 +20,9 @@
                     <div class="col-md-4 col-lg-4 col-xl-4 ">
                         <div class="pageTitle">
                             @if(isset($key) && $key !='')
-                            <h3 class="header_text">{{$job_details->job_ref}}</h3>
+                            <h3 class="header_text">Edit Purchase Order</h3>
                             @else
-                            <h3 class="header_text">New Jobs</h3>
+                            <h3 class="header_text">New Purchase Order</h3>
                             @endif
                         </div>
                     </div>
@@ -40,22 +45,20 @@
                             <div class="row">
                                 <div class="col-md-4 col-lg-4 col-xl-4">
                                     <div class="formDtail">
-                                        <h4 class="contTitle">Customer Details</h4>
+                                        <h4 class="contTitle">Supplier Details</h4>
                                        @csrf
-                                        <input type="hidden" id="id" name="id" value="<?php if(isset($key) && $key !=''){echo $job_details->id;}?>">
-                                        <input type="hidden" id="home_id" name="home_id" value="{{$home_id}}">
+                                        <input type="hidden" id="id" name="id" value="">
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer"
-                                                    class="col-sm-3 col-form-label">Customer<span
+                                                    class="col-sm-3 col-form-label">Supplier<span
                                                     class="radStar">*</span></label>
                                                 <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions" id="customer_id" name="customer_id" required onchange="get_customer_details()">
-                                                    <option selected disabled>Select Customer</option>
+                                                <select class="form-control editInput selectOptions" id="customer_id" name="customer_id"  onchange="get_customer_details()">
+                                                    <option selected disabled>Select Supplier</option>
                                                     <?php foreach ($customers as $cust) { ?>
-                                                        <option value="{{$cust->id}}" <?php if(isset($job_details) && $job_details->customer_id == $cust->id){echo "selected";}?>>{{$cust->name}}</option>
+                                                        <option value="{{$cust->id}}">{{$cust->name}}</option>
                                                     <?php } ?>
                                                 </select>
-                                                    <!-- <input type="text"  id="staticEmail"> -->
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <a href="javascript:void(0)" class="formicon" data-bs-toggle="modal" data-bs-target="#customerPop">
@@ -63,27 +66,6 @@
                                                 </div>
                                                 <div class="col-sm-1" id="clock" style="display:none">
                                                     <a href="#!" class="formicon"><i class="fa-solid fa-clock"></i></a>
-                                                </div>
-
-                                               
-
-
-                                            </div><!-- End off Customer -->
-                                            <div class="mb-3 row">
-                                                <label for="inputProject"
-                                                    class="col-sm-3 col-form-label">Project</label>
-                                                <div class="col-sm-7">
-                                                    <select class="form-control editInput selectOptions"
-                                                    id="project_id" name="project_id" <?php if(!isset($key) && $key ==''){echo 'disabled';}?> >
-                                                        <option>None</option>
-                                                        @foreach($projects as $project)
-                                                            <option value="{{$project->id}}" <?php if(isset($job_details) && $job_details->project_id == $project->id){echo 'selected';}?>>{{$project->project_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(4)"><i
-                                                            class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -103,42 +85,12 @@
                                                             class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
+                                            
                                             <div class="mb-3 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Name<span
                                                 class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" name="name" id="name" value="<?php if(isset($job_details) && $job_details !=''){echo $job_details->name;}?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="email" name="email" value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->email ?? "");}?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row field">
-                                                <label for="inputTelephone"
-                                                    class="col-sm-3 col-form-label">Telephone</label>
-                                                <div class="col-sm-3">
-                                                    <select class="form-control editInput selectOptions" required>
-                                                        <option>+444</option>
-                                                        <option>+91</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <input type="text" class="form-control editInput" id="telephone" name="telephone" required value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->telephone ?? "");}?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row field">
-                                                <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
-                                                <div class="col-sm-3">
-                                                    <select class="form-control editInput selectOptions" required>
-                                                        <option>+444</option>
-                                                        <option>+91</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <input type="text" class="form-control editInput" id="contact" name="contact" required value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->contact ?? "");}?>">
+                                                    <input type="text" class="form-control editInput" name="name" id="name" value="">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -146,56 +98,121 @@
                                                     class="col-sm-3 col-form-label">Address<span
                                                     class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" id="address" name="address" rows="3"
-                                                        ><?php if(isset($job_details) && $job_details !=''){echo ($job_details->address ?? "");}?></textarea>
+                                                    <textarea class="form-control textareaInput" id="address" name="address" rows="3"></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCity" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="city" name="city" value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->city ?? "");}?>">
+                                                    <input type="text" class="form-control editInput" id="city" name="city" value="">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCounty" class="col-sm-3 col-form-label">County</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="country" name="country" value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->country ?? "");}?>">
+                                                    <input type="text" class="form-control editInput" id="country" name="country" value="">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPincode"
-                                                    class="col-sm-3 col-form-label">Pincode</label>
+                                                    class="col-sm-3 col-form-label">Postcode</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="pincode" name="pincode" value="<?php if(isset($job_details) && $job_details !=''){echo ($job_details->pincode ?? "");}?>">
+                                                    <input type="text" class="form-control editInput" id="pincode" name="pincode" value="">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
+                                                <label for="inputTelephone"
+                                                    class="col-sm-3 col-form-label">Telephone</label>
+                                                <div class="col-sm-3">
+                                                    <select class="form-control editInput selectOptions">
+                                                        <option>+444</option>
+                                                        <option>+91</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control editInput" id="telephone" name="telephone" value="">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row field">
+                                                <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
+                                                <div class="col-sm-3">
+                                                    <select class="form-control editInput selectOptions">
+                                                        <option>+444</option>
+                                                        <option>+91</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control editInput" id="contact" name="contact"  value="">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput" id="email" name="email" value="">
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- <div class="mb-3 row field">
                                                 <label for="inputCountry"
                                                     class="col-sm-3 col-form-label">Country</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control editInput selectOptions" id="country_id" name="country_id" required>
+                                                    <select class="form-control editInput selectOptions" id="country_id" name="country_id">
                                                         <option selected disabled>Select Country</option>
                                                         <?php foreach ($country as $country_val) { ?>
                                                             <option value="{{$country_val->id}}" class="country_code" <?php if(isset($job_details) && $job_details->country_id == $country_val->id){echo "selected";}?> >{{$country_val->name}}</option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         <!-- </form> -->
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-4">
                                     <div class="formDtail">
-                                        <h4 class="contTitle">Site Details</h4>
+                                        <h4 class="contTitle">Customer / Delivery Details</h4>
                                         <!-- <form class="customerForm"> -->
+                                            <div class="mb-3 row">
+                                                <label for="inputCustomer" class="col-sm-3 col-form-label">Customer</label>
+                                                <div class="col-sm-7">
+                                                <select class="form-control editInput selectOptions get_site_result"
+                                                <?php if(!isset($key) && $key ==''){echo 'disabled';}?> id="site_id" name="site_id">
+                                                    <option selected disabled>Select Customer</option>
+                                                    <?php foreach ($customers as $cust) { ?>
+                                                        <option value="{{$cust->id}}">{{$cust->name}}</option>
+                                                    <?php } ?>
+                                                </select>
+                                                    <!-- <input type="text"  id="staticEmail"> -->
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(6)"><i
+                                                            class="fa-solid fa-square-plus"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="inputProject"
+                                                    class="col-sm-3 col-form-label">Project</label>
+                                                <div class="col-sm-7">
+                                                    <select class="form-control editInput selectOptions"
+                                                    id="project_id" name="project_id" <?php if(!isset($key) && $key ==''){echo 'disabled';}?> >
+                                                        <option>None</option>
+                                                        @foreach($projects as $project)
+                                                            <option value="{{$project->id}}">{{$project->project_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(4)"><i
+                                                            class="fa-solid fa-square-plus"></i></a>
+                                                </div>
+                                            </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Site</label>
                                                 <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions get_site_result" required
+                                                <select class="form-control editInput selectOptions get_site_result"
                                                 <?php if(!isset($key) && $key ==''){echo 'disabled';}?> id="site_id" name="site_id">
                                                     <option selected>Default</option>
                                                     @foreach($site as $siteVal)
-                                                        <option value="{{$siteVal->id}}" <?php if(isset($job_details) && $job_details->site_id == $siteVal->id){echo "selected";}?>>{{$siteVal->site_name}}</option>
+                                                        <option value="{{$siteVal->id}}">{{$siteVal->site_name}}</option>
                                                     @endforeach
                                                 </select>
                                                     <!-- <input type="text"  id="staticEmail"> -->
@@ -208,164 +225,103 @@
 
 
                                             </div>
+                                            
                                             <div class="mb-3 row">
-                                                <label for="inputProject" class="col-sm-3 col-form-label">Region</label>
-                                                <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions get_region_result" id="region" name="region" required>
-                                                    <option selected disabled>Select Region</option>
-                                                    <?php foreach($region as $site_region){?>
-                                                        <option value="{{$site_region->id}}" <?php if(isset($job_details) && $job_details->region == $site_region->id){echo "selected";}?>>{{$site_region->title}}</option>
-                                                    <?php }?>
-                                                </select>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <a href="javascript:void(0)" class="formicon" onclick="get_modal(0)"><i
-                                                            class="fa-solid fa-square-plus"></i></a>
+                                                <label for="inputContact"
+                                                    class="col-sm-3 col-form-label">Name<span class="radStar">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="company" id="company" class="form-control" value="">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputContact"
                                                     class="col-sm-3 col-form-label">Company</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="company" id="company" class="form-control" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->company ?? "");}?>">
+                                                    <input type="text" name="company" id="company" class="form-control" value="">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label for="inputName" class="col-sm-3 col-form-label">Contact</label>
+                                                <label for="inputAddress"
+                                                    class="col-sm-3 col-form-label">Address<span class="radStar">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <textarea class="form-control textareaInput" id="address" name="address" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="inputName" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-9">
                                                 <input type="text" class="form-control-plaintext editInput"
-                                                id="profession_name" value="<?php if(!empty($contact_name)){echo $contact_name;}else{echo "Lisa";}?> <?php if(!empty($customer_profession)){echo '('.$customer_profession->name.')';}else{echo "(Manager)";}?>" readonly="">
+                                                id="profession_name" value="">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label for="inputName" class="col-sm-3 col-form-label">Contact
-                                                    Name</label>
+                                                <label for="inputName" class="col-sm-3 col-form-label">County</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="conatact_name" name="conatact_name" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->conatact_name ?? "");}?>">
+                                                    <input type="text" class="form-control editInput" id="conatact_name" name="conatact_name" value="">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                                                <label for="inputEmail" class="col-sm-3 col-form-label">Postcode</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="site_email" name="site_email" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_email ?? "");}?>">
+                                                    <input type="text" class="form-control editInput" id="site_email" name="site_email" value="">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
                                             <label for="inputTelephone"
                                                 class="col-sm-3 col-form-label">Telephone</label>
                                             <div class="col-sm-3">
-                                                <select class="form-control editInput selectOptions" required>
+                                                <select class="form-control editInput selectOptions" >
                                                     <option>+444</option>
                                                     <option>+91</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control editInput" id="site_telephone" name="site_telephone" required value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_telephone ?? "");}?>">
+                                                <input type="text" class="form-control editInput" id="site_telephone" name="site_telephone" value="">
                                             </div>
                                         </div>
                                         <div class="mb-3 row field">
                                             <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
                                             <div class="col-sm-3">
-                                                <select class="form-control editInput selectOptions" required>
+                                                <select class="form-control editInput selectOptions">
                                                     <option>+444</option>
                                                     <option>+91</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control editInput" id="site_mobile" name="site_mobile" required value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_mobile ?? "");}?>">
+                                                <input type="text" class="form-control editInput" id="site_mobile" name="site_mobile" value="">
                                             </div>
                                         </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputAddress"
-                                                    class="col-sm-3 col-form-label">Address<span class="radStar">*</span></label>
-                                                <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" id="site_address" name="site_address" rows="3"
-                                                        ><?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_address ?? "");}?></textarea>
-                                                </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputAddress"
+                                                class="col-sm-6 col-form-label">Expected Delivery On</label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control editInput" id="site_mobile" name="site_mobile" value="">
                                             </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputCity" class="col-sm-3 col-form-label">City</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="site_city" name="site_city" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_city ?? "");}?>">
-                                                </div>
+                                            <div class="col-sm-2 calendar_icon">
+                                                <i class="fa fa-calendar-alt"></i>
                                             </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputCounty" class="col-sm-3 col-form-label">County</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="site_country" name="site_country" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_country ?? "");}?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputPincode"
-                                                    class="col-sm-3 col-form-label">Pincode</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="site_pincode" name="site_pincode" value="<?php if(isset($job_details) && $job_details != ''){echo ($job_details->site_pincode ?? "");}?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputCountry"
-                                                    class="col-sm-3 col-form-label">Country</label>
-                                                <div class="col-sm-9">
-                                                <select class="form-control editInput selectOptions" id="site_country_id" name="site_country_id" required>
-                                                    <option selected disabled>Select Country</option>
-                                                    <?php foreach ($country as $country_v) { ?>
-                                                        <option value="{{$country_v->id}}" <?php if(isset($job_details) && $job_details->site_country_id == $country_v->id){echo "selected";}?>>{{$country_v->name}}</option>
-                                                    <?php } ?>
-                                                </select>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputAddress" class="col-sm-3 col-form-label">Notes</label>
-                                                <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" id="notes" name="notes" rows="3" placeholder="Site Notes"><?php if(isset($job_details) && $job_details!= ''){echo $job_details->notes;}?></textarea>
-                                                </div>
-                                            </div>
-                                        <!-- </form> -->
+                                            
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-4">
                                     <div class="formDtail">
-                                        <h4 class="contTitle">Jobs Details</h4>
+                                        <h4 class="contTitle">Purchase Order Details</h4>
                                         <!-- <form class="customerForm"> -->
                                             <div class="mb-3 row">
-                                                <label for="inputJobRef" class="col-sm-3 col-form-label">Job Ref</label>
+                                                <label for="inputJobRef" class="col-sm-3 col-form-label">Purchase Order Ref.</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control-plaintext editInput"
-                                                        id="inputJobRef" <?php if(isset($job_details) && $job_details!= ''){echo 'value="'.$job_details->job_ref.'"';}else{echo 'value="Auto generate"';}?> readonly>
+                                                        id="inputJobRef" value="Auto generate" readonly>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label for="inputCustomer" class="col-sm-3 col-form-label">Customer
-                                                    Ref</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput"
-                                                    id="customer_ref" name="customer_ref" placeholder="Customer Ref if any" value="<?php if(isset($job_details) && $job_details!= ''){echo $job_details->customer_ref;}?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputCustomer" class="col-sm-3 col-form-label">Customer Job
-                                                    Ref</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput"
-                                                    id="cust_job_ref" name="cust_job_ref" placeholder="Customer Job if any" value="<?php if(isset($job_details) && $job_details!= ''){echo $job_details->cust_job_ref;}?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputPurchase" class="col-sm-3 col-form-label">Purch. Order
-                                                    Ref</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput"
-                                                    id="purchase_order_ref" name="purchase_order_ref" placeholder="Purchase Order Ref if any" value="<?php if(isset($job_details) && $job_details!= ''){echo $job_details->purchase_order_ref;}?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputJobType" class="col-sm-3 col-form-label">Job
-                                                    Type<span class="radStar">*</span></label>
+                                                <label for="inputJobType" class="col-sm-3 col-form-label">Department</label>
                                                 <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions" id="job_type" name="job_type" required>
+                                                <select class="form-control editInput selectOptions" id="job_type" name="job_type">
                                                     <option selected disabled>Please Select</option>
                                                     <?php foreach ($job_type as $type) { ?>
-                                                        <option value="{{$type->id}}" <?php if(isset($job_details) && $job_details->job_type == $type->id){echo 'selected';}?>>{{$type->name}}</option>
+                                                        <option value="{{$type->id}}" >{{$type->name}}</option>
                                                     <?php } ?>
                                                 </select>
                                                 </div>
@@ -375,73 +331,92 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
+                                                <label for="inputTelephone" class="col-sm-6 col-form-label">Purchase Date<span class="radStar">*</span></label>
+                                                <div class="col-sm-4">
+                                                    <input type="date" class="form-control editInput"
+                                                    id="start_date" name="start_date" value="">
+                                                </div>
+                                                <div class="col-sm-2 calendar_icon">
+                                                    <i class="fa fa-calendar-alt"></i>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="inputCustomer" class="col-sm-3 col-form-label">Reference</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput textareaInput"
+                                                    id="customer_ref" name="customer_ref" placeholder="Reference(if any)" value="">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Ref</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput textareaInput"
+                                                    id="cust_job_ref" name="cust_job_ref" placeholder="Quote, if any" value="">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="inputPurchase" class="col-sm-3 col-form-label">Job Ref</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput textareaInput"
+                                                    id="purchase_order_ref" name="purchase_order_ref" placeholder="Job Ref, if any" value="">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="inputPurchase" class="col-sm-3 col-form-label">Invoice Ref</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control editInput textareaInput"
+                                                    id="purchase_order_ref" name="purchase_order_ref" placeholder="Invoice Ref, if any" value="">
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                    <label class="col-sm-3 col-form-label">Payment Terms</label>
+                                                    <div class="col-sm-6">
+                                                        <select class="form-control editInput selectOptions"
+                                                            id="payment_terms" name="payment_terms">
+                                                            <option value="21">Default (21)
+                                                            </option>
+                                                            <?php for($i=1;$i<21;$i++){?>
+                                                            <option value="{{$i}}">{{$i}}</option>
+                                                            <?php }?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label class="form-check-label checkboxtext" for="checkalrt">
+                                                            days</label>
+                                                    </div>
+
+                                                </div>
+                                            <div class="mb-3 row">
+                                                <label for="inputTelephone" class="col-sm-6 col-form-label">Payment Due Date</label>
+                                                <div class="col-sm-4">
+                                                    <input type="date" class="form-control editInput"
+                                                    id="start_date" name="start_date" value="">
+                                                </div>
+                                                <div class="col-sm-2 calendar_icon">
+                                                    <i class="fa fa-calendar-alt"></i>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3 row">
                                                 <label for="inputPriority"
-                                                    class="col-sm-3 col-form-label">Priority</label>
+                                                    class="col-sm-3 col-form-label">Status</label>
                                                 <div class="col-sm-9">
                                                 <select class="form-control editInput selectOptions"
                                                     id="priorty" name="priorty">
                                                     <option selected disabled>None</option>
-                                                    <option value="1" <?php if(isset($job_details) && $job_details->priorty == 1){echo 'selected';}?>>Normal</option>
-                                                    <option value="2" <?php if(isset($job_details) && $job_details->priorty == 2){echo 'selected';}?>>Medium</option>
+                                                    <option value="1">Normal</option>
+                                                    <option value="2">Medium</option>
                                                 </select>
                                                 </div>
                                             </div>
-                                            <div class="mb-2 row">
-                                                <label class="col-sm-3 col-form-label">Alert Customer</label>
-                                                <div class="col-sm-9">
-
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        name="alert_customer" id="alert_customer"
-                                                        required <?php if(isset($job_details) && $job_details->alert_customer == 1){echo 'checked value="1"';}else{echo 'value="0"';}?>>
-                                                    <label class="form-check-label checkboxtext" for="checkalrt">By
-                                                        Email</label>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row field">
-                                                <label class="col-sm-3 col-form-label">On Rout SMS Alert</label>
-                                                <div class="col-sm-9">
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="on_route_sms" id="on_route_sms" <?php if(isset($job_details) && $job_details->on_route_sms == 1){echo 'checked';}else{echo 'unchecked';}?> value="1"
-                                                            required>
-                                                        <label class="form-check-label checkboxtext"
-                                                            for="inlineRadio1">Yes</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="on_route_sms" id="on_route_sms" value="2"
-                                                             <?php if(isset($job_details) && $job_details->on_route_sms == 1){echo 'unchecked';}else{echo 'checked';}?>>
-                                                        <label class="form-check-label checkboxtext"
-                                                            for="inlineRadio2">No</label>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputTelephone" class="col-sm-3 col-form-label">Start
-                                                    Date<span class="radStar">*</span></label>
-                                                <div class="col-sm-4">
-                                                    <input type="date" class="form-control editInput"
-                                                    id="start_date" name="start_date" value="<?php if(isset($job_details) && $job_details != ''){echo $job_details->start_date;}?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputMobile" class="col-sm-3 col-form-label">Complete
-                                                    By<span class="radStar">*</span></label>
-                                                <div class="col-sm-4">
-                                                    <input type="date" class="form-control editInput" id="complete_by" name="complete_by" value="<?php if(isset($job_details) && $job_details != ''){echo $job_details->complete_by;}?>">
-                                                </div>
-                                            </div>
-
+                                            
                                             <div class="mb-3 row">
                                                 <label for="inputCountry" class="col-sm-3 col-form-label">Tags</label>
                                                 <div class="col-sm-7">
                                                     <select class="form-control editInput selectOptions" id="tags" name="tags">
                                                         <option selected disabled>None</option>
                                                         @foreach($tag as $tagval)
-                                                            <option value="{{$tagval->id}}" <?php if(isset($job_details) && $job_details->tags == $tagval->id){echo 'selected';}?>>{{$tagval->title}}</option>
+                                                            <option value="{{$tagval->id}}">{{$tagval->title}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -456,32 +431,8 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="formDiscription">
-                                        <!-- <form class="customerForm"> -->
-                                            <div class="mb-3">
-                                                <label for="exampleInputEmail1" class="col-form-label">Short
-                                                    Description<span class="radStar">*</span> <span>(max 250 charecters)</span></label>
-                                                <textarea class="form-control textareaInput" name="short_decinc"
-                                                    id="short_decinc" rows="2" placeholder="Short Notes" onkeyup="get_char()"><?php if(isset($job_details) && $job_details != ''){echo $job_details->short_decinc;}?></textarea>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="exampleInputEmail1" class="col-form-label">Description /
-                                                    Instructions</span></label>
-                                                <textarea cols="40" rows="5" id="description" name="description">
-                                                  </textarea>
-                                            </div>
-                                        <!-- </form> -->
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div> <!-- End  off newJobForm -->
-
                         <div class="newJobForm mt-4">
-                            <label class="upperlineTitle">Item Details</label>
+                            <label class="upperlineTitle">Product Details</label>
                             <div class="row">
                                 <div class="col-sm-9">
                                     <div class="mb-3 row">
@@ -494,7 +445,7 @@
                                             <div class="plusandText">
                                                 <a href="javascript:void(0)" class="formicon" onclick="get_modal(8)"><i class="fa-solid fa-square-plus"></i>
                                                 </a>
-                                                <span class="afterPlusText"> (Type to view product or <a href="Javascript:void(0)" onclick="openProductListModal();">Click
+                                                <span class="afterPlusText"> (Type to view product or <a href="Javascript:void(0)" onclick="show_product_model()">Click
                                                         here</a> to view all assets)</span>
                                             </div>
                                         </div>
@@ -503,8 +454,8 @@
                                 <div class="col-sm-3">
                                     <div class="pageTitleBtn p-0">
                                         <a href="#" class="profileDrop">Add Title</a>
-                                        <a href="#" class="profileDrop">Show Variations</a>
-                                        <a href="#" class="profileDrop bg-secondary">Export</a>
+                                        <!-- <a href="#" class="profileDrop">Show Variations</a>
+                                        <a href="#" class="profileDrop bg-secondary">Export</a> -->
 
                                     </div>
                                 </div>
@@ -514,581 +465,84 @@
                                         <table class="table" id="result">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>Code </th>
+                                                    <th>Job </th>
                                                     <th>Product </th>
-                                                    <th>Description</th>
-                                                    <th>Qty </th>
-                                                    <th>Cost Price(R) </th>
-                                                    <th>Price(R) </th>
-                                                    <th>Discount </th>
-                                                    <th>VAT(%) </th>
-                                                    <th>Amount Assigned To </th>
-                                                    <th></th>
+                                                    <th>Code</th>
+                                                    <th>Description </th>
+                                                    <th>Account Code <a href="javascript:void(0)" class="formicon" onclick="get_modal(8)"><i class="fa-solid fa-square-plus"></i>
+                                                    </a> </th>
+                                                    <th>QTY</th>
+                                                    <th>Price VAT(%) <a href="javascript:void(0)" class="formicon" onclick="get_modal(8)"><i class="fa-solid fa-square-plus"></i>
+                                                    </a></th>
+                                                    <th>VAT </th>
+                                                    <th>Amount</th>
+                                                    <th>Delivered QTY</th>
+                                                    <th>Quantity Available</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="product_result">
-                                                <?php 
-                                                    $previous_ids=array();
-                                                    $cost_price=0;
-                                                    $amount=0;
-                                                    foreach($jobassign_products as $assignVal){
-                                                        $previous_ids[]=$assignVal->product_id;
-                                                        $cost_price=$cost_price+$assignVal->cost_price;
-                                                        $amount=$amount+$assignVal->price;
-                                                ?>
+                                                <?php $previous_ids=array();?>
                                                     <tr>
-                                                        <input type="hidden" id="idjobasign" name="idjobasign[]" value="{{$assignVal->id}}">
-                                                        <td>{{$assignVal->code}} <input type="hidden" id="product_codejob" name="product_codejob[]" value="{{$assignVal->code}}"></td>
-                                                        <td>{{$assignVal->product_name}}<input type="hidden" id="product_namejob" name="product_namejob[]" value="{{$assignVal->product_name}}"></td>
-                                                        <td>{{$assignVal->description}}<input type="hidden" id="descriptionjob" name="descriptionjob[]" value="{{$assignVal->description}}"></td>
-                                                        <td><input type="text" class="quantity" value="{{$assignVal->qty}}" name="quantity[]" id="quantity"></td>
-                                                        <td>{{$assignVal->cost_price}}<input type="hidden" id="cost_pricejob" class="cost_pricejob" name="cost_pricejob[]" value="{{$assignVal->cost_price}}"></td>
-                                                        <td>{{$assignVal->price}}<input type="hidden" id="pricejob" class="pricejob" name="pricejob[]" value="{{$assignVal->price}}"></td>
-                                                        <td><input type="text" class="" value="0" name="discount[]"></td>
-
-                                                        <td><select id="vatjob" name="vatjob[]">
-                                                        <?php foreach($sales_tax as $taxv){?>
-                                                            <option value="{{$taxv->id}}" <?php if($assignVal->vat == $taxv->id){echo "selected";}?>>{{$taxv->name}}</option>
-                                                        <?php } ?>
-                                                        </select></td>
-                                                        <td id="pre_total_amount" class="pre_total_amount">{{$assignVal->price}}</td>
-                                                        <td><button type="button" class="btn btn-danger" onclick="removeRow(this,{{$assignVal->id}})">Delete<input type="hidden" value="{{$assignVal->id}}" name="product_detail_id[]" id="product_detail_id"></button></td>
+                                                        <td> </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
-                                                <?php }?>
                                                 
                                             </tbody>
-                                            <tr>
+                                            <!-- <tr>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td id="pro_qty">0.00</td>
-                                                    <td id="pro_cost_price">£{{$cost_price}}</td>
+                                                    <td>0.00</td>
+                                                    <td>£0.00</td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td id="total_amount">£{{$amount}}</td>
+                                                    <td>£0.00</td>
                                                     <td></td>
-                                                </tr>
+                                                </tr> -->
                                         </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @include('components.product-list')
-                        <!-- End  off newJobForm -->
-
-                        <!-- <div class="newJobForm mt-4">
-                            <label class="upperlineTitle">Asset Details</label>
-                            <div class="row">
-                                <div class="col-sm-9">
-                                    <div class="mb-3 row">
-                                        <label for="inputCountry" class="col-sm-2 col-form-label">Select Asset</label>
-                                        <div class="col-sm-3">
-                                            <input type="text" class="form-control editInput" id="inputCountry"
-                                                placeholder="Type to add Asset">
-                                        </div>
-                                        <div class="col-sm-7">
-                                            <div class="plusandText">
-                                                <a href="#!" class="formicon"><i class="fa-solid fa-square-plus"></i>
-                                                </a>
-                                                <span class="afterPlusText"> (Type to view Asset or <a href="#!">Click
-                                                        here</a> to view all assets)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                   <div class="pageTitleBtn p-0">
-                                       <a href="#" class="profileDrop">Add Title</a>
-                                       <a href="#" class="profileDrop">Show Variations</a>
-                                       <a href="#" class="profileDrop bg-secondary">Export</a>
-
-                                   </div>
-                               </div>
-
-                                <div class="col-sm-12">
-                                    <div class="productDetailTable">
-                                        <table class="table">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>Asset Ref </th>
-                                                    <th>Title </th>
-                                                    <th>Description</th>
-                                                    <th>Asset Status </th>
-                                                    <th>Assigned To </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>..</td>
-                                                    <td>..</td>
-                                                    <td>..</td>
-                                                    <td>..</td>
-                                                    <td>..</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="title">Appoinments</div> -->
-
-                                    <div class="newJobForm mt-4">
-                                        <label class="upperlineTitle">Appoinments</label>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="jobsection">
-                                                    <a href="#" class="profileDrop">Smart Planning</a>
-                                                    <a href="javascript:void(0)" onclick="new_appointment()" class="profileDrop">New User Appoinment</a>
-                                                    <a href="#" class="profileDrop">Send To Planner</a>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-12">
-                                                <div class="productDetailTable pt-3">
-                                                    <table class="table table-bordered" id="appointment_table">
-                                                        <thead class="table-light">
-                                                            <tr>
-                                                                <th>User </th>
-                                                                <th>Appoinment Type </th>
-                                                                <th>Date / Time</th>
-                                                                <th>User Notes </th>
-                                                                <th>Status </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php 
-                                                            function convertMinutesToTime($minutes) {
-                                                                $hours = floor($minutes / 60);
-                                                                $remainingMinutes = $minutes % 60;
-                                                                return "{$hours}h {$remainingMinutes}min";
-                                                            }
-                                                            $count=1; if(count($job_appointment)>0){ foreach($job_appointment as $key=>$appointmentVal){
-                                                                $travel_time=$appointmentVal->travel_time ?? 0;
-                                                                $appointment_time=$appointmentVal->appointment_time ?? 0;
-                                                                if($travel_time > $appointment_time){
-                                                                    $duration=$travel_time;
-                                                                }else{
-                                                                    $duration=$appointment_time;
-                                                                }
-                                                                ?>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="hidden" value="{{$appointmentVal->id}}" name="appointment_id[]">
-                                                                    <div class="d-flex">
-                                                                        <p class="leftNum">{{$count}}</p>
-                                                                        <select class="form-control editInput selectOptions" id="Appointmentuser_id" name="Appointmentuser_id[]">
-                                                                            <option selected disabled>Select user</option>
-                                                                            <?php foreach ($users as $user) { ?>
-                                                                                <option value="{{$user->id}}" <?php if($user->id == $appointmentVal->user_id){echo "selected";}?>>{{$user->name}}</option>
-                                                                            <?php } ?>
-                                                                        </select>
-                                                                        <a href="#!" class="callIcon"><i
-                                                                                class="fa-solid fa-square-phone"></i></a>
-                                                                    </div>
-                                                                    <div class="alertBy">
-                                                                        <label><strong>Alert By
-                                                                                :</strong></label>
-                                                                        <div
-                                                                            class="form-check form-check-inline">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox"
-                                                                                id="alert_sms_appointment{{$count}}"
-                                                                                <?php if($appointmentVal->sms == 1){echo 'checked value="1"';}else{echo 'value="0"';}?> class="alert_by_check_1" name="alert_sms_appointment[]">
-                                                                            <label class="form-check-label"
-                                                                                for="inlineCheckbox1">SMS</label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="form-check form-check-inline">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox"
-                                                                                id="alert_email_appointment{{$count}}"
-                                                                                 class="alert_by_check_2" name="alert_email_appointment[]" <?php if($appointmentVal->email == 1){echo 'checked value="1"';}else{echo 'value="0"';}?>>
-                                                                            <label class="form-check-label"
-                                                                                for="inlineCheckbox2">Email</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="col-2">
-                                                                    <div class="appoinment_type">
-                                                                        <select
-                                                                            class="form-control editInput selectOptions"
-                                                                            id="appointment_type_id" name="appointment_type_id[]">
-                                                                            <option selected disabled>Select Appointment Type</option>
-                                                                            <?php foreach ($appointment_type as $appointmentv) { ?>
-                                                                                <option value="{{$appointmentv->id}}">{{$appointmentv->name}}</option>
-                                                                            <?php } ?>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="Priority">
-                                                                        <label>Priority :</label>
-                                                                        <select
-                                                                            class="form-control editInput selectOptions"
-                                                                            id="priority" name="priority[]">
-                                                                            <option selected disabled>Select Priority</option>
-                                                                            <option <?php if($appointmentVal->priority == 'Default'){echo "selected";}?>>Default</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="addDateAndTime">
-                                                                        <div class="startDate">
-                                                                            <input type="date" name="appointment_start_date[]"
-                                                                                class=" editInput" value="<?php if($appointmentVal->start_date != ''){echo $appointmentVal->start_date;}?>">
-                                                                            <input type="time" name="start_time[]"
-                                                                                class=" editInput" value="<?php if($appointmentVal->start_time != ''){echo $appointmentVal->start_time;}?>">
-                                                                        </div>
-                                                                        <span class="p-2">To</span>
-                                                                        <div class="endDate">
-                                                                            <input type="date" name="end_date[]"
-                                                                                class=" editInput" value="<?php if($appointmentVal->end_date != ''){echo $appointmentVal->end_date;}?>">
-                                                                            <input type="time" name="end_time[]"
-                                                                                class=" editInput" value="<?php if($appointmentVal->end_time != ''){echo $appointmentVal->end_time;}?>">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pt-3">
-                                                                        <div
-                                                                            class="form-check form-check-inline">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox"
-                                                                                id="single_appointment{{$count}}" name="single_appointment[]"
-                                                                                <?php if($appointmentVal->single_appointment == 1){echo 'checked value="1"';}else{echo 'value="0"';}?>>
-                                                                            <label class="form-check-label"
-                                                                                for="singleAppointment">Single
-                                                                                Appointment</label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="form-check form-check-inline">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox"
-                                                                                id="floating_appointment{{$count}}" name="floating_appointment[]"
-                                                                                <?php if($appointmentVal->floating_appointment == 1){echo 'checked value="1"';}else{echo 'value="0"';}?>>
-                                                                            <label class="form-check-label"
-                                                                                for="floatingAppointment">Floating
-                                                                                Appointment</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="addTextarea">
-                                                                        <textarea cols="40" rows="5" id="appointment_notes" name="appointment_notes[]">
-                                                                        <?php if($appointmentVal->notes != ''){echo $appointmentVal->notes;}?>
-                                                                    </textarea>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="statuswating">
-                                                                        <select
-                                                                            class="form-control editInput selectOptions"
-                                                                            id="appointment_status" name="appointment_status[]">
-                                                                            <option selected disabled>Select Status</option>
-                                                                            <option value="1" <?php if($appointmentVal->appointment_status == 1){echo 'selected';}?>>Awaiting</option>
-                                                                            <option value="2" <?php if($appointmentVal->appointment_status == 2){echo 'selected';}?>>Received</option>
-                                                                            <option value="3" <?php if($appointmentVal->appointment_status == 3){echo 'selected';}?>>Accepted</option>
-                                                                            <option value="4" <?php if($appointmentVal->appointment_status == 4){echo 'selected';}?>>Declined</option>
-                                                                            <option value="5" <?php if($appointmentVal->appointment_status == 5){echo 'selected';}?>>on Route</option>
-                                                                            <option value="6" <?php if($appointmentVal->appointment_status == 6){echo 'selected';}?>>On Site</option>
-                                                                            <option value="7" <?php if($appointmentVal->appointment_status == 7){echo 'selected';}?>>Completed</option>
-                                                                            <option value="8" <?php if($appointmentVal->appointment_status == 8){echo 'selected';}?>>Follow On</option>
-                                                                            <option value="9" <?php if($appointmentVal->appointment_status == 9){echo 'selected';}?>>Abandoned</option>
-                                                                            <option value="10" <?php if($appointmentVal->appointment_status == 10){echo 'selected';}?>>No Access</option>
-                                                                            <option value="11" <?php if($appointmentVal->appointment_status == 11){echo 'selected';}?>>Cancelled</option>
-                                                                            <option value="12" <?php if($appointmentVal->appointment_status == 12){echo 'selected';}?>>On Hold</option>
-                                                                        </select>
-                                                                        <a href="javascript:void(0)" onclick="deleteRow(this)"><i
-                                                                                class="fa-solid fa-circle-xmark"></i></a>
-
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="Priority">
-                                                                        <label><strong>Travel Time
-                                                                                -</strong></label>
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="firstinput_time{{$count}}" name="firstinput_time[]"
-                                                                            placeholder="" value="{{$appointmentVal->travel_time}}" onkeyup="get_time({{$count}})"><label>
-                                                                            Mins</label>
-                                                                    </div>
-                                                                </td>
-                                                                <td></td>
-                                                                <td>
-                                                                    <div class="Priority">
-                                                                        <label><strong>Appointment Time
-                                                                                -</strong></label>
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="secondinput_time{{$count}}" name="secondinput_time[]"
-                                                                            placeholder="" value="{{$appointmentVal->appointment_time}}" onkeyup="get_time({{$count}})"><label> Mins
-                                                                            <strong>Total Time -</strong>
-                                                                            <font id="time_show{{$count}}">{{ convertMinutesToTime($duration) }}</font>
-                                                                        </label>
-                                                                    </div>
-                                                                    <input type="hidden" id="appointment_time{{$count}}" class="appointment_time" name="appointment_time[]">
-                                                                </td>
-                                                                <td></td>
-                                                                <td></td>
-                                                            </tr>
-                                                            <tr class="del-btn">
-                                                                <td>
-                                                                    <div class="Priority p-0">
-                                                                        <label class="p-0"><strong>Assigned
-                                                                                Products: </strong><a
-                                                                                href="#!">All</a> None</label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="pageTitleBtn p-0">
-                                                                        <a href="#" class="profileDrop">Asign
-                                                                            Product</a>
-                                                                    </div>
-                                                                </td>
-                                                                <td></td>
-                                                                <td colspan="2">
-                                                                    <div class="pageTitleBtn p-0">
-                                                                        <a href="#" class="profileDrop">Add
-                                                                            Title</a>
-                                                                        <a href="#" class="profileDrop">Show
-                                                                            Variations</a>
-                                                                        <a href="#"
-                                                                            class="profileDrop bg-secondary">Export</a>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="del-btn">
-                                                                <td colspan="5" class="padingtableBottom"></td>
-                                                            </tr>
-                                                        <?php $count++; }?>
-                                                    <?php }else{?>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="hidden" id="count_number" value="{{$count}}">
-                                                                    <div class="d-flex">
-                                                                        <p class="leftNum">1</p>
-                                                                        <select class="form-control editInput selectOptions" id="Appointmentuser_id" name="Appointmentuser_id[]">
-                                                                            <option selected disabled>Select user</option>
-                                                                            <?php foreach ($users as $user) { ?>
-                                                                                <option value="{{$user->id}}">{{$user->name}}</option>
-                                                                            <?php } ?>
-                                                                        </select>
-                                                                        <a href="#!" class="callIcon"><i
-                                                                                class="fa-solid fa-square-phone"></i></a>
-                                                                    </div>
-                                                                    <div class="alertBy">
-                                                                        <label><strong>Alert By
-                                                                                :</strong></label>
-                                                                        <div
-                                                                            class="form-check form-check-inline">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox"
-                                                                                id="alert_sms_appointment1"
-                                                                                value="0" name="alert_sms_appointment[]">
-                                                                            <label class="form-check-label"
-                                                                                for="inlineCheckbox1">SMS</label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="form-check form-check-inline">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox"
-                                                                                id="alert_email_appointment1"
-                                                                                value="0" name="alert_email_appointment[]">
-                                                                            <label class="form-check-label"
-                                                                                for="inlineCheckbox2">Email</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="col-2">
-                                                                    <div class="appoinment_type">
-                                                                        <select
-                                                                            class="form-control editInput selectOptions"
-                                                                            id="appointment_type_id" name="appointment_type_id[]">
-                                                                            <option selected disabled>Select Appointment Type</option>
-                                                                            <?php foreach ($appointment_type as $appointmentv) { ?>
-                                                                                <option value="{{$appointmentv->id}}">{{$appointmentv->name}}</option>
-                                                                            <?php } ?>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="Priority">
-                                                                        <label>Priority :</label>
-                                                                        <select
-                                                                            class="form-control editInput selectOptions"
-                                                                            id="priority" name="priority[]">
-                                                                            <option selected disabled>Select Priority</option>
-                                                                            <option>Default</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="addDateAndTime">
-                                                                        <div class="startDate">
-                                                                            <input type="date" name="appointment_start_date[]"
-                                                                                class=" editInput">
-                                                                            <input type="time" name="start_time[]"
-                                                                                class=" editInput">
-                                                                        </div>
-                                                                        <span class="p-2">To</span>
-                                                                        <div class="endDate">
-                                                                            <input type="date" name="end_date[]"
-                                                                                class=" editInput">
-                                                                            <input type="time" name="end_time[]"
-                                                                                class=" editInput">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pt-3">
-                                                                        <div
-                                                                            class="form-check form-check-inline">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox"
-                                                                                id="single_appointment1"
-                                                                                value="0" name="single_appointment[]">
-                                                                            <label class="form-check-label"
-                                                                                for="singleAppointment">Single
-                                                                                Appointment</label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="form-check form-check-inline">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox"
-                                                                                id="floating_appointment1"
-                                                                                value="0" name="floating_appointment[]">
-                                                                            <label class="form-check-label"
-                                                                                for="floatingAppointment">Floating
-                                                                                Appointment</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="addTextarea">
-                                                                        <textarea cols="40" rows="5" id="appointment_notes" name="appointment_notes[]">
-
-                                                                    </textarea>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="statuswating">
-                                                                        <select
-                                                                            class="form-control editInput selectOptions"
-                                                                            id="appointment_status" name="appointment_status[]">
-                                                                            <option selected disabled>Select Status</option>
-                                                                            <option value="1">Awaiting</option>
-                                                                            <option value="2">Received</option>
-                                                                            <option value="3">Accepted</option>
-                                                                            <option value="4">Declined</option>
-                                                                            <option value="5">on Route</option>
-                                                                            <option value="6">On Site</option>
-                                                                            <option value="7">Completed</option>
-                                                                            <option value="8">Follow On</option>
-                                                                            <option value="9">Abandoned</option>
-                                                                            <option value="10">No Access</option>
-                                                                            <option value="11">Cancelled</option>
-                                                                            <option value="12">On Hold</option>
-                                                                        </select>
-                                                                        <a href="javascript:void(0)" onclick="deleteRow(this)"><i
-                                                                                class="fa-solid fa-circle-xmark"></i></a>
-
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="Priority">
-                                                                        <label><strong>Travel Time
-                                                                                -</strong></label>
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="firstinput_time1" name="firstinput_time[]"
-                                                                            placeholder="" onkeyup="get_time(1)"><label>
-                                                                            Mins</label>
-                                                                    </div>
-                                                                </td>
-                                                                <td></td>
-                                                                <td>
-                                                                    <div class="Priority">
-                                                                        <label><strong>Appointment Time
-                                                                                -</strong></label>
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="secondinput_time1" name="secondinput_time[]"
-                                                                            placeholder="" onkeyup="get_time(1)"><label> Mins
-                                                                            <strong>Total Time -</strong>
-                                                                            <font id="time_show1">0h
-                                                                                0mins</font>
-                                                                        </label>
-                                                                    </div>
-                                                                    <input type="hidden" id="appointment_time1" class="appointment_time" name="appointment_time[]">
-                                                                </td>
-                                                                <td></td>
-                                                                <td></td>
-                                                            </tr>
-                                                            <tr class="del-btn">
-                                                                <td>
-                                                                    <div class="Priority p-0">
-                                                                        <label class="p-0"><strong>Assigned
-                                                                                Products: </strong><a
-                                                                                href="#!">All</a> None</label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="pageTitleBtn p-0">
-                                                                        <a href="#" class="profileDrop">Asign
-                                                                            Product</a>
-                                                                    </div>
-                                                                </td>
-                                                                <td></td>
-                                                                <td colspan="2">
-                                                                    <div class="pageTitleBtn p-0">
-                                                                        <a href="#" class="profileDrop">Add
-                                                                            Title</a>
-                                                                        <a href="#" class="profileDrop">Show
-                                                                            Variations</a>
-                                                                        <a href="#"
-                                                                            class="profileDrop bg-secondary">Export</a>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="del-btn">
-                                                                <td colspan="5" class="padingtableBottom"></td>
-                                                            </tr>
-                                                            <?php }?>
-                                                        </tbody>
-                                                        <div id="appointment_result"></div>
-
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- End  off newJobForm -->
-
-
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Notes</label>
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <div class="">
-                                        <h4 class="contTitle text-start">Customer Notes</h4>
+                                        <h4 class="contTitle text-start">Supplier Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="customer_notes" name="customer_notes">
-                                                <?php if(isset($job_details) && $job_details !=''){echo $job_details->customer_notes;}?>
-                                              </textarea>
+                                            <textarea cols="40" rows="5" id="customer_notes" name="customer_notes"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
+                                    <div class="">
+                                        <h4 class="contTitle text-start">Delivery Notes</h4>
+                                        <div class="mt-3">
+                                            <textarea cols="40" rows="5" id="deliver_notes" name="deliver_notes"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
                                     <div class="">
                                         <h4 class="contTitle text-start">Internal Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="internal_notes" name="internal_notes">
-                                            <?php if(isset($job_details) && $job_details !=''){echo $job_details->internal_notes;}?>
-                                              </textarea>
+                                            <textarea cols="40" rows="5" id="internal_notes" name="internal_notes"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- End  off newJobForm -->
+                        </div>
 
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Attachments</label>
@@ -1102,7 +556,7 @@
                                 </div>
                                 </div>
                             </div>
-                        </div><!-- End  off newJobForm -->
+                        </div>
 
                     </div>
                 </div>
@@ -1110,17 +564,25 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-xl-4 ">
                         <div class="pageTitle">
-                            @if(isset($key) && $key !='')
-                            <h3 class="header_text">{{$job_details->job_ref}}</h3>
-                            @else
-                            <h3 class="header_text">New Jobs</h3>
-                            @endif
+                            
+                            <!-- <h3 class="header_text">New Jobs</h3> -->
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-8 col-xl-8 px-3">
                         <div class="pageTitleBtn">
                             <a href="javascript:void(0)" class="profileDrop" onclick="save_all_data()"><i class="fa-solid fa-floppy-disk" ></i> Save</a>
                             <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                            <div class="pageTitleBtn p-0">
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Actions
+                                    </a>
+                                    <div class="dropdown-menu fade-up m-0 d-none">
+                                        <a href="http://localhost/socialcareitsolution/job_edit?key=MQ==" class="dropdown-item col-form-label">Edit</a>
+                                        <!-- <hr class="dropdown-divider"> -->
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -2635,7 +2097,7 @@ var editor_config = {
   ],
 };
 
-CKEDITOR.replace('description', editor_config );
+CKEDITOR.replace('deliver_notes', editor_config );
 CKEDITOR.replace('customer_notes', editor_config );
 CKEDITOR.replace('internal_notes', editor_config );
 //Text Editer
@@ -3299,23 +2761,23 @@ const openPopupButton = document.getElementById('openPopupButton');
         }
     }
 
-    // function show_product_model() {
-    //     var token = '<?php echo csrf_token(); ?>'
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "{{url('product_modal_list')}}",
-    //             data: {_token: token},
-    //             success: function(data) {
-    //                 console.log(data);
-    //                 // 
-    //                 $("#product_model").modal('show');
-    //                 $('#search_result').html(data);
+    function show_product_model() {
+        var token = '<?php echo csrf_token(); ?>'
+            $.ajax({
+                type: "POST",
+                url: "{{url('product_modal_list')}}",
+                data: {_token: token},
+                success: function(data) {
+                    console.log(data);
+                    // 
+                    $("#product_model").modal('show');
+                    $('#search_result').html(data);
 
-    //             }
-    //         });
+                }
+            });
         
-    //     $('#product_model').modal('show');
-    // }
+        $('#product_model').modal('show');
+    }
     var previous_id=[];
     function selectProduct(id) {
         previous_id.push(id);
@@ -3338,7 +2800,6 @@ const openPopupButton = document.getElementById('openPopupButton');
     }
     $(document).ready(function(){
         var TablePrevious_ids = JSON.parse('<?php echo json_encode($previous_ids); ?>');
-        // console.log(typeof(TablePrevious_ids));return false;
         TablePrevious_ids.forEach(function (id) {
             // selectProduct(id);
             previous_id.push(Number(id));
@@ -3396,7 +2857,6 @@ const openPopupButton = document.getElementById('openPopupButton');
             $("#total_amount").text('£' + totalAmountAssign);
     });
     function UpdateItemDetailsCalculation(){
-        alert()
         var updatedCostPrice=0;
         var updatedGrandAmount=0;
         $('.cost_pricejob').each(function(){
@@ -3415,71 +2875,6 @@ const openPopupButton = document.getElementById('openPopupButton');
 
     function get_data_product() {
         $('#product_model').modal('hide');
-    }
-
-    function get_delete_jobproduct(id) {
-        if (confirm("Do you want to delete it ?")) {
-            var token = '<?php echo csrf_token(); ?>'
-            var table = 'jobs';
-            $.ajax({
-                type: "POST",
-                url: "{{url('delete_function')}}",
-                data: {
-                    id: id,
-                    table: table,
-                    _token: token
-                },
-                success: function(data) {
-                    console.log(data);
-                    window.location.reload();
-                }
-            });
-        }
-    }
-
-    function new_appointment() {
-        var token = '<?php echo csrf_token(); ?>';
-        var count_number = $('#count_number').val();
-        count_number++;
-        $.ajax({
-            type: "POST",
-            url: "{{url('/new_appointment_add_section')}}",
-            data: {
-                count_number: count_number,
-                _token: token
-            },
-            success: function(data) {
-                console.log(data);
-                $("#appointment_table tbody").last().append(data);
-                // count_number++;
-                $('#count_number').val(count_number);
-            },
-            error: function(xhr, status, error) {
-                console.error("An error occurred: " + error);
-            }
-        });
-    }
-
-    function deleteRow(element) {
-        // element.closest('tbody').remove();
-        $(element).closest('tr').nextUntil('tr:has(td[colspan])').addBack().remove();
-        $(element).closest('tr').remove();
-    }
-
-    function get_time(id) {
-        var input_time1 = $("#firstinput_time"+id).val();
-        var input_time2 = $("#secondinput_time"+id).val();
-        var minutes;
-        if (input_time2) {
-            minutes = input_time2;
-        } else {
-            minutes = input_time1;
-        }
-        var hours = Math.floor(minutes / 60);
-        var remainingMinutes = minutes % 60;
-        $("#appointment_time"+id).val(hours + " h " + remainingMinutes + " mins");
-        $("#time_show"+id).text(hours + " h " + remainingMinutes + " mins")
-        // return hours + " hours and " + remainingMinutes + " minutes";
     }
 </script>
 
@@ -3701,169 +3096,6 @@ const openPopupButton = document.getElementById('openPopupButton');
                 }
                 
             });
-        }
-    });
-</script>
-<script>
-    function getProductData(selectedId) {
-        $.ajax({
-            url: '{{ route("item.ajax.getProductFromId") }}',
-            method: 'Post',
-            data: {
-                id: selectedId
-            },
-            success: function(response) {
-                console.log(response);
-                productGroupTable(response.data, 'result');
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-    var totalAmount=0;
-    var GrandCostPrice=0;
-    var GrandPrice=0;
-    function productGroupTable(data, tableId) {
-        // Get the table body element
-        const tableBody = document.querySelector(`#${tableId} tbody`);
-        
-        
-        if (data.length === 0) {
-            const noDataRow = document.createElement('tr');
-            const noDataCell = document.createElement('td');
-
-            
-            noDataCell.setAttribute('colspan', 4);
-            noDataCell.textContent = 'No products found';
-            noDataCell.style.textAlign = 'center'; 
-
-            
-            noDataRow.appendChild(noDataCell);
-            tableBody.appendChild(noDataRow);
-        } else {
-            
-            const emptyErrorRow = document.getElementById('EmptyError');
-            if (emptyErrorRow) {
-                emptyErrorRow.remove();
-            }
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                
-                const codeCell = document.createElement('td');
-                codeCell.innerHTML = item.product_code+'<input type="hidden" id="product_codejob" name="product_codejob[]" value="'+item.product_code+'">';
-                row.appendChild(codeCell);
-
-                
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.className = 'product_detail_id';
-                hiddenInput.name = 'product_detail_id[]'; 
-                hiddenInput.value = item.id; 
-                row.appendChild(hiddenInput);
-
-                const nameCell = document.createElement('td');
-                nameCell.innerHTML = item.product_name+'<input type="hidden" id="product_namejob" name="product_namejob[]" value="'+item.product_name+'">';
-                row.appendChild(nameCell);
-
-                const descriptionCell = document.createElement('td');
-                descriptionCell.innerHTML = item.description+'<input type="hidden" id="descriptionjob" name="descriptionjob[]" value="'+item.description+'">';
-                row.appendChild(descriptionCell);
-
-                const qtyCell = document.createElement('td');
-                const inputQty = document.createElement('input');
-                inputQty.type = 'text'; 
-                inputQty.className = 'quantity';
-                inputQty.addEventListener('input', function() {
-                    UpdateItemDetailsCalculation();
-                });
-                inputQty.name = 'quantity[]'; 
-                inputQty.value = '1'; 
-                qtyCell.appendChild(inputQty);
-                row.appendChild(qtyCell);
-
-                const costCell = document.createElement('td');
-                // const inputCost = document.createElement('input');
-                // inputCost.type = 'text'; 
-                // inputCost.className = 'cost_price input50';
-                // inputCost.name = 'cost_price[]';
-                // inputCost.value = item.cost_price;
-                // costCell.appendChild(inputCost);
-                costCell.innerHTML = item.cost_price+'<input type="hidden" id="cost_pricejob" class="cost_pricejob" name="cost_pricejob[]" value="'+item.cost_price+'">';
-                GrandCostPrice=GrandCostPrice+Number(item.cost_price);
-                row.appendChild(costCell);
-
-                const priceCell = document.createElement('td');
-                // const inputPrice = document.createElement('input');
-                // inputPrice.type = 'text'; 
-                // inputPrice.className = 'product_price input50';
-                // inputPrice.addEventListener('input', function() {
-                //     updateAmount(row);
-                // });
-                // inputPrice.name = 'product_price[]'; 
-                // inputPrice.value = item.price; 
-                // priceCell.appendChild(inputPrice);
-                priceCell.innerHTML=item.price+'<input type="hidden" id="pricejob" class="pricejob" name="pricejob[]" value="'+item.price+'">';
-                GrandPrice=GrandPrice+Number(item.price);
-                row.appendChild(priceCell);
-
-                const discountCell = document.createElement('td');
-                const inputdiscount = document.createElement('input');
-                inputdiscount.type = 'text'; 
-                inputdiscount.className = 'discount';
-                inputdiscount.name = 'discount[]'; 
-                inputdiscount.value = '0'; 
-                discountCell.appendChild(inputdiscount);
-                row.appendChild(discountCell);
-
-                const vatCell = document.createElement('td');
-
-                row.appendChild(vatCell);
-
-                const amountCell = document.createElement('td');
-                amountCell.innerHTML = '£'+ parseFloat(item.price).toFixed(2)+'<input type="hidden" id="pricejob" class="pricejob" name="pricejob[]" value="'+item.price+'">';
-                // amountCell.className = "pricejob";
-                // amountCell.id = "pricejob";
-                row.appendChild(amountCell);
-                totalAmount=totalAmount+Number(item.price);
-
-                const deleteCell = document.createElement('td');
-                deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
-                row.appendChild(deleteCell);
-
-                tableBody.appendChild(row);
-
-
-            });
-            UpdateItemDetailsCalculation();
-            $("#pro_cost_price").val(parseFloat(GrandCostPrice).toFixed(2));
-            $("#total_amount").text('£'+parseFloat(GrandPrice).toFixed(2));
-            var htmlCode=`<tr>
-                                <td colspan="4"></td>
-                                <td>Total</td><td id="GrandTotalAmount">£`+parseFloat(totalAmount).toFixed(2)+`</td>
-                                <td></td>
-                          </tr>`;
-            $("#containerA").html(htmlCode); 
-        }
-    }
-    document.querySelector("#result").addEventListener("click", function(e) {
-        if (e.target && e.target.classList.contains("deleteRow")) {
-            // Remove the parent row of the clicked delete button
-            const row = e.target.closest("tr");
-            if (row) {
-                row.remove();
-                const amountCell = row.querySelector(".price");
-                const amount = parseFloat(amountCell.textContent.replace(/[^\d.]/g, "")) || 0;
-                totalAmount -= amount;
-                if(totalAmount === 0){
-                    $("#costPrice").val('0.00');
-                   $("#containerA").hide();
-                }else{
-                    $("#containerA").show();
-                }
-                document.getElementById("GrandTotalAmount").textContent = "$" + totalAmount.toFixed(2);
-                $("#productPrice").val(totalAmount.toFixed(2));
-            }
         }
     });
 </script>
