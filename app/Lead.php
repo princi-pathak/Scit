@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\LeadNote;
 
@@ -30,8 +29,8 @@ class Lead extends Model
         return Lead::whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->where('home_id', $home_id)->count();
     }
 
-    public static function getUnassignedCount(){
-        return Lead::where('assign_to', 0)->count();
+    public static function getUnassignedCount($home_id){
+        return Lead::where('assign_to', 0)->where('home_id', $home_id)->count();
     }
     
     public static function getRejectedCount(){
@@ -42,12 +41,12 @@ class Lead extends Model
         return $this->hasMany(LeadNote::class);
     }
 
-    public static function getLeadByUser(){
-        return Lead::where('assign_to', Auth::user()->id)->where('home_id', Auth::user()->home_id)->whereNotIn('status', [7])->count();
+    public static function getLeadByUser($user_id, $home_id){
+        return Lead::where('assign_to', $user_id)->where('home_id', $home_id)->whereNotIn('status', [7])->count();
     } 
 
-    public static function getAuthorizationCount(){
-        return Lead::where('status', 7)->count();
+    public static function getAuthorizationCount($home_id){
+        return Lead::where('status', 7)->where('home_id', $home_id)->count();
     }
 
     public static function leadForAdminAuthorization($id){

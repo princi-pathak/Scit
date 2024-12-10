@@ -17,6 +17,7 @@ use App\Services\Quotes\QuoteProductService;
 use App\Services\Quotes\AttachmentTypeService;
 
 use App\Models\QuoteType;
+use App\Models\Quote;
 use App\Models\QuoteSource;
 use App\Models\QuoteRejectType;
 use App\Models\Customer_type;
@@ -54,7 +55,7 @@ class QuoteController extends Controller
         $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
         $data['countries'] = Country::getCountriesNameCode();
         $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id);
-        // dd($data['product_categories']);
+
         return view('frontEnd.salesAndFinance.quote.quote_form', $data);
     }
     public function index(Request $request)
@@ -65,7 +66,7 @@ class QuoteController extends Controller
         $lastSegment = end($segments);
         $data['lastSegment'] = $lastSegment;
         $data['quotes'] = $this->quoteService->getQuoteData($lastSegment, Auth::user()->home_id);
-        // dd($data['quotes']);
+        $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
      
         return view('frontEnd.salesAndFinance.quote.draft', $data);
     }
@@ -316,12 +317,51 @@ class QuoteController extends Controller
     public function saveAttachmentData(Request $request){
         // dd($request);
         $validator = Validator::make($request->all(), [
-            'title' => 'required'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,pdf|max:2048',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $attachmentType = $this->attachmentService->saveAttachmentType($request->all());
+        $data = $this->attachmentService->saveAttachmentType($request->all(), $request);
+        
+        return response()->json([
+            'success' => (bool) $data,
+            'id' => $data->id,
+            'data' => $data ? "Attachment saved successfully!" : 'Error in saving file'
+        ]);
+    }
+
+    public function getAttachmentData(Request $request){
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'attachment_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $this->attachmentService->getAttachmentType($request->attachment_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function add_multi_attachment(Request $request){
+        $data['quoteId'] = $request->query('quote_id');
+        $data['quote_ref'] = Quote::where('id',  $request->query('quote_id'))->value('quote_ref');
+        return view('frontEnd.salesAndFinance.quote.multi_file_uploader', $data);
+    }
+
+    public function getAttachmentList(){
+        $data = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
+
+        
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
     }
 }
