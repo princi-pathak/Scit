@@ -528,7 +528,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('quote-details/add_multi_attachment', 'add_multi_attachment')->name('quote.addMultiAttachment');
 		Route::post('/quote/saveQuoteData', 'store');
 		Route::get('/quote/getAttachmentList', 'getAttachmentList')->name('quote.ajax.getAttachmentList');
+		Route::post('/quote/saveQuoteAttachments', 'saveQuoteAttachments')->name('quote.ajax.saveQuoteAttachments');
 
+
+		
 		
 	});
 

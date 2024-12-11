@@ -323,7 +323,7 @@ class QuoteController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $data = $this->attachmentService->saveAttachmentType($request->all(), $request);
+        $data = $this->attachmentService->saveAttachmentType($request->all(), $request->file('image'));
         
         return response()->json([
             'success' => (bool) $data,
@@ -363,5 +363,37 @@ class QuoteController extends Controller
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data.'
         ]);
+    }
+
+    public function saveQuoteAttachments(Request $request){
+
+        $rows = $request->input('rows', []);
+        $files = $request->file('files', []);
+      
+        foreach($rows as $index => $rowData){
+            $data = json_decode($rowData, true);
+            $file = $files[$index] ?? null;
+
+            if ($file) {
+                $validator = Validator::make(
+                    ['file' => $file],
+                    ['file' => 'required|image|mimes:jpeg,png,jpg,gif,pdf|max:2048']
+                );
+    
+                if ($validator->fails()) {
+                    return response()->json(['errors' => $validator->errors()], 422);
+                }
+            }
+
+
+            print_r($this->attachmentService->saveAttachmentType($data, $file));
+        }
+
+        // return response()->json([
+        //     'success' => (bool) $response,
+        //     'id' => $response->id,
+        //     'data' => $response ? "Attachment saved successfully!" : 'Error in saving file'
+        // ]);
+
     }
 }
