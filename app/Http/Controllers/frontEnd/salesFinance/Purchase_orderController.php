@@ -67,6 +67,7 @@ class Purchase_orderController extends Controller
         $data['site']=Constructor_customer_site::where('customer_id',$customerId)->get();
         $data['job_type']=Job_type::where('status',1)->get();
         $data['product_count']=Product::count();
+        // echo "<pre>";print_r($data['country']);die;
         return view('frontEnd.salesAndFinance.purchase_order.new_purchase_order',$data);
     }
 }

@@ -74,7 +74,7 @@
                                                 <div class="col-sm-7">
                                                     <select class="form-control editInput selectOptions"
                                                     id="contact_id" name="contact_id" <?php if(!isset($key) && $key ==''){echo 'disabled';}?>>
-                                                        <option>Default</option>
+                                                        <option disabled>Select Supplier First</option>
                                                         @foreach($additional_contact as $addContact)
                                                             <option value="{{$addContact->id}}" <?php if(isset($job_details) && $job_details->contact_id == $addContact->id){echo 'selected';}?>>{{$addContact->contact_name}}</option>
                                                         @endforeach
@@ -90,7 +90,7 @@
                                                 <label for="inputName" class="col-sm-3 col-form-label">Name<span
                                                 class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" name="name" id="name" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" name="name" id="name" value="" placeholder="Enter Your Full Name">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -98,26 +98,26 @@
                                                     class="col-sm-3 col-form-label">Address<span
                                                     class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" id="address" name="address" rows="3"></textarea>
+                                                    <textarea class="form-control textareaInput" id="address" name="address" rows="3" placeholder="Enter Your Address"></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCity" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="city" name="city" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="city" name="city" value="" placeholder="Enter Your City">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCounty" class="col-sm-3 col-form-label">County</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="country" name="country" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="country" name="country" value="" placeholder="Enter Your County">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPincode"
                                                     class="col-sm-3 col-form-label">Postcode</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="pincode" name="pincode" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="pincode" name="pincode" value="" placeholder="Enter Your Postcode">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
@@ -125,46 +125,34 @@
                                                     class="col-sm-3 col-form-label">Telephone</label>
                                                 <div class="col-sm-3">
                                                     <select class="form-control editInput selectOptions">
-                                                        <option>+444</option>
-                                                        <option>+91</option>
+                                                        @foreach($country as $Codeval)
+                                                        <option value="{{$Codeval->id}}">+{{$Codeval->code}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control editInput" id="telephone" name="telephone" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="telephone" name="telephone" value="" placeholder="Enter Your Telephone">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
                                                 <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
                                                 <div class="col-sm-3">
                                                     <select class="form-control editInput selectOptions">
-                                                        <option>+444</option>
-                                                        <option>+91</option>
+                                                    @foreach($country as $Codeval)
+                                                        <option value="{{$Codeval->id}}">+{{$Codeval->code}}</option>
+                                                    @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control editInput" id="contact" name="contact"  value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="contact" name="contact"  value="" placeholder="Enter Your Mobile No.">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="email" name="email" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="email" name="email" value="" placeholder="Enter Your Email">
                                                 </div>
                                             </div>
-                                            
-                                            <!-- <div class="mb-3 row field">
-                                                <label for="inputCountry"
-                                                    class="col-sm-3 col-form-label">Country</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control editInput selectOptions" id="country_id" name="country_id">
-                                                        <option selected disabled>Select Country</option>
-                                                        <?php foreach ($country as $country_val) { ?>
-                                                            <option value="{{$country_val->id}}" class="country_code" <?php if(isset($job_details) && $job_details->country_id == $country_val->id){echo "selected";}?> >{{$country_val->name}}</option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div> -->
-                                        <!-- </form> -->
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-4">
@@ -192,9 +180,8 @@
                                                 <label for="inputProject"
                                                     class="col-sm-3 col-form-label">Project</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control editInput selectOptions"
-                                                    id="project_id" name="project_id" <?php if(!isset($key) && $key ==''){echo 'disabled';}?> >
-                                                        <option>None</option>
+                                                    <select class="form-control editInput selectOptions" id="project_id" name="project_id" disabled>
+                                                        <option selected disabled></option>
                                                         @foreach($projects as $project)
                                                             <option value="{{$project->id}}">{{$project->project_name}}</option>
                                                         @endforeach
@@ -208,9 +195,8 @@
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Site</label>
                                                 <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions get_site_result"
-                                                <?php if(!isset($key) && $key ==''){echo 'disabled';}?> id="site_id" name="site_id">
-                                                    <option selected>Default</option>
+                                                <select class="form-control editInput selectOptions get_site_result" disabled id="site_id" name="site_id">
+                                                    <option selected>None</option>
                                                     @foreach($site as $siteVal)
                                                         <option value="{{$siteVal->id}}">{{$siteVal->site_name}}</option>
                                                     @endforeach
@@ -230,40 +216,40 @@
                                                 <label for="inputContact"
                                                     class="col-sm-3 col-form-label">Name<span class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="company" id="company" class="form-control" value="">
+                                                    <input type="text" name="company" id="company" class="form-control editInput textareaInput" value="" placeholder="Enter Your Name">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputContact"
                                                     class="col-sm-3 col-form-label">Company</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="company" id="company" class="form-control" value="">
+                                                    <input type="text" name="company" id="company" class="form-control editInput textareaInput" value="" placeholder="Enter Comapny Name">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputAddress"
                                                     class="col-sm-3 col-form-label">Address<span class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" id="address" name="address" rows="3"></textarea>
+                                                    <textarea class="form-control textareaInput" id="address" name="address" rows="3" placeholder="Enter Your Address"></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext editInput"
-                                                id="profession_name" value="">
+                                                <input type="text" class="form-control-plaintext editInput textareaInput"
+                                                id="profession_name" value="" placeholder="Enter Your City">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">County</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="conatact_name" name="conatact_name" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="conatact_name" name="conatact_name" value="" placeholder="Enter Your County">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputEmail" class="col-sm-3 col-form-label">Postcode</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="site_email" name="site_email" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="site_email" name="site_email" value="" placeholder="Enter Your Postcode">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
@@ -271,31 +257,33 @@
                                                 class="col-sm-3 col-form-label">Telephone</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control editInput selectOptions" >
-                                                    <option>+444</option>
-                                                    <option>+91</option>
+                                                @foreach($country as $Codeval)
+                                                    <option value="{{$Codeval->id}}">+{{$Codeval->code}}</option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control editInput" id="site_telephone" name="site_telephone" value="">
+                                                <input type="text" class="form-control editInput textareaInput" id="site_telephone" name="site_telephone" value="" placeholder="Enter Your Telephone">
                                             </div>
                                         </div>
                                         <div class="mb-3 row field">
                                             <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control editInput selectOptions">
-                                                    <option>+444</option>
-                                                    <option>+91</option>
+                                                @foreach($country as $Codeval)
+                                                    <option value="{{$Codeval->id}}">+{{$Codeval->code}}</option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control editInput" id="site_mobile" name="site_mobile" value="">
+                                                <input type="text" class="form-control editInput textareaInput" id="site_mobile" name="site_mobile" value="" placeholder="Enter Your Mobile No.">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label for="inputAddress"
                                                 class="col-sm-6 col-form-label">Expected Delivery On</label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control editInput" id="site_mobile" name="site_mobile" value="">
+                                                <input type="date" class="form-control editInput textareaInput" id="site_mobile" name="site_mobile" value="">
                                             </div>
                                             <div class="col-sm-2 calendar_icon">
                                                 <i class="fa fa-calendar-alt"></i>
@@ -309,8 +297,8 @@
                                         <h4 class="contTitle">Purchase Order Details</h4>
                                         <!-- <form class="customerForm"> -->
                                             <div class="mb-3 row">
-                                                <label for="inputJobRef" class="col-sm-3 col-form-label">Purchase Order Ref.</label>
-                                                <div class="col-sm-9">
+                                                <label for="inputJobRef" class="col-sm-4 col-form-label">Purchase Order Ref.</label>
+                                                <div class="col-sm-8">
                                                     <input type="text" class="form-control-plaintext editInput"
                                                         id="inputJobRef" value="Auto generate" readonly>
                                                 </div>
@@ -438,7 +426,7 @@
                                     <div class="mb-3 row">
                                         <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control editInput" id="search_value"
+                                            <input type="text" class="form-control editInput textareaInput" id="search_value"
                                                 placeholder="Type to add product" onkeyup="get_search()">
                                         </div>
                                         <div class="col-sm-7">
@@ -557,6 +545,45 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="newJobForm mt-4">
+                                <label class="upperlineTitle">Tasks</label>
+                                <div class="row">
+                                    <div class="col-sm-12 mb-3 mt-2">
+                                        <div class="jobsection">
+                                            <a href="javascript:void(0)" onclick="get_modal(6)" class="profileDrop">New Task</a>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 mb-3 mt-2">
+                                        <div class="jobsection">
+                                            <a href="javascript:void(0)" onclick="get_modal(6)" class="profileDrop">Tasks</a>
+                                            <a href="javascript:void(0)" onclick="get_modal(6)" class="profileDrop">Recurring Tasks</a>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-sm-12">
+                                        <div class="productDetailTable">
+                                            <table class="table">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Full Name </th>
+                                                        <th>Username</th>
+                                                        <th>Email</th>
+                                                        <th>Telephone </th>
+                                                        <th>Last Login </th>
+                                                        <th>Status </th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="login_result"></tbody>
+                                            </table>
+                                        </div>
+                                    </div> -->
+                                    
+                                </div>
+                            </div>
 
                     </div>
                 </div>
