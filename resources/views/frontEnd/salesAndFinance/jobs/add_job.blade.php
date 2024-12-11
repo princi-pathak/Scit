@@ -3396,7 +3396,7 @@ const openPopupButton = document.getElementById('openPopupButton');
             $("#total_amount").text('£' + totalAmountAssign);
     });
     function UpdateItemDetailsCalculation(){
-        alert()
+        // alert()
         var updatedCostPrice=0;
         var updatedGrandAmount=0;
         $('.cost_pricejob').each(function(){
@@ -3493,10 +3493,8 @@ const openPopupButton = document.getElementById('openPopupButton');
         // alert(countNumber);return false;
         for(var i=1; i<=countNumber;i++){
             if ($('#alert_sms_appointment'+i).is(':checked')) {
-                alert(1)
                 $("#alert_sms_appointment"+i).val(1);
             }else {
-                alert(0)
                 $("#alert_sms_appointment"+i).val(0);
             }
             if ($('#alert_email_appointment'+i).is(':checked')) {
@@ -3706,166 +3704,22 @@ const openPopupButton = document.getElementById('openPopupButton');
 </script>
 <script>
     function getProductData(selectedId) {
-        $.ajax({
-            url: '{{ route("item.ajax.getProductFromId") }}',
-            method: 'Post',
-            data: {
-                id: selectedId
-            },
-            success: function(response) {
-                console.log(response);
-                productGroupTable(response.data, 'result');
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
+        selectProduct(selectedId);
+        // $.ajax({
+        //     url: '{{ route("item.ajax.getProductFromId") }}',
+        //     method: 'Post',
+        //     data: {
+        //         id: selectedId
+        //     },
+        //     success: function(response) {
+        //         console.log(response);
+        //         productGroupTable(response.data, 'result');
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error(error);
+        //     }
+        // });
     }
-    var totalAmount=0;
-    var GrandCostPrice=0;
-    var GrandPrice=0;
-    function productGroupTable(data, tableId) {
-        // Get the table body element
-        const tableBody = document.querySelector(`#${tableId} tbody`);
-        
-        
-        if (data.length === 0) {
-            const noDataRow = document.createElement('tr');
-            const noDataCell = document.createElement('td');
-
-            
-            noDataCell.setAttribute('colspan', 4);
-            noDataCell.textContent = 'No products found';
-            noDataCell.style.textAlign = 'center'; 
-
-            
-            noDataRow.appendChild(noDataCell);
-            tableBody.appendChild(noDataRow);
-        } else {
-            
-            const emptyErrorRow = document.getElementById('EmptyError');
-            if (emptyErrorRow) {
-                emptyErrorRow.remove();
-            }
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                
-                const codeCell = document.createElement('td');
-                codeCell.innerHTML = item.product_code+'<input type="hidden" id="product_codejob" name="product_codejob[]" value="'+item.product_code+'">';
-                row.appendChild(codeCell);
-
-                
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.className = 'product_detail_id';
-                hiddenInput.name = 'product_detail_id[]'; 
-                hiddenInput.value = item.id; 
-                row.appendChild(hiddenInput);
-
-                const nameCell = document.createElement('td');
-                nameCell.innerHTML = item.product_name+'<input type="hidden" id="product_namejob" name="product_namejob[]" value="'+item.product_name+'">';
-                row.appendChild(nameCell);
-
-                const descriptionCell = document.createElement('td');
-                descriptionCell.innerHTML = item.description+'<input type="hidden" id="descriptionjob" name="descriptionjob[]" value="'+item.description+'">';
-                row.appendChild(descriptionCell);
-
-                const qtyCell = document.createElement('td');
-                const inputQty = document.createElement('input');
-                inputQty.type = 'text'; 
-                inputQty.className = 'quantity';
-                inputQty.addEventListener('input', function() {
-                    UpdateItemDetailsCalculation();
-                });
-                inputQty.name = 'quantity[]'; 
-                inputQty.value = '1'; 
-                qtyCell.appendChild(inputQty);
-                row.appendChild(qtyCell);
-
-                const costCell = document.createElement('td');
-                // const inputCost = document.createElement('input');
-                // inputCost.type = 'text'; 
-                // inputCost.className = 'cost_price input50';
-                // inputCost.name = 'cost_price[]';
-                // inputCost.value = item.cost_price;
-                // costCell.appendChild(inputCost);
-                costCell.innerHTML = item.cost_price+'<input type="hidden" id="cost_pricejob" class="cost_pricejob" name="cost_pricejob[]" value="'+item.cost_price+'">';
-                GrandCostPrice=GrandCostPrice+Number(item.cost_price);
-                row.appendChild(costCell);
-
-                const priceCell = document.createElement('td');
-                // const inputPrice = document.createElement('input');
-                // inputPrice.type = 'text'; 
-                // inputPrice.className = 'product_price input50';
-                // inputPrice.addEventListener('input', function() {
-                //     updateAmount(row);
-                // });
-                // inputPrice.name = 'product_price[]'; 
-                // inputPrice.value = item.price; 
-                // priceCell.appendChild(inputPrice);
-                priceCell.innerHTML=item.price+'<input type="hidden" id="pricejob" class="pricejob" name="pricejob[]" value="'+item.price+'">';
-                GrandPrice=GrandPrice+Number(item.price);
-                row.appendChild(priceCell);
-
-                const discountCell = document.createElement('td');
-                const inputdiscount = document.createElement('input');
-                inputdiscount.type = 'text'; 
-                inputdiscount.className = 'discount';
-                inputdiscount.name = 'discount[]'; 
-                inputdiscount.value = '0'; 
-                discountCell.appendChild(inputdiscount);
-                row.appendChild(discountCell);
-
-                const vatCell = document.createElement('td');
-
-                row.appendChild(vatCell);
-
-                const amountCell = document.createElement('td');
-                amountCell.innerHTML = '£'+ parseFloat(item.price).toFixed(2)+'<input type="hidden" id="pricejob" class="pricejob" name="pricejob[]" value="'+item.price+'">';
-                // amountCell.className = "pricejob";
-                // amountCell.id = "pricejob";
-                row.appendChild(amountCell);
-                totalAmount=totalAmount+Number(item.price);
-
-                const deleteCell = document.createElement('td');
-                deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
-                row.appendChild(deleteCell);
-
-                tableBody.appendChild(row);
-
-
-            });
-            UpdateItemDetailsCalculation();
-            $("#pro_cost_price").val(parseFloat(GrandCostPrice).toFixed(2));
-            $("#total_amount").text('£'+parseFloat(GrandPrice).toFixed(2));
-            var htmlCode=`<tr>
-                                <td colspan="4"></td>
-                                <td>Total</td><td id="GrandTotalAmount">£`+parseFloat(totalAmount).toFixed(2)+`</td>
-                                <td></td>
-                          </tr>`;
-            $("#containerA").html(htmlCode); 
-        }
-    }
-    document.querySelector("#result").addEventListener("click", function(e) {
-        if (e.target && e.target.classList.contains("deleteRow")) {
-            // Remove the parent row of the clicked delete button
-            const row = e.target.closest("tr");
-            if (row) {
-                row.remove();
-                const amountCell = row.querySelector(".price");
-                const amount = parseFloat(amountCell.textContent.replace(/[^\d.]/g, "")) || 0;
-                totalAmount -= amount;
-                if(totalAmount === 0){
-                    $("#costPrice").val('0.00');
-                   $("#containerA").hide();
-                }else{
-                    $("#containerA").show();
-                }
-                document.getElementById("GrandTotalAmount").textContent = "$" + totalAmount.toFixed(2);
-                $("#productPrice").val(totalAmount.toFixed(2));
-            }
-        }
-    });
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
