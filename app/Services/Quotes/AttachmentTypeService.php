@@ -6,10 +6,10 @@ use App\Models\QuoteAttachment;
 
 class AttachmentTypeService
 {
-    public function saveAttachmentType(array $attachments, $request): ?QuoteAttachment
+    public function saveAttachmentType(array $attachments, $file): ?QuoteAttachment
     {
         // Save the image using a reusable method
-        $imageData = $this->saveImage($request->file('image'));
+        $imageData = $this->saveImage($file);
 
         if ($imageData) {
             $data = [
