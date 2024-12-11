@@ -1,5 +1,6 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
 @section('title','Quotes')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <section class="main_section_page px-3">
     <div class="container-fluid">
@@ -28,8 +29,8 @@
             </div>
             <div class="col-md-4 col-lg-4 col-xl-4 px-3 align-items-center">
                 <div class="d-flex topbaarBtn text-center">
-                    <a href="javascript:void(0)" class="profileDrop"> <i class="material-symbols-outlined"> add </i> <input type="file" id="imageUpload" name="uploadfile[]"></a>
-                    <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> arrow_circle_right </i> Start Upload</a>
+                    <a href="javascript:void(0)" class="profileDrop"> <i class="material-symbols-outlined"> add </i> <input type="file" id="imageUpload" multiple name="uploadfile[]"></a>
+                    <a href="#!" class="profileDrop" id="saveTableData"> <i class="material-symbols-outlined"> arrow_circle_right </i> Start Upload</a>
                     <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> close_small </i> Cancel Upload </a>
                 </div>
             </div>
@@ -65,84 +66,103 @@
 </section>
 
 <script>
-    document.getElementById('imageUpload').addEventListener('change', function(event) {
-        const file = event.target.files[0]; // Get the selected file
-        const preview = document.getElementById('imagePreview'); // Get the preview image element
+ 
+    const uploadImageInput = document.getElementById('imageUpload');
+    const addImageButton = document.getElementById('addImageToTable');
+    const imageTableBody = document.querySelector('#imageTable tbody');
 
+    // Track the uploaded image file
+    let uploadedImageFile = null;
+
+    // Handle image selection
+    uploadImageInput.addEventListener('change', function() {
+        const file = uploadImageInput.files[0];
         if (file) {
-            // Check if the file is an image
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader(); // Create a FileReader instance
-
-                const tableBody = $('#multiFileUploader tbody');
-                console.log(tableBody);
-                reader.onload = function(e) {
-                const row = `
-                          <tr>
-                                <td>
-                                    <div class="">
-                                        <label>${file.name}</label>
-                                        <input type="text" class="form-control editInput textareaInput" >
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="uplod_img">
-                                        <img id="imagePreview" src="${e.target.result}" alt="Image Preview" style="max-width: 200px;">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
-                                        <select class="form-control editInput selectOptions attachmentType" onclick="getAttachmentType();" id="attachmentType">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
-                                        <input type="text" class="form-control editInput textareaInput" placeholder="Title">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
-                                        <textarea class="form-control textareaInput rounded-1" name="address" rows="3" placeholder="Description"></textarea>
-                                    </div>
-                                </td>
-                                <td class="text-center mobile_user_check">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="inlinecheckOptions" id="" value="option1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex topbaarBtn justify-content-end">
-                                        <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> arrow_circle_right </i> </a>
-                                        <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> close_small </i> </a>
-                                    </div>
-                                </td>
-                            </tr>
-                    `;
-                    console.log(row);
-                    tableBody.append(row);
-
-                // Set up the FileReader to update the preview image when file reading is complete
-             
-                    // preview.src = e.target.result; // Set the preview image's source
-                    // preview.style.display = 'block'; // Show the image preview
-                };
-
-              
-
-                reader.readAsDataURL(file); // Read the file as a data URL (base64 encoded)
-            } else {
-                alert('Please upload a valid image file.');
-                preview.style.display = 'none'; // Hide the preview image if the file is not valid
-            }
+            uploadedImageFile = file; // Store the file for later use
+            alert('Image selected: ' + file.name);
         } else {
-            preview.style.display = 'none'; // Hide the preview image if no file is selected
+            uploadedImageFile = null;
         }
     });
 
+
+    uploadImageInput.addEventListener('change', function(event) {
+        const files = event.target.files; // Get the selected files
+        console.log(files);
+        const tableBody = $('#multiFileUploader tbody');
+
+        if (files.length > 0) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+
+                // Check if the file is an image
+                if (file.type.startsWith('image/')) {
+                    const fileSizeInBytes = file.size; // File size in bytes
+                    const fileSizeInKB = (fileSizeInBytes / 1024).toFixed(2);
+
+                    const reader = new FileReader(); // Create a FileReader instance
+
+                    reader.onload = function(e) {
+                        const row = `
+                        <tr>
+                            <td>
+                                <div>
+                                    <label>${file.name}</label>
+                                    <p>${fileSizeInKB} KB</p>
+                                    <input type="text" class="form-control editInput textareaInput">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="uplod_img">
+                                    <input type="file" class="image_file" hidden data-url="${URL.createObjectURL(file)}"/>
+                                    <img src="${e.target.result}" alt="Image Preview" style="max-width: 200px;">
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <select class="form-control editInput selectOptions attachmentType" name="attachment_type" onclick="getAttachmentType();" id="attachmentType">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <input type="text" class="form-control editInput textareaInput title" name="title" placeholder="Title">
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea class="form-control textareaInput rounded-1 description" name="description" rows="3" placeholder="Description"></textarea>
+                                </div>
+                            </td>
+                            <td class="text-center mobile_user_check">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="mobile_user_visible[]" value="option1">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex topbaarBtn justify-content-end">
+                                    <a href="javascript:void(0)" class="profileDrop"><i class="material-symbols-outlined">arrow_circle_right</i></a>
+                                    <a href="#!" class="profileDrop"><i class="material-symbols-outlined">close_small</i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                        tableBody.append(row); // Append the row to the table
+                    };
+
+                    reader.readAsDataURL(file); // Read the file as a data URL (base64 encoded)
+                } else {
+                    alert(`File "${file.name}" is not a valid image.`);
+                }
+            }
+        } else {
+            alert('No files selected.');
+        }
+    });
+
+
     function getAttachmentType() {
-        // const attachmentType = document.getElementById('attachmentType');
         const attachmentTypeElements = document.querySelectorAll('.attachmentType');
 
         $.ajax({
@@ -150,30 +170,104 @@
             method: 'GET',
             success: function(response) {
                 console.log("getAttachmentList", response.data);
-                // attachmentType.innerHTML = '';
 
                 attachmentTypeElements.forEach(attachmentTypeElement => {
-                // attachmentTypeElement.innerHTML = ''; // Clear the existing options
+                    const selectedValue = attachmentTypeElement.value; // Save the current selected value
 
-                // Append a blank option
-                const blankOption = document.createElement('option');
-                blankOption.text = '';
-                attachmentTypeElement.appendChild(blankOption);
+                    // Check if the dropdown is already populated with options
+                    if (attachmentTypeElement.options.length === 0 || !response.data.some(attachment => attachment.id === parseInt(selectedValue))) {
+                        attachmentTypeElement.innerHTML = ''; // Clear the existing options
 
-                // Add options dynamically
-                response.data.forEach(attachment => {
-                    const option = document.createElement('option');
-                    option.value = attachment.id;
-                    option.text = attachment.title;
-                    attachmentTypeElement.appendChild(option);
+                        // Append a blank option
+                        const blankOption = document.createElement('option');
+                        blankOption.text = '';
+                        attachmentTypeElement.appendChild(blankOption);
+
+                        // Add options dynamically
+                        response.data.forEach(attachment => {
+                            const option = document.createElement('option');
+                            option.value = attachment.id;
+                            option.text = attachment.title;
+                            attachmentTypeElement.appendChild(option);
+                        });
+                    }
+
+                    // Restore the selected value if it still exists
+                    if (selectedValue) {
+                        attachmentTypeElement.value = selectedValue;
+                    }
                 });
-            });
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
         });
+
     }
+
+    document.getElementById('saveTableData').addEventListener('click', function() {
+        // alert("button click");
+        const tableRows = document.querySelectorAll('#multiFileUploader tbody tr');
+        console.log("tableRows", tableRows);
+        // const formData = [];
+        const formData = new FormData();
+
+        tableRows.forEach(row => {
+
+            console.log("row", row);
+            const attachment_type = row.querySelector('.attachmentType').value;
+            const title = row.querySelector('.title').value;
+            const description = row.querySelector('.description').value;
+
+            // const fileInput = row.querySelector('.image_file').value;
+            const fileInput = row.querySelector('.image_file');
+            if (!fileInput) {
+                console.error('File input not found for the row');
+                return;
+            }
+            console.log(fileInput);
+            const fileUrl = fileInput.dataset.url;
+
+            console.log("image_file", fileUrl);
+
+            const rowData = {
+                attachment_type: attachmentType,
+                title: title,
+                description: description,
+                image_file: fileUrl || null, // Use file URL if no file is selected
+            };
+
+            formData.append('rows[]', JSON.stringify(rowData));
+
+            // formData.push({
+            //     attachment_type: attachment_type,
+            //     title: title,
+            //     image_file: fileUrl,
+            //     description: description
+            // });
+        });
+
+        console.log(formData);
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+        // Send data via AJAX
+        $.ajax({
+            url: '{{ Route("quote.ajax.saveQuoteAttachments") }}',
+            method: 'POST',
+            data: {   forms: formData },
+            processData: false, // Prevent jQuery from automatically transforming the data into a query string
+            contentType: false,
+            success: function(response) {
+                alert(response.data);
+            },
+            error: function(xhr) {
+                console.error('Error saving data:', xhr);
+            }
+        });
+    });
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
