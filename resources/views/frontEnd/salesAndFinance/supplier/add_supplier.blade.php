@@ -9,6 +9,9 @@
         pointer-events: none;
         opacity: 0.5;
     }
+    .eye_icon:hover {
+        cursor: pointer;
+    }
 </style>
 <section class="main_section_page px-3">
             <div class="container-fluid">
@@ -30,15 +33,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="alert alert-success" id="alert_message" style="display:none">
+                <div class="alert alert-success" id="alert_message_supplier" style="display:none">
                     
                 </div>
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <button class="nav-link active" id="nav-supplierList-tab" data-bs-toggle="tab" data-bs-target="#nav-supplierList" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Supplier Details</button>
-                            <button class="nav-link @if(!isset($key) || $key == '') disabled-tab @endif" id="nav-purchaseOrdersList-tab" data-bs-toggle="tab" data-bs-target="#nav-purchaseOrdersList" type="button" role="tab" aria-controls="nav-purchaseOrdersList" aria-selected="false" @if(!isset($key) || $key == '') disabled @else onclick="getpurchaseorders()" @endif>Purchase Orders</button>
+                            <button class="nav-link @if(!isset($supplier) || $supplier == '') disabled-tab @endif" id="nav-purchaseOrdersList-tab" data-bs-toggle="tab" data-bs-target="#nav-purchaseOrdersList" type="button" role="tab" aria-controls="nav-purchaseOrdersList" aria-selected="false" @if(!isset($supplier) || $supplier == '') disabled @endif>Purchase Orders</button>
 
-                            <button class="nav-link @if(!isset($key) || $key == '') disabled-tab @endif" id="nav-attachmentsList-tab" data-bs-toggle="tab" data-bs-target="#nav-attachmentsList" type="button" role="tab" aria-controls="nav-attachmentsList" aria-selected="false" @if(!isset($key) || $key == '') disabled @else onclick="getattachments()" @endif>Attachment</button>
+                            <button class="nav-link @if(!isset($supplier) || $supplier == '') disabled-tab @endif" id="nav-attachmentsList-tab" data-bs-toggle="tab" data-bs-target="#nav-attachmentsList" type="button" role="tab" aria-controls="nav-attachmentsList" aria-selected="false" @if(!isset($supplier) || $supplier == '') disabled @else onclick="getattachments()" @endif>Attachment</button>
                     </div>
                 </nav>
 
@@ -48,7 +51,7 @@
                             <div class="col-lg-12">
                                 <div class="newJobForm">
                                     <form id="supplier_form_data">
-                                        <input type="hidden" id="id" name="id" value="<?php if(isset($key) && $key !=''){echo $key;}?>">
+                                        <input type="hidden" id="id" name="id" value="<?php if(isset($supplier) && $supplier !=''){echo $supplier->id;}?>">
                                         <div class="row">
                                             <div class="col-md-4 col-lg-4 col-xl-4">
                                                 <div class="formDtail">
@@ -358,16 +361,17 @@
                                                     <th></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
+                                            <tbody id="supllier_attachment_list">
+                                                <!-- <tr>
                                                     <td colspan="8">
                                                         <label class="red_sorryText">
                                                             Sorry, no item(s) found
                                                         </label>
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                             </tbody>
                                         </table>
+                                        <div id="attachments-pagination-controls"></div>
                                     </div>
                                 </div>
                             </div>
@@ -386,90 +390,12 @@
                 </div>
             </div>
 <!-- Attachment Modal start here -->
-<div class="modal fade" id="attachment_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-modal="true" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content add_Customer">
-            <div class="modal-header">
-                <h5 class="modal-title" id="thirdModalLabel">Add Attachment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="customer_type_form">
-                <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Type</label>
-                        <div class="col-sm-9">
-                            <select id="type" name="type" class="form-control editInput">
-                                <option value="1">document</option>
-                                <option value="0">file</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Title <span class="radStar ">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="customer_type_name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Type">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="inputAddress" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
-                        <div class="col-sm-9">
-                            <textarea class="form-control textareaInput" name="address" id="address" rows="3" placeholder="75 Cope Road Mall Park USA">Govind nagar kanpur</textarea>
-                        </div>
-                    </div>
-                    <div class="mb-0 row">
-                        <label class="col-sm-3 col-form-label">Reminder</label>
-                        <div class="col-sm-9">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input reminder" type="radio" name="reminder" id="reminder1" value="1">
-                                <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input reminder" type="radio" name="reminder" id="reminder2" checked value="0">
-                                <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3 row HideShow" style="display:none;">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Reminder Date <span class="radStar ">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="date" name="customer_type_name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Type">
-                        </div>
-                    </div>
-                    <div class="mb-3 row HideShow" style="display:none;">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Reminder Email <span class="radStar ">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" name="customer_type_name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Type">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">File Name <span class="radStar ">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="file" name="customer_type_name" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Type">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
-                        <div class="col-sm-9">
-                            <select id="customer_type_status" name="customer_type_status" class="form-control editInput">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="pageTitleBtn">
-                        <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_attachment()"> Save</a>
-                        <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+@include('components.supplier-attachment-modal')
 <!-- end here -->
 </section>
 
 <script>
-    function getemail(id){
+    function getemail(){
         var email= $('#email').val();
         validRegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (email.search(validRegExp) == -1){
@@ -500,7 +426,15 @@
         }
     }
     function getAttachmentsModal(){
+        $("#attachment_form")[0].reset();
+        $('.HideShow').hide();
         $("#attachment_modal").modal('show');
+        var supplier_id=$("#id").val();
+        $("#supplier_id").val(supplier_id);
+        $('#file_name').text('');
+        $('#attachment_id').val('');
+        $("#payment_terms").html('<option value="0">0</option>');
+        
     }
 
     function save_supplier(){
@@ -532,15 +466,16 @@
                         alert(data.vali_error);
                         $(window).scrollTop(0);
                         return false;
-                    }else{
+                    }else if(data.success === true){
                         $(window).scrollTop(0);
-                        $('.alert').show();
-                        $('#alert_message').text(data.message);
+                        $('#alert_message_supplier').text(data.message).show();
                         setTimeout(function() {
                             var id = parseInt(data.supplier.id, 10) || 0;
                             var encodedId = btoa(unescape(encodeURIComponent(id)));
                             location.href = '<?php echo url('supplier_edit'); ?>?key=' + encodedId;
                         }, 3000);
+                    }else{
+                        alert("Something went wrong! Please try later");
                     }
                 },
                 error: function(xhr, status, error) {
@@ -550,13 +485,118 @@
             });
         }
     }
-    $('.reminder').on('change', function(){
-        var radio=$('input[name="reminder"]:checked').val();
-        if(radio == 1){
-            $('.HideShow').show();
-        }else{
-            $('.HideShow').hide();
+    function getattachments(){
+        getAllSupplierAttachment("{{url('/getAllSupplierAttachment')}}");   
+    }
+    function getAllSupplierAttachment(pageUrl){
+        var supplier_id=$("#id").val();
+        $.ajax({
+            type: "POST",
+            url: pageUrl,
+            data: {supplier_id:supplier_id,_token:'{{ csrf_token() }}'},
+            success: function(response) {
+                console.log(response);
+                var data = response.data.data;
+                var pagination = response.pagination;
+                var tableBody = $("#supllier_attachment_list"); 
+                tableBody.empty();
+                var count=1;
+                data.forEach(function(item) {
+                    var attachmentdate = moment(item.reminder_date).format('DD/MM/YYYY');
+                    var type="";
+                    if(item.type_id == 1){
+                        type="Document";
+                    }else if(item.type_id == 2){
+                        type="Equipment";
+                    }else{
+                        type="Other";
+                    }
+                    var imag_url="<?php echo url('public/images/supplier_attachments/');?>"+'/'+item.attachment;
+                    var html = '<tr>' +
+                        '<td>' + count + '</td>' +
+                        '<td>' + item.title + '</td>' +
+                        '<td>' + type + '</td>' +
+                        '<td>' + (item.description ?? "") + '</td>' + 
+                        '<td>' + (item.reminder == 1 ? "Yes, remind "+item.reminder_before_days+" day(s) before "+item.reminder_date : "No") + '</td>' +
+                        '<td>' + (item.reminder_email ?? "") + '</td>' +
+                        '<td id="visible_complaint_file_' + item.id + '" class="eye_icon"><a href="'+imag_url+'" target="_blank"><i class="fa fa-eye"></i></a></td>' +  
+                        '<td id="visible_complaint_action_' + item.id + '" class="eye_icon"><img src="http://localhost/socialcareitsolution/public/frontEnd/jobs/images/pencil.png" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#attachment_modal" class="modal_dataFetch" data-id="'+item.id+'" data-supplier_id="'+item.supplier_id+'" data-title="'+item.title+'" data-type_id="'+item.type_id+'" data-description="'+item.description+'" data-reminder="'+item.reminder+'" data-reminder_date="'+item.reminder_date+'" data-reminder_before_days="'+item.reminder_before_days+'" data-reminder_email="'+item.reminder_email+'" data-attachment="'+item.attachment+'" data-file_original_name="'+item.file_original_name+'">&emsp; <img src="http://localhost/socialcareitsolution/public/frontEnd/jobs/images/delete.png" alt="" class="image_delete" data-delete="'+item.id+'"></td>' + 
+                    '</tr>';
+                    tableBody.append(html);
+                    count++;
+                });
+
+                var paginationControls = $("#attachments-pagination-controls");
+                paginationControls.empty();
+                if (pagination.prev_page_url) {
+                    paginationControls.append('<button class="profileDrop" onclick="getAllSupplierAttachment(\'' + pagination.prev_page_url + '\')">Previous</button>');
+                }
+                if (pagination.next_page_url) {
+                    paginationControls.append('<button class="profileDrop" onclick="getAllSupplierAttachment( \'' + pagination.next_page_url + '\')">Next</button>');
+                }
+            
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+            }
+        });
+    }
+    $(document).on('click', '.image_delete', function() {
+        var id=$(this).data('delete');
+        if(confirm("Are you sure to delete?")){
+            var token='<?php echo csrf_token();?>'
+            $.ajax({
+                type: "POST",
+                url: "{{url('supplier_attachment_image_delete')}}",
+                data: {id:id,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if(data){
+                        // location.reload();
+                        getAllSupplierAttachment("{{url('/getAllSupplierAttachment')}}");
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
         }
     });
+    $(document).on('click', '.modal_dataFetch', function() {
+        var attachment_id = $(this).data('id');
+        var supplier_id = $(this).data('supplier_id');
+        var title = $(this).data('title');
+        var type_id = $(this).data('type_id');
+        var description = $(this).data('description');
+        var reminder = $(this).data('reminder');
+        var reminder_date = $(this).data('reminder_date');
+        var reminder_before_days = $(this).data('reminder_before_days');
+        var reminder_email = $(this).data('reminder_email');
+        var attachment = $(this).data('attachment');
+        var file_original_name = $(this).data('file_original_name');
+        
+        $("#attachment_id").val(attachment_id);
+        $("#supplier_id").val(supplier_id);
+        $("#title").val(title);
+        $("#type_id").val(type_id);
+        $("#description").val(description);
+        if(reminder == 1){
+            $(".HideShow").show();
+            $('#reminder1').prop('checked',true);
+        }
+        // $("#reminder").val(reminder);
+        $("#reminder_date").val(reminder_date);
+        if(reminder_date){
+            setMinEndDate(reminder_before_days);
+        }
+        $("#reminder_email").val(reminder_email);
+        // $("#attachment").val(attachment);
+        $("#file_name").text(file_original_name);
+    })
 </script>
     @include('frontEnd.salesAndFinance.jobs.layout.footer')
