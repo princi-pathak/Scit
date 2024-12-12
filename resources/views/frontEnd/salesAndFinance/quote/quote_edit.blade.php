@@ -51,7 +51,7 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Quote Ref</label>
                                         <div class="col-sm-9">
-                                            <input type="hidden" name="quote_id" value="{{ $quoteData['id'] }}">
+                                            <input type="hidden" id="quote_id" name="quote_id" value="{{ $quoteData['id'] }}">
                                             <input type="text" class="form-control-plaintext editInput" id="" value="{{ $quoteData['quote_ref'] }}" readonly>
                                         </div>
                                     </div>
@@ -1315,10 +1315,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="8">
-
-                                                    </td>
-
+                                                    <td colspan="8"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1340,14 +1337,12 @@
                                     <div class=" p-0">
                                         <a href="javascript:void(0)" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
                                         <a href="{{ route('quote.addMultiAttachment', ['quote_id' => $quoteData['id']]) }}" class="profileDrop">Upload Multi Attachment</a>
-                                        <a href="javascript:void(0)" class="profileDrop">Preview Attachment(s)</a>
                                         <a href="javascript:void(0)" class="profileDrop">Download Attachment</a>
-
+                                        <a href="javascript:void(0)" class="profileDrop">Delete Attachment</a>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
                                     <div class="productDetailTable">
                                         <table class="table" id="attachmentTable">
                                             <thead class="table-light">
@@ -1366,7 +1361,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -2393,6 +2388,8 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        getQuoteAttachmentsOnPageLoad();
         $('#search-product').on('keyup', function() {
             let query = $(this).val();
             const divList = document.querySelector('.parent-container');
@@ -2672,6 +2669,74 @@
 
     });
 
+    function getQuoteAttachmentsOnPageLoad() {
+        const quote_id = document.getElementById('quote_id').value;
+        console.log("quote_id", quote_id);
+        $.ajax({
+            url: '{{ route("quote.ajax.getAttachmentDataOnQuoteId") }}', // Replace with your Laravel route URL
+            type: 'POST',
+            data: {
+                quote_id: quote_id
+            },
+            success: function(response) {
+                // Handle success
+                console.log(response);
+                const tableBody = $('#attachmentTable tbody');
+                console.log(tableBody);
+                tableBody.empty(); // Clear existing rows
+
+                // Assuming `response` contains an array of attachments
+                const attachments = Array.isArray(response.data) ? response.data : [response.data];
+
+                attachments.forEach(attachment => {
+                    console.log(attachment);
+                    // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
+                    const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
+                    const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
+
+                    const id = attachment.id;
+                    const row = `
+                        <tr>
+                            <td></td>
+                            <td>${attachment.attachment_type || ''}</td>
+                            <td>${attachment.title}</td>
+                            <td>${attachment.description}</td>
+                            <td>Quote</td>
+                            <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
+                            <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
+                            <td>${attachment.original_name}</td>
+                            <td>${attachment.mime_type} / ${attachment.size} KB</td>
+                            <td>${new Date(attachment.created_at).toLocaleString()}</td>
+                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="downloadAttachmentFile('${attachment.timestamp_name}');"> <i class="fas fa-download"></i></a></td>
+                        </tr>
+                    `;
+                    console.log(row);
+                    tableBody.append(row);
+                });
+            },
+            error: function(xhr) {
+                // Handle error
+                const errors = xhr.responseJSON.errors || {
+                    message: xhr.responseJSON.message
+                };
+                let errorMessage = 'Error on getting the attachment:\n';
+                for (let key in errors) {
+                    errorMessage += `${errors[key]}\n`;
+                }
+                alert(errorMessage);
+            }
+        });
+
+    }
+
+    function downloadAttachmentFile(fileName) {
+        const fileUrl = fileName; // Construct the file URL dynamically
+        const anchor = document.createElement('a');
+        anchor.href = fileUrl;
+        anchor.download = fileName; // Optional: Rename the file for the user
+        anchor.click();
+    }
+
     function getQuoteAttachments(attachment_id) {
         $.ajax({
             url: '{{ route("quote.ajax.getAttachmentData") }}', // Replace with your Laravel route URL
@@ -2686,28 +2751,32 @@
                 alert(response);
                 const tableBody = $('#attachmentTable tbody');
                 console.log(tableBody);
-                tableBody.empty(); // Clear existing rows
 
                 // Assuming `response` contains an array of attachments
+
+
                 const attachments = Array.isArray(response.data) ? response.data : [response.data];
 
                 attachments.forEach(attachment => {
                     console.log(attachment);
-                    const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : 'N/A';
+                    // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
+                    const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
+                    const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
+
                     const id = attachment.id;
                     const row = `
                         <tr>
                             <td></td>
-                            <td>${attachmentTypeTitle}</td>
-                            <td>${attachment.title || 'N/A'}</td>
-                            <td>${attachment.description || 'N/A'}</td>
+                            <td>${attachment.attachment_type || '' }</td>
+                            <td>${attachment.title}</td>
+                            <td>${attachment.description}</td>
                             <td>Quote</td>
-                            <td> <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span> ${attachment.customer_visible}</td>
-                            <td> <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>${attachment.mobile_user_visible}</td>
+                            <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
+                            <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
                             <td>${attachment.original_name}</td>
-                            <td>${attachment.mime_type} / ${attachment.size} </td>
+                            <td>${attachment.mime_type} / ${attachment.size} KB</td>
                             <td>${new Date(attachment.created_at).toLocaleString()}</td>
-                            <td><i class="fa fa-times"></i></td>
+                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i></td>
                         </tr>
                     `;
                     console.log(row);
