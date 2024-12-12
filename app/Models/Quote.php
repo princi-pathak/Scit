@@ -60,6 +60,11 @@ class Quote extends Model
         return $this->belongsTo(Constructor_customer_site::class, 'billing_add_id');
     }
 
+    public function attachments()
+    {
+        return $this->hasMany(QuoteAttachment::class);
+    }
+
     public static function getDraftCount($home_id){
         return self::where('status', 'Draft')->where('home_id', $home_id)->count();
     }

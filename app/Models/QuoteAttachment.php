@@ -21,6 +21,11 @@ class QuoteAttachment extends Model
         'customer_visible',
     ];
 
+    public function quoteAttachment()
+    {
+        return $this->belongsTo(Quote::class);
+    }
+
     public function attachmentType()
     {
         return $this->hasOne(AttachmentType::class, 'id', 'attachment_type'); // Assuming 'attachment_type' is the foreign key in 'quote_attachments' table

@@ -63,6 +63,42 @@ class AttachmentTypeService
 
     public function getAttachmentType($id)
     {
-        return QuoteAttachment::with('attachmentType')->find($id);
+        $quoteAtt =  QuoteAttachment::with('attachmentType')->find($id);
+
+        return [
+            'id' => $quoteAtt->id ,
+            'attachmentType' => $quoteAtt->attachmentType ? $quoteAtt->attachmentType->title : '',
+            'title' => $quoteAtt->title ? $quoteAtt->title : '',
+            'description' => $quoteAtt->description ? $quoteAtt->description : '',
+            'original_name' => $quoteAtt->original_name,
+            'timestamp_name' => asset('storage/app/public/images/quoteAttachment/' . $quoteAtt->timestamp_name),
+            'mime_type' => $quoteAtt->mime_type,
+            'size' => $quoteAtt->size,
+            'mobile_user_visible' => $quoteAtt->mobile_user_visible,
+            'customer_visible' => $quoteAtt->customer_visible,
+            'created_at' => $quoteAtt->created_at
+        ];
+    }
+
+    public function getAllAttachmentTypeOnQuote($quote_id){
+        $quoteAttachment =  QuoteAttachment::with('attachmentType')->where('quote_id', $quote_id)->get();
+
+        $attachments = array();
+        foreach($quoteAttachment as $value){
+            $data['id'] = $value->id;
+            $data['attachmentType'] = $value->attachmentType ? $value->attachmentType->title : '';
+            $data['title'] = $value->title ? $value->title : '';
+            $data['description'] = $value->description ? $value->description : '';
+            $data['original_name'] = $value->original_name;
+            $data['timestamp_name'] =   asset('storage/app/public/images/quoteAttachment/' . $value->timestamp_name);
+            $data['mime_type'] = $value->mime_type;
+            $data['size'] = $value->size;
+            $data['mobile_user_visible'] = $value->mobile_user_visible;
+            $data['customer_visible'] = $value->customer_visible;
+            $data['created_at'] = $value->created_at;
+            array_push($attachments, $data);
+        }
+
+        return $attachments;
     }
 }

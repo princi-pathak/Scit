@@ -29,6 +29,7 @@
             </div>
             <div class="col-md-4 col-lg-4 col-xl-4 px-3 align-items-center">
                 <div class="d-flex topbaarBtn text-center">
+                    <input type="hidden" class="quote_id" name="quote_id" id="quote_id" value="{{ $quoteId }}">
                     <a href="javascript:void(0)" class="profileDrop"> <i class="material-symbols-outlined"> add </i> <input type="file" id="imageUpload" multiple name="uploadfile[]"></a>
                     <a href="#!" class="profileDrop" id="saveTableData"> <i class="material-symbols-outlined"> arrow_circle_right </i> Start Upload</a>
                     <a href="#!" class="profileDrop"> <i class="material-symbols-outlined"> close_small </i> Cancel Upload </a>
@@ -66,28 +67,9 @@
 </section>
 
 <script>
- 
-    const uploadImageInput = document.getElementById('imageUpload');
-    const addImageButton = document.getElementById('addImageToTable');
-    const imageTableBody = document.querySelector('#imageTable tbody');
-
-    // Track the uploaded image file
-    let uploadedImageFile = null;
-
-    // Handle image selection
-    uploadImageInput.addEventListener('change', function() {
-        const file = uploadImageInput.files[0];
-        if (file) {
-            uploadedImageFile = file; // Store the file for later use
-            alert('Image selected: ' + file.name);
-        } else {
-            uploadedImageFile = null;
-        }
-    });
-
-
-    uploadImageInput.addEventListener('change', function(event) {
+    document.getElementById('imageUpload').addEventListener('change', function(event) {
         const files = event.target.files; // Get the selected files
+        const QuoteId = document.getElementById('quote_id').value;
         console.log(files);
         const tableBody = $('#multiFileUploader tbody');
 
@@ -101,7 +83,6 @@
                     const fileSizeInKB = (fileSizeInBytes / 1024).toFixed(2);
 
                     const reader = new FileReader(); // Create a FileReader instance
-
                     reader.onload = function(e) {
                         const row = `
                         <tr>
@@ -127,6 +108,7 @@
                             </td>
                             <td>
                                 <div>
+                                <input type="hidden" class="quoteId" value="${QuoteId}">
                                     <input type="text" class="form-control editInput textareaInput title" name="title" placeholder="Title">
                                 </div>
                             </td>
@@ -137,7 +119,7 @@
                             </td>
                             <td class="text-center mobile_user_check">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="mobile_user_visible[]" value="option1">
+                                    <input class="form-check-input mobile_user_visible" type="checkbox" name="mobile_user_visible[]" value="1">
                                 </div>
                             </td>
                             <td>
@@ -153,11 +135,11 @@
 
                     reader.readAsDataURL(file); // Read the file as a data URL (base64 encoded)
                 } else {
-                    alert(`File "${file.name}" is not a valid image.`);
+                    console.log(`File "${file.name}" is not a valid image.`);
                 }
             }
         } else {
-            alert('No files selected.');
+            console.log('No files selected.');
         }
     });
 
@@ -206,62 +188,54 @@
     }
 
     document.getElementById('saveTableData').addEventListener('click', function() {
-        // alert("button click");
         const tableRows = document.querySelectorAll('#multiFileUploader tbody tr');
         console.log("tableRows", tableRows);
-        // const formData = [];
         const formData = new FormData();
 
-        tableRows.forEach(row => {
-
+        tableRows.forEach((row, index) => {
             console.log("row", row);
             const attachment_type = row.querySelector('.attachmentType').value;
             const title = row.querySelector('.title').value;
             const description = row.querySelector('.description').value;
+            const mobile_user_visible = row.querySelector('.mobile_user_visible').value;
+            const quoteId = row.querySelector('.quoteId').value;
 
-            // const fileInput = row.querySelector('.image_file').value;
-            const fileInput = row.querySelector('.image_file');
-            if (!fileInput) {
-                console.error('File input not found for the row');
-                return;
+            const fileInput = document.getElementById('imageUpload');
+            console.log("fileInput", fileInput);
+            if (fileInput.files.length > 0) {
+                Array.from(fileInput.files).forEach((file, index) => {
+                    console.log(file);
+                    // Append each file to the FormData object
+                    formData.append(`image[${index}]`, file);
+                });
+            } else {
+                console.log('No files selected');
             }
-            console.log(fileInput);
-            const fileUrl = fileInput.dataset.url;
 
-            console.log("image_file", fileUrl);
+            formData.append(`quote_id[${index}]`, quoteId);
+            formData.append(`attachment_type[${index}]`, attachment_type);
+            formData.append(`title[${index}]`, title);
+            formData.append(`description[${index}]`, description);
+            formData.append(`mobile_user_visible[${index}]`, mobile_user_visible);
 
-            const rowData = {
-                attachment_type: attachmentType,
-                title: title,
-                description: description,
-                image_file: fileUrl || null, // Use file URL if no file is selected
-            };
-
-            formData.append('rows[]', JSON.stringify(rowData));
-
-            // formData.push({
-            //     attachment_type: attachment_type,
-            //     title: title,
-            //     image_file: fileUrl,
-            //     description: description
-            // });
         });
 
-        console.log(formData);
+        console.log("formData", formData);
         $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         // Send data via AJAX
         $.ajax({
             url: '{{ Route("quote.ajax.saveQuoteAttachments") }}',
             method: 'POST',
-            data: {   forms: formData },
+            data: formData,
             processData: false, // Prevent jQuery from automatically transforming the data into a query string
             contentType: false,
             success: function(response) {
                 alert(response.data);
+                window.location.href = response.redirect_url;
             },
             error: function(xhr) {
                 console.error('Error saving data:', xhr);
