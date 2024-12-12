@@ -365,35 +365,49 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function saveQuoteAttachments(Request $request){
+    public function saveQuoteAttachments(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'image.*' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+       
+        foreach ($request->file('image') as $index => $file) {
 
-        $rows = $request->input('rows', []);
-        $files = $request->file('files', []);
-      
-        foreach($rows as $index => $rowData){
-            $data = json_decode($rowData, true);
-            $file = $files[$index] ?? null;
+            $quote_id = $request->quote_id[$index];
+            // Create an attachment entry
+            $attachmentData = [
+                'quote_id' => $request->quote_id[$index], // Replace with actual quote_id field
+                'attachment_type' => $request->attachment_type[$index] ?? null,
+                'title' => $request->title[$index] ?? null,
+                'description' => $request->description[$index] ?? null,
+                'mobile_user_visible' => $request->mobile_user_visible[$index] ?? null,
+            ];
 
-            if ($file) {
-                $validator = Validator::make(
-                    ['file' => $file],
-                    ['file' => 'required|image|mimes:jpeg,png,jpg,gif,pdf|max:2048']
-                );
-    
-                if ($validator->fails()) {
-                    return response()->json(['errors' => $validator->errors()], 422);
-                }
+            $savedAttachment = $this->attachmentService->saveAttachmentType($attachmentData, $file);
+
+            if (!$savedAttachment) {
+                return response()->json(['success' => false,  'redirect_url' => '',  'data' => 'Failed to save attachment'], 500);
             }
+        }
+        // return redirect()->route('quote.edit', ['id' => $quote_id])->with('success', 'Quote saved successfully!');
+        return response()->json(['success' => true,  'redirect_url' => route('quote.edit', ['id' => $quote_id]), 'data' => 'Quote attachments saved successfully!']);
+    }
 
-
-            print_r($this->attachmentService->saveAttachmentType($data, $file));
+    public function getAttachmentDataOnQuoteId(Request $request){
+        $validator = Validator::make($request->all(), [
+            'quote_id' => 'required|integer',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // return response()->json([
-        //     'success' => (bool) $response,
-        //     'id' => $response->id,
-        //     'data' => $response ? "Attachment saved successfully!" : 'Error in saving file'
-        // ]);
-
+        $data = $this->attachmentService->getAllAttachmentTypeOnQuote($request->quote_id);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
     }
 }

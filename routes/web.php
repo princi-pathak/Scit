@@ -307,6 +307,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/supplier_edit', 'supplier_add');
 		Route::post('/supplier_save', 'supplier_save');
 		Route::get('/supplier/{status}', 'supplier_list');
+		Route::post('/supplier_attachment_save', 'supplier_attachment_save');
+		Route::post('/getAllSupplierAttachment', 'getAllSupplierAttachment');
+		Route::post('/supplier_attachment_image_delete', 'supplier_attachment_image_delete');
 	});
 	Route::controller(ExpenseController::class)->group(function(){
 		Route::match(['get','post'],'/expenses','expenses');
@@ -529,6 +532,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/quote/saveQuoteData', 'store');
 		Route::get('/quote/getAttachmentList', 'getAttachmentList')->name('quote.ajax.getAttachmentList');
 		Route::post('/quote/saveQuoteAttachments', 'saveQuoteAttachments')->name('quote.ajax.saveQuoteAttachments');
+		Route::post('/quote/getAttachmentDataOnQuoteId', 'getAttachmentDataOnQuoteId')->name('quote.ajax.getAttachmentDataOnQuoteId');
 
 
 		
