@@ -63,8 +63,8 @@ class AttachmentTypeService
 
     public function getAttachmentType($id)
     {
-        $quoteAtt =  QuoteAttachment::with('attachmentType')->find($id);
-
+        $quoteAtt =  QuoteAttachment::with('attachmentType')->where('deleted_at', null)->find($id);
+        
         return [
             'id' => $quoteAtt->id ,
             'attachmentType' => $quoteAtt->attachmentType ? $quoteAtt->attachmentType->title : '',
@@ -81,10 +81,11 @@ class AttachmentTypeService
     }
 
     public function getAllAttachmentTypeOnQuote($quote_id){
-        $quoteAttachment =  QuoteAttachment::with('attachmentType')->where('quote_id', $quote_id)->get();
+        $quoteAttachment =  QuoteAttachment::with('attachmentType')->where('quote_id', $quote_id)->where('deleted_at', null)->get();
 
         $attachments = array();
         foreach($quoteAttachment as $value){
+         
             $data['id'] = $value->id;
             $data['attachmentType'] = $value->attachmentType ? $value->attachmentType->title : '';
             $data['title'] = $value->title ? $value->title : '';
@@ -101,4 +102,9 @@ class AttachmentTypeService
 
         return $attachments;
     }
+
+    public function deleteAttachment($id){
+        return QuoteAttachment::whereIn('id', $id)->update(['deleted_at' => now()]);
+    }
+
 }
