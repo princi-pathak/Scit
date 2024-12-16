@@ -306,10 +306,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/supplier_add', 'supplier_add');
 		Route::get('/supplier_edit', 'supplier_add');
 		Route::post('/supplier_save', 'supplier_save');
-		Route::get('/supplier/{status}', 'supplier_list');
+		Route::get('/supplier', 'supplier_list');
 		Route::post('/supplier_attachment_save', 'supplier_attachment_save');
 		Route::post('/getAllSupplierAttachment', 'getAllSupplierAttachment');
 		Route::post('/supplier_attachment_image_delete', 'supplier_attachment_image_delete');
+		Route::post('/get_supplier_details', 'get_supplier_details');
 	});
 	Route::controller(ExpenseController::class)->group(function(){
 		Route::match(['get','post'],'/expenses','expenses');

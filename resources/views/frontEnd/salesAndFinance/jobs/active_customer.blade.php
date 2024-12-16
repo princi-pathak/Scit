@@ -3897,11 +3897,12 @@ job_input.addEventListener('input', function() {
     }
     function get_all_crm_customer_contacts(id,pageUrl){
         var token='<?php echo csrf_token();?>'
+        var userTyep=1;
         $.ajax({
             url: pageUrl,
             method: 'POST',
             data: {
-                id: id,_token:token
+                userTyep:userTyep,id: id,_token:token
             },
             success: function(response) {
                 console.log(response);

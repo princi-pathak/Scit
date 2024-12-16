@@ -21,4 +21,8 @@ class Supplier extends Model
     public static function allGetSupplier($home_id,$user_id){
         return self::where(['home_id'=>$home_id,'user_id'=>$user_id,'deleted_at'=>null]);
     }
+
+    public function contacts(){
+        return $this->hasMany(Constructor_additional_contact::class,'customer_id');
+    }
 }

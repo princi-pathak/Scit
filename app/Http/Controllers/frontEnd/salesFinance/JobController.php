@@ -723,7 +723,7 @@ class JobController extends Controller
         $data['home_id']=Auth::user()->home_id;
         // echo "<pre>";print_r($data);die;
         $insert=Constructor_additional_contact::saveCustomerAdditional($data);
-        $data=Constructor_additional_contact::find($insert);
+        $data=Constructor_additional_contact::find($insert->id);
         if($data){
             if($data->status ==1){
                 echo '<option value="'.$data->id.'">'.$data->contact_name.'</option>';
