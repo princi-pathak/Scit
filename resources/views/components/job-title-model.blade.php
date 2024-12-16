@@ -8,6 +8,7 @@
             </div>
             <div class="modal-body">
                 <form id="jobTitleForm">
+                    @csrf
                     <div class="mb-3 row">
                         <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="radStar ">*</span></label>
                         <div class="col-sm-9">

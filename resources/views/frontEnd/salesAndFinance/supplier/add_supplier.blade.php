@@ -76,7 +76,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-3 row">
-                                                        <label for="email" class="col-sm-4 col-form-label">Email<span class="radStar ">*</span></label>
+                                                        <label for="email" class="col-sm-4 col-form-label">Email</label>
                                                         <div class="col-sm-8">
                                                             <input type="text" class="form-control editInput checkError" id="email" name="email" value="<?php if(isset($supplier) && $supplier !=''){echo $supplier->email;}?>" onchange="getemail()">
                                                             <span style="color:red" id="emailErr"></span>
@@ -194,7 +194,6 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                        
                                                     </div>
                                                     <div class="mb-3 row">
                                                         <label for="creadit_limit" class="col-sm-3 col-form-label">Credit Limit</label>
@@ -273,16 +272,11 @@
                                                             <th>Billing</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colspan="10">
-                                                                <label class="red_sorryText">
-                                                                    Sorry, no records to show
-                                                                </label>
-                                                            </td>
-                                                        </tr>
+                                                    <tbody id="supplier_contact_list">
+                                                        
                                                     </tbody>
                                                 </table>
+                                                <div id="pagination-controls-supplier-contact"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -391,6 +385,8 @@
             </div>
 <!-- Attachment Modal start here -->
 @include('components.supplier-attachment-modal')
+@include('components.contact-modal')
+@include('components.job-title-model')
 <!-- end here -->
 </section>
 
@@ -422,7 +418,14 @@
             alert("Please save Supplier first");
             return false;
         }else{
-            alert("Modal code");
+            $("#contact_form")[0].reset();
+            var supplier_name='<?php echo ($supplier->name ?? "");?>'
+            $('#contact_customer_name').text(supplier_name);
+            $('#contactModalLabel').text("Add Supplier Contact");
+            $('#contactLabel').text("Supplier");
+            $('#contact_customer_id').val(id);
+            $('#userType').val(2);
+            $("#contact_modal").modal('show');
         }
     }
     function getAttachmentsModal(){
@@ -597,6 +600,68 @@
         $("#reminder_email").val(reminder_email);
         // $("#attachment").val(attachment);
         $("#file_name").text(file_original_name);
+    });
+    
+    function GetAllContact(data){
+        var supplier_id=$('#id').val();
+        populateDataInTable(2,supplier_id,pageUrl = '{{ url("get_all_crm_customer_contacts") }}')
+    }
+    function populateDataInTable(userType,id,pageUrl){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {
+                userType:userType,id: id,_token:token
+            },
+            success: function(response) {
+                console.log(response);
+                var data = response.data;
+                var paginationContact = response.pagination;
+                var tableBody = $("#supplier_contact_list"); 
+                tableBody.empty();
+                var html='';
+                if(data.length>0){
+                    var count=1;
+                    data.forEach(function(item) {
+                        
+                        html+= '<tr>' +
+                            '<td>' + count + '</td>' +
+                            '<td>' + item.contact + '</td>' +
+                            '<td>' + item.email + '</td>' +       
+                            '<td>' + item.telephone + '</td>' +        
+                            '<td>' + item.mobile + '</td>' +
+                            '<td>' + item.address + '</td>' +
+                            '<td>' + item.city + '</td>' +
+                            '<td>' + item.country + '</td>' +
+                            '<td>' + item.postcode + '</td>' +
+                            '<td>' + (item.default_billing == 1 ? "Yes" : "No") + '</td>' +
+                            '</tr>';
+                        count++;
+                    });
+                }else{
+                    html+='<tr> <td colspan="10"> <label class="red_sorryText">Sorry, no records to show</label> </td> </tr>';
+                    
+                }
+                tableBody.html(html);
+                var paginationControlsContact = $("#pagination-controls-supplier-contact");
+                paginationControlsContact.empty();
+                if (paginationContact.prev_page_url) {
+                    paginationControlsContact.append('<button class="profileDrop" onclick="populateDataInTable(2,' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationContact.next_page_url) {
+                    paginationControlsContact.append('<button class="profileDrop" onclick="populateDataInTable(2,' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
+<script>
+    $(document).ready(function(){
+        GetAllContact(null);
     })
 </script>
     @include('frontEnd.salesAndFinance.jobs.layout.footer')

@@ -287,8 +287,8 @@ $access_rights = explode(',', $rights);
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{url('supplier_add')}}"><i class="fa fa-plus"></i>New Supllier</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('supplier/Active') }}"><i class="fa fa-check-circle"></i>Active Suppliers</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('supplier/Inactive') }}"><i class="fa fa-times-circle"></i>Inactive Suppliers</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('supplier?list_mode=ACTIVE') }}"><i class="fa fa-check-circle"></i>Active Suppliers</a></li>
+                                            <li><a class="dropdown-item" href="{{ url('supplier?list_mode=INACTIVE') }}"><i class="fa fa-times-circle"></i>Inactive Suppliers</a></li>
                                         </ul>
                                     </li>
                                 </ul>

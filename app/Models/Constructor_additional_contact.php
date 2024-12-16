@@ -35,9 +35,12 @@ class Constructor_additional_contact extends Model
             ['id' => $data['id'] ?? null],
             $data
         );
-        return $insert->id;
+        return $insert;
     }
     public static function getAllcrmContacts($id){
-        return self::where(['customer_id'=>$id,'deleted_at'=>null]);
+        return self::where(['customer_id'=>$id,'deleted_at'=>null])->whereNotNull('customer_id');
+    }
+    public function suppliers(){
+        return $this->belongsTo(Supplier::class, 'id');
     }
 }
