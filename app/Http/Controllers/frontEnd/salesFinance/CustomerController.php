@@ -31,6 +31,7 @@ use App\Models\Construction_customer_login;
 use App\Models\Constructor_additional_contact;
 use App\Models\CustomerBillingAddress;
 use App\Models\LogHistory;
+use App\Models\Supplier;
 
 class CustomerController extends Controller
 {
@@ -94,15 +95,27 @@ class CustomerController extends Controller
     }
     public function default_address(Request $request)
     {
-        // echo $customer_id=$request->customer_id;die;
+        // return $customer_id=$request->customer_id;
 
         $country = Country::all_country_list();
-        $address_details = Customer::find($request->customer_id);
+        $userType=$request->userType;
+        if($userType == 1){
+            $address_details = Customer::find($request->customer_id);
+            $country_code=$address_details->country_code ?? 0;
+        }else if($userType == 2){
+            $address_details = Supplier::find($request->customer_id);
+            $country_code=$address_details->country_id ?? 0;
+        }
+        
+        if(!$address_details){
+            return response()->json(['error'=>"something went wrong"]);
+        }
+        
         $result = '';
         if ($request->check == 1) {
             $result .= '<option value="" selected disabled>None</option>';
             foreach ($country as $country_codev) {
-                $select = ($country_codev->id == $address_details->country_code) ? "selected" : "";
+                $select = ($country_codev->id == $country_code) ? "selected" : "";
                 $result .= '<option value="' . $country_codev->code . '" ' . $select . '>' . $country_codev->name . ' (' . $country_codev->code . ')</option>';
             }
         } else {
@@ -118,15 +131,41 @@ class CustomerController extends Controller
     public function save_contact(Request $request)
     {
         // echo "<pre>";print_r($request->all());die;
+        $vali_data = [];
+
+        if ($request->filled('telephone')) {
+            $vali_data['telephone'] = [
+                'required',
+                'regex:/^\d{10}$/',
+            ];
+        }
+
+        if ($request->filled('mobile')) {
+            $vali_data['mobile'] = [
+                'required',
+                'regex:/^\d{10}$/',
+            ];
+        }
+
+        $vali_data = array_merge($vali_data, [
+            'contact_name' => 'required',
+            'address' => 'required',
+            'userType' => 'required',
+        ]);
+
+        $validator = Validator::make($request->all(),$vali_data);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        // die;
         $data=$request->all();
-        $data['auth_login_id']=Auth::user()->home_id;
+        $data['home_id']=Auth::user()->home_id;
         try {
             $customer = Constructor_additional_contact::saveCustomerAdditional($data);
-            echo "done";
+            return response()->json(['success'=>true,'message'=>'Contact Added Succuessfully Done','data'=>$customer]);
         } catch (\Exception $e) {
             Log::error('Error saving Tag: ' . $e->getMessage());
-            // return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
-            echo "error";
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
     public function delete_contact(Request $request ){
@@ -1000,7 +1039,9 @@ class CustomerController extends Controller
     ]);
     }
     public function get_all_crm_customer_contacts(Request $request){
-        $contact_list=Constructor_additional_contact::getAllcrmContacts($request->id)->orderBy('id', 'desc')->paginate(10);
+        // echo "<pre>";print_r($request->all());die;
+        $userType=$request->userType ?? null;
+        $contact_list=Constructor_additional_contact::getAllcrmContacts($request->id)->where('userType',$userType)->orderBy('id', 'desc')->paginate(10);
         $data=array();
         foreach($contact_list as $val){
             $customer=Customer::find($val->customer_id);
@@ -1009,7 +1050,15 @@ class CustomerController extends Controller
                 'customer_id'=>$request->id,
                 'contact'=>$val->contact_name ?? "",
                 'crm_section_type_id'=>'',
-                'customer_name'=>$customer->name ?? ""
+                'customer_name'=>$customer->name ?? "",
+                'email'=>$val->email ?? "",
+                'telephone'=>$val->telephone ?? "",
+                'mobile'=>$val->mobile ?? "",
+                'address'=>$val->address ?? "",
+                'city'=>$val->city ?? "",
+                'country'=>$val->country ?? "",
+                'postcode'=>$val->postcode ?? "",
+                'default_billing'=>$val->default_billing,
             ];
         }
         // return response()->json(['success' =>true,'data'=>$data]);
