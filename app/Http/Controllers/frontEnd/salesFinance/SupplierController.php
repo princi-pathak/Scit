@@ -8,7 +8,9 @@ use Validator,Auth;
 use App\Models\Currency;
 use App\Models\Country;
 use App\Models\Supplier;
+use App\Models\Job_title;
 use App\Models\SupplierAttachment;
+use App\Models\Constructor_additional_contact;
 
 class SupplierController extends Controller
 {
@@ -17,9 +19,12 @@ class SupplierController extends Controller
     }
     public function supplier_add(Request $request){
         $key=base64_decode($request->key);
+        $home_id=Auth::user()->home_id;
         $data['supplier']=Supplier::find($key);
         $data['currency']=Currency::where(['status'=>1,'deleted_at'=>null])->get();
         $data['country']=Country::all_country_list();
+        $data['job_title']=Job_title::where(['home_id'=>$home_id,'status'=>1])->get();
+        // echo "<pre>";print_r($data['job_title']);die;
         return view('frontEnd.salesAndFinance.supplier.add_supplier',$data);
     }
     public function supplier_save(Request $request){
@@ -29,7 +34,6 @@ class SupplierController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'contact_name' => 'required',
-            'email' => 'required',
             'address' => 'required',
         ]);
         if ($validator->fails()) {
@@ -49,15 +53,16 @@ class SupplierController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    public function supplier_list(Request $request, $status){
-        if (!in_array($status, ['Active', 'Inactive'])) {
-            abort(404);
-        }
+    public function supplier_list(Request $request){
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
-        $table_status=($status === 'Active' ? 1 : 0);
-        $supplier_list=Supplier::allGetSupplier($home_id,$user_id)->where('status',$table_status)->get();
-        echo "<pre>";print_r($supplier_list);die;
+        $table_status=($request->list_mode === 'ACTIVE' ? 1 : 0);
+        $data['supplier_list']=Supplier::allGetSupplier($home_id,$user_id)->where('status',$table_status)->get();
+        $data['CountActiveSupplier']=Supplier::allGetSupplier($home_id,$user_id)->where('status',1)->count();
+        $data['CountInactiveSupplier']=Supplier::allGetSupplier($home_id,$user_id)->where('status',0)->count();
+        // echo "<pre>";print_r($data['supplier_list']);die;
+        $data['table_status']=$table_status;
+        return view('frontEnd.salesAndFinance.supplier.supplier',$data);
     }
     public function supplier_attachment_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -137,6 +142,12 @@ class SupplierController extends Controller
         catch (\Exception $e) {
             return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
         }
+    }
+    public function get_supplier_details(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $supplier_id=$request->supplier_id;
+        $data=Supplier::with('contacts')->where('id',$supplier_id)->get();
+        return response()->json(['success'=>true,'data'=>$data]);
     }
     
 }

@@ -67,7 +67,7 @@ class QuoteController extends Controller
         $data['lastSegment'] = $lastSegment;
         $data['quotes'] = $this->quoteService->getQuoteData($lastSegment, Auth::user()->home_id);
         $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
-     
+
         return view('frontEnd.salesAndFinance.quote.draft', $data);
     }
 
@@ -259,7 +259,7 @@ class QuoteController extends Controller
     }
 
     public function store(QuoteRequest $request)
-    {       
+    {
         try {
             $qutRef = $request->quote_ref ?? $this->quoteService->generateQuoteRef();
             $quote = $this->quoteService->saveQuoteData($request->all(), $qutRef, Auth::user()->home_id);
@@ -295,8 +295,8 @@ class QuoteController extends Controller
         $data['page'] = "quotes";
         $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
         $data['countries'] = Country::getCountriesNameCode();
-        $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id); 
-        $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);   
+        $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id);
+        $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);
         $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
         // dd($data['attachment_type']);
         return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
@@ -310,11 +310,13 @@ class QuoteController extends Controller
             'data' => $data ? $data : 'No data.'
         ]);
     }
-    public function details(){
+    public function details()
+    {
         return view('frontEnd.salesAndFinance.quote.add_quote');
     }
 
-    public function saveAttachmentData(Request $request){
+    public function saveAttachmentData(Request $request)
+    {
         // dd($request);
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,pdf|max:2048',
@@ -324,7 +326,7 @@ class QuoteController extends Controller
         }
 
         $data = $this->attachmentService->saveAttachmentType($request->all(), $request->file('image'));
-        
+
         return response()->json([
             'success' => (bool) $data,
             'id' => $data->id,
@@ -332,7 +334,8 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function getAttachmentData(Request $request){
+    public function getAttachmentData(Request $request)
+    {
         // dd($request);
         $validator = Validator::make($request->all(), [
             'attachment_id' => 'required',
@@ -349,16 +352,18 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function add_multi_attachment(Request $request){
+    public function add_multi_attachment(Request $request)
+    {
         $data['quoteId'] = $request->query('quote_id');
         $data['quote_ref'] = Quote::where('id',  $request->query('quote_id'))->value('quote_ref');
         return view('frontEnd.salesAndFinance.quote.multi_file_uploader', $data);
     }
 
-    public function getAttachmentList(){
+    public function getAttachmentList()
+    {
         $data = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
 
-        
+
         return response()->json([
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data.'
@@ -373,7 +378,7 @@ class QuoteController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-       
+
         foreach ($request->file('image') as $index => $file) {
 
             $quote_id = $request->quote_id[$index];
@@ -396,7 +401,8 @@ class QuoteController extends Controller
         return response()->json(['success' => true,  'redirect_url' => route('quote.edit', ['id' => $quote_id]), 'data' => 'Quote attachments saved successfully!']);
     }
 
-    public function getAttachmentDataOnQuoteId(Request $request){
+    public function getAttachmentDataOnQuoteId(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'quote_id' => 'required|integer',
         ]);
@@ -410,4 +416,22 @@ class QuoteController extends Controller
             'data' => $data ? $data : 'No data.'
         ]);
     }
+
+    public function deleteAttachment(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'ids' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $ids = $request->input('ids');
+
+        $data = $this->attachmentService->deleteAttachment($ids);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? "Attachment deleted successfully !" : 'Failed to delete the row .'
+        ]);
+    }
+
 }

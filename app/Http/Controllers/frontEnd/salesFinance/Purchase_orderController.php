@@ -23,6 +23,10 @@ use App\Models\Constructor_customer_site;
 use App\Models\Job;
 use App\Models\Job_type;
 use App\Models\Product;
+use App\Models\Currency;
+use App\Models\Supplier;
+use App\Home;
+use App\Admin;
 
 class Purchase_orderController extends Controller
 {
@@ -46,8 +50,12 @@ class Purchase_orderController extends Controller
         return response()->json(['data' => $data]);
     }
     public function purchase_order(Request $request){
+        // echo "<pre>";print_r(Auth::user());die;
         $home_id = Auth::user()->home_id;
         $user_id=Auth::user()->id;
+        $home_table=Home::find($home_id);
+        $data['company_name']=Admin::find($home_table->admin_id)->company;
+        // echo "<pre>";print_r($company_name);die;
         $key=base64_decode($request->key);
         $data['key']=$key;
         $job_details=Job::find($key);
@@ -67,6 +75,8 @@ class Purchase_orderController extends Controller
         $data['site']=Constructor_customer_site::where('customer_id',$customerId)->get();
         $data['job_type']=Job_type::where('status',1)->get();
         $data['product_count']=Product::count();
+        $data['currency']=Currency::where(['status'=>1,'deleted_at'=>null])->get();
+        $data['suppliers']=Supplier::allGetSupplier($home_id,$user_id)->where('status',1)->get();
         // echo "<pre>";print_r($data['country']);die;
         return view('frontEnd.salesAndFinance.purchase_order.new_purchase_order',$data);
     }
