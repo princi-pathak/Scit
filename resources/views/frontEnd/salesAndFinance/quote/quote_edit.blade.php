@@ -1337,8 +1337,8 @@
                                     <div class=" p-0">
                                         <a href="javascript:void(0)" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
                                         <a href="{{ route('quote.addMultiAttachment', ['quote_id' => $quoteData['id']]) }}" class="profileDrop">Upload Multi Attachment</a>
-                                        <a href="javascript:void(0)" class="profileDrop">Download Attachment</a>
-                                        <a href="javascript:void(0)" class="profileDrop">Delete Attachment</a>
+                                        <a href="javascript:void(0)" id="downloadSelected" class="profileDrop">Download Attachment(s)</a>
+                                        <a href="javascript:void(0)" id="deleteSelected" class="profileDrop">Delete Attachment(s)</a>
                                     </div>
                                 </div>
 
@@ -1347,7 +1347,7 @@
                                         <table class="table" id="attachmentTable">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th><input type="checkbox" id="selectAll"></th>
                                                     <th>Type</th>
                                                     <th>Title </th>
                                                     <th>Description</th>
@@ -2696,9 +2696,9 @@
 
                     const id = attachment.id;
                     const row = `
-                        <tr>
-                            <td></td>
-                            <td>${attachment.attachment_type || ''}</td>
+                        <tr data-id="${id}">
+                            <td><input type="checkbox" class="selectRow"></td>
+                            <td>${attachment.attachmentType}</td>
                             <td>${attachment.title}</td>
                             <td>${attachment.description}</td>
                             <td>Quote</td>
@@ -2707,7 +2707,7 @@
                             <td>${attachment.original_name}</td>
                             <td>${attachment.mime_type} / ${attachment.size} KB</td>
                             <td>${new Date(attachment.created_at).toLocaleString()}</td>
-                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="downloadAttachmentFile('${attachment.timestamp_name}');"> <i class="fas fa-download"></i></a></td>
+                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="downloadAttachmentFile('${attachment.timestamp_name}');"> <i class="fas fa-download"></i></a> | <a href="javascript:void(0)" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a> </td>
                         </tr>
                     `;
                     console.log(row);
@@ -2766,8 +2766,8 @@
                     const id = attachment.id;
                     const row = `
                         <tr>
-                            <td></td>
-                            <td>${attachment.attachment_type || '' }</td>
+                            <td><input type="checkbox"></td>
+                            <td>${attachment.attachmentType}</td>
                             <td>${attachment.title}</td>
                             <td>${attachment.description}</td>
                             <td>Quote</td>
@@ -2776,7 +2776,7 @@
                             <td>${attachment.original_name}</td>
                             <td>${attachment.mime_type} / ${attachment.size} KB</td>
                             <td>${new Date(attachment.created_at).toLocaleString()}</td>
-                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i></td>
+                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a></td>
                         </tr>
                     `;
                     console.log(row);
@@ -2795,6 +2795,33 @@
                 alert(errorMessage);
             }
         });
+    }
+
+    function deleteAttachmentFile(id) {
+        alert(id);
+
+        // Confirm deletion
+        if (confirm("Are you sure you want to delete this row?")) {
+            // Make AJAX call to delete the row on the server
+            $.ajax({
+                url: '{{ route("quote.ajax.deleteAttachment") }}', // Replace with your server URL
+                method: 'POST', // Replace with appropriate HTTP method
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Remove the row from the table
+                        row.remove();
+                    } else {
+                        alert("Failed to delete the row.");
+                    }
+                },
+                error: function() {
+                    alert("An error occurred while trying to delete the row.");
+                }
+            });
+        }
     }
 
     function setSiteAddressDetails(id) {
@@ -3054,12 +3081,93 @@
             document.getElementById(fieldId).textContent = value;
         });
     }
-</script>
-<script>
+
     function upload() {
         var imgcanvas = document.getElementById("canv1");
         var fileinput = document.getElementById("finput");
         var image = new SimpleImage(fileinput);
         image.drawTo(imgcanvas);
     }
+
+    $(document).ready(function() {
+        // Enable/disable "Delete Selected" button based on checkbox selection
+        $(document).on("change", ".selectRow, #selectAll", function() {
+            const anySelected = $(".selectRow:checked").length > 0;
+            $("#deleteSelected").prop("disabled", !anySelected);
+
+            if (this.id === "selectAll") {
+                $(".selectRow").prop("checked", $(this).prop("checked"));
+            }
+        });
+
+        // Handle delete selected rows
+        $("#deleteSelected").click(function() {
+            if (confirm("Are you sure you want to delete the selected rows?")) {
+                // Collect all selected row IDs
+                const ids = $(".selectRow:checked")
+                    .map(function() {
+                        return $(this).closest("tr").data("id");
+                    })
+                    .get();
+
+                if (ids.length > 0) {
+                    // Send AJAX request to delete rows
+                    $.ajax({
+                        url: '{{ route("quote.ajax.deleteAttachment") }}', // Your server endpoint
+                        method: 'POST', // HTTP method
+                        data: {
+                            ids: ids,
+                            _token: '{{ csrf_token() }}' // CSRF token for Laravel
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Remove rows from the table
+                                $(".selectRow:checked").each(function() {
+                                    $(this).closest("tr").remove();
+                                });
+                                alert("Selected rows deleted successfully.");
+                                $("#deleteSelected").prop("disabled", true);
+                                $("#selectAll").prop("checked", false);
+                            } else {
+                                alert("Failed to delete the selected rows.");
+                            }
+                        },
+                        error: function() {
+                            alert("An error occurred while deleting the rows.");
+                        }
+                    });
+                }
+            }
+        });
+
+        // Handle "Download Selected" button
+        $("#downloadSelected").click(function() {
+            const selectedFiles = [];
+
+            // Collect selected files
+            $(".selectRow:checked").each(function() {
+                const row = $(this).closest("tr");
+                const fileUrl = row.find("a[target='_blank']").attr("href");
+                selectedFiles.push(fileUrl);
+            });
+
+            if (selectedFiles.length > 0) {
+                downloadMultipleFiles(selectedFiles);
+            }
+        });
+
+        // Function to trigger download for each file
+        function downloadMultipleFiles(files) {
+            files.forEach((fileUrl) => {
+                const a = document.createElement("a");
+                a.href = fileUrl;
+                a.download = ""; // Optional: Set custom filename
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        }
+
+
+    });
 </script>

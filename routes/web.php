@@ -533,6 +533,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/getAttachmentList', 'getAttachmentList')->name('quote.ajax.getAttachmentList');
 		Route::post('/quote/saveQuoteAttachments', 'saveQuoteAttachments')->name('quote.ajax.saveQuoteAttachments');
 		Route::post('/quote/getAttachmentDataOnQuoteId', 'getAttachmentDataOnQuoteId')->name('quote.ajax.getAttachmentDataOnQuoteId');
+		Route::post('/quote/deleteAttachment', 'deleteAttachment')->name('quote.ajax.deleteAttachment');
+
+		
 
 
 		
