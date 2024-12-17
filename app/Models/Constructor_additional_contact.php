@@ -41,6 +41,6 @@ class Constructor_additional_contact extends Model
         return self::where(['customer_id'=>$id,'deleted_at'=>null])->whereNotNull('customer_id');
     }
     public function suppliers(){
-        return $this->belongsTo(Supplier::class, 'id');
+        return $this->belongsTo(Supplier::class, 'customer_id');
     }
 }

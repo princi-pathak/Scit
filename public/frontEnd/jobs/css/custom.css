@@ -910,7 +910,7 @@ form.customerForm {
   line-height: 32px;
   padding-left: 10px;
 }
-.productDetailTable table.table thead tr th, .productDetailTable table.table tbody tr td, .productDetailTable table.table tfoot tr td{
+.productDetailTable table.table thead tr th, .productDetailTable table.table tbody tr td, .productDetailTable table.table tfoot tr th{
   font-size: 12px;
   line-height: 22px;
 }
@@ -1391,12 +1391,10 @@ canvas#canv1 {
   cursor: pointer;
 }
 
-
-
-
 /* *************** */
 .dropdown-item {
   /* color: #fff; */
+  font-size: 12px;
 }
 .dropdown1 .dropdown-menu1 {
   display: none;
