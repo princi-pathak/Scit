@@ -146,7 +146,7 @@ class SupplierController extends Controller
     public function get_supplier_details(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $supplier_id=$request->supplier_id;
-        $data=Supplier::with('contacts')->where('id',$supplier_id)->get();
+        $data=Supplier::with('contacts')->where('id',$supplier_id)->first();
         return response()->json(['success'=>true,'data'=>$data]);
     }
     

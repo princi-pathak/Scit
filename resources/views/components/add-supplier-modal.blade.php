@@ -17,25 +17,25 @@
                                             <div class="mb-2 row">
                                                 <label for="supplier_name" class="col-sm-3 col-form-label">Supplier Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="supplier_name" name="name">
+                                                    <input type="text" class="form-control editInput textareaInput checkError" placeholder="Enter Supplier Name" id="supplier_name" name="name">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="supplier_code" class="col-sm-3 col-form-label">Supplier Code</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="supplier_code" name="code">
+                                                    <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Code" id="supplier_code" name="code">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="contact_name" class="col-sm-3 col-form-label">Contact Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="supplier_contact_name" name="contact_name">
+                                                    <input type="text" class="form-control editInput textareaInput checkError" placeholder="Enter Contact Name" id="supplier_contact_name" name="contact_name">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="email" class="col-sm-3 col-form-label">Email</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="supplier_email" name="email" onchange="supplier_check_email()">
+                                                    <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Email" id="supplier_email" name="email" onchange="supplier_check_email()">
                                                     <span style="color:red" id="supplieremailErr"></span>
                                                 </div>
                                             </div>
@@ -51,7 +51,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-7">
-                                                    <input type="text" class="form-control editInput" id="supplier_telephone" name="telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                    <input type="text" class="form-control editInput textareaInput" id="supplier_telephone" placeholder="Enter Supplier Telephone" name="telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                         <span style="color:red;display:none" id="ChecksupplierTelephoneErr">Please enter 10 digit number</span>
                                                 </div>
                                             </div>
@@ -67,7 +67,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-7">
-                                                    <input type="text" class="form-control editInput" id="supplier_mobile" name="mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                    <input type="text" class="form-control editInput textareaInput" id="supplier_mobile" placeholder="Enter Supplier Mobile" name="mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                         <span style="color:red;display:none" id="ChecksupplierMobileErr">Please enter 10 digit number</span>
                                                 </div>
                                             </div>
@@ -75,13 +75,13 @@
                                             <div class="mb-2 row">
                                                 <label for="supplier_fax" class="col-sm-3 col-form-label">Fax</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="supplier_fax" name="fax">
+                                                    <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Fax" id="supplier_fax" name="fax">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="supplier_website" class="col-sm-3 col-form-label">Website</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="supplier_website" name="website">
+                                                    <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Website" id="supplier_website" name="website">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -101,27 +101,27 @@
                                             <div class="mb-2 row">
                                                 <label for="supplier_address" class="col-sm-3 col-form-label">Address<span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" id="supplier_address" name="address" rows="3"></textarea>
+                                                    <textarea class="form-control textareaInput editInput checkError" placeholder="Enter Supplier Address" id="supplier_address" name="address" rows="3"></textarea>
                                                 </div>
                                             </div>
 
                                             <div class="mb-2 row">
                                                 <label for="supplier_city" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="supplier_city" name="city">
+                                                    <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier City" id="supplier_city" name="city">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="supplier_county" class="col-sm-3 col-form-label">County</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="supplier_county" name="county">
+                                                    <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier County" id="supplier_county" name="county">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label for="supplier_postcode"
                                                     class="col-sm-3 col-form-label">Postcode</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="supplier_postcode" name="postcode">
+                                                    <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Postcode" id="supplier_postcode" name="postcode">
                                                 </div>
                                             </div>
 
@@ -140,7 +140,7 @@
                                             <div class="mb-2 row">
                                                 <label for="supplier_account_ref" class="col-sm-3 col-form-label">Account Ref.</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput" id="supplier_account_ref" name="account_ref">
+                                                    <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Account Ref." id="supplier_account_ref" name="account_ref">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -159,14 +159,14 @@
                                                     <span style="padding:3px">£</span>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control editInput textareaInput" name="creadit_limit" id="supplier_creadit_limit" value="<?php if(isset($supplier) && $supplier !=''){echo $supplier->creadit_limit;}else{echo '0.00';}?>" oninput="suppliervalidateDecimal(this)" maxlength="8">
+                                                    <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Credit Limit" name="creadit_limit" id="supplier_creadit_limit" value="<?php if(isset($supplier) && $supplier !=''){echo $supplier->creadit_limit;}else{echo '0.00';}?>" oninput="suppliervalidateDecimal(this)" maxlength="8">
                                                 </div>
                                             </div>
 
                                             <div class="mb-2 row">
                                                 <label for="supplier_note" class="col-sm-3 col-form-label">Notes</label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" rows="3" id="supplier_note" name="notes"></textarea>
+                                                    <textarea class="form-control textareaInput" placeholder="Enter Supplier Notes" rows="3" id="supplier_note" name="notes"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -221,7 +221,6 @@
         var supplier_telephone=$("#supplier_telephone").val();
         var supplier_mobile=$("#supplier_mobile").val();
         if(supplier_telephone !='' && supplier_telephone.length !=10){
-            alert()
             $("#ChecksupplierTelephoneErr").show();
             return false;
         }else if(supplier_mobile !='' && supplier_mobile.length !=10){
