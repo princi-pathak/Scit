@@ -40,120 +40,131 @@
                             </div>
                         </div>
                     </div>
+                    <div class="productDetailTable pt-3">
+                        <table id="containerA" class="table mb-0" cellspacing="0" width="100%">
+                            <thead class="table-light">
+                                <tr>
+                                    <td></td>
+                                    <th>#</th>
+                                    <th>Quote Ref </th>
+                                    <th>Quote Date</th>
+                                    <th>Customer Name</th>
+                                    <th>Site / Delivery</th>
+                                    <th>No. Quotes </th>
+                                    <th>Sub Total</th>
+                                    <th>VAT</th>
+                                    <th>Total </th>
+                                    <th>Deposit </th>
+                                    <th>Outstanding</th>
+                                    <th>profit</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
 
-                    <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <td></td>
-                                <th>#</th>
-                                <th>Quote Ref </th>
-                                <th>Quote Date</th>
-                                <th>Customer Name</th>
-                                <th>Site / Delivery</th>
-                                <th>No. Quotes </th>
-                                <th>Sub Total</th>
-                                <th>VAT</th>
-                                <th>Total </th>
-                                <th>Deposit </th>
-                                <th>Outstanding</th>
-                                <th>profit</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @php
-                            $subTotal = 0;
-                            $vat = 0;
-                            $total = 0;
-                            $deposit = 0;
-                            $outstanding = 0;
-                            $profit = 0;
-                            @endphp
-                            @if(!empty($quotes))
-                            @foreach($quotes as $value)
-                            @php
-                            $subTotal += $value->sub_total ?? 0;
-                            $vat += $value->vat_amount ?? 0;
-                            $total += $value->total ?? 0;
-                            $deposit += $value->deposit ?? 0;
-                            $outstanding += $value->outstanding ?? 0;
-                            $profit += $value->profit ?? 0;
-                            @endphp
-                            <tr>
-                                <td></td>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $value->quote_ref ?? '-'}}</td>
-                                <td>{{ $value->quota_date }}</td>
-                                <td>{{ $value->customer->name ?? '' }}</td>
-                                <td>{{ $value->customer_address }}</td>
-                                <td>1</td>
-                                <td>&#163;{{ $value->sub_total ?? '0.00' }}</td>
-                                <td>&#163;{{ $value->vat_amount ?? '0.00'}}</td>
-                                <td>&#163;{{ $value->total ?? '0.00'}}</td>
-                                <td>&#163;{{ $value->deposit ??  '0.00'}}</td>
-                                <td>&#163;{{ $value->outstanding ?? '0.00' }}</td>
-                                <td>&#163;{{ $value->profit ?? '0.00' }}</td>
-                                <td>
-                                    <div class="d-inline-flex align-items-center ">
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                                Action
-                                            </a>
-                                            <div class="dropdown-menu fade-up m-0">
-                                                <a href="#" class="dropdown-item">Send SMS</a>
-                                                <a href="{{ url('/quote/edit').'/'.$value->id }}" class="dropdown-item">Edit</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="" class="dropdown-item">Preview</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="" class="dropdown-item">Print</a>
-                                                <a href="" class="dropdown-item">Email</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="" class="dropdown-item">Convert To Recurring Quote </a>
-                                                <hr class="dropdown-divider">
-                                                <a href="" class="dropdown-item">Convert To New Job</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="" class="dropdown-item">Convert To Recurring Job</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="" class="dropdown-item">Convert To Invoice</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="" class="dropdown-item">Change To Processed</a>
-                                                <a href="" class="dropdown-item">Change To Call Back</a>
-                                                <a href="" class="dropdown-item">Change To Accepted</a>
-                                                <a href="" class="dropdown-item">Change To Rejected</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="#" class="dropdown-item set_value_on_CRM_model" class="dropdown-item">CRM History</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="#" class="dropdown-item">Start Timer</a>
+                            <tbody>
+                                @php
+                                $subTotal = 0;
+                                $vat = 0;
+                                $total = 0;
+                                $deposit = 0;
+                                $outstanding = 0;
+                                $profit = 0;
+                                @endphp
+                                @if(!empty($quotes))
+                                @foreach($quotes as $value)
+                                @php
+                                $subTotal += $value->sub_total ?? 0;
+                                $vat += $value->vat_amount ?? 0;
+                                $total += $value->total ?? 0;
+                                $deposit += $value->deposit ?? 0;
+                                $outstanding += $value->outstanding ?? 0;
+                                $profit += $value->profit ?? 0;
+                                @endphp
+                                <tr>
+                                    <td></td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $value->quote_ref ?? '-'}}</td>
+                                    <td>{{ $value->quota_date }}</td>
+                                    <td>{{ $value->customer->name ?? '' }}</td>
+                                    <td>{{ $value->customer_address }}</td>
+                                    <td>1</td>
+                                    <td>&#163;{{ $value->sub_total ?? '0.00' }}</td>
+                                    <td>&#163;{{ $value->vat_amount ?? '0.00'}}</td>
+                                    <td>&#163;{{ $value->total ?? '0.00'}}</td>
+                                    <td>&#163;{{ $value->deposit ??  '0.00'}}</td>
+                                    <td>&#163;{{ $value->outstanding ?? '0.00' }}</td>
+                                    <td>&#163;{{ $value->profit ?? '0.00' }}</td>
+                                    <td>
+                                        <div class="d-inline-flex align-items-center ">
+                                            <div class="nav-item dropdown">
+                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                    Action
+                                                </a>
+                                                <div class="dropdown-menu fade-up m-0">
+                                                    <a href="#" class="dropdown-item">Send SMS</a>
+                                                    <a href="{{ url('/quote/edit').'/'.$value->id }}" class="dropdown-item">Edit</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="" class="dropdown-item">Preview</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="" class="dropdown-item">Print</a>
+                                                    <a href="" class="dropdown-item">Email</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="" class="dropdown-item">Convert To Recurring Quote </a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="" class="dropdown-item">Convert To New Job</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="" class="dropdown-item">Convert To Recurring Job</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="" class="dropdown-item">Convert To Invoice</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="" class="dropdown-item">Change To Processed</a>
+                                                    <a href="" class="dropdown-item">Change To Call Back</a>
+                                                    <a href="" class="dropdown-item">Change To Accepted</a>
+                                                    <a href="" class="dropdown-item">Change To Rejected</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="#" class="dropdown-item set_value_on_CRM_model" class="dropdown-item">CRM History</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="#" class="dropdown-item">Start Timer</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                            @else
-                            <tr>
-                                <td></td>
-                                <td colspan="12">
-                                    <label class="red_sorryText"> Sorry, there are no items available.. </label>
-                                </td>
-                            </tr>
-                            @endif
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td></td>
-                                <td colspan="6">Page Sub Total</td>
-                                <td>&#163;{{ number_format($subTotal, 2) }}</td>
-                                <td>&#163;{{ number_format($vat, 2) }}</td>
-                                <td>&#163;{{ number_format($total, 2) }}</td>
-                                <td>&#163;{{ number_format($deposit, 2) }}</td>
-                                <td>&#163;{{ number_format($outstanding, 2) }}</td>
-                                <td>&#163;{{ number_format($profit, 2) }}</td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td></td>
+                                    <td colspan="12">
+                                        <label class="red_sorryText"> Sorry, there are no items available.. </label>
+                                    </td>
+                                </tr>
+                                @endif
+                            </tbody>
+                            <tfoot>
+                                <!-- <tr>
+                                    <th colspan="6" rowspan="1">Page Sub Total</th>
+                                    <th rowspan="1" colspan="1">£220.00</th>
+                                    <th rowspan="1" colspan="1">£44.00</th>
+                                    <th rowspan="1" colspan="1">£264.00</th>
+                                    <th rowspan="1" colspan="1">£0.00</th>
+                                    <th rowspan="1" colspan="1">£264.00</th>
+                                    <th rowspan="1" colspan="1">£120.00</th>
+                                    <th rowspan="1" colspan="1"></th>
+                                </tr> -->
+                                <tr>
+                                    <th></th>
+                                    <th colspan="6">Page Sub Total</th>
+                                    <th>&#163;{{ number_format($subTotal, 2) }}</th>
+                                    <th>&#163;{{ number_format($vat, 2) }}</th>
+                                    <th>&#163;{{ number_format($total, 2) }}</th>
+                                    <th>&#163;{{ number_format($deposit, 2) }}</th>
+                                    <th>&#163;{{ number_format($outstanding, 2) }}</th>
+                                    <th>&#163;{{ number_format($profit, 2) }}</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div> <!-- End off main Table -->
             </div>
         </di>

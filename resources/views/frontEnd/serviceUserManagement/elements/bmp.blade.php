@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     .search_bmp_date {
         display: none;
     }
@@ -6,7 +6,7 @@
     .search_bmp_title {
         display: none;
     }
-</style>
+</style> -->
 <!-- Add Behaviour Management Plans Modal -->
 <div class="modal fade my_plan_model" id="BMPAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -20,7 +20,7 @@
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default add-new-btn active" type="button"> Add New </button>
                         <button class="btn label-default logged-btn active logged-bmp-btn" type="button"> Logged Plans </button>
-                        <!-- <button class="btn label-default search-btn active" type="button"> Search </button> -->
+                        <button class="btn label-default search-btn active" type="button"> Search </button>
                     </div>
                     <!-- Add new Details -->
                     <div class="add-new-box risk-tabs custm-tabs">
@@ -112,10 +112,10 @@
                         </div>
 
 
-                        <div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">
+                        <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">
                             <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 cus-lbl text-right"> Search Type: </label>
                             <div class="col-md-11 col-sm-11 col-xs-12 m-b-15 title">
-                                <!-- <input type="text" name="search_bmp_record" class="form-control" maxlength="255"> -->
+                                <input type="text" name="search_bmp_record" class="form-control" maxlength="255">
                                 <select name="" class="form-control" id="search_bmp_type">
                                     <option value="">Select</option>
                                     <option value="1">Title</option>
@@ -129,7 +129,7 @@
                             <div class="col-md-11 col-sm-11 col-xs-12 m-b-15 title">
                                 <input type="text" name="search_bmp_record" class="form-control" maxlength="255">
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-12 col-sm-12 col-xs-12 p-0 search_bmp_date">
                             <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 cus-lbl text-right"> Date: </label>
@@ -658,7 +658,8 @@
 
         function update_search_list() {
 
-            var searchType = document.getElementById('search_bmp_type').value;
+            // var searchType = document.getElementById('search_bmp_type').value;
+            var searchType = 2;
             if (searchType == 1) {
                 var search_input = $('input[name=\'search_bmp_record\']');
                 var search = search_input.val();
@@ -747,17 +748,17 @@
         });
     });
 
-    $('#search_bmp_type').on('change', function() {
-        var searchType = document.getElementById('search_bmp_type').value;
-        if (searchType == 1) {
-            $('.search_bmp_title').show();
-        } else {
-            $('.search_bmp_title').hide();
-        }
-        if (searchType == 2) {
-            $('.search_bmp_date').show();
-        } else {
-            $('.search_bmp_date').hide();
-        }
-    });
+    // $('#search_bmp_type').on('change', function() {
+    //     var searchType = document.getElementById('search_bmp_type').value;
+    //     if (searchType == 1) {
+    //         $('.search_bmp_title').show();
+    //     } else {
+    //         $('.search_bmp_title').hide();
+    //     }
+    //     if (searchType == 2) {
+    //         $('.search_bmp_date').show();
+    //     } else {
+    //         $('.search_bmp_date').hide();
+    //     }
+    // });
 </script>
