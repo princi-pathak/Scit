@@ -44,6 +44,7 @@
                 <form action="{{ url('/quote/saveQuoteData') }}" method="post" class="customerForm mt-3">
                     @csrf
                     <div class="newJobForm card">
+                        
                         <div class="row" id="hideCustomerDetails">
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="formDtail">
@@ -565,6 +566,7 @@
                                                                         <th>Deposit </th>
                                                                         <th>Outstanding</th>
                                                                         <th>Status</th>
+                                                                        <th></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -581,6 +583,42 @@
                                                                         <td>&#163;{{ $quoteData['deposit'] ?? '0.00' }}</td>
                                                                         <td>&#163;{{ $quoteData['outstanding'] }}</td>
                                                                         <td>{{ $quoteData['status'] }}</td>
+                                                                        <td>
+                                                                            <div class="d-inline-flex align-items-center ">
+                                                                                <div class="nav-item dropdown">
+                                                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                                                        Action
+                                                                                    </a>
+                                                                                    <div class="dropdown-menu fade-up m-0">
+                                                                                        <a href="{{ url('/quote-details/edit').'/'.$value->id }}" class="dropdown-item">Edit</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Preview</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Print</a>
+                                                                                        <a href="" class="dropdown-item">Email</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Duplicate</a>
+                                                                                        <a href="" class="dropdown-item">Duplicate for New Customer</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Create Purchase Order </a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Convert To New Job</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Convert To Recurring Job</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Convert To Invoice</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Change To Processed</a>
+                                                                                        <a href="" class="dropdown-item">Change To Call Back</a>
+                                                                                        <a href="" class="dropdown-item">Change To Accepted</a>
+                                                                                        <a href="" class="dropdown-item">Change To Rejected</a>
+                                                                                        <a href="" class="dropdown-item">New Task</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="#" class="dropdown-item set_value_on_CRM_model" class="dropdown-item">CRM History</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -1039,7 +1077,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!--  -->
                                                         <div class="tab-pane fade" id="billingDetails" role="tabpanel" aria-labelledby="billingDetails-tab" tabindex="0">
                                                             <div class="newJobForm card">
                                                                 <div class="mb-2 row">
@@ -1165,31 +1202,21 @@
                                                 <div class="contantbodypopup p-0">
                                                     <div class="newJobForm card">
                                                         <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date
-                                                                <span class="radStar">*</span></label>
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
                                                                 <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
                                                             </div>
                                                             <div class="col-sm-1 ps-0">
-                                                                <a href="#!">
-                                                                    <span class="material-symbols-outlined">
-                                                                        calendar_month
-                                                                    </span>
-                                                                </a>
+                                                                <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Due Date
-                                                                <span class="radStar">*</span></label>
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Due Date<span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
                                                                 <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
                                                             </div>
                                                             <div class="col-sm-1 ps-0">
-                                                                <a href="#!">
-                                                                    <span class="material-symbols-outlined">
-                                                                        calendar_month
-                                                                    </span>
-                                                                </a>
+                                                                <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
@@ -1204,8 +1231,6 @@
                                                                 <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
                                                             </div>
                                                         </div>
-
-
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
                                                                 <span class="radStar">*</span></label>
@@ -1238,7 +1263,7 @@
                                                         </div>
 
                                                         <div class="mb-2 row">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Totle (inc. VAT)</label>
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Totel (inc. VAT)</label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
                                                             </div>
@@ -1286,11 +1311,8 @@
                                             <tbody>
                                                 <tr>
                                                     <td colspan="7">
-                                                        <label class="red_sorryText">
-                                                            Sorry, no records to show
-                                                        </label>
+                                                        <label class="red_sorryText">Sorry, no records to show</label>
                                                     </td>
-
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1377,7 +1399,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="tabheadingTitle pb-3 pt-2">
-                                        <a href="#" class="profileDrop me-3"> New Task</a>
+                                        <a href="#" class="profileDrop me-3" onclick="openTaskModal();"> New Task</a>
                                     </div>
                                     <div class="extraInformationTab">
                                         <nav>
@@ -1788,6 +1810,43 @@
     </div>
 </div>
 <!-- Add Customer Type Modal End -->
+
+
+<!-- Add Task Modal Start -->
+<!-- <div class="modal fade" id="quote_task_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="thirdModalLabel">New Task</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add_customer_type_form">
+                    <div class="mb-3 row">
+                        <label for="inputJobRef" class="col-sm-3 col-form-label">Customer Type <span class="radStar ">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="title" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Type">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                        <div class="col-sm-9">
+                            <select id="customer_type_status" name="status" class="form-control editInput">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="pageTitleBtn">
+                        <a href="#" class="profileDrop p-2 crmNewBtn" id="saveAddCustomerType"> Save</a>
+                        <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- Add Task Type Modal End -->
 
 <!-- Add Site Address Modal Start -->
 <div class="modal fade" id="add_site_address_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
@@ -2668,6 +2727,10 @@
         });
 
     });
+
+    // function openTaskModal() {
+    //     $('#quote_task_modal').modal('show');
+    // }
 
     function getQuoteAttachmentsOnPageLoad() {
         const quote_id = document.getElementById('quote_id').value;

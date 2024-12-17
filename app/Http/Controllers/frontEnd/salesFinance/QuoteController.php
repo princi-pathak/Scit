@@ -298,6 +298,7 @@ class QuoteController extends Controller
         $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id);
         $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);
         $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
+        $data['type'] = "quote";
         // dd($data['attachment_type']);
         return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
@@ -434,4 +435,15 @@ class QuoteController extends Controller
         ]);
     }
 
+    public function editQuoteDetails($id){
+        $data['page'] = "quotes";
+        $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
+        $data['countries'] = Country::getCountriesNameCode();
+        $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id);
+        $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);
+        $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
+        $data['type'] = "quote-details";
+        // dd($data['attachment_type']);
+        return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
+    }
 }
