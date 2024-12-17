@@ -13,6 +13,10 @@
     display: flex;
     align-items: center;
 }
+.disabled-tab {
+    pointer-events: none;
+    opacity: 0.5;
+}
 </style>
         <section class="main_section_page px-3">
             <div class="container-fluid">
@@ -20,7 +24,7 @@
                     <div class="col-md-4 col-lg-4 col-xl-4 ">
                         <div class="pageTitle">
                             @if(isset($key) && $key !='')
-                            <h3 class="header_text">Edit Purchase Order</h3>
+                            <h3 class="header_text">{{$purchase_orders->purchase_order_ref}}</h3>
                             @else
                             <h3 class="header_text">New Purchase Order</h3>
                             @endif
@@ -47,16 +51,15 @@
                                     <div class="formDtail">
                                         <h4 class="contTitle">Supplier Details</h4>
                                        @csrf
-                                        <input type="hidden" id="id" name="id" value="">
+                                        <input type="hidden" id="id" name="id" value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id; }?>">
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer"
-                                                    class="col-sm-3 col-form-label">Supplier<span
-                                                    class="radStar">*</span></label>
+                                                    class="col-sm-3 col-form-label">Supplier<span class="radStar">*</span></label>
                                                 <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions" id="purchase_supplier_id" name="supplier_id"  onchange="get_supplier_details()">
+                                                <select class="form-control editInput selectOptions checkError" id="purchase_supplier_id" name="supplier_id"  onchange="get_supplier_details()">
                                                     <option selected disabled>Select Supplier</option>
                                                     <?php foreach ($suppliers as $suppVal) { ?>
-                                                        <option value="{{$suppVal->id}}">{{$suppVal->name}}</option>
+                                                        <option value="{{$suppVal->id}}" <?php if(isset($purchase_orders) && $suppVal->id == $purchase_orders->supplier_id){echo 'selected'; }?>>{{$suppVal->name}}</option>
                                                     <?php } ?>
                                                 </select>
                                                 </div>
@@ -72,10 +75,10 @@
                                                 <label for="inputContact"
                                                     class="col-sm-3 col-form-label">Contact</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control editInput selectOptions" id="contact_id" name="contact_id" <?php if(!isset($key) && $key ==''){echo 'disabled';}?> disabled>
-                                                        <option selected>Select Supplier First</option>
+                                                    <select class="form-control editInput selectOptions" id="purchase_contact_id" name="contact_id" <?php if(!isset($purchase_orders) && $purchase_orders ==''){echo 'disabled'; }?>>
+                                                        <option selected disabled>Select Supplier First</option>
                                                         @foreach($additional_contact as $addContact)
-                                                            <option value="{{$addContact->id}}" <?php if(isset($job_details) && $job_details->contact_id == $addContact->id){echo 'selected';}?>>{{$addContact->contact_name}}</option>
+                                                            <option value="{{$addContact->id}}" <?php if(isset($purchase_orders) && $purchase_orders->contact_id == $addContact->id){echo 'selected';}?>>{{$addContact->contact_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -89,7 +92,7 @@
                                                 <label for="inputName" class="col-sm-3 col-form-label">Name<span
                                                 class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput" name="name" id="name" value="" placeholder="Enter Your Full Name">
+                                                    <input type="text" class="form-control editInput textareaInput checkError" name="name" id="purchase_name" value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->name;}?>" placeholder="Enter Your Full Name">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -97,59 +100,62 @@
                                                     class="col-sm-3 col-form-label">Address<span
                                                     class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" id="address" name="address" rows="3" placeholder="Enter Your Address"></textarea>
+                                                    <textarea class="form-control textareaInput checkError" id="purchase_address" name="address" rows="3" placeholder="Enter Your Address"><?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->address;}?></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCity" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput" id="city" name="city" value="" placeholder="Enter Your City">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_city" name="city" value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->city;}?>" placeholder="Enter Your City">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCounty" class="col-sm-3 col-form-label">County</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput" id="country" name="country" value="" placeholder="Enter Your County">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_county" name="county" value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->county;}?>" placeholder="Enter Your County">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPincode"
                                                     class="col-sm-3 col-form-label">Postcode</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput" id="pincode" name="pincode" value="" placeholder="Enter Your Postcode">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_postcode" name="postcode" value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->postcode;}?>" placeholder="Enter Your Postcode">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
                                                 <label for="inputTelephone"
                                                     class="col-sm-3 col-form-label">Telephone</label>
                                                 <div class="col-sm-3">
-                                                    <select class="form-control editInput selectOptions">
+                                                    <select class="form-control editInput selectOptions" id="purchase_telephone_code" name="telephone_code">
                                                         @foreach($country as $Codeval)
-                                                        <option value="{{$Codeval->id}}">+{{$Codeval->code}}</option>
+                                                        <option value="{{$Codeval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->telephone_code == $Codeval->id){echo 'selcted';}?>>+{{$Codeval->code}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control editInput textareaInput" id="telephone" name="telephone" value="" placeholder="Enter Your Telephone">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_telephone" name="telephone" value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->telephone;}?>" placeholder="Enter Your Telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                    <span style="color:red;display:none" id="CheckpurchaseTelephoneErr">Please enter 10 digit number</span>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
                                                 <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
                                                 <div class="col-sm-3">
-                                                    <select class="form-control editInput selectOptions">
+                                                    <select class="form-control editInput selectOptions" id="purchase_mobile_code" name="mobile_code">
                                                     @foreach($country as $Codeval)
-                                                        <option value="{{$Codeval->id}}">+{{$Codeval->code}}</option>
+                                                        <option value="{{$Codeval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->mobile_code == $Codeval->id){echo 'selcted';}?>>+{{$Codeval->code}}</option>
                                                     @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control editInput textareaInput" id="contact" name="contact"  value="" placeholder="Enter Your Mobile No.">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_mobile" name="mobile"  value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->mobile;}?>" placeholder="Enter Your Mobile No." onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                    <span style="color:red;display:none" id="CheckpurchaseMobileErr">Please enter 10 digit number</span>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput" id="email" name="email" value="" placeholder="Enter Your Email">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_email" name="email" value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->email;}?>" placeholder="Enter Your Email" onchange="purchase_check_email()">
+                                                    <span style="color:red" id="purchaseemailErr"></span>
                                                 </div>
                                             </div>
                                     </div>
@@ -162,10 +168,10 @@
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Customer</label>
                                                 <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions get_site_result"
-                                                <?php if(!isset($key) && $key ==''){echo 'disabled';}?> id="site_id" name="site_id">
+                                                <?php if(!isset($key) && $key ==''){echo 'disabled';}?> id="purchase_customer_id" name="customer_id" onchange="get_customer_details()">
                                                     <option selected disabled>Select Customer</option>
                                                     <?php foreach ($customers as $cust) { ?>
-                                                        <option value="{{$cust->id}}">{{$cust->name}}</option>
+                                                        <option value="{{$cust->id}}" <?php if(isset($purchase_orders) && $purchase_orders->customer_id == $cust->id){echo 'selected';}?>>{{$cust->name}}</option>
                                                     <?php } ?>
                                                 </select>
                                                     <!-- <input type="text"  id="staticEmail"> -->
@@ -179,10 +185,10 @@
                                                 <label for="inputProject"
                                                     class="col-sm-3 col-form-label">Project</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control editInput selectOptions" id="project_id" name="project_id" disabled>
+                                                    <select class="form-control editInput selectOptions" id="purchase_project_id" name="project_id" <?php if(!isset($purchase_orders) && $purchase_orders ==''){echo 'disabled'; }?>>
                                                         <option selected disabled></option>
                                                         @foreach($projects as $project)
-                                                            <option value="{{$project->id}}">{{$project->project_name}}</option>
+                                                            <option value="{{$project->id}}" <?php if(isset($purchase_orders) && $purchase_orders->project_id == $project->id){echo 'selected';}?>>{{$project->project_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -194,10 +200,10 @@
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Site</label>
                                                 <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions get_site_result" disabled id="site_id" name="site_id">
+                                                <select class="form-control editInput selectOptions get_site_result" id="purchase_site_id" name="site_id" <?php if(!isset($purchase_orders) && $purchase_orders ==''){echo 'disabled'; }?>>
                                                     <option selected>None</option>
                                                     @foreach($site as $siteVal)
-                                                        <option value="{{$siteVal->id}}">{{$siteVal->site_name}}</option>
+                                                        <option value="{{$siteVal->id}}" <?php if(isset($purchase_orders) && $purchase_orders->site_id == $siteVal->id){echo 'selected';}?>>{{$siteVal->site_name}}</option>
                                                     @endforeach
                                                 </select>
                                                     <!-- <input type="text"  id="staticEmail"> -->
@@ -215,74 +221,75 @@
                                                 <label for="inputContact"
                                                     class="col-sm-3 col-form-label">Name<span class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="company" id="company" class="form-control editInput textareaInput" value="{{Auth::user()->name}}" placeholder="Enter Your Name">
+                                                    <input type="text" name="user_name" id="purchase_user_name" class="form-control editInput textareaInput checkError" value="<?php if(isset($purchase_orders) && $purchase_orders->user_name !=''){echo $purchase_orders->user_name;}else{echo Auth::user()->name;}?>" placeholder="Enter Your Name">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputContact"
                                                     class="col-sm-3 col-form-label">Company</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="company" id="company" class="form-control editInput textareaInput" value="{{$company_name}}" placeholder="Enter Comapny Name">
+                                                    <input type="text" name="company_name" id="purchase_company_name" class="form-control editInput textareaInput" value="<?php if(isset($purchase_orders) && $purchase_orders->company_name !=''){echo $purchase_orders->company_name;}else{echo $company_name;}?>" placeholder="Enter Comapny Name">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputAddress"
                                                     class="col-sm-3 col-form-label">Address<span class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput" id="address" name="address" rows="3" placeholder="Enter Your Address">{{Auth::user()->current_location}}</textarea>
+                                                    <textarea class="form-control textareaInput checkError" id="purchase_user_address" name="user_address" rows="3" placeholder="Enter Your Address"><?php if(isset($purchase_orders) && $purchase_orders->user_address !=''){echo $purchase_orders->user_address;}else{echo Auth::user()->current_location;}?></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-9">
-                                                <input type="text" class="form-control  editInput textareaInput"
-                                                id="profession_name" value="" placeholder="Enter Your City">
+                                                <input type="text" class="form-control  editInput textareaInput" id="purchase_user_city" name="user_city" value="<?php if(isset($purchase_orders) && $purchase_orders->user_city !=''){echo $purchase_orders->user_city;}?>" placeholder="Enter Your City">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">County</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput" id="conatact_name" name="conatact_name" value="" placeholder="Enter Your County">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_user_county" name="user_county" value="<?php if(isset($purchase_orders) && $purchase_orders->user_county !=''){echo $purchase_orders->user_county;}?>" placeholder="Enter Your County">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputEmail" class="col-sm-3 col-form-label">Postcode</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput" id="site_email" name="site_email" value="" placeholder="Enter Your Postcode">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_user_post_code" name="user_post_code" value="<?php if(isset($purchase_orders) && $purchase_orders->user_post_code !=''){echo $purchase_orders->user_post_code;}?>" placeholder="Enter Your Postcode">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row field">
                                             <label for="inputTelephone"
                                                 class="col-sm-3 col-form-label">Telephone</label>
                                             <div class="col-sm-3">
-                                                <select class="form-control editInput selectOptions" >
+                                                <select class="form-control editInput selectOptions" id="purchase_user_telephone_code" name="user_telephone_code">
                                                 @foreach($country as $Codeval)
-                                                    <option value="{{$Codeval->id}}">+{{$Codeval->code}}</option>
+                                                    <option value="{{$Codeval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->user_telephone_code == $Codeval->id){echo 'selected';}?>>+{{$Codeval->code}}</option>
                                                 @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control editInput textareaInput" id="site_telephone" name="site_telephone" value="{{Auth::user()->phone_no}}" placeholder="Enter Your Telephone">
+                                                <input type="text" class="form-control editInput textareaInput" id="purchase_user_telephone" name="user_telephone" value="<?php if(isset($purchase_orders) && $purchase_orders->user_telephone != ''){echo $purchase_orders->user_telephone;}else{echo Auth::user()->phone_no;}?>" placeholder="Enter Your Telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                <span style="color:red;display:none" id="CheckpurchaseUserTelephoneErr">Please enter 10 digit number</span>
                                             </div>
                                         </div>
                                         <div class="mb-3 row field">
                                             <label for="inputMobile" class="col-sm-3 col-form-label">Mobile</label>
                                             <div class="col-sm-3">
-                                                <select class="form-control editInput selectOptions">
+                                                <select class="form-control editInput selectOptions" id="purchase_user_mobile_code" name="user_mobile_code">
                                                 @foreach($country as $Codeval)
-                                                    <option value="{{$Codeval->id}}">+{{$Codeval->code}}</option>
+                                                    <option value="{{$Codeval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->user_telephone_code == $Codeval->id){echo 'selected';}?>>+{{$Codeval->code}}</option>
                                                 @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control editInput textareaInput" id="site_mobile" name="site_mobile" value="{{Auth::user()->mobile}}" placeholder="Enter Your Mobile No.">
+                                                <input type="text" class="form-control editInput textareaInput" id="purchase_user_mobile" name="user_mobile" value="<?php if(isset($purchase_orders) && $purchase_orders->user_mobile != ''){echo $purchase_orders->user_mobile;}else{echo Auth::user()->mobile;}?>" placeholder="Enter Your Mobile No." onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                <span style="color:red;display:none" id="CheckpurchaseUserMobileErr">Please enter 10 digit number</span>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label for="inputAddress"
                                                 class="col-sm-6 col-form-label">Expected Delivery On</label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control editInput textareaInput" id="site_mobile" name="site_mobile" value="">
+                                                <input type="date" class="form-control editInput textareaInput" id="purchase_expected_deleveryDate" name="expected_deleveryDate" value="<?php if(isset($purchase_orders) && $purchase_orders->expected_deleveryDate != ''){echo $purchase_orders->expected_deleveryDate;}?>">
                                             </div>
                                             <div class="col-sm-2 calendar_icon">
                                                 <i class="fa fa-calendar-alt"></i>
@@ -298,17 +305,16 @@
                                             <div class="mb-3 row">
                                                 <label for="inputJobRef" class="col-sm-4 col-form-label">Purchase Order Ref.</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control-plaintext editInput"
-                                                        id="inputJobRef" value="Auto generate" readonly>
+                                                    <input type="text" class="form-control-plaintext editInput" id="inputJobRef" value="<?php if(isset($purchase_orders) && $purchase_orders->purchase_order_ref != ''){echo $purchase_orders->purchase_order_ref;}else{echo 'Auto generate';}?>" readonly>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputJobType" class="col-sm-3 col-form-label">Department</label>
                                                 <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions" id="job_type" name="job_type">
+                                                <select class="form-control editInput selectOptions" id="purchase_department_id" name="department_id">
                                                     <option selected disabled>Please Select</option>
-                                                    <?php foreach ($job_type as $type) { ?>
-                                                        <option value="{{$type->id}}" >{{$type->name}}</option>
+                                                    <?php foreach ($department as $dept) { ?>
+                                                        <option value="{{$dept->id}}" <?php if(isset($purchase_orders) && $purchase_orders->department_id == $dept->id){echo 'selected';}?>>{{$dept->title}}</option>
                                                     <?php } ?>
                                                 </select>
                                                 </div>
@@ -320,8 +326,7 @@
                                             <div class="mb-3 row">
                                                 <label for="inputTelephone" class="col-sm-6 col-form-label">Purchase Date<span class="radStar">*</span></label>
                                                 <div class="col-sm-4">
-                                                    <input type="date" class="form-control editInput"
-                                                    id="start_date" name="start_date" value="">
+                                                    <input type="date" class="form-control editInput checkError" id="purchase_purchase_date" name="purchase_date" value="<?php if(isset($purchase_orders) && $purchase_orders->purchase_date != ''){echo $purchase_orders->purchase_date;}?>">
                                                 </div>
                                                 <div class="col-sm-2 calendar_icon">
                                                     <i class="fa fa-calendar-alt"></i>
@@ -330,40 +335,35 @@
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Reference</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput"
-                                                    id="customer_ref" name="customer_ref" placeholder="Reference(if any)" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_reference" name="reference" placeholder="Reference(if any)" value="<?php if(isset($purchase_orders) && $purchase_orders->reference != ''){echo $purchase_orders->reference;}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Ref</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput"
-                                                    id="cust_job_ref" name="cust_job_ref" placeholder="Quote, if any" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_qoute_ref" name="qoute_ref" placeholder="Quote, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->qoute_ref != ''){echo $purchase_orders->qoute_ref;}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPurchase" class="col-sm-3 col-form-label">Job Ref</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput"
-                                                    id="purchase_order_ref" name="purchase_order_ref" placeholder="Job Ref, if any" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_job_ref" name="job_ref" placeholder="Job Ref, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->job_ref != ''){echo $purchase_orders->job_ref;}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPurchase" class="col-sm-3 col-form-label">Invoice Ref</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput"
-                                                    id="purchase_order_ref" name="purchase_order_ref" placeholder="Invoice Ref, if any" value="">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_invoice_ref" name="invoice_ref" placeholder="Invoice Ref, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->invoice_ref != ''){echo $purchase_orders->invoice_ref;}?>">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                     <label class="col-sm-3 col-form-label">Payment Terms</label>
                                                     <div class="col-sm-6">
-                                                        <select class="form-control editInput selectOptions"
-                                                            id="payment_terms" name="payment_terms">
+                                                        <select class="form-control editInput selectOptions" id="purchase_payment_terms" name="payment_terms">
                                                             <option value="21">Default (21)
                                                             </option>
                                                             <?php for($i=1;$i<21;$i++){?>
-                                                            <option value="{{$i}}">{{$i}}</option>
+                                                            <option value="{{$i}}" <?php if(isset($purchase_orders) && $purchase_orders->payment_terms == $i){echo 'selected';}?>>{{$i}}</option>
                                                             <?php }?>
                                                         </select>
                                                     </div>
@@ -376,8 +376,7 @@
                                             <div class="mb-3 row">
                                                 <label for="inputTelephone" class="col-sm-6 col-form-label">Payment Due Date</label>
                                                 <div class="col-sm-4">
-                                                    <input type="date" class="form-control editInput"
-                                                    id="start_date" name="start_date" value="">
+                                                    <input type="date" class="form-control editInput" id="purchase_payment_due_date" name="payment_due_date" value="<?php if(isset($purchase_orders) && $purchase_orders->payment_due_date != ''){echo $purchase_orders->payment_due_date;}?>">
                                                 </div>
                                                 <div class="col-sm-2 calendar_icon">
                                                     <i class="fa fa-calendar-alt"></i>
@@ -388,15 +387,14 @@
                                                 <label for="inputPriority"
                                                     class="col-sm-3 col-form-label">Status</label>
                                                 <div class="col-sm-9">
-                                                <select class="form-control editInput selectOptions"
-                                                    id="priorty" name="priorty">
-                                                    <option value="1" selected>Draft</option>
-                                                    <option value="2">Awaiting Approval</option>
-                                                    <option value="3">Approved</option>
-                                                    <option value="4">Actioned</option>
+                                                <select class="form-control editInput selectOptions" id="purchase_status" name="status">
+                                                    <option value="1" <?php if(isset($purchase_orders) && $purchase_orders->status == 1){echo 'selected';}else{echo 'selected';}?>>Draft</option>
+                                                    <option value="2" <?php if(isset($purchase_orders) && $purchase_orders->status == 2){echo 'selected';}?>>Awaiting Approval</option>
+                                                    <option value="3" <?php if(isset($purchase_orders) && $purchase_orders->status == 3){echo 'selected';}?>>Approved</option>
+                                                    <option value="4" <?php if(isset($purchase_orders) && $purchase_orders->status == 4){echo 'selected';}?>>Actioned</option>
                                                     <option value="5" disabled>Paid</option>
-                                                    <option value="6">Cancelled</option>
-                                                    <option value="7">Invoice Received</option>
+                                                    <option value="6" <?php if(isset($purchase_orders) && $purchase_orders->status == 6){echo 'selected';}?>>Cancelled</option>
+                                                    <option value="7" <?php if(isset($purchase_orders) && $purchase_orders->status == 7){echo 'selected';}?>>Invoice Received</option>
                                                     <option value="8" disabled>Rejected</option>
                                                 </select>
                                                 </div>
@@ -405,10 +403,10 @@
                                             <div class="mb-3 row">
                                                 <label for="inputCountry" class="col-sm-3 col-form-label">Tags</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control editInput selectOptions" id="tags" name="tags">
+                                                    <select class="form-control editInput selectOptions" id="purchase_tag_id" name="tag_id">
                                                         <option selected disabled>None</option>
                                                         @foreach($tag as $tagval)
-                                                            <option value="{{$tagval->id}}">{{$tagval->title}}</option>
+                                                            <option value="{{$tagval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->tag_id == $tagval->id){echo 'selected';}?>>{{$tagval->title}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -513,7 +511,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Supplier Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="customer_notes" name="customer_notes"></textarea>
+                                            <textarea cols="40" rows="5" id="purchase_supplier_notes" name="supplier_notes"><?php if(isset($purchase_orders) && $purchase_orders->supplier_notes != ''){echo $purchase_orders->supplier_notes;}?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -521,7 +519,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Delivery Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="deliver_notes" name="deliver_notes"></textarea>
+                                            <textarea cols="40" rows="5" id="purchase_delivery_notes" name="delivery_notes"><?php if(isset($purchase_orders) && $purchase_orders->delivery_notes != ''){echo $purchase_orders->delivery_notes;}?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -529,7 +527,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Internal Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="internal_notes" name="internal_notes"></textarea>
+                                            <textarea cols="40" rows="5" id="purchase_internal_notes" name="internal_notes"><?php if(isset($purchase_orders) && $purchase_orders->internal_notes != ''){echo $purchase_orders->internal_notes;}?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -543,7 +541,8 @@
 
                                 <div class="py-4">
                                     <div class="jobsection">
-                                        <input type="file" id="attachments" name="attachments" class="profileDrop">Upload Attachments
+                                        <input type="file" id="purchase_attachment" name="attachment" class="profileDrop">Upload Attachments
+                                        <span><?php if(isset($purchase_orders) && $purchase_orders->file_original_name != ''){echo $purchase_orders->file_original_name;}?></span>
                                     </div>
                                 </div>
                                 </div>
@@ -554,7 +553,7 @@
                                 <div class="row">
                                     <div class="col-sm-12 mb-3 mt-2">
                                         <div class="jobsection">
-                                            <a href="javascript:void(0)" onclick="get_modal(9)" class="profileDrop">New Task</a>
+                                            <a href="javascript:void(0)" class="profileDrop @if(!isset($key) || $key == '') disabled-tab @endif" @if(!isset($key) || $key == '') disabled @else  onclick="get_modal(9)" @endif>New Task</a>
 
                                         </div>
                                     </div>
@@ -623,6 +622,8 @@
 <!-- Models Start Here -->
 
 @include('components.add-supplier-modal')
+@include('components.contact-modal')
+@include('components.job-title-model')
 
 <!-- End here -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
@@ -639,18 +640,20 @@ var editor_config = {
   ],
 };
 
-CKEDITOR.replace('deliver_notes', editor_config );
-CKEDITOR.replace('customer_notes', editor_config );
-CKEDITOR.replace('internal_notes', editor_config );
+CKEDITOR.replace('purchase_supplier_notes', editor_config );
+CKEDITOR.replace('purchase_delivery_notes', editor_config );
+CKEDITOR.replace('purchase_internal_notes', editor_config );
 //Text Editer
 </script>
 <script>
     function getAllSupplier(data){
-        $("#purchase_supplier_id").append('<option value="'+data.id+'">'+data.name+'</option>')
+        $("#purchase_supplier_id").append('<option value="'+data.id+'">'+data.name+'</option>');
+    }
+    function GetAllContact(contact_data){
+        $("#purchase_contact_id").append('<option value="'+contact_data.data.id+'">'+contact_data.data.contact_name+'</option>');
     }
     function get_supplier_details(){
         var supplier_id = $("#purchase_supplier_id").val();
-        alert(supplier_id)
         var token = '<?php echo csrf_token(); ?>'
         $.ajax({
             type: "POST",
@@ -659,17 +662,22 @@ CKEDITOR.replace('internal_notes', editor_config );
                 supplier_id: supplier_id,
                 _token: token
             },
-            success: function(data) {
-                console.log(data);return false;
-                $('#contact_id').removeAttr('disabled');
-                if (data.customers && data.customers.length > 0) {
-                var customerData = data.customers[0];
-                $(".site_country_code").each(function() {
-                    if ($(this).val() === customerData.country_code) {
-                        $(this).prop('selected', true);
-                    }
-                });
-            }
+            success: function(response) {
+                console.log(response);
+                $('#purchase_contact_id').removeAttr('disabled');
+                var contactSelect=document.getElementById("purchase_contact_id");
+                $("#contact_customer_id").val(response.data.id);
+                $("#contact_customer_name").text(response.data.name);
+                const all_contact=response.data.contacts;
+                if (all_contact && all_contact.length > 0) {
+                    contactSelect.innerHTML='';
+                    all_contact.forEach((cont) => {
+                        const option = document.createElement("option");
+                        option.value = cont.id;
+                        option.text = `${cont.contact_name}`;
+                        contactSelect.appendChild(option);
+                    });
+                }
             },
             error: function(xhr, status, error) {
                 console.log(error);
@@ -677,7 +685,7 @@ CKEDITOR.replace('internal_notes', editor_config );
         });
     }
     function get_customer_details() {
-        var customer_id = $("#customer_id").val();
+        var customer_id = $("#purchase_customer_id").val();
         var token = '<?php echo csrf_token(); ?>'
         $.ajax({
             type: "POST",
@@ -688,43 +696,10 @@ CKEDITOR.replace('internal_notes', editor_config );
             },
             success: function(data) {
                 console.log(data);
-                $('#project_id').removeAttr('disabled');
-                $('#contact_id').removeAttr('disabled');
-                $('#site_id').removeAttr('disabled');
+                $('#purchase_project_id').removeAttr('disabled');
+                $('#purchase_site_id').removeAttr('disabled');
                 if (data.customers && data.customers.length > 0) {
                 var customerData = data.customers[0];
-
-                $("#name").val(customerData.name);
-                $("#email").val(customerData.email);
-                $("#telephone").val(customerData.telephone);
-                $("#mobile").val(customerData.mobile);
-                $("#address").val(customerData.address);
-                $("#city").val(customerData.city);
-                $("#country").val(customerData.country);
-                $("#pincode").val(customerData.postal_code);
-                $("#contact_name").val(customerData.contact_name);
-                $("#site_email").val(customerData.email);
-                $("#site_telephone").val(customerData.telephone);
-                $("#site_mobile").val(customerData.mobile);
-                $("#site_address").val(customerData.address);
-                $("#site_city").val(customerData.city);
-                $("#site_country").val(customerData.country);
-                $("#site_pincode").val(customerData.postal_code);
-                $("#company").val(customerData.name);
-                $("#contact").val(customerData.mobile);
-                $("#project_customer_name").text(customerData.contact_name);
-                $("#contact_customer_name").text(customerData.contact_name);
-                $("#site_customer_name").text(customerData.contact_name);
-                $("#project_customer_id").val(customerData.id);
-                $("#contact_customer_id").val(customerData.id);
-                $("#site_customer_id").val(customerData.id);
-                $("#conatact_name").val(customerData.contact_name);
-
-                // Assuming data.customer_profession is not null
-                if (data.customer_profession) {
-                    $("#profession_name").val(customerData.contact_name + " (" + data.customer_profession.name + ")");
-                }
-
                 // Populate project options
                 var project = '<option value="0" selected>Select Project</option>';
                 if (customerData.customer_project && Array.isArray(customerData.customer_project)) {
@@ -732,16 +707,7 @@ CKEDITOR.replace('internal_notes', editor_config );
                         project += '<option value="' + customerData.customer_project[i].id + '">' + customerData.customer_project[i].project_name + '</option>';
                     }
                 }
-                document.getElementById('project_id').innerHTML = project;
-
-                // Populate contact options
-                var contact = '<option value="0" selected>Default</option>';
-                if (customerData.additional_contact && Array.isArray(customerData.additional_contact)) {
-                    for (let i = 0; i < customerData.additional_contact.length; i++) {
-                        contact += '<option value="' + customerData.additional_contact[i].id + '">' + customerData.additional_contact[i].contact_name + '</option>';
-                    }
-                }
-                document.getElementById('contact_id').innerHTML = contact;
+                document.getElementById('purchase_project_id').innerHTML = project;
 
                 // Populate site options
                 var site = '<option value="default" selected>Select Site</option>';
@@ -750,24 +716,11 @@ CKEDITOR.replace('internal_notes', editor_config );
                         site += '<option value="' + customerData.sites[i].id + '">' + customerData.sites[i].site_name + '</option>';
                     }
                 }
-                document.getElementById('site_id').innerHTML = site;
-
-                // Handle country code selection
-                $(".country_code").each(function() {
-                    if ($(this).val() === customerData.country_code) {
-                        $(this).prop('selected', true);
-                    }
-                });
-                $(".site_country_code").each(function() {
-                    if ($(this).val() === customerData.country_code) {
-                        $(this).prop('selected', true);
-                    }
-                });
+                document.getElementById('purchase_site_id').innerHTML = site;
 
                 // Enable the relevant fields
-                $('#project_id').removeAttr('disabled');
-                $('#contact_id').removeAttr('disabled');
-                $('#site_id').removeAttr('disabled');
+                $('#purchase_project_id').removeAttr('disabled');
+                $('#purchase_site_id').removeAttr('disabled');
             }
             },
             error: function(xhr, status, error) {
@@ -786,10 +739,16 @@ CKEDITOR.replace('internal_notes', editor_config );
             alert("Please select Supplier");
             return false;
         }else{
-            // if(modal == 1){
-            //     $("#customer_type_form")[0].reset();
-            //     $("#cutomer_type_modal").modal('show');
-            // }else if(modal == 2){
+            if(modal == 1){
+                get_supplier_details();
+                $("#contact_form")[0].reset();
+                $('#contactModalLabel').text("Add Supplier Contact");
+                $('#contactLabel').text("Supplier");
+                $('#userType').val(2);
+                $("#contact_modal").modal('show');
+                
+            }
+            // else if(modal == 2){
             //     $("#job_title_form")[0].reset();
             //     $("#job_title_modal").modal('show');
             // }else if(modal == 3 || modal == 0){
@@ -819,6 +778,99 @@ CKEDITOR.replace('internal_notes', editor_config );
             // }
         }
         
+    }
+ </script>
+ <script>
+    function purchase_check_email(){
+        var email= $('#purchase_email').val();
+        validRegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (email.search(validRegExp) == -1){
+            $('#purchaseemailErr').text("Please enter correct email address");
+            return false;
+        }else{
+            $('#purchaseemailErr').text("");
+        }
+  }
+    function save_all_data(){
+        for (var instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+        var emailErr=$("#purchaseemailErr").text();
+        $('.checkError').each(function() {
+            if ($(this).val() === '' || $(this).val() == null) {
+                $(this).css('border','1px solid red');
+                $(this).focus();
+                return false;
+            } else {
+                $(this).css('border','');
+            }
+        });
+        var purchase_telephone=$("#purchase_telephone").val();
+        var purchase_mobile=$("#purchase_mobile").val();
+        var purchase_user_telephone=$("#purchase_user_telephone").val();
+        var purchase_user_mobile=$("#purchase_user_mobile").val();
+        if(purchase_telephone !='' && purchase_telephone.length !=10){
+            $("#CheckpurchaseTelephoneErr").show();
+            return false;
+        }else if(purchase_mobile !='' && purchase_mobile.length !=10){
+            $("#CheckpurchaseTelephoneErr").hide();
+            $("#CheckpurchaseMobileErr").show();
+            return false;
+        }else if(purchase_user_telephone !='' && purchase_user_telephone.length !=10){
+            $("#CheckpurchaseTelephoneErr").hide();
+            $("#CheckpurchaseMobileErr").hide();
+            $("#CheckpurchaseUserTelephoneErr").show();
+            return false;
+        }else if(purchase_user_mobile !='' && purchase_user_mobile.length !=10){
+            $("#CheckpurchaseTelephoneErr").hide();
+            $("#CheckpurchaseMobileErr").hide();
+            $("#CheckpurchaseUserTelephoneErr").hide();
+            $("#CheckpurchaseUserMobileErr").show();
+            return false;
+        }else if(emailErr.length >0){
+            $("#CheckpurchaseTelephoneErr").hide();
+            $("#CheckpurchaseMobileErr").hide();
+            $("#CheckpurchaseUserTelephoneErr").hide();
+            $("#CheckpurchaseUserMobileErr").hide();
+            return false;
+        }else{
+            $("#CheckpurchaseTelephoneErr").hide();
+            $("#CheckpurchaseMobileErr").hide();
+            $("#CheckpurchaseUserTelephoneErr").hide();
+            $("#CheckpurchaseUserMobileErr").hide();
+            $.ajax({
+                type: "POST",
+                url: "{{url('/purchase_order_save')}}",
+                data: new FormData($("#all_data")[0]),
+                async: false,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                if(response.vali_error){
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
+                        return false;
+                    }else if(response.success === true){
+                        $(window).scrollTop(0);
+                        $('#message_save').text(response.message).show();
+                        setTimeout(function() {
+                            $('#message_save').text('').hide();
+                            var id = parseInt(response.data.id, 10) || 0;
+                            var encodedId = btoa(unescape(encodeURIComponent(id)));
+                            location.href = '<?php echo url('purchase_order_edit'); ?>?key=' + encodedId;
+                        }, 3000);
+                    }else{
+                        alert("Something went wrong! Please try later");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
     }
  </script>
 

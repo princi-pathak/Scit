@@ -23,9 +23,9 @@ return new class extends Migration
             $table->string('county')->nullable();
             $table->string('postcode')->nullable();
             $table->integer('telephone_code')->nullable();
-            $table->integer('telephone')->nullable();
+            $table->string('telephone')->nullable();
             $table->integer('mobile_code')->nullable();
-            $table->integer('mobile')->nullable();
+            $table->string('mobile')->nullable();
             $table->string('email')->nullable();
             $table->integer('customer_id')->nullable();
             $table->integer('project_id')->nullable();
@@ -37,9 +37,9 @@ return new class extends Migration
             $table->string('user_county')->nullable();
             $table->string('user_post_code')->nullable();
             $table->integer('user_telephone_code')->nullable();
-            $table->integer('user_telephone')->nullable();
+            $table->string('user_telephone')->nullable();
             $table->integer('user_mobile_code')->nullable();
-            $table->integer('user_mobile')->nullable();
+            $table->string('user_mobile')->nullable();
             $table->string('expected_deleveryDate')->nullable();
             $table->integer('department_id')->nullable();
             $table->string('purchase_date')->nullable();
@@ -47,6 +47,7 @@ return new class extends Migration
             $table->string('qoute_ref')->nullable();
             $table->string('job_ref')->nullable();
             $table->string('invoice_ref')->nullable();
+            $table->string('purchase_order_ref');
             $table->string('payment_terms')->nullable();
             $table->string('payment_due_date')->nullable();
             $table->integer('tag_id')->nullable();
