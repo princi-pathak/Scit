@@ -141,16 +141,6 @@
                                 @endif
                             </tbody>
                             <tfoot>
-                                <!-- <tr>
-                                    <th colspan="6" rowspan="1">Page Sub Total</th>
-                                    <th rowspan="1" colspan="1">£220.00</th>
-                                    <th rowspan="1" colspan="1">£44.00</th>
-                                    <th rowspan="1" colspan="1">£264.00</th>
-                                    <th rowspan="1" colspan="1">£0.00</th>
-                                    <th rowspan="1" colspan="1">£264.00</th>
-                                    <th rowspan="1" colspan="1">£120.00</th>
-                                    <th rowspan="1" colspan="1"></th>
-                                </tr> -->
                                 <tr>
                                     <th></th>
                                     <th colspan="6">Page Sub Total</th>

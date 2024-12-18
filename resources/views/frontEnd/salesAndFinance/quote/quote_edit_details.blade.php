@@ -19,6 +19,16 @@
     .totleBold {
         font-weight: 600;
     }
+
+    .contantbodypopup .nav-pills .nav-link.active,
+    .contantbodypopup .nav-pills .show>.nav-link {
+        color: #fff;
+        background-color: #333;
+    }
+
+    .contantbodypopup .nav-pills .nav-link {
+        border-radius: 3px;
+    }
 </style>
 
 <section class="main_section_page px-3 pt-0">
@@ -44,7 +54,7 @@
                 <form action="{{ url('/quote/saveQuoteData') }}" method="post" class="customerForm mt-3">
                     @csrf
                     <div class="newJobForm card">
-                        
+
                         <div class="row" id="hideCustomerDetails">
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="formDtail">
@@ -289,7 +299,7 @@
                                         <div class="mb-3 row">
                                             <label for="inputName" class="col-sm-3 col-form-label">Customer <span class="radStar">*</span></label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext editInput" id="setCustomerNameInCustomerdetails" readonly>
+                                                <input type="text" class="form-control-plaintext editInput" value='{{ $quoteData["customer"]["name"]}}' id="setCustomerNameInCustomerdetails" readonly>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -425,13 +435,14 @@
                                             <div class="col-sm-9">
                                                 <input type="hidden" name="quote_id">
                                                 <!-- <input type="hidden" name="quote_ref"> -->
-                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
+                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['quote_ref'] }}" readonly>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="quoteType" class="col-sm-3 col-form-label">Quote Type </label>
                                         <div class="col-sm-7">
+                                            <input type="hidden" id="quoteTypeId" value="{{ $quoteData['quota_type'] }}">
                                             <select class="form-control editInput" name="quota_type" id="quoteType">
                                                 <option value="">-Select-</option>
                                             </select>
@@ -445,31 +456,31 @@
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Date <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control editInput textareaInput" value="<?= date('Y-m-d'); ?>" name="quota_date" id="" required>
+                                            <input type="date" class="form-control editInput textareaInput" value="{{ $quoteData['quota_date'] }}" name="quota_date" id="" required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputAddress" class="col-sm-3 col-form-label">Expiry Date</label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control editInput textareaInput" name="expiry_date" value="{{ \Carbon\Carbon::now()->addMonth(1)->format('Y-m-d') }}" id="">
+                                            <input type="date" class="form-control editInput textareaInput" name="expiry_date" value="{{ $quoteData['expiry_date'] }}" id="">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Customer Ref </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="" name="customer_ref" placeholder="Customer Ref">
+                                            <input type="text" class="form-control editInput textareaInput" id="" name="customer_ref" value="{{ $quoteData['customer_ref'] }}" placeholder="Customer Ref">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">Customer Job Ref</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="inputPurchase" name="customer_job_ref" placeholder="Customer Job Ref">
+                                            <input type="text" class="form-control editInput textareaInput" id="inputPurchase" name="customer_job_ref" value="{{ $quoteData['customer_job_ref']}}" placeholder="Customer Job Ref">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">Purchase Order Ref</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="" name="purchase_order_ref" placeholder="Purchase Order Ref">
+                                            <input type="text" class="form-control editInput textareaInput" value="{{ $quoteData['purchase_order_ref'] }}" id="" name="purchase_order_ref" placeholder="Purchase Order Ref">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -478,7 +489,7 @@
                                             <select class="form-control editInput" name="source" id="">
                                                 <option value="">None</option>
                                                 @foreach($quoteSource as $value)
-                                                <option value="{{ $value->id}}">{{ $value->title }}</option>
+                                                <option value="{{ $value->id}}" {{ $value->id == $quoteData['source'] ? 'selected' : '' }}>{{ $value->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -491,13 +502,13 @@
                                     <div class="mb-3 row">
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Prefered Job Date</label>
                                         <div class="col-sm-3">
-                                            <input type="date" class="form-control editInput textareaInput" id="inputPurchase" name="performed_job_date">
+                                            <input type="date" class="form-control editInput textareaInput" id="inputPurchase" value="{{ $quoteData['performed_job_date'] }}" name="performed_job_date">
                                         </div>
                                         <div class="col-sm-6">
                                             <select class="form-control editInput" name="period" id="">
                                                 <option value="">Any Time</option>
-                                                <option value="AM">AM</option>
-                                                <option value="PM">PM</option>
+                                                <option value="AM" @if($quoteData["period"]=="AM" ) selected @endif >AM</option>
+                                                <option value="PM" @if($quoteData["period"]=="PM" ) selected @endif>PM</option>
                                             </select>
                                         </div>
                                     </div>
@@ -505,12 +516,13 @@
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
                                             <select class="form-control editInput" name="status" id="">
-                                                <option value="1">Draft</option>
-                                                <option value="2">Processed</option>
-                                                <option value="3">Call back</option>
-                                                <option value="4">Accepted</option>
-                                                <option value="5">Rejected</option>
+                                                <option value="1" @if($quoteData["status"]=="Draft" ) selected @endif>Draft</option>
+                                                <option value="2" @if($quoteData["status"]=="Processed" ) selected @endif>Processed</option>
+                                                <option value="3" @if($quoteData["status"]=="Call back" ) selected @endif>Call back</option>
+                                                <option value="4" @if($quoteData["status"]=="Accepted" ) selected @endif>Accepted</option>
+                                                <option value="5" @if($quoteData["status"]=="Rejected" ) selected @endif>Rejected</option>
                                             </select>
+
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -590,7 +602,7 @@
                                                                                         Action
                                                                                     </a>
                                                                                     <div class="dropdown-menu fade-up m-0">
-                                                                                        <a href="{{ url('/quote-details/edit').'/'.$quoteData['id'] }}" class="dropdown-item">Edit</a>
+                                                                                        <a href="{{ url('/quote-details/edit').'/'.$value->id }}" class="dropdown-item">Edit</a>
                                                                                         <hr class="dropdown-divider">
                                                                                         <a href="" class="dropdown-item">Preview</a>
                                                                                         <hr class="dropdown-divider">
@@ -730,7 +742,6 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-
                                                 <p class="uploadImg">
                                                     <i class="fa fa-cloud-upload"></i>
                                                     <input type="file" multiple="false" accept="image/*" id="finput" onchange="upload()">
@@ -777,6 +788,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="add_table_insrt">
+
                                             </tbody>
                                             <tfoot class="table totlepayment add_table_insrt33" id="containerA">
                                             </tfoot>
@@ -937,7 +949,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Description</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" name="extra_information" id="textarea8"> </textarea>
+                                            <textarea cols="40" rows="5" name="extra_information" id="textarea8">{{ $quoteData['extra_information'] }} </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -945,7 +957,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Customer Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea9" name="customer_notes"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea9" name="customer_notes"> {{ $quoteData['customer_notes'] }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -953,7 +965,7 @@
                                     <div class="pt-3">
                                         <h4 class="contTitle text-start">Terms</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea10" name="tearms"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea10" name="tearms"> {{ $quoteData['tearms'] }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -961,7 +973,7 @@
                                     <div class="pt-3">
                                         <h4 class="contTitle text-start">Internal Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea11" name="internal_notes"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea11" name="internal_notes">{{ $quoteData['internal_notes'] }} </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -978,11 +990,11 @@
                             <div class="row">
                                 <div class="col-sm-3 mb-3 mt-2">
                                     <div class=" p-0">
-                                        <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Creadit Deposit</a>
+                                        <a href="javascript:void(0)" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Create Deposit</a>
                                         <span class="col-form-label">
                                             or
                                         </span>
-                                        <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Creadit Deposit Invoice</a>
+                                        <a href="javascript:void(0)" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Create Deposit Invoice</a>
                                     </div>
                                 </div>
 
@@ -992,7 +1004,7 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content add_Customer">
                                             <div class="modal-header">
-                                                <h5 class="modal-title fs-5" id="creaditDepositModalLabel">Creadit Deposit</h5>
+                                                <h5 class="modal-title fs-5" id="creaditDepositModalLabel">Create Deposit</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body ">
@@ -1000,184 +1012,113 @@
 
                                                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                                         <li class="nav-item me-2" role="presentation">
-                                                            <button class="profileDrop" id="paymentDetails-tab" data-bs-toggle="pill" data-bs-target="#paymentDetails" type="button" role="tab" aria-controls="paymentDetails" aria-selected="false" tabindex="-1">Payment Details</button>
+                                                            <button class="nav-link profileDrop active" id="paymentDetails-tab" data-bs-toggle="pill" data-bs-target="#paymentDetails" type="button" role="tab" aria-controls="paymentDetails" aria-selected="false" tabindex="-1">Payment Details</button>
                                                         </li>
                                                         <li class="nav-item me-2" role="presentation">
-                                                            <button class="profileDrop" id="billingDetails-tab" data-bs-toggle="pill" data-bs-target="#billingDetails" type="button" role="tab" aria-controls="billingDetails" aria-selected="false" tabindex="-1">Billing Details</button>
-                                                        </li>
-                                                        <li class="nav-item me-2" role="presentation">
-                                                            <button class="profileDrop active activetb" id="paymentType-tab" data-bs-toggle="pill" data-bs-target="#paymentType" type="button" role="tab" aria-controls="paymentType" aria-selected="true">Payment Type</button>
+                                                            <button class="nav-link profileDrop " id="paymentType-tab" data-bs-toggle="pill" data-bs-target="#paymentType" type="button" role="tab" aria-controls="paymentType" aria-selected="true">Payment Type</button>
                                                         </li>
                                                     </ul>
                                                     <div class="tab-content" id="pills-tabContent">
-                                                        <div class="tab-pane fade" id="paymentDetails" role="tabpanel" aria-labelledby="paymentDetails-tab" tabindex="0">
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="QU-0021 - Quote Date 24/10/2024" readonly="">
+                                                        <form action="">
+                                                            <!-- Payment Details -->
+                                                            <div class="tab-pane fade show active" id="paymentDetails" role="tabpanel" aria-labelledby="paymentDetails-tab" tabindex="0">
+                                                                <div class="newJobForm card">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['quote_ref'] }} - Quote Date {{ $quoteData['quota_date_deposit'] }}" readonly="">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="Prathima" readonly="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['customer']['name'] }}" readonly="">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Totle (inc. VAT)</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT)</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['sub_total'] }}" readonly="">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="$12,000.00" readonly="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['total_amount'] }}" readonly="">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
-                                                                        <span class="radStar">*</span></label>
-                                                                    <div class="col-sm-5">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
+                                                                            <span class="radStar">*</span></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                                        </div>
+                                                                        <div class="col-sm-1 ps-0">
+                                                                            <input class="form-control editInput text-center" value="%" disabled="">
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-sm-1 ps-0">
-                                                                        <input class="form-control editInput text-center" value="%" disabled="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-1 pe-0">
+                                                                            <input class="form-control editInput text-center" value="&#163;" disabled="">
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" value="0.00">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-1 pe-0">
-                                                                        <input class="form-control editInput text-center" value="$" disabled="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-sm-4">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" value="$ 0.00">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCounty" class="col-sm-3 col-form-label pt-0">Take Card Payment Now?</label>
-                                                                    <div class="col-sm-8">
-                                                                        <span class="oNOfswich">
-                                                                            <input type="checkbox">
-                                                                        </span>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="tab-pane fade" id="billingDetails" role="tabpanel" aria-labelledby="billingDetails-tab" tabindex="0">
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">First Name<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Arjun">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Last Name<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Kumar">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Email Address<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="info@gmail.com">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Telephone<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Address Line1<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="USA">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Address Line2</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">City<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">County</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Country</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="United Stat Kingdom">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Postcode<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--  -->
-                                                        <div class="tab-pane fade active show" id="paymentType" role="tabpanel" aria-labelledby="paymentType-tab" tabindex="0">
-                                                            <div class="mb-2 row">
-                                                                <div class="col-sm-12">
-                                                                    <div class="text-end">
-                                                                        <h5>Paying Now: $12000.00</h5>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                            <option>Cash</option>
-                                                                            <option>paypal</option>
-                                                                            <option>Card</option>
-                                                                            <option>Bank</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
-                                                                        <span class="radStar">*</span></label>
-                                                                    <div class="col-sm-5">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
-                                                                    </div>
-                                                                    <div class="col-sm-1 ps-0">
-                                                                        <span class="material-symbols-outlined">
-                                                                            calendar_month
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
+                                                            <!-- Payment Details -->
 
+                                                            <!--  Payment Types -->
+                                                            <div class="tab-pane fade  " id="paymentType" role="tabpanel" aria-labelledby="paymentType-tab" tabindex="0">
+                                                                <div class="mb-2 row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="text-end">
+                                                                            <h5>Paying Now: $12000.00</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="newJobForm card">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                                @foreach($paymentType as $value)
+                                                                                <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
+                                                                            <span class="radStar">*</span></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="date" class="form-control editInput" id="inputCity" value="{{ now()->format('Y-m-d') }}">
+                                                                        </div>
+                                                                        <div class="col-sm-1 ps-0">
+                                                                            <span class="material-symbols-outlined">
+                                                                                calendar_month
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <!--  -->
+                                                            <!-- Payment Types -->
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div> <!-- end modal body -->
@@ -1392,8 +1333,9 @@
                             </div>
                         </div>
                         <!-- ************************************* End Of Attechment ******************************** -->
-
-                        <!-- ******************************* Start Task ***************************** -->
+                    </div>
+                    <!-- ******************************* Start Task ***************************** -->
+                    <div id="hideTaskData">
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Tasks</label>
                             <div class="row">
@@ -1501,9 +1443,11 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- ****************************** End of Task ***************************** -->
-
                     </div>
+
+                    <!-- ****************************** End of Task ***************************** -->
+
+
 
 
                     <div class="row">
@@ -2437,9 +2381,20 @@
 
     $(document).ready(function() {
 
-        document.getElementById('hideQuoteDetails').style.display = "none";
-        document.getElementById('hideQuoteDiv').style.display = "none";
-        document.getElementById('hideDepositSection').style.display = "none";
+        document.getElementById('hideCustomerDetails').style.display = "none";
+        document.getElementById('hideTaskData').style.display = "none";
+        // document.getElementById('hideDepositSection').style.display = "none";
+        document.getElementById('yourQuoteSection').style.display = "none";
+
+        $('#OpenQuoteTypeModel').on('click', function() {
+            $('#quoteTypeModal').modal('show');
+        });
+
+        $('#OpenAddQuoteSourceModal').on('click', function() {
+            $('#quoteSourceModal').modal('show');
+        });
+
+        getQuoteType(document.getElementById('quoteType'));
 
 
         $.ajaxSetup({
@@ -2535,6 +2490,26 @@
             }
         });
 
+        // get all product from quote_id
+        const quote_id = document.getElementById('quote_id').value;
+        $.ajax({
+            url: '{{ route("quote.ajax.getQuoteProductList") }}',
+            method: 'POST',
+            data: {
+                id: quote_id
+            },
+            success: function(response) {
+                console.log(response.message);
+
+                response.data.forEach(data => {
+                    quoteProductTable(response.data, 'quoteProducts');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+
 
         const edit_customer_billing_id = document.getElementById('edit_customer_billing_id').value;
         if (setCustomerId === edit_customer_billing_id) {
@@ -2569,6 +2544,24 @@
             setCustomerBillingData(edit_customer_billing_id);
         }
 
+        $('#saveQuoteTypeQuote').on('click', function() {
+            var formData = $('#add_quote_type_form').serialize();
+            $.ajax({
+                url: '{{ route("quote.ajax.saveQuoteType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
+                    $('#quoteTypeModal').modal('hide');
+                    getQuoteType(document.getElementById('quoteType'));
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
 
         $('#billingDetailContact').on('change', function() {
             var selected = document.getElementById('getCustomerList').value;
@@ -2623,10 +2616,10 @@
                 const selectCustomer = document.getElementById('getCustomerList');
                 const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
                 document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
-                document.getElementById('yourQuoteSection').style.display = "none";
-                document.getElementById('hideQuoteDiv').style.display = "block";
-                document.getElementById('hideCustomerDetails').style.display = "none";
-                document.getElementById('hideQuoteDetails').style.display = "block";
+                // document.getElementById('yourQuoteSection').style.display = "none";
+                // document.getElementById('hideQuoteDiv').style.display = "block";
+                // document.getElementById('hideCustomerDetails').style.display = "none";
+                // document.getElementById('hideQuoteDetails').style.display = "block";
             }
         });
 
@@ -2728,9 +2721,424 @@
 
     });
 
+    function attachRowEventListeners(row, table) {
+        // Attach change events for quantity, costPrice, price, etc.
+        row.querySelector('.quantity')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.costPrice')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.price')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.discount')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.vat')?.addEventListener('change', () => calculateRowsValue(table));
+    }
+
+    function getTaxRateOnTaxId(taxID) {
+        $.ajax({
+            url: '{{ route("invoice.ajax.getTaxRateOnTaxId") }}',
+            method: 'Post',
+            data: {
+                id: 2
+            },
+            success: function(response) {
+                console.log("response.data", response.data);
+                document.querySelector('.selectedTaxID').value = response.data;
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    
+    function getProductData(selectedId) {
+        $.ajax({
+            url: '{{ route("item.ajax.getProductFromId") }}',
+            method: 'Post',
+            data: {
+                id: selectedId
+            },
+            success: function(response) {
+                console.log("response.data", response.data);
+                quoteProductTable(response.data, 'quoteProducts');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function tableFootForProduct(tableName) {
+        const table = document.querySelector(`#${tableName}`);
+
+        if (!isFooterAppended) {
+            const tableFoot = table.querySelector('.add_table_insrt33');
+            tableFoot.innerHTML += `<tr>
+                                        <td colspan="10" class="borderNone"></td>
+                                        <td>Sub Total (exc. VAT) <input type="hidden" name="sub_total" id="InputFootAmount"></td>
+                                        <td class="tableAmountRight" id="footAmount">$00.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10" class="borderNone"></td>
+                                        <td>
+                                            <div class="discountInput">
+                                                <span>Discount</span><input type="text" class="form-control editInput input50 discountInputField" id="discountInput" value="0" data-table="${tableName}">
+                                                <span>%</span>
+                                            </div>
+                                        </td>
+                                        <td class="tableAmountRight" id="footDiscount">$00.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10" class="borderNone"></td>
+                                        <td>
+                                            <span id="markUpLinkRemove"><a href="javascript:void(0)" onclick="applyMarkup();"> Apply overall markup</a> </span>
+                                            
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10" class="borderNone"></td>
+                                        <td>VAT<input type="hdden" name="vat_amount" id="InputFootVatAmount"></td>
+                                        <td class="tableAmountRight" id="footVatAmount">$00.00</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)<input type="hidden" name="total" id="inputFootTotalDiscountVat"></strong></td>
+                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">$00.00</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td>Profit<input type="hidden" name="profit" id="inputFootProfit"></td>
+                                        <td class="tableAmountRight" id="footProfit">$00.00</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td>Margin</td>
+                                        <td class="tableAmountRight" id="footMargin">00.00%</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td>Deposit</td>
+                                        <td class="tableAmountRight" id="footDeposit">$00.00</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td>Refund</td>
+                                        <td class="tableAmountRight" id="footRefund">$00.00</td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan="10" class="borderNone"></td>
+                                        <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)<input type="hidden" name="outstanding" id="inputFootOutstandingAmount"></strong></td>
+                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">$00.00</td>
+                                    </tr>`;
+            isFooterAppended = true;
+
+            // Ensure the input is correctly selected
+            const discountInput = table.querySelector('#discountInput');
+            if (!discountInput) {
+                console.error('Discount input not found.');
+                return;
+            }
+
+            // Attach the event listener
+            discountInput.addEventListener('input', function() {
+                const discountValue = parseFloat(this.value) || 0;
+
+                // Update all elements with the class "discount"
+                document.querySelectorAll('.discount').forEach(discountElement => {
+                    discountElement.value = discountValue.toFixed(2); // Format to 2 decimal places
+                });
+
+                // Call calculateRowsValue function
+                if (typeof calculateRowsValue === 'function') {
+                    calculateRowsValue(table);
+                } else {
+                    console.error('calculateRowsValue function is not defined.');
+                }
+            });
+
+        }
+    }
+
+    function applyMarkup() {
+        document.getElementById('markUpLinkRemove').innerHTML = '';
+        document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
+    }
+
+    function calculateRowsValue(table) {
+        const rows = table.querySelectorAll('tbody tr');
+
+        let totalQuantity = 0;
+        let totalCostPrice = 0;
+        let totalPrice = 0;
+        let totalMarkup = 0;
+
+        let totalVAT = 0;
+        const vat = 20;
+
+        let totalProfit = 0;
+        let totalDiscount = 0;
+
+        let profitElement;
+        let profitValue;
+        let numericProfit;
+        let totalMargin = 0;
+
+        let price = 0;
+
+        const doller = '$';
+
+        rows.forEach(row => {
+
+            getTaxRateOnTaxId();
+
+            // Get input values from the row
+            totalQuantity = parseInt(row.querySelector('.quantity').value) || 0;
+            totalPrice = parseFloat(row.querySelector('.price').value) || 0;
+            discount = parseInt(row.querySelector('.discount').value) || 0;
+            totalCostPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
+            totalMarkup = parseInt(row.querySelector('.priceMarkup').value) || 0;
+
+            // Calculate selling price (Cost Price + Markup - Discount)
+
+            markupAmount = (totalPrice * totalMarkup) / 100; // Percentage markup
+            console.log(markupAmount);
+            discountAmount = (totalPrice * discount) / 100; // Discount as a percentage
+            console.log(discountAmount);
+            totalDiscount += discountAmount;
+            sellingPrice = totalPrice + markupAmount - discountAmount;
+            console.log("sellingPrice", sellingPrice);
+
+            // Calculate Amount (Quantity × Selling Price)
+            amount = totalQuantity * sellingPrice;
+            console.log(amount);
+            price += amount;
+
+            // Calculate VAT amount
+            vatAmount = (amount * vat) / 100;
+            console.log(vatAmount);
+            totalVAT += vatAmount;
+            // Calculate Profit ((Selling Price - Cost Price) × Quantity)
+            profit = (sellingPrice - totalCostPrice) * totalQuantity;
+            console.log(sellingPrice);
+            totalProfit += profit;
+
+            // Calculate margin
+            margin = parseFloat((profit / sellingPrice) * 100);
+            totalMargin += margin;
+            console.log(margin);
+
+            row.querySelector('.amount').textContent = doller + amount.toFixed(2);
+
+            // Update row output fields
+            row.querySelector('.profit').textContent = doller + profit.toFixed(2);
+
+            if (margin >= 0) {
+                row.querySelector('.footRowMargin').classList.add('minusnmberGreen');
+            } else {
+                row.querySelector('.footRowMargin').classList.add('minusnmberRed');
+            }
+            row.querySelector('.footRowMargin').textContent = '(' + margin.toFixed(2) + '%' + ')';
+
+        });
+        console.log("Total Quantity: ", totalQuantity);
+        console.log("Total Cost Price: ", totalCostPrice);
+        console.log("Total Price: ", price);
+        console.log("Total Markup: ", totalMarkup);
+        console.log("Total VAT: ", totalVAT);
+        console.log("Total Discount: ", totalDiscount);
+        console.log("Total Profit: ", totalProfit);
+        console.log("Total totalMargin: ", totalMargin);
+
+        document.getElementById('footAmount').textContent = doller + price.toFixed(2);
+        document.getElementById('InputFootAmount').value = price.toFixed(2);
+        document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
+        document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
+        document.getElementById('InputFootVatAmount').value = totalVAT.toFixed(2);
+        document.getElementById('footTotalDiscountVat').textContent = doller + (price + totalVAT).toFixed(2);
+        document.getElementById('inputFootTotalDiscountVat').value = (price + totalVAT).toFixed(2);
+        document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
+        document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
+        document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
+        document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
+        document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
+
+
+    }
+
+    function taxRate() {
+        $.ajax({
+            url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log("response.data", response.data);
+                if (Array.isArray(response.data)) {
+                    // Iterate over all Account Code dropdowns and populate them
+                    document.querySelectorAll('#getTaxRate').forEach(dropdown => {
+                        dropdown.innerHTML = ''; // Clear existing options
+
+                        const optionInitial = document.createElement('option');
+                        optionInitial.textContent = "Please Select"; // Use appropriate key from your response
+                        optionInitial.value = 0;
+                        dropdown.appendChild(optionInitial);
+                        // Append new options
+                        response.data.forEach(code => {
+                            const option = document.createElement('option');
+                            option.value = code.id; // Use appropriate key from your response
+                            option.textContent = code.name; // Use appropriate key from your response
+                            if (code.id === 2) {
+                                option.selected = true; // Select the option where id = 2
+                            }
+                            dropdown.appendChild(option);
+                        });
+                    });
+                } else {
+                    console.error("Invalid response format");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    let isFooterAppended = false;
+    let rowIndex = 0;
+
+    function quoteProductTable(data, tableId) {
+        const table = document.querySelector(`#${tableId}`);
+        // Populate rows as usual if data is not empty
+        data.forEach(item => {
+            console.log("1", rowIndex);
+            const tableBody = document.querySelector(`#${tableId} tbody`);
+            const node = document.createElement("tr");
+            taxRate();
+            node.classList.add("add_table_insrt");
+            node.innerHTML = `<td>
+                    <div class="CSPlus">
+                        <span class="plusandText">
+                            <a href="javascript:void(0)" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                            <input type="hidden" name="products[${rowIndex}][id]" value="${item.id}">
+                            <input type="text" class="form-control editInput input80" name="products[${rowIndex}][product_code]" value="${item.product_code}">
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput" name="products[${rowIndex}][product_name]" value="${item.product_name}">
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <textarea class="form-control textareaInput" id="inputAddress" name="products[${rowIndex}][description]" rows="2" placeholder="Description"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <select class="form-control editInput selectOptions" onclick="getAccountCode();" name="products[${rowIndex}][account_code]" id="accoutCodeList">
+                            <option>-No Department-</option> 
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class=""><input type="text" class="form-control editInput input50 quantity" name="products[${rowIndex}][quantity]" value="1"></div>
+                </td>
+                <td>
+                    <div class=""><input type="text" class="form-control editInput input50 costPrice" name="products[${rowIndex}][cost_price]" value="${parseFloat(item.cost_price || 0).toFixed(2)}"></div>
+                </td>
+                <td>
+                    <div class="calculatorIcon">
+                        <span class="plusandText">
+                            <a href="javascript:void(0)" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput input50 price" name="products[${rowIndex}][price]" value="${parseFloat(item.price || 0).toFixed(2)}">
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${parseFloat(item.margin || 0).toFixed(2)}">
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="hidden" class="selectedTaxID">
+                        <select class="form-control editInput selectOptions vat" name="products[${rowIndex}][VAT]" id="getTaxRate">
+                            <option>Please Select</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex">
+                        <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="0">
+                        <select class="form-control editInput selectOptions input50" name="" id="">
+                            <option>Please Select</option>
+                            <option>%</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <span class="amount">$00.00</span>
+                </td>
+                <td>
+                    <span class="profit">$00.00</span>
+                    <div class="pt-1 footRowMargin">(00.00%)</div>
+                </td>
+                <td>
+                    <div class="statuswating">
+                        <span class="oNOfswich">
+                            <input type="checkbox">
+                        </span>
+                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                    </div>
+                </td>`;
+
+            tableFootForProduct(tableId);
+            isFooterAppended = true;
+            rowIndex++;
+            console.log('2', rowIndex);
+
+            if (tableBody) {
+                tableBody.appendChild(node);
+
+
+                attachRowEventListeners(node, table)
+                const closeButton = node.querySelector('.closeappend');
+                closeButton.addEventListener('click', function() {
+                    node.remove(); // Remove the row when close button is clicked 
+                    clearFooter(table);
+                    calculateRowsValue(table);
+                });
+            } else {
+                console.error("Table body with ID 'add_table_insrt' not found.");
+            }
+
+        });
+        calculateRowsValue(table);
+    }
+
     // function openTaskModal() {
     //     $('#quote_task_modal').modal('show');
     // }
+
+    function getQuoteType(quoteType) {
+        $.ajax({
+            url: '{{ route("quote.ajax.getQuoteTypes") }}',
+            success: function(response) {
+                console.log(response.message);
+                quoteType.innerHTML = '';
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.title;
+                    quoteType.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 
     function getQuoteAttachmentsOnPageLoad() {
         const quote_id = document.getElementById('quote_id').value;
