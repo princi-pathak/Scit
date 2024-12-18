@@ -1,10 +1,3 @@
-<style>
-.calendar_icon {
-    color: red;
-    display: flex;
-    align-items: center;
-}
-</style>
 <div class="modal fade" id="attachment_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-modal="true" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content add_Customer">
