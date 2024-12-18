@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->integer('show_msg')->after('is_converted');
-            $table->longText('msg')->after('is_converted');
-            $table->string('section_id')->after('is_converted');
+            $table->integer('show_msg')->after('is_converted')->nullable();
+            $table->longText('msg')->after('is_converted')->nullable();
+            $table->string('section_id')->after('is_converted')->nullable();
         });
     }
 

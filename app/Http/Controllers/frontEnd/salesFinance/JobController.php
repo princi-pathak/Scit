@@ -707,7 +707,16 @@ class JobController extends Controller
 
     public function project_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'customer_name'=>'required',
+            'project_name'=>'required',
+            'start_date'=>'required',
+            'end_date'=>'required',
+        ]);
         
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
         $insert=Project::saveProject($request->all());
         if($insert){
             if($insert->status ==1){
@@ -734,6 +743,15 @@ class JobController extends Controller
     }
     public function site_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'site_name'=>'required',
+            'contact_name'=>'required',
+            'address'=>'required',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
         $result=Constructor_customer_site::saveCustomerAdditional($request->all());
         $data=Constructor_customer_site::find($result);
         if($data){

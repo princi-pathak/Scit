@@ -60,8 +60,10 @@ class Purchase_orderController extends Controller
         $data['key']=$key;
         $purchase_orders=PurchaseOrder::find($key);
         $site=array();
+        $contact_name=array();
         if($key){
-            $site=Constructor_customer_site::where('customer_id',$purchase_orders->customer_id)->get();  
+            $site=Constructor_customer_site::where('customer_id',$purchase_orders->customer_id)->get();
+            $contact_name=Customer::find($purchase_orders->customer_id);
         }
         $data['purchase_orders']=$purchase_orders;
         $data['site']=$site;
@@ -74,6 +76,9 @@ class Purchase_orderController extends Controller
         $data['suppliers']=Supplier::allGetSupplier($home_id,$user_id)->where('status',1)->get();
         $data['department']=Department::getAllDepartment($home_id);
         $data['job_title']=Job_title::where(['home_id'=>$home_id,'status'=>1])->get();
+        $data['customer_types']=Customer_type::where(['home_id'=>$home_id,'status'=>1])->get();
+        $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
+        $data['contact_name']=$contact_name;
         // echo "<pre>";print_r($data['additional_contact']);die;
         return view('frontEnd.salesAndFinance.purchase_order.new_purchase_order',$data);
     }
