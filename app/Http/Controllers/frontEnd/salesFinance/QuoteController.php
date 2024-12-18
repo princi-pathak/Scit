@@ -26,6 +26,7 @@ use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Product_category;
 use App\Models\AttachmentType;
+use App\Models\Payment_type;
 use App\User;
 
 
@@ -298,7 +299,7 @@ class QuoteController extends Controller
         $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id);
         $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);
         $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
-        $data['type'] = "quote";
+        // $data['type'] = 1;
         // dd($data['attachment_type']);
         return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
@@ -442,8 +443,26 @@ class QuoteController extends Controller
         $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id);
         $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);
         $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
-        $data['type'] = "quote-details";
-        // dd($data['attachment_type']);
-        return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
+        $data['paymentType'] = Payment_type::getActivePaymentType(Auth::user()->home_id);
+        // $data['type'] = 2;
+        // dd($data['quoteData']);
+        return view('frontEnd.salesAndFinance.quote.quote_edit_details', $data);
+    }
+
+    public function getQuoteProductList(Request $request){
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $this->itemService->getQuoteProductData($request->id);
+        // dd($data);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
     }
 }

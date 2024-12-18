@@ -538,6 +538,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/quote/getAttachmentDataOnQuoteId', 'getAttachmentDataOnQuoteId')->name('quote.ajax.getAttachmentDataOnQuoteId');
 		Route::post('/quote/deleteAttachment', 'deleteAttachment')->name('quote.ajax.deleteAttachment');
 		Route::get('/quote-details/edit/{id}', 'editQuoteDetails')->name('quote.editDetails');
+		Route::post('quote/getQuoteProductList', 'getQuoteProductList')->name('quote.ajax.getQuoteProductList');
+		
 		
 	});
 

@@ -27,4 +27,8 @@ class Payment_type extends Model
             return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
         }
     }
+
+    public static function getActivePaymentType($home_id){
+        return self::select('id', 'title')->where('home_id', $home_id)->where('status', 1)->whereNull('deleted_at')->get();   
+    }
 }
