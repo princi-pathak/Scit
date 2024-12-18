@@ -17,7 +17,7 @@
                                             <div class="mb-2 row">
                                                 <label for="supplier_name" class="col-sm-3 col-form-label">Supplier Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput checkError" placeholder="Enter Supplier Name" id="supplier_name" name="name">
+                                                    <input type="text" class="form-control editInput textareaInput suppliercheckError" placeholder="Enter Supplier Name" id="supplier_name" name="name">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -29,7 +29,7 @@
                                             <div class="mb-2 row">
                                                 <label for="contact_name" class="col-sm-3 col-form-label">Contact Name <span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput checkError" placeholder="Enter Contact Name" id="supplier_contact_name" name="contact_name">
+                                                    <input type="text" class="form-control editInput textareaInput suppliercheckError" placeholder="Enter Contact Name" id="supplier_contact_name" name="contact_name">
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -101,7 +101,7 @@
                                             <div class="mb-2 row">
                                                 <label for="supplier_address" class="col-sm-3 col-form-label">Address<span class="radStar ">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput editInput checkError" placeholder="Enter Supplier Address" id="supplier_address" name="address" rows="3"></textarea>
+                                                    <textarea class="form-control textareaInput editInput suppliercheckError" placeholder="Enter Supplier Address" id="supplier_address" name="address" rows="3"></textarea>
                                                 </div>
                                             </div>
 
@@ -209,7 +209,7 @@
     }
     function save_supplier(){
         var emailErr=$("#supplieremailErr").text();
-        $('.checkError').each(function() {
+        $('.suppliercheckError').each(function() {
             if ($(this).val() === '') {
                 $(this).css('border','1px solid red');
                 $(this).focus();

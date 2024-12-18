@@ -81,16 +81,24 @@ class CustomerController extends Controller
             $validator = Validator::make($request->all(), [
                 'email' => [Rule::unique('customers')->ignore($request->id)],
             ]);
-            if ($validator->fails()) {
-                return response()->json(['vali_error' => $validator->errors()->first()]);
-            }
+            
+        }else{
+            $validator = Validator::make($request->all(), [
+                'name'=>'required',
+                'contact_name'=>'required',
+                'address'=>'required',
+            ]);
+             
+        }
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
         }
         try {
             $customer = Customer::saveCustomer($request->all());
             return response()->json($customer);
         } catch (\Exception $e) {
             Log::error('Error saving Tag: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
     public function default_address(Request $request)
@@ -253,6 +261,12 @@ class CustomerController extends Controller
     public function save_customer_type(Request $request)
     {
         // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(),[
+            'title'=>'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
         $home_id = Auth::user()->home_id;
 
         $insert = '';

@@ -33,6 +33,11 @@
         .table_responsive div#exampleOne_wrapper {
             overflow: auto;
         }
+        .calendar_icon {
+            color: red;
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <?php

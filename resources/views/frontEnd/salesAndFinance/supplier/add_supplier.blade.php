@@ -515,6 +515,7 @@
                         type="Other";
                     }
                     var imag_url="<?php echo url('public/images/supplier_attachments/');?>"+'/'+item.attachment;
+                    var baseUrl = "{{ url('') }}";
                     var html = '<tr>' +
                         '<td>' + count + '</td>' +
                         '<td>' + item.title + '</td>' +
@@ -523,7 +524,7 @@
                         '<td>' + (item.reminder == 1 ? "Yes, remind "+item.reminder_before_days+" day(s) before "+item.reminder_date : "No") + '</td>' +
                         '<td>' + (item.reminder_email ?? "") + '</td>' +
                         '<td id="visible_complaint_file_' + item.id + '" class="eye_icon"><a href="'+imag_url+'" target="_blank"><i class="fa fa-eye"></i></a></td>' +  
-                        '<td id="visible_complaint_action_' + item.id + '" class="eye_icon"><img src="http://localhost/socialcareitsolution/public/frontEnd/jobs/images/pencil.png" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#attachment_modal" class="modal_dataFetch" data-id="'+item.id+'" data-supplier_id="'+item.supplier_id+'" data-title="'+item.title+'" data-type_id="'+item.type_id+'" data-description="'+item.description+'" data-reminder="'+item.reminder+'" data-reminder_date="'+item.reminder_date+'" data-reminder_before_days="'+item.reminder_before_days+'" data-reminder_email="'+item.reminder_email+'" data-attachment="'+item.attachment+'" data-file_original_name="'+item.file_original_name+'">&emsp; <img src="http://localhost/socialcareitsolution/public/frontEnd/jobs/images/delete.png" alt="" class="image_delete" data-delete="'+item.id+'"></td>' + 
+                        '<td id="visible_complaint_action_' + item.id + '" class="eye_icon"><img src="' + baseUrl + '/public/frontEnd/jobs/images/pencil.png" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#attachment_modal" class="modal_dataFetch" data-id="'+item.id+'" data-supplier_id="'+item.supplier_id+'" data-title="'+item.title+'" data-type_id="'+item.type_id+'" data-description="'+item.description+'" data-reminder="'+item.reminder+'" data-reminder_date="'+item.reminder_date+'" data-reminder_before_days="'+item.reminder_before_days+'" data-reminder_email="'+item.reminder_email+'" data-attachment="'+item.attachment+'" data-file_original_name="'+item.file_original_name+'">&emsp; <img src="' + baseUrl + '/public/frontEnd/jobs/images/delete.png" alt="" class="image_delete" data-delete="'+item.id+'"></td>' + 
                     '</tr>';
                     tableBody.append(html);
                     count++;
