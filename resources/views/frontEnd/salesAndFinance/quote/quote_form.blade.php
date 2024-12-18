@@ -481,7 +481,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="#!" id="OpenAddQuoteSourceModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                <a href="javascript:void(0)" id="OpenAddQuoteSourceModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -502,11 +502,11 @@
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
                                             <select class="form-control editInput" name="status" id="">
-                                                <option value="1">Draft</option>
-                                                <option value="2">Processed</option>
-                                                <option value="3">Call back</option>
-                                                <option value="4">Accepted</option>
-                                                <option value="5">Rejected</option>
+                                                <option value="Draft">Draft</option>
+                                                <option value="Processed2">Processed</option>
+                                                <option value="Call back">Call back</option>
+                                                <option value="Accepted">Accepted</option>
+                                                <option value="Rejected">Rejected</option>
                                             </select>
                                         </div>
                                     </div>

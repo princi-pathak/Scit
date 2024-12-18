@@ -3,9 +3,8 @@ namespace App\Services\Quotes;
 
 use App\Models\Quote;
 use Illuminate\Support\Facades\DB;
-// use App\Models\CustomerBillingAddress;
-// use App\Models\Constructor_customer_site;
-// use App\Models\QuoteProduct;
+use Illuminate\Support\Carbon;
+
 
 class QuoteService
 {
@@ -79,6 +78,7 @@ class QuoteService
             'project_id' =>$quote->project_id,
             'quota_type' => $quote->quota_type,
             'quota_date' => $quote->quota_date,
+            'quota_date_deposit' => Carbon::create($quote->quota_date)->format('d/m/Y'),
             'expiry_date' => $quote->expiry_date,
             'customer_ref' => $quote->customer_ref,
             'customer_job_ref' => $quote->customer_job_ref,
@@ -132,5 +132,7 @@ class QuoteService
             'total' => $quote->total_amount,
         ];
     }
+
+
    
 }
