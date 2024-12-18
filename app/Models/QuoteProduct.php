@@ -30,4 +30,9 @@ class QuoteProduct extends Model
     public static function editQuotePageProduct($quote_id){
         return self::where('quote_id', $quote_id)->get();
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

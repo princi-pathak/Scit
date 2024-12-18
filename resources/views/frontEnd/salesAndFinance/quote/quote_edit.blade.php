@@ -484,7 +484,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="#!" id="OpenAddQuoteSourceModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                <a href="javascript:void(0)" id="OpenAddQuoteSourceModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -590,7 +590,7 @@
                                                                                         Action
                                                                                     </a>
                                                                                     <div class="dropdown-menu fade-up m-0">
-                                                                                        <a href="{{ url('/quote-details/edit').'/'.$value->id }}" class="dropdown-item">Edit</a>
+                                                                                        <a href="{{ url('/quote-details/edit').'/'.$quoteData['id'] }}" class="dropdown-item">Edit</a>
                                                                                         <hr class="dropdown-divider">
                                                                                         <a href="" class="dropdown-item">Preview</a>
                                                                                         <hr class="dropdown-divider">

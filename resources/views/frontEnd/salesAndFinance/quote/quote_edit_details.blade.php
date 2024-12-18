@@ -19,19 +19,27 @@
     .totleBold {
         font-weight: 600;
     }
-</style>
 
+    .contantbodypopup .nav-pills .nav-link.active,
+    .contantbodypopup .nav-pills .show>.nav-link {
+        color: #fff;
+        background-color: #333;
+    }
+
+    .contantbodypopup .nav-pills .nav-link {
+        border-radius: 3px;
+    }
+</style>
 
 <section class="main_section_page px-3 pt-0">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>New Quote</h3>
+                    <h3>{{ $quoteData['quote_ref'] }}</h3>
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-lg-12">
                 @if(session('error'))
@@ -46,6 +54,7 @@
                 <form action="{{ url('/quote/saveQuoteData') }}" method="post" class="customerForm mt-3">
                     @csrf
                     <div class="newJobForm card">
+
                         <div class="row" id="hideCustomerDetails">
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="formDtail">
@@ -53,39 +62,42 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Quote Ref</label>
                                         <div class="col-sm-9">
-                                            <!-- <input type="hidden" name="quote_ref"> -->
-                                            <input type="text" class="form-control-plaintext editInput" id="" value="Auto generate" readonly>
+                                            <input type="hidden" id="quote_id" name="quote_id" value="{{ $quoteData['id'] }}">
+                                            <input type="text" class="form-control-plaintext editInput" id="" value="{{ $quoteData['quote_ref'] }}" readonly>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Customer<span class="radStar">*</span></label>
                                         <div class="col-sm-7">
+                                            <input type="hidden" value="{{ $quoteData['customer']['customer.id'] }}" id="setCustomerId">
                                             <select class="form-control editInput selectOptions" name="customer_id" id="getCustomerList">
                                                 <option value="">Select Customer</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="plusandText">
-                                                <a href="javascript:void(0)" id="OpenAddCustomerModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                <a href="#!" id="OpenAddCustomerModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
+                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['status'] }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="formDtail">
                                     <h4 class="contTitle mb-3">Billing Details</h4>
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Contact </label>
                                         <div class="col-sm-7">
+                                            <input type="hidden" value="{{ $quoteData['billing_add_id'] }}" id="edit_customer_billing_id">
                                             <input type="hidden" id="billing_add_id" name="billing_add_id">
-                                            <select class="form-control editInput selectOptions" disabled id="billingDetailContact">
+                                            <select class="form-control editInput selectOptions" id="billingDetailContact">
                                                 <option>Select Customer First</option>
                                             </select>
                                         </div>
@@ -98,36 +110,36 @@
                                     <div class="mb-3 row">
                                         <label for="inputEmail" class="col-sm-3 col-form-label"> Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" id="billingDetailsName" placeholder="Full Name">
+                                            <input type="text" class="form-control editInput" value="{{ $quoteData['customer']['contact_name'] ?? '' }}" id="billingDetailsName" placeholder="Full Name">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputAddress" class="col-sm-3 col-form-label">Address <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control textareaInput" name="address" id="billingDetailsAddress" rows="3" placeholder="Address"></textarea>
+                                            <textarea class="form-control textareaInput" name="address" id="billingDetailsAddress" rows="3" placeholder="Address">{{ $quoteData['customer']['address'] ?? '' }}</textarea>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="billingCustomerCity" class="col-sm-3 col-form-label">City </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerCity" placeholder="City">
+                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerCity" value="{{ $quoteData['customer']['city'] ?? '' }}" placeholder="City">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">County</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerCounty" placeholder="County">
+                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerCounty" value="{{ $quoteData['customer']['country'] ?? '' }}" placeholder="County">
                                         </div>
                                     </div>
 
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">Postcode</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerPostcode" placeholder="Postcode">
+                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerPostcode" value="{{ $quoteData['customer']['postal_code'] ?? '' }}" placeholder="Postcode">
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="plusandText">
-                                                <a href="javascript:void(0)" class="formicon"><i class="fa-solid fa-magnifying-glass-location"></i></a>
+                                                <a href="#!" class="formicon"><i class="fa-solid fa-magnifying-glass-location"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -137,12 +149,12 @@
                                             <select class="form-control editInput selectOptions" name="telephone_country_code" id="billingCustomerTelephoneCode">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['telephone_country_code']) && $quoteData['customer']['telephone_country_code'] == $value->id) ? 'selected' : '' }}> + {{ $value->code }} - {{ $value->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="billingCustomerTelephone" placeholder="Telephone">
+                                            <input type="text" class="form-control editInput" id="billingCustomerTelephone" value="{{ $quoteData['customer']['telephone'] ?? '' }}" placeholder="Telephone">
                                         </div>
                                     </div>
 
@@ -152,26 +164,27 @@
                                             <select class="form-control editInput selectOptions" name="mobile_country_code" id="billingCustomerMobileCode">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['mobile_country_code']) && $quoteData['customer']['mobile_country_code'] == $value->id) ? 'selected' : '' }}> + {{ $value->code }} - {{ $value->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="billingCustomerMobile" placeholder="Mobile">
+                                            <input type="text" class="form-control editInput" id="billingCustomerMobile" value="{{ $quoteData['customer']['mobile'] ?? '' }}" placeholder="Mobile">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Email Address</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput" id="billingDetailsEmail" placeholder="Email Address">
+                                            <input type="text" class="form-control editInput" id="billingDetailsEmail" value="{{ $quoteData['customer']['email'] ?? '' }}" placeholder="Email Address">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Country</label>
                                         <div class="col-sm-9">
+                                            <input type="hidden" value="{{ $quoteData['customer']['country_code'] ?? '' }}" id="edit_country_code">
                                             <select class="form-control editInput" name="" id="billingCustomerCountry">
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['country_code']) && $quoteData['customer']['country_code'] == $value->id) ? 'selected' : '' }}>{{ $value->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -184,9 +197,9 @@
                                     <div class="mb-3 row">
                                         <label for="inputJobRef" class="col-sm-3 col-form-label">Site</label>
                                         <div class="col-sm-7">
-                                            <!-- <input type="hidden" id="customer_site_id" name="customer_site_id"> -->
-                                            <select class="form-control editInput selectOptions" disabled id="customerSiteDetails">
-                                                <option>-Not Assigned-</option>
+                                            <input type="hidden" id="edit_customer_site_id" name="{{ $quoteData['site_add_id'] }}">
+                                            <select class="form-control editInput selectOptions" id="customerSiteDetails">
+                                                <option>Same As Customer</option>
                                             </select>
                                             <input type="hidden" name="site_add_id" id="siteCustomerId">
                                         </div>
@@ -199,41 +212,41 @@
                                     <div class="mb-3 row">
                                         <label for="customerSiteName" class="col-sm-3 col-form-label">Name </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteName" placeholder="Name">
+                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteName" value="{{ $quoteData['customer']['contact_name'] ?? '' }}" placeholder="Name">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="customerSiteCompany" class="col-sm-3 col-form-label">Company </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCompany" placeholder="Company">
+                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCompany" value="{{ $quoteData['customer']['name'] ?? '' }}" placeholder="Company">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputAddress" class="col-sm-3 col-form-label">Address</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control textareaInput" name="address" id="customerSiteAddress" rows="3" placeholder="Address"></textarea>
+                                            <textarea class="form-control textareaInput" name="address" id="customerSiteAddress" rows="3" placeholder="Address">{{ $quoteData['customer']['address'] ?? '' }}</textarea>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="customerSiteCity" class="col-sm-3 col-form-label">City </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCity" placeholder="City">
+                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCity" value="{{ $quoteData['customer']['name'] ?? '' }}" placeholder="City">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">County </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCounty" placeholder="County">
+                                            <input type="text" class="form-control editInput textareaInput" value="{{ $quoteData['customer']['country'] ?? '' }}" id="customerSiteCounty" placeholder="County">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">Postcode </label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSitePostCode" placeholder="Postcode">
+                                            <input type="text" class="form-control editInput textareaInput" id="customerSitePostCode" value="{{ $quoteData['customer']['postal_code'] ?? '' }}" placeholder="Postcode">
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="plusandText">
-                                                <a href="javascript:void(0)" class="formicon"><i class="fa-solid fa-magnifying-glass-location"></i> </a>
+                                                <a href="#!" class="formicon"><i class="fa-solid fa-magnifying-glass-location"></i> </a>
                                             </div>
                                         </div>
                                     </div>
@@ -243,12 +256,12 @@
                                             <select class="form-control editInput selectOptions" id="customerSiteTelephoneCode">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['telephone_country_code']) && $quoteData['customer']['telephone_country_code'] == $value->id) ? 'selected' : '' }}> + {{ $value->code }} - {{ $value->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="customerSiteTelephone" placeholder="Telephone ">
+                                            <input type="text" class="form-control editInput" id="customerSiteTelephone" value="{{ $quoteData['customer']['telephone'] ?? '' }}" placeholder="Telephone ">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -257,12 +270,12 @@
                                             <select class="form-control editInput selectOptions" id="customerSiteMobileCode">
                                                 <option value="">Please Select</option>
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}"> + {{ $value->code }} - {{ $value->name}} </option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['mobile_country_code']) && $quoteData['customer']['mobile_country_code'] == $value->id) ? 'selected' : '' }}> + {{ $value->code }} - {{ $value->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput" id="customerSiteMobile" placeholder="Mobile">
+                                            <input type="text" class="form-control editInput" id="customerSiteMobile" value="{{ $quoteData['customer']['mobile'] ?? '' }}" placeholder="Mobile">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -270,7 +283,7 @@
                                         <div class="col-sm-9">
                                             <select class="form-control editInput" name="" id="customerSiteDetailsCountry">
                                                 @foreach($countries as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}" {{ (isset($quoteData['customer']['country_code']) && $quoteData['customer']['country_code'] == $value->id) ? 'selected' : '' }}>{{ $value->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -286,7 +299,7 @@
                                         <div class="mb-3 row">
                                             <label for="inputName" class="col-sm-3 col-form-label">Customer <span class="radStar">*</span></label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext editInput" id="setCustomerNameInCustomerdetails" readonly>
+                                                <input type="text" class="form-control-plaintext editInput" value='{{ $quoteData["customer"]["name"]}}' id="setCustomerNameInCustomerdetails" readonly>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -300,7 +313,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="plusandText">
-                                                    <a href="javascript:void(0)" id="" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                    <a href="#!" id="" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -319,7 +332,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="plusandText">
-                                                    <a href="javascript:void(0)" id="openSiteDeliveryModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                    <a href="#!" id="openSiteDeliveryModal" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -333,7 +346,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="plusandText">
-                                                    <a href="javascript:void(0)" id="" onclick="openRegionModal('siteDeliveryRegions');" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
+                                                    <a href="#!" id="" onclick="openRegionModal('siteDeliveryRegions');" class="formicon"><i class="fa-solid fa-square-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -422,13 +435,14 @@
                                             <div class="col-sm-9">
                                                 <input type="hidden" name="quote_id">
                                                 <!-- <input type="hidden" name="quote_ref"> -->
-                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
+                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['quote_ref'] }}" readonly>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="quoteType" class="col-sm-3 col-form-label">Quote Type </label>
                                         <div class="col-sm-7">
+                                            <input type="hidden" id="quoteTypeId" value="{{ $quoteData['quota_type'] }}">
                                             <select class="form-control editInput" name="quota_type" id="quoteType">
                                                 <option value="">-Select-</option>
                                             </select>
@@ -442,31 +456,31 @@
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Date <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control editInput textareaInput" value="<?= date('Y-m-d'); ?>" name="quota_date" id="" required>
+                                            <input type="date" class="form-control editInput textareaInput" value="{{ $quoteData['quota_date'] }}" name="quota_date" id="" required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputAddress" class="col-sm-3 col-form-label">Expiry Date</label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="form-control editInput textareaInput" name="expiry_date" value="{{ \Carbon\Carbon::now()->addMonth(1)->format('Y-m-d') }}" id="">
+                                            <input type="date" class="form-control editInput textareaInput" name="expiry_date" value="{{ $quoteData['expiry_date'] }}" id="">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputCustomer" class="col-sm-3 col-form-label">Customer Ref </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="" name="customer_ref" placeholder="Customer Ref">
+                                            <input type="text" class="form-control editInput textareaInput" id="" name="customer_ref" value="{{ $quoteData['customer_ref'] }}" placeholder="Customer Ref">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">Customer Job Ref</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="inputPurchase" name="customer_job_ref" placeholder="Customer Job Ref">
+                                            <input type="text" class="form-control editInput textareaInput" id="inputPurchase" name="customer_job_ref" value="{{ $quoteData['customer_job_ref']}}" placeholder="Customer Job Ref">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputPurchase" class="col-sm-3 col-form-label">Purchase Order Ref</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="" name="purchase_order_ref" placeholder="Purchase Order Ref">
+                                            <input type="text" class="form-control editInput textareaInput" value="{{ $quoteData['purchase_order_ref'] }}" id="" name="purchase_order_ref" placeholder="Purchase Order Ref">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -475,7 +489,7 @@
                                             <select class="form-control editInput" name="source" id="">
                                                 <option value="">None</option>
                                                 @foreach($quoteSource as $value)
-                                                <option value="{{ $value->id}}">{{ $value->title }}</option>
+                                                <option value="{{ $value->id}}" {{ $value->id == $quoteData['source'] ? 'selected' : '' }}>{{ $value->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -488,13 +502,13 @@
                                     <div class="mb-3 row">
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Prefered Job Date</label>
                                         <div class="col-sm-3">
-                                            <input type="date" class="form-control editInput textareaInput" id="inputPurchase" name="performed_job_date">
+                                            <input type="date" class="form-control editInput textareaInput" id="inputPurchase" value="{{ $quoteData['performed_job_date'] }}" name="performed_job_date">
                                         </div>
                                         <div class="col-sm-6">
                                             <select class="form-control editInput" name="period" id="">
                                                 <option value="">Any Time</option>
-                                                <option value="AM">AM</option>
-                                                <option value="PM">PM</option>
+                                                <option value="AM" @if($quoteData["period"]=="AM" ) selected @endif >AM</option>
+                                                <option value="PM" @if($quoteData["period"]=="PM" ) selected @endif>PM</option>
                                             </select>
                                         </div>
                                     </div>
@@ -502,12 +516,13 @@
                                         <label for="inputMobile" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
                                             <select class="form-control editInput" name="status" id="">
-                                                <option value="Draft">Draft</option>
-                                                <option value="Processed2">Processed</option>
-                                                <option value="Call back">Call back</option>
-                                                <option value="Accepted">Accepted</option>
-                                                <option value="Rejected">Rejected</option>
+                                                <option value="1" @if($quoteData["status"]=="Draft" ) selected @endif>Draft</option>
+                                                <option value="2" @if($quoteData["status"]=="Processed" ) selected @endif>Processed</option>
+                                                <option value="3" @if($quoteData["status"]=="Call back" ) selected @endif>Call back</option>
+                                                <option value="4" @if($quoteData["status"]=="Accepted" ) selected @endif>Accepted</option>
+                                                <option value="5" @if($quoteData["status"]=="Rejected" ) selected @endif>Rejected</option>
                                             </select>
+
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -567,6 +582,56 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
+                                                                    <tr>
+                                                                        <!-- <?php print_r($quoteData); ?> -->
+                                                                        <td>1</td>
+                                                                        <td>{{ $quoteData['quote_ref'] }}</td>
+                                                                        <td>-</td>
+                                                                        <td>{{ $quoteData['quota_date'] }}</td>
+                                                                        <td>{{ $quoteData['expiry_date'] }}</td>
+                                                                        <td>&#163;{{ $quoteData['sub_total'] }}</td>
+                                                                        <td>&#163;{{ $quoteData['vat_amount'] }}</td>
+                                                                        <td>&#163;{{ $quoteData['total_amount'] ?? '0.00'}}</td>
+                                                                        <td>&#163;{{ $quoteData['deposit'] ?? '0.00' }}</td>
+                                                                        <td>&#163;{{ $quoteData['outstanding'] }}</td>
+                                                                        <td>{{ $quoteData['status'] }}</td>
+                                                                        <td>
+                                                                            <div class="d-inline-flex align-items-center ">
+                                                                                <div class="nav-item dropdown">
+                                                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                                                        Action
+                                                                                    </a>
+                                                                                    <div class="dropdown-menu fade-up m-0">
+                                                                                        <a href="{{ url('/quote-details/edit').'/'.$value->id }}" class="dropdown-item">Edit</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Preview</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Print</a>
+                                                                                        <a href="" class="dropdown-item">Email</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Duplicate</a>
+                                                                                        <a href="" class="dropdown-item">Duplicate for New Customer</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Create Purchase Order </a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Convert To New Job</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Convert To Recurring Job</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Convert To Invoice</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="" class="dropdown-item">Change To Processed</a>
+                                                                                        <a href="" class="dropdown-item">Change To Call Back</a>
+                                                                                        <a href="" class="dropdown-item">Change To Accepted</a>
+                                                                                        <a href="" class="dropdown-item">Change To Rejected</a>
+                                                                                        <a href="" class="dropdown-item">New Task</a>
+                                                                                        <hr class="dropdown-divider">
+                                                                                        <a href="#" class="dropdown-item set_value_on_CRM_model" class="dropdown-item">CRM History</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -677,7 +742,6 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-
                                                 <p class="uploadImg">
                                                     <i class="fa fa-cloud-upload"></i>
                                                     <input type="file" multiple="false" accept="image/*" id="finput" onchange="upload()">
@@ -724,6 +788,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="add_table_insrt">
+
                                             </tbody>
                                             <tfoot class="table totlepayment add_table_insrt33" id="containerA">
                                             </tfoot>
@@ -884,7 +949,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Description</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" name="extra_information" id="textarea8"> </textarea>
+                                            <textarea cols="40" rows="5" name="extra_information" id="textarea8">{{ $quoteData['extra_information'] }} </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -892,7 +957,7 @@
                                     <div class="">
                                         <h4 class="contTitle text-start">Customer Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea9" name="customer_notes"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea9" name="customer_notes"> {{ $quoteData['customer_notes'] }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -900,7 +965,7 @@
                                     <div class="pt-3">
                                         <h4 class="contTitle text-start">Terms</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea10" name="tearms"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea10" name="tearms"> {{ $quoteData['tearms'] }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -908,7 +973,7 @@
                                     <div class="pt-3">
                                         <h4 class="contTitle text-start">Internal Notes</h4>
                                         <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea11" name="internal_notes"> </textarea>
+                                            <textarea cols="40" rows="5" id="textarea11" name="internal_notes">{{ $quoteData['internal_notes'] }} </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -925,11 +990,11 @@
                             <div class="row">
                                 <div class="col-sm-3 mb-3 mt-2">
                                     <div class=" p-0">
-                                        <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Creadit Deposit</a>
+                                        <a href="javascript:void(0)" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Create Deposit</a>
                                         <span class="col-form-label">
                                             or
                                         </span>
-                                        <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Creadit Deposit Invoice</a>
+                                        <a href="javascript:void(0)" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Create Deposit Invoice</a>
                                     </div>
                                 </div>
 
@@ -939,7 +1004,7 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content add_Customer">
                                             <div class="modal-header">
-                                                <h5 class="modal-title fs-5" id="creaditDepositModalLabel">Creadit Deposit</h5>
+                                                <h5 class="modal-title fs-5" id="creaditDepositModalLabel">Create Deposit</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body ">
@@ -947,185 +1012,113 @@
 
                                                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                                         <li class="nav-item me-2" role="presentation">
-                                                            <button class="profileDrop" id="paymentDetails-tab" data-bs-toggle="pill" data-bs-target="#paymentDetails" type="button" role="tab" aria-controls="paymentDetails" aria-selected="false" tabindex="-1">Payment Details</button>
+                                                            <button class="nav-link profileDrop active" id="paymentDetails-tab" data-bs-toggle="pill" data-bs-target="#paymentDetails" type="button" role="tab" aria-controls="paymentDetails" aria-selected="false" tabindex="-1">Payment Details</button>
                                                         </li>
                                                         <li class="nav-item me-2" role="presentation">
-                                                            <button class="profileDrop" id="billingDetails-tab" data-bs-toggle="pill" data-bs-target="#billingDetails" type="button" role="tab" aria-controls="billingDetails" aria-selected="false" tabindex="-1">Billing Details</button>
-                                                        </li>
-                                                        <li class="nav-item me-2" role="presentation">
-                                                            <button class="profileDrop active activetb" id="paymentType-tab" data-bs-toggle="pill" data-bs-target="#paymentType" type="button" role="tab" aria-controls="paymentType" aria-selected="true">Payment Type</button>
+                                                            <button class="nav-link profileDrop " id="paymentType-tab" data-bs-toggle="pill" data-bs-target="#paymentType" type="button" role="tab" aria-controls="paymentType" aria-selected="true">Payment Type</button>
                                                         </li>
                                                     </ul>
                                                     <div class="tab-content" id="pills-tabContent">
-                                                        <div class="tab-pane fade" id="paymentDetails" role="tabpanel" aria-labelledby="paymentDetails-tab" tabindex="0">
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="QU-0021 - Quote Date 24/10/2024" readonly="">
+                                                        <form action="">
+                                                            <!-- Payment Details -->
+                                                            <div class="tab-pane fade show active" id="paymentDetails" role="tabpanel" aria-labelledby="paymentDetails-tab" tabindex="0">
+                                                                <div class="newJobForm card">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['quote_ref'] }} - Quote Date {{ $quoteData['quota_date_deposit'] }}" readonly="">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="Prathima" readonly="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['customer']['name'] }}" readonly="">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Totle (inc. VAT)</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT)</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['sub_total'] }}" readonly="">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="$12,000.00" readonly="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['total_amount'] }}" readonly="">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
-                                                                        <span class="radStar">*</span></label>
-                                                                    <div class="col-sm-5">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
+                                                                            <span class="radStar">*</span></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                                        </div>
+                                                                        <div class="col-sm-1 ps-0">
+                                                                            <input class="form-control editInput text-center" value="%" disabled="">
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-sm-1 ps-0">
-                                                                        <input class="form-control editInput text-center" value="%" disabled="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-1 pe-0">
+                                                                            <input class="form-control editInput text-center" value="&#163;" disabled="">
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" value="0.00">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-1 pe-0">
-                                                                        <input class="form-control editInput text-center" value="$" disabled="">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-sm-4">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" value="$ 0.00">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCounty" class="col-sm-3 col-form-label pt-0">Take Card Payment Now?</label>
-                                                                    <div class="col-sm-8">
-                                                                        <span class="oNOfswich">
-                                                                            <input type="checkbox">
-                                                                        </span>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <!--  -->
-                                                        <div class="tab-pane fade" id="billingDetails" role="tabpanel" aria-labelledby="billingDetails-tab" tabindex="0">
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">First Name<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Arjun">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Last Name<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Kumar">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Email Address<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="info@gmail.com">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Telephone<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Address Line1<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="USA">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Address Line2</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">City<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">County</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Country</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="United Stat Kingdom">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Postcode<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--  -->
-                                                        <div class="tab-pane fade active show" id="paymentType" role="tabpanel" aria-labelledby="paymentType-tab" tabindex="0">
-                                                            <div class="mb-2 row">
-                                                                <div class="col-sm-12">
-                                                                    <div class="text-end">
-                                                                        <h5>Paying Now: $12000.00</h5>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                            <option>Cash</option>
-                                                                            <option>paypal</option>
-                                                                            <option>Card</option>
-                                                                            <option>Bank</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
-                                                                        <span class="radStar">*</span></label>
-                                                                    <div class="col-sm-5">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
-                                                                    </div>
-                                                                    <div class="col-sm-1 ps-0">
-                                                                        <span class="material-symbols-outlined">
-                                                                            calendar_month
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
+                                                            <!-- Payment Details -->
 
+                                                            <!--  Payment Types -->
+                                                            <div class="tab-pane fade  " id="paymentType" role="tabpanel" aria-labelledby="paymentType-tab" tabindex="0">
+                                                                <div class="mb-2 row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="text-end">
+                                                                            <h5>Paying Now: $12000.00</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="newJobForm card">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                                @foreach($paymentType as $value)
+                                                                                <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
+                                                                            <span class="radStar">*</span></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="date" class="form-control editInput" id="inputCity" value="{{ now()->format('Y-m-d') }}">
+                                                                        </div>
+                                                                        <div class="col-sm-1 ps-0">
+                                                                            <span class="material-symbols-outlined">
+                                                                                calendar_month
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <!--  -->
+                                                            <!-- Payment Types -->
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div> <!-- end modal body -->
@@ -1150,31 +1143,21 @@
                                                 <div class="contantbodypopup p-0">
                                                     <div class="newJobForm card">
                                                         <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date
-                                                                <span class="radStar">*</span></label>
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
                                                                 <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
                                                             </div>
                                                             <div class="col-sm-1 ps-0">
-                                                                <a href="#!">
-                                                                    <span class="material-symbols-outlined">
-                                                                        calendar_month
-                                                                    </span>
-                                                                </a>
+                                                                <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Due Date
-                                                                <span class="radStar">*</span></label>
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Due Date<span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
                                                                 <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
                                                             </div>
                                                             <div class="col-sm-1 ps-0">
-                                                                <a href="#!">
-                                                                    <span class="material-symbols-outlined">
-                                                                        calendar_month
-                                                                    </span>
-                                                                </a>
+                                                                <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
@@ -1189,8 +1172,6 @@
                                                                 <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
                                                             </div>
                                                         </div>
-
-
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
                                                                 <span class="radStar">*</span></label>
@@ -1223,7 +1204,7 @@
                                                         </div>
 
                                                         <div class="mb-2 row">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Totle (inc. VAT)</label>
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Totel (inc. VAT)</label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
                                                             </div>
@@ -1271,11 +1252,8 @@
                                             <tbody>
                                                 <tr>
                                                     <td colspan="7">
-                                                        <label class="red_sorryText">
-                                                            Sorry, no records to show
-                                                        </label>
+                                                        <label class="red_sorryText">Sorry, no records to show</label>
                                                     </td>
-
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1300,10 +1278,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="8">
-
-                                                    </td>
-
+                                                    <td colspan="8"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1315,13 +1290,58 @@
                     </div>
                     <!--  -->
                     <div id="hideAttachmentTask">
-                        <!-- *************************Start Task*************************************************** -->
+
+                        <!-- ************************************* Start Attechments ******************************** -->
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Attachments</label>
+                            <div class="row">
+
+                                <div class="col-sm-12 mb-3 mt-2">
+                                    <div class=" p-0">
+                                        <a href="javascript:void(0)" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
+                                        <a href="{{ route('quote.addMultiAttachment', ['quote_id' => $quoteData['id']]) }}" class="profileDrop">Upload Multi Attachment</a>
+                                        <a href="javascript:void(0)" id="downloadSelected" class="profileDrop">Download Attachment(s)</a>
+                                        <a href="javascript:void(0)" id="deleteSelected" class="profileDrop">Delete Attachment(s)</a>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="attachmentTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th><input type="checkbox" id="selectAll"></th>
+                                                    <th>Type</th>
+                                                    <th>Title </th>
+                                                    <th>Description</th>
+                                                    <th>Section </th>
+                                                    <th>Customer Visible </th>
+                                                    <th>Mobile User Visible </th>
+                                                    <th>File Name</th>
+                                                    <th>Mime Type / Size</th>
+                                                    <th>Created On</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- ************************************* End Of Attechment ******************************** -->
+                    </div>
+                    <!-- ******************************* Start Task ***************************** -->
+                    <div id="hideTaskData">
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Tasks</label>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="tabheadingTitle pb-3 pt-2">
-                                        <a href="#" class="profileDrop me-3"> New Task</a>
+                                        <a href="#" class="profileDrop me-3" onclick="openTaskModal();"> New Task</a>
                                     </div>
                                     <div class="extraInformationTab">
                                         <nav>
@@ -1423,59 +1443,11 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- **********************End of Task************************ -->
-
-                        <!-- ***********************************Start Attechments******************************** -->
-                        <div class="newJobForm mt-4">
-                            <label class="upperlineTitle">Attachments</label>
-                            <div class="row">
-
-                                <div class="col-sm-12 mb-3 mt-2">
-                                    <div class=" p-0">
-                                        <a href="javascript:void(0)" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
-                                        <a href="javascript:void(0)" class="profileDrop">Upload Multi Attachment</a>
-                                        <a href="javascript:void(0)" class="profileDrop">Preview Attachment(s)</a>
-                                        <a href="javascript:void(0)" class="profileDrop">Download Attachment</a>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
-                                    <div class="productDetailTable">
-                                        <table class="table" id="containerA">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Type</th>
-                                                    <th>Title </th>
-                                                    <th>Description</th>
-                                                    <th>Section </th>
-                                                    <th>Customer Visible </th>
-                                                    <th>Mobile User Visible </th>
-                                                    <th>File Name</th>
-                                                    <th>Mime Type / Size</th>
-                                                    <th>Created On</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="7">
-                                                        <label class="red_sorryText">
-                                                            Sorry, no attachment(s) found
-                                                        </label>
-                                                    </td>
-
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <!-- ***************************************End Of Attechment********************************************** -->
                     </div>
+
+                    <!-- ****************************** End of Task ***************************** -->
+
+
 
 
                     <div class="row">
@@ -1783,6 +1755,43 @@
 </div>
 <!-- Add Customer Type Modal End -->
 
+
+<!-- Add Task Modal Start -->
+<!-- <div class="modal fade" id="quote_task_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="thirdModalLabel">New Task</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add_customer_type_form">
+                    <div class="mb-3 row">
+                        <label for="inputJobRef" class="col-sm-3 col-form-label">Customer Type <span class="radStar ">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="title" class="form-control editInput" id="customer_type_name" value="" placeholder="Customer Type">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputJobRef" class="col-sm-3 col-form-label">Status</label>
+                        <div class="col-sm-9">
+                            <select id="customer_type_status" name="status" class="form-control editInput">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="pageTitleBtn">
+                        <a href="#" class="profileDrop p-2 crmNewBtn" id="saveAddCustomerType"> Save</a>
+                        <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- Add Task Type Modal End -->
+
 <!-- Add Site Address Modal Start -->
 <div class="modal fade" id="add_site_address_modal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -1800,7 +1809,7 @@
                                     <input type="hidden" name="customer_id" id="customer_id_site_add">
                                     <label for="inputName" class="col-sm-4 col-form-label">Customer </label>
                                     <div class="col-sm-8">
-                                        <label for="inputAddress" class="col-form-label"><span id="setSiteAddress"></span> </label>
+                                        <label for="inputAddress" class="col-form-label"><span id="setSiteAddress">{{ $quoteData['customer']['name']}}</span> </label>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
@@ -1957,7 +1966,7 @@
                                 <div class="mb-2 row">
                                     <label for="inputName" class="col-sm-4 col-form-label">Customer </label>
                                     <div class="col-sm-8">
-                                        <label for="inputAddress" class="col-form-label"><span id="setCustomerName"></span> </label>
+                                        <label for="inputAddress" class="col-form-label"><span id="setCustomerName">{{ $quoteData['customer']['name'] }}</span> </label>
                                         <input type="hidden" name="customer_id" id="customer_contact_id">
                                     </div>
                                 </div>
@@ -2244,39 +2253,52 @@
     <div class="modal-dialog">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title pupTitle">ABCD</h5>
+                <h5 class="modal-title pupTitle">Add Attachment</h5>
                 <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button"></button>
             </div>
             <div class="modal-body">
-                <form role="form" id="">
-
+                <form role="form" id="attachmentTypeForm">
                     <div><span id="error-message" class="error"></span></div>
                     <div class="row form-group">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Quote Type <span class="radStar ">*</span></label>
+                        <label class="col-lg-3 col-sm-3 col-form-label">Quote Ref </label>
                         <div class="col-md-9">
-                            <input type="hidden" name="quote_type_id" id="quote_type_id">
-                            <input type="text" name="title" class="form-control editInput " placeholder="Quote Type" id="title">
+                            <input type="hidden" value="{{ $quoteData['id'] }}" name="quote_id">
+                            <input type="text" class="form-control-plaintext editInput" id="" value="{{ $quoteData['quote_ref'] }}" readonly>
                         </div>
                     </div>
                     <div class="row form-group mt-3">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Number of days</label>
+                        <label class="col-lg-3 col-sm-3 col-form-label">Type</label>
                         <div class="col-md-9">
-                            <input type="text" name="number_of_days" class="form-control editInput " placeholder="Number of days" id="number_of_days" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                        </div>
-                    </div>
-                    <div class="row form-group mt-3">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
-                        <div class="col-md-9">
-                            <select name="status" id="modale_status" class="form-control editInput">
-                                <option value="1">Active</option>
-                                <option value="0">InActive</option>
+                            <select name="attachment_type" id="modale_status" class="form-control editInput">
+                                <option value="">Please Select</option>
+                                @foreach($attachment_type as $value)
+                                <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">File Name <span class="radStar ">*</span></label>
+                        <div class="col-md-9">
+                            <input type="file" name="image" class="form-control editInput " placeholder="" id="">
+                        </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Title</label>
+                        <div class="col-md-9">
+                            <input type="text" name="title" class="form-control editInput " placeholder="Title" id="">
+                        </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Description</label>
+                        <div class="col-md-9">
+                            <textarea name="description" class="form-control textareaInput" rows="4" placeholder="Description" id=""></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="btn profileDrop" id="">Save</button>
+                <button type="button" class="btn profileDrop" id="saveAttachmentType">Save</button>
                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
@@ -2356,23 +2378,32 @@
     CKEDITOR.replace('textarea9', editor_config);
     CKEDITOR.replace('textarea10', editor_config);
     CKEDITOR.replace('textarea11', editor_config);
-    //Text Editer
-
-    // document.querySelector("#listAllProduct").addEventListener("click", function(e) {
-    //     const productIds = document.getElementById('selectedProductIds').value;
-    //     const productIdsArray = JSON.parse(productIds || '[]');
-    //     productIdsArray.forEach(id => {
-    //         getProductData(id); // Call the function for each ID
-    //     });
-    // });
 
     $(document).ready(function() {
+
+        document.getElementById('hideCustomerDetails').style.display = "none";
+        document.getElementById('hideTaskData').style.display = "none";
+        // document.getElementById('hideDepositSection').style.display = "none";
+        document.getElementById('yourQuoteSection').style.display = "none";
+
+        $('#OpenQuoteTypeModel').on('click', function() {
+            $('#quoteTypeModal').modal('show');
+        });
+
+        $('#OpenAddQuoteSourceModal').on('click', function() {
+            $('#quoteSourceModal').modal('show');
+        });
+
+        getQuoteType(document.getElementById('quoteType'));
+
 
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        getQuoteAttachmentsOnPageLoad();
         $('#search-product').on('keyup', function() {
             let query = $(this).val();
             const divList = document.querySelector('.parent-container');
@@ -2434,39 +2465,69 @@
                 $('#results').empty(); // Clear results if the input is empty
             }
         });
-        // getCustomerList();
+        const setCustomerId = document.getElementById('setCustomerId').value;
 
-        getQuoteType(document.getElementById('quoteType'));
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerList") }}',
+            success: function(response) {
+                console.log(response.message);
+                var get_customer_type = document.getElementById('getCustomerList');
+                // get_customer_type.innerHTML = '';
 
-        document.getElementById('hideQuoteDiv').style.display = "none";
-        document.getElementById('hideQuoteDetails').style.display = "none";
-        document.getElementById('hideAttachmentTask').style.display = "none";
-        document.getElementById('hideDepositSection').style.display = "none";
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.name;
+                    if (user.id == setCustomerId) {
+                        option.selected = true; // Mark as selected
+                    }
 
-        $('#getCustomerList').on('click', function() {
-            // getCustomerList();
-            document.getElementById('customerSiteDetails').removeAttribute('disabled');
-            document.getElementById('billingDetailContact').removeAttribute('disabled');
+                    get_customer_type.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
 
-            const billingDetailContact = document.getElementById('billingDetailContact');
-            billingDetailContact.innerHTML = '';
+        // get all product from quote_id
+        const quote_id = document.getElementById('quote_id').value;
+        $.ajax({
+            url: '{{ route("quote.ajax.getQuoteProductList") }}',
+            method: 'POST',
+            data: {
+                id: quote_id
+            },
+            success: function(response) {
+                console.log(response.message);
 
-            var getCustomerListValue = document.getElementById('getCustomerList');
+                response.data.forEach(data => {
+                    quoteProductTable(response.data, 'quoteProducts');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
 
-            const option = document.createElement('option');
-            option.value = getCustomerListValue.value;
-            option.text = "Default";
-            billingDetailContact.appendChild(option);
 
-
+        const edit_customer_billing_id = document.getElementById('edit_customer_billing_id').value;
+        if (setCustomerId === edit_customer_billing_id) {
             $.ajax({
                 url: '{{ route("customer.ajax.getCustomerBillingAddress") }}',
                 method: 'POST',
                 data: {
-                    id: getCustomerListValue.value
+                    id: setCustomerId
                 },
                 success: function(response) {
                     console.log(response.message);
+                    var billingDetailContact = document.getElementById('billingDetailContact');
+                    billingDetailContact.innerHTML = '';
+
+                    const optionDefault = document.createElement('option');
+                    optionDefault.value = setCustomerId;
+                    optionDefault.text = "Default";
+                    billingDetailContact.appendChild(optionDefault);
 
                     response.data.forEach(user => {
                         const option = document.createElement('option');
@@ -2479,52 +2540,27 @@
                     console.error(error);
                 }
             });
+        } else {
+            setCustomerBillingData(edit_customer_billing_id);
+        }
 
-            getBillingDetailsData(getCustomerListValue.value);
-
-
-            const customerSiteDetails = document.getElementById('customerSiteDetails');
-            const customerSiteDelivery = document.getElementById('customerSiteDelivery');
-
-            customerSiteDetails.innerHTML = '';
-            customerSiteDelivery.innerHTML = '';
-
-            const option3 = document.createElement('option');
-            option3.value = getCustomerListValue.value;
-            option3.text = "Same as customer";
-            const option4 = option3.cloneNode(true);
-            customerSiteDetails.appendChild(option3);
-            customerSiteDelivery.appendChild(option4);
-
-            removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
-        });
-
-        $('#AddQuoteButton').on('click', function() {
-            var customer = document.getElementById('getCustomerList').value;
-            if (customer === "") {
-                alert('Please select the customer');
-            } else {
-                getTags(document.getElementById('quoteTag'))
-                getRegions(document.getElementById('siteDeliveryRegions'));
-                const selectCustomer = document.getElementById('getCustomerList');
-                const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
-                document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
-                document.getElementById('yourQuoteSection').style.display = "none";
-                document.getElementById('hideQuoteDiv').style.display = "block";
-                document.getElementById('hideCustomerDetails').style.display = "none";
-                document.getElementById('hideQuoteDetails').style.display = "block";
-            }
-        });
-
-        $('#saveQuoteTag').on('click', function() {
-            var quoteTag = document.getElementById('quoteTag');
-            saveFormData(
-                'add_quote_tag_form', // formId
-                '{{ route("General.ajax.saveQuoteTag") }}', // saveUrl
-                'quoteTagModal', // modalId
-                getTags, // callback function after success
-                quoteTag
-            );
+        $('#saveQuoteTypeQuote').on('click', function() {
+            var formData = $('#add_quote_type_form').serialize();
+            $.ajax({
+                url: '{{ route("quote.ajax.saveQuoteType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    console.log(response.id);
+                    setSiteAddressDetails(response.id);
+                    $('#quoteTypeModal').modal('hide');
+                    getQuoteType(document.getElementById('quoteType'));
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
 
         $('#billingDetailContact').on('change', function() {
@@ -2537,88 +2573,67 @@
             }
         });
 
-        $('#customerSiteDetails').on('change', function() {
-            var selected = document.getElementById('getCustomerList').value;
-            console.log($(this).val());
-            if ($(this).val() === selected) {
-
-                $.ajax({
-                    url: '{{ route("customer.ajax.getCustomerDetails") }}',
-                    method: 'POST',
-                    data: {
-                        id: $(this).val()
-                    },
-                    success: function(response) {
-                        console.log(response.data);
-
-                        // document.getElementById('customer_site_id').value = response.data[0].id;
-                        document.getElementById('siteCustomerId').value = response.data[0].id;
-                        document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                        document.getElementById('customerSiteAddress').value = response.data[0].address;
-                        document.getElementById('customerSiteCity').value = response.data[0].city;
-                        document.getElementById('customerSiteCounty').value = response.data[0].country;
-                        document.getElementById('customerSitePostCode').value = response.data[0].postal_code;
-                        document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                        document.getElementById('customerSiteMobile').value = response.data[0].mobile;
-                        document.getElementById('setSiteAddress').textContent = document.getElementById('customerSiteCompany').value = response.data[0].name;
-                        selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                        selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                        selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                setSiteAddressDetails($(this).val());
-            }
-        });
-
-        $('#customerSiteDelivery').on('change', function() {
-            var selected = document.getElementById('getCustomerList').value;
-            console.log($(this).val());
-            if ($(this).val() === selected) {
-
-                $.ajax({
-                    url: '{{ route("customer.ajax.getCustomerDetails") }}',
-                    method: 'POST',
-                    data: {
-                        id: $(this).val()
-                    },
-                    success: function(response) {
-                        console.log(response.data);
-                        document.getElementById('site_delivery_add_id').value = response.data[0].id;
-                        document.getElementById('customerSiteDeliveryName').value = response.data[0].contact_name;
-                        document.getElementById('customerSiteDeliveryAdd').value = response.data[0].address;
-                        document.getElementById('customerSiteDeliveryPostCode').value = response.data[0].postal_code;
-                        document.getElementById('customerSiteDeliveryTelephone').value = response.data[0].telephone;
-                        document.getElementById('customerSiteDeliveryMobile').value = response.data[0].mobile;
-                        document.getElementById('customerSiteDeliveryEmail').value = response.data[0].email;
-                        document.getElementById('customerSiteDeliveryCompany').value = response.data[0].name;
-                        selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
-                        selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
-                        selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                setSiteDeliveryDetails($(this).val());
-            }
-        });
-
-        $('#saveQuoteSourceQuote').on('click', function() {
-            var formData = $('#add_quote_source_form').serialize();
+        const edit_site_id = document.getElementById('edit_customer_billing_id').value;
+        if (setCustomerId === edit_customer_billing_id) {
             $.ajax({
-                url: '{{ route("quote.ajax.saveQuoteSources") }}',
+                url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
+                method: 'POST',
+                data: {
+                    id: setCustomerId
+                },
+                success: function(response) {
+                    console.log(response.data);
+
+                    const optionDefault = document.createElement('option');
+                    optionDefault.value = setCustomerId;
+                    optionDefault.text = "Same As Default";
+                    billingDetailContact.appendChild(optionDefault);
+
+                    response.data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.site_name;
+                        const option1 = option.cloneNode(true);
+                        customerSiteDetails.appendChild(option);
+                        customerSiteDelivery.appendChild(option1);
+                    });
+
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+
+        $('#AddQuoteButton').on('click', function() {
+            var customer = document.getElementById('getCustomerList').value;
+            if (customer === "") {
+                alert('Please select the customer');
+            } else {
+                // getTags(document.getElementById('quoteTag'))
+                // getRegions(document.getElementById('siteDeliveryRegions'));
+                const selectCustomer = document.getElementById('getCustomerList');
+                const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
+                document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
+                // document.getElementById('yourQuoteSection').style.display = "none";
+                // document.getElementById('hideQuoteDiv').style.display = "block";
+                // document.getElementById('hideCustomerDetails').style.display = "none";
+                // document.getElementById('hideQuoteDetails').style.display = "block";
+            }
+        });
+
+        $('#saveCustomerContactData').on('click', function() {
+            var formData = $('#add_customer_contact_form').serialize();
+            $.ajax({
+                url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
                 method: 'POST',
                 data: formData,
                 success: function(response) {
+                    console.log(response);
                     alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    $('#quoteSourceModal').modal('hide');
+                    setCustomerBillingData(response.lastid);
+                    $('#add_customer_contact_modal').modal('hide');
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -2646,210 +2661,73 @@
             });
         });
 
-        $('#saveCustomerSiteDeliveryDetails').on('click', function() {
-            var formData = $('#add_customer_site_delivery_form').serialize();
+        $('#OpenAddCustomerContact').on('click', function() {
+            getCustomerJobTitle(document.getElementById('customer_job_titile_id'));
+            $('#add_customer_contact_modal').modal('show');
+        });
+
+        $('#openCustomerSiteAddress').on('click', function() {
+            var customer = document.getElementById('getCustomerList').value;
+            if (customer === "") {
+                alert('Please select the customer');
+            } else {
+                getRegions(document.getElementById('getSiteAddressRegion'));
+                getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
+                getCustomerJobTitle(document.getElementById('siteJobTitle'));
+                getCountriesList(document.getElementById('siteAddressMobileCode'));
+                getCountriesList(document.getElementById('siteAddressTelephoneCode'));
+                $('#add_site_address_modal').modal('show');
+            }
+
+
+
+        });
+
+        $('#new_Attachment_open_model').on('click', function() {
+            $('#new_Attachment_model').modal('show');
+        });
+
+        $('#saveAttachmentType').on('click', function(e) {
+
+            let formData = new FormData($('#attachmentTypeForm')[0]);
+            console.log(formData);
+
             $.ajax({
-                url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
-                method: 'POST',
+                url: '{{ route("quote.ajax.saveAttachmentData") }}', // Replace with your Laravel route URL
+                type: 'POST',
                 data: formData,
+                contentType: false, // Required for FormData
+                processData: false, // Required for FormData
                 success: function(response) {
-                    alert(response.message);
+                    // Handle success
+                    alert(response.data);
                     console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    $('#add_site_delivery_address_modal').modal('hide');
+                    $('#new_Attachment_model').modal('hide'); // Hide the modal
+                    getQuoteAttachments(response.id);
                 },
-                error: function(xhr, status, error) {
-                    console.error(error);
+                error: function(xhr) {
+                    // Handle error
+                    const errors = xhr.responseJSON.errors || {
+                        message: xhr.responseJSON.message
+                    };
+                    let errorMessage = 'Error saving the attachment:\n';
+                    for (let key in errors) {
+                        errorMessage += `${errors[key]}\n`;
+                    }
+                    alert(errorMessage);
                 }
             });
         });
-
-        $('#saveQuoteTypeQuote').on('click', function() {
-            var formData = $('#add_quote_type_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveQuoteType") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    $('#quoteTypeModal').modal('hide');
-                    getQuoteType(document.getElementById('quoteType'));
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        // Ajax Call for saving Customer Type
-        $('#saveAddCustomerType').on('click', function() {
-            var formData = $('#add_customer_type_form').serialize();
-            $.ajax({
-                url: '{{ route("quote.ajax.saveCustomerType") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    $('#quote_cutomer_type_modal').modal('hide');
-                    getCustomerType();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-          // Save Customer Data
-          $('#saveCustomerContactData').on('click', function() {
-            var formData = $('#add_customer_contact_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    $('#add_customer_contact_modal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
-        
-        // Save Customer Data
-        $('#SaveCustomerData').on('click', function() {
-            var formData = $('#add_customer_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.SaveCustomerData") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    getCustomerList();
-                    $('#QuotecustomerPop').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-
 
     });
 
-    function getCustomerType() {
-        $.ajax({
-            url: '{{ route("quote.ajax.getCustomerType") }}',
-            success: function(response) {
-                console.log(response.message);
-                const get_customer_type = document.getElementById('get_customer_type');
-                get_customer_type.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.title;
-                    get_customer_type.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getProductData(selectedId) {
-        $.ajax({
-            url: '{{ route("item.ajax.getProductFromId") }}',
-            method: 'Post',
-            data: {
-                id: selectedId
-            },
-            success: function(response) {
-                console.log("response.data", response.data);
-                quoteProductTable(response.data, 'quoteProducts');
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getAccountCode() {
-        $.ajax({
-            url: '{{ route("Invoice.ajax.getActiveAccountCode") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("response.getActiveAccountCode", response.data);
-                // Ensure response.data contains the account codes
-                if (Array.isArray(response.data)) {
-                    // Iterate over all Account Code dropdowns and populate them
-                    document.querySelectorAll('#accoutCodeList').forEach(dropdown => {
-                        dropdown.innerHTML = ''; // Clear existing options
-
-                        const optionInitial = document.createElement('option');
-                        optionInitial.textContent = "-No Department-"; // Use appropriate key from your response
-                        optionInitial.value = "";
-                        dropdown.appendChild(optionInitial);
-                        // Append new options
-                        response.data.forEach(code => {
-                            const option = document.createElement('option');
-                            option.value = code.id;
-                            option.textContent = code.departmental_code + "-" + code.name; // Use appropriate key from your response
-                            dropdown.appendChild(option);
-                        });
-                    });
-                } else {
-                    console.error("Invalid response format");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function taxRate() {
-        $.ajax({
-            url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("response.data", response.data);
-                if (Array.isArray(response.data)) {
-                    // Iterate over all Account Code dropdowns and populate them
-                    document.querySelectorAll('#getTaxRate').forEach(dropdown => {
-                        dropdown.innerHTML = ''; // Clear existing options
-
-                        const optionInitial = document.createElement('option');
-                        optionInitial.textContent = "Please Select"; // Use appropriate key from your response
-                        optionInitial.value = 0;
-                        dropdown.appendChild(optionInitial);
-                        // Append new options
-                        response.data.forEach(code => {
-                            const option = document.createElement('option');
-                            option.value = code.id; // Use appropriate key from your response
-                            option.textContent = code.name; // Use appropriate key from your response
-                            if (code.id === 2) {
-                                option.selected = true; // Select the option where id = 2
-                            }
-                            dropdown.appendChild(option);
-                        });
-                    });
-                } else {
-                    console.error("Invalid response format");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function applyMarkup() {
-        document.getElementById('markUpLinkRemove').innerHTML = '';
-        document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
+    function attachRowEventListeners(row, table) {
+        // Attach change events for quantity, costPrice, price, etc.
+        row.querySelector('.quantity')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.costPrice')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.price')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.discount')?.addEventListener('input', () => calculateRowsValue(table));
+        row.querySelector('.vat')?.addEventListener('change', () => calculateRowsValue(table));
     }
 
     function getTaxRateOnTaxId(taxID) {
@@ -2862,6 +2740,24 @@
             success: function(response) {
                 console.log("response.data", response.data);
                 document.querySelector('.selectedTaxID').value = response.data;
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    
+    function getProductData(selectedId) {
+        $.ajax({
+            url: '{{ route("item.ajax.getProductFromId") }}',
+            method: 'Post',
+            data: {
+                id: selectedId
+            },
+            success: function(response) {
+                console.log("response.data", response.data);
+                quoteProductTable(response.data, 'quoteProducts');
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -2959,6 +2855,11 @@
             });
 
         }
+    }
+
+    function applyMarkup() {
+        document.getElementById('markUpLinkRemove').innerHTML = '';
+        document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
     }
 
     function calculateRowsValue(table) {
@@ -3060,6 +2961,42 @@
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
 
 
+    }
+
+    function taxRate() {
+        $.ajax({
+            url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log("response.data", response.data);
+                if (Array.isArray(response.data)) {
+                    // Iterate over all Account Code dropdowns and populate them
+                    document.querySelectorAll('#getTaxRate').forEach(dropdown => {
+                        dropdown.innerHTML = ''; // Clear existing options
+
+                        const optionInitial = document.createElement('option');
+                        optionInitial.textContent = "Please Select"; // Use appropriate key from your response
+                        optionInitial.value = 0;
+                        dropdown.appendChild(optionInitial);
+                        // Append new options
+                        response.data.forEach(code => {
+                            const option = document.createElement('option');
+                            option.value = code.id; // Use appropriate key from your response
+                            option.textContent = code.name; // Use appropriate key from your response
+                            if (code.id === 2) {
+                                option.selected = true; // Select the option where id = 2
+                            }
+                            dropdown.appendChild(option);
+                        });
+                    });
+                } else {
+                    console.error("Invalid response format");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
     }
 
     let isFooterAppended = false;
@@ -3180,23 +3117,9 @@
         calculateRowsValue(table);
     }
 
-    function attachRowEventListeners(row, table) {
-        // Attach change events for quantity, costPrice, price, etc.
-        row.querySelector('.quantity')?.addEventListener('input', () => calculateRowsValue(table));
-        row.querySelector('.costPrice')?.addEventListener('input', () => calculateRowsValue(table));
-        row.querySelector('.price')?.addEventListener('input', () => calculateRowsValue(table));
-        row.querySelector('.discount')?.addEventListener('input', () => calculateRowsValue(table));
-        row.querySelector('.vat')?.addEventListener('change', () => calculateRowsValue(table));
-    }
-
-    function clearFooter(table) {
-        const tableBody = table.querySelector('tbody');
-        const tableFoot = table.querySelector('tfoot');
-        if (tableBody && tableBody.children.length === 0 && tableFoot) {
-            tableFoot.innerHTML = ''; // Clear the footer
-            isFooterAppended = false; // Reset the flag
-        }
-    }
+    // function openTaskModal() {
+    //     $('#quote_task_modal').modal('show');
+    // }
 
     function getQuoteType(quoteType) {
         $.ajax({
@@ -3217,178 +3140,159 @@
         });
     }
 
-    function getCustomerList() {
-
+    function getQuoteAttachmentsOnPageLoad() {
+        const quote_id = document.getElementById('quote_id').value;
+        console.log("quote_id", quote_id);
         $.ajax({
-            url: '{{ route("customer.ajax.getCustomerList") }}',
-            success: function(response) {
-                console.log(response.message);
-                var get_customer_type = document.getElementById('getCustomerList');
-                // get_customer_type.innerHTML = '';
-
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name;
-                    get_customer_type.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getCountriesListCustomer(selectElement) {
-        $.ajax({
-            url: '{{ route("ajax.getCountriesList") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log(response.Data);
-                selectElement.innerHTML = '';
-                response.Data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name;
-                    selectElement.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getTags(tags) {
-        $.ajax({
-            url: '{{ route("General.ajax.getTags") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("jxcnjfjnfnk", response.data);
-                tags.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.title;
-                    tags.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getCurrencyData(customer_currency) {
-        $.ajax({
-            url: '{{ route("currency.ajax.getCurrencyData") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("jxcnjfjnfnk", response.data);
-                customer_currency.innerHTML = '';
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name + " - " + user.code;
-                    customer_currency.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function saveFormData(formId, saveUrl, modalId, callback, callBackValue = null) {
-        var formData = $('#' + formId).serialize();
-        console.log(formData);
-
-        $.ajax({
-            url: saveUrl,
-            method: 'POST',
-            data: formData,
-            success: function(response) {
-                alert(response.message);
-                $('#' + modalId).modal('hide');
-                if (callback && typeof callback === 'function') {
-                    callback(callBackValue);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-
-
-    function selectPrevious(Select, previouslySelected) {
-        // Loop through the options in the select field
-        const options = Select.options;
-
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].value === previouslySelected) {
-                options[i].selected = true; // Set the previously selected country
-                break;
-            }
-        }
-    }
-
-    function setFieldValues(fields, value) {
-        fields.forEach(fieldId => {
-            document.getElementById(fieldId).value = value;
-        });
-    }
-
-    function setTextContent(fields, value) {
-        fields.forEach(fieldId => {
-            document.getElementById(fieldId).textContent = value;
-        });
-    }
-
-    function getBillingDetailsData(id) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerDetails") }}',
-            method: 'POST',
+            url: '{{ route("quote.ajax.getAttachmentDataOnQuoteId") }}', // Replace with your Laravel route URL
+            type: 'POST',
             data: {
-                id: id
+                quote_id: quote_id
             },
             success: function(response) {
-                console.log("getCustomerDetails", response.data);
-                var contactData = response.data[0];
-                // billing details data set
-                // setFieldValues([], contactData.id);
+                // Handle success
+                console.log(response);
+                const tableBody = $('#attachmentTable tbody');
+                console.log(tableBody);
+                tableBody.empty(); // Clear existing rows
 
-                setFieldValues(['billing_add_id', 'site_delivery_add_id', 'siteCustomerId', 'customer_id_site_delivery'], contactData.id);
-                setFieldValues(['billingDetailsName', 'customerSiteName', 'customerSiteDeliveryName'], contactData.contact_name);
-                setTextContent(['setCustomerName', 'setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany', 'setSiteDeliveryAddress'], contactData.name);
-                setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
-                setFieldValues(['billingDetailsEmail', 'customerSiteDeliveryEmail'], contactData.email);
-                setFieldValues(['billingCustomerCity', 'customerSiteCity'], contactData.city);
-                setFieldValues(['billingCustomerCounty', 'customerSiteCounty'], contactData.country);
-                setFieldValues(['billingCustomerPostcode', 'customerSitePostCode', 'customerSiteDeliveryPostCode'], contactData.postal_code);
-                setFieldValues(['billingCustomerTelephone', 'customerSiteTelephone', 'customerSiteDeliveryTelephone'], contactData.telephone);
-                setFieldValues(['billingCustomerMobile', 'customerSiteMobile', 'customerSiteDeliveryMobile'], contactData.mobile);
-                // customer_contact_id
+                // Assuming `response` contains an array of attachments
+                const attachments = Array.isArray(response.data) ? response.data : [response.data];
 
-                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
-                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
+                attachments.forEach(attachment => {
+                    console.log(attachment);
+                    // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
+                    const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
+                    const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
 
-                // Customer Site Address Data Set
-                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-
-                // Customer Site Delivery Address Data Set
-                selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
-                selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
+                    const id = attachment.id;
+                    const row = `
+                        <tr data-id="${id}">
+                            <td><input type="checkbox" class="selectRow"></td>
+                            <td>${attachment.attachmentType}</td>
+                            <td>${attachment.title}</td>
+                            <td>${attachment.description}</td>
+                            <td>Quote</td>
+                            <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
+                            <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
+                            <td>${attachment.original_name}</td>
+                            <td>${attachment.mime_type} / ${attachment.size} KB</td>
+                            <td>${new Date(attachment.created_at).toLocaleString()}</td>
+                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="downloadAttachmentFile('${attachment.timestamp_name}');"> <i class="fas fa-download"></i></a> | <a href="javascript:void(0)" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a> </td>
+                        </tr>
+                    `;
+                    console.log(row);
+                    tableBody.append(row);
+                });
             },
-            error: function(xhr, status, error) {
-                console.error(error);
+            error: function(xhr) {
+                // Handle error
+                const errors = xhr.responseJSON.errors || {
+                    message: xhr.responseJSON.message
+                };
+                let errorMessage = 'Error on getting the attachment:\n';
+                for (let key in errors) {
+                    errorMessage += `${errors[key]}\n`;
+                }
+                alert(errorMessage);
             }
         });
+
+    }
+
+    function downloadAttachmentFile(fileName) {
+        const fileUrl = fileName; // Construct the file URL dynamically
+        const anchor = document.createElement('a');
+        anchor.href = fileUrl;
+        anchor.download = fileName; // Optional: Rename the file for the user
+        anchor.click();
+    }
+
+    function getQuoteAttachments(attachment_id) {
+        $.ajax({
+            url: '{{ route("quote.ajax.getAttachmentData") }}', // Replace with your Laravel route URL
+            type: 'POST',
+            data: {
+                attachment_id: attachment_id
+            },
+            // contentType: false, // Required for FormData
+            // processData: false, // Required for FormData
+            success: function(response) {
+                // Handle success
+                alert(response);
+                const tableBody = $('#attachmentTable tbody');
+                console.log(tableBody);
+
+                // Assuming `response` contains an array of attachments
+
+
+                const attachments = Array.isArray(response.data) ? response.data : [response.data];
+
+                attachments.forEach(attachment => {
+                    console.log(attachment);
+                    // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
+                    const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
+                    const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
+
+                    const id = attachment.id;
+                    const row = `
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>${attachment.attachmentType}</td>
+                            <td>${attachment.title}</td>
+                            <td>${attachment.description}</td>
+                            <td>Quote</td>
+                            <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
+                            <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
+                            <td>${attachment.original_name}</td>
+                            <td>${attachment.mime_type} / ${attachment.size} KB</td>
+                            <td>${new Date(attachment.created_at).toLocaleString()}</td>
+                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a></td>
+                        </tr>
+                    `;
+                    console.log(row);
+                    tableBody.append(row);
+                });
+            },
+            error: function(xhr) {
+                // Handle error
+                const errors = xhr.responseJSON.errors || {
+                    message: xhr.responseJSON.message
+                };
+                let errorMessage = 'Error on getting the attachment:\n';
+                for (let key in errors) {
+                    errorMessage += `${errors[key]}\n`;
+                }
+                alert(errorMessage);
+            }
+        });
+    }
+
+    function deleteAttachmentFile(id) {
+        alert(id);
+
+        // Confirm deletion
+        if (confirm("Are you sure you want to delete this row?")) {
+            // Make AJAX call to delete the row on the server
+            $.ajax({
+                url: '{{ route("quote.ajax.deleteAttachment") }}', // Replace with your server URL
+                method: 'POST', // Replace with appropriate HTTP method
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Remove the row from the table
+                        row.remove();
+                    } else {
+                        alert("Failed to delete the row.");
+                    }
+                },
+                error: function() {
+                    alert("An error occurred while trying to delete the row.");
+                }
+            });
+        }
     }
 
     function setSiteAddressDetails(id) {
@@ -3427,62 +3331,6 @@
                 selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_id);
                 selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
                 selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-
-
-    function setSiteDeliveryDetails(id) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerSiteDetails") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log(response.data);
-                document.getElementById('siteCustomerId').value = response.data[0].id;
-                document.getElementById('customerSiteDeliveryName').value = response.data[0].contact_name;
-                document.getElementById('customerSiteDeliveryAdd').value = response.data[0].address;
-                document.getElementById('customerSiteDeliveryPostCode').value = response.data[0].post_code;
-                document.getElementById('customerSiteDeliveryTelephone').value = response.data[0].telephone;
-                document.getElementById('customerSiteDeliveryMobile').value = response.data[0].mobile;
-                document.getElementById('customerSiteDeliveryEmail').value = response.data[0].email;
-                document.getElementById('customerSiteDeliveryCompany').value = response.data[0].company_name;
-                selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_id);
-                selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, id) {
-        console.log(id);
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log(response.data);
-                // alert(response.data);    
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.site_name;
-                    const option1 = option.cloneNode(true);
-                    customerSiteDetails.appendChild(option);
-                    customerSiteDelivery.appendChild(option1);
-                });
-
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3538,22 +3386,44 @@
         });
     }
 
-    function getUsersList() {
-        alert();
+    function getBillingDetailsData(id) {
         $.ajax({
-            url: '{{ route("quote.ajax.getUsersData") }}',
-            method: 'GET',
+            url: '{{ route("customer.ajax.getCustomerDetails") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
             success: function(response) {
-                console.log(response.data);
-                const usersList = document.getElementById('getUsersList');
-                // alert(response.data);    
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name;
-                    usersList.appendChild(option);
-                });
+                console.log("getCustomerDetails", response.data);
+                var contactData = response.data[0];
+                // billing details data set
+                // setFieldValues([], contactData.id);
 
+                setFieldValues(['billing_add_id', 'site_delivery_add_id', 'siteCustomerId', 'customer_id_site_delivery'], contactData.id);
+                setFieldValues(['billingDetailsName', 'customerSiteName', 'customerSiteDeliveryName'], contactData.contact_name);
+                setTextContent(['setCustomerName', 'setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany', 'setSiteDeliveryAddress'], contactData.name);
+                setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
+                setFieldValues(['billingDetailsEmail', 'customerSiteDeliveryEmail'], contactData.email);
+                setFieldValues(['billingCustomerCity', 'customerSiteCity'], contactData.city);
+                setFieldValues(['billingCustomerCounty', 'customerSiteCounty'], contactData.country);
+                setFieldValues(['billingCustomerPostcode', 'customerSitePostCode', 'customerSiteDeliveryPostCode'], contactData.postal_code);
+                setFieldValues(['billingCustomerTelephone', 'customerSiteTelephone', 'customerSiteDeliveryTelephone'], contactData.telephone);
+                setFieldValues(['billingCustomerMobile', 'customerSiteMobile', 'customerSiteDeliveryMobile'], contactData.mobile);
+                // customer_contact_id
+
+                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
+                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
+
+                // Customer Site Address Data Set
+                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+
+                // Customer Site Delivery Address Data Set
+                selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
+                selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3561,914 +3431,214 @@
         });
     }
 
-    window.onload = function() {
-        var buttons = document.querySelectorAll('.hide-on-load');
-        buttons.forEach(function(button) {
-            button.style.display = 'none';
+    function setCustomerBillingData(id) {
+        // alert(id)
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response.data);
+
+                let selectElement = document.getElementById('billingDetailContact'); // Get the select element
+
+                // Create and append a new option
+                let newOption = document.createElement('option');
+                newOption.value = response.data[0].id;
+                newOption.text = response.data[0].contact_name;
+                selectElement.appendChild(newOption);
+
+                // Set the new option as selected
+                newOption.selected = true;
+                setFieldValues(['billing_add_id', 'siteCustomerId', 'site_delivery_add_id'], response.data[0].id);
+
+                // billing details data set
+                document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
+                document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
+                document.getElementById('billingDetailsEmail').value = response.data[0].email;
+                document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
+                document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
+                document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
+                document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
+                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
+
+                // Customer Site Address Data Set
+                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
         });
-    };
-
-    // js for Add Customer modal open
-    const OpenAddCustomerModal = document.getElementById('OpenAddCustomerModal');
-    const QuotecustomerPop = document.getElementById('QuotecustomerPop');
-
-    OpenAddCustomerModal.onclick = function() {
-        getRegions(document.getElementById('customerRegion'));
-        getCustomerType();
-        getCurrencyData(document.getElementById('customer_currency_id'));
-        getCountriesList(document.getElementById('billingTelephoneCountryCode'));
-        getCountriesList(document.getElementById('billingMobileCountryCode'));
-        getCustomerJobTitle(document.getElementById('customer_job_title_id'));
-        $('#QuotecustomerPop').modal('show');
-    }
-    // js for Add Customer modal open
-
-    // js for Add customer Type modal
-    $('#OpenCustomerTypeModel').on('click', function() {
-        $('#quote_cutomer_type_modal').modal('show');
-    });
-
-    $('#OpenQuoteTypeModel').on('click', function() {
-        $('#quoteTypeModal').modal('show');
-    });
-
-    $('#OpenAddQuoteSourceModal').on('click', function() {
-        $('#quoteSourceModal').modal('show');
-    });
-
-
-
-    // js for Add Customer Contact modal
-    const OpenAddCustomerContact = document.getElementById('OpenAddCustomerContact');
-    const add_customer_contact_modal = document.getElementById('add_customer_contact_modal');
-    var customer_job_titile_id = document.getElementById('customer_job_titile_id');
-    OpenAddCustomerContact.onclick = function() {
-        var customer = document.getElementById('getCustomerList').value;
-        if (customer === "") {
-            alert('Please select the customer');
-        } else {
-            getCountriesListWithNameCode(document.getElementById('getCountryList'));
-            getCustomerJobTitle(customer_job_titile_id);
-            getCountriesList(setBillingAddressTelephoneCountryCode);
-            getCountriesList(setBillingAddressMobileCountryCode);
-            var getCustomerList = document.getElementById('getCustomerList').value
-            document.getElementById('customer_contact_id').value = getCustomerList;
-            document.getElementById('customer_id_site_add').value = getCustomerList;
-            document.getElementById('customer_id_site_delivery').value = getCustomerList;
-
-            $('#add_customer_contact_modal').modal('show');
-        }
-    }
-    // js for Add Customer Contact modal
-
-    // js for Add Site Address modal
-    $('#openCustomerSiteAddress').on('click', function() {
-        var customer = document.getElementById('getCustomerList').value;
-        if (customer === "") {
-            alert('Please select the customer');
-        } else {
-            getRegions(document.getElementById('getSiteAddressRegion'));
-            getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
-            getCustomerJobTitle(document.getElementById('siteJobTitle'));
-            getCountriesList(document.getElementById('siteAddressMobileCode'));
-            getCountriesList(document.getElementById('siteAddressTelephoneCode'));
-            $('#add_site_address_modal').modal('show');
-        }
-    });
-
-    $('#openSiteDeliveryModal').on('click', function() {
-        getCustomerJobTitle(document.getElementById('siteDeliveryJobTitle'));
-        getCountriesList(document.getElementById('siteDeliveryAddressTelephoneCode'));
-        getCountriesList(document.getElementById('siteDeliveryAddressMobileCode'));
-        getRegions(document.getElementById('getSiteDeliveryAddressRegion'));
-        getCountriesListWithNameCode(document.getElementById('siteDeliveryAddressCountry'));
-        $('#add_site_delivery_address_modal').modal('show');
-    });
-
-
-
-    $('#openABCProductModal').on('click', function() {
-        $('#productModalBAC').modal('show');
-    });
-
-    $('#OpenAddQuoteTag').on('click', function() {
-        $('#quoteTagModal').modal('show');
-    });
-
-
-
-    $('#new_Attachment_open_model').on('click', function() {
-        $('#new_Attachment_model').modal('show');
-    });
-
-
-
-
-
-
-
-
-
-
-    function additemsCatagoryModal(th) {
-        //alert();
-        $('#category_name').val('');
-        $('#parentcategory').val('');
-        $('#product_category_status').val(1);
-        $('#productCategoryID').val('');
-        $('#productCategorytype').val(th);
-        $('#itemsCatagoryModal').modal('show');
     }
 
-    // **************************impExpClickbtnPopup
 
-    const impExpClickbtnPopup = document.getElementById('impExpClickbtnPopup');
-    const importExportpopup = document.getElementById('importExportpopup');
-    const closeimportExportPopup = document.getElementById('closeimportExportPopup');
+    function setCustomerBillingData(id) {
+        // alert(id)
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                console.log(response.data);
 
-    impExpClickbtnPopup.addEventListener('click', () => {
-        importExportpopup.style.display = 'block';
-        setTimeout(() => {
-            importExportpopup.style.opacity = '1';
-        }, 50);
-    });
+                let selectElement = document.getElementById('billingDetailContact'); // Get the select element
 
-    closeimportExportPopup.addEventListener('click', () => {
-        importExportpopup.style.opacity = '0';
-        setTimeout(() => {
-            importExportpopup.style.display = 'none';
-        }, 300);
-    });
-    // **************************End impExpClickbtnPopup
-    // **************************Purchase Tax Rate
+                // Create and append a new option
+                let newOption = document.createElement('option');
+                newOption.value = response.data[0].id;
+                newOption.text = response.data[0].contact_name;
+                selectElement.appendChild(newOption);
 
-    const purchaseTaxRatePop = document.getElementById('purchaseTaxRatePop');
-    const purchasepopup = document.getElementById('purchasepopup');
-    const closePurchasePopup = document.getElementById('closePurchasePopup');
+                // Set the new option as selected
+                newOption.selected = true;
+                setFieldValues(['billing_add_id', 'siteCustomerId', 'site_delivery_add_id'], response.data[0].id);
 
-    purchaseTaxRatePop.addEventListener('click', () => {
-        purchasepopup.style.display = 'block';
-        setTimeout(() => {
-            purchasepopup.style.opacity = '1';
-        }, 50);
-    });
+                // billing details data set
+                document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
+                document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
+                document.getElementById('billingDetailsEmail').value = response.data[0].email;
+                document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
+                document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
+                document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
+                document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
+                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
 
-    closePurchasePopup.addEventListener('click', () => {
-        purchasepopup.style.opacity = '0';
-        setTimeout(() => {
-            purchasepopup.style.display = 'none';
-        }, 300);
-    });
-    // **************************End Purchase Tax Rate
-    // **************************Product Cetagory
-    const productCetagoryPopup = document.getElementById('productCetagoryPopup');
-    const cetagpopup = document.getElementById('cetagpopup');
-    const closecatagPopup = document.getElementById('closecatagPopup');
+                // Customer Site Address Data Set
+                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 
-    productCetagoryPopup.addEventListener('click', () => {
-        cetagpopup.style.display = 'block';
-        setTimeout(() => {
-            cetagpopup.style.opacity = '1';
-        }, 50);
-    });
 
-    closecatagPopup.addEventListener('click', () => {
-        cetagpopup.style.opacity = '0';
-        setTimeout(() => {
-            cetagpopup.style.display = 'none';
-        }, 300);
-    });
-    // **************************End Product Cetagory
+    function selectPrevious(Select, previouslySelected) {
+        // Loop through the options in the select field
+        const options = Select.options;
 
-    //**************insrtProduct
-    // function insrtProduct() {
-    //     const node = document.createElement("tr");
-
-    //     node.classList.add("add_table_insrt");
-    //     node.innerHTML = `
-
-    //      <td>
-    //         <div class="CSPlus">
-    //             <span class="plusandText">
-    //                 <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-    //                 <input type="text" class="form-control editInput input80" value="CS-0001">
-    //             </span>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <input type="hidden" name="item[][itemDetails]" value="product">
-    //             <input type="text" class="form-control editInput" value="CS-0001">
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="2" placeholder="Address"></textarea>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <select class="form-control editInput selectOptions" id="accoutCodeList">
-    //                 <option>No account</option>
-    //                 <option>Default</option>
-    //                 <option>Default</option>
-    //             </select>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class=""><input type="text" class="form-control editInput input50" value="1"></div>
-    //     </td>
-    //     <td>
-    //         <div class=""> <input type="text" class="form-control editInput input50" value="100.00"></div>
-    //     </td>
-    //     <td>
-    //         <div class="calculatorIcon">
-    //             <span class="plusandText">
-    //                 <a href="#!" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
-    //             </span>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <input type="text" class="form-control editInput input50" value="90.00">
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <input type="text" class="form-control editInput input50" value="0">
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <select class="form-control editInput selectOptions" id="inputCustomer">
-    //                 <option>Please Select</option>
-    //                 <option>Default</option>
-    //                 <option>Default</option>
-    //             </select>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="d-flex">
-    //             <input type="text" class="form-control editInput input50 me-2" value="0">
-    //             <select class="form-control editInput selectOptions input50" id="inputCustomer">
-    //                 <option>Please Select</option>
-    //                 <option>Default</option>
-    //                 <option>Default</option>
-    //             </select>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <span>$90.00</span>
-    //     </td>
-    //     <td>
-    //         <span>$-10.00</span>
-    //         <div class="minusnmber pt-1">(-11.11%)</div>
-    //     </td>
-    //     <td>
-    //         <div class="statuswating">
-    //             <span class="oNOfswich">
-    //                 <input type="checkbox">
-    //             </span>
-    //             <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
-    //         </div>
-    //     </td>
-
-    //         `;
-
-    //     // const tableFoot = document.getElementsByClassName('add_table_insrt33');
-    //     const tableFoot = document.querySelector('.add_table_insrt33');
-
-    //     tableFoot.innerHTML += ` 
-
-    //     <tr>
-
-    //                                               <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Sub Total (exc. VAT)</td>
-    //                                                 <td>$90.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                                 <td colspan="12" class="borderNone"></td>
-    //                                                 <td>
-    //                                                     <div class="discountInput">
-    //                                                         <span>Discount</span><input type="text" class="form-control editInput input50" value="0">
-    //                                                         <span>%</span>
-    //                                                     </div>
-    //                                                 </td>
-    //                                                 <td>$0.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                                 <td colspan="12" class="borderNone"></td>
-    //                                                 <td>
-    //                                                     Apply overall markup
-    //                                                 </td>
-    //                                                 <td></td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                                 <td colspan="12" class="borderNone"></td>
-    //                                                 <td>VAT</td>
-    //                                                 <td>$18.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td><strong>Total(inc.VAT)</strong></td>
-    //                                                 <td><strong>$108.00</strong></td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Profit</td>
-    //                                                 <td>$-10.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Margin</td>
-    //                                                 <td>-11.11%</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Deposit</td>
-    //                                                 <td>$0.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Refund</td>
-    //                                                 <td>$0.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td><strong>Outstanding (inc.VAT)</strong></td>
-    //                                                 <td><strong>$108.00</strong></td>
-    //                                             </tr>
-    //     `;
-    //     const tableBody = document.querySelector(".add_table_insrt");
-    //     // const tableBodyFoot = document.querySelector(".add_table_insrt33");
-
-    //     if (tableBody) {
-    //         tableBody.appendChild(node);
-    //         // tableBodyFoot.appendChild(tableFoot);
-    //         // Add event listener to the close button
-    //         const closeButton = node.querySelector('.closeappend');
-    //         closeButton.addEventListener('click', function() {
-    //             node.remove(); // Remove the row when close button is clicked
-    //         });
-    //     } else {
-    //         console.error("Table body with ID 'add_table_insrt' not found.");
-    //     }
-    // }
-    // ************End of InsrtProduct
-    //**************insrtTitle
-    function insrtTitle() {
-        const node = document.createElement("tr");
-        node.classList.add("add_table_insrt");
-        node.innerHTML = `
-            <form>
-                <td>
-                    <div class="CSPlus">
-                        <span class="plusandText">
-                            <a href="javascript:void(0)" onclick="insrtTitle()" class="formicon pt-0 me-2">
-                                <i class="fa-solid fa-square-plus"></i>
-                            </a>
-                            <label>Title*:</label>
-                            <input type="text" class="form-control editInput ms-3" name="item[][title][item_title]" placeholder="Type to add product">
-                        </span>
-                    </div>
-                </td>
-                <td colspan="12">
-                    <input type="text" class="form-control editInput" name="item[][title][item_desc]" placeholder="Type to add product">
-                </td>
-                <td>
-                    <div class="statuswating">
-                        <span class="oNOfswich">
-                            <input type="checkbox">
-                        </span>
-                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                </td> 
-            </form>
-            `;
-        const tableBody = document.querySelector(".add_table_insrt");
-        if (tableBody) {
-            tableBody.appendChild(node);
-
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_table_insrt' not found.");
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === previouslySelected) {
+                options[i].selected = true; // Set the previously selected country
+                break;
+            }
         }
     }
 
-    //**************insrtImgappend
-    function insrtImgappend() {
-        const node = document.createElement("tr");
-        node.classList.add("add_table_insrt"); // Adding the class to the row
-
-        node.innerHTML = `
-            <td colspan="13">
-                <div class="d-flex">
-                    <div class="CSPlus">
-                        <span class="plusandText pt-1">
-                            <a href="javascript:void(0)" onclick="insrtImgappend()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                            <label></label>
-                        </span>
-                    </div>
-                    <div class="addimg">
-                        <img class="insrtImg" src="assets/imagrs/imgad1.png">
-                        <input type="hidden" name="item[]['image'][]['itemImage']" value="image">
-
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="statuswating">
-                    <span class="oNOfswich">
-                        <input type="checkbox">
-                    </span>
-                    <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                </div>
-            </td>            
-        `;
-
-        // Select the table body using a class instead of an ID
-        const tableBody = document.querySelector(".add_table_insrt");
-
-        if (tableBody) {
-            tableBody.appendChild(node);
-
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when the close button is clicked
-            });
-        } else {
-            console.error("Table body with class 'add_table_insrt' not found.");
-        }
+    function setFieldValues(fields, value) {
+        fields.forEach(fieldId => {
+            document.getElementById(fieldId).value = value;
+        });
     }
 
-    //**************insrtDescription
-    function insrtDescription() {
-        const node = document.createElement("tr");
-        node.classList.add("add_table_insrt");
-        node.innerHTML = `
-            <td colspan="13">
-                <div class="d-flex">
-                    <div class="CSPlus">
-                        <span class="plusandText pt-1">
-                            <a href="javascript:void(0)" onclick="insrtDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
-                        </span>
-                    </div>
-                    <input type="text" class="form-control editInput" name="item[][description][item_description]" id="" placeholder="Type to add product">
-                </div>
-            </td>
-            <td>
-                <div class="statuswating">
-                    <span class="oNOfswich">
-                        <input type="checkbox">
-                    </span>
-                    <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                </div>
-            </td>                     
-        `;
-
-        // Get table body element
-        const tableBody = document.querySelector(".add_table_insrt");
-        if (tableBody) {
-            tableBody.appendChild(node);
-
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_table_insrt' not found.");
-        }
+    function setTextContent(fields, value) {
+        fields.forEach(fieldId => {
+            document.getElementById(fieldId).textContent = value;
+        });
     }
 
-    //**************insrt Section Title
-    function insrtSection() {
-        const node = document.createElement("tr");
-        node.classList.add("add_table_insrt");
-        node.innerHTML = `
-            <td colspan="14" class="p-0">
-                <div class="newJobForm">
-                    <div class="d-flex">
-                    <div class="CSPlus">
-                        <span class="plusandText pt-1">
-                            <a href="javascript:void(0)" onclick="insrtSection()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                            <label class="secTitle">Section Title* :</label>
-                        </span>
-                    </div>
-                    <input type="text" class="form-control editInput" name="item[]['section_title_name']" id="inputCountry" placeholder="Type to add product">
-                    
-                    <div class="pageTitleBtn p-0">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                + Section Insert </a>
-                            <div class="dropdown-menu fade-up m-0">
-                                <a href="javascript:void(0)" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">insert Section Product</a>
-                                <a href="javascript:void(0)" class="dropdown-item col-form-label" onclick="insrtSectionTtle()">insert Section Title</a>
-                                <a href="javascript:void(0)" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">insert Section Image</a>
-                                <a href="javascript:void(0)" class="dropdown-item col-form-label" onclick="insrtSectionDescription()">insert Section Description</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="statuswating text-end ps-3">
-                        <span class="oNOfswich">
-                            <input type="checkbox">
-                        </span>
-                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                    </div>
-
-                    <div class="productDetailTable mt-3">
-                        <table class="table" id="containerA">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Code </th>
-                                    <th>Product <i class="fa  fa-info-circle"></i> </th>
-                                    <th>Description</th>
-                                    <th>
-                                        <div class="tableplusBTN">
-                                            <span>Account Code </span>
-                                            <span class="plusandText ps-3">
-                                                <a href="javascript:void(0)" id="openSectionAccountCode" class="formicon pt-0"> <i class="fa-solid fa-square-plus"></i> </a>
-                                            </span>
-                                        </div>
-                                    </th>
-                                    <th>Qty </th>
-                                    <th>Cost Price($) </th>
-                                    <th>Cost Calc</th>
-                                    <th>Price($) </th>
-                                    <th>Markup(%)</th>
-                                    <th>VAT(%) </th>
-                                    <th>Discount </th>
-                                    <th>Amount </th>
-                                    <th>Profit </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody class="add_sectionTitle">
-                                 <tr>
-                            <td>
-                    <div class="CSPlus">
-                        <span class="plusandText">
-                            <a href="javascript:void(0)" class="formicon pt-0 me-2" onclick="insrtProduct()"> <i
-                                    class="fa-solid fa-square-plus"></i> </a>
-                            <input type="text"
-                                class="form-control editInput input80"
-                                value="CS-0001">
-                        </span>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput"
-                            value="CS-0001">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <textarea class="form-control textareaInput" name="address"
-                            id="inputAddress" rows="2"
-                            placeholder="Address"></textarea>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <select class="form-control editInput selectOptions"
-                            id="inputCustomer">
-                            <option>No account</option>
-                            <option>Default</option>
-                            <option>Default</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="1">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="100.00">
-                    </div>
-                </td>
-                <td>
-                    <div class="calculatorIcon">
-                        <span class="plusandText">
-                            <a href="javascript:void(0)" class="formicon pt-0"
-                                data-bs-toggle="modal"
-                                data-bs-target="#calculatePop"> <span
-                                    class="material-symbols-outlined">
-                                    calculate
-                                </span> </a>
-                        </span>
-                    </div>
-
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="90.00">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="0">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <select class="form-control editInput selectOptions"
-                            id="inputCustomer">
-                            <option>Please Select</option>
-                            <option>Default</option>
-                            <option>Default</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="d-flex">
-                        <input type="text"
-                            class="form-control editInput input50 me-2" value="0">
-                        <select class="form-control editInput selectOptions input50"
-                            id="inputCustomer">
-                            <option>Please Select</option>
-                            <option>Default</option>
-                            <option>Default</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <span>$90.00</span>
-                </td>
-                <td>
-                    <span>$-10.00</span>
-                    <div class="minusnmber pt-1">(-11.11%)</div>
-                </td>
-                <td>
-                    <div class="statuswating">
-                        <span class="oNOfswich">
-                            <input type="checkbox">
-                        </span>
-                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                </td>    
-                        </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </td>                    
-            `;
-        // Get table body element 
-        const tableBody = document.querySelector(".add_table_insrt");
-        if (tableBody) {
-            tableBody.appendChild(node);
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_table_insrt' not found.");
-        }
-    }
-
-    //**************Table inner Table insrtSectionTtle
-    function insrtSectionTtle() {
-        const node = document.createElement("tr");
-        node.classList.add("add_sectionTitle");
-        node.innerHTML = `
-                        <td>
-                    <div class="CSPlus">
-                        <span class="plusandText">
-                            <a href="javascript:void(0)" onclick="insrtSectionTtle()" class="formicon pt-0 me-2">
-                                <i class="fa-solid fa-square-plus"></i>
-                            </a>
-                            <label>Title*:</label>
-                            <input type="hidden" name="item[][itemDetails]" value="section_title">
-                            <input type="text" class="form-control editInput ms-3" name="item[][section_title][section_item_title]" placeholder="Type to add product">
-                        </span>
-                    </div>
-                </td>
-                <td colspan="12">
-                    <input type="text" class="form-control editInput" name="item[][section_title][section_item_description]" placeholder="Type to add product">
-                </td>
-                <td>
-                    <div class="statuswating">
-                        <span class="oNOfswich">
-                            <input type="checkbox">
-                        </span>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                </td>   
-            `;
-        // Get table body element
-        const tableBody = document.querySelector(".add_sectionTitle");
-        if (tableBody) {
-            tableBody.appendChild(node);
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_sectionTitle' not found.");
-        }
-    }
-
-    //**************Table inner Table insrtSectionImg
-    function insrtSectionImg() {
-        const node = document.createElement("tr");
-        node.classList.add("add_sectionTitle");
-        node.innerHTML = `
-                    <td colspan="13">
-                        <div class="d-flex">
-                            <div class="CSPlus">
-                                <span class="plusandText pt-1">
-                                    <a href="javascript:void(0)" onclick="insrtSectionImg()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-                                    <label></label>
-                                </span>
-                            </div>
-                            <div class="addimg">
-                                <input type="hidden" name="item[][section_image][section_item_image]" value="section_image">
-                                <img class="insrtImg" src="assets/imagrs/imgad1.png">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="statuswating">
-                            <span class="oNOfswich">
-                                <input type="checkbox">
-                            </span>
-                            <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                        </div>
-                    </td>  
-                    `;
-        // Get table body element
-        const tableBody = document.querySelector(".add_sectionTitle");
-        if (tableBody) {
-            tableBody.appendChild(node);
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_sectionTitle' not found.");
-        }
-    }
-
-    //**************Table inner Table insrtSectionDescription
-    function insrtSectionDescription() {
-        const node = document.createElement("tr");
-        node.classList.add("add_sectionTitle");
-        node.innerHTML = `
-                     <td colspan="13">
-                            <div class="d-flex">
-                                <div class="CSPlus">
-                                    <span class="plusandText pt-1">
-                                        <a href="javascript:void(0)" onclick="insrtSectionDescription()" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>    
-                                    </span>
-                                </div>
-                                <input type="hidden" name="item[][itemDetails]" value="section_description">
-                                <input type="text" class="form-control editInput" name="item[][section_description][section_item_description]" id="inputCountry" placeholder="Section Description">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="statuswating">
-                                <span class="oNOfswich">
-                                    <input type="checkbox">
-                                </span>
-                                <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                            </div>
-                        </td>   
-                    `;
-        // Get table body element
-        const tableBody = document.querySelector(".add_sectionTitle");
-        if (tableBody) {
-            tableBody.appendChild(node);
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_sectionTitle' not found.");
-        }
-    }
-
-    //**************insrtTitle
-    function insrtAppoinment() {
-        const node = document.createElement("tr");
-        node.classList.add("add_insrtAppoinment");
-        node.innerHTML = `
-                <td>
-                    <div class="d-flex">
-                        <p class="leftNum">1</p>
-                        <select class="form-control editInput selectOptions onclick="getUsersList();" >
-                            <option>Select user</option>
-                            <option>Default</option>
-                        </select>
-                        <a href="javascript:void(0)" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
-                    </div>
-                    <div class="alertBy">
-                        <label><strong>Alert By :</strong></label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                            <label class="form-check-label" for="inlineCheckbox1">SMS</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                            <label class="form-check-label" for="inlineCheckbox2">Email</label>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="addDateAndTime">
-                        <div class="startDate">
-                            <input type="date" name="date" class=" editInput">
-                            <input type="time" name="time" class=" editInput">
-                        </div>
-                    </div>
-                    <div class="pt-3">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="floatingAppointment" value="option2">
-                            <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="addDateAndTime">
-                        <div class="endDate">
-                            <input type="date" name="date" class=" editInput">
-                            <input type="time" name="time" class=" editInput">
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="addTextarea">
-                        <textarea cols="40" rows="5" placeholder="Type Notes...">Type Notes... </textarea>
-                    </div>
-                </td>
-                <td class="col-2">
-                    <div class="appoinment_type">
-                        <select class="form-control editInput selectOptions" id="">
-                            <option>Select user</option>
-                            <option>Install</option>
-                            <option>Cold Call</option>
-                            <option>Maintenance</option>
-                        </select>
-                    </div>
-                    <div class="Priority">
-                        <label>Priority :</label>
-                        <select class="form-control editInput selectOptions" id="">
-                            <option>Low</option>
-                            <option>Medium</option>
-                            <option>High</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="statuswating">
-
-                        <div><label for="inputPurchase" class="col-sm-3 col-form-label">Awaiting</label></div>
-                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                      <div class="tabheadingTitle">
-                         <label for="inputPurchase" class="col-sm-3 col-form-label"><input type="checkbox">Dispatch Now</label>
-                    </div>
-                    <div class="tabheadingTitle">
-                        <a href="#" class="profileDrop me-3"> Notify</a>
-                    </div>
-                </td>                                         
-            `;
-        const tableBody = document.querySelector(".add_insrtAppoinment");
-        if (tableBody) {
-            tableBody.appendChild(node);
-
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_insrtAppoinment' not found.");
-        }
-    }
-</script>
-<script>
     function upload() {
         var imgcanvas = document.getElementById("canv1");
         var fileinput = document.getElementById("finput");
         var image = new SimpleImage(fileinput);
         image.drawTo(imgcanvas);
     }
+
+    $(document).ready(function() {
+        // Enable/disable "Delete Selected" button based on checkbox selection
+        $(document).on("change", ".selectRow, #selectAll", function() {
+            const anySelected = $(".selectRow:checked").length > 0;
+            $("#deleteSelected").prop("disabled", !anySelected);
+
+            if (this.id === "selectAll") {
+                $(".selectRow").prop("checked", $(this).prop("checked"));
+            }
+        });
+
+        // Handle delete selected rows
+        $("#deleteSelected").click(function() {
+            if (confirm("Are you sure you want to delete the selected rows?")) {
+                // Collect all selected row IDs
+                const ids = $(".selectRow:checked")
+                    .map(function() {
+                        return $(this).closest("tr").data("id");
+                    })
+                    .get();
+
+                if (ids.length > 0) {
+                    // Send AJAX request to delete rows
+                    $.ajax({
+                        url: '{{ route("quote.ajax.deleteAttachment") }}', // Your server endpoint
+                        method: 'POST', // HTTP method
+                        data: {
+                            ids: ids,
+                            _token: '{{ csrf_token() }}' // CSRF token for Laravel
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Remove rows from the table
+                                $(".selectRow:checked").each(function() {
+                                    $(this).closest("tr").remove();
+                                });
+                                alert("Selected rows deleted successfully.");
+                                $("#deleteSelected").prop("disabled", true);
+                                $("#selectAll").prop("checked", false);
+                            } else {
+                                alert("Failed to delete the selected rows.");
+                            }
+                        },
+                        error: function() {
+                            alert("An error occurred while deleting the rows.");
+                        }
+                    });
+                }
+            }
+        });
+
+        // Handle "Download Selected" button
+        $("#downloadSelected").click(function() {
+            const selectedFiles = [];
+
+            // Collect selected files
+            $(".selectRow:checked").each(function() {
+                const row = $(this).closest("tr");
+                const fileUrl = row.find("a[target='_blank']").attr("href");
+                selectedFiles.push(fileUrl);
+            });
+
+            if (selectedFiles.length > 0) {
+                downloadMultipleFiles(selectedFiles);
+            }
+        });
+
+        // Function to trigger download for each file
+        function downloadMultipleFiles(files) {
+            files.forEach((fileUrl) => {
+                const a = document.createElement("a");
+                a.href = fileUrl;
+                a.download = ""; // Optional: Set custom filename
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        }
+
+
+    });
 </script>

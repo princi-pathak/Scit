@@ -56,7 +56,7 @@
                                                 <label for="inputCustomer"
                                                     class="col-sm-3 col-form-label">Supplier<span class="radStar">*</span></label>
                                                 <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions checkError" id="purchase_supplier_id" name="supplier_id"  onchange="get_supplier_details()">
+                                                <select class="form-control editInput selectOptions PurchaseOrdercheckError" id="purchase_supplier_id" name="supplier_id"  onchange="get_supplier_details()">
                                                     <option selected disabled>Select Supplier</option>
                                                     <?php foreach ($suppliers as $suppVal) { ?>
                                                         <option value="{{$suppVal->id}}" <?php if(isset($purchase_orders) && $suppVal->id == $purchase_orders->supplier_id){echo 'selected'; }?>>{{$suppVal->name}}</option>
@@ -92,7 +92,7 @@
                                                 <label for="inputName" class="col-sm-3 col-form-label">Name<span
                                                 class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput checkError" name="name" id="purchase_name" value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->name;}?>" placeholder="Enter Your Full Name">
+                                                    <input type="text" class="form-control editInput textareaInput PurchaseOrdercheckError" name="name" id="purchase_name" value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->name;}?>" placeholder="Enter Your Full Name">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -100,7 +100,7 @@
                                                     class="col-sm-3 col-form-label">Address<span
                                                     class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput checkError" id="purchase_address" name="address" rows="3" placeholder="Enter Your Address"><?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->address;}?></textarea>
+                                                    <textarea class="form-control textareaInput PurchaseOrdercheckError" id="purchase_address" name="address" rows="3" placeholder="Enter Your Address"><?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->address;}?></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -167,8 +167,7 @@
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Customer</label>
                                                 <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions get_site_result"
-                                                <?php if(!isset($key) && $key ==''){echo 'disabled';}?> id="purchase_customer_id" name="customer_id" onchange="get_customer_details()">
+                                                <select class="form-control editInput selectOptions" <?php if(!isset($key) && $key ==''){echo 'disabled';}?> id="purchase_customer_id" name="customer_id" onchange="get_customer_details()">
                                                     <option selected disabled>Select Customer</option>
                                                     <?php foreach ($customers as $cust) { ?>
                                                         <option value="{{$cust->id}}" <?php if(isset($purchase_orders) && $purchase_orders->customer_id == $cust->id){echo 'selected';}?>>{{$cust->name}}</option>
@@ -221,7 +220,7 @@
                                                 <label for="inputContact"
                                                     class="col-sm-3 col-form-label">Name<span class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="user_name" id="purchase_user_name" class="form-control editInput textareaInput checkError" value="<?php if(isset($purchase_orders) && $purchase_orders->user_name !=''){echo $purchase_orders->user_name;}else{echo Auth::user()->name;}?>" placeholder="Enter Your Name">
+                                                    <input type="text" name="user_name" id="purchase_user_name" class="form-control editInput textareaInput PurchaseOrdercheckError" value="<?php if(isset($purchase_orders) && $purchase_orders->user_name !=''){echo $purchase_orders->user_name;}else{echo Auth::user()->name;}?>" placeholder="Enter Your Name">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -235,7 +234,7 @@
                                                 <label for="inputAddress"
                                                     class="col-sm-3 col-form-label">Address<span class="radStar">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <textarea class="form-control textareaInput checkError" id="purchase_user_address" name="user_address" rows="3" placeholder="Enter Your Address"><?php if(isset($purchase_orders) && $purchase_orders->user_address !=''){echo $purchase_orders->user_address;}else{echo Auth::user()->current_location;}?></textarea>
+                                                    <textarea class="form-control textareaInput PurchaseOrdercheckError" id="purchase_user_address" name="user_address" rows="3" placeholder="Enter Your Address"><?php if(isset($purchase_orders) && $purchase_orders->user_address !=''){echo $purchase_orders->user_address;}else{echo Auth::user()->current_location;}?></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -326,7 +325,7 @@
                                             <div class="mb-3 row">
                                                 <label for="inputTelephone" class="col-sm-6 col-form-label">Purchase Date<span class="radStar">*</span></label>
                                                 <div class="col-sm-4">
-                                                    <input type="date" class="form-control editInput checkError" id="purchase_purchase_date" name="purchase_date" value="<?php if(isset($purchase_orders) && $purchase_orders->purchase_date != ''){echo $purchase_orders->purchase_date;}?>">
+                                                    <input type="date" class="form-control editInput PurchaseOrdercheckError" id="purchase_purchase_date" name="purchase_date" value="<?php if(isset($purchase_orders) && $purchase_orders->purchase_date != ''){echo $purchase_orders->purchase_date;}?>">
                                                 </div>
                                                 <div class="col-sm-2 calendar_icon">
                                                     <i class="fa fa-calendar-alt"></i>
@@ -622,8 +621,13 @@
 <!-- Models Start Here -->
 
 @include('components.add-supplier-modal')
+@include('components.add-customer-modal')
 @include('components.contact-modal')
+@include('components.add-site-modal')
 @include('components.job-title-model')
+@include('components.customer-type-modal')
+@include('components.region-model')
+@include('components.add-project-modal')
 
 <!-- End here -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
@@ -651,6 +655,18 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
     }
     function GetAllContact(contact_data){
         $("#purchase_contact_id").append('<option value="'+contact_data.data.id+'">'+contact_data.data.contact_name+'</option>');
+    }
+    function getAllCusomer(customer_data){
+        $("#purchase_customer_id").append('<option value="'+customer_data.id+'">'+customer_data.name+'</option>');
+    }
+    function getAllCustomerType(customer_type_data){
+        $("#customer_type_id").append(customer_type_data);
+    }
+    function getAllproject(project_data){
+        $("#purchase_project_id").append(project_data);
+    }
+    function getAllsite(site_data){
+        $("#purchase_site_id").append(site_data);
     }
     function get_supplier_details(){
         var supplier_id = $("#purchase_supplier_id").val();
@@ -734,7 +750,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
     function get_modal(modal){  
         // alert(modal)
         var supplier_select_check=$("#purchase_supplier_id").val();
-        var modal_array=[1,2,3,4,5,6,7,8,9];
+        var modal_array=[1,2,4,5,6,7,8,9];
         if(supplier_select_check == null && modal_array.includes(modal)){
             alert("Please select Supplier");
             return false;
@@ -747,37 +763,53 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 $('#userType').val(2);
                 $("#contact_modal").modal('show');
                 
+            }else if(modal == 2){
+                $("#AddCustomerModal")[0].reset();
+                $("#customerPop").modal('show');
+            }else if(modal == 3){
+                var customer_id=$("#purchase_customer_id").val();
+                if(customer_id =='' || customer_id == null){
+                    $("#HideShowFieldText").hide();
+                    $("#HideShowFieldSelect").show();
+                }else{
+                    $("#HideShowFieldText").show();
+                    $("#HideShowFieldSelect").hide();
+                }
+                $("#project_form")[0].reset();
+                $("#project_modal").modal('show');
+            }else if(modal == 4){
+                $("#site_form")[0].reset();
+                $("#site_modal").modal('show');
             }
-            // else if(modal == 2){
-            //     $("#job_title_form")[0].reset();
-            //     $("#job_title_modal").modal('show');
-            // }else if(modal == 3 || modal == 0){
-            //     $("#region_form")[0].reset();
-            //     $("#region_modal").modal('show');
-            // }else if(modal == 4){
-            //     $("#project_form")[0].reset();
-            //     $("#project_modal").modal('show');
-            // }else if(modal == 5){
+            // else if(modal == 5){
             //     $("#contact_form")[0].reset();
             //     $("#contact_modal").modal('show');
-            // }else if(modal == 6){
+            // }
+            // else if(modal == 6){
             //     $("#site_form")[0].reset();
             //     $("#site_modal").modal('show');
-            // }else if(modal == 7){
+            // }
+            // else if(modal == 7){
             //     $("#job_type_form")[0].reset();
             //     $("#job_type_modal").modal('show');
-            // }else if(modal == 8){
+            // }
+            // else if(modal == 8){
             //     $("#add_product_form")[0].reset();
             //     $("#add_product_modal").modal('show');
-            // }else if(modal == 9){
+            // }
+            // else if(modal == 9){
             //     $("#product_category_form")[0].reset();
             //     $("#product_category_modal").modal('show');
-            // }else if(modal == 10){
+            // }
+            // else if(modal == 10){
             //     $("#product_tax_form")[0].reset();
             //     $("#product_tax_modal").modal('show');
             // }
         }
         
+    }
+    function open_customer_type_modal(){
+        $('#cutomer_type_modal').modal('show');
     }
  </script>
  <script>
@@ -796,7 +828,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             CKEDITOR.instances[instance].updateElement();
         }
         var emailErr=$("#purchaseemailErr").text();
-        $('.checkError').each(function() {
+        $('.PurchaseOrdercheckError').each(function() {
             if ($(this).val() === '' || $(this).val() == null) {
                 $(this).css('border','1px solid red');
                 $(this).focus();

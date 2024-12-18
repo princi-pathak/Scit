@@ -2,6 +2,7 @@
 namespace App\Services\Quotes;
 
 use App\Models\QuoteProduct;
+use App\Models\Product;
 
 class QuoteProductService
 {
@@ -25,5 +26,33 @@ class QuoteProductService
                 'discount' => $productData['discount'],
             ]);
         }
+    }
+
+    public function getQuoteProductData($id){
+        $quoteProduct = QuoteProduct::where('quote_id', $id)->get();
+        // dd($quoteProduct);
+        if (!$quoteProduct) {
+            return null; // Handle case when quote is not found
+        }
+
+        $products = array();
+        foreach($quoteProduct as $product){
+            $data['id'] = $product->id;
+            $data['product_id'] = $product['product_id'];
+            $data['product_code'] = $product['product_code'];
+            $data['product_name'] = $product['title'] ?? '';
+            $data['description'] = $product['description'] ?? '';
+            $data['account_code'] = $product['account_code'];
+            $data['price'] = $product['price'];
+            $data['quantity'] = $product['quantity'];
+            $data['cost_price'] = $product['cost_price'];
+            $data['price'] = $product['price'];
+            $data['markup'] = $product['markup'];
+            $data['VAT'] = $product['VAT'];
+            $data['discount'] = $product['discount'];
+            array_push($products, $data);
+        }
+
+      return $products;
     }
 }
