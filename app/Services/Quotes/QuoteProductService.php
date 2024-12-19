@@ -2,7 +2,6 @@
 namespace App\Services\Quotes;
 
 use App\Models\QuoteProduct;
-use App\Models\Product;
 
 class QuoteProductService
 {

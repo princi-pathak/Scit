@@ -4,6 +4,7 @@ namespace App\Services\Quotes;
 use App\Models\Quote;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use App\Models\QuoteCallBack;
 
 
 class QuoteService
@@ -35,6 +36,7 @@ class QuoteService
                         ELSE constructor_customer_sites.address 
                     END as customer_address")
             )
+            ->where('quotes.status', "Draft")
             ->orderByDesc('created_at')
             ->get();
 
@@ -134,5 +136,27 @@ class QuoteService
     }
 
 
+    public function saveCallBack($data){
+       
+        $record = [
+            'quote_id' => $data['quote_id'],
+            'call_back_date' => $data['call_back_date'],
+            'call_back_time' => $data['call_back_time'],
+            'contact_name' => $data['contact_name'],
+            'contact_phone' => $data['contact_phone'],
+            'notify' => $data['notify'] ?? null,
+            'notify_date' => $data['notify_date'],
+            'notify_time' => $data['notify_time'],
+            'nottify_who'=> $data['nottify_who'],
+            'notification' => $data['notification'] ?? null,
+            'email' => $data['email'] ?? null,
+            'sms' => $data['sms'] ?? null,
+            'notes' => $data['notes'],
+        ];
+
+        Quote::where('id', $data['quote_id'])->update(['status' => "Call Back"]);
+
+        return QuoteCallBack::create($record);
+    }
    
 }
