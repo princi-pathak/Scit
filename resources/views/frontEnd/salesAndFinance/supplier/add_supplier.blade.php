@@ -418,6 +418,8 @@
             alert("Please save Supplier first");
             return false;
         }else{
+            $("#contact_billing_radio").hide();
+            $("#contact_job_title_field").hide();
             $("#contact_form")[0].reset();
             var supplier_name='<?php echo ($supplier->name ?? "");?>'
             $('#contact_customer_name').text(supplier_name);
@@ -583,6 +585,7 @@
         var reminder_email = $(this).data('reminder_email');
         var attachment = $(this).data('attachment');
         var file_original_name = $(this).data('file_original_name');
+        var imag_url="<?php echo url('public/images/supplier_attachments/');?>"+'/'+attachment;
         
         $("#attachment_id").val(attachment_id);
         $("#supplier_id").val(supplier_id);
@@ -600,6 +603,9 @@
         }
         $("#reminder_email").val(reminder_email);
         // $("#attachment").val(attachment);
+        if(attachment !=''){
+            $('#supplier_attachmentview_file').attr('href', imag_url);
+        }
         $("#file_name").text(file_original_name);
     });
     

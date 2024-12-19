@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Department extends Model
 {
@@ -17,12 +18,7 @@ class Department extends Model
     }
 
     public static function save_Department($data){
-        try {
-            $department=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
-            return $department;
-        }catch (\Exception $e) {
-            Log::error('Error saving Payment Type: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
-        }
+        $department=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
+        return $department;
     }
 }

@@ -46,9 +46,20 @@ class Purchase_orderController extends Controller
         if ($validator->fails()) {
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
-
-        $data=Department::save_Department($request->all());
-        return response()->json(['data' => $data]);
+        try {
+            $home_id = Auth::user()->home_id;
+            $requestData=$request->all();
+            $requestData['home_id']=$home_id;
+            $data=Department::save_Department($requestData);
+            if($request->id == ''){
+                return response()->json(['success'=>true,'message'=>'Department Added Successfully Done','data' => $data]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'Department Updated Successfully Done','data' => $data]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+        
     }
     public function purchase_order(Request $request){
         // echo "<pre>";print_r(Auth::user());die;

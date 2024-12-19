@@ -349,7 +349,8 @@ class JobController extends Controller
         // echo "<pre>";print_r($calculation);die;
         $product_details=Product::product_detail($request->id);
         $tax=Product::tax_detail($home_id);
-        $html.= '<tr>
+        if($request->key ==''){
+            $html.= '<tr>
                 <td>'.$product_details->product_code.'<input type="hidden" id="product_codejob" name="product_codejob[]" value="'.$product_details->product_code.'"></td>
                 <td>'.$product_details->product_name.'<input type="hidden" id="product_namejob" name="product_namejob[]" value="'.$product_details->product_name.'"></td>
                 <td>'.$product_details->description.'<input type="hidden" id="descriptionjob" name="descriptionjob[]" value="'.$product_details->description.'"></td>
@@ -358,15 +359,19 @@ class JobController extends Controller
                 <td>'.$product_details->price.'<input type="hidden" id="pricejob" class="pricejob" name="pricejob[]" value="'.$product_details->price.'"></td>
                 <td><input type="text" class="" value="0" name="discount[]"></td>';
 
-        $html.= '<td><select id="vatjob" name="vatjob[]">';
-        foreach($tax as $taxv){
-        $html.= '<option value="'.$taxv->id.'">'.$taxv->name.'</option>';
+            $html.= '<td><select id="vatjob" name="vatjob[]">';
+            foreach($tax as $taxv){
+            $html.= '<option value="'.$taxv->id.'">'.$taxv->name.'</option>';
+            }
+            $html.= '</select></td>
+                    <td id="pre_total_amount" class="pre_total_amount">'.$product_details->price.'</td>
+                    <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete<input type="hidden" value="'.$product_details->id.'" name="product_detail_id[]" id="product_detail_id"></button></td>
+                </tr>';
+            return $data=['html'=>$html];
+        }else{
+            return response()->json(['success'=>true,'product_detail'=>$product_details,'tax'=>$tax]);
         }
-        $html.= '</select></td>
-                <td id="pre_total_amount" class="pre_total_amount">'.$product_details->price.'</td>
-                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete<input type="hidden" value="'.$product_details->id.'" name="product_detail_id[]" id="product_detail_id"></button></td>
-            </tr>';
-        return $data=['html'=>$html];
+        
        
     }
     // private function calculation($data){
