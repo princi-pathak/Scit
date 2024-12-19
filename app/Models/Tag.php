@@ -17,12 +17,7 @@ class Tag extends Model
     }
 
     public static function saveTag($data){
-        try {
-            return self::updateOrCreate(['id' => $data['id'] ?? null],$data);
-        }catch (\Exception $e) {
-            Log::error('Error saving Payment Type: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
-        }
+        return self::updateOrCreate(['id' => $data['id'] ?? null],$data);
     }
 
 }

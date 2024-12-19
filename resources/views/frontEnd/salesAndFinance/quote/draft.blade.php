@@ -118,7 +118,7 @@
                                                     <a href="" class="dropdown-item">Convert To Invoice</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Change To Processed</a>
-                                                    <a href="" class="dropdown-item">Change To Call Back</a>
+                                                    <a href="javascript:void(0)" onclick="openCallBackModal()" id="changeToCallBack" data-id = "{{ $value->id }}" data-quote_ref="{{ $value->quote_ref }}" class="dropdown-item">Change To Call Back</a>
                                                     <a href="" class="dropdown-item">Change To Accepted</a>
                                                     <a href="" class="dropdown-item">Change To Rejected</a>
                                                     <hr class="dropdown-divider">
@@ -161,6 +161,6 @@
     </div>
 </section>
 
-
+@include('components.quote.call-back')
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

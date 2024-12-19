@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\QuoteRequest;
+use App\Http\Requests\Quotes\CallBackRequest;
 
 use App\Services\Quotes\QuoteService;
 use App\Services\Quotes\QuoteProductService;
@@ -463,6 +464,16 @@ class QuoteController extends Controller
         return response()->json([
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function storeCallBackData(CallBackRequest $request){
+        // dd($request);
+        $data = $this->quoteService->saveCallBack($request);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? "Quote Status changed to Call Back !" : 'Error in satus changed.'
         ]);
     }
 }

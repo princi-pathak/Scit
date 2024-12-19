@@ -2469,6 +2469,7 @@
 
 @include('components.product-list')
 
+
 <!-- Include the quote type modal component -->
 <x-quote-type-modal
     modalId="quoteTypeModal"

@@ -81,6 +81,12 @@
                             <span id="file_name"></span>
                         </div>
                     </div>
+                    <div class="mb-3 row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9">
+                            <a id="supplier_attachmentview_file" target="_blank" style="text-decoration:none">View</a>
+                        </div>
+                    </div>
                     <div class="pageTitleBtn">
                         <a href="#" class="profileDrop p-2 crmNewBtn" onclick="save_attachment()"> Save</a>
                         <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>

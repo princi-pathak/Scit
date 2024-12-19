@@ -554,7 +554,8 @@ Array.prototype.slice.call(forms)
                     // Loop through the data and append options to the select box
                     $.each(data, function(index, category) {
                         $select.append($('<option>', {
-                            value: category.tax_rate, // Assuming the id field
+                            // value: category.tax_rate, // Assuming the id field
+                            value: category.id, // Assuming the id field
                             text: category.name // Assuming the name field
                         }));
                     });

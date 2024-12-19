@@ -16,10 +16,10 @@
                                     <div class="mb-2 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
                                         <div class="col-sm-9">
-                                            <p id="site_customer_name"><?php if(isset($contact_name)){echo $contact_name->contact_name;}?></p>
+                                            <p id="site_customer_name"><?php if(!empty($contact_name)){echo $contact_name->contact_name;}?></p>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="site_customer_id" name="customer_id" value="<?php if(isset($contact_name) && $contact_name !=''){echo $contact_name->id;}?>">
+                                    <input type="hidden" id="site_customer_id" name="customer_id" value="<?php if(!empty($contact_name) && $contact_name !=''){echo $contact_name->id;}?>">
                                 
                                     <div class="mb-2 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Site Name <span class="radStar ">*</span></label>
