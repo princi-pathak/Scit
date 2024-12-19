@@ -137,6 +137,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
+                                                        <div class="col-sm-3">
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <label for="inputJobRef" class="col-form-label red_sorryText"> Note: Comma not allowed in the tag. The previous name will not be populated by the rename tag.</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
                                                         <label for="inputProject"
                                                             class="col-sm-3 col-form-label">Status</label>
                                                         <div class="col-sm-9">
@@ -190,7 +197,6 @@
                 var title = $("#name").val().trim();
                 
                 var status = $.trim($('#statusModal option:selected').val());
-                var home_id = '<?php echo $home_id;?>';
                 var id = $("#id").val();
                 var message;
 
@@ -206,10 +212,11 @@
                     $("#name").addClass('addError');
                     return false;
                 } else {
+                    $("#name").removeClass('addError');
                     $.ajax({
                         type: "POST",
                         url: '{{ url("/save_tag") }}',
-                        data: {id: id, home_id: home_id, title: title, status: status, _token: token},
+                        data: {id: id, title: title, status: status, _token: token},
                         success: function(data) {
                             console.log(data);
                             if(data.vali_error){

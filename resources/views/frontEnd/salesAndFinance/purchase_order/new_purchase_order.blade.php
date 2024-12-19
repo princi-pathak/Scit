@@ -17,6 +17,17 @@
     pointer-events: none;
     opacity: 0.5;
 }
+
+.productDetailTable table.table thead tr th, .productDetailTable table.table tbody tr td, .productDetailTable table.table tfoot tr td {
+    font-size: 12px;
+    line-height: 22px;
+}
+
+.totlepayment {
+    width: 300px;
+    margin-left: 46%;
+    text-align: end;
+}
 </style>
         <section class="main_section_page px-3">
             <div class="container-fluid">
@@ -410,8 +421,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <a href="javascript:void(0)" class="formicon"><i
-                                                            class="fa-solid fa-square-plus" data-bs-toggle="modal" data-bs-target="#TagModal"></i></a>
+                                                    <a href="javascript:void(0)" class="formicon">
+                                                        <i class="fa-solid fa-square-plus" onclick="get_modal(6)"></i></a>
                                                 </div>
                                             </div>
 
@@ -427,14 +438,13 @@
                                     <div class="mb-3 row">
                                         <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control editInput textareaInput" id="search_value"
-                                                placeholder="Type to add product" onkeyup="get_search()">
+                                            <input type="text" class="form-control editInput textareaInput" id="search_value" placeholder="Type to add product" onkeyup="get_search()">
                                         </div>
                                         <div class="col-sm-7">
                                             <div class="plusandText">
-                                                <a href="javascript:void(0)" class="formicon" onclick="get_modal(6)"><i class="fa-solid fa-square-plus"></i>
+                                                <a href="javascript:void(0)" class="formicon" onclick="get_modal(7)"><i class="fa-solid fa-square-plus"></i>
                                                 </a>
-                                                <span class="afterPlusText"> (Type to view product or <a href="Javascript:void(0)" onclick="show_product_model()">Click
+                                                <span class="afterPlusText"> (Type to view product or <a href="Javascript:void(0)" onclick="openProductListModal();">Click
                                                         here</a> to view all assets)</span>
                                             </div>
                                         </div>
@@ -458,10 +468,11 @@
                                                     <th>Product </th>
                                                     <th>Code</th>
                                                     <th>Description </th>
-                                                    <th>Account Code <a href="javascript:void(0)" class="formicon" onclick="get_modal(7)"><i class="fa-solid fa-square-plus"></i>
+                                                    <th>Account Code <a href="javascript:void(0)" class="formicon" onclick="get_modal(8)"><i class="fa-solid fa-square-plus"></i>
                                                     </a> </th>
                                                     <th>QTY</th>
-                                                    <th>Price VAT(%) <a href="javascript:void(0)" class="formicon" onclick="get_modal(8)"><i class="fa-solid fa-square-plus"></i>
+                                                    <th>Price</th>
+                                                    <th>Price VAT(%) <a href="javascript:void(0)" class="formicon" onclick="get_modal(9)"><i class="fa-solid fa-square-plus"></i>
                                                     </a></th>
                                                     <th>VAT </th>
                                                     <th>Amount</th>
@@ -470,35 +481,39 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="product_result">
-                                                <?php $previous_ids=array();?>
-                                                    <tr>
-                                                        <td> </td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                
+                                                 
                                             </tbody>
-                                            <!-- <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>0.00</td>
-                                                    <td>£0.00</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>£0.00</td>
-                                                    <td></td>
-                                                </tr> -->
+
+                                            
                                         </table>
+                                        <table class="table totlepayment" id="product_calculation" style="display:none">
+                                            <tfoot class="insrt_product_and_detail">
+                                               
+                                                <tr>
+                                                    <td>Sub Total (exc. VAT)</td>
+                                                    <td id="exact_vat"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        VAT
+                                                    </td>
+                                                    <td id="vat"></td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td><strong>Total(inc.VAT)</strong></td>
+                                                    <td><strong id="total_vat"></strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Paid</td>
+                                                    <td>-£0.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Outstanding (inc.VAT)</strong></td>
+                                                    <td><strong id="outstanding_vat"></strong></td>
+                                                </tr>
+                                            </tfoot>
+                                            </table>
                                     </div>
                                 </div>
                             </div>
@@ -552,14 +567,14 @@
                                 <div class="row">
                                     <div class="col-sm-12 mb-3 mt-2">
                                         <div class="jobsection">
-                                            <a href="javascript:void(0)" class="profileDrop @if(!isset($key) || $key == '') disabled-tab @endif" @if(!isset($key) || $key == '') disabled @else  onclick="get_modal(9)" @endif>New Task</a>
+                                            <a href="javascript:void(0)" class="profileDrop @if(!isset($key) || $key == '') disabled-tab @endif" @if(!isset($key) || $key == '') disabled @else  onclick="get_modal(10)" @endif>New Task</a>
 
                                         </div>
                                     </div>
                                     <div class="col-sm-12 mb-3 mt-2">
                                         <div class="jobsection">
-                                            <a href="javascript:void(0)" onclick="get_modal(10)" class="profileDrop">Tasks</a>
-                                            <a href="javascript:void(0)" onclick="get_modal(11)" class="profileDrop">Recurring Tasks</a>
+                                            <a href="javascript:void(0)" onclick="get_modal(11)" class="profileDrop">Tasks</a>
+                                            <a href="javascript:void(0)" onclick="get_modal(12)" class="profileDrop">Recurring Tasks</a>
 
                                         </div>
                                     </div>
@@ -628,6 +643,17 @@
 @include('components.customer-type-modal')
 @include('components.region-model')
 @include('components.add-project-modal')
+@include('components.department-model')
+@include('components.product-list')
+
+<x-tag-modal
+    modalId="TagModal"
+    modalTitle="Add Tag"
+    formId="add_tag_form"
+    inputId="tag_title"
+    statusId="tag_status"
+    saveButtonId="saveTag"
+    placeholderText="Tag" />
 
 <!-- End here -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
@@ -667,6 +693,9 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
     }
     function getAllsite(site_data){
         $("#purchase_site_id").append(site_data);
+    }
+    function getAlldepartment(department_data){
+        $("#purchase_department_id").append('<option value="'+department_data.data.id+'">'+department_data.data.title+'</option>');
     }
     function get_supplier_details(){
         var supplier_id = $("#purchase_supplier_id").val();
@@ -750,7 +779,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
     function get_modal(modal){  
         // alert(modal)
         var supplier_select_check=$("#purchase_supplier_id").val();
-        var modal_array=[1,2,4,5,6,7,8,9];
+        var modal_array=[1,2,4,7,8,9];
         if(supplier_select_check == null && modal_array.includes(modal)){
             alert("Please select Supplier");
             return false;
@@ -780,15 +809,13 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             }else if(modal == 4){
                 $("#site_form")[0].reset();
                 $("#site_modal").modal('show');
+            }else if(modal == 5){
+                $("#department_form_data")[0].reset();
+                $("#departmentPop").modal('show');
+            }else if(modal == 6){
+                $("#add_tag_form")[0].reset();
+                $("#TagModal").modal('show');
             }
-            // else if(modal == 5){
-            //     $("#contact_form")[0].reset();
-            //     $("#contact_modal").modal('show');
-            // }
-            // else if(modal == 6){
-            //     $("#site_form")[0].reset();
-            //     $("#site_modal").modal('show');
-            // }
             // else if(modal == 7){
             //     $("#job_type_form")[0].reset();
             //     $("#job_type_modal").modal('show');
@@ -899,10 +926,354 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 },
                 error: function(xhr, status, error) {
                     var errorMessage = xhr.status + ': ' + xhr.statusText;
-                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.error);
                 }
             });
         }
+    }
+    $("#saveTag").on('click', function(){
+        var title = $("#tag_title").val().trim(); 
+        var status = $.trim($('#tag_status option:selected').val());
+
+        if (title.includes(',')) {
+            alert("Comma not allowed in the tag, please use _ or - instead");
+            return false;
+        }else if(title == ''){
+            $("#tag_title").css('border','1px solid red');
+            return false;
+        }else{
+            $("#tag_title").css('border','');
+            $.ajax({
+                type: "POST",
+                url: "{{url('/save_tag')}}",
+                data: new FormData($("#add_tag_form")[0]),
+                async: false,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    if(response.vali_error){
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
+                        return false;
+                    }else if(response.data && response.data.original && response.data.original.error){
+                        alert(response.data.original.error);
+                        return false;
+                    }else if(response.success === true){
+                        // $(window).scrollTop(0);
+                        // $('#message_save').text(response.message).show();
+                        // setTimeout(function() {
+                        //     $('#message_save').text('').hide();
+                        // }, 3000);
+                        $("#TagModal").modal('hide');
+                        $("#purchase_tag_id").append('<option value="'+response.data.id+'">'+response.data.title+'</option>')
+
+                    }else{
+                        alert("Something went wrong! Please try later");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.error);
+                }
+            });
+        }
+    });
+ </script>
+ <script>
+    function getProductData(selectedId) {
+        selectProduct(selectedId);
+        // $.ajax({
+        //     url: '{{ route("item.ajax.getProductFromId") }}',
+        //     method: 'Post',
+        //     data: {
+        //         id: selectedId
+        //     },
+        //     success: function(response) {
+        //         console.log(response);
+        //         productGroupTable(response.data, 'result');
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error(error);
+        //     }
+        // });
+    }
+    var GrandPrice=0;
+    var totalAmount=0;
+    
+    function selectProduct(id) {
+        var token = '<?php echo csrf_token(); ?>'
+        var key='order';
+        $.ajax({
+            type: "POST",
+            url: "{{url('result_product_calculation')}}",
+            data: {
+                id: id, key:key, _token: token
+            },
+            success: function(data) {
+                console.log(data);
+                // $("#product_result").append(data.html);
+                // UpdateItemDetailsCalculation();
+                const tableBody = document.querySelector(`#result tbody`);
+        
+                // Check if data array is empty
+                if (data.length === 0) {
+                    // Create a row to display the "No products found" message
+                    const noDataRow = document.createElement('tr');
+                    noDataRow.id='EmptyError'
+                    const noDataCell = document.createElement('td');
+
+                    // Span across all columns in the table (adjust the colspan if your table has more columns)
+                    noDataCell.setAttribute('colspan', 4);
+                    noDataCell.textContent = 'No products found';
+                    noDataCell.style.textAlign = 'center'; // Center the message
+
+                    // Append the cell to the row and the row to the table body
+                    noDataRow.appendChild(noDataCell);
+                    tableBody.appendChild(noDataRow);
+                } else {
+                    // Populate rows as usual if data is not empty
+                    const emptyErrorRow = document.getElementById('EmptyError');
+                    if (emptyErrorRow) {
+                        emptyErrorRow.remove();
+                    }
+                        const row = document.createElement('tr');
+                        // job dropdown
+                        const dropdownJob = document.createElement('td');
+                        const selectDropdownJob = document.createElement('select');
+                        selectDropdownJob.name = 'job_id[]';
+
+                        const optionsJob = [
+                        { value: '', text: 'Select an option' },
+                        { value: '1', text: 'Job-1' },
+                        { value: '2', text: 'Job-2' },
+                        { value: '3', text: 'Job-3' }
+                        ];
+
+                        optionsJob.forEach(optionJob => {
+                        const optJob = document.createElement('option');
+                        optJob.value = optionJob.value;
+                        optJob.textContent = optionJob.text;
+                        selectDropdownJob.appendChild(optJob);
+                        });
+                        dropdownJob.appendChild(selectDropdownJob);
+                        row.appendChild(dropdownJob);
+                        // end
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = data.product_detail.product_name;
+                        row.appendChild(nameCell);
+
+                        const codeCell = document.createElement('td');
+                        codeCell.textContent = data.product_detail.product_code;
+                        row.appendChild(codeCell);
+
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.className = 'product_id';
+                        hiddenInput.name = 'product_ids[]';
+                        hiddenInput.value = data.product_detail.id;
+                        row.appendChild(hiddenInput);
+
+                        const descriptionCell = document.createElement('td');
+                        const inputDescription = document.createElement('textarea');
+                        inputDescription.className = 'description';
+                        inputDescription.name = 'description[]';
+                        inputDescription.value = data.product_detail.description;
+                        descriptionCell.appendChild(inputDescription);
+                        row.appendChild(descriptionCell);
+
+                        const dropdownAccountCode = document.createElement('td');
+                        const selectDropdownAccountCode = document.createElement('select');
+                        selectDropdownAccountCode.name = 'account_id[]';
+
+                        const optionsAccountCode = [
+                        { value: '', text: 'Select an option' },
+                        { value: '1', text: 'Acc-1' },
+                        { value: '2', text: 'Acc-2' },
+                        { value: '3', text: 'Acc-3' }
+                        ];
+
+                        optionsAccountCode.forEach(optionJob => {
+                        const optAccountCode = document.createElement('option');
+                        optAccountCode.value = optionJob.value;
+                        optAccountCode.textContent = optionJob.text;
+                        selectDropdownAccountCode.appendChild(optAccountCode);
+                        });
+                        dropdownAccountCode.appendChild(selectDropdownAccountCode);
+                        row.appendChild(dropdownAccountCode);
+
+                        const qtyCell = document.createElement('td');
+                        const inputQty = document.createElement('input');
+                        inputQty.type = 'text';
+                        inputQty.className = 'qty input50';
+                        inputQty.addEventListener('input', function() {
+                            updateAmount(row);
+                        });
+                        inputQty.name = 'qty[]';
+                        inputQty.value = '1';
+                        qtyCell.appendChild(inputQty);
+                        row.appendChild(qtyCell);
+
+                        const priceCell = document.createElement('td');
+                        const inputPrice = document.createElement('input');
+                        inputPrice.type = 'text';
+                        inputPrice.className = 'product_price input50';
+                        inputPrice.addEventListener('input', function() {
+                            updateAmount(row);
+                        });
+                        inputPrice.name = 'product_price[]'; 
+                        inputPrice.value = data.product_detail.price;
+                        GrandPrice=GrandPrice+Number(data.product_detail.price);
+                        priceCell.appendChild(inputPrice);
+                        row.appendChild(priceCell);
+
+                        const dropdownVat = document.createElement('td');
+                        const selectDropdownVat = document.createElement('select');
+                        selectDropdownVat.addEventListener('change', function() {
+                            // alert(`You selected: ${this.options[this.selectedIndex].text}`);
+                            getIdVat($(this).val());
+                        });
+                        selectDropdownVat.name = 'vat_id[]';
+                        const optionsVat =data.tax;
+                        var tax_rate='00';
+                        optionsVat.forEach(optionVat => {
+                        const optVat = document.createElement('option');
+                        optVat.value = optionVat.id;
+                        if(optionVat.id == data.product_detail.tax_rate){
+                            tax_rate=optionVat.tax_rate;
+                            optVat.setAttribute("selected", "selected");
+                        }
+                        optVat.textContent = optionVat.name;
+                        selectDropdownVat.appendChild(optVat);
+                        });
+                        dropdownVat.appendChild(selectDropdownVat);
+                        row.appendChild(dropdownVat);
+
+                        const vatCell = document.createElement('td');
+                        const inputVat = document.createElement('input');
+                        inputVat.type = 'text';
+                        inputVat.className = 'vat';
+                        inputVat.addEventListener('input', function() {
+                            updateAmount(row);
+                        });
+                        inputVat.name = 'vat[]'; 
+                        inputVat.value = parseFloat(tax_rate).toFixed(2);
+                        vatCell.appendChild(inputVat);
+                        row.appendChild(vatCell);
+
+                        const amountCell = document.createElement('td');
+                        amountCell.innerHTML = '£'+ parseFloat(data.product_detail.price).toFixed(2);
+                        amountCell.className = "price";
+                        row.appendChild(amountCell);
+                        totalAmount=totalAmount+Number(data.product_detail.price);
+
+                        const delveriQTYCell = document.createElement('td');
+                        delveriQTYCell.innerHTML='-';
+                        delveriQTYCell.className ='text-center';
+                        row.appendChild(delveriQTYCell);
+
+                        const deleteCell = document.createElement('td');
+                        deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
+                        deleteCell.addEventListener('click', function() {
+                            removeRow(this);
+                        });
+                        row.appendChild(deleteCell);
+
+                        tableBody.appendChild(row);
+                        updateAmount(row)
+                        $("#product_calculation").show();
+                }
+
+            }
+        });
+    }
+    function removeRow(button,id=null) {
+        console.log(button);
+        const table = document.getElementById("result");
+        const tbody = table.querySelector("tbody");
+        const rowCount = tbody ? tbody.rows.length : 0;
+        if(rowCount <= 1){
+            $("#product_calculation").hide();
+        }
+        var row = button.parentNode.parentNode;
+        
+        if(id){
+            var token = '<?php echo csrf_token(); ?>'
+            $.ajax({
+                type: "POST",
+                url: "{{url('jobassign_productsDelete')}}",
+                data: {id:id,_token: token},
+                success: function(data) {
+                    console.log(data);
+                    if(data.success != true){
+                        alert("Something went wrong! Please try later");
+                        return false;
+                    }else{
+                        row.parentNode.removeChild(row);
+                        updateAmount(row);
+                    }
+                }
+            });
+        }else{
+            row.parentNode.removeChild(row);
+            updateAmount(row);
+        }
+    }
+    // $(".quantity").on('keyup', function(){
+        $(document).on("keyup", ".quantity", function() {
+        var qty = $(this).val();
+        var row = $(this).closest('tr');
+        updateAmount(row);
+        // var price = row.find("input#pricejob").val();
+        // if(qty != ''){
+        //     $('#pro_qty').val(qty);
+        //     var totalPrice = qty * price;
+        //     row.find("#pre_total_amount").text(totalPrice);
+        // }else{
+        //     $('#pro_qty').val('0');
+        //     row.find("#pre_total_amount").text(price);
+        // }
+        //     var totalAmountAssign=0;
+        //     $('.pre_total_amount').each(function(index){
+        //         var amount_assign=$(this).text();
+        //         totalAmountAssign=totalAmountAssign+Number(amount_assign);
+        //     });
+        //     $("#total_amount").text('£' + totalAmountAssign);
+    });
+
+    function updateAmount(row) {
+        // console.log(row)
+        // const priceInput = row.querySelector('.price');
+        const priceInput = row.querySelector('.product_price');
+        const qtyInput = row.querySelector('.qty');
+        const amountCell = row.querySelector('td:nth-last-child(3)');
+        const price = parseFloat(priceInput.value) || 0;
+        const qty = parseInt(qtyInput.value) || 1;
+        const amount = price * qty;
+        amountCell.textContent = '£'+amount.toFixed(2);
+
+        var calculation=0;
+        $('.price').each(function () {
+            const priceText = $(this).text();
+            const numericValue = parseFloat(priceText.replace(/[^\d.]/g, ''));
+            // console.log(typeof(numericValue));
+            calculation=calculation+numericValue;
+        });
+        var vat_amount=0;
+        $('.vat').each(function () {
+            const vat = $(this).val();
+            vat_amount=vat_amount+Number(vat);
+        });
+        totalAmount=calculation;
+        // console.log(typeof(vat_amount));
+        // document.getElementById('GrandTotalAmount').innerHTML='$'+totalAmount.toFixed(2);
+        $("#productPrice").val(totalAmount.toFixed(2));
+        $("#exact_vat").text('£'+totalAmount.toFixed(2));
+        $("#vat").text('£'+vat_amount.toFixed(2));
+        var total_vat=totalAmount+vat_amount;
+        $("#total_vat").text('£'+total_vat.toFixed(2));
+        $("#outstanding_vat").text('£'+total_vat.toFixed(2));
     }
  </script>
 

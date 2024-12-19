@@ -9,6 +9,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="{{ $formId }}">
+                        @csrf
                         <div class="mb-3 row">
                             <label for="inputJobRef" class="col-sm-3 col-form-label">Tag <span class="radStar ">*</span></label>
                             <div class="col-sm-9">
