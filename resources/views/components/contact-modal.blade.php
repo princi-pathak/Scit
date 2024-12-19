@@ -23,7 +23,7 @@
                                             <input type="hidden" id="contact_customer_id" name="customer_id">
                                             <input type="hidden" id="userType" name="userType">
                                             
-                                            <div class="mb-2 row">
+                                            <div class="mb-2 row" id="contact_billing_radio">
                                                 <label class="col-sm-3 col-form-label">Default Billing</label>
                                                 <div class="col-sm-9">
 
@@ -50,7 +50,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="mb-2 row">
+                                            <div class="mb-2 row" id="contact_job_title_field">
                                                 <label for="inputProject" class="col-sm-3 col-form-label">Job
                                                     Title (Position)</label>
                                                 <div class="col-sm-4">
@@ -129,7 +129,7 @@
                                         <div class="mb-2 row">
                                             <label class="col-sm-3 col-form-label">Address Details</label>
                                             <div class="col-sm-9">
-
+                                                same as default
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="contact_default_address" onchange="default_address()">
                                                 </div>

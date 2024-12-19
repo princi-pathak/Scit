@@ -90,8 +90,17 @@ class GeneralSectionController extends Controller
         if ($validator->fails()) {
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
-        $data=Tag::saveTag(array_merge(['home_id' => Auth::user()->home_id], $request->all())  );
-        return response()->json(['data' => $data, 'message' => "Tags added successfully"]);
+        try {
+            $data=Tag::saveTag(array_merge(['home_id' => Auth::user()->home_id], $request->all()));
+            if($request->id == ''){
+                return response()->json(['success'=>true,'data' => $data, 'message' => "Tags added successfully"]);
+            }else{
+                return response()->json(['success'=>true,'data' => $data, 'message' => "Tags Updated successfully"]);
+            }
+        }catch (\Exception $e) {
+            Log::error('Error saving Payment Type: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function getTags(){

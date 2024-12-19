@@ -29,7 +29,7 @@ class Product extends Model
         return $data;
     }
     public static function tax_detail($home_id){
-        return Construction_tax_rate::where('home_id',$home_id)->get();
+        return Construction_tax_rate::where('home_id',$home_id)->where('deleted_at',null)->get();
     }
 
     public static function genrateproductcode($product_name){ 
