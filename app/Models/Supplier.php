@@ -25,4 +25,7 @@ class Supplier extends Model
     public function contacts(){
         return $this->hasMany(Constructor_additional_contact::class,'customer_id');
     }
+    public function purchaseOrders(){
+        return $this->hasMany(PurchaseOrder::class, 'supplier_id');
+    }
 }

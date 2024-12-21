@@ -311,6 +311,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/getAllSupplierAttachment', 'getAllSupplierAttachment');
 		Route::post('/supplier_attachment_image_delete', 'supplier_attachment_image_delete');
 		Route::post('/get_supplier_details', 'get_supplier_details');
+		Route::post('/search_email_list', 'search_email_list');
+		Route::post('/getsupplier_purchaseList', 'getsupplier_purchaseList');
 	});
 	Route::controller(ExpenseController::class)->group(function(){
 		Route::match(['get','post'],'/expenses','expenses');

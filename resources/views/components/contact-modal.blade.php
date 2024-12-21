@@ -128,9 +128,9 @@
                                     <div class="formDtail">
                                         <div class="mb-2 row">
                                             <label class="col-sm-3 col-form-label">Address Details</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-9 d-flex">
                                                 same as default
-                                                <div class="form-check form-check-inline">
+                                                <div class="form-check form-check-inline ms-2">
                                                     <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="contact_default_address" onchange="default_address()">
                                                 </div>
                                             </div>
