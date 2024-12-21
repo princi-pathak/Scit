@@ -30,172 +30,172 @@
                         </div>
                     </div>
                     <div class="searchJobForm" id="divTohide">
-                            <form action="" class="p-4">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">User:</label>
-                                            <div class="col-md-8">
-                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                    <option>--Any--</option>
-                                                    <option>Yes</option>
-                                                    <option>No</option>
-                                                </select>
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Job Ref:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="inputName" value="John Smith">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Site Address:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="inputName" value="John Smith">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Appointment Date:</label>
-                                            <div class="col-md-4">
-                                                <input type="date" class="form-control editInput" id="inputName" value="John Smith">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input type="date" class="form-control editInput" id="inputName" value="John Smith">
-                                            </div>
-                                        </div>
-                                   
-                                    </div>
+                        <form action="" class="p-4">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">User:</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control editInput selectOptions" id="inputJobType">
+                                                <option>--Any--</option>
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                            </select>
 
-                                    <div class="col-md-3">
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Customer:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="inputName" value="John Smith">
-                                            </div>
                                         </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Time:</label>
-                                            <div class="col-md-8">
-                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                    <option>--Any--</option>
-                                                    <option>Yes</option>
-                                                    <option>No</option>
-                                                </select>
-                                            </div>
+                                    </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Job Ref:</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Region:</label>
-                                            <div class="col-md-8">
-                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                    <option>--Any--</option>
-                                                    <option>Yes</option>
-                                                    <option>No</option>
-                                                </select>
-                                            </div>
+                                    </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Site Address:</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
-                                       
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Completed On:</label>
-                                            <div class="col-md-4">
-                                                <input type="date" class="form-control editInput" id="inputName" value="John Smith">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input type="date" class="form-control editInput" id="inputName" value="John Smith">
-                                            </div>
+                                    </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Appointment Date:</label>
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control editInput" id="inputName" value="John Smith">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Project:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="inputName" value="John Smith">
-                                            </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Customer:</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
-                                    
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">App. Type:</label>
-                                            <div class="col-md-8">
-                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                    <option>--Any--</option>
-                                                    <option>Yes</option>
-                                                    <option>No</option>
-                                                </select>
-                                            </div>
+                                    </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Time:</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control editInput selectOptions" id="inputJobType">
+                                                <option>--Any--</option>
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                            </select>
                                         </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Appt. Created Date:</label>
-                                            <div class="col-md-4">
-                                                <input type="date" class="form-control editInput" id="inputName" value="Start">
-                                            </div>
-                                            
-                                            <div class="col-md-4">
-                                                <input type="date" class="form-control editInput" id="inputName" value="End">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Job Priority:</label>
-                                            <div class="col-md-8">
-                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                    <option>--Any--</option>
-                                                    <option>Yes</option>
-                                                    <option>No</option>
-                                                </select>
-                                            </div>
+                                    </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Region:</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control editInput selectOptions" id="inputJobType">
+                                                <option>--Any--</option>
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                            </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Job Type:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="inputName" value="John Smith">
-                                            </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Completed On:</label>
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">App. Priority:</label>
-                                            <div class="col-md-8">
-                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                    <option>--Any--</option>
-                                                    <option>Yes</option>
-                                                    <option>No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Created By User:</label>
-                                            <div class="col-md-8">
-                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                    <option>--Any--</option>
-                                                    <option>Yes</option>
-                                                    <option>No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">App. Status:	</label>
-                                            <div class="col-md-8">
-                                                <select class="form-control editInput selectOptions" id="inputJobType">
-                                                    <option>--Any--</option>
-                                                    <option>Yes</option>
-                                                    <option>No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                      
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="pageTitleBtn justify-content-center">
-                                            <a href="#" class="profileDrop px-3">Search </a>
-                                            <a href="#" class="profileDrop px-3">Clear</a>                
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div> 
-            <!--  <div class="markendDelete">
+
+                                <div class="col-md-3">
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Project:</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control editInput" id="inputName" value="John Smith">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">App. Type:</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control editInput selectOptions" id="inputJobType">
+                                                <option>--Any--</option>
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Appt. Created Date:</label>
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control editInput" id="inputName" value="Start">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control editInput" id="inputName" value="End">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Job Priority:</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control editInput selectOptions" id="inputJobType">
+                                                <option>--Any--</option>
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Job Type:</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control editInput" id="inputName" value="John Smith">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">App. Priority:</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control editInput selectOptions" id="inputJobType">
+                                                <option>--Any--</option>
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Created By User:</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control editInput selectOptions" id="inputJobType">
+                                                <option>--Any--</option>
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">App. Status: </label>
+                                        <div class="col-md-8">
+                                            <select class="form-control editInput selectOptions" id="inputJobType">
+                                                <option>--Any--</option>
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="pageTitleBtn justify-content-center">
+                                        <a href="#" class="profileDrop px-3">Search </a>
+                                        <a href="#" class="profileDrop px-3">Clear</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!--  <div class="markendDelete">
                         <div class="row">
                             <div class="col-md-7">
                             </div>
@@ -284,7 +284,7 @@
                                                     <a href="" class="dropdown-item">Convert To Invoice</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Change To Processed</a>
-                                                    <a href="javascript:void(0)" onclick="openCallBackModal()" id="changeToCallBack" data-id = "{{ $value->id }}" data-quote_ref="{{ $value->quote_ref }}" class="dropdown-item">Change To Call Back</a>
+                                                    <a href="javascript:void(0)" onclick="openCallBackModal()" id="changeToCallBack" data-id="{{ $value->id }}" data-quote_ref="{{ $value->quote_ref }}" class="dropdown-item">Change To Call Back</a>
                                                     <a href="" class="dropdown-item">Change To Accepted</a>
                                                     <a href="" class="dropdown-item">Change To Rejected</a>
                                                     <hr class="dropdown-divider">
@@ -326,6 +326,11 @@
         </di>
     </div>
 </section>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('divTohide').style.display = 'none'; // Hide content
+    });
+</script>
 
 @include('components.quote.call-back')
 

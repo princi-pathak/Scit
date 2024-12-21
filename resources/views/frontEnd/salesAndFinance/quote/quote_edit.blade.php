@@ -3314,7 +3314,7 @@
             // processData: false, // Required for FormData
             success: function(response) {
                 // Handle success
-                alert(response);
+                // alert(response);
                 const tableBody = $('#attachmentTable tbody');
                 console.log(tableBody);
 
