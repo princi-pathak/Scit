@@ -65,9 +65,19 @@ class Quote extends Model
         return $this->hasMany(QuoteAttachment::class);
     }
 
+    
+    public function callBack()
+    {
+        return $this->hasOne(QuoteCallBack::class, 'quote_id');
+    }
+
     public static function getDraftCount($home_id){
         return self::where('status', 'Draft')->where('home_id', $home_id)->count();
     }
  
+    
+    public static function getCallBackCount($home_id){
+        return self::where('status', 'Call Back')->where('home_id', $home_id)->count();
+    }
 
 }

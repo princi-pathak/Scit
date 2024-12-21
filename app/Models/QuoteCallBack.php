@@ -27,4 +27,9 @@ class QuoteCallBack extends Model
         'notes',
     ];
 
+    public function quoteCall()
+    {
+        return $this->belongsTo(Quote::class, 'id');
+    }
+
 }
