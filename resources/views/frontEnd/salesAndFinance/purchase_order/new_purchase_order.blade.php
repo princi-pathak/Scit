@@ -438,7 +438,8 @@
                                     <div class="mb-3 row">
                                         <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control editInput textareaInput" id="search_value" placeholder="Type to add product" onkeyup="get_search()">
+                                            <input type="text" class="form-control editInput textareaInput" id="search-product" placeholder="Type to add product">
+                                            <div class="parent-container"></div>
                                         </div>
                                         <div class="col-sm-7">
                                             <div class="plusandText">
@@ -645,6 +646,7 @@
 @include('components.add-project-modal')
 @include('components.department-model')
 @include('components.product-list')
+@include('frontEnd.salesAndFinance.item.common.addproductmodal')
 
 <x-tag-modal
     modalId="TagModal"
@@ -815,11 +817,9 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             }else if(modal == 6){
                 $("#add_tag_form")[0].reset();
                 $("#TagModal").modal('show');
+            }else if(modal == 7){
+                itemsAddProductModal(1);
             }
-            // else if(modal == 7){
-            //     $("#job_type_form")[0].reset();
-            //     $("#job_type_modal").modal('show');
-            // }
             // else if(modal == 8){
             //     $("#add_product_form")[0].reset();
             //     $("#add_product_modal").modal('show');
@@ -1045,7 +1045,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         selectDropdownJob.name = 'job_id[]';
 
                         const optionsJob = [
-                        { value: '', text: 'Select an option' },
+                        { value: '', text: '-Not Selected-' },
                         { value: '1', text: 'Job-1' },
                         { value: '2', text: 'Job-2' },
                         { value: '3', text: 'Job-3' }
@@ -1088,7 +1088,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         selectDropdownAccountCode.name = 'account_id[]';
 
                         const optionsAccountCode = [
-                        { value: '', text: 'Select an option' },
+                        { value: '', text: '-No Department-' },
                         { value: '1', text: 'Acc-1' },
                         { value: '2', text: 'Acc-2' },
                         { value: '3', text: 'Acc-3' }
@@ -1196,7 +1196,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
         if(rowCount <= 1){
             $("#product_calculation").hide();
         }
-        var row = button.parentNode.parentNode;
+        var row = button.parentNode;
         
         if(id){
             var token = '<?php echo csrf_token(); ?>'
@@ -1275,6 +1275,78 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
         $("#total_vat").text('£'+total_vat.toFixed(2));
         $("#outstanding_vat").text('£'+total_vat.toFixed(2));
     }
+ </script>
+ <script>
+    $(document).ready(function() {
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$('#search-product').on('keyup', function() {
+    let query = $(this).val();
+    const divList = document.querySelector('.parent-container');
+
+    if (query === '') {
+        divList.innerHTML = '';
+    }
+
+    // Make an AJAX call only if query length > 2
+    if (query.length > 2) {
+        $.ajax({
+            url: "{{ route('item.ajax.searchProduct') }}", // Laravel route
+            method: 'GET',
+            data: {
+                query: query
+            },
+            success: function(response) {
+                console.log(response);
+                // $('#results').html(response);
+                divList.innerHTML = "";
+                const div = document.createElement('div');
+                div.className = 'container'; // Optional: Add a class to the div for styling
+
+                // Step 2: Create a ul (unordered list)
+                const ul = document.createElement('ul');
+                ul.id = "productList";
+                // Step 3: Loop through the data and create li (list item) for each entry
+                response.forEach(item => {
+                    const li = document.createElement('li'); // Create a new li element
+                    li.textContent = item.product_name; // Set the text of the li item
+                    li.id = item.id;
+                    li.className = "editInput";
+                    ul.appendChild(li); // Append the li to the ul
+                });
+
+                // Step 4: Append the ul to the div
+                div.appendChild(ul);
+
+                // Step 5: Append the div to the parent container in the HTML
+                divList.appendChild(div);
+
+                ul.addEventListener('click', function(event) {
+                    divList.innerHTML = '';
+                    document.getElementById('search-product').value = '';
+                    // Check if the clicked element is an <li> (to avoid triggering on other child elements)
+                    if (event.target.tagName.toLowerCase() === 'li') {
+                        const selectedId = event.target.id; // Get the ID of the clicked <li>
+                        console.log('Selected Product ID:', selectedId); // Print the ID of the selected product
+                        getProductData(selectedId);
+                    }
+                });
+
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+            }
+        });
+    } else {
+        $('#results').empty(); // Clear results if the input is empty
+    }
+});
+
+});
  </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

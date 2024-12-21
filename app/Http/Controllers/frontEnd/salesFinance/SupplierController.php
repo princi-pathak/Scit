@@ -11,6 +11,7 @@ use App\Models\Supplier;
 use App\Models\Job_title;
 use App\Models\SupplierAttachment;
 use App\Models\Constructor_additional_contact;
+use App\Customer;
 
 class SupplierController extends Controller
 {
@@ -24,6 +25,7 @@ class SupplierController extends Controller
         $data['currency']=Currency::where(['status'=>1,'deleted_at'=>null])->get();
         $data['country']=Country::all_country_list();
         $data['job_title']=Job_title::where(['home_id'=>$home_id,'status'=>1])->get();
+        $data['supplier_email']=Supplier::allGetSupplier($home_id,Auth::user()->id)->whereNotNull('email')->take(10)->get();
         // echo "<pre>";print_r($data['job_title']);die;
         return view('frontEnd.salesAndFinance.supplier.add_supplier',$data);
     }
@@ -68,29 +70,28 @@ class SupplierController extends Controller
         // echo "<pre>";print_r($request->all());die;
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
-        if($request->attachment_id !=''){
-            $array=[
-                'supplier_id' => 'required',
+        $array=[
+            'supplier_id' => 'required',
+            'title' => 'required',
+            'attachment' => 'required',
+        ]; 
+        if($request->reminder == 1){
+            $array= [
                 'title' => 'required',
-            ];
-        }else{
-            $array=[
                 'supplier_id' => 'required',
-                'title' => 'required',
+                'reminder_date' => 'required',
+                'reminder_email' => 'required',
                 'attachment' => 'required',
-            ]; 
-            if($request->reminder == 1){
-                $array= [
-                    'supplier_id' => 'required',
-                    'reminder_date' => 'required',
-                    'reminder_email' => 'required',
-                    'attachment' => 'required',
-                    'title' => 'required',
-                ];
-            }
+            ];
         }
-        $validator = Validator::make($request->all(), $array);
         
+        $validator = Validator::make($request->all(), $array);
+        $requestData = $request->all();
+        if(!empty($request->reminder_email) && count($request->reminder_email) >0 && count($request->reminder_email) <=5){
+            $requestData['reminder_email']=implode(',',$request->reminder_email);
+        }else if(!empty($request->reminder_email) && count($request->reminder_email) >5){
+            return response()->json(['vali_error' => 'Maximum 5 emails allowed']);
+        }
         if ($validator->fails()) {
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
@@ -99,13 +100,12 @@ class SupplierController extends Controller
                 $imageName = time().'.'.$request->attachment->extension();      
                 $request->attachment->move(public_path('images/supplier_attachments'), $imageName);
                 $original_name=$request->attachment->getClientOriginalName();
-                $requestData = $request->all();
+                
                 $requestData['attachment'] = $imageName;
                 $requestData['file_original_name'] = $original_name;
-            } else {
-                $requestData = $request->all();
             }
             $requestData['id']=$request->attachment_id ?? null;
+            
             // echo "<pre>";print_r($requestData);die;
             $supplier_attachment=SupplierAttachment::supplierAttachmentSave($requestData);
             if($request->attachment_id == ''){
@@ -148,6 +148,48 @@ class SupplierController extends Controller
         $supplier_id=$request->supplier_id;
         $data=Supplier::with('contacts')->where('id',$supplier_id)->first();
         return response()->json(['success'=>true,'data'=>$data]);
+    }
+    public function search_email_list(Request $request){
+        $email=$request->email;
+        // $supplier_check=Supplier::where('email','LIKE', "%$email%")->where(['status'=>1,'deleted_at'=>null])->take(10)->get();
+        // $customer_check=Customer::where('email','LIKE', "%$email%")->where(['is_converted'=>1,'status'=>1,'deleted_at'=>null])->take(10)->get();
+        // $all_emails=array();
+        // foreach($supplier_check as $suppval){
+        //     $all_emails[]=[
+        //         'id'=>$suppval->id,
+        //         'email'=>$suppval->email,
+        //         'userType'=>2
+        //     ];
+        // }
+        // foreach($customer_check as $cusval){
+        //     $all_emails[]=[
+        //         'id'=>$cusval->id,
+        //         'email'=>$cusval->email,
+        //         'userType'=>1
+        //     ];
+        // }
+        // Uncomment above code when need to save usertype and primary id in table
+        $supplier_emails = Supplier::where('email', 'LIKE', "%$email%")->where(['status'=>1,'deleted_at'=>null])->take(10)->pluck('email');
+        $customer_emails = Customer::where('email', 'LIKE', "%$email%")->where(['is_converted'=>1,'status'=>1,'deleted_at'=>null])->take(10)->pluck('email');
+        // $all_emails = $supplier_emails->merge($customer_emails)->unique()->toArray();
+        $all_emails = $supplier_emails->merge($customer_emails);
+
+        return response()->json(['all_emails' => $all_emails]);
+    }
+    public function getsupplier_purchaseList(Request $request){
+        $supplier_id=$request->supplier_id;
+        $list=Supplier::with('purchaseOrders')->where('id',$supplier_id)->orderBy('id', 'desc')->paginate(10);
+        return response()->json([
+            'success' => true, 'data' => $list, 
+            'pagination' => [
+                    'total' => $list->total(),
+                    'current_page' => $list->currentPage(),
+                    'last_page' => $list->lastPage(),
+                    'per_page' => $list->perPage(),
+                    'next_page_url' => $list->nextPageUrl(),
+                    'prev_page_url' => $list->previousPageUrl(),
+                ]
+        ]);
     }
     
 }

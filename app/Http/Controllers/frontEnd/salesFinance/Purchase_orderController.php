@@ -90,6 +90,7 @@ class Purchase_orderController extends Controller
         $data['customer_types']=Customer_type::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
         $data['contact_name']=$contact_name;
+        $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
         // echo "<pre>";print_r($data['additional_contact']);die;
         return view('frontEnd.salesAndFinance.purchase_order.new_purchase_order',$data);
     }

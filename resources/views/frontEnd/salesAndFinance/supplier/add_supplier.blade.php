@@ -28,7 +28,7 @@
                     <div class="col-md-8 col-lg-8 col-xl-8 px-3">
                         <div class="pageTitleBtn">
                             <a href="javascript:void(0)" onclick="save_supplier()" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                            <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                            <a href="{{url('supplier?list_mode=ACTIVE')}}" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
                             <a href="#" class="profileDrop"><i class="fa-solid fa-comments"></i> CRM</a>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <button class="nav-link active" id="nav-supplierList-tab" data-bs-toggle="tab" data-bs-target="#nav-supplierList" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Supplier Details</button>
-                            <button class="nav-link @if(!isset($supplier) || $supplier == '') disabled-tab @endif" id="nav-purchaseOrdersList-tab" data-bs-toggle="tab" data-bs-target="#nav-purchaseOrdersList" type="button" role="tab" aria-controls="nav-purchaseOrdersList" aria-selected="false" @if(!isset($supplier) || $supplier == '') disabled @endif>Purchase Orders</button>
+                            <button class="nav-link @if(!isset($supplier) || $supplier == '') disabled-tab @endif" id="nav-purchaseOrdersList-tab" data-bs-toggle="tab" data-bs-target="#nav-purchaseOrdersList" type="button" role="tab" aria-controls="nav-purchaseOrdersList" aria-selected="false" @if(!isset($supplier) || $supplier == '') disabled @else onclick="getpurchaseorder({{$supplier->id}})" @endif>Purchase Orders</button>
 
                             <button class="nav-link @if(!isset($supplier) || $supplier == '') disabled-tab @endif" id="nav-attachmentsList-tab" data-bs-toggle="tab" data-bs-target="#nav-attachmentsList" type="button" role="tab" aria-controls="nav-attachmentsList" aria-selected="false" @if(!isset($supplier) || $supplier == '') disabled @else onclick="getattachments()" @endif>Attachment</button>
                     </div>
@@ -316,7 +316,7 @@
                                                     <th></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="purchaseOrderList">
                                                 <tr>
                                                     <td colspan="12">
                                                         <label class="red_sorryText">
@@ -326,6 +326,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div id="pagination-controls-supplier-purchaseOrder"></div>
                                     </div>
                                 </div>
                             </div>
@@ -376,8 +377,8 @@
                 <div class="row">                    
                     <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                         <div class="pageTitleBtn">
-                            <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                            <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                            <a href="javascript:void(0)" onclick="save_supplier()" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
+                            <a href="{{url('supplier?list_mode=ACTIVE')}}" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
                             <a href="#" class="profileDrop"><i class="fa-solid fa-comments"></i> CRM</a>
                         </div>
                     </div>
@@ -439,6 +440,7 @@
         $('#file_name').text('');
         $('#attachment_id').val('');
         $("#payment_terms").html('<option value="0">0</option>');
+        $('#supplier_attachmentview_file').removeAttr('href').hide();
         
     }
 
@@ -491,9 +493,12 @@
         }
     }
     function getattachments(){
-        getAllSupplierAttachment("{{url('/getAllSupplierAttachment')}}");   
+        getAllSupplierAttachmentList("{{url('/getAllSupplierAttachment')}}");   
     }
-    function getAllSupplierAttachment(pageUrl){
+    function getAllSupplierAttachment(){
+        location.reload();
+    }
+    function getAllSupplierAttachmentList(pageUrl){
         var supplier_id=$("#id").val();
         $.ajax({
             type: "POST",
@@ -516,6 +521,13 @@
                     }else{
                         type="Other";
                     }
+                    var reminder_email = '';
+                    if (item.reminder_email && item.reminder_email != '') { 
+                        let emailTable = item.reminder_email.split(','); 
+                        emailTable.forEach(function(email) {
+                            reminder_email += email + '<br>';
+                        });
+                    }
                     var imag_url="<?php echo url('public/images/supplier_attachments/');?>"+'/'+item.attachment;
                     var baseUrl = "{{ url('') }}";
                     var html = '<tr>' +
@@ -524,9 +536,9 @@
                         '<td>' + type + '</td>' +
                         '<td>' + (item.description ?? "") + '</td>' + 
                         '<td>' + (item.reminder == 1 ? "Yes, remind "+item.reminder_before_days+" day(s) before "+item.reminder_date : "No") + '</td>' +
-                        '<td>' + (item.reminder_email ?? "") + '</td>' +
+                        '<td>' + reminder_email + '</td>' +
                         '<td id="visible_complaint_file_' + item.id + '" class="eye_icon"><a href="'+imag_url+'" target="_blank"><i class="fa fa-eye"></i></a></td>' +  
-                        '<td id="visible_complaint_action_' + item.id + '" class="eye_icon"><img src="' + baseUrl + '/public/frontEnd/jobs/images/pencil.png" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#attachment_modal" class="modal_dataFetch" data-id="'+item.id+'" data-supplier_id="'+item.supplier_id+'" data-title="'+item.title+'" data-type_id="'+item.type_id+'" data-description="'+item.description+'" data-reminder="'+item.reminder+'" data-reminder_date="'+item.reminder_date+'" data-reminder_before_days="'+item.reminder_before_days+'" data-reminder_email="'+item.reminder_email+'" data-attachment="'+item.attachment+'" data-file_original_name="'+item.file_original_name+'">&emsp; <img src="' + baseUrl + '/public/frontEnd/jobs/images/delete.png" alt="" class="image_delete" data-delete="'+item.id+'"></td>' + 
+                        '<td id="visible_complaint_action_' + item.id + '" class="eye_icon"><img src="' + baseUrl + '/public/frontEnd/jobs/images/pencil.png" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#attachment_modal" class="modal_dataFetch" data-id="'+item.id+'" data-supplier_id="'+item.supplier_id+'" data-title="'+item.title+'" data-type_id="'+item.type_id+'" data-description="'+item.description+'" data-reminder="'+item.reminder+'" data-reminder_date="'+item.reminder_date+'" data-reminder_before_days="'+item.reminder_before_days+'" data-reminder_email="'+item.reminder_email+'" data-attachment="'+item.attachment+'" data-file_original_name="'+item.file_original_name+'" data-created_at="'+item.created_at+'">&emsp; <img src="' + baseUrl + '/public/frontEnd/jobs/images/delete.png" alt="" class="image_delete" data-delete="'+item.id+'"></td>' + 
                     '</tr>';
                     tableBody.append(html);
                     count++;
@@ -535,16 +547,17 @@
                 var paginationControls = $("#attachments-pagination-controls");
                 paginationControls.empty();
                 if (pagination.prev_page_url) {
-                    paginationControls.append('<button class="profileDrop" onclick="getAllSupplierAttachment(\'' + pagination.prev_page_url + '\')">Previous</button>');
+                    paginationControls.append('<button class="profileDrop" onclick="getAllSupplierAttachmentList(\'' + pagination.prev_page_url + '\')">Previous</button>');
                 }
                 if (pagination.next_page_url) {
-                    paginationControls.append('<button class="profileDrop" onclick="getAllSupplierAttachment( \'' + pagination.next_page_url + '\')">Next</button>');
+                    paginationControls.append('<button class="profileDrop" onclick="getAllSupplierAttachmentList( \'' + pagination.next_page_url + '\')">Next</button>');
                 }
             
             },
             error: function(xhr, status, error) {
                 var errorMessage = xhr.status + ': ' + xhr.statusText;
                 alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                location.reload();
             }
         });
     }
@@ -560,7 +573,7 @@
                     console.log(data);
                     if(data){
                         // location.reload();
-                        getAllSupplierAttachment("{{url('/getAllSupplierAttachment')}}");
+                        getAllSupplierAttachmentList("{{url('/getAllSupplierAttachment')}}");
                     }else{
                         alert("Something went wrong");
                     }
@@ -586,6 +599,18 @@
         var attachment = $(this).data('attachment');
         var file_original_name = $(this).data('file_original_name');
         var imag_url="<?php echo url('public/images/supplier_attachments/');?>"+'/'+attachment;
+        var created_at=$(this).data('created_at');
+        var date_created = new Date(created_at);
+        let emailArray = reminder_email.split(',') ?? [];
+        if(emailArray.length >0){
+        $('.multiselect-dropdown').hide();
+            var TableemailDropdownList='';
+            emailArray.forEach(function(item){
+                TableemailDropdownList+='<option value="'+item+'" selected>'+item+'</option>';
+            });
+            $("#reminder_email").html(TableemailDropdownList);
+            MultiselectDropdown();
+        }
         
         $("#attachment_id").val(attachment_id);
         $("#supplier_id").val(supplier_id);
@@ -599,12 +624,12 @@
         // $("#reminder").val(reminder);
         $("#reminder_date").val(reminder_date);
         if(reminder_date){
-            setMinEndDate(reminder_before_days);
+            setMinEndDate(reminder_before_days,date_created.toISOString().split('T')[0]);
         }
         $("#reminder_email").val(reminder_email);
         // $("#attachment").val(attachment);
         if(attachment !=''){
-            $('#supplier_attachmentview_file').attr('href', imag_url);
+            $('#supplier_attachmentview_file').attr('href', imag_url).show();
         }
         $("#file_name").text(file_original_name);
     });
@@ -662,6 +687,62 @@
             },
             error: function(xhr, status, error) {
                 console.error(error);
+                location.reload();
+            }
+        });
+    }
+    function getpurchaseorder(supplier_id,pageUrl= '{{url("getsupplier_purchaseList")}}'){
+        
+        // purchaseOrderList
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {
+                supplier_id:supplier_id, _token:token
+            },
+            success: function(response) {
+                console.log(response);return false;
+                var data = response.purchase_orders;
+                var paginationPurchaseOrder = response.pagination;
+                var tableBody = $("#purchaseOrderList"); 
+                tableBody.empty();
+                var purchase_html='';
+                if(data.length>0){
+                    var purchasecount=1;
+                    data.forEach(function(item) {
+                        
+                        purchase_html+= '<tr>' +
+                            '<td>' + purchasecount + '</td>' +
+                            '<td>' + item.reference + '</td>' +
+                            '<td>' + item.purchase_date + '</td>' +       
+                            '<td>' + item.customer_id + '</td>' +        
+                            '<td>' + item.expected_deleveryDate + '</td>' +
+                            '<td>' + item.address + '</td>' +
+                            '<td>' + item.city + '</td>' +
+                            '<td>' + item.country + '</td>' +
+                            '<td>' + item.postcode + '</td>' +
+                            '<td>' + (item.default_billing == 1 ? "Yes" : "No") + '</td>' +
+                            '</tr>';
+                        count++;
+                    });
+                }else{
+                    purchase_html+='<tr> <td colspan="10"> <label class="red_sorryText">Sorry, no records to show</label> </td> </tr>';
+                    
+                }
+                tableBody.html(purchase_html);
+                var paginationControlsPurchaseOrder = $("#pagination-controls-supplier-purchaseOrder");
+                paginationControlsPurchaseOrder.empty();
+                if (paginationPurchaseOrder.prev_page_url) {
+                    paginationControlsPurchaseOrder.append('<button class="profileDrop" onclick="getpurchaseorder(' + supplier_id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationPurchaseOrder.next_page_url) {
+                    paginationControlsPurchaseOrder.append('<button class="profileDrop" onclick="getpurchaseorder(' + supplier_id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                location.reload();
             }
         });
     }
