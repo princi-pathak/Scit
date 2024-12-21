@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     .search_date {
         display: none;
     }
@@ -6,7 +6,7 @@
     .search_title {
         display: none;
     }
-</style>
+</style> -->
 <!-- RMP Plan Add-->
 <div class="modal fade my_plan_model" id="rmpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -111,7 +111,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h3 class="m-t-0 m-b-20 clr-blue">Search</h3>
                         </div>
-                        <div class="col-md-12 col-sm-12 col-xs-12 p-0 type-field">
+                        <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 type-field">
                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Type: </label>
                             <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
                                 <div class="select-style">
@@ -121,7 +121,7 @@
                                         <option value='2'> Date </option>
                                     </select>
                                 </div>
-                                <!-- <input type="text" name="search_daily_record" class="form-control"> -->
+                                <input type="text" name="search_daily_record" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-12 col-xs-12 p-0 search_title">
@@ -129,7 +129,7 @@
                             <div class="col-md-11 col-sm-11 col-xs-12 m-b-15 title">
                                 <input type="text" name="search_rmp_record" class="form-control" maxlength="255">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd search_date">
                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Date: </label>
                             <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
@@ -662,7 +662,8 @@
         function update_search_list() {
 
 
-            var searchType = document.getElementById('search_type').value;
+            // var searchType = document.getElementById('search_type').value;
+            var searchType = 2;
             if (searchType == 1) {
                 var search_input = $('input[name=\'search_rmp_record\']');
                 var search = search_input.val();
@@ -763,17 +764,17 @@
     });
 
     //Komal 18-8-23
-    $('#search_type').on('change', function() {
-        var searchType = document.getElementById('search_type').value;
-        if (searchType == 1) {
-            $('.search_title').show();
-        } else {
-            $('.search_title').hide();
-        }
-        if (searchType == 2) {
-            $('.search_date').show();
-        } else {
-            $('.search_date').hide();
-        }
-    });
+    // $('#search_type').on('change', function() {
+    //     var searchType = document.getElementById('search_type').value;
+    //     if (searchType == 1) {
+    //         $('.search_title').show();
+    //     } else {
+    //         $('.search_title').hide();
+    //     }
+    //     if (searchType == 2) {
+    //         $('.search_date').show();
+    //     } else {
+    //         $('.search_date').hide();
+    //     }
+    // });
 </script>

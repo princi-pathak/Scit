@@ -18,4 +18,7 @@ class PurchaseOrder extends Model
             $data
         );
     }
+    public function suppliers(){
+        return $this->belongsTo(Supplier::class, 'supplier_id');
+    }
 }

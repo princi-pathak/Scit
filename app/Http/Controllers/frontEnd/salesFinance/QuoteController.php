@@ -69,7 +69,7 @@ class QuoteController extends Controller
         $data['lastSegment'] = $lastSegment;
         $data['quotes'] = $this->quoteService->getQuoteData($lastSegment, Auth::user()->home_id);
         $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
-
+        $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.draft', $data);
     }
 
@@ -476,4 +476,19 @@ class QuoteController extends Controller
             'data' => $data ? "Quote Status changed to Call Back !" : 'Error in satus changed.'
         ]);
     }
+
+    public function callBack(Request $request)
+    {
+        $data['page'] = "quotes";
+        $path = $request->path();
+        $segments = explode('/', $path);
+        $lastSegment = end($segments);
+        $data['lastSegment'] = $lastSegment;
+        $data['quotes'] = $this->quoteService->getQuoteCallBack($lastSegment, Auth::user()->home_id);
+        $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
+        $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
+        // dd($data);
+        return view('frontEnd.salesAndFinance.quote.call_back', $data);
+    }
+ 
 }
