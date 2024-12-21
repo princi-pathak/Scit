@@ -5,7 +5,7 @@
             <a href="{{ url('/quote/draft') }}" class="profileDrop">Draft <span>({{ $draftCount }})</span></a>
             <a href="#" class="profileDrop">Actioned<span>(8)</span></a>
             <a href="#" class="profileDrop">Converted<span>(15)</span></a>
-            <a href="#" class="profileDrop">Call back<span>(76)</span></a>
+            <a href="{{ url('/quote/callBack') }}" class="profileDrop">Call back<span>({{ $callbackCount }})</span></a>
             <a href="#" class="profileDrop">Accsepted<span>(32)</span></a>
             <a href="#" class="profileDrop">Rejected<span>(2)</span></a>
             <a href="#" class="profileDrop">Sales Appointments</a>
