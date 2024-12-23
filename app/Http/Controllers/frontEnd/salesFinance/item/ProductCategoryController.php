@@ -40,7 +40,7 @@ class ProductCategoryController extends Controller
             array_push($productcategory_array,$arr);
         }
         $product_categories_list = $productcategory_array;
-        return view('frontEnd.salesAndFinance.Item.product_category', compact('product_categories', 'page', 'lastSegment', 'users', 'product_categories_list'));
+        return view('frontEnd.salesAndFinance.item.product_category', compact('product_categories', 'page', 'lastSegment', 'users', 'product_categories_list'));
     }
     //add product category
     function saveProductCategoryData(Request $request){

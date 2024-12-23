@@ -110,7 +110,7 @@ class ProductController extends Controller
         //     array_push($productcategory_array,$arr);
         // }
         // $product_categories_list = $productcategory_array;
-        return view('frontEnd.salesAndFinance.Item.product', compact('product', 'page', 'lastSegment', 'users', 'product_inactive','product_categories','product_list_array'));
+        return view('frontEnd.salesAndFinance.item.product', compact('product', 'page', 'lastSegment', 'users', 'product_inactive','product_categories','product_list_array'));
     }
 
     function productcategorylist(Request $request){

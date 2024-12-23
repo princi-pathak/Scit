@@ -21,4 +21,7 @@ class PurchaseOrder extends Model
     public function suppliers(){
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
+    public function poAttachments(){
+        return $this->hasMany(PoAttachment::class, 'po_id', 'id');
+    }
 }

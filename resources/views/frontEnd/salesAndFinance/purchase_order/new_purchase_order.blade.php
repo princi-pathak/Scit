@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-4">
-                        <div class="alert alert-primary mt-1 mb-0 text-center" id="message_save" style="display:none"></div>
+                        <div class="mt-1 mb-0 text-center" id="message_save"></div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-4 px-3">
                     
@@ -549,7 +549,7 @@
                             </div>
                         </div>
 
-                        <div class="newJobForm mt-4">
+                        <!-- <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Attachments</label>
                             <div class="row">
                             <div class="col-sm-12">
@@ -562,20 +562,55 @@
                                 </div>
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="newJobForm mt-4">
+                                <label class="upperlineTitle">Attachments</label>
+                                <div class="row">
+                                    <div class="col-sm-12 mb-3 mt-2">
+                                        <div class="jobsection">
+                                            <a href="javascript:void(0)" class="profileDrop @if(!isset($key) || $key == '') disabled-tab @endif" @if(!isset($key) || $key == '') disabled @else  onclick="get_modal(10)" @endif>New Attachment</a>
+                                            <a href="javascript:void(0)" class="profileDrop">Delete Attachment(s)</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="productDetailTable">
+                                            <table class="table">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Type</th>
+                                                        <th>Title</th>
+                                                        <th>Description</th>
+                                                        <th>Section</th>
+                                                        <th>File Name</th>
+                                                        <th>Mime Type / Size</th>
+                                                        <th>Created On</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="attachments_result"></tbody>
+                                            </table>
+                                            <div id="pagination-controls-Attachments"></div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
                         </div>
                         <div class="newJobForm mt-4">
                                 <label class="upperlineTitle">Tasks</label>
                                 <div class="row">
                                     <div class="col-sm-12 mb-3 mt-2">
                                         <div class="jobsection">
-                                            <a href="javascript:void(0)" class="profileDrop @if(!isset($key) || $key == '') disabled-tab @endif" @if(!isset($key) || $key == '') disabled @else  onclick="get_modal(10)" @endif>New Task</a>
+                                            <a href="javascript:void(0)" class="profileDrop @if(!isset($key) || $key == '') disabled-tab @endif" @if(!isset($key) || $key == '') disabled @else  onclick="get_modal(11)" @endif>New Task</a>
 
                                         </div>
                                     </div>
                                     <div class="col-sm-12 mb-3 mt-2">
                                         <div class="jobsection">
-                                            <a href="javascript:void(0)" onclick="get_modal(11)" class="profileDrop">Tasks</a>
-                                            <a href="javascript:void(0)" onclick="get_modal(12)" class="profileDrop">Recurring Tasks</a>
+                                            <a href="javascript:void(0)" onclick="get_modal(12)" class="profileDrop">Tasks</a>
+                                            <a href="javascript:void(0)" onclick="get_modal(13)" class="profileDrop">Recurring Tasks</a>
 
                                         </div>
                                     </div>
@@ -603,7 +638,7 @@
                                 </div>
                             </div>
 
-                    </div>
+                        </div>
                 </div>
             </form>
                 <div class="row">
@@ -656,6 +691,19 @@
     statusId="tag_status"
     saveButtonId="saveTag"
     placeholderText="Tag" />
+
+<x-add-attachment-modal 
+    purchaseModalId="purchase_model"
+    purchaseformId="purchase_Attachmentform"
+    refTitle="Purchase"
+    modalTitle="Add Attachment"
+    TypeId="purchase_typeId"
+    inputTitle="purchase_title"
+    selectfile_name="purchase_file"
+    inputDescription="purchase_description"
+    saveButtonId="savePurchaseAttachment"
+    hiddenForeignId="po_id"
+/>
 
 <!-- End here -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
@@ -819,11 +867,14 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 $("#TagModal").modal('show');
             }else if(modal == 7){
                 itemsAddProductModal(1);
+            }else if(modal == 10){
+                var purchase_ref='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->purchase_order_ref;}?>'
+                var po_id='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>'
+                $("#purchase_Attachmentform")[0].reset();
+                $("#Purchase_ref").val(purchase_ref);
+                $("#po_id").val(po_id);
+                $("#purchase_model").modal('show');
             }
-            // else if(modal == 8){
-            //     $("#add_product_form")[0].reset();
-            //     $("#add_product_modal").modal('show');
-            // }
             // else if(modal == 9){
             //     $("#product_category_form")[0].reset();
             //     $("#product_category_modal").modal('show');
@@ -913,24 +964,66 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         return false;
                     }else if(response.success === true){
                         $(window).scrollTop(0);
-                        $('#message_save').text(response.message).show();
+                        $('#message_save').addClass('success-message').text(response.message).show();
                         setTimeout(function() {
-                            $('#message_save').text('').hide();
+                            $('#message_save').removeClass('success-message').text('').hide();
                             var id = parseInt(response.data.id, 10) || 0;
                             var encodedId = btoa(unescape(encodeURIComponent(id)));
                             location.href = '<?php echo url('purchase_order_edit'); ?>?key=' + encodedId;
                         }, 3000);
-                    }else{
-                        alert("Something went wrong! Please try later");
+                    }else if(response.success === false){
+                        $('#message_save').addClass('error-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#error-message').text('').fadeOut();
+                        }, 3000);
                     }
                 },
                 error: function(xhr, status, error) {
                     var errorMessage = xhr.status + ': ' + xhr.statusText;
-                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.error);
+                    alert('Error - ' + errorMessage + "\nMessage: " + error);
                 }
             });
         }
     }
+    $("#savePurchaseAttachment").on('click', function(){
+        $.ajax({
+            type: "POST",
+            url: "{{url('/purchase_order_attachment_save')}}",
+            data: new FormData($("#purchase_Attachmentform")[0]),
+            async: false,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+                if(response.vali_error){
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
+                        return false;
+                }else if(response.success === true){
+                    $(window).scrollTop(0);
+                    $('#attachment_messagse').addClass('success-message').text(response.message).show();
+                    setTimeout(function() {
+                        $('#attachment_messagse').removeClass('success-message').text('').hide();
+                        location.reload();
+                    }, 3000);
+                }else if(response.success === false){
+                    $('#attachment_messagse').addClass('error-message').text(response.message).show();
+                    setTimeout(function() {
+                        $('#attachment_messagse').text('').fadeOut();
+                    }, 3000);
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                // alert('Error - ' + errorMessage + "\nMessage: " + error);
+                $('#attachment_messagse').addClass('error-message').text(error).show();
+                    setTimeout(function() {
+                        $('#attachment_messagse').text('').fadeOut();
+                    }, 3000);
+            }
+        });
+    });
     $("#saveTag").on('click', function(){
         var title = $("#tag_title").val().trim(); 
         var status = $.trim($('#tag_status option:selected').val());
@@ -975,7 +1068,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 },
                 error: function(xhr, status, error) {
                     var errorMessage = xhr.status + ': ' + xhr.statusText;
-                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.error);
+                    alert('Error - ' + errorMessage + "\nMessage: " + error);
                 }
             });
         }
@@ -1041,23 +1134,25 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const row = document.createElement('tr');
                         // job dropdown
                         const dropdownJob = document.createElement('td');
+
                         const selectDropdownJob = document.createElement('select');
                         selectDropdownJob.name = 'job_id[]';
 
-                        const optionsJob = [
-                        { value: '', text: '-Not Selected-' },
-                        { value: '1', text: 'Job-1' },
-                        { value: '2', text: 'Job-2' },
-                        { value: '3', text: 'Job-3' }
-                        ];
+                        const defaultOptionJob = document.createElement('option');
+                        defaultOptionJob.value = '';
+                        defaultOptionJob.text = '-Not Selected-';
+                        selectDropdownJob.appendChild(defaultOptionJob);
 
+                        const optionsJob = data.job;
                         optionsJob.forEach(optionJob => {
-                        const optJob = document.createElement('option');
-                        optJob.value = optionJob.value;
-                        optJob.textContent = optionJob.text;
-                        selectDropdownJob.appendChild(optJob);
+                            const optJob = document.createElement('option');
+                            optJob.value = optionJob.id;
+                            optJob.textContent = optionJob.name;
+                            selectDropdownJob.appendChild(optJob);
                         });
+
                         dropdownJob.appendChild(selectDropdownJob);
+
                         row.appendChild(dropdownJob);
                         // end
                         const nameCell = document.createElement('td');
@@ -1071,7 +1166,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const hiddenInput = document.createElement('input');
                         hiddenInput.type = 'hidden';
                         hiddenInput.className = 'product_id';
-                        hiddenInput.name = 'product_ids[]';
+                        hiddenInput.name = 'product_id[]';
                         hiddenInput.value = data.product_detail.id;
                         row.appendChild(hiddenInput);
 
@@ -1085,19 +1180,19 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
 
                         const dropdownAccountCode = document.createElement('td');
                         const selectDropdownAccountCode = document.createElement('select');
-                        selectDropdownAccountCode.name = 'account_id[]';
+                        selectDropdownAccountCode.name = 'accountCode_id[]';
 
-                        const optionsAccountCode = [
-                        { value: '', text: '-No Department-' },
-                        { value: '1', text: 'Acc-1' },
-                        { value: '2', text: 'Acc-2' },
-                        { value: '3', text: 'Acc-3' }
-                        ];
+                        const optionsAccountCode = data.accountCode;
+
+                        const defaultOptionAccountCode = document.createElement('option');
+                        defaultOptionAccountCode.value = '';
+                        defaultOptionAccountCode.text = '-No Department-';
+                        selectDropdownAccountCode.appendChild(defaultOptionAccountCode);
 
                         optionsAccountCode.forEach(optionJob => {
                         const optAccountCode = document.createElement('option');
-                        optAccountCode.value = optionJob.value;
-                        optAccountCode.textContent = optionJob.text;
+                        optAccountCode.value = optionJob.id;
+                        optAccountCode.textContent = optionJob.name;
                         selectDropdownAccountCode.appendChild(optAccountCode);
                         });
                         dropdownAccountCode.appendChild(selectDropdownAccountCode);
@@ -1122,7 +1217,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         inputPrice.addEventListener('input', function() {
                             updateAmount(row);
                         });
-                        inputPrice.name = 'product_price[]'; 
+                        inputPrice.name = 'price[]'; 
                         inputPrice.value = data.product_detail.price;
                         GrandPrice=GrandPrice+Number(data.product_detail.price);
                         priceCell.appendChild(inputPrice);
@@ -1347,6 +1442,64 @@ $('#search-product').on('keyup', function() {
 });
 
 });
+ </script>
+ <script>
+    $(document).ready(function(){
+        var purchaseOrderId='<?php if(isset($purchase_orders)){echo $purchase_orders->id;}?>'
+        getAttachment(purchaseOrderId,'{{ url("getAllAttachmens") }}');
+    });
+    function getAttachment(id,pageUrl = '{{ url("getAllAttachmens") }}'){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {id: id,_token:token},
+            success: function(response) {
+                console.log(response.data.data);return false;
+                var data = response.data.data;
+                var paginationAttachment = response.pagination;
+                var tableBody = $("#attachments_result"); 
+                tableBody.empty();
+                var html='';
+                if(data.length>0){
+                    var count=1;
+                    data.forEach(function(item) {
+                        
+                        html+= '<tr>' +
+                            '<td>' + count + '</td>' +
+                            '<td>' + item.contact + '</td>' +
+                            '<td>' + item.email + '</td>' +       
+                            '<td>' + item.telephone + '</td>' +        
+                            '<td>' + item.mobile + '</td>' +
+                            '<td>' + item.address + '</td>' +
+                            '<td>' + item.city + '</td>' +
+                            '<td>' + item.country + '</td>' +
+                            '<td>' + item.postcode + '</td>' +
+                            '<td>' + (item.default_billing == 1 ? "Yes" : "No") + '</td>' +
+                            '</tr>';
+                        count++;
+                    });
+                }else{
+                    html+='<tr> <td colspan="10"> <label class="red_sorryText">Sorry, no records to show</label> </td> </tr>';
+                    
+                }
+                tableBody.html(html);
+                var paginationControlsAttachment = $("#pagination-controls-Attachments");
+                paginationControlsAttachment.empty();
+                if (paginationAttachment.prev_page_url) {
+                    paginationControlsAttachment.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationAttachment.next_page_url) {
+                    paginationControlsAttachment.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                location.reload();
+            }
+        });
+    }
+    
  </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

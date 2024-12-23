@@ -90,31 +90,55 @@
                                             </div>
                                         </div>
                                     </td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- End off main Table -->
-                <!--  Modal start here -->
-                <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content add_Customer">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="customerModalLabel">Task Type - Add</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
+
+                                <?php }?>
+
+                            </tbody>
+                        </table>
+
+                    </div>   <!-- End off main Table -->
+                    <!--  Modal start here -->
+                    <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content add_Customer">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="customerModalLabel">Task Type - Add</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
                                     <div class="alert alert-success text-center success_message" style="display:none;height:50px">
                                         <p id="message"></p>
                                     </div>
-                                    <form id="form_data" class="customerForm">
-                                        <input type="hidden" name="id" id="id">
-                                        <div class="row form-group">
-                                            <label for="inputName" class="col-sm-3 col-form-label">Task Type<span class="radStar ">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control editInput" id="name" name="title" value="">
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
+                                            <div class="formDtail">
+                                                <form id="form_data" class="customerForm">
+                                                    <input type="hidden" name="id" id="id">
+                                                    <div class="mb-2 row">
+
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Task Type<span class="radStar ">*</span></label>
+
+
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control editInput"
+                                                                id="name" name="title" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputProject"
+                                                            class="col-sm-3 col-form-label">Status</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control editInput selectOptions"
+                                                                id="statusModal" name="status">
+                                                                <option value="1" >Active</option>
+                                                                <option value="0">Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
                                             </div>
                                         </div>
                                         <div class="row form-group mt-3">

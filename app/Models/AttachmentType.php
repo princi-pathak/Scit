@@ -52,6 +52,9 @@ class AttachmentType extends Model
     {
         return $this->belongsTo(QuoteAttachment::class, 'attachment_type', 'id'); // Assuming 'attachment_type' is the foreign key
     }
+    public function poAttachments(){
+        return $this->hasMany(PoAttachment::class, 'attachment_type','id');
+    }
 
 }
 
