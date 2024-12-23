@@ -12,10 +12,12 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\QuoteRequest;
 use App\Http\Requests\Quotes\CallBackRequest;
+use App\Http\Requests\Quotes\QuoteTaskRequest;
 
 use App\Services\Quotes\QuoteService;
 use App\Services\Quotes\QuoteProductService;
 use App\Services\Quotes\AttachmentTypeService;
+
 
 use App\Models\QuoteType;
 use App\Models\Quote;
@@ -28,7 +30,9 @@ use App\Models\Currency;
 use App\Models\Product_category;
 use App\Models\AttachmentType;
 use App\Models\Payment_type;
+use App\Models\Task_type;
 use App\User;
+
 
 
 
@@ -300,8 +304,10 @@ class QuoteController extends Controller
         $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id);
         $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);
         $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
-        // $data['type'] = 1;
+        $data['users'] = User::getHomeUsers(Auth::user()->home_id);
+        $data['loginCustomer'] = Auth::user()->id;
         // dd($data['attachment_type']);
+        $data['taskType'] = Task_type::getAllAciveTask_type(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
     public function getUsersList()
@@ -365,7 +371,6 @@ class QuoteController extends Controller
     public function getAttachmentList()
     {
         $data = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
-
 
         return response()->json([
             'success' => (bool) $data,
@@ -489,6 +494,17 @@ class QuoteController extends Controller
         $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
         // dd($data);
         return view('frontEnd.salesAndFinance.quote.call_back', $data);
+    }
+
+    // QuoteTaskRequest
+    public function storeQuoteTask(Request $request)
+    {
+        dd($request);
+        $data =  $this->quoteService->saveQuoteTaskData($request, Auth::user()->home_id);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? "Task added successfully!" : 'Failed to save task.'
+        ]);
     }
  
 }
