@@ -11,14 +11,14 @@ class AttachmentType extends Model
 
     protected $fillable = ['title', 'home_id', 'status'];
 
-    public static function getAttachmentType(){
-        $data = AttachmentType::where('status', 1)->where('deleted_at', null)->get();
-        return $data;
+    public static function getAttachmentType()
+    {
+        return AttachmentType::where('status', 1)->where('deleted_at', null)->get();
     }
 
-    public static function getAttachmentTypeName($id){
-        $title = AttachmentType::where('id', $id)->value('title');
-        return $title;
+    public static function getAttachmentTypeName($id)
+    {
+        return AttachmentType::where('id', $id)->value('title');
     }
 
     public static function formatSizeUnits($size, $precision = 2)
@@ -36,17 +36,16 @@ class AttachmentType extends Model
 
     public static function saveAttachment($data)
     {
-        $AttachmentType=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
-        return $AttachmentType;
+        return self::updateOrCreate(['id' => $data['id'] ?? null],$data);
     }
-    public static function getAllAttachmentType(){
-        $data = self::whereNull('deleted_at')->get();
-        return $data;
+    public static function getAllAttachmentType()
+    {
+        return self::whereNull('deleted_at')->get();     
     }
 
-    public static function getActiveAttachmentType($home_id){
-        $data = AttachmentType::where('status', 1)->where('home_id', $home_id)->where('deleted_at', null)->get();
-        return $data;
+    public static function getActiveAttachmentType($home_id)
+    {
+        return AttachmentType::where('status', 1)->where('home_id', $home_id)->where('deleted_at', null)->get();
     }
 
     public function quoteAttachment()

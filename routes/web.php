@@ -356,6 +356,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/regions', 'regions');
 		Route::get('/task_types', 'task_types');
 		Route::post('/save_task_type', 'save_task_type');
+		Route::post('/save_task_type_data', 'save_task_type_data')->name('General.ajax.save_task_type_data');
+		Route::get('/getTaskTypeList', 'getTaskTypeList')->name('General.ajax.getTaskTypeList');
 		Route::get('/tags', 'tags');
 		Route::post('/save_tag', 'save_tag')->name('General.ajax.saveQuoteTag');
 		Route::get('/getTags', 'getTags')->name('General.ajax.getTags');
@@ -545,6 +547,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('quote/getQuoteProductList', 'getQuoteProductList')->name('quote.ajax.getQuoteProductList');
 		Route::post('/quote/save-quote-callback', 'storeCallBackData')->name('quote.callback.save');
 		Route::get('/quote/callBack', 'callBack');
+		Route::post('/quote/save-quote-task', 'storeQuoteTask')->name('quote.ajax.saveQuoteTask');
 
 		
 	});
@@ -1878,7 +1881,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	// 		Route::get('/crm_section_type/delete/{id}', 'crm_section_type_delete');
 	// 	});
 	// });
+
 // Bbackend Controller for setting in General section
+
 	Route::controller(GeneralController::class)->group(function () {
 
 		Route::prefix('general')->group(function () {
@@ -1893,6 +1898,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/region/delete','region_delete');
 			Route::get('/task_types','task_types');
 			Route::post('saveTaskType','saveTaskType');
+		
 			Route::get('task_type/delete','task_type_delete');
 			Route::get('/tags','tags');
 			Route::post('/saveTag','saveTag');
@@ -1901,6 +1907,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 		});
 	});
+
+	//Backend Controller for General Section E
 	Route::controller(ExpenseControllerAdmin::class)->group(function() {
 		Route::prefix('sales-finance/expense')->group(function() {
 			Route::match(['get', 'post'],'/', 'index');

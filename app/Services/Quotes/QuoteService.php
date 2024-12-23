@@ -6,6 +6,7 @@ use App\Models\Quote;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Models\QuoteCallBack;
+use App\Models\QuoteTask;
 
 
 class QuoteService
@@ -213,5 +214,9 @@ class QuoteService
             array_push($quoteArr, $quote);
         }
         return $quoteArr;
+    }
+
+    public function saveQuoteTaskData($data, $home_id){
+        return  QuoteTask::create($data);
     }
 }
