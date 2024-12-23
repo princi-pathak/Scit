@@ -19,6 +19,7 @@
     .totleBold {
         font-weight: 600;
     }
+
     .contantbodypopup .nav-pills .nav-link.active,
     .contantbodypopup .nav-pills .show>.nav-link {
         color: #fff;
@@ -53,7 +54,7 @@
                 <form action="{{ url('/quote/saveQuoteData') }}" method="post" class="customerForm mt-3">
                     @csrf
                     <div class="newJobForm card">
-                        
+
                         <div class="row" id="hideCustomerDetails">
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="formDtail">
@@ -995,7 +996,6 @@
                                     </div>
                                 </div>
 
-
                                 <!-- ************************* -->
                                 <div class="modal fade" id="creaditDepositModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositModalLabel" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
@@ -1199,6 +1199,7 @@
                                     </div>
                                 </div>
                                 <!-- ************************ -->
+
                                 <!-- *********************** -->
                                 <div class="modal fade" id="creaditDepositInvoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositInvoiceModalModalLabel" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
@@ -1277,14 +1278,12 @@
                                                                 <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div> <!-- end modal body -->
                                             <div class="modal-footer customer_Form_Popup">
                                                 <button type="button" class="btn profileDrop">Save</button>
                                                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-
                                             </div>
                                         </div>
                                     </div>
@@ -1363,7 +1362,6 @@
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Attachments</label>
                             <div class="row">
-
                                 <div class="col-sm-12 mb-3 mt-2">
                                     <div class=" p-0">
                                         <a href="javascript:void(0)" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
@@ -1392,12 +1390,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <!-- ************************************* End Of Attechment ******************************** -->
@@ -1408,7 +1404,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="tabheadingTitle pb-3 pt-2">
-                                        <a href="#" class="profileDrop me-3" onclick="openTaskModal();" data-bs-toggle="modal" data-bs-target="#newTaskModal"> New Task</a>
+                                        <a href="#" class="profileDrop me-3" data-bs-toggle="modal" data-bs-target="#newTaskModal"> New Task</a>
                                     </div>
                                     <div class="extraInformationTab">
                                         <nav>
@@ -1464,10 +1460,8 @@
                                                 </div>
                                                 <!-- ENd col-9 -->
                                             </div>
-                                            <div class="tab-pane fade" id="nav-RecurringTasks" role="tabpanel" aria-labelledby="nav-RecurringTasks-tab" tabindex="0">
-
+                                            <div class="tb-pane fade" id="nav-RecurringTasks" role="tabpanel" aria-labelledby="nav-RecurringTasks-tab" tabindex="0">
                                                 <div class="col-sm-12">
-
                                                     <div class="productDetailTable pt-3">
                                                         <table class="table" id="containerA">
                                                             <thead class="table-light">
@@ -1486,540 +1480,476 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                    <td>...</td>
-                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
 
+                                        <!-- ********************************** -->
+                                        <div class="modal fade" id="newTaskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newTaskModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content add_Customer">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title fs-5" id="newTaskModalLabel">New Task</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body ">
+                                                        <form id="quoteTaskFormData">
+                                                            <div class="contantbodypopup p-0">
+                                                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                                    <li class="nav-item me-2" role="presentation">
+                                                                        <button class="nav-link profileDrop active" id="newTasks-tab" data-bs-toggle="pill" data-bs-target="#newTasks" type="button"
+                                                                            role="tab" aria-controls="newTasks" aria-selected="true">Task</button>
+                                                                    </li>
+                                                                    <li class="nav-item me-2" role="presentation">
+                                                                        <button class="nav-link profileDrop" id="newTaskTimer-tab" data-bs-toggle="pill" data-bs-target="#newTaskTimer" type="button" role="tab" aria-controls="newTaskTimer" aria-selected="false">Timer</button>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content" id="pills-tabContent">
+                                                                    <div class="tab-pane fade show active" id="newTasks" role="tabpanel" aria-labelledby="newTasks-tab" tabindex="0">
+                                                                        <div class="newJobForm card">
 
-
-                                        
- <!-- ********************************** -->
- <div class="modal fade" id="newTaskModal" data-bs-backdrop="static"
-                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="newTaskModalLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content add_Customer">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title fs-5" id="newTaskModalLabel">New Task</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body ">
-                                                    <div class="contantbodypopup p-0">
-
-                                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                                            <li class="nav-item me-2" role="presentation">
-                                                                <button class="nav-link profileDrop active" id="newTasks-tab" data-bs-toggle="pill" data-bs-target="#newTasks" type="button"
-                                                                    role="tab" aria-controls="newTasks" aria-selected="true">Task</button>
-                                                            </li>
-                                                            <li class="nav-item me-2" role="presentation">
-                                                                <button class="nav-link profileDrop" id="newTaskTimer-tab" data-bs-toggle="pill" data-bs-target="#newTaskTimer" type="button" role="tab" aria-controls="newTaskTimer" aria-selected="false">Timer</button>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="tab-content" id="pills-tabContent">
-                                                            <div class="tab-pane fade show active" id="newTasks"
-                                                                role="tabpanel" aria-labelledby="newTasks-tab"
-                                                                tabindex="0">
-                                                                <div class="newJobForm card">
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Customer</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="text"
-                                                                                        class="form-control-plaintext editInput"
-                                                                                        id="" value="Prathima" readonly="">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Customer</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" class="form-control-plaintext editInput" id="setCustomerNameInTask" value="" readonly="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Task User<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <select class="form-control editInput selectOptions" name="user_id" id="">
+                                                                                                @foreach($users as $value)
+                                                                                                <option value="{{ $value->id }}" @if($value->id == $loginCustomer) selected @endif>{{ $value->name }}</option>
+                                                                                                @endforeach
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Title<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" class="form-control editInput" name="title" id="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Task Type<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <select class="form-control editInput selectOptions" name="task_type" id="setTaskTypeData">
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="col-sm-1 ps-0">
+                                                                                            <div class="plusandText">
+                                                                                                <a href="#!" class="formicon" onclick="openTaskTypeModal('setTaskTypeData')"><i class="fa-solid fa-square-plus"></i></a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Start Date <span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-4">
+                                                                                            <input type="date" class="form-control editInput" name="start_date" id="">
+                                                                                        </div>
+                                                                                        <div class="col-sm-4">
+                                                                                            <input type="time" class="form-control editInput" name="start_time" id="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">End Date <span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-4">
+                                                                                            <input type="date" class="form-control editInput" name="end_date" id="">
+                                                                                        </div>
+                                                                                        <div class="col-sm-4">
+                                                                                            <input type="time" class="form-control editInput" name="end_time" id="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label for="inputCounty" class="col-sm-4 col-form-label pt-0">Is Recuring Task?</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="checkbox" name="is_recurring">
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Task User
-                                                                                    <span class="radStar">*</span></label>
-                                                                                <div class="col-sm-8">
-                                                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                        <option>-Not Assigned-</option>
-                                                                                        <option>Customer-2</option>
-                                                                                        <option>Customer-3</option>
-                                                                                        <option>Customer-4</option>
-                                                                                    </select>
-                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-3 col-form-label">Notify</label>
+                                                                                        <div class="col-sm-3">
+                                                                                            <input type="checkbox" name="notify" id="yesOn">
+                                                                                            <label class="col-form-label" for="yesOn">Yes, ON </label>
+                                                                                        </div>
+                                                                                        <div class="col-sm-5">
+                                                                                            <div class="col-sm-3">
+                                                                                                <input type="date" class="form-control editInput" name="end_date" id="">
+                                                                                            </div>
+                                                                                            <div class="col-sm-2">
+                                                                                                <input type="time" class="form-control editInput" name="end_time" id="">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <div class="col-md-3"></div>
+                                                                                        <div class="col-sm-9">
+                                                                                            <div id="optionsDiv">
+                                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="notification"> Notification</label>
+                                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="email"> Email</label>
+                                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="sms"> SMS</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
 
-                                                                            </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Title<span class="radStar">*</span></label>
-                                                                                  <div class="col-sm-8">
-                                                                                    <input type="text" class="form-control editInput" id="">
-                                                                                  </div>
-                                                                            </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Task Type<span class="radStar">*</span></label>
-                                                                                <div class="col-sm-7">
-                                                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                        <option>-Not Assigned-</option>
-                                                                                        <option>Customer-2</option>
-                                                                                        <option>Customer-3</option>
-                                                                                        <option>Customer-4</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-sm-1 ps-0">
-                                                                                    <div class="plusandText">
-                                                                                        <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#newQuotePop">
-                                                                                            <i class="fa-solid fa-square-plus"></i>
-                                                                                        </a>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-3 col-form-label">Related To :</label>
+                                                                                        <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control-plaintext editInput" value="{{ $quoteData['quote_ref']}}" readonly="">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="mb-2 row">
+                                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Notes</label>
+                                                                                        <div class="col-sm-9">
+                                                                                            <textarea class="form-control textareaInput rounded-1" name="notes" rows="5" placeholder="Notes"></textarea>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Start Date<span class="radStar">*</span></label>
-                                                                                <div class="col-sm-5">
-                                                                                    <input type="text" class="form-control editInput" id="" placeholder="Reference">
-                                                                                </div>
-                                                                                <div class="col-sm-3">
-                                                                                    <input type="text" class="form-control editInput" id="" placeholder="Reference">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">End Date<span class="radStar">*</span></label>
-                                                                                <div class="col-sm-5">
-                                                                                    <input type="text" class="form-control editInput" id="" placeholder="Reference">
-                                                                                </div>                                                                            
-                                                                                <div class="col-sm-3">
-                                                                                    <input type="text" class="form-control editInput" id="" placeholder="Reference">
-                                                                                </div>
-                                                                            </div>
-                                                                      
-                                                                            <div class="mb-2 row">
-                                                                                <label for="inputCounty"
-                                                                                    class="col-sm-4 col-form-label pt-0">Is Recuring Task?</label>
-                                                                                <div class="col-sm-8">
-                                                                                        <input type="checkbox">
-                                                                                </div>
-                                                                            </div>
-                                                                       </div>
 
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-2 row">
-                                                                            <label class="col-sm-3 col-form-label">Notify</label>
-                                                                            <div class="col-sm-3">
-                                                                                    <input type="checkbox" id="yesOn">
-                                                                                    <label class="col-form-label" for="yesOn">Yes, ON </label>
-
-                                                                            </div>
-                                                                            <div class="col-sm-5">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="mb-2 row">
-                                                                            <div class="col-md-3"></div>
-                                                                            <div class="col-sm-9">
-                                                                            <div id="optionsDiv" style="display: block;">
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="notification"> Notification</label>
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="email"> Email</label>
-                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="sms"> SMS</label>
-                                                                            </div>
-                                                                        </div>
-                                                                        </div>
-
-                                                                        <div class="mb-2 row">
-                                                                            <label class="col-sm-3 col-form-label">Related To :</label>
-                                                                            <div class="col-sm-9">
-                                                                                <input type="text" class="form-control-plaintext editInput" value="Prathima" readonly="">
-                                                                            </div>
-                                                                        </div>
-                                                               
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Notes<span class="radStar">*</span></label>
-                                                                            <div class="col-sm-9">
-                                                                                <textarea class="form-control textareaInput rounded-1" name="Notes" rows="5" placeholder="Notes"></textarea>
-                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                    <!--  -->
+                                                                    <div class="tab-pane fade" id="newTaskTimer" role="tabpanel" aria-labelledby="newTaskTimer-tab" tabindex="0">
+                                                                        <div class="newJobForm card">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Customer</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" class="form-control-plaintext editInput" id="" value="" readonly="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-3 col-form-label">Task User <span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-9">
+                                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                                                <option>-Not Assigned-</option>
+                                                                                                <option>Customer-2</option>
+                                                                                                <option>Customer-3</option>
+                                                                                                <option>Customer-4</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-3 col-form-label">Title<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control editInput" id="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-3 col-form-label">Timer<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-9">
+                                                                                            <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
+                                                                                            <span id="timerDisplay">00:00:00</span>
+                                                                                            <input type="hidden" name="start_time_timer" id="start_time">
+                                                                                        </div>
+                                                                                    </div>
 
-                                                            </div>
-                                                        </div>
-                                                        <!--  -->
-                                                        <div class="tab-pane fade" id="newTaskTimer" role="tabpanel"
-                                                            aria-labelledby="newTaskTimer-tab" tabindex="0">
-                                                            <div class="newJobForm card">
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Customer</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="text"
-                                                                                        class="form-control-plaintext editInput"
-                                                                                        id="" value="Prathima" readonly="">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-3 col-form-label">Task User
-                                                                                    <span class="radStar">*</span></label>
-                                                                                <div class="col-sm-9">
-                                                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                        <option>-Not Assigned-</option>
-                                                                                        <option>Customer-2</option>
-                                                                                        <option>Customer-3</option>
-                                                                                        <option>Customer-4</option>
-                                                                                    </select>
-                                                                                </div>
-
-                                                                            </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-3 col-form-label">Title<span class="radStar">*</span></label>
-                                                                                  <div class="col-sm-9">
-                                                                                    <input type="text" class="form-control editInput" id="">
-                                                                                  </div>
-                                                                            </div>
-                                                                        
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-3 col-form-label">Timer<span class="radStar">*</span></label>
-                                                                                <div class="col-sm-9">
-                                                                                    <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
-                                                                                    <span id="timerDisplay">00:00:00</span>
-                                                                                    <input type="hidden" name="start_time_timer" id="start_time">
-                                                                                </div>
-                                                                            </div>
-                                                                      
-                                                                            <div class="mb-2 row">
-                                                                                <label for="inputCounty"
-                                                                                    class="col-sm-3 col-form-label pt-0">Related To</label>
-                                                                                <div class="col-sm-9">
-                                                                                    <span class="editInput" id="relatedTo">LEAD-0021</span>
-                                                                                </div>
-                                                                            </div>
-                                                                       </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-2 row">
-                                                                            <label class="col-sm-3 col-form-label">Task Type<span class="radStar">*</span></label>
-                                                                            <div class="col-sm-8">
-                                                                                <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                    <option>-Not Assigned-</option>
-                                                                                    <option>Customer-2</option>
-                                                                                    <option>Customer-3</option>
-                                                                                    <option>Customer-4</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-sm-1 ps-0">
-                                                                                <div class="plusandText">
-                                                                                    <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#newQuotePop">
-                                                                                        <i class="fa-solid fa-square-plus"></i>
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                               
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Notes<span class="radStar">*</span></label>
-                                                                            <div class="col-sm-9">
-                                                                                <textarea class="form-control textareaInput rounded-1" name="Notes" rows="5" placeholder="Notes"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                        </div>
-                                                        <!--  -->
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end modal body -->
-                                            <div class="modal-footer customer_Form_Popup">
-                                                <button type="button" class="btn profileDrop">Next</button>
-                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-<!-- ********************************************************** -->
-                                    </div>
-
-                                    <!-- ********************************** -->
-                                    <div class="modal fade" id="newTaskModal" data-bs-backdrop="static"
-                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="newTaskModalLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content add_Customer">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title fs-5" id="newTaskModalLabel">New Task</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body ">
-                                                    <div class="contantbodypopup p-0">
-
-                                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                                            <li class="nav-item me-2" role="presentation">
-                                                                <button class="activetb active profileDrop"
-                                                                    id="newTasks-tab" data-bs-toggle="pill"
-                                                                    data-bs-target="#newTasks" type="button"
-                                                                    role="tab" aria-controls="newTasks"
-                                                                    aria-selected="true">Task</button>
-                                                            </li>
-                                                            <li class="nav-item me-2" role="presentation">
-                                                                <button class="profileDrop" id="newTaskTimer-tab"
-                                                                    data-bs-toggle="pill" data-bs-target="#newTaskTimer"
-                                                                    type="button" role="tab" aria-controls="newTaskTimer"
-                                                                    aria-selected="false">Timer</button>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="tab-content" id="pills-tabContent">
-                                                            <div class="tab-pane fade show active" id="newTasks"
-                                                                role="tabpanel" aria-labelledby="newTasks-tab"
-                                                                tabindex="0">
-                                                                <div class="newJobForm card">
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Customer</label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="text"
-                                                                                        class="form-control-plaintext editInput"
-                                                                                        id="" value="Prathima" readonly="">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Task User
-                                                                                    <span class="radStar">*</span></label>
-                                                                                <div class="col-sm-8">
-                                                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                        <option>-Not Assigned-</option>
-                                                                                        <option>Customer-2</option>
-                                                                                        <option>Customer-3</option>
-                                                                                        <option>Customer-4</option>
-                                                                                    </select>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label for="inputCounty" class="col-sm-3 col-form-label pt-0">Related To</label>
+                                                                                        <div class="col-sm-9">
+                                                                                            <span class="editInput" id="relatedTo">LEAD-0021</span>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
 
-                                                                            </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Title<span class="radStar">*</span></label>
-                                                                                  <div class="col-sm-8">
-                                                                                    <input type="text" class="form-control editInput" id="">
-                                                                                  </div>
-                                                                            </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Task Type<span class="radStar">*</span></label>
-                                                                                <div class="col-sm-7">
-                                                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                        <option>-Not Assigned-</option>
-                                                                                        <option>Customer-2</option>
-                                                                                        <option>Customer-3</option>
-                                                                                        <option>Customer-4</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-sm-1 ps-0">
-                                                                                    <div class="plusandText">
-                                                                                        <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#newQuotePop">
-                                                                                            <i class="fa-solid fa-square-plus"></i>
-                                                                                        </a>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-3 col-form-label">Task Type<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                                                <option>-Not Assigned-</option>
+                                                                                                <option>Customer-2</option>
+                                                                                                <option>Customer-3</option>
+                                                                                                <option>Customer-4</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="col-sm-1 ps-0">
+                                                                                            <div class="plusandText">
+                                                                                                <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#newQuotePop">
+                                                                                                    <i class="fa-solid fa-square-plus"></i>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="mb-2 row">
+                                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Notes<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-9">
+                                                                                            <textarea class="form-control textareaInput rounded-1" name="Notes" rows="5" placeholder="Notes"></textarea>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">Start Date<span class="radStar">*</span></label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="text" class="form-control editInput" id="" placeholder="Reference">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="mb-2 row">
-                                                                                <label class="col-sm-4 col-form-label">End Date<span class="radStar">*</span></label>
-                                                                                <div class="col-sm-8">
-                                                                                    <input type="text" class="form-control editInput" id="" placeholder="Reference">
-                                                                                </div>
-                                                                            </div>
-                                                                      
-                                                                            <div class="mb-2 row">
-                                                                                <label for="inputCounty"
-                                                                                    class="col-sm-4 col-form-label pt-0">Is Recuring Task?</label>
-                                                                                <div class="col-sm-8">
-                                                                                        <input type="checkbox">
-                                                                                </div>
-                                                                            </div>
-                                                                       </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="mb-2 row">
-                                                                            <label class="col-sm-3 col-form-label">Notify</label>
-                                                                            <div class="col-sm-3">
-                                                                                    <input type="checkbox" id="yesOn">
-                                                                                    <label class="col-form-label" for="yesOn">Yes, ON </label>
-
-                                                                            </div>
-                                                                            <div class="col-sm-5">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="mb-2 row">
-                                                                            <label class="col-sm-3 col-form-label">Related To :</label>
-                                                                            <div class="col-sm-9">
-                                                                                <input type="text" class="form-control-plaintext editInput" value="Prathima" readonly="">
-                                                                            </div>
-                                                                        </div>
-                                                               
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Notes<span class="radStar">*</span></label>
-                                                                            <div class="col-sm-9">
-                                                                                <textarea class="form-control textareaInput rounded-1" name="Notes" rows="5" placeholder="Notes"></textarea>
-                                                                            </div>
                                                                         </div>
                                                                     </div>
+                                                                    <!--  -->
                                                                 </div>
-
+                                                            </div> <!-- end modal body -->
+                                                            <div class="modal-footer customer_Form_Popup">
+                                                                <button type="button" class="btn profileDrop" onclick="saveQuoteTaskFormData();">Save</button>
+                                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
                                                             </div>
-                                                        </div>
-                                                        <!--  -->
-                                                        <div class="tab-pane fade" id="newTaskTimer" role="tabpanel"
-                                                            aria-labelledby="newTaskTimer-tab" tabindex="0">
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">First Name<span
-                                                                            class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity" placeholder="Arjun">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">Last Name<span
-                                                                            class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity" placeholder="Kumar">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">Email
-                                                                        Address<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity" placeholder="info@gmail.com">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">Telephone<span
-                                                                            class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">Address
-                                                                        Line1<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity" placeholder="USA">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">Address
-                                                                        Line2</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">City<span
-                                                                            class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">County</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">Country</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity"
-                                                                            placeholder="United Stat Kingdom">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity"
-                                                                        class="col-sm-3 col-form-label">Postcode<span
-                                                                            class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text"
-                                                                            class="form-control editInput"
-                                                                            id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--  -->
+                                                        </form>
                                                     </div>
                                                 </div>
-                                            </div> <!-- end modal body -->
-                                            <div class="modal-footer customer_Form_Popup">
-                                                <button type="button" class="btn profileDrop">Next</button>
-                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+                                                <!-- ********************************************************** -->
                                             </div>
-                                        </div>
+
+                                            <!-- ********************************** -->
+                                            <div class="modal fade" id="newTaskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newTaskModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content add_Customer">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title fs-5" id="newTaskModalLabel">New Task</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body ">
+                                                            <div class="contantbodypopup p-0">
+                                                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                                    <li class="nav-item me-2" role="presentation">
+                                                                        <button class="activetb active profileDrop" id="newTasks-tab" data-bs-toggle="pill" data-bs-target="#newTasks" type="button" role="tab" aria-controls="newTasks" aria-selected="true">Task</button>
+                                                                    </li>
+                                                                    <li class="nav-item me-2" role="presentation">
+                                                                        <button class="profileDrop" id="newTaskTimer-tab" data-bs-toggle="pill" data-bs-target="#newTaskTimer" type="button" role="tab" aria-controls="newTaskTimer" aria-selected="false">Timer</button>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content" id="pills-tabContent">
+                                                                    <div class="tab-pane fade show active" id="newTasks" role="tabpanel" aria-labelledby="newTasks-tab" tabindex="0">
+                                                                        <div class="newJobForm card">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Customer</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" class="form-control-plaintext editInput" id="" readonly="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Task User<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                                                <option>-Not Assigned-</option>
+                                                                                                <option>Customer-2</option>
+                                                                                                <option>Customer-3</option>
+                                                                                                <option>Customer-4</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Title<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" class="form-control editInput" id="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Task Type<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                                                <option>-Not Assigned-</option>
+                                                                                                <option>Customer-2</option>
+                                                                                                <option>Customer-3</option>
+                                                                                                <option>Customer-4</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="col-sm-1 ps-0">
+                                                                                            <div class="plusandText">
+                                                                                                <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#newQuotePop">
+                                                                                                    <i class="fa-solid fa-square-plus"></i>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">Start Date<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" class="form-control editInput" id="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-4 col-form-label">End Date<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="text" class="form-control editInput" id="">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="mb-2 row">
+                                                                                        <label for="inputCounty" class="col-sm-4 col-form-label pt-0">Is Recuring Task?</label>
+                                                                                        <div class="col-sm-8">
+                                                                                            <input type="checkbox">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="col-md-6">
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-3 col-form-label">Notify</label>
+                                                                                        <div class="col-sm-3">
+                                                                                            <input type="checkbox" id="yesOn">
+                                                                                            <label class="col-form-label" for="yesOn">Yes, ON </label>
+                                                                                        </div>
+                                                                                        <div class="col-sm-5">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="mb-2 row">
+                                                                                        <label class="col-sm-3 col-form-label">Related To :</label>
+                                                                                        <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control-plaintext editInput" value="Prathima" readonly="">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="mb-2 row">
+                                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Notes<span class="radStar">*</span></label>
+                                                                                        <div class="col-sm-9">
+                                                                                            <textarea class="form-control textareaInput rounded-1" name="Notes" rows="5" placeholder="Notes"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--  -->
+                                                                    <div class="tab-pane fade" id="newTaskTimer" role="tabpanel" aria-labelledby="newTaskTimer-tab" tabindex="0">
+                                                                        <div class="newJobForm card">
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">First Name<span class="radStar">*</span></label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="Arjun">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Last Name<span class="radStar">*</span></label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control editInput"
+                                                                                        id="inputCity" placeholder="Kumar">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputCity"
+                                                                                    class="col-sm-3 col-form-label">Email
+                                                                                    Address<span class="radStar">*</span></label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control editInput"
+                                                                                        id="inputCity" placeholder="info@gmail.com">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputCity"
+                                                                                    class="col-sm-3 col-form-label">Telephone<span
+                                                                                        class="radStar">*</span></label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control editInput"
+                                                                                        id="inputCity">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputCity"
+                                                                                    class="col-sm-3 col-form-label">Address
+                                                                                    Line1<span class="radStar">*</span></label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control editInput"
+                                                                                        id="inputCity" placeholder="USA">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputCity"
+                                                                                    class="col-sm-3 col-form-label">Address
+                                                                                    Line2</label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control editInput"
+                                                                                        id="inputCity">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputCity"
+                                                                                    class="col-sm-3 col-form-label">City<span
+                                                                                        class="radStar">*</span></label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control editInput"
+                                                                                        id="inputCity">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputCity"
+                                                                                    class="col-sm-3 col-form-label">County</label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control editInput"
+                                                                                        id="inputCity">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputCity"
+                                                                                    class="col-sm-3 col-form-label">Country</label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control editInput"
+                                                                                        id="inputCity"
+                                                                                        placeholder="United Stat Kingdom">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputCity"
+                                                                                    class="col-sm-3 col-form-label">Postcode<span
+                                                                                        class="radStar">*</span></label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control editInput"
+                                                                                        id="inputCity">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--  -->
+                                                                </div>
+                                                            </div>
+                                                        </div> <!-- end modal body -->
+                                                        <div class="modal-footer customer_Form_Popup">
+                                                            <button type="button" class="btn profileDrop">Next</button>
+                                                            <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ***************************************** -->
+
+                                        </div><!-- End off col-sm-12 -->
                                     </div>
                                 </div>
-                                <!-- ***************************************** -->
+                                <!-- ****************************** End of Task ***************************** -->
 
-                            </div><!-- End off col-sm-12 -->
-                        </div>
-                    </div>
-                    <!-- ****************************** End of Task ***************************** -->
+                            </div>
 
+
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xl-12 px-3">
+                                    <div class="pageTitleBtn">
+                                        <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a> -->
+                                        <button type="submit" class="profileDrop">Save</button>
+                                        <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                </form>
             </div>
-
-
-            <div class="row">
-                <div class="col-md-12 col-lg-12 col-xl-12 px-3">
-                    <div class="pageTitleBtn">
-                        <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a> -->
-                        <button type="submit" class="profileDrop">Save</button>
-                        <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a>
-                    </div>
-                </div>
-            </div>
-            </form>
+            <!-- End col-12 -->
         </div>
-        <!-- End col-12 -->
-    </div>
     </div>
 </section>
 
@@ -2866,12 +2796,10 @@
 
 <!-- Include the region modal  -->
 @include('components.region-model')
-
 @include('components.job-title-model')
-
 @include('components.account-code')
-
 @include('components.product-list')
+@include('components.task-type')
 
 <!-- Include the quote type modal component -->
 <x-quote-type-modal
@@ -2938,11 +2866,27 @@
     CKEDITOR.replace('textarea10', editor_config);
     CKEDITOR.replace('textarea11', editor_config);
 
+    document.addEventListener('DOMContentLoaded', function() {
+        const yesOnCheckbox = document.getElementById('yesOn');
+        const optionsDiv = document.getElementById('optionsDiv');
+        optionsDiv.style.display = 'none';
+        // Add an event listener to the "Yes, ON" checkbox
+        yesOnCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                optionsDiv.style.display = 'block'; // Show optionsDiv
+            } else {
+                optionsDiv.style.display = 'none'; // Hide optionsDiv
+            }
+        });
+    });
+
     $(document).ready(function() {
 
         document.getElementById('hideQuoteDetails').style.display = "none";
         document.getElementById('hideQuoteDiv').style.display = "none";
         document.getElementById('hideDepositSection').style.display = "none";
+
+
 
 
         $.ajaxSetup({
@@ -3028,6 +2972,7 @@
                     option.text = user.name;
                     if (user.id == setCustomerId) {
                         option.selected = true; // Mark as selected
+                        document.getElementById('setCustomerNameInTask').value = user.name;
                     }
 
                     get_customer_type.appendChild(option);
@@ -3037,6 +2982,8 @@
                 console.error(error);
             }
         });
+
+        getTaskType(document.getElementById("setTaskTypeData"));
 
 
         const edit_customer_billing_id = document.getElementById('edit_customer_billing_id').value;
@@ -3314,7 +3261,7 @@
             // processData: false, // Required for FormData
             success: function(response) {
                 // Handle success
-                alert(response);
+                // alert(response);
                 const tableBody = $('#attachmentTable tbody');
                 console.log(tableBody);
 
@@ -3355,6 +3302,38 @@
                     message: xhr.responseJSON.message
                 };
                 let errorMessage = 'Error on getting the attachment:\n';
+                for (let key in errors) {
+                    errorMessage += `${errors[key]}\n`;
+                }
+                alert(errorMessage);
+            }
+        });
+    }
+
+    function saveQuoteTaskFormData() {
+        let formData = $('#quoteTaskFormData').serialize();
+        // let formData = new FormData(document.getElementById('quoteTaskFormData'));
+        console.log("formData", formData);
+
+        $.ajax({
+            url: '{{ route("quote.ajax.saveQuoteTask") }}', // Replace with your Laravel route URL
+            type: 'POST',
+            data: formData,
+            // contentType: false, // Required for FormData
+            // processData: false, // Required for FormData
+            success: function(response) {
+                // Handle success
+                alert(response.data);
+                console.log(response.id);
+                $('#newTaskModal').modal('hide'); // Hide the modal
+                getQuoteAttachments(response.id);
+            },
+            error: function(xhr) {
+                // Handle error
+                const errors = xhr.responseJSON.errors || {
+                    message: xhr.responseJSON.message
+                };
+                let errorMessage = 'Error saving the task:\n';
                 for (let key in errors) {
                     errorMessage += `${errors[key]}\n`;
                 }

@@ -38,16 +38,16 @@
                                     <input type="text" name="contact_phone" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="form-control editInput" id="">
                                 </div>
                             </div>
-                            <div class=" row">
+                            <div class="mb-3 row">
                                 <label class="col-sm-4 col-form-label">Notify? </label>
                                 <div class="col-sm-3">
                                     <input type="checkbox" name="notify" value="1" id="yesOn">
                                     <label class="col-form-label" for="yesOn">Yes, ON </label>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-3">
                                     <input type="date" name="notify_date" class="form-control editInput" id="" placeholder="Date">
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <input type="time" name="notify_time" class="form-control editInput" id="" placeholder="Time">
                                 </div>
                                 <div class="col-sm-5"> </div>
@@ -136,6 +136,7 @@
             document.getElementById('quoteCallBackForm').reset(); // Reset form
             const modal = bootstrap.Modal.getInstance(document.getElementById('callBackModal'));
             modal.hide();
+            window.location.reload();
         } else {
             alert("Something went wrong.");
         }
