@@ -369,7 +369,9 @@ class JobController extends Controller
                 </tr>';
             return $data=['html'=>$html];
         }else{
-            return response()->json(['success'=>true,'product_detail'=>$product_details,'tax'=>$tax]);
+            $all_job=Job::getAllJob($home_id)->where('status',1)->get();
+            $accountCode=Construction_account_code::getActiveAccountCode($home_id);
+            return response()->json(['success'=>true,'product_detail'=>$product_details,'tax'=>$tax,'job'=>$all_job,'accountCode'=>$accountCode]);
         }
         
        
