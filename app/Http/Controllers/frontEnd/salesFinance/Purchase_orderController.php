@@ -28,6 +28,9 @@ use App\Models\Supplier;
 use App\Home;
 use App\Admin;
 use App\Models\PurchaseOrder;
+use App\Models\PurchaseOrderProduct;
+use App\Models\AttachmentType;
+use App\Models\PoAttachment;
 
 class Purchase_orderController extends Controller
 {
@@ -72,11 +75,13 @@ class Purchase_orderController extends Controller
         $purchase_orders=PurchaseOrder::find($key);
         $site=array();
         $contact_name=array();
+        $attachments=array();
         if($key){
             $site=Constructor_customer_site::where('customer_id',$purchase_orders->customer_id)->get();
             $contact_name=Customer::find($purchase_orders->customer_id);
         }
         $data['purchase_orders']=$purchase_orders;
+        $data['attachments']=$attachments;
         $data['site']=$site;
         $data['projects']=Project::where(['status'=>1,'home_id'=>$home_id])->get();
         $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
@@ -91,7 +96,7 @@ class Purchase_orderController extends Controller
         $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
         $data['contact_name']=$contact_name;
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
-        // echo "<pre>";print_r($data['additional_contact']);die;
+        // echo "<pre>";print_r($data['attachments']);die;
         return view('frontEnd.salesAndFinance.purchase_order.new_purchase_order',$data);
     }
     public function purchase_order_save(Request $request){
@@ -131,6 +136,13 @@ class Purchase_orderController extends Controller
             
             // echo "<pre>";print_r($requestData);die;
             $purchaseOrder=PurchaseOrder::savePurchaseOrder($requestData);
+            if(!empty($request->product_id) && count($request->product_id)>0){
+                $requestData['purchase_order_id'] = $purchaseOrder->id;
+                $PurchaseOrderProduct=$this->savePurchaseOrderProduct($requestData);
+                if($PurchaseOrderProduct == 0){
+                    return response()->json(['success' => false,'message'=>'Something went wrong.', 'data' => array()]);
+                }
+            }
             if($request->id == ''){
                 return response()->json(['success' => true,'message'=>'The Purchase Order has been saved succesfully.', 'data' => $purchaseOrder]);
             }else{
@@ -149,5 +161,87 @@ class Purchase_orderController extends Controller
         }else{
             return $order_ref='PO-'.$order_count+1;
         }
+    }
+    public function savePurchaseOrderProduct($data){
+        // echo "<pre>";print_r($data);die;
+        $product_id=$data['product_id'];
+        try{
+            for($i=0;$i<count($product_id);$i++){
+                $PurchaseOrderProduct=PurchaseOrderProduct::savePurchaseOrderProduct($data[$ii]);
+                if($PurchaseOrderProduct){
+                    return 1;
+                }else{
+                    return 0;
+                }
+            }
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function purchase_order_attachment_save(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|file',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        try{
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $imageName = time() . '.' . $file->extension();      
+                // $file->move(public_path('images/purchase_order'), $imageName);
+        
+                $original_name = $file->getClientOriginalName();
+                $mime_type = $file->getMimeType();
+                $file_size_bytes = $file->getSize();
+
+                if ($file_size_bytes >= 1073741824) {
+                    $file_size = round($file_size_bytes / 1073741824, 2) . ' GB';
+                } elseif ($file_size_bytes >= 1048576) { 
+                    $file_size = round($file_size_bytes / 1048576, 2) . ' MB';
+                } elseif ($file_size_bytes >= 1024) { 
+                    $file_size = round($file_size_bytes / 1024, 2) . ' KB';
+                } else {
+                    $file_size = $file_size_bytes . ' Bytes';
+                }
+
+                $requestData = $request->all();
+                $requestData['file'] = $imageName;
+                $requestData['original_file_name'] = $original_name;
+                $requestData['mime_type'] = $mime_type;
+                $requestData['size'] = $file_size;
+            } else {
+                $requestData = $request->all();
+            }
+            // echo "<pre>";print_r($requestData);die;
+            $attachment=PoAttachment::savePoAttachment($requestData);
+            if($request->id == ''){
+                return response()->json(['success'=>true,'message'=>"Attachment Added Successfully Done",'data'=>$attachment]);
+            }else{
+                return response()->json(['success'=>true,'message'=>"Attachment Updated Successfully Done",'data'=>$attachment]);
+            }
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function getAllAttachmens(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        // $purchase_orders=PurchaseOrder::with('poAttachments')->where('id',$request->id)->orderBy('id', 'desc')->paginate(10);
+        $purchase_orders = PurchaseOrder::with(['poAttachments.attachmentType'])->where('id', $request->id)->orderBy('id', 'desc')->paginate(10);
+
+        return response()->json([
+            'success' => true, 'data' => $purchase_orders, 
+            'pagination' => [
+                    'total' => $purchase_orders->total(),
+                    'current_page' => $purchase_orders->currentPage(),
+                    'last_page' => $purchase_orders->lastPage(),
+                    'per_page' => $purchase_orders->perPage(),
+                    'next_page_url' => $purchase_orders->nextPageUrl(),
+                    'prev_page_url' => $purchase_orders->previousPageUrl(),
+                ]
+        ]);
+
     }
 }

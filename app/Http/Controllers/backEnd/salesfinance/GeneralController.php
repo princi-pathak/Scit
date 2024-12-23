@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AttachmentType;
 use Illuminate\Support\Facades\Session;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Models\Payment_type;
 use App\Models\Region;
@@ -75,7 +75,7 @@ class GeneralController extends Controller
             return redirect()->back()->with('error', "Record not found");
         }
     }
-    public function regins(Request $request){
+    public function regins(){
         $data['page'] = 'regions';
         $data['region'] = Region::whereNull('deleted_at')->get();
         $data['home_id']=Session::get('scitsAdminSession')->home_id;
@@ -109,7 +109,7 @@ class GeneralController extends Controller
             return redirect()->back()->with('error', "Record not found");
         }
     }
-    public function task_types(Request $request){
+    public function task_types(){
         $data['page'] = 'task_type';
         $data['task_type'] = Task_type::whereNull('deleted_at')->get();
         $data['home_id']=Session::get('scitsAdminSession')->home_id;
