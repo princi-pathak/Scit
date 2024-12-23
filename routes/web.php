@@ -14,9 +14,9 @@ use App\Http\Controllers\frontEnd\salesFinance\InvoiceController;
 use App\Http\Controllers\frontEnd\salesFinance\Purchase_orderController;
 use App\Http\Controllers\backEnd\ManagersController;
 use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
-use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as FrontendProductCategoryController;
-use App\Http\Controllers\frontEnd\salesFinance\Item\ProductController;
-use App\Http\Controllers\frontEnd\salesFinance\Item\ProductGroupController;
+use App\Http\Controllers\frontEnd\salesFinance\item\ProductCategoryController as FrontendProductCategoryController;
+use App\Http\Controllers\frontEnd\salesFinance\item\ProductController;
+use App\Http\Controllers\frontEnd\salesFinance\item\ProductGroupController;
 use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
 use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
 
@@ -347,7 +347,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('GetFullHistory','GetFullHistory');
 	});
 
-	// General section Front 
+	// Frontend Controller for setting in General section 
 	Route::controller(GeneralSectionController::class)->group(function () {
 		Route::get('/attachments_types', 'attachments_types');
 		Route::post('/save_attachment_type', 'save_attachment_type');
@@ -382,6 +382,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/purchase_order','purchase_order');
 		Route::post('/purchase_order_save','purchase_order_save');
 		Route::get('/purchase_order_edit','purchase_order');
+		Route::post('/purchase_order_attachment_save','purchase_order_attachment_save');
+		Route::post('/getAllAttachmens','getAllAttachmens');
 	});
 	
 	// Forontend Customer Controller
@@ -1876,7 +1878,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	// 		Route::get('/crm_section_type/delete/{id}', 'crm_section_type_delete');
 	// 	});
 	// });
-
+// Bbackend Controller for setting in General section
 	Route::controller(GeneralController::class)->group(function () {
 
 		Route::prefix('general')->group(function () {
