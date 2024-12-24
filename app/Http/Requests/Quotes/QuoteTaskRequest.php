@@ -25,11 +25,19 @@ class QuoteTaskRequest extends FormRequest
             'quote_id' => 'required|integer|exists:quotes,id',
             'user_id' => 'required|integer',
             'title' => 'required|string|max:255',
-            'task_type_id' => 'required|integer|task_types,id',
+            'task_type_id' => 'required|integer|exists:task_types,id',
             'start_date' => 'required|date',
             'start_time' => 'required',
             'end_date' => 'required|date',
-            'end_time' => 'required'
+            'end_time' => 'required',
+            'is_recurring' => 'nullable|boolean',
+            'yesOn' => 'nullable|boolean',
+            'notify_date' => 'nullable|date',
+            'notify_time' => 'nullable',
+            'notification' => 'nullable|boolean',
+            'email' => 'nullable|boolean',
+            'sms' => 'nullable|boolean',
+            'notes' => 'nullable|string',
         ];
     }
 }

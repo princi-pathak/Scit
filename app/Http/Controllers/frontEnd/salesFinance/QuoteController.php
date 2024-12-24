@@ -18,6 +18,7 @@ use App\Services\Quotes\QuoteService;
 use App\Services\Quotes\QuoteProductService;
 use App\Services\Quotes\AttachmentTypeService;
 
+use Illuminate\Support\Carbon;
 
 use App\Models\QuoteType;
 use App\Models\Quote;
@@ -32,6 +33,7 @@ use App\Models\AttachmentType;
 use App\Models\Payment_type;
 use App\Models\Task_type;
 use App\User;
+use App\Models\QuoteTask;
 
 
 
@@ -442,7 +444,8 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function editQuoteDetails($id){
+    public function editQuoteDetails($id)
+    {
         $data['page'] = "quotes";
         $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
         $data['countries'] = Country::getCountriesNameCode();
@@ -455,7 +458,8 @@ class QuoteController extends Controller
         return view('frontEnd.salesAndFinance.quote.quote_edit_details', $data);
     }
 
-    public function getQuoteProductList(Request $request){
+    public function getQuoteProductList(Request $request)
+    {
         // dd($request);
         $validator = Validator::make($request->all(), [
             'id' => 'required',
@@ -472,7 +476,8 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function storeCallBackData(CallBackRequest $request){
+    public function storeCallBackData(CallBackRequest $request)
+    {
         // dd($request);
         $data = $this->quoteService->saveCallBack($request);
 
@@ -497,14 +502,111 @@ class QuoteController extends Controller
     }
 
     // QuoteTaskRequest
-    public function storeQuoteTask(Request $request)
+    public function saveQuoteTask(QuoteTaskRequest $request)
     {
-        dd($request);
-        $data =  $this->quoteService->saveQuoteTaskData($request, Auth::user()->home_id);
+        \Log::info('Raw Request Data: ', json_decode($request->getContent(), true));
+        $validatedData = $request->validated();
+        dd($validatedData);
+
+        $data = json_decode($request->getContent(), true);
+
+        // Validate and save as before
+        $validatedData = Validator::make($data, [
+            'quote_id' => 'required|integer|exists:quotes,id',
+            'user_id' => 'required|integer',
+            'title' => 'required|string|max:255',
+            'task_type_id' => 'required|integer|exists:task_types,id',
+            'start_date' => 'required|date',
+            'start_time' => 'required',
+            'end_date' => 'required|date',
+            'end_time' => 'required',
+            'is_recurring' => 'nullable|boolean',
+            'yesOn' => 'nullable|boolean',
+            'notify_date' => 'nullable|date',
+            'notify_time' => 'nullable',
+            'notification' => 'nullable|boolean',
+            'email' => 'nullable|boolean',
+            'sms' => 'nullable|boolean',
+            'notes' => 'nullable|string',
+        ])->validate();
+
+        $validatedData['notify_date'] = $validatedData['notify_date'] ?: null;
+        $validatedData['notify_time'] = $validatedData['notify_time'] ?: null;
+
+
+        // Save the data to the database
+
+
+        // $validator = Validator::make($request->all(), [
+        //     'quote_id' => 'required',
+        //     'task_type_id' => 'required'
+        // ]);
+
+        // if ($request->task == "task_form") {
+        //     $validator = Validator::make($request->all(), [
+        //         'title' => 'required',
+        //         'start_date' => 'required',
+        //         'start_time' => 'required',
+        //         'end_date' => 'required',
+        //         'end_time' => 'required',
+        //         'user_id' => 'required'
+        //     ]);
+        // } elseif ($request->timer == "timer_form") {
+        //     $validator = Validator::make($request->all(), [
+        //         'title_timer' => 'required',
+        //         'user_id_timer' => 'required'
+        //     ]);
+
+        // }
+
+        // if ($validator->fails()) {
+        //     return response()->json(['errors' => $validator->errors()], 422);
+        // }
+
+        // if ($request->notify == 1) {
+        //     $notification = $request->has('notification') ? 1 : 0;
+        //     $sms = $request->has('sms') ? 1 : 0;
+        //     $email = $request->has('email') ? 1 : 0;
+        // }
+
+        // if (!isset($notification) || !isset($sms) || !isset($email)) {
+        //     $notification = $sms = $email = null;
+        // }
+
+        // $task = Task::create($validatedData);
+
+
+        // Data to update or create
+        // $values = [
+        //     'home_id' => Auth::user()->home_id,
+        //     'quote_id' => $validatedData->quote_id,
+        //     'user_id' => $validatedData->user_id ?? $request->user_id_timer,
+        //     'title' => $validatedData->title ?? $request->title_timer,
+        //     'task_type_id' => $validatedData->task_type_id ?? $request->task_type_id_time,
+        //     'start_date' => $validatedData->start_date ?? Carbon::now()->toDateString(),
+        //     'start_time' => $validatedData->start_time ?? Carbon::now()->toTimeString(),
+        //     'end_date' => $validatedData->end_date,
+        //     'end_time' => $validatedData->end_time,
+        //     'is_recurring' => $validatedData->is_recurring ?? false,
+        //     'notify' => $validatedData->notify,
+        //     'notification' => $notification,
+        //     'sms' => $sms,
+        //     'email' => $email,
+        //     'task_date' => $validatedData->task_date,
+        //     'task_time' => $validatedData->task_time,
+        //     'notes' => $validatedData->notes
+        // ];
+
+        // Update the record if it exists, otherwise create a new one
+        $quoteTask = QuoteTask::updateOrCreate(['id' => $request->edit_quote_task_id], $validatedData);
+
+        // $data = CRMLeadTaskReccurence::create(array_merge($request->all(), ['crm_lead_task_id' =>  $CRMleadTask->id]));
+
+        Log::info('User logged in', ['user_id' => $quoteTask]);
+
         return response()->json([
-            'success' => (bool) $data,
-            'data' => $data ? "Task added successfully!" : 'Failed to save task.'
+            'success' => (bool) $quoteTask,
+            'data' => $quoteTask ? "Task added successfully!" : 'Failed to save task.'
         ]);
     }
- 
 }

@@ -1496,7 +1496,7 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body ">
-                                                        <form id="quoteTaskFormData">
+                                                        <form id="quoteTaskFormDatas">
                                                             <div class="contantbodypopup p-0">
                                                                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                                                     <li class="nav-item me-2" role="presentation">
@@ -1510,7 +1510,6 @@
                                                                 <div class="tab-content" id="pills-tabContent">
                                                                     <div class="tab-pane fade show active" id="newTasks" role="tabpanel" aria-labelledby="newTasks-tab" tabindex="0">
                                                                         <div class="newJobForm card">
-
                                                                             <div class="row">
                                                                                 <div class="col-md-6">
                                                                                     <div class="mb-2 row">
@@ -1522,9 +1521,13 @@
                                                                                     <div class="mb-2 row">
                                                                                         <label class="col-sm-4 col-form-label">Task User<span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
-                                                                                            <select class="form-control editInput selectOptions" name="user_id" id="">
+                                                                                            <input type="hidden" name="form_type" id="form_type" value="">
+                                                                                            <input type="hidden" name="edit_quote_task_id" id="edit_quote_task_id" value="">
+                                                                                            <select class="form-control editInput selectOptions" name="user_id" id="quoteTaskUser">
                                                                                                 @foreach($users as $value)
-                                                                                                <option value="{{ $value->id }}" @if($value->id == $loginCustomer) selected @endif>{{ $value->name }}</option>
+                                                                                                <option value="{{ $value->id }}" @if($value->id == $loginCustomer) selected @endif>{{ $value->name }}</
+                                                                                                
+                                                                                                option>
                                                                                                 @endforeach
                                                                                             </select>
                                                                                         </div>
@@ -1532,7 +1535,7 @@
                                                                                     <div class="mb-2 row">
                                                                                         <label class="col-sm-4 col-form-label">Title<span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="text" class="form-control editInput" name="title" id="">
+                                                                                            <input type="text" class="form-control editInput" name="title" id="title">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
@@ -1550,25 +1553,25 @@
                                                                                     <div class="mb-2 row">
                                                                                         <label class="col-sm-4 col-form-label">Start Date <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-4">
-                                                                                            <input type="date" class="form-control editInput" name="start_date" id="">
+                                                                                            <input type="date" class="form-control editInput" name="start_date" id="start_date">
                                                                                         </div>
                                                                                         <div class="col-sm-4">
-                                                                                            <input type="time" class="form-control editInput" name="start_time" id="">
+                                                                                            <input type="time" class="form-control editInput" name="start_time" id="start_time">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
                                                                                         <label class="col-sm-4 col-form-label">End Date <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-4">
-                                                                                            <input type="date" class="form-control editInput" name="end_date" id="">
+                                                                                            <input type="date" class="form-control editInput" name="end_date" id="end_date">
                                                                                         </div>
                                                                                         <div class="col-sm-4">
-                                                                                            <input type="time" class="form-control editInput" name="end_time" id="">
+                                                                                            <input type="time" class="form-control editInput" name="end_time" id="end_time">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
                                                                                         <label for="inputCounty" class="col-sm-4 col-form-label pt-0">Is Recuring Task?</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="checkbox" name="is_recurring">
+                                                                                            <input type="checkbox" name="is_recurring" value="1" id="is_recurring">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1576,25 +1579,21 @@
                                                                                     <div class="mb-2 row">
                                                                                         <label class="col-sm-3 col-form-label">Notify</label>
                                                                                         <div class="col-sm-3">
-                                                                                            <input type="checkbox" name="notify" id="yesOn">
+                                                                                            <input type="checkbox" name="notify" valie="1" id="yesOn">
                                                                                             <label class="col-form-label" for="yesOn">Yes, ON </label>
                                                                                         </div>
                                                                                         <div class="col-sm-5">
-                                                                                            <div class="col-sm-3">
-                                                                                                <input type="date" class="form-control editInput" name="end_date" id="">
-                                                                                            </div>
-                                                                                            <div class="col-sm-2">
-                                                                                                <input type="time" class="form-control editInput" name="end_time" id="">
-                                                                                            </div>
+                                                                                            <input type="date" class="form-control editInput" name="notify_date" id="notify_date">
+                                                                                            <input type="time" class="form-control editInput" name="notify_time" id="notify_time">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
                                                                                         <div class="col-md-3"></div>
                                                                                         <div class="col-sm-9">
                                                                                             <div id="optionsDiv">
-                                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="notification"> Notification</label>
-                                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="email"> Email</label>
-                                                                                                <label class="editInput"><input type="checkbox" value="1" id="" name="sms"> SMS</label>
+                                                                                                <label class="editInput"><input type="checkbox" value="1" id="notification" name="notification"> Notification</label>
+                                                                                                <label class="editInput"><input type="checkbox" value="1" id="email" name="email"> Email</label>
+                                                                                                <label class="editInput"><input type="checkbox" value="1" id="sms" name="sms"> SMS</label>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -1609,7 +1608,7 @@
                                                                                     <div class="mb-2 row">
                                                                                         <label for="inputCity" class="col-sm-3 col-form-label">Notes</label>
                                                                                         <div class="col-sm-9">
-                                                                                            <textarea class="form-control textareaInput rounded-1" name="notes" rows="5" placeholder="Notes"></textarea>
+                                                                                            <textarea class="form-control textareaInput rounded-1" id="notes" name="notes" rows="5" placeholder="Notes"></textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1666,16 +1665,12 @@
                                                                                     <div class="mb-2 row">
                                                                                         <label class="col-sm-3 col-form-label">Task Type<span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
-                                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                                <option>-Not Assigned-</option>
-                                                                                                <option>Customer-2</option>
-                                                                                                <option>Customer-3</option>
-                                                                                                <option>Customer-4</option>
+                                                                                            <select class="form-control editInput selectOptions" id="setTaskTypeOnTimer">
                                                                                             </select>
                                                                                         </div>
                                                                                         <div class="col-sm-1 ps-0">
                                                                                             <div class="plusandText">
-                                                                                                <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#newQuotePop">
+                                                                                                <a href="#!" class="formicon" data-bs-toggle="modal" onclick="openTaskTypeModal('setTaskTypeOnTimer')" data-bs-target="#newQuotePop">
                                                                                                     <i class="fa-solid fa-square-plus"></i>
                                                                                                 </a>
                                                                                             </div>
@@ -1830,88 +1825,55 @@
                                                                             <div class="mb-2 row">
                                                                                 <label for="inputCity" class="col-sm-3 col-form-label">Last Name<span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
-                                                                                    <input type="text"
-                                                                                        class="form-control editInput"
-                                                                                        id="inputCity" placeholder="Kumar">
+                                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="Kumar">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity"
-                                                                                    class="col-sm-3 col-form-label">Email
-                                                                                    Address<span class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Email Address<span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
-                                                                                    <input type="text"
-                                                                                        class="form-control editInput"
-                                                                                        id="inputCity" placeholder="info@gmail.com">
+                                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="info@gmail.com">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity"
-                                                                                    class="col-sm-3 col-form-label">Telephone<span
-                                                                                        class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Telephone<span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
-                                                                                    <input type="text"
-                                                                                        class="form-control editInput"
-                                                                                        id="inputCity">
+                                                                                    <input type="text" class="form-control editInput" id="inputCity">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity"
-                                                                                    class="col-sm-3 col-form-label">Address
-                                                                                    Line1<span class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Address Line1<span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
-                                                                                    <input type="text"
-                                                                                        class="form-control editInput"
-                                                                                        id="inputCity" placeholder="USA">
+                                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="USA">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity"
-                                                                                    class="col-sm-3 col-form-label">Address
-                                                                                    Line2</label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Address Line2</label>
                                                                                 <div class="col-sm-9">
-                                                                                    <input type="text"
-                                                                                        class="form-control editInput"
-                                                                                        id="inputCity">
+                                                                                    <input type="text" class="form-control editInput" id="inputCity">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity"
-                                                                                    class="col-sm-3 col-form-label">City<span
-                                                                                        class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">City<span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
-                                                                                    <input type="text"
-                                                                                        class="form-control editInput"
-                                                                                        id="inputCity">
+                                                                                    <input type="text" class="form-control editInput" id="inputCity">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity"
-                                                                                    class="col-sm-3 col-form-label">County</label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">County</label>
                                                                                 <div class="col-sm-9">
-                                                                                    <input type="text"
-                                                                                        class="form-control editInput"
-                                                                                        id="inputCity">
+                                                                                    <input type="text" class="form-control editInput" id="inputCity">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity"
-                                                                                    class="col-sm-3 col-form-label">Country</label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Country</label>
                                                                                 <div class="col-sm-9">
-                                                                                    <input type="text"
-                                                                                        class="form-control editInput"
-                                                                                        id="inputCity"
-                                                                                        placeholder="United Stat Kingdom">
+                                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="United Stat Kingdom">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mb-2 row">
-                                                                                <label for="inputCity"
-                                                                                    class="col-sm-3 col-form-label">Postcode<span
-                                                                                        class="radStar">*</span></label>
+                                                                                <label for="inputCity" class="col-sm-3 col-form-label">Postcode<span class="radStar">*</span></label>
                                                                                 <div class="col-sm-9">
-                                                                                    <input type="text"
-                                                                                        class="form-control editInput"
-                                                                                        id="inputCity">
+                                                                                    <input type="text" class="form-control editInput" id="inputCity">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -2751,7 +2713,7 @@
                     <div class="row form-group">
                         <label class="col-lg-3 col-sm-3 col-form-label">Quote Ref </label>
                         <div class="col-md-9">
-                            <input type="hidden" value="{{ $quoteData['id'] }}" name="quote_id">
+                            <input type="hidden" value="{{ $quoteData['id'] }}" name="quote_id" id="quote_id">
                             <input type="text" class="form-control-plaintext editInput" id="" value="{{ $quoteData['quote_ref'] }}" readonly>
                         </div>
                     </div>
@@ -3311,22 +3273,40 @@
     }
 
     function saveQuoteTaskFormData() {
-        let formData = $('#quoteTaskFormData').serialize();
-        // let formData = new FormData(document.getElementById('quoteTaskFormData'));
-        console.log("formData", formData);
+        alert('Saving quote task data...');
+        const data = {
+            quote_id: document.getElementById('quote_id').value,
+            edit_quote_task_id: document.getElementById('edit_quote_task_id').value,
+            user_id: document.getElementById('quoteTaskUser').value,
+            title: document.getElementById('title').value,
+            task_type_id: document.getElementById('setTaskTypeData').value,
+            start_date: document.getElementById('start_date').value,
+            start_time: document.getElementById('start_time').value,
+            end_date: document.getElementById('end_date').value,
+            end_time: document.getElementById('end_time').value,
+            is_recurring: document.getElementById('is_recurring').checked ? 1 : 0,  
+            yesOn: document.getElementById('yesOn').checked ? 1 : 0, 
+            notify_date: document.getElementById('notify_date').value  || null,
+            notify_time: document.getElementById('notify_time').value || null,
+            notification: document.getElementById('notification').checked ? 1 : 0,  
+            email: document.getElementById('email').checked ? 1 : 0,
+            sms: document.getElementById('sms').checked ? 1 : 0,
+            notes: document.getElementById('notes').value,
+        };
 
         $.ajax({
             url: '{{ route("quote.ajax.saveQuoteTask") }}', // Replace with your Laravel route URL
             type: 'POST',
-            data: formData,
-            // contentType: false, // Required for FormData
-            // processData: false, // Required for FormData
+            data: JSON.stringify(data),
+            // cache: false,
+            // contentType: false, // Let FormData handle the content type
+            // processData: false, // Let FormData handle the data processing
             success: function(response) {
                 // Handle success
                 alert(response.data);
                 console.log(response.id);
                 $('#newTaskModal').modal('hide'); // Hide the modal
-                getQuoteAttachments(response.id);
+                // getQuoteAttachments(response.id);
             },
             error: function(xhr) {
                 // Handle error

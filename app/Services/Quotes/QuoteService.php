@@ -217,6 +217,6 @@ class QuoteService
     }
 
     public function saveQuoteTaskData($data, $home_id){
-        return  QuoteTask::create($data);
+        return QuoteTask::create(array_merge($data->all(), ['home_id' => $home_id]));
     }
 }
