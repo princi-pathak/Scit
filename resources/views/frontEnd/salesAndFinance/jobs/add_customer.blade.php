@@ -1310,6 +1310,7 @@
         }else {
             default_billing=0;
         }
+        var userType=1;
         var contact_name=$("#concontact_name").val();
         var customer_id=$("#id").val();
         var job_title_id=$('#contact_title_id').val();
@@ -1324,30 +1325,35 @@
         var country_id=$("#contact_country_code").val();
         var id=$("#contact_id").val();
         if(contact_name == ''){
-            $("#contact_name").css('border','1px soild red');
+            $("#concontact_name").css('border','1px soild red');
             return false;
         }else if(address == ''){
-            $("#contact_name").css('border','');
+            $("#concontact_name").css('border','');
             $("#address").css('border','1px soild red');
             return false;
         }else{
                 $.ajax({
                 type: "POST",
                 url: "{{url('/save_contact')}}",
-                data: {id:id,default_billing:default_billing,contact_name:contact_name,customer_id:customer_id,job_title_id:job_title_id,
+                data: {userType:userType,id:id,default_billing:default_billing,contact_name:contact_name,customer_id:customer_id,job_title_id:job_title_id,
                     email:email,telephone:telephone,mobile:mobile,fax:fax,address:address,city:city,country:country,postcode:postcode,
                     country_id:country_id,_token:token},
-                success: function(data) {
-                    console.log(data);
-                    if($.trim(data) == 'done'){
+                success: function(response) {
+                    console.log(response);
+                    if(response.vali_error){
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
+                        return false;
+                    }else if(response.success === true){
                         $("#ContactModel").modal('hide');
                         location.reload();
                     }else{
-                        alert("Something went wrong");
-                        return false;
+                        alert("Something went wrong! Please try later");
                     }
-                    
-                    
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + error);
                 }
             });
         }
@@ -1369,10 +1375,11 @@
         }
         var token='<?php echo csrf_token();?>'
         var customer_id=$("#id").val();
+        var userType=1;
         $.ajax({
             type: "POST",
             url: "{{url('/default_address')}}",
-            data: {check:check,customer_id:customer_id,_token:token},
+            data: {userType:userType,check:check,customer_id:customer_id,_token:token},
             success: function(data) {
                 console.log(data);
                 if(check == 1){

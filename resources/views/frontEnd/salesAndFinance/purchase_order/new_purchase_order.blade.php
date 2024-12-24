@@ -28,6 +28,9 @@
     margin-left: 46%;
     text-align: end;
 }
+.image_style {
+    cursor: pointer;
+}
 </style>
         <section class="main_section_page px-3">
             <div class="container-fluid">
@@ -515,6 +518,7 @@
                                                 </tr>
                                             </tfoot>
                                             </table>
+                                            <div id="pagination-controls-Produc-details"></div>
                                     </div>
                                 </div>
                             </div>
@@ -569,7 +573,7 @@
                                     <div class="col-sm-12 mb-3 mt-2">
                                         <div class="jobsection">
                                             <a href="javascript:void(0)" class="profileDrop @if(!isset($key) || $key == '') disabled-tab @endif" @if(!isset($key) || $key == '') disabled @else  onclick="get_modal(10)" @endif>New Attachment</a>
-                                            <a href="javascript:void(0)" class="profileDrop">Delete Attachment(s)</a>
+                                            <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete Attachment(s)</a>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
@@ -577,6 +581,7 @@
                                             <table class="table">
                                                 <thead class="table-light">
                                                     <tr>
+                                                        <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll"> <label for="selectAll"></label></th>
                                                         <th>#</th>
                                                         <th>Type</th>
                                                         <th>Title</th>
@@ -707,6 +712,7 @@
 
 <!-- End here -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <script>
         //Text Editer
 
@@ -1106,27 +1112,20 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             },
             success: function(data) {
                 console.log(data);
-                // $("#product_result").append(data.html);
-                // UpdateItemDetailsCalculation();
                 const tableBody = document.querySelector(`#result tbody`);
         
-                // Check if data array is empty
                 if (data.length === 0) {
-                    // Create a row to display the "No products found" message
                     const noDataRow = document.createElement('tr');
                     noDataRow.id='EmptyError'
                     const noDataCell = document.createElement('td');
 
-                    // Span across all columns in the table (adjust the colspan if your table has more columns)
                     noDataCell.setAttribute('colspan', 4);
                     noDataCell.textContent = 'No products found';
-                    noDataCell.style.textAlign = 'center'; // Center the message
+                    noDataCell.style.textAlign = 'center'; 
 
-                    // Append the cell to the row and the row to the table body
                     noDataRow.appendChild(noDataCell);
                     tableBody.appendChild(noDataRow);
                 } else {
-                    // Populate rows as usual if data is not empty
                     const emptyErrorRow = document.getElementById('EmptyError');
                     if (emptyErrorRow) {
                         emptyErrorRow.remove();
@@ -1227,7 +1226,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const selectDropdownVat = document.createElement('select');
                         selectDropdownVat.addEventListener('change', function() {
                             // alert(`You selected: ${this.options[this.selectedIndex].text}`);
-                            getIdVat($(this).val());
+                            getIdVat($(this).val(),row);
                         });
                         selectDropdownVat.name = 'vat_id[]';
                         const optionsVat =data.tax;
@@ -1297,7 +1296,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             var token = '<?php echo csrf_token(); ?>'
             $.ajax({
                 type: "POST",
-                url: "{{url('jobassign_productsDelete')}}",
+                url: "{{url('purchase_productsDelete')}}",
                 data: {id:id,_token: token},
                 success: function(data) {
                     console.log(data);
@@ -1369,6 +1368,31 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
         var total_vat=totalAmount+vat_amount;
         $("#total_vat").text('£'+total_vat.toFixed(2));
         $("#outstanding_vat").text('£'+total_vat.toFixed(2));
+    }
+    function getIdVat(vat_id,row){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            type: "POST",
+            url: "{{url('/vat_tax_details')}}",
+            data: {vat_id:vat_id,_token:token},
+            success: function(response) {
+                console.log(response);
+                if(response){
+                    const vat_value=Number(response.data);
+                    var td=row.querySelector('td:nth-last-child(4)');
+                    var input = td.querySelector('.vat');
+                    // console.log(typeof(vat_value));
+                    input.value = vat_value.toFixed(2) || 0;
+                    updateAmount(row);
+                }else{
+                    alert("Something went wrong");
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+            }
+        });
     }
  </script>
  <script>
@@ -1447,6 +1471,7 @@ $('#search-product').on('keyup', function() {
     $(document).ready(function(){
         var purchaseOrderId='<?php if(isset($purchase_orders)){echo $purchase_orders->id;}?>'
         getAttachment(purchaseOrderId,'{{ url("getAllAttachmens") }}');
+        getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
     });
     function getAttachment(id,pageUrl = '{{ url("getAllAttachmens") }}'){
         var token='<?php echo csrf_token();?>'
@@ -1455,35 +1480,41 @@ $('#search-product').on('keyup', function() {
             method: 'POST',
             data: {id: id,_token:token},
             success: function(response) {
-                console.log(response.data.data);return false;
-                var data = response.data.data;
+                // console.log(response.data.data);
                 var paginationAttachment = response.pagination;
-                var tableBody = $("#attachments_result"); 
-                tableBody.empty();
-                var html='';
-                if(data.length>0){
-                    var count=1;
-                    data.forEach(function(item) {
-                        
-                        html+= '<tr>' +
-                            '<td>' + count + '</td>' +
-                            '<td>' + item.contact + '</td>' +
-                            '<td>' + item.email + '</td>' +       
-                            '<td>' + item.telephone + '</td>' +        
-                            '<td>' + item.mobile + '</td>' +
-                            '<td>' + item.address + '</td>' +
-                            '<td>' + item.city + '</td>' +
-                            '<td>' + item.country + '</td>' +
-                            '<td>' + item.postcode + '</td>' +
-                            '<td>' + (item.default_billing == 1 ? "Yes" : "No") + '</td>' +
-                            '</tr>';
-                        count++;
-                    });
-                }else{
-                    html+='<tr> <td colspan="10"> <label class="red_sorryText">Sorry, no records to show</label> </td> </tr>';
-                    
-                }
-                tableBody.html(html);
+                var data = response.data.data;
+                const attachments = response.data.data[0].po_attachments || [];
+                // console.log(attachments);
+                const tbody = $('#attachments_result');
+                tbody.empty();
+                var attachmentCount=1;
+                attachments.forEach(attachment => {
+                    const attachmentType = attachment.attachment_type?.title || ''; 
+                    const title = attachment.title || ''; 
+                    const description = attachment.description || '';
+                    const section = attachment.Purchase_ref || '';
+                    const fileName = attachment.original_file_name || ''; 
+                    const mime_type =attachment.mime_type || '';
+                    const size = attachment.size || '';
+                    const created_at=attachment.created_at || '';
+                    var date = moment(created_at).format('DD/MM/YYYY HH:mm');
+
+                    tbody.append(`
+                        <tr>
+                            <td><input type="checkbox" id="" class="delete_checkbox" value="`+attachment.id+`"></td>
+                            <td>${attachmentCount}</td>
+                            <td>${attachmentType}</td>
+                            <td>${title}</td>
+                            <td>${description}</td>
+                            <td>${section}</td>
+                            <td>${fileName}</td>
+                            <td>${mime_type} / ${size}</td>
+                            <td>${date}</td>
+                            <td><i class="fa fa-eye"></i> &emsp; <img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="attachment_delete image_style" data-delete=`+attachment.id+`></td>
+                        </tr>
+                    `);
+                    attachmentCount++;
+                });
                 var paginationControlsAttachment = $("#pagination-controls-Attachments");
                 paginationControlsAttachment.empty();
                 if (paginationAttachment.prev_page_url) {
@@ -1499,7 +1530,272 @@ $('#search-product').on('keyup', function() {
             }
         });
     }
+    function getProductDetail(id,pageUrl = '{{ url("getPurchaesOrderProductDetail") }}'){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {id: id,_token:token},
+            success: function(response) {
+                // console.log(response);
+                var data=response.data[0];
+                console.log(data);
+                const tableBody = document.querySelector(`#result tbody`);
+                var purchase_order_products=data.product_details.purchase_order_products;
+                // console.log(purchase_order_products);return false;
+                if (purchase_order_products.length === 0) {
+                    const noDataRow = document.createElement('tr');
+                    noDataRow.id='EmptyError'
+                    const noDataCell = document.createElement('td');
+
+                    noDataCell.setAttribute('colspan', 4);
+                    noDataCell.textContent = 'No products found';
+                    noDataCell.style.textAlign = 'center'; 
+
+                    noDataRow.appendChild(noDataCell);
+                    tableBody.appendChild(noDataRow);
+                }else{
+                    const emptyErrorRow = document.getElementById('EmptyError');
+                    if (emptyErrorRow) {
+                        emptyErrorRow.remove();
+                    }
+                    purchase_order_products.forEach(product => {
+                        const row = document.createElement('tr');
+
+                        
+                         // job dropdown
+                        const dropdownJob = document.createElement('td');
+
+                        const selectDropdownJob = document.createElement('select');
+                        selectDropdownJob.name = 'job_id[]';
+
+                        const defaultOptionJob = document.createElement('option');
+                        defaultOptionJob.value = '';
+                        defaultOptionJob.text = '-Not Selected-';
+                        selectDropdownJob.appendChild(defaultOptionJob);
+
+                        const optionsJob = data.all_job;
+                        optionsJob.forEach(optionJob => {
+                            const optJob = document.createElement('option');
+                            optJob.value = optionJob.id;
+                            optJob.textContent = optionJob.name;
+                            selectDropdownJob.appendChild(optJob);
+                        });
+                        dropdownJob.appendChild(selectDropdownJob);
+                        row.appendChild(dropdownJob);
+                        // end
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = data.purchase_order_products_detail.product_name;
+                        row.appendChild(nameCell);
+
+                        const codeCell = document.createElement('td');
+                        codeCell.textContent = data.purchase_order_products_detail.product_code;
+                        row.appendChild(codeCell);
+
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.className = 'product_id';
+                        hiddenInput.name = 'product_id[]';
+                        hiddenInput.value = data.purchase_order_products_detail.id;
+                        row.appendChild(hiddenInput);
+                        // purchase order product hidden id
+                        const hiddenID = document.createElement('input');
+                        hiddenID.type = 'hidden';
+                        hiddenID.className = 'purchase_product_id';
+                        hiddenID.name = 'purchase_product_id[]';
+                        hiddenID.value = product.id;
+                        row.appendChild(hiddenID);
+                    // end
+
+                        const descriptionCell = document.createElement('td');
+                        const inputDescription = document.createElement('textarea');
+                        inputDescription.className = 'description';
+                        inputDescription.name = 'description[]';
+                        inputDescription.value = product.description;
+                        descriptionCell.appendChild(inputDescription);
+                        row.appendChild(descriptionCell);
+
+                        const dropdownAccountCode = document.createElement('td');
+                        const selectDropdownAccountCode = document.createElement('select');
+                        selectDropdownAccountCode.name = 'accountCode_id[]';
+
+                        const optionsAccountCode = data.accountCode;
+
+                        const defaultOptionAccountCode = document.createElement('option');
+                        defaultOptionAccountCode.value = '';
+                        defaultOptionAccountCode.text = '-No Department-';
+                        selectDropdownAccountCode.appendChild(defaultOptionAccountCode);
+
+                        optionsAccountCode.forEach(optionJob => {
+                        const optAccountCode = document.createElement('option');
+                        optAccountCode.value = optionJob.id;
+                        optAccountCode.textContent = optionJob.name;
+                        selectDropdownAccountCode.appendChild(optAccountCode);
+                        });
+                        dropdownAccountCode.appendChild(selectDropdownAccountCode);
+                        row.appendChild(dropdownAccountCode);
+
+                        const qtyCell = document.createElement('td');
+                        const inputQty = document.createElement('input');
+                        inputQty.type = 'text';
+                        inputQty.className = 'qty input50';
+                        inputQty.addEventListener('input', function() {
+                            updateAmount(row);
+                        });
+                        inputQty.name = 'qty[]';
+                        inputQty.value = product.qty;
+                        qtyCell.appendChild(inputQty);
+                        row.appendChild(qtyCell);
+
+                        const priceCell = document.createElement('td');
+                        const inputPrice = document.createElement('input');
+                        inputPrice.type = 'text';
+                        inputPrice.className = 'product_price input50';
+                        inputPrice.addEventListener('input', function() {
+                            updateAmount(row);
+                        });
+                        inputPrice.name = 'price[]'; 
+                        inputPrice.value = product.price;
+                        GrandPrice=GrandPrice+Number(product.price);
+                        priceCell.appendChild(inputPrice);
+                        row.appendChild(priceCell);
+
+                        const dropdownVat = document.createElement('td');
+                        const selectDropdownVat = document.createElement('select');
+                        selectDropdownVat.addEventListener('change', function() {
+                            getIdVat($(this).val(),row);
+                        });
+                        selectDropdownVat.name = 'vat_id[]';
+                        const optionsVat =data.tax;
+                        var tax_rate='00';
+                        optionsVat.forEach(optionVat => {
+                        const optVat = document.createElement('option');
+                        optVat.value = optionVat.id;
+                        if(optionVat.id == product.vat_id){
+                            tax_rate=optionVat.tax_rate;
+                            optVat.setAttribute("selected", "selected");
+                        }
+                        optVat.textContent = optionVat.name;
+                        selectDropdownVat.appendChild(optVat);
+                        });
+                        dropdownVat.appendChild(selectDropdownVat);
+                        row.appendChild(dropdownVat);
+
+                        const vatCell = document.createElement('td');
+                        const inputVat = document.createElement('input');
+                        inputVat.type = 'text';
+                        inputVat.className = 'vat';
+                        inputVat.addEventListener('input', function() {
+                            updateAmount(row);
+                        });
+                        inputVat.name = 'vat[]'; 
+                        inputVat.value = parseFloat(tax_rate).toFixed(2);
+                        vatCell.appendChild(inputVat);
+                        row.appendChild(vatCell);
+
+                        const amountCell = document.createElement('td');
+                        amountCell.innerHTML = '£'+ parseFloat(product.price).toFixed(2);
+                        amountCell.className = "price";
+                        row.appendChild(amountCell);
+                        totalAmount=totalAmount+Number(product.price);
+
+                        const delveriQTYCell = document.createElement('td');
+                        delveriQTYCell.innerHTML='-';
+                        delveriQTYCell.className ='text-center';
+                        row.appendChild(delveriQTYCell);
+
+                        const deleteCell = document.createElement('td');
+                        deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
+                        deleteCell.addEventListener('click', function() {
+                            removeRow(this,product.id);
+                        });
+                        row.appendChild(deleteCell);
+
+                        tableBody.appendChild(row);
+                        updateAmount(row)
+                    });
+                    $("#product_calculation").show();
+                    
+                }
+                
+                // var paginationProductDetails = response.pagination;
+
+                // var paginationControlsProductDetail = $("#pagination-controls-Produc-details");
+                // paginationControlsProductDetail.empty();
+                // if (paginationProductDetails.prev_page_url) {
+                //     paginationControlsProductDetail.append('<button class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                // }
+                // if (paginationProductDetails.next_page_url) {
+                //     paginationControlsProductDetail.append('<button class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                // }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                // location.reload();
+            }
+        });
+    }
     
+ </script>
+ <script>
+   $("#deleteSelectedRows").on('click', function() {
+    let ids = [];
+    
+    $('.delete_checkbox:checked').each(function() {
+        ids.push($(this).val());
+    });
+    if(ids.length == 0){
+        alert("Please check the checkbox for delete");
+    }else{
+        
+        if(confirm("Are you sure to delete?")){
+            // console.log(ids);
+            var token='<?php echo csrf_token();?>'
+            var model='PoAttachment';
+            $.ajax({
+                type: "POST",
+                url: "{{url('/bulk_delete')}}",
+                data: {ids:ids,model:model,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if(data){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    }
+    
+});
+$(document).on('click', '.delete_checkbox', function() {
+    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+        $('#selectAll').prop('checked', true);
+    } else {
+        $('#selectAll').prop('checked', false);
+    }
+});
+$(document).on('click','.attachment_delete', function() {
+        var id = $(this).data('delete');
+        if (confirm("Are you sure you want to delete this row?")) {
+            $(this).closest('tr').remove();
+            var token='<?php echo csrf_token();?>'
+            $.ajax({
+            type: "POST",
+            url: "{{url('/delete_po_attachment')}}",
+            data: {id:id,_token:token},
+            success: function(data) {
+                console.log(data);
+            }
+        });
+        }
+    });
  </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
