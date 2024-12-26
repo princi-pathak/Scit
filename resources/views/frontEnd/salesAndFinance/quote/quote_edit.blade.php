@@ -1421,36 +1421,20 @@
                                                     <div class="mb-3 row">
                                                         <div class="col-md-12">
                                                             <div class="productDetailTable pt-3">
-                                                                <table class="table" id="containerA">
+                                                                <table class="table" id="quoteTaskList">
                                                                     <thead class="table-light">
                                                                         <tr>
-                                                                            <th># </th>
-                                                                            <th>Quote Ref </th>
-                                                                            <th>Job Ref</th>
-                                                                            <th>Quote Date </th>
-                                                                            <th>Expiry Date </th>
-                                                                            <th>Sub Total</th>
-                                                                            <th>VAT</th>
-                                                                            <th>Total</th>
-                                                                            <th>Deposit </th>
-                                                                            <th>Outstanding</th>
-                                                                            <th>Status</th>
+                                                                            <th>Date </th>
+                                                                            <th>Ref </th>
+                                                                            <th>User</th>
+                                                                            <th>Type </th>
+                                                                            <th>Title </th>
+                                                                            <th>Notes</th>
+                                                                            <th>Created On </th>
+                                                                            <th>Executed</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                        </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -1526,9 +1510,9 @@
                                                                                             <select class="form-control editInput selectOptions" name="user_id" id="quoteTaskUser">
                                                                                                 @foreach($users as $value)
                                                                                                 <option value="{{ $value->id }}" @if($value->id == $loginCustomer) selected @endif>{{ $value->name }}</
-                                                                                                
-                                                                                                option>
-                                                                                                @endforeach
+
+                                                                                                        option>
+                                                                                                    @endforeach
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
@@ -1624,7 +1608,7 @@
                                                                                     <div class="mb-2 row">
                                                                                         <label class="col-sm-4 col-form-label">Customer</label>
                                                                                         <div class="col-sm-8">
-                                                                                            <input type="text" class="form-control-plaintext editInput" id="" value="" readonly="">
+                                                                                            <input type="text" class="form-control-plaintext editInput" id="setCustomerNameInTimer" value="" readonly="">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
@@ -2847,7 +2831,7 @@
         document.getElementById('hideQuoteDetails').style.display = "none";
         document.getElementById('hideQuoteDiv').style.display = "none";
         document.getElementById('hideDepositSection').style.display = "none";
-
+        getQuoteTaskList(document.querySelector('#quoteTaskList tbody'));
 
 
 
@@ -2935,8 +2919,8 @@
                     if (user.id == setCustomerId) {
                         option.selected = true; // Mark as selected
                         document.getElementById('setCustomerNameInTask').value = user.name;
+                        document.getElementById('setCustomerNameInTimer').value = user.name;
                     }
-
                     get_customer_type.appendChild(option);
                 });
             },
@@ -3273,7 +3257,6 @@
     }
 
     function saveQuoteTaskFormData() {
-        alert('Saving quote task data...');
         const data = {
             quote_id: document.getElementById('quote_id').value,
             edit_quote_task_id: document.getElementById('edit_quote_task_id').value,
@@ -3284,11 +3267,11 @@
             start_time: document.getElementById('start_time').value,
             end_date: document.getElementById('end_date').value,
             end_time: document.getElementById('end_time').value,
-            is_recurring: document.getElementById('is_recurring').checked ? 1 : 0,  
-            yesOn: document.getElementById('yesOn').checked ? 1 : 0, 
-            notify_date: document.getElementById('notify_date').value  || null,
+            is_recurring: document.getElementById('is_recurring').checked ? 1 : 0,
+            yesOn: document.getElementById('yesOn').checked ? 1 : 0,
+            notify_date: document.getElementById('notify_date').value || null,
             notify_time: document.getElementById('notify_time').value || null,
-            notification: document.getElementById('notification').checked ? 1 : 0,  
+            notification: document.getElementById('notification').checked ? 1 : 0,
             email: document.getElementById('email').checked ? 1 : 0,
             sms: document.getElementById('sms').checked ? 1 : 0,
             notes: document.getElementById('notes').value,
@@ -3297,16 +3280,16 @@
         $.ajax({
             url: '{{ route("quote.ajax.saveQuoteTask") }}', // Replace with your Laravel route URL
             type: 'POST',
+            contentType: 'application/json',
             data: JSON.stringify(data),
-            // cache: false,
-            // contentType: false, // Let FormData handle the content type
-            // processData: false, // Let FormData handle the data processing
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
             success: function(response) {
-                // Handle success
                 alert(response.data);
                 console.log(response.id);
-                $('#newTaskModal').modal('hide'); // Hide the modal
-                // getQuoteAttachments(response.id);
+                $('#newTaskModal').modal('hide');
+                getQuoteTaskList(document.querySelector('#quoteTaskList tbody'));
             },
             error: function(xhr) {
                 // Handle error
@@ -3318,6 +3301,97 @@
                     errorMessage += `${errors[key]}\n`;
                 }
                 alert(errorMessage);
+            }
+        });
+    }
+
+
+    // Function to populate the table
+    function populateTable(data) {
+        data.forEach(item => {
+            // Create a new row
+            const row = document.createElement('tr');
+
+            const listCell = document.createElement('td');
+            listCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="summary"><i class="fa fa-list-ul" title="Call"></i></a>`;
+            row.appendChild(listCell);
+
+            const created_at = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+            const date = moment(item.start_date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+            const time = moment(item.start_time, 'HH:mm:ss').format('HH:mm');
+
+            // Create cells and append them to the row
+            const dateCell = document.createElement('td');
+            dateCell.textContent = date + " " + time;
+            row.appendChild(dateCell);
+
+            const nameCell = document.createElement('td');
+            nameCell.innerHTML = item.userName;
+            row.appendChild(nameCell);
+
+            const phoneCell = document.createElement('td');
+            phoneCell.textContent = item.telephone;
+            row.appendChild(phoneCell);
+
+            const lead_task_title = document.createElement('td');
+            lead_task_title.textContent = item.lead_task_title;
+            row.appendChild(lead_task_title);
+
+            const typeCell = document.createElement('td');
+            typeCell.textContent = item.title;
+            row.appendChild(typeCell);
+
+            const notesCell = document.createElement('td');
+            notesCell.innerHTML = item.notes;
+            row.appendChild(notesCell);
+
+            const related = document.createElement('td');
+            related.innerHTML = quote_ref;
+            row.appendChild(related);
+
+            const create_time = document.createElement('td');
+            create_time.innerHTML = created_at;
+            row.appendChild(create_time);
+
+            const created_by = document.createElement('td');
+            created_by.innerHTML = '<?php echo Auth::user()->name; ?>';
+            row.appendChild(created_by);
+
+            const visibilityCell = document.createElement('td');
+            if (item.customer_visibility == 0) {
+                visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+            } else if (item.customer_visibility == 1) {
+                visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+            }
+            row.appendChild(visibilityCell);
+
+            const idCell = document.createElement('td');
+            idCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="edit"><i class="fa fa-edit"></i></a> <i class="fa fa-times"></i>`;
+            row.appendChild(idCell);
+
+            // Append the row to the table body
+            tableBody.appendChild(row);
+        });
+    }
+
+    function getQuoteTaskList(tableBody) {
+        const quote_id = document.getElementById('quote_id').value;
+        $.ajax({
+            url: '{{ route("quote.ajax.getQuoteTaskList") }}',
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            data: {  quote_id: quote_id },
+            success: function(response) {
+                console.log(response.data);
+                tableBody.innerHTML = '';
+
+                // Call the function to populate the table with the data array
+                populateTable(response.data);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
             }
         });
     }

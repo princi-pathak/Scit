@@ -548,6 +548,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/quote/save-quote-callback', 'storeCallBackData')->name('quote.callback.save');
 		Route::get('/quote/callBack', 'callBack');
 		Route::post('/quote/save-quote-task', 'saveQuoteTask')->name('quote.ajax.saveQuoteTask');
+		Route::post('/quote/getQuoteTaskList', 'getQuoteTaskList')->name('quote.ajax.getQuoteTaskList');
 
 		
 	});
