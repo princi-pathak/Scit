@@ -12,6 +12,11 @@ class Task_type extends Model
     protected $table="task_types";
     protected $fillable=['home_id','title','status'];
 
+    public function quoteTask()
+    {
+        return $this->hasOne(QuoteTask::class, 'task_type_id');
+    }
+
     public static function getAllTask_type($home_id){
         $data = self::whereNull('deleted_at')->where('home_id',$home_id)->get();
         return $data;

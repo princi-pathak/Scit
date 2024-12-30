@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quote_deposit', function (Blueprint $table) {
+        Schema::create('quote_customer_deposits', function (Blueprint $table) {
             $table->id();
             $table->integer('quote_id');
+            $table->integer('customer_id');
             $table->integer('deposit_percantage');
             $table->decimal('amount', 8,2)->comment('Amount included tax');
             $table->string('reference');
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quote_deposit');
+        Schema::dropIfExists('quote_customer_deposits');
     }
 };
