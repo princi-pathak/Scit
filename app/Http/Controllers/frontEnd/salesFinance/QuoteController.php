@@ -74,6 +74,7 @@ class QuoteController extends Controller
         $lastSegment = end($segments);
         $data['lastSegment'] = $lastSegment;
         $data['quotes'] = $this->quoteService->getQuoteData($lastSegment, Auth::user()->home_id);
+        // dd($data['quotes']);
         $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
         $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.draft', $data);
@@ -359,7 +360,7 @@ class QuoteController extends Controller
 
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 
@@ -423,7 +424,7 @@ class QuoteController extends Controller
         $data = $this->attachmentService->getAllAttachmentTypeOnQuote($request->quote_id);
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 

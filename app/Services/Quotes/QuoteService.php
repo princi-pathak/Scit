@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Models\QuoteCallBack;
 use App\Models\QuoteTask;
+use App\User;
 
 
 class QuoteService
@@ -214,7 +215,7 @@ class QuoteService
     }
 
     public function saveQuoteTaskData($validatedData){
-        return  QuoteTask::updateOrCreate(['id' => $validatedData->edit_quote_task_id], $validatedData);
+        return  QuoteTask::updateOrCreate(['id' => $validatedData['edit_quote_task_id']], $validatedData);
     }
 
     public function getQuoteTaskList($quote_id){
@@ -225,7 +226,7 @@ class QuoteService
             $data = [];
             $data['id'] = $value->id;
             $data['quote_ref'] = Quote::where('id', $value->quote_id)->value('quote_ref');
-            $data['user_id'] = $value->user_id;
+            $data['userName'] = User::where('id',$value->user_id)->value('name');
             $data['title'] = $value->title;
             $data['task_type_id'] = $value->taskType->title;
             $data['start_date'] = $value->start_date;

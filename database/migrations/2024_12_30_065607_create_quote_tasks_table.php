@@ -17,10 +17,10 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('title');
             $table->integer('task_type_id');
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->time('start_time');
-            $table->date('end_date');
-            $table->time('end_time');
+            $table->date('end_date')->nullable();
+            $table->time('end_time')->nullable();
             $table->boolean('notify')->nullable();
             $table->date('notify_date')->nullable();
             $table->time('notify_time')->nullable();

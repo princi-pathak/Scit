@@ -581,24 +581,21 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <!-- <?php print_r($quoteData); ?> -->
                                                                         <td>1</td>
                                                                         <td>{{ $quoteData['quote_ref'] }}</td>
                                                                         <td>-</td>
                                                                         <td>{{ $quoteData['quota_date'] }}</td>
                                                                         <td>{{ $quoteData['expiry_date'] }}</td>
-                                                                        <td>&#163;{{ $quoteData['sub_total'] }}</td>
-                                                                        <td>&#163;{{ $quoteData['vat_amount'] }}</td>
-                                                                        <td>&#163;{{ $quoteData['total_amount'] ?? '0.00'}}</td>
+                                                                        <td>&#163;{{ $quoteData['sub_total'] ?? '0.00' }}</td>
+                                                                        <td>&#163;{{ $quoteData['vat_amount'] ?? '0.00' }}</td>
+                                                                        <td>&#163;{{ $quoteData['total_amount'] ?? '0.00' }}</td>
                                                                         <td>&#163;{{ $quoteData['deposit'] ?? '0.00' }}</td>
-                                                                        <td>&#163;{{ $quoteData['outstanding'] }}</td>
+                                                                        <td>&#163;{{ $quoteData['outstanding'] ?? '0.00' }}</td>
                                                                         <td>{{ $quoteData['status'] }}</td>
                                                                         <td>
                                                                             <div class="d-inline-flex align-items-center ">
                                                                                 <div class="nav-item dropdown">
-                                                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                                                                        Action
-                                                                                    </a>
+                                                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">Action</a>
                                                                                     <div class="dropdown-menu fade-up m-0">
                                                                                         <a href="{{ url('/quote-details/edit').'/'.$quoteData['id'] }}" class="dropdown-item">Edit</a>
                                                                                         <hr class="dropdown-divider">
@@ -1006,7 +1003,6 @@
                                             </div>
                                             <div class="modal-body ">
                                                 <div class="contantbodypopup p-0">
-
                                                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                                         <li class="nav-item me-2" role="presentation">
                                                             <button class="profileDrop" id="paymentDetails-tab" data-bs-toggle="pill" data-bs-target="#paymentDetails" type="button" role="tab" aria-controls="paymentDetails" aria-selected="false" tabindex="-1">Payment Details</button>
@@ -1482,7 +1478,7 @@
                                                     <div class="modal-body ">
                                                         <form id="quoteTaskFormDatas">
                                                             <div class="contantbodypopup p-0">
-                                                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                                <ul class="nav nav-pills taskTimer mb-3" id="pills-tab" role="tablist">
                                                                     <li class="nav-item me-2" role="presentation">
                                                                         <button class="nav-link profileDrop active" id="newTasks-tab" data-bs-toggle="pill" data-bs-target="#newTasks" type="button"
                                                                             role="tab" aria-controls="newTasks" aria-selected="true">Task</button>
@@ -1509,10 +1505,8 @@
                                                                                             <input type="hidden" name="edit_quote_task_id" id="edit_quote_task_id" value="">
                                                                                             <select class="form-control editInput selectOptions" name="user_id" id="quoteTaskUser">
                                                                                                 @foreach($users as $value)
-                                                                                                <option value="{{ $value->id }}" @if($value->id == $loginCustomer) selected @endif>{{ $value->name }}</
-
-                                                                                                        option>
-                                                                                                    @endforeach
+                                                                                                <option value="{{ $value->id }}" @if($value->id == $loginCustomer) selected @endif>{{ $value->name }}</option>
+                                                                                                @endforeach
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
@@ -1614,33 +1608,32 @@
                                                                                     <div class="mb-2 row">
                                                                                         <label class="col-sm-3 col-form-label">Task User <span class="radStar">*</span></label>
                                                                                         <div class="col-sm-9">
-                                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                                <option>-Not Assigned-</option>
-                                                                                                <option>Customer-2</option>
-                                                                                                <option>Customer-3</option>
-                                                                                                <option>Customer-4</option>
+                                                                                            <select class="form-control editInput selectOptions" id="quoteTimerUser">
+                                                                                                @foreach($users as $value)
+                                                                                                <option value="{{ $value->id }}" @if($value->id == $loginCustomer) selected @endif>{{ $value->name }}</option>
+                                                                                                @endforeach
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
                                                                                         <label class="col-sm-3 col-form-label">Title<span class="radStar">*</span></label>
                                                                                         <div class="col-sm-9">
-                                                                                            <input type="text" class="form-control editInput" id="">
+                                                                                            <input type="text" class="form-control editInput" id="timerTitle">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="mb-2 row">
                                                                                         <label class="col-sm-3 col-form-label">Timer<span class="radStar">*</span></label>
                                                                                         <div class="col-sm-9">
-                                                                                            <button class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
+                                                                                            <button type="button" class="profileDrop" id="toggleTimerBtn"><i class="fa fa-play"></i> Start</button>
                                                                                             <span id="timerDisplay">00:00:00</span>
-                                                                                            <input type="hidden" name="start_time_timer" id="start_time">
+                                                                                            <input type="hidden" name="start_time_timer" id="start_time_timer">
                                                                                         </div>
                                                                                     </div>
 
                                                                                     <div class="mb-2 row">
                                                                                         <label for="inputCounty" class="col-sm-3 col-form-label pt-0">Related To</label>
                                                                                         <div class="col-sm-9">
-                                                                                            <span class="editInput" id="relatedTo">LEAD-0021</span>
+                                                                                            <span class="editInput" id="relatedTo">{{ $quoteData['quote_ref'] }}</span>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1650,6 +1643,7 @@
                                                                                         <label class="col-sm-3 col-form-label">Task Type<span class="radStar">*</span></label>
                                                                                         <div class="col-sm-8">
                                                                                             <select class="form-control editInput selectOptions" id="setTaskTypeOnTimer">
+
                                                                                             </select>
                                                                                         </div>
                                                                                         <div class="col-sm-1 ps-0">
@@ -1664,7 +1658,7 @@
                                                                                     <div class="mb-2 row">
                                                                                         <label for="inputCity" class="col-sm-3 col-form-label">Notes<span class="radStar">*</span></label>
                                                                                         <div class="col-sm-9">
-                                                                                            <textarea class="form-control textareaInput rounded-1" name="Notes" rows="5" placeholder="Notes"></textarea>
+                                                                                            <textarea class="form-control textareaInput rounded-1" name="Notes" id="timerNotes" rows="5" placeholder="Notes"></textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1694,7 +1688,7 @@
                                                         </div>
                                                         <div class="modal-body ">
                                                             <div class="contantbodypopup p-0">
-                                                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                                <ul class="nav nav-pills taskTimer mb-3" id="pills-tab" role="tablist">
                                                                     <li class="nav-item me-2" role="presentation">
                                                                         <button class="activetb active profileDrop" id="newTasks-tab" data-bs-toggle="pill" data-bs-target="#newTasks" type="button" role="tab" aria-controls="newTasks" aria-selected="true">Task</button>
                                                                     </li>
@@ -2779,6 +2773,8 @@
 @include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customeQuoteForm.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js"></script>
+
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script>
@@ -2840,6 +2836,41 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        // start here js for time start and pause
+        let timerInterval;
+        let elapsedSeconds = 0;
+        let isRunning = false;
+
+        function toggleTimer() {
+            if (isRunning) {
+                // Pause the timer
+                clearInterval(timerInterval);
+                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-play"></i> Start';
+            } else {
+                // Start the timer
+                timerInterval = setInterval(function() {
+                    elapsedSeconds++;
+                    document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+                    document.getElementById('start_time_timer').value = formatTime(elapsedSeconds);
+                }, 1000);
+                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
+            }
+            isRunning = !isRunning; // Toggle the running state
+        }
+
+        function formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+        }
+
+        function pad(number) {
+            return number < 10 ? '0' + number : number;
+        }
+
+        document.getElementById('toggleTimerBtn').addEventListener('click', toggleTimer);
 
         getQuoteAttachmentsOnPageLoad();
         $('#search-product').on('keyup', function() {
@@ -2930,6 +2961,8 @@
         });
 
         getTaskType(document.getElementById("setTaskTypeData"));
+        getTaskType(document.getElementById("setTaskTypeOnTimer"));
+
 
 
         const edit_customer_billing_id = document.getElementById('edit_customer_billing_id').value;
@@ -3140,21 +3173,24 @@
             success: function(response) {
                 // Handle success
                 console.log(response);
+
                 const tableBody = $('#attachmentTable tbody');
                 console.log(tableBody);
                 tableBody.empty(); // Clear existing rows
+                if (response.data == "No data") {
+                    console.log(response.data);
+                } else {
+                    // Assuming `response` contains an array of attachments
+                    const attachments = Array.isArray(response.data) ? response.data : [response.data];
 
-                // Assuming `response` contains an array of attachments
-                const attachments = Array.isArray(response.data) ? response.data : [response.data];
+                    attachments.forEach(attachment => {
+                        console.log(attachment);
+                        // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
+                        const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
+                        const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
 
-                attachments.forEach(attachment => {
-                    console.log(attachment);
-                    // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
-                    const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
-                    const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
-
-                    const id = attachment.id;
-                    const row = `
+                        const id = attachment.id;
+                        const row = `
                         <tr data-id="${id}">
                             <td><input type="checkbox" class="selectRow"></td>
                             <td>${attachment.attachmentType}</td>
@@ -3169,9 +3205,12 @@
                             <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="downloadAttachmentFile('${attachment.timestamp_name}');"> <i class="fas fa-download"></i></a> | <a href="javascript:void(0)" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a> </td>
                         </tr>
                     `;
-                    console.log(row);
-                    tableBody.append(row);
-                });
+                        console.log(row);
+                        tableBody.append(row);
+                    });
+                }
+
+
             },
             error: function(xhr) {
                 // Handle error
@@ -3211,36 +3250,39 @@
                 const tableBody = $('#attachmentTable tbody');
                 console.log(tableBody);
 
+                if (response.data == "No data") {
+
+                } else {
+                    const attachments = Array.isArray(response.data) ? response.data : [response.data];
+
+                    attachments.forEach(attachment => {
+                        console.log(attachment);
+                        // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
+                        const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
+                        const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
+
+                        const id = attachment.id;
+                        const row = `
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>${attachment.attachmentType}</td>
+                                    <td>${attachment.title}</td>
+                                    <td>${attachment.description}</td>
+                                    <td>Quote</td>
+                                    <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
+                                    <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
+                                    <td>${attachment.original_name}</td>
+                                    <td>${attachment.mime_type} / ${attachment.size} KB</td>
+                                    <td>${new Date(attachment.created_at).toLocaleString()}</td>
+                                    <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a></td>
+                                </tr>
+                            `;
+                        console.log(row);
+                        tableBody.append(row);
+                    });
+                }
                 // Assuming `response` contains an array of attachments
 
-
-                const attachments = Array.isArray(response.data) ? response.data : [response.data];
-
-                attachments.forEach(attachment => {
-                    console.log(attachment);
-                    // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
-                    const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
-                    const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
-
-                    const id = attachment.id;
-                    const row = `
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>${attachment.attachmentType}</td>
-                            <td>${attachment.title}</td>
-                            <td>${attachment.description}</td>
-                            <td>Quote</td>
-                            <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
-                            <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
-                            <td>${attachment.original_name}</td>
-                            <td>${attachment.mime_type} / ${attachment.size} KB</td>
-                            <td>${new Date(attachment.created_at).toLocaleString()}</td>
-                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a></td>
-                        </tr>
-                    `;
-                    console.log(row);
-                    tableBody.append(row);
-                });
             },
             error: function(xhr) {
                 // Handle error
@@ -3257,28 +3299,55 @@
     }
 
     function saveQuoteTaskFormData() {
-        const data = {
-            quote_id: document.getElementById('quote_id').value,
-            edit_quote_task_id: document.getElementById('edit_quote_task_id').value,
-            user_id: document.getElementById('quoteTaskUser').value,
-            title: document.getElementById('title').value,
-            task_type_id: document.getElementById('setTaskTypeData').value,
-            start_date: document.getElementById('start_date').value,
-            start_time: document.getElementById('start_time').value,
-            end_date: document.getElementById('end_date').value,
-            end_time: document.getElementById('end_time').value,
-            is_recurring: document.getElementById('is_recurring').checked ? 1 : 0,
-            yesOn: document.getElementById('yesOn').checked ? 1 : 0,
-            notify_date: document.getElementById('notify_date').value || null,
-            notify_time: document.getElementById('notify_time').value || null,
-            notification: document.getElementById('notification').checked ? 1 : 0,
-            email: document.getElementById('email').checked ? 1 : 0,
-            sms: document.getElementById('sms').checked ? 1 : 0,
-            notes: document.getElementById('notes').value,
-        };
+
+        const activeTab = document.querySelector('.taskTimer .nav-link.active');
+        console.log(activeTab);
+        let data;
+        // Check the active tab by its ID
+        if (activeTab.id === 'newTasks-tab') {
+            // Task tab is active, set task fields
+            console.log('Task fields set');
+            data = {
+                type: 'task',
+                quote_id: document.getElementById('quote_id').value,
+                edit_quote_task_id: document.getElementById('edit_quote_task_id').value,
+                user_id: document.getElementById('quoteTaskUser').value,
+                title: document.getElementById('title').value,
+                task_type_id: document.getElementById('setTaskTypeData').value,
+                start_date: document.getElementById('start_date').value,
+                start_time: document.getElementById('start_time').value,
+                end_date: document.getElementById('end_date').value,
+                end_time: document.getElementById('end_time').value,
+                is_recurring: document.getElementById('is_recurring').checked ? 1 : 0,
+                yesOn: document.getElementById('yesOn').checked ? 1 : 0,
+                notify_date: document.getElementById('notify_date').value,
+                notify_time: document.getElementById('notify_time').value,
+                notification: document.getElementById('notification').checked ? 1 : 0,
+                email: document.getElementById('email').checked ? 1 : 0,
+                sms: document.getElementById('sms').checked ? 1 : 0,
+                notes: document.getElementById('notes').value,
+            };
+            console.log("data", data);
+        } else if (activeTab.id === 'newTaskTimer-tab') {
+            // Timer tab is active, set timer fields
+            console.log('Timer fields set');
+            data = {
+                type: 'timer',
+                quote_id: document.getElementById('quote_id').value,
+                edit_quote_task_id: document.getElementById('edit_quote_task_id').value,
+                user_id: document.getElementById('quoteTimerUser').value,
+                title: document.getElementById('timerTitle').value,
+                start_date: moment().format('YYYY-MM-DD'),
+                start_time: document.getElementById('start_time_timer').value,
+                task_type_id: document.getElementById('setTaskTypeOnTimer').value,
+                notes: document.getElementById('timerNotes').value,
+            };
+        }
+
+
 
         $.ajax({
-            url: '{{ route("quote.ajax.saveQuoteTask") }}', // Replace with your Laravel route URL
+            url: '{{ route("quote.ajax.saveQuoteTask") }}',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),
@@ -3307,14 +3376,10 @@
 
 
     // Function to populate the table
-    function populateTable(data) {
+    function populateTable(data, tableBody) {
         data.forEach(item => {
             // Create a new row
             const row = document.createElement('tr');
-
-            const listCell = document.createElement('td');
-            listCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="summary"><i class="fa fa-list-ul" title="Call"></i></a>`;
-            row.appendChild(listCell);
 
             const created_at = moment(item.created_at).format('DD/MM/YYYY HH:mm');
             const date = moment(item.start_date, 'YYYY-MM-DD').format('DD/MM/YYYY');
@@ -3325,17 +3390,17 @@
             dateCell.textContent = date + " " + time;
             row.appendChild(dateCell);
 
+            const related = document.createElement('td');
+            related.innerHTML = item.quote_ref;
+            row.appendChild(related);
+
             const nameCell = document.createElement('td');
             nameCell.innerHTML = item.userName;
             row.appendChild(nameCell);
 
-            const phoneCell = document.createElement('td');
-            phoneCell.textContent = item.telephone;
-            row.appendChild(phoneCell);
-
-            const lead_task_title = document.createElement('td');
-            lead_task_title.textContent = item.lead_task_title;
-            row.appendChild(lead_task_title);
+            const quote_task_title = document.createElement('td');
+            quote_task_title.textContent = item.task_type_id;
+            row.appendChild(quote_task_title);
 
             const typeCell = document.createElement('td');
             typeCell.textContent = item.title;
@@ -3345,25 +3410,9 @@
             notesCell.innerHTML = item.notes;
             row.appendChild(notesCell);
 
-            const related = document.createElement('td');
-            related.innerHTML = quote_ref;
-            row.appendChild(related);
-
             const create_time = document.createElement('td');
             create_time.innerHTML = created_at;
             row.appendChild(create_time);
-
-            const created_by = document.createElement('td');
-            created_by.innerHTML = '<?php echo Auth::user()->name; ?>';
-            row.appendChild(created_by);
-
-            const visibilityCell = document.createElement('td');
-            if (item.customer_visibility == 0) {
-                visibilityCell.innerHTML = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
-            } else if (item.customer_visibility == 1) {
-                visibilityCell.innerHTML = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
-            }
-            row.appendChild(visibilityCell);
 
             const idCell = document.createElement('td');
             idCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="edit"><i class="fa fa-edit"></i></a> <i class="fa fa-times"></i>`;
@@ -3382,13 +3431,15 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
-            data: {  quote_id: quote_id },
+            data: {
+                quote_id: quote_id
+            },
             success: function(response) {
                 console.log(response.data);
                 tableBody.innerHTML = '';
 
                 // Call the function to populate the table with the data array
-                populateTable(response.data);
+                populateTable(response.data, tableBody);
             },
             error: function(xhr, status, error) {
                 console.error(error);
