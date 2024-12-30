@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Models\QuoteCallBack;
 use App\Models\QuoteTask;
+use App\User;
 
 
 class QuoteService
@@ -186,12 +187,9 @@ class QuoteService
         foreach ($quotes as $quote) {
 
             $date = $quote->callBack->call_back_date; // e.g., '20/12/2024'
-            // dd($date);
             $time = $quote->callBack->call_back_time;
-            // dd($time);
             // $callbackDate = Carbon::createFromFormat('d/m/Y', $date);
-            // $callbackTime = Carbon::createFromFormat('h:i:s', $time);
-    
+            // $callbackTime = Carbon::createFromFormat('h:i:s', $time);    
 
             $quote['id'] = $quote->id;
             $quote['quote_ref'] = $quote->quote_ref;
@@ -216,7 +214,41 @@ class QuoteService
         return $quoteArr;
     }
 
-    public function saveQuoteTaskData($data, $home_id){
-        return  QuoteTask::create($data);
+    public function saveQuoteTaskData($validatedData){
+        return  QuoteTask::updateOrCreate(['id' => $validatedData['edit_quote_task_id']], $validatedData);
+    }
+
+    public function getQuoteTaskList($quote_id){
+        $quoteTaskData =   QuoteTask::with('taskType')->where('quote_id', $quote_id)->get();
+        $record = [];
+        
+        foreach($quoteTaskData as $value){
+            $data = [];
+            $data['id'] = $value->id;
+            $data['quote_ref'] = Quote::where('id', $value->quote_id)->value('quote_ref');
+            $data['userName'] = User::where('id',$value->user_id)->value('name');
+            $data['title'] = $value->title;
+            $data['task_type_id'] = $value->taskType->title;
+            $data['start_date'] = $value->start_date;
+            $data['start_time'] = $value->start_time;
+            $data['end_date'] = $value->end_date;
+            $data['end_time'] = $value->end_time;
+            $data['notify'] = $value->notify;
+            $data['notify_date'] = $value->notify_date;
+            $data['notify_time'] = $value->notify_time;
+            $data['notification'] = $value->notification;
+            $data['email'] = $value->email;
+            $data['sms'] = $value->sms;
+            $data['is_recurring'] = $value->is_recurring;
+            $data['is_completed'] = $value->is_completed;
+            $data['notes'] = $value->notes;
+            $data['created_at'] = $value->created_at;
+
+            $record[] = $data;
+        }
+        // dd($record);
+        return $record;
+     
     }
 }
+ 

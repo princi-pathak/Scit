@@ -18,6 +18,7 @@ use App\Services\Quotes\QuoteService;
 use App\Services\Quotes\QuoteProductService;
 use App\Services\Quotes\AttachmentTypeService;
 
+use Illuminate\Support\Carbon;
 
 use App\Models\QuoteType;
 use App\Models\Quote;
@@ -32,6 +33,7 @@ use App\Models\AttachmentType;
 use App\Models\Payment_type;
 use App\Models\Task_type;
 use App\User;
+use App\Models\QuoteTask;
 
 
 
@@ -72,6 +74,7 @@ class QuoteController extends Controller
         $lastSegment = end($segments);
         $data['lastSegment'] = $lastSegment;
         $data['quotes'] = $this->quoteService->getQuoteData($lastSegment, Auth::user()->home_id);
+        // dd($data['quotes']);
         $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
         $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.draft', $data);
@@ -357,7 +360,7 @@ class QuoteController extends Controller
 
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 
@@ -421,7 +424,7 @@ class QuoteController extends Controller
         $data = $this->attachmentService->getAllAttachmentTypeOnQuote($request->quote_id);
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 
@@ -442,7 +445,8 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function editQuoteDetails($id){
+    public function editQuoteDetails($id)
+    {
         $data['page'] = "quotes";
         $data['quoteSource'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
         $data['countries'] = Country::getCountriesNameCode();
@@ -455,7 +459,8 @@ class QuoteController extends Controller
         return view('frontEnd.salesAndFinance.quote.quote_edit_details', $data);
     }
 
-    public function getQuoteProductList(Request $request){
+    public function getQuoteProductList(Request $request)
+    {
         // dd($request);
         $validator = Validator::make($request->all(), [
             'id' => 'required',
@@ -472,8 +477,8 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function storeCallBackData(CallBackRequest $request){
-        // dd($request);
+    public function storeCallBackData(CallBackRequest $request)
+    {
         $data = $this->quoteService->saveCallBack($request);
 
         return response()->json([
@@ -492,19 +497,40 @@ class QuoteController extends Controller
         $data['quotes'] = $this->quoteService->getQuoteCallBack($lastSegment, Auth::user()->home_id);
         $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
         $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
-        // dd($data);
         return view('frontEnd.salesAndFinance.quote.call_back', $data);
     }
 
     // QuoteTaskRequest
-    public function storeQuoteTask(Request $request)
+    public function saveQuoteTask(QuoteTaskRequest $request)
     {
-        dd($request);
-        $data =  $this->quoteService->saveQuoteTaskData($request, Auth::user()->home_id);
+        $validatedData = $request->validated();
+
+        $quoteTask = $this->quoteService->saveQuoteTaskData($validatedData);
+
+        // Update the record if it exists, otherwise create a new one
+        // $quoteTask = QuoteTask::updateOrCreate(['id' => $request->edit_quote_task_id], $validatedData);
+
+        Log::info('User logged in', ['user_id' => $quoteTask]);
+
         return response()->json([
-            'success' => (bool) $data,
-            'data' => $data ? "Task added successfully!" : 'Failed to save task.'
+            'success' => (bool) $quoteTask,
+            'data' => $quoteTask ? "Task added successfully!" : 'Failed to save task.'
         ]);
     }
- 
+    public function getQuoteTaskList(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'quote_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $this->quoteService->getQuoteTaskList($request->quote_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
 }

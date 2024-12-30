@@ -28,4 +28,9 @@ class QuoteTask extends Model
         'is_comleted',
         'notes'
     ];
+
+    public function taskType()
+    {
+        return $this->belongsTo(Task_type::class, 'task_type_id')->select(['id', 'title']);
+    }
 }
