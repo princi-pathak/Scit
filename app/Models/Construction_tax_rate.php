@@ -32,13 +32,8 @@ class Construction_tax_rate extends Model
     }
 
     public static function saveTax_rate($data){
-        try {
-            $Task_type=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
-            return $Task_type;
-        }catch (\Exception $e) {
-            Log::error('Error saving Payment Type: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
-        }
+        $Task_type=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
+        return $Task_type;
     }
 
     public static function saveTaxRateData(array $data, $taxRateID = null)

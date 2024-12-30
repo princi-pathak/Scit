@@ -52,9 +52,18 @@ class InvoiceController extends Controller
         if ($validator->fails()) {
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
-
-        $data=Construction_tax_rate::saveTax_rate($request->all());
-        return response()->json(['data' => $data]);
+        try{
+            $data=Construction_tax_rate::saveTax_rate($request->all());
+            if($request->id == ''){
+                return response()->json(['success'=>true,'message'=>'Tax Rate added successfully done','data' => $data]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'Tax Rate updated successfully done','data' => $data]);
+            }
+        }catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+        
     }
 
     public function getAccountCode(){

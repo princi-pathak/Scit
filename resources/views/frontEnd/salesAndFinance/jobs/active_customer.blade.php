@@ -2603,7 +2603,7 @@
                 url: "{{url('/status_change')}}",
                 data: {id:id,status:status,model:model,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if($.trim(data)==1){
                         // $('.alert').show().fadeOut(800);
                         $(".alert").show('slow' , 'linear').delay(2000).fadeOut(setTimeout(function() {
@@ -2636,7 +2636,7 @@
                 url: "{{url('/bulk_delete')}}",
                 data: {ids:ids,model:model,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data){
                         location.reload();
                     }else{
@@ -2687,7 +2687,7 @@ $('.delete_checkbox').on('click', function() {
                 url: "{{url('/get_customer_details')}}",
                 data: {id:id,_token:token},
                 success: function(data) {
-                    console.log(data)
+                    // console.log(data)
                     $('.customer_name').text(data.customer.name);
                     $("#notes_customer_id").val(data.customer.id);
                     $("#call_customer_id").val(data.customer.id);
@@ -2778,7 +2778,7 @@ $('.delete_checkbox').on('click', function() {
                 url: "{{url('/find_project')}}",
                 data: {customer_id:customer_id,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     const projectArr=data.project;
                     projectArr.forEach((project) => {
                         const option = document.createElement("option");
@@ -2875,7 +2875,7 @@ $('.delete_checkbox').on('click', function() {
             cache: false,
             processData: false,
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data.vali_error){
                         alert(data.vali_error);
                         $("#email").css('border','1px solid red');
@@ -2964,7 +2964,7 @@ job_input.addEventListener('input', function() {
                 url: "{{url('/find_appointment')}}",
                 data: {job_id:job_id,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data.length>0){
                         $('#job_appointment_id').prop('disabled',false);
                         var selectHTML = '';
@@ -3094,7 +3094,7 @@ job_input.addEventListener('input', function() {
                     method: 'POST',
                     data: {_token:token},
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                          if(data.success){
                             var data = data.data;
                             var selectBody = $("#contact_customer_id"); 
@@ -3129,7 +3129,7 @@ job_input.addEventListener('input', function() {
             url: '{{ route("lead.ajax.getCRMTypeData") }}',
             method: 'GET',
             success: function(response) {
-                console.log(response.Data);
+                // console.log(response.Data);
                 const selectElement = document.getElementById('calls_type');
                 const lead_notes_crm = document.getElementById('lead_notes_crm');
                 const lead_complaint_crm = document.getElementById('lead_complaint_crm');
@@ -3218,7 +3218,7 @@ job_input.addEventListener('input', function() {
                     method: 'POST',
                     data: formData,
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         if(data.vali_error){
                         alert(data.vali_error);
                         $("#user_notifiy").css('border','1px solid red');
@@ -3327,7 +3327,7 @@ job_input.addEventListener('input', function() {
                     contentType: false,
                     processData: false,
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         if(data.vali_error){
                         alert(data.vali_error);
                         $("#user_notifiy").css('border','1px solid red');
@@ -3378,7 +3378,7 @@ job_input.addEventListener('input', function() {
                     // processData: false,  
                     // contentType: false,  
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
                         if(response.vali_error){
                         alert(response.vali_error);
                         $("#user_notifiy").css('border','1px solid red');
@@ -3431,7 +3431,7 @@ job_input.addEventListener('input', function() {
                     // processData: false,  
                     // contentType: false,  
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
                         
                         if(response.vali_error){
                             alert(response.vali_error);
@@ -3474,7 +3474,7 @@ job_input.addEventListener('input', function() {
                 method: 'POST',
                 data: formData,
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.vali_error) {
                         alert(data.vali_error);
                         return false;
@@ -3504,7 +3504,7 @@ job_input.addEventListener('input', function() {
                     url: '{{ url("/save_task_type") }}',
                     data: {home_id: home_id, title: title, status: status, _token: token},
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         if(data.vali_error){
                             alert(data.vali_error);
                             return false;
@@ -3533,7 +3533,7 @@ job_input.addEventListener('input', function() {
                 crm_section: crmSection,
                 _token:token
             };
-            console.log(formData);
+            // console.log(formData);
             addCRMTypes(formData, 3);
         });
         $('#saveCRMTypesComplaint').on('click', function() {
@@ -3547,7 +3547,7 @@ job_input.addEventListener('input', function() {
                 crm_section: crmSection,
                 _token:token
             };
-            console.log(formData);
+            // console.log(formData);
             addCRMTypes(formData, 4);
         });
         // Ajax Call for saving CRM section Type
@@ -3600,7 +3600,7 @@ job_input.addEventListener('input', function() {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response.data);
+                // console.log(response.data);
                 var data = response.data;
                 var paginationCall = response.pagination;
                 var tableBody = $("#customer_crmData"); 
@@ -3661,7 +3661,7 @@ job_input.addEventListener('input', function() {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
                 var paginationEmail = response.pagination;
                 var tableBody = $("#crm_customer_email"); 
@@ -3720,7 +3720,7 @@ job_input.addEventListener('input', function() {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
                 var tableBody = $("#crm_customer_task"); 
                 var paginationTask = response.pagination;
@@ -3773,7 +3773,7 @@ job_input.addEventListener('input', function() {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
                 var paginationNotes = response.pagination;
                 var tableBody = $("#crm_customer_note"); 
@@ -3837,7 +3837,7 @@ job_input.addEventListener('input', function() {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
                 var pagination = response.pagination;
                 var tableBody = $("#crm_customer_complaint"); 
@@ -3905,7 +3905,7 @@ job_input.addEventListener('input', function() {
                 userTyep:userTyep,id: id,_token:token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
                 var paginationContact = response.pagination;
                 var tableBody = $("#crm_customer_contact"); 
@@ -3967,7 +3967,7 @@ job_input.addEventListener('input', function() {
             url: "{{url('/visibility_change')}}",
             data: {id:id,_token:token},
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 // visible_check1
                 var visibilityCell = '';
                 if(data.data.customer_visibility == 0){
@@ -4135,7 +4135,7 @@ job_input.addEventListener('input', function() {
                 url: "{{url('/save_job_title')}}",
                 data: {name:name,status:status,home_id:home_id,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     
                     $("#job_modaltitle").modal('hide');
                     $('.get_job_title_result').append(data);
@@ -4190,7 +4190,7 @@ job_input.addEventListener('input', function() {
                 url: "{{url('/contact_save')}}",
                 data: {userType:userType,country_id:country_id,postcode:postcode,country:country,city:city,address:address,fax:fax,mobile:mobile,telephone:telephone,email:email,job_title_id:job_title_id,contact_name:contact_name,customer_id:customer_id,default_billing:default_billing,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     $("#contact_modal").modal('hide');
                     $("#notes_contact").append(data);
                     $("#comaplint_contact").append(data);
@@ -4219,7 +4219,7 @@ job_input.addEventListener('input', function() {
             url: "{{url('/default_address')}}",
             data: {check:check,customer_id:customer_id,_token:token},
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 if(check == 1){
                     $("#contact_address").val(data.details.address);
                     $("#contact_city").val(data.details.city);
@@ -4256,11 +4256,11 @@ job_input.addEventListener('input', function() {
                     var customerData = ContactData[i].customers;
                     var user=ContactData[i].user;
                     if(ContactData[i].userType == 1){
-                        customer_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>CUSTOMER</td><td>' + customerData.name + '</td><td>' + (customerData.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
+                        customer_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>CUSTOMER</td><td>' + (customerData.name ?? '') + '</td><td>' + (customerData.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
                     }else if(ContactData[i].userType == 2){
-                        supplier_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>Supplier</td><td>' + customerData.name + '</td><td>' + (customerData.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
+                        supplier_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>Supplier</td><td>' + (customerData.name ?? '') + '</td><td>' + (customerData.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
                     }else if(ContactData[i].userType == 3){
-                        user_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>User</td><td>' + user.name + '</td><td>' + (user.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
+                        user_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>User</td><td>' + (user.name ?? '') + '</td><td>' + (user.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
                     }else{
                         alert("Something is wrong");
                         return false;
@@ -4280,7 +4280,7 @@ job_input.addEventListener('input', function() {
     function select_row(rowElement,id,name){
         $('.contact-row').removeClass('selected-row');
         $(rowElement).addClass('selected-row');
-        console.log(rowElement);
+        // console.log(rowElement);
         selectedContactId = id;
         selectedContactName = name;
     }
@@ -4319,7 +4319,7 @@ job_input.addEventListener('input', function() {
                 _token: token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 if (response.success && response.callHistoryData.length > 0) {
                     data = response.callHistoryData;
                     setupPagination();
