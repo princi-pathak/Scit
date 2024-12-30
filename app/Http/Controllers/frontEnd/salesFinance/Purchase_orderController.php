@@ -5,7 +5,8 @@ namespace App\Http\Controllers\frontEnd\salesFinance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Auth;
+use App\Http\Requests\NewTaskRequest;
+use Auth,Log;
 use App\Customer;
 use App\Models\Department;
 use App\Models\Project;
@@ -31,6 +32,9 @@ use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderProduct;
 use App\Models\AttachmentType;
 use App\Models\PoAttachment;
+use App\Models\PrucahseOrderNewTask;
+use App\Models\Task_type;
+use App\User;
 
 class Purchase_orderController extends Controller
 {
@@ -139,8 +143,9 @@ class Purchase_orderController extends Controller
             if(!empty($request->product_id) && count($request->product_id)>0){
                 $requestData['purchase_order_id'] = $purchaseOrder->id;
                 $PurchaseOrderProduct=$this->savePurchaseOrderProduct($requestData);
-                if($PurchaseOrderProduct == 0){
-                    return response()->json(['success' => false,'message'=>'Something went wrong.', 'data' => array()]);
+                $responseData = $PurchaseOrderProduct->getData(true);
+                if (empty($responseData['success']) || $responseData['success'] === false) {
+                    return response()->json(['success' => false,'message' => 'Something went wrong.','data' => [],]);
                 }
             }
             if($request->id == ''){
@@ -162,19 +167,83 @@ class Purchase_orderController extends Controller
             return $order_ref='PO-'.$order_count+1;
         }
     }
+    public function getPurchaesOrderProductDetail(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id=Auth::user()->home_id;
+        $purchase_order_products = PurchaseOrder::with(['purchaseOrderProducts'])->where(['id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
+        // return $purchase_order_products;
+        $tax=Product::tax_detail($home_id);
+        $all_job=Job::getAllJob($home_id)->where('status',1)->get();
+        $accountCode=Construction_account_code::getActiveAccountCode($home_id);
+        $data_array = [];
+        foreach ($purchase_order_products as $purchase_order) {
+            $product=$purchase_order->purchaseOrderProducts->toArray();
+            $product_details = $purchase_order->toArray();
+            foreach($product as $val){
+                // return $val['product_id'];
+                $purchase_order_products_detail = Product::product_detail($val['product_id']);
+
+                $data_array[] = [
+                    'product_details' => $product_details,
+                    'tax'=>$tax,
+                    'all_job'=>$all_job,
+                    'accountCode'=>$accountCode,
+                    'purchase_order_products_detail'=>$purchase_order_products_detail
+                ];
+            }
+            
+        }
+        // return $data_array;
+        return response()->json([
+            'success' => true, 'data' => $data_array, 
+            'pagination' => [
+                    'total' => $purchase_order_products->total(),
+                    'current_page' => $purchase_order_products->currentPage(),
+                    'last_page' => $purchase_order_products->lastPage(),
+                    'per_page' => $purchase_order_products->perPage(),
+                    'next_page_url' => $purchase_order_products->nextPageUrl(),
+                    'prev_page_url' => $purchase_order_products->previousPageUrl(),
+                ]
+        ]);
+    }
+    public function vat_tax_details(Request $request){
+        // echo "<pre>";print_r($request->all());
+        $dataVat=Construction_tax_rate::getTaxRateOnId($request->vat_id);
+        return response()->json(['success'=>true,'data'=>$dataVat]);
+
+    }
     public function savePurchaseOrderProduct($data){
         // echo "<pre>";print_r($data);die;
-        $product_id=$data['product_id'];
-        try{
-            for($i=0;$i<count($product_id);$i++){
-                $PurchaseOrderProduct=PurchaseOrderProduct::savePurchaseOrderProduct($data[$ii]);
-                if($PurchaseOrderProduct){
-                    return 1;
-                }else{
-                    return 0;
+        try {
+            $product_ids = $data['product_id'];
+            $success = 0;
+
+            for ($i = 0; $i < count($product_ids); $i++) {
+                $productData = [
+                    'id'=>$data['purchase_product_id'][$i] ?? null,
+                    'user_id'=>Auth::user()->id,
+                    'userType'=>2,
+                    'purchase_order_id' => $data['purchase_order_id'],
+                    'product_id' => $product_ids[$i],
+                    'description' => $data['description'][$i] ?? null,
+                    'accountCode_id' => $data['accountCode_id'][$i] ?? null,
+                    'qty' => $data['qty'][$i] ?? 0,
+                    'price' => $data['price'][$i] ?? 0,
+                    'vat_id' => $data['vat_id'][$i] ?? null,
+                    'vat' => $data['vat'][$i] ?? 0,
+                ];
+                // echo "<pre>";print_r($productData);die;
+                $PurchaseOrderProduct = PurchaseOrderProduct::savePurchaseOrderProduct($productData);
+                if ($PurchaseOrderProduct) {
+                    $success++;
                 }
             }
-        }catch (\Exception $e) {
+            if ($success === count($product_ids)) {
+                return response()->json(['success' => true, 'message' => 'All products saved successfully.']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Some products could not be saved.']);
+            }
+        } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
@@ -191,7 +260,7 @@ class Purchase_orderController extends Controller
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
                 $imageName = time() . '.' . $file->extension();      
-                // $file->move(public_path('images/purchase_order'), $imageName);
+                $file->move(public_path('images/purchase_order'), $imageName);
         
                 $original_name = $file->getClientOriginalName();
                 $mime_type = $file->getMimeType();
@@ -228,8 +297,7 @@ class Purchase_orderController extends Controller
     }
     public function getAllAttachmens(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        // $purchase_orders=PurchaseOrder::with('poAttachments')->where('id',$request->id)->orderBy('id', 'desc')->paginate(10);
-        $purchase_orders = PurchaseOrder::with(['poAttachments.attachmentType'])->where('id', $request->id)->orderBy('id', 'desc')->paginate(10);
+        $purchase_orders = PurchaseOrder::with(['poAttachments.attachmentType'])->where(['id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
 
         return response()->json([
             'success' => true, 'data' => $purchase_orders, 
@@ -243,5 +311,119 @@ class Purchase_orderController extends Controller
                 ]
         ]);
 
+    }
+    public function delete_po_attachment(Request $request){
+        $id=$request->id;
+        try{
+            PoAttachment::find($id)->update(['deleted_at' => now()]);
+            return response()->json(['success'=>true,'message'=>'Deleted Successfully done']);
+        }catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function purchase_productsDelete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id=$request->id;
+        try{
+            PurchaseOrderProduct::find($id)->update(['deleted_at' => now()]);
+            return response()->json(['success'=>true,'message'=>'Deleted Successfully done']);
+        }catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function purchase_order_new_task_save(NewTaskRequest $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validatedData = $request->validated();
+        try{
+            if ($request->notify == 1) {
+                $notification = $request->has('notification') ? 1 : 0;
+                $sms = $request->has('sms') ? 1 : 0;
+                $email = $request->has('email') ? 1 : 0;
+            }
+    
+            if (!isset($notification) || !isset($sms) || !isset($email)) {
+                $notification = $sms = $email = null;
+            }
+            $values = [
+                'id'=>$request->id,
+                'po_id'=>$request->task_po_id,
+                'home_id' => Auth::user()->home_id,
+                'supplier_id' => $request->task_supplier_id,
+                'user_id' => $request->user_id ?? $request->user_id_timer,
+                'title' => $request->title ?? $request->title_timer,
+                'task_type_id' => $request->task_type_id ?? $request->task_type_timer_id,
+                'start_date' => $request->start_date ?? Carbon::now()->toDateString(),
+                'start_time' => $request->start_time ?? Carbon::now()->toTimeString(),
+                'end_date' => $request->end_date,
+                'end_time' => $request->end_time,
+                'is_recurring' => $request->is_recurring ?? false,
+                'notify' => $request->notify,
+                'notification' => $notification,
+                'sms' => $sms,
+                'email' => $email,
+                'notify_date' => $request->notify_date,
+                'notify_time' => $request->notify_time,
+                'notes' => $request->notes ?? $request->notes_timer
+            ];
+            $data=PrucahseOrderNewTask::savePurchaseOrderNewTask($values);
+            if($request->id == ''){
+                return response()->json(['success'=>true,'message'=>'New Task Successfully Added','data'=>$data]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'New Task Successfully Updated','data'=>$data]);
+            }
+            
+        }catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function getAllNewTaskList(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $data_newTask=PrucahseOrderNewTask::where(['po_id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
+        $data_array=[];
+        foreach($data_newTask as $val){
+            $ref=PurchaseOrder::find($val->po_id);
+            $user=User::find($val->user_id);
+            $type=Task_type::find($val->task_type_id);
+            $data_array[]=[
+                'date'=>$val->start_date,
+                'ref'=>$ref->purchase_order_ref,
+                'user'=>$user->name,
+                'type'=>$type->title,
+                'title'=>$val->title,
+                'notes'=>$val->notes,
+                'created_at'=>$val->created_at,
+                'executed'=>$val->start_date,
+                'id'=>$val->id,
+                'po_id'=>$val->po_id,
+                'supplier_id'=>$val->supplier_id,
+                'user_id'=>$val->user_id,
+                'task_type_id'=>$val->task_type_id,
+                'start_time'=>$val->start_time,
+                'end_date'=>$val->end_date,
+                'end_time'=>$val->end_time,
+                'is_recurring'=>$val->is_recurring,
+                'notify'=>$val->notify,
+                'notify_date'=>$val->notify_date,
+                'notify_time'=>$val->notify_time,
+                'notification'=>$val->notification,
+                'email'=>$val->email,
+                'sms'=>$val->sms,
+
+            ];
+        }
+        return response()->json([
+            'success' => true, 'data' => $data_array, 
+            'pagination' => [
+                    'total' => $data_newTask->total(),
+                    'current_page' => $data_newTask->currentPage(),
+                    'last_page' => $data_newTask->lastPage(),
+                    'per_page' => $data_newTask->perPage(),
+                    'next_page_url' => $data_newTask->nextPageUrl(),
+                    'prev_page_url' => $data_newTask->previousPageUrl(),
+                ]
+        ]);
     }
 }

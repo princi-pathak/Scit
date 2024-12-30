@@ -22,6 +22,9 @@ class PurchaseOrder extends Model
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
     public function poAttachments(){
-        return $this->hasMany(PoAttachment::class, 'po_id', 'id');
+        return $this->hasMany(PoAttachment::class, 'po_id', 'id')->whereNull('deleted_at');
+    }
+    public function purchaseOrderProducts(){
+        return $this->hasMany(PurchaseOrderProduct::class, 'purchase_order_id', 'id')->whereNull('deleted_at');
     }
 }

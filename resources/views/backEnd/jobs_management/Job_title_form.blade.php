@@ -67,7 +67,7 @@ padding: 5px 0px 15px 0px;
                                         <input type="hidden" name="home_id" id="home_id" value="<?php echo ($home_id?$home_id:'');?>">
 										<button type="button" class="btn btn-primary save-btn" onclick="get_data()">Save</button>
 
-                                        <a href="{{ url('admin/customer_type') }}">
+                                        <a href="{{ url('admin/job_title') }}">
                                             <button type="button" class="btn btn-default" name="cancel">Cancel</button>
                                         </a>
 									</div>
