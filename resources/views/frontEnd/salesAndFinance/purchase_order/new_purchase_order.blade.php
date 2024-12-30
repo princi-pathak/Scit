@@ -302,7 +302,12 @@
                                             <label for="inputAddress"
                                                 class="col-sm-6 col-form-label">Expected Delivery On</label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control editInput textareaInput" id="purchase_expected_deleveryDate" name="expected_deleveryDate" value="<?php if(isset($purchase_orders) && $purchase_orders->expected_deleveryDate != ''){echo $purchase_orders->expected_deleveryDate;}?>">
+                                            <?php
+                                                $expectedDeliveryDate = isset($purchase_orders) && !empty($purchase_orders->expected_deleveryDate)
+                                                    ? $purchase_orders->expected_deleveryDate
+                                                    : date('Y-m-d', strtotime('+1 day'));
+                                            ?>
+                                                <input type="date" class="form-control editInput textareaInput" id="purchase_expected_deleveryDate" name="expected_deleveryDate" value="<?php echo $expectedDeliveryDate;?>">
                                             </div>
                                             <div class="col-sm-2 calendar_icon">
                                                 <i class="fa fa-calendar-alt"></i>
@@ -472,7 +477,7 @@
                                                     <th>Product </th>
                                                     <th>Code</th>
                                                     <th>Description </th>
-                                                    <th>Account Code <a href="javascript:void(0)" class="formicon" onclick="get_modal(8)"><i class="fa-solid fa-square-plus"></i>
+                                                    <th>Account Code <a href="javascript:void(0)" class="formicon" onclick="openAccountCodeModal(null)"><i class="fa-solid fa-square-plus"></i>
                                                     </a> </th>
                                                     <th>QTY</th>
                                                     <th>Price</th>
@@ -614,31 +619,52 @@
                                     </div>
                                     <div class="col-sm-12 mb-3 mt-2">
                                         <div class="jobsection">
-                                            <a href="javascript:void(0)" onclick="get_modal(12)" class="profileDrop">Tasks</a>
-                                            <a href="javascript:void(0)" onclick="get_modal(13)" class="profileDrop">Recurring Tasks</a>
-
+                                            <a href="javascript:void(0)" class="profileDrop bgColour" id="task_active_inactive" @if(isset($key) || $key != '') style="background-color:#474747" @endif  onclick="bgColorChange(1)">Tasks</a>
+                                            <a href="javascript:void(0)" class="profileDrop bgColour" id="recurring_active_inactive" onclick="bgColorChange(2)">Recurring Tasks</a>
                                         </div>
                                     </div>
 
-                                    <!-- <div class="col-sm-12">
+                                    <div class="col-sm-12" id="taskHideShow">
                                         <div class="productDetailTable">
                                             <table class="table">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>Full Name </th>
-                                                        <th>Username</th>
-                                                        <th>Email</th>
-                                                        <th>Telephone </th>
-                                                        <th>Last Login </th>
-                                                        <th>Status </th>
+                                                        <th>Date</th>
+                                                        <th>Ref</th>
+                                                        <th>User</th>
+                                                        <th>Type</th>
+                                                        <th>Title</th>
+                                                        <th>Notes</th>
+                                                        <th>Created On</th>
+                                                        <th>Executed</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="login_result"></tbody>
+                                                <tbody id="newtask_result"></tbody>
                                             </table>
+                                            <div id="pagination-controls-New-task"></div>
                                         </div>
-                                    </div> -->
+                                    </div>
+                                    <div class="col-sm-12" id="recurringHideShow" style="display:none">
+                                        <div class="productDetailTable">
+                                            <table class="table">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Ref</th>
+                                                        <th>User</th>
+                                                        <th>Type</th>
+                                                        <th>Title</th>
+                                                        <th>Notes</th>
+                                                        <th>Created On</th>
+                                                        <th>Executed</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id=""></tbody>
+                                            </table>
+                                            <div id="pagination-controls-recurring"></div>
+                                        </div>
+                                    </div>
                                     
                                 </div>
                             </div>
@@ -686,6 +712,7 @@
 @include('components.add-project-modal')
 @include('components.department-model')
 @include('components.product-list')
+@include('components.account-code')
 @include('frontEnd.salesAndFinance.item.common.addproductmodal')
 
 <x-tag-modal
@@ -702,12 +729,48 @@
     purchaseformId="purchase_Attachmentform"
     refTitle="Purchase"
     modalTitle="Add Attachment"
-    TypeId="purchase_typeId"
+    typeId="purchase_typeId"
     inputTitle="purchase_title"
-    selectfile_name="purchase_file"
+    selectfileName="purchase_file"
     inputDescription="purchase_description"
     saveButtonId="savePurchaseAttachment"
     hiddenForeignId="po_id"
+/>
+
+<x-new-task-modal 
+    modalId="NewTaskModal"
+    modalTitle="New Task"
+    formId="newTaskform"
+    taskCustomerId="task_supplier_id"
+    taskId="task_id"
+    foriegnId="task_po_id"
+    userId="task_user_id"
+    taskTitle="taskTitle"
+    taskTypeId="taskTypeId"
+    taskStartDate="taskStartDate"
+    taskStartTime="taskStartTime"
+    taskEndDate="taskEndDate"
+    taskEndTime="taskEndTime"
+    notifyDate="notify_date"
+    notifyTime="notify_time"
+    taskNotesText="taskNotesText"
+    modalLabelTitle="modal_label_title"
+    saveButtonId="saveNewTask"
+    saveButtonUrl="{{url('/purchase_order_new_task_save')}}"
+/>
+
+<x-vat-tax-rate 
+    modalId="VatTaxRateModal"
+    modalTitle="Departmental Code - Add"
+    formId="vattaxrateform"
+    id="vattaxrate_id"
+    name="vat_tax_name"
+    taxRate="vat_tax_rate"
+    taxCode="vat_tax_code"
+    expDate="vat_tax_expdate"
+    status="vat_tax_satatus"
+    saveButtonId="saveVatTaxRate"
+    saveButtonUrl="{{ url('/save_tax_rate') }}"
 />
 
 <!-- End here -->
@@ -764,11 +827,13 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 _token: token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 $('#purchase_contact_id').removeAttr('disabled');
                 var contactSelect=document.getElementById("purchase_contact_id");
                 $("#contact_customer_id").val(response.data.id);
                 $("#contact_customer_name").text(response.data.name);
+                $("#task_supplier_id").val(response.data.id);
+                $(".customer_name").text(response.data.name);
                 const all_contact=response.data.contacts;
                 if (all_contact && all_contact.length > 0) {
                     contactSelect.innerHTML='';
@@ -796,7 +861,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 _token: token
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 $('#purchase_project_id').removeAttr('disabled');
                 $('#purchase_site_id').removeAttr('disabled');
                 if (data.customers && data.customers.length > 0) {
@@ -834,8 +899,10 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
 <script>
     function get_modal(modal){  
         // alert(modal)
+        var purchase_ref='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->purchase_order_ref;}?>'
+        var po_id='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>'
         var supplier_select_check=$("#purchase_supplier_id").val();
-        var modal_array=[1,2,4,7,8,9];
+        var modal_array=[1,2,4,7];
         if(supplier_select_check == null && modal_array.includes(modal)){
             alert("Please select Supplier");
             return false;
@@ -874,21 +941,22 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             }else if(modal == 7){
                 itemsAddProductModal(1);
             }else if(modal == 10){
-                var purchase_ref='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->purchase_order_ref;}?>'
-                var po_id='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>'
                 $("#purchase_Attachmentform")[0].reset();
                 $("#Purchase_ref").val(purchase_ref);
                 $("#po_id").val(po_id);
                 $("#purchase_model").modal('show');
+            }else if(modal == 11){
+                $("#newTaskform")[0].reset();
+                get_supplier_details();
+                $("#modal_label_title").text('Supplier');
+                $("#related_To").text(purchase_ref);
+                $("#task_po_id").val(po_id);
+                $("#NewTaskModal").modal('show');
+
+            }else if(modal == 9){
+                $("#vattaxrateform")[0].reset();
+                $("#VatTaxRateModal").modal('show');
             }
-            // else if(modal == 9){
-            //     $("#product_category_form")[0].reset();
-            //     $("#product_category_modal").modal('show');
-            // }
-            // else if(modal == 10){
-            //     $("#product_tax_form")[0].reset();
-            //     $("#product_tax_modal").modal('show');
-            // }
         }
         
     }
@@ -963,7 +1031,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 cache: false,
                 processData: false,
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                 if(response.vali_error){
                         alert(response.vali_error);
                         $(window).scrollTop(0);
@@ -1001,7 +1069,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             cache: false,
             processData: false,
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 if(response.vali_error){
                         alert(response.vali_error);
                         $(window).scrollTop(0);
@@ -1051,7 +1119,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 cache: false,
                 processData: false,
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                     if(response.vali_error){
                         alert(response.vali_error);
                         $(window).scrollTop(0);
@@ -1111,7 +1179,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 id: id, key:key, _token: token
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 const tableBody = document.querySelector(`#result tbody`);
         
                 if (data.length === 0) {
@@ -1179,6 +1247,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
 
                         const dropdownAccountCode = document.createElement('td');
                         const selectDropdownAccountCode = document.createElement('select');
+                        selectDropdownAccountCode.className='accountCode_id';
                         selectDropdownAccountCode.name = 'accountCode_id[]';
 
                         const optionsAccountCode = data.accountCode;
@@ -1229,6 +1298,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                             getIdVat($(this).val(),row);
                         });
                         selectDropdownVat.name = 'vat_id[]';
+                        selectDropdownVat.className='vat_id';
                         const optionsVat =data.tax;
                         var tax_rate='00';
                         optionsVat.forEach(optionVat => {
@@ -1283,7 +1353,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
         });
     }
     function removeRow(button,id=null) {
-        console.log(button);
+        // console.log(button);
         const table = document.getElementById("result");
         const tbody = table.querySelector("tbody");
         const rowCount = tbody ? tbody.rows.length : 0;
@@ -1299,7 +1369,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 url: "{{url('purchase_productsDelete')}}",
                 data: {id:id,_token: token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data.success != true){
                         alert("Something went wrong! Please try later");
                         return false;
@@ -1376,7 +1446,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             url: "{{url('/vat_tax_details')}}",
             data: {vat_id:vat_id,_token:token},
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 if(response){
                     const vat_value=Number(response.data);
                     var td=row.querySelector('td:nth-last-child(4)');
@@ -1420,7 +1490,7 @@ $('#search-product').on('keyup', function() {
                 query: query
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 // $('#results').html(response);
                 divList.innerHTML = "";
                 const div = document.createElement('div');
@@ -1470,8 +1540,11 @@ $('#search-product').on('keyup', function() {
  <script>
     $(document).ready(function(){
         var purchaseOrderId='<?php if(isset($purchase_orders)){echo $purchase_orders->id;}?>'
-        getAttachment(purchaseOrderId,'{{ url("getAllAttachmens") }}');
-        getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
+        if(purchaseOrderId){
+            getAttachment(purchaseOrderId,'{{ url("getAllAttachmens") }}');
+            getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
+            getAllNewTaskList(purchaseOrderId,'{{ url("getAllNewTaskList") }}');
+        }
     });
     function getAttachment(id,pageUrl = '{{ url("getAllAttachmens") }}'){
         var token='<?php echo csrf_token();?>'
@@ -1498,7 +1571,7 @@ $('#search-product').on('keyup', function() {
                     const size = attachment.size || '';
                     const created_at=attachment.created_at || '';
                     var date = moment(created_at).format('DD/MM/YYYY HH:mm');
-
+                    var imag_url="<?php echo url('public/images/purchase_order/');?>"+'/'+attachment.file;
                     tbody.append(`
                         <tr>
                             <td><input type="checkbox" id="" class="delete_checkbox" value="`+attachment.id+`"></td>
@@ -1510,7 +1583,7 @@ $('#search-product').on('keyup', function() {
                             <td>${fileName}</td>
                             <td>${mime_type} / ${size}</td>
                             <td>${date}</td>
-                            <td><i class="fa fa-eye"></i> &emsp; <img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="attachment_delete image_style" data-delete=`+attachment.id+`></td>
+                            <td><a href="`+imag_url+`" target="_blank"><i class="fa fa-eye"></i></a> &emsp; <img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="attachment_delete image_style" data-delete=`+attachment.id+`></td>
                         </tr>
                     `);
                     attachmentCount++;
@@ -1539,7 +1612,7 @@ $('#search-product').on('keyup', function() {
             success: function(response) {
                 // console.log(response);
                 var data=response.data[0];
-                console.log(data);
+                // console.log(data);
                 const tableBody = document.querySelector(`#result tbody`);
                 var purchase_order_products=data.product_details.purchase_order_products;
                 // console.log(purchase_order_products);return false;
@@ -1617,7 +1690,12 @@ $('#search-product').on('keyup', function() {
 
                         const dropdownAccountCode = document.createElement('td');
                         const selectDropdownAccountCode = document.createElement('select');
+                        selectDropdownAccountCode.className='accountCode_id';
                         selectDropdownAccountCode.name = 'accountCode_id[]';
+                        // selectDropdownAccountCode.addEventListener('click', function() {
+                        //     var elements = document.getElementsByClassName('accountCode_id');
+                        //     getAccountCode(elements);
+                        // });
 
                         const optionsAccountCode = data.accountCode;
 
@@ -1666,6 +1744,7 @@ $('#search-product').on('keyup', function() {
                             getIdVat($(this).val(),row);
                         });
                         selectDropdownVat.name = 'vat_id[]';
+                        selectDropdownVat.className='vat_id';
                         const optionsVat =data.tax;
                         var tax_rate='00';
                         optionsVat.forEach(optionVat => {
@@ -1735,6 +1814,100 @@ $('#search-product').on('keyup', function() {
             }
         });
     }
+    function getAllNewTaskList(id,pageUrl = '{{ url("getAllNewTaskList") }}'){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {id: id,_token:token},
+            success: function(response) {
+                // console.log(response);
+                var paginationNewTask = response.pagination;
+                const newTask = response.data;
+                // console.log(newTask);
+                const tbody = $('#newtask_result');
+                tbody.empty();
+                var taskCount=1;
+                newTask.forEach(task => {
+                    const created_at = moment(task.created_at).format('DD/MM/YYYY HH:mm');
+                    const date = moment(task.date).format('DD/MM/YYYY HH:mm');
+                    const executed = moment(task.executed).format('DD/MM/YYYY HH:mm');
+                    const imag_path='{{url("public/frontEnd/jobs/images/pencil.png")}}';
+                    tbody.append(`
+                        <tr>
+                            <td>${date}</td>
+                            <td>${task.ref}</td>
+                            <td>${task.user}</td>
+                            <td>${task.type}</td>
+                            <td>${task.title}</td>
+                            <td>${task.notes || ''}</td>
+                            <td>${created_at}</td>
+                            <td>-</td>
+                            <td><img src="${imag_path}" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#NewTaskModal" class="modal_dataTaskFetch image_style" data-id="${task.id}" data-po_id="${task.po_id}" data-supplier_id="${task.supplier_id}" data-user_id="${task.user_id}" data-title="${task.title}" data-task_type_id="${task.task_type_id}" data-start_date="${task.date}" data-start_time="${task.start_time}" data-end_date="${task.end_date}" data-end_time="${task.end_time}" data-is_recurring="${task.is_recurring}" data-notify="${task.notify}" data-notify_date="${task.notify_date}" data-notify_time="${task.notify_time}" data-notification="${task.notification}" data-email="${task.email}" data-sms="${task.sms}" data-notes="${task.notes}"></td>
+                        </tr>
+                    `);
+                    taskCount++;
+                });
+                var paginationControlsNewTask = $("#pagination-controls-New-task");
+                paginationControlsNewTask.empty();
+                if (paginationNewTask.prev_page_url) {
+                    paginationControlsNewTask.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationNewTask.next_page_url) {
+                    paginationControlsNewTask.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                location.reload();
+            }
+        });
+    }
+    $(document).on('click','.modal_dataTaskFetch', function(){
+        var taskId = $(this).data('id');
+        var task_po_id = $(this).data('po_id');
+        var task_supplier_id = $(this).data('supplier_id');
+        var title = $(this).data('title');
+        var userId = $(this).data('user_id');
+        var taskTypeId = $(this).data('task_type_id');
+        var startDate = $(this).data('start_date');
+        var startTime = $(this).data('start_time');
+        var endDate = $(this).data('end_date');
+        var endTime = $(this).data('end_time');
+        var isRecurring = $(this).data('is_recurring');
+        var notify = $(this).data('notify');
+        var notification = $(this).data('notification');
+        var email = $(this).data('email');
+        var sms = $(this).data('sms');
+        var notifyDate = $(this).data('notify_date');
+        var notifyTime = $(this).data('notify_time');
+        var notes = $(this).data('notes');
+        
+        $('#task_id').val(taskId); 
+        $('#task_po_id').val(po_id); 
+        $('#task_supplier_id').val(task_supplier_id); 
+        $('#task_user_id').val(userId);
+        $('#taskTitle').val(title);
+        $('#taskTypeId').val(taskTypeId);
+        $('#taskStartDate').val(startDate);
+        $('#taskStartTime').val(startTime);
+        $('#taskEndDate').val(endDate).removeAttr('disabled');
+        $('#taskEndTime').val(endTime);
+        $('#notify_date').val(notifyDate);
+        $('#notify_time').val(notifyTime);
+        $('#taskNotesText').val(notes);
+        $(taskEndDate)
+        if(isRecurring == 1){
+            $('#isRecurring').prop('checked',true);
+        }else{
+            $('#isRecurring').prop('checked',false);
+        }
+        if(notify == 1){
+            $('#yeson').prop('checked',true);
+        }else{
+            $('#yeson').prop('checked',false);
+        }
+    });
     
  </script>
  <script>
@@ -1757,7 +1930,7 @@ $('#search-product').on('keyup', function() {
                 url: "{{url('/bulk_delete')}}",
                 data: {ids:ids,model:model,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data){
                         location.reload();
                     }else{
@@ -1791,11 +1964,38 @@ $(document).on('click','.attachment_delete', function() {
             url: "{{url('/delete_po_attachment')}}",
             data: {id:id,_token:token},
             success: function(data) {
-                console.log(data);
+                // console.log(data);
             }
         });
         }
     });
+ </script>
+ <script>
+    function getAllNewTask(data){
+        console.log(data);
+        getAllNewTaskList(data.po_id,pageUrl = '{{ url("getAllNewTaskList") }}');
+    }
+    function bgColorChange(button){
+        $('.bgColour').removeAttr('style');
+        $("#recurringHideShow").hide();
+        $("#taskHideShow").hide();
+        if(button ==1){
+            $("#taskHideShow").show();
+            $("#task_active_inactive").css('background-color','#474747');
+        }else{
+            $("#recurringHideShow").show();
+            $("#recurring_active_inactive").css('background-color','#474747');
+        }
+    }
+    function getAllAccountCodeList(data){
+        console.log(data.data);
+        var accList=data.data;
+        $('.accountCode_id').append('<option value="'+accList.id+'">'+accList.name+'</option>')
+    }
+    function getAllVatTaxRate(data){
+        var vatList=data.data;
+        $(".vat_id").append('<option value="'+vatList.id+'">'+vatList.name+'</option>');
+    }
  </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

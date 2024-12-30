@@ -20,9 +20,9 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Type</label>
                         <div class="col-md-9">
-                            <select name="attachment_type" id="{{ $TypeId }}" class="form-control editInput">
+                            <select name="attachment_type" id="{{ $typeId }}" class="form-control editInput">
                                 <option value="">Please Select</option>
-                                @foreach($attachment_type as $value)
+                                @foreach($attachmentType as $value)
                                 <option value="{{ $value->id }}">{{ $value->title }}</option>
                                 @endforeach
                             </select>
@@ -31,7 +31,7 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">File Name <span class="radStar ">*</span></label>
                         <div class="col-md-9">
-                            <input type="file" name="file" class="form-control editInput " placeholder="" id="{{ $selectfile_name }}">
+                            <input type="file" name="file" class="form-control editInput " placeholder="" id="{{ $selectfileName }}">
                         </div>
                     </div>
                     <div class="row form-group mt-3">

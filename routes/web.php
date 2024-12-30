@@ -390,6 +390,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/vat_tax_details','vat_tax_details');
 		Route::post('/getPurchaesOrderProductDetail','getPurchaesOrderProductDetail');
 		Route::post('/purchase_productsDelete','purchase_productsDelete');
+		Route::post('/purchase_order_new_task_save','purchase_order_new_task_save');
+		Route::post('/getAllNewTaskList','getAllNewTaskList');
 	});
 	
 	// Forontend Customer Controller

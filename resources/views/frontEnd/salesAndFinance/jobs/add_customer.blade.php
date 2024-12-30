@@ -930,13 +930,13 @@
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Telephone</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_telephone" id="site_telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        <input type="text" class="form-control editInput" name="site_telephone" maxlength="10" id="site_telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Mobile</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_mobile" id="site_mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        <input type="text" class="form-control editInput" maxlength="10" name="site_mobile" id="site_mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -1324,12 +1324,16 @@
         var postcode=$("#contact_postcode").val();
         var country_id=$("#contact_country_code").val();
         var id=$("#contact_id").val();
+        var emailError=$("#emailErr2").text();
         if(contact_name == ''){
             $("#concontact_name").css('border','1px soild red');
             return false;
         }else if(address == ''){
             $("#concontact_name").css('border','');
             $("#address").css('border','1px soild red');
+            return false;
+        }else if(emailError.length>0){
+            alert(emailError);
             return false;
         }else{
                 $.ajax({
@@ -1417,6 +1421,7 @@
         var country_id=$("#site_country_id").val();
         var notes=$("#site_note").val();
         var id=$("#site_id").val();
+        var emailErr3=$("#emailErr3").text();
         if(site_name == ''){
             $("#site_name").css('border','1px solid red');
             // $(window).scrollTop($('#site_name').position().top);
@@ -1431,7 +1436,11 @@
             $("#site_address").css('border','1px solid red');
             // $(window).scrollTop($('#site_address').position().top);
             return false;
+        }else if(emailErr3.length >0){
+            alert(emailErr3);
+            return false;
         }else{
+            alert(123);return false;
             $("#site_name").css('border','');
             $("#site_contact_name").css('border','');
             $("#site_address").css('border','');

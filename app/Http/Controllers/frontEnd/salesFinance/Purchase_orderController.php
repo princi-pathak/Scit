@@ -5,7 +5,8 @@ namespace App\Http\Controllers\frontEnd\salesFinance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Auth;
+use App\Http\Requests\NewTaskRequest;
+use Auth,Log;
 use App\Customer;
 use App\Models\Department;
 use App\Models\Project;
@@ -31,6 +32,9 @@ use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderProduct;
 use App\Models\AttachmentType;
 use App\Models\PoAttachment;
+use App\Models\PrucahseOrderNewTask;
+use App\Models\Task_type;
+use App\User;
 
 class Purchase_orderController extends Controller
 {
@@ -256,7 +260,7 @@ class Purchase_orderController extends Controller
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
                 $imageName = time() . '.' . $file->extension();      
-                // $file->move(public_path('images/purchase_order'), $imageName);
+                $file->move(public_path('images/purchase_order'), $imageName);
         
                 $original_name = $file->getClientOriginalName();
                 $mime_type = $file->getMimeType();
@@ -328,5 +332,98 @@ class Purchase_orderController extends Controller
             Log::error('Error saving Tag: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function purchase_order_new_task_save(NewTaskRequest $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validatedData = $request->validated();
+        try{
+            if ($request->notify == 1) {
+                $notification = $request->has('notification') ? 1 : 0;
+                $sms = $request->has('sms') ? 1 : 0;
+                $email = $request->has('email') ? 1 : 0;
+            }
+    
+            if (!isset($notification) || !isset($sms) || !isset($email)) {
+                $notification = $sms = $email = null;
+            }
+            $values = [
+                'id'=>$request->id,
+                'po_id'=>$request->task_po_id,
+                'home_id' => Auth::user()->home_id,
+                'supplier_id' => $request->task_supplier_id,
+                'user_id' => $request->user_id ?? $request->user_id_timer,
+                'title' => $request->title ?? $request->title_timer,
+                'task_type_id' => $request->task_type_id ?? $request->task_type_timer_id,
+                'start_date' => $request->start_date ?? Carbon::now()->toDateString(),
+                'start_time' => $request->start_time ?? Carbon::now()->toTimeString(),
+                'end_date' => $request->end_date,
+                'end_time' => $request->end_time,
+                'is_recurring' => $request->is_recurring ?? false,
+                'notify' => $request->notify,
+                'notification' => $notification,
+                'sms' => $sms,
+                'email' => $email,
+                'notify_date' => $request->notify_date,
+                'notify_time' => $request->notify_time,
+                'notes' => $request->notes ?? $request->notes_timer
+            ];
+            $data=PrucahseOrderNewTask::savePurchaseOrderNewTask($values);
+            if($request->id == ''){
+                return response()->json(['success'=>true,'message'=>'New Task Successfully Added','data'=>$data]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'New Task Successfully Updated','data'=>$data]);
+            }
+            
+        }catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function getAllNewTaskList(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $data_newTask=PrucahseOrderNewTask::where(['po_id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
+        $data_array=[];
+        foreach($data_newTask as $val){
+            $ref=PurchaseOrder::find($val->po_id);
+            $user=User::find($val->user_id);
+            $type=Task_type::find($val->task_type_id);
+            $data_array[]=[
+                'date'=>$val->start_date,
+                'ref'=>$ref->purchase_order_ref,
+                'user'=>$user->name,
+                'type'=>$type->title,
+                'title'=>$val->title,
+                'notes'=>$val->notes,
+                'created_at'=>$val->created_at,
+                'executed'=>$val->start_date,
+                'id'=>$val->id,
+                'po_id'=>$val->po_id,
+                'supplier_id'=>$val->supplier_id,
+                'user_id'=>$val->user_id,
+                'task_type_id'=>$val->task_type_id,
+                'start_time'=>$val->start_time,
+                'end_date'=>$val->end_date,
+                'end_time'=>$val->end_time,
+                'is_recurring'=>$val->is_recurring,
+                'notify'=>$val->notify,
+                'notify_date'=>$val->notify_date,
+                'notify_time'=>$val->notify_time,
+                'notification'=>$val->notification,
+                'email'=>$val->email,
+                'sms'=>$val->sms,
+
+            ];
+        }
+        return response()->json([
+            'success' => true, 'data' => $data_array, 
+            'pagination' => [
+                    'total' => $data_newTask->total(),
+                    'current_page' => $data_newTask->currentPage(),
+                    'last_page' => $data_newTask->lastPage(),
+                    'per_page' => $data_newTask->perPage(),
+                    'next_page_url' => $data_newTask->nextPageUrl(),
+                    'prev_page_url' => $data_newTask->previousPageUrl(),
+                ]
+        ]);
     }
 }
