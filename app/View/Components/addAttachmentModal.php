@@ -17,10 +17,10 @@ class addAttachmentModal extends Component
     public $modalTitle;
     public $purchaseformId;
     public $refTitle;
-    public $TypeId;
+    public $typeId;
     public $inputTitle;
     public $inputDescription;
-    public $selectfile_name;
+    public $selectfileName;
     public $hiddenForeignId;
     public $saveButtonId;
     public function __construct(
@@ -28,9 +28,9 @@ class addAttachmentModal extends Component
         string $purchaseformId = 'defaultFormId',
         string $refTitle = 'defaultRefTitle',
         string $modalTitle = 'Add Attachment',
-        string $TypeId = 'defaultTypeId',
+        string $typeId = 'defaultTypeId',
         string $inputTitle = 'defaultInputTitle',
-        string $selectfile_name = 'defaultSelectfile_name',
+        string $selectfileName = 'defaultSelectfileName',
         string $inputDescription = 'defaultInputDescription',
         string $hiddenForeignId = 'defaulthiddenForeignId',
         string $saveButtonId = 'defaultSaveButtonId',)
@@ -39,10 +39,10 @@ class addAttachmentModal extends Component
         $this->purchaseformId = $purchaseformId;
         $this->refTitle = $refTitle;
         $this->modalTitle = $modalTitle;
-        $this->TypeId = $TypeId;
+        $this->typeId = $typeId;
         $this->inputTitle = $inputTitle;
         $this->inputDescription = $inputDescription;
-        $this->selectfile_name = $selectfile_name;
+        $this->selectfileName = $selectfileName;
         $this->hiddenForeignId = $hiddenForeignId;
         $this->saveButtonId = $saveButtonId;
     }
@@ -52,7 +52,8 @@ class addAttachmentModal extends Component
      */
     public function render(): View|Closure|string
     {
-        $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
+        $data['attachmentType'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
+        // echo "<pre>";print_r($data['attachmentType']);die;
         return view('components.add-attachment-modal',$data);
     }
 }

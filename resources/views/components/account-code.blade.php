@@ -62,6 +62,7 @@
                 // getCustomerJobTitle(document.getElementById(JobTitleId));
                 // Use the currentFormId to find the specific form or field to update
                 // For example, you might want to set the region value in the form itself
+                getAllAccountCodeList(response);
             },
             error: function(error) {
                 console.error('Error saving account code:', error);

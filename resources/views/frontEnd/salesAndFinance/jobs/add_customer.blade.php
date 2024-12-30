@@ -930,13 +930,13 @@
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Telephone</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_telephone" id="site_telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        <input type="text" class="form-control editInput" name="site_telephone" maxlength="10" id="site_telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="inputName" class="col-sm-3 col-form-label">Mobile</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_mobile" id="site_mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        <input type="text" class="form-control editInput" maxlength="10" name="site_mobile" id="site_mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -1310,6 +1310,7 @@
         }else {
             default_billing=0;
         }
+        var userType=1;
         var contact_name=$("#concontact_name").val();
         var customer_id=$("#id").val();
         var job_title_id=$('#contact_title_id').val();
@@ -1323,31 +1324,40 @@
         var postcode=$("#contact_postcode").val();
         var country_id=$("#contact_country_code").val();
         var id=$("#contact_id").val();
+        var emailError=$("#emailErr2").text();
         if(contact_name == ''){
-            $("#contact_name").css('border','1px soild red');
+            $("#concontact_name").css('border','1px soild red');
             return false;
         }else if(address == ''){
-            $("#contact_name").css('border','');
+            $("#concontact_name").css('border','');
             $("#address").css('border','1px soild red');
+            return false;
+        }else if(emailError.length>0){
+            alert(emailError);
             return false;
         }else{
                 $.ajax({
                 type: "POST",
                 url: "{{url('/save_contact')}}",
-                data: {id:id,default_billing:default_billing,contact_name:contact_name,customer_id:customer_id,job_title_id:job_title_id,
+                data: {userType:userType,id:id,default_billing:default_billing,contact_name:contact_name,customer_id:customer_id,job_title_id:job_title_id,
                     email:email,telephone:telephone,mobile:mobile,fax:fax,address:address,city:city,country:country,postcode:postcode,
                     country_id:country_id,_token:token},
-                success: function(data) {
-                    console.log(data);
-                    if($.trim(data) == 'done'){
+                success: function(response) {
+                    console.log(response);
+                    if(response.vali_error){
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
+                        return false;
+                    }else if(response.success === true){
                         $("#ContactModel").modal('hide');
                         location.reload();
                     }else{
-                        alert("Something went wrong");
-                        return false;
+                        alert("Something went wrong! Please try later");
                     }
-                    
-                    
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + error);
                 }
             });
         }
@@ -1369,10 +1379,11 @@
         }
         var token='<?php echo csrf_token();?>'
         var customer_id=$("#id").val();
+        var userType=1;
         $.ajax({
             type: "POST",
             url: "{{url('/default_address')}}",
-            data: {check:check,customer_id:customer_id,_token:token},
+            data: {userType:userType,check:check,customer_id:customer_id,_token:token},
             success: function(data) {
                 console.log(data);
                 if(check == 1){
@@ -1410,6 +1421,7 @@
         var country_id=$("#site_country_id").val();
         var notes=$("#site_note").val();
         var id=$("#site_id").val();
+        var emailErr3=$("#emailErr3").text();
         if(site_name == ''){
             $("#site_name").css('border','1px solid red');
             // $(window).scrollTop($('#site_name').position().top);
@@ -1424,7 +1436,11 @@
             $("#site_address").css('border','1px solid red');
             // $(window).scrollTop($('#site_address').position().top);
             return false;
+        }else if(emailErr3.length >0){
+            alert(emailErr3);
+            return false;
         }else{
+            alert(123);return false;
             $("#site_name").css('border','');
             $("#site_contact_name").css('border','');
             $("#site_address").css('border','');

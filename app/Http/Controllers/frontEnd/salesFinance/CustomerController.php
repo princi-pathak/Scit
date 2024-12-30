@@ -1098,7 +1098,14 @@ class CustomerController extends Controller
         // echo "<pre>";print_r($contact);die;
         $arrya=array();
         foreach($contact as $val){
-            $customer_id=Customer::find($val->customer_id);
+            if($val->userType == 1){
+                $customer_id=Customer::find($val->customer_id);
+            }else if($val->userType == 2){
+                $customer_id=Supplier::find($val->customer_id);
+            }else if($val->userType == 3){
+                $customer_id=Customer::find($val->customer_id);
+            }
+            
             $user=User::find($val->customer_id);
             $data[]=[
                 'customers'=>$customer_id,

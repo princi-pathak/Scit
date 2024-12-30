@@ -21,15 +21,43 @@ class QuoteTaskRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+
+        $type = $this->input('type');
+
+        $rules = [
             'quote_id' => 'required|integer|exists:quotes,id',
             'user_id' => 'required|integer',
+            'task_type_id' => 'required|integer|exists:task_types,id',
             'title' => 'required|string|max:255',
-            'task_type_id' => 'required|integer|task_types,id',
-            'start_date' => 'required|date',
-            'start_time' => 'required',
-            'end_date' => 'required|date',
-            'end_time' => 'required'
+            'notes' => 'nullable|string',
+            'edit_quote_task_id' => 'nullable|integer'
         ];
+
+
+        if ($type === 'task') {
+            // Task-specific rules
+            $rules = array_merge($rules, [
+                'start_date' => 'required|date',
+                'start_time' => 'required',
+                'end_date' => 'required|date',
+                'end_time' => 'required',
+                'is_recurring' => 'nullable|boolean',
+                'yesOn' => 'nullable|boolean',
+                'notify_date' => 'nullable|date',
+                'notify_time' => 'nullable',
+                'notification' => 'nullable|boolean',
+                'email' => 'nullable|boolean',
+                'sms' => 'nullable|boolean',
+                ]);
+        } elseif ($type === 'timer') {
+            // Timer-specific rules
+            $rules = array_merge($rules, [
+                'start_date' => 'required|date',
+                'start_time' => 'required',
+            ]);
+        }
+
+
+        return $rules;
     }
 }

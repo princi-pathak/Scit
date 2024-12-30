@@ -86,7 +86,7 @@
                         <label class="col-lg-3 col-sm-3 ">Status</label>
                         <select name="status" id="status" class="form-control">
                             <option value="1">Active</option>
-                            <option value="0">InActive</option>
+                            <option value="0">Inactive</option>
                         </select>
                     </div>
                 </form>
