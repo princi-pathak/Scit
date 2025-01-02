@@ -106,7 +106,7 @@ $access_rights = explode(',', $rights);
                                     <a href="{{ url('/leads/rejected') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Rejected Lead </span></a>
                                     <a href="{{ url('/lead/authorization') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Authorization </span></a>
                                     <a href="{{ url('/leads/converted') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Converted Lead </span></a>
-                                    <a href="{{ url('/leads/search_lead') }}" class="dropdown-item"><span><i class="fa fa-search"></i> Search Lead </span></a>
+                                    <a href="{{ url('leads/search') }}" class="dropdown-item"><span><i class="fa fa-search"></i> Search Lead </span></a>
                                     <a href="{{ url('/leads/tasks') }}" class="dropdown-item"><span><i class="fa fa-list-ol"></i> Lead Task </span></a>
                                 </div>
                             </div>
@@ -119,14 +119,13 @@ $access_rights = explode(',', $rights);
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1"><a href="{{ url('/quote/dashboard') }}" class="dropdown-item"><span><i class="fa fa-dashboard"></i> Dashboard</span></a></li>
                                     <li class="nav-item1"><a href="{{ url('/quote/add') }}" class="dropdown-item"><span><i class="fa fa-plus"></i> New Quote</span></a></li>
-                                    <!-- <li class="nav-item1"><a href="{{ url('/quote/add-details') }}" class="dropdown-item"><span><i class="fa fa-plus"></i> New Quote Details</span></a></li> -->
                                     <li class="nav-item1"><a href="{{ url('/quote/draft') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Draft Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Actioned Quote</span></a></li>
-                                    <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Call Back Quote</span></a></li>
+                                    <li class="nav-item1"><a href="{{ url('/quote/callBack') }}" class="dropdown-item"><span><i class="fa fa-file-text"></i> Call Back Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Accepted Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Converted Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Reminders</span></a></li>
-                                    <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-search"></i> Search Quote</span></a></li>
+                                    <li class="nav-item1"><a href="{{ url('quote/search') }}" class="dropdown-item"><span><i class="fa fa-search"></i> Search Quote</span></a></li>
 
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -208,10 +207,9 @@ $access_rights = explode(',', $rights);
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-list"></i>
-                                                Invoices</span> <i class="fa-solid fa-angle-right"></i>
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span><i class="fa fa-list"></i> Invoices </span> <i class="fa-solid fa-angle-right"></i>
                                         </a>
-
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-columns"></i>Dashboard</span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-plus"></i>New Invoice</span></a></li>
@@ -254,8 +252,8 @@ $access_rights = explode(',', $rights);
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-columns"></i>Dashboard</span></a></li>
                                             <li><a class="dropdown-item" href="{{url('purchase_order')}}"><span><i class="fa fa-plus"></i>New Purchase Order</span></a></li>
-                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i>Draft Purchase Orders</span></a></li>
-                                            <li><a class="dropdown-item" href="#"><span><i class="fa-solid fa-hourglass"></i>Awaiting Approval Purchase Orders</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('draft_purchase_order') }}"><span><i class="fa fa-list"></i>Draft Purchase Orders</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}"><span><i class="fa-solid fa-hourglass"></i>Awaiting Approval Purchase Orders</span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-check"></i>Approved Purchase Orders </span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-check"></i>Rejected Purchase Orders </span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-check"></i>Actioned Purchase Orders</span></a></li>

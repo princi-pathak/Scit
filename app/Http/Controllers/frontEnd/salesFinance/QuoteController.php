@@ -270,6 +270,7 @@ class QuoteController extends Controller
     public function store(QuoteRequest $request)
     {
         try {
+
             $qutRef = $request->quote_ref ?? $this->quoteService->generateQuoteRef();
             $quote = $this->quoteService->saveQuoteData($request->all(), $qutRef, Auth::user()->home_id);
 
@@ -282,7 +283,7 @@ class QuoteController extends Controller
                 return redirect()->route('quote.edit', ['id' => $quote->id])->with('success', $message);
             } else {
                 $message =  'Quote updated successfully.';
-                return redirect()->route('quotes.quotes')->with('success', $message);
+                return redirect()->route('quote.edit', ['id' => $quote->id])->with('success', $message);
             }
 
             Log::info('This is an informational message.', [$quote]);
@@ -532,5 +533,17 @@ class QuoteController extends Controller
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data.'
         ]);
+    }
+
+    public function searchQuote(Request $request){
+        $data['page'] = "quotes";
+        $path = $request->path();
+        $segments = explode('/', $path);
+        $lastSegment = end($segments);
+        $data['lastSegment'] = $lastSegment;
+        $data['quotes'] = $this->quoteService->getQuoteCallBack($lastSegment, Auth::user()->home_id);
+        $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
+        $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
+        return view('frontEnd.salesAndFinance.quote.search_quote', $data);
     }
 }

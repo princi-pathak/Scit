@@ -251,15 +251,15 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $value->quote_ref ?? '-'}}</td>
                                     <td>{{ $value->quota_date }}</td>
-                                    <td>{{ $value->customer->name ?? '' }}</td>
+                                    <td>{{ $value->customer->name ?? '-' }}</td>
                                     <td>{{ $value->customer_address }}</td>
                                     <td>1</td>
-                                    <td>&#163;{{ $value->sub_total ?? '0.00' }}</td>
-                                    <td>&#163;{{ $value->vat_amount ?? '0.00'}}</td>
-                                    <td>&#163;{{ $value->total ?? '0.00'}}</td>
-                                    <td>&#163;{{ $value->deposit ??  '0.00'}}</td>
-                                    <td>&#163;{{ $value->outstanding ?? '0.00' }}</td>
-                                    <td>&#163;{{ $value->profit ?? '0.00' }}</td>
+                                    <td>{{ $value->sub_total > 0 ? '£' . $value->sub_total : '-' }}</td>
+                                    <td>{{ $value->vat_amount > 0 ? '£' . $value->vat_amount : '-' }}</td>
+                                    <td>{{ $value->total > 0 ? '£' . $value->total : '-' }}</td>
+                                    <td>{{ $value->deposit > 0 ? '£' . $value->deposit : '-'}}</td>
+                                    <td>{{ $value->outstanding > 0 ? '£' . $value->outstanding : '-' }}</td>
+                                    <td>{{ $value->profit > 0 ? '£' . $value->profit : '-' }}</td>
                                     <td>
                                         <div class="d-inline-flex align-items-center ">
                                             <div class="nav-item dropdown">
@@ -284,8 +284,8 @@
                                                     <a href="" class="dropdown-item">Convert To Invoice</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Change To Processed</a>
-                                                    <a href="javascript:void(0)" onclick="openCallBackModal()" id="changeToCallBack" data-id="{{ $value->id }}" data-quote_ref="{{ $value->quote_ref }}" class="dropdown-item">Change To Call Back</a>
-                                                    <a href="" class="dropdown-item">Change To Accepted</a>
+                                                    <a href="javaScript:void(0)" onclick="openCallBackModal()" id="changeToCallBack" data-id="{{ $value->id }}" data-quote_ref="{{ $value->quote_ref }}" class="dropdown-item">Change To Call Back</a>
+                                                    <a href="javaScript:void(0);" onclick="statusChangeToAccept()" data-id="{{ $value->id }}" class="dropdown-item">Change To Accepted</a>
                                                     <a href="" class="dropdown-item">Change To Rejected</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="#" class="dropdown-item set_value_on_CRM_model" class="dropdown-item">CRM History</a>
@@ -330,6 +330,10 @@
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('divTohide').style.display = 'none'; // Hide content
     });
+
+    function statusChangeToAccept(){
+        alert();
+    }
 </script>
 
 @include('components.quote.call-back')

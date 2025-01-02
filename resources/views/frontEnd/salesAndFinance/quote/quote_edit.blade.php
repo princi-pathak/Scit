@@ -3242,11 +3242,8 @@
             data: {
                 attachment_id: attachment_id
             },
-            // contentType: false, // Required for FormData
-            // processData: false, // Required for FormData
             success: function(response) {
                 // Handle success
-                // alert(response);
                 const tableBody = $('#attachmentTable tbody');
                 console.log(tableBody);
 
@@ -3257,7 +3254,6 @@
 
                     attachments.forEach(attachment => {
                         console.log(attachment);
-                        // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
                         const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
                         const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
 
@@ -3282,7 +3278,6 @@
                     });
                 }
                 // Assuming `response` contains an array of attachments
-
             },
             error: function(xhr) {
                 // Handle error
@@ -3495,7 +3490,6 @@
                 selectElement.appendChild(newOption);
                 customerSiteDelivery.appendChild(option1);
 
-
                 // document.getElementById('customerSiteDetails');
                 document.getElementById('siteCustomerId').value = response.data[0].id;
                 document.getElementById('customerSiteName').value = response.data[0].contact_name;
@@ -3660,7 +3654,6 @@
 
 
     function setCustomerBillingData(id) {
-        // alert(id)
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
             method: 'POST',
@@ -3817,7 +3810,6 @@
                 document.body.removeChild(a);
             });
         }
-
 
     });
 </script>
