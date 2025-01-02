@@ -33,29 +33,32 @@
 
 
     .orange-tab a {
-  	   color: #fff;
-		padding: 5px;
+        color: #fff;
+        padding: 5px;
         margin-right: 8px;
-  }
-	.orange-tab.current a {
-	 	color: #fff;
+    }
+
+    .orange-tab.current a {
+        color: #fff;
         background-color: #333;
         padding: 5px;
-        
-	}
-  .tab-content {
+
+    }
+
+    .tab-content {
         display: none;
 
-  }
-  .tab-content.current {
+    }
+
+    .tab-content.current {
         display: block;
-   }
-   ul.tabs.padding-tab {
-    list-style: none;
-    display: flex
-;
-    padding-left: 0;
-}
+    }
+
+    ul.tabs.padding-tab {
+        list-style: none;
+        display: flex;
+        padding-left: 0;
+    }
 </style>
 
 <section class="main_section_page px-3 pt-0">
@@ -534,7 +537,7 @@
                                         <div class="col-sm-6">
                                             <select class="form-control editInput" name="period" id="">
                                                 <option value="">Any Time</option>
-                                                <option value="AM" @if($quoteData["period"]=="AM" ) selected @endif >AM</option>
+                                                <option value="AM" @if($quoteData["period"]=="AM" ) selected @endif>AM</option>
                                                 <option value="PM" @if($quoteData["period"]=="PM" ) selected @endif>PM</option>
                                             </select>
                                         </div>
@@ -907,7 +910,7 @@
                                                             </div>
                                                             <div class="col-sm-7">
                                                                 <div class="plusandText">
-                                                                    <a href="#!" class="formicon" id="cost_product_popup"><i class="fa-solid fa-square-plus"></i></a>
+                                                                    <a href="javascript:void(0)" class="formicon" id="cost_product_popup" onclick="itemsAddProductModal(2)"><i class="fa-solid fa-square-plus"></i></a>
                                                                     <span class="afterPlusText"> (Type to view product or <a href="#!" onclick="openProductListModal()">Click here</a> to view all assets)</span>
                                                                 </div>
                                                             </div>
@@ -1035,14 +1038,11 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body ">
-
-
-                                            <div id="page-content" class="header-clear">
+                                                <div id="page-content" class="header-clear">
                                                     <div id="page-content-scroll">
                                                         <!--Enables this element to be scrolled -->
                                                         <div class="content padding-content-tab">
                                                             <div id="test-tab">
-                                                                										
                                                                 <ul class="tabs padding-tab">
                                                                     <div class="orange-tab current text-center" data-tab="tabs-1">
                                                                         <li class="tab-link"><a href="#tabs-1" class="profileDrop">Payment Details</a></li>
@@ -1051,115 +1051,105 @@
                                                                         <li class="tab-link"><a href="#tabs-2" class="profileDrop">Payment Type</a></li>
                                                                     </div>
                                                                 </ul>
-                                                                             
+
                                                                 <div id="tabs-1" class="tab-content current">
-                                                                <div class="newJobForm card">
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['quote_ref'] }} - Quote Date {{ $quoteData['quota_date_deposit'] }}" readonly="">
+                                                                    <div class="newJobForm card">
+                                                                        <div class="mb-2 row">
+                                                                            <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
+                                                                            <div class="col-sm-9">
+                                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['quote_ref'] }} - Quote Date {{ $quoteData['quota_date_deposit'] }}" readonly="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-2 row">
+                                                                            <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                                                            <div class="col-sm-9">
+                                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['customer']['name'] }}" readonly="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-2 row">
+                                                                            <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT)</label>
+                                                                            <div class="col-sm-9">
+                                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['sub_total'] }}" readonly="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-2 row">
+                                                                            <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
+                                                                            <div class="col-sm-9">
+                                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['total_amount'] }}" readonly="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-2 row">
+                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Deposit Percentage <span class="radStar">*</span></label>
+                                                                            <div class="col-sm-5">
+                                                                                <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                                            </div>
+                                                                            <div class="col-sm-1 ps-0">
+                                                                                <input class="form-control editInput text-center" value="%" disabled="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-2 row">
+                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
+                                                                            <div class="col-sm-1 pe-0">
+                                                                                <input class="form-control editInput text-center" value="&#163;" disabled="">
+                                                                            </div>
+                                                                            <div class="col-sm-4">
+                                                                                <input type="text" class="form-control editInput" id="inputCity" value="0.00">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-2 row">
+                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
+                                                                            <div class="col-sm-9">
+                                                                                <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mb-2 row">
+                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
+                                                                            <div class="col-sm-9">
+                                                                                <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['customer']['name'] }}" readonly="">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT)</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['sub_total'] }}" readonly="">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['total_amount'] }}" readonly="">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
-                                                                            <span class="radStar">*</span></label>
-                                                                        <div class="col-sm-5">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" value="100">
-                                                                        </div>
-                                                                        <div class="col-sm-1 ps-0">
-                                                                            <input class="form-control editInput text-center" value="%" disabled="">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-1 pe-0">
-                                                                            <input class="form-control editInput text-center" value="&#163;" disabled="">
-                                                                        </div>
-                                                                        <div class="col-sm-4">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" value="0.00">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
                                                                 </div>
                                                                 <!--End off tab one  -->
                                                                 <div id="tabs-2" class="tab-content">
-                                                                <div class="mb-2 row">
-                                                                    <div class="col-sm-12">
-                                                                        <div class="text-end">
-                                                                            <h5>Paying Now: $12000.00</h5>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="newJobForm card">
                                                                     <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                @foreach($paymentType as $value)
-                                                                                <option value="{{ $value->id }}">{{ $value->title }}</option>
-                                                                                @endforeach
-                                                                            </select>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="text-end">
+                                                                                <h5>Paying Now: $12000.00</h5>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
-                                                                            <span class="radStar">*</span></label>
-                                                                        <div class="col-sm-5">
-                                                                            <input type="date" class="form-control editInput" id="inputCity" value="{{ now()->format('Y-m-d') }}">
+                                                                    <div class="newJobForm card">
+                                                                        <div class="mb-2 row">
+                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
+                                                                            <div class="col-sm-9">
+                                                                                <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                                    @foreach($paymentType as $value)
+                                                                                    <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-sm-1 ps-0">
-                                                                            <span class="material-symbols-outlined">
-                                                                                calendar_month
-                                                                            </span>
+                                                                        <div class="mb-2 row">
+                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
+                                                                                <span class="radStar">*</span></label>
+                                                                            <div class="col-sm-5">
+                                                                                <input type="date" class="form-control editInput" id="inputCity" value="{{ now()->format('Y-m-d') }}">
+                                                                            </div>
+                                                                            <div class="col-sm-1 ps-0">
+                                                                                <span class="material-symbols-outlined">calendar_month</span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-
-                                                                </div>
                                                                 </div>
                                                                 <!--End off tab two  -->
-                                                              
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="contantbodypopup p-0">
 
-                                                <!--  -->
-
-                                                
-
-                                                <!--  -->
-                                                
 
                                                     <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                                         <li class="nav-item me-2" role="presentation">
@@ -1174,8 +1164,8 @@
 
 
 
-                                                            <!-- Payment Details -->
-                                                            <!-- <div class="tab-pane fade show active" id="paymentDetails" role="tabpanel" aria-labelledby="paymentDetails-tab" tabindex="0">
+                                                    <!-- Payment Details -->
+                                                    <!-- <div class="tab-pane fade show active" id="paymentDetails" role="tabpanel" aria-labelledby="paymentDetails-tab" tabindex="0">
                                                                 <div class="newJobForm card">
                                                                     <div class="mb-2 row">
                                                                         <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
@@ -1234,10 +1224,10 @@
                                                                     </div>
                                                                 </div>
                                                             </div> -->
-                                                            <!-- Payment Details -->
+                                                    <!-- Payment Details -->
 
-                                                            <!--  Payment Types -->
-                                                            <!-- <div class="tab-pane fade  " id="paymentType" role="tabpanel" aria-labelledby="paymentType-tab" tabindex="0">
+                                                    <!--  Payment Types -->
+                                                    <!-- <div class="tab-pane fade  " id="paymentType" role="tabpanel" aria-labelledby="paymentType-tab" tabindex="0">
                                                                 <div class="mb-2 row">
                                                                     <div class="col-sm-12">
                                                                         <div class="text-end">
@@ -1271,13 +1261,13 @@
 
                                                                 </div>
                                                             </div> -->
-                                                            <!-- Payment Types -->
-                                                        <!-- </form>
+                                                    <!-- Payment Types -->
+                                                    <!-- </form>
                                                     </div> -->
                                                 </div>
                                             </div> <!-- end modal body -->
                                             <div class="modal-footer customer_Form_Popup">
-                                                <button type="button" id="next_button" class="btn profileDrop">Next</button> 
+                                                <button type="button" id="next_button" class="btn profileDrop">Next</button>
                                                 <!-- <button type="button" class="btn profileDrop">Next</button> -->
                                                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
 
@@ -2903,7 +2893,7 @@
         });
     }
 
-    
+
     function getProductData(selectedId) {
         $.ajax({
             url: '{{ route("item.ajax.getProductFromId") }}',
@@ -3312,34 +3302,38 @@
                 console.log(tableBody);
                 tableBody.empty(); // Clear existing rows
 
-                // Assuming `response` contains an array of attachments
-                const attachments = Array.isArray(response.data) ? response.data : [response.data];
+                if (response.data == "No data") {
+                    console.log(response.data);
+                } else {
+                    // Assuming `response` contains an array of attachments
+                    const attachments = Array.isArray(response.data) ? response.data : [response.data];
 
-                attachments.forEach(attachment => {
-                    console.log(attachment);
-                    // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
-                    const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
-                    const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
+                    attachments.forEach(attachment => {
+                        console.log(attachment);
+                        // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
+                        const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
+                        const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
 
-                    const id = attachment.id;
-                    const row = `
-                        <tr data-id="${id}">
-                            <td><input type="checkbox" class="selectRow"></td>
-                            <td>${attachment.attachmentType}</td>
-                            <td>${attachment.title}</td>
-                            <td>${attachment.description}</td>
-                            <td>Quote</td>
-                            <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
-                            <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
-                            <td>${attachment.original_name}</td>
-                            <td>${attachment.mime_type} / ${attachment.size} KB</td>
-                            <td>${new Date(attachment.created_at).toLocaleString()}</td>
-                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="downloadAttachmentFile('${attachment.timestamp_name}');"> <i class="fas fa-download"></i></a> | <a href="javascript:void(0)" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a> </td>
-                        </tr>
-                    `;
-                    console.log(row);
-                    tableBody.append(row);
-                });
+                        const id = attachment.id;
+                        const row = `
+                                <tr data-id="${id}">
+                                    <td><input type="checkbox" class="selectRow"></td>
+                                    <td>${attachment.attachmentType}</td>
+                                    <td>${attachment.title}</td>
+                                    <td>${attachment.description}</td>
+                                    <td>Quote</td>
+                                    <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
+                                    <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
+                                    <td>${attachment.original_name}</td>
+                                    <td>${attachment.mime_type} / ${attachment.size} KB</td>
+                                    <td>${new Date(attachment.created_at).toLocaleString()}</td>
+                                    <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="downloadAttachmentFile('${attachment.timestamp_name}');"> <i class="fas fa-download"></i></a> | <a href="javascript:void(0)" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a> </td>
+                                </tr>
+                            `;
+                        console.log(row);
+                        tableBody.append(row);
+                    });
+                }
             },
             error: function(xhr) {
                 // Handle error
@@ -3379,36 +3373,39 @@
                 const tableBody = $('#attachmentTable tbody');
                 console.log(tableBody);
 
-                // Assuming `response` contains an array of attachments
+                if (response.data == "No data") {
+                    console.log(response.data);
+                } else {
+                    // Assuming `response` contains an array of attachments
+                    const attachments = Array.isArray(response.data) ? response.data : [response.data];
 
+                    attachments.forEach(attachment => {
+                        console.log(attachment);
+                        // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
+                        const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
+                        const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
 
-                const attachments = Array.isArray(response.data) ? response.data : [response.data];
+                        const id = attachment.id;
+                        const row = `
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>${attachment.attachmentType}</td>
+                                <td>${attachment.title}</td>
+                                <td>${attachment.description}</td>
+                                <td>Quote</td>
+                                <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
+                                <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
+                                <td>${attachment.original_name}</td>
+                                <td>${attachment.mime_type} / ${attachment.size} KB</td>
+                                <td>${new Date(attachment.created_at).toLocaleString()}</td>
+                                <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a></td>
+                            </tr>
+                        `;
+                        console.log(row);
+                        tableBody.append(row);
+                    });
+                }
 
-                attachments.forEach(attachment => {
-                    console.log(attachment);
-                    // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
-                    const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
-                    const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
-
-                    const id = attachment.id;
-                    const row = `
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>${attachment.attachmentType}</td>
-                            <td>${attachment.title}</td>
-                            <td>${attachment.description}</td>
-                            <td>Quote</td>
-                            <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
-                            <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
-                            <td>${attachment.original_name}</td>
-                            <td>${attachment.mime_type} / ${attachment.size} KB</td>
-                            <td>${new Date(attachment.created_at).toLocaleString()}</td>
-                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a></td>
-                        </tr>
-                    `;
-                    console.log(row);
-                    tableBody.append(row);
-                });
             },
             error: function(xhr) {
                 // Handle error
@@ -3800,7 +3797,7 @@
 </script>
 
 <script>
-     $('#next_button').click(function(e) {
+    $('#next_button').click(function(e) {
         var tab_id = $('ul.tabs .orange-tab.current').attr('data-tab');
         var first = $('ul.tabs .orange-tab:first').attr('data-tab');
 
@@ -3814,6 +3811,6 @@
             $('ul.tabs div.orange-tab:first').addClass('current');
             $("#" + first).addClass('current');
         }
-				
-});
+
+    });
 </script>

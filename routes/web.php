@@ -386,6 +386,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/purchase_order_edit','purchase_order');
 		Route::post('/purchase_order_attachment_save','purchase_order_attachment_save');
 		Route::post('/getAllAttachmens','getAllAttachmens');
+		Route::post('/delete_po_attachment','delete_po_attachment');
+		Route::post('/vat_tax_details','vat_tax_details');
+		Route::post('/getPurchaesOrderProductDetail','getPurchaesOrderProductDetail');
+		Route::post('/purchase_productsDelete','purchase_productsDelete');
+		Route::post('/purchase_order_new_task_save','purchase_order_new_task_save');
+		Route::post('/getAllNewTaskList','getAllNewTaskList');
 	});
 	
 	// Forontend Customer Controller
@@ -547,7 +553,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('quote/getQuoteProductList', 'getQuoteProductList')->name('quote.ajax.getQuoteProductList');
 		Route::post('/quote/save-quote-callback', 'storeCallBackData')->name('quote.callback.save');
 		Route::get('/quote/callBack', 'callBack');
-		Route::post('/quote/save-quote-task', 'storeQuoteTask')->name('quote.ajax.saveQuoteTask');
+		Route::post('/quote/save-quote-task', 'saveQuoteTask')->name('quote.ajax.saveQuoteTask');
+		Route::post('/quote/getQuoteTaskList', 'getQuoteTaskList')->name('quote.ajax.getQuoteTaskList');
 
 		
 	});

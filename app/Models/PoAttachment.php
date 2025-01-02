@@ -21,6 +21,6 @@ class PoAttachment extends Model
         return $this->belongsTo(PurchaseOrder::class, 'po_id','id');
     }
     public function attachmentType(){
-        return $this->belongsTo(AttachmentType::class, 'attachment_type','id');
+        return $this->belongsTo(AttachmentType::class, 'attachment_type','id')->whereNull('deleted_at');
     }
 }

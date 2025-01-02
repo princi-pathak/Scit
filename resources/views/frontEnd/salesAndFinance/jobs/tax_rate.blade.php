@@ -116,7 +116,7 @@
                     <!--  Modal start here -->
                     <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel"
                         aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
+                        <div class="modal-dialog">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="customerModalLabel">Departmental Code - Add</h5>
@@ -125,13 +125,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                    <div class="alert alert-success text-center success_message" style="display:none;height:50px">
-                                        <p id="message"></p>
-                                    </div>
-                                    <div class="alert alert-danger text-center error_message" style="display:none;height:50px">
-                                        <p id="error_message"></p>
-                                    </div>
-                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="text-center mt-3" id="message_save"></div>
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="formDtail">
                                                 <form id="form_data" class="customerForm">
                                                     <input type="hidden" name="id" id="id">
@@ -240,30 +235,26 @@
                         type: "POST",
                         url: '{{ url("/save_tax_rate") }}',
                         data: {id: id, home_id: home_id, name: name,tax_rate:tax_rate,tax_code:tax_code,exp_date:exp_date, status: status, _token: token},
-                        success: function(data) {
-                            console.log(data);
-                            if(data.vali_error){
-                                $("#error_message").text(data.vali_error);
-                                $(".error_message").show();
+                        success: function(response) {
+                            console.log(response);
+                            if(response.vali_error){
+                                $('#message_save').addClass('error-message').text(response.vali_error).show();
                                 setTimeout(function() {
-                                    $(".error_message").hide();
-                                    // $("#form_data")[0].reset();
+                                    $('#error-message').text('').fadeOut();
                                 }, 3000);
                                 return false;
-                            }else if(data.data && data.data.original && data.data.original.error){
-                                alert(data.data.original.error);
-                                return false;
-                            }else{
-                                $("#message").text(message);
-                                $(".success_message").show();
+                            }else if(response.success === true){
+                                $('#message_save').addClass('success-message').text(response.message).show();
                                 setTimeout(function() {
-                                    $(".alert").hide();
+                                    $('#message_save').removeClass('success-message').text('').hide();
                                     location.reload();
-                                    // $("#form_data")[0].reset();
                                 }, 3000);
-                                
                             }
                             
+                        },
+                        error: function(xhr, status, error) {
+                            var errorMessage = xhr.status + ': ' + xhr.statusText;
+                            alert('Error - ' + errorMessage + "\nMessage: " + error);
                         }
                         
                     });

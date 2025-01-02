@@ -2,6 +2,34 @@ $(document).ready(function () {
     const hiddenDiv = document.getElementById('hiddenDiv');
     hiddenDiv.style.display = 'none';
 
+    // $('#saveQuoteTaskFormData').on('click', function (e) {
+    //     alert("saveQuoteTaskFormData");
+    //     e.preventDefault();
+    
+    //     var form = $('#quoteTaskFormData')[0]; // Select form element
+    //     var formData = new FormData(form);    // Create FormData object
+    
+    //     // Debug: Log formData contents
+    //     for (var pair of formData.entries()) {
+    //         console.log(pair[0] + ': ' + pair[1]);
+    //     }
+    
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/save-quote-task',
+    //         data: formData,
+    //         contentType: false,
+    //         processData: false,
+    //         success: function (response) {
+    //             console.log(response);
+    //         },
+    //         error: function (xhr, status, error) {
+    //             console.error(xhr.responseText);
+    //         }
+    //     });
+    // });
+    
+
     // $('#savettachmentForm').on('submit', function (e) {
     //     e.preventDefault(); // Prevent the default form submission
 
