@@ -426,4 +426,33 @@ class Purchase_orderController extends Controller
                 ]
         ]);
     }
+    public function draft_purchase_order(Request $request){
+        $lastSegment = $request->list_mode;
+        $segment_check=$this->check_segment_purchaseOrder($lastSegment);
+        // echo "<pre>"; print_r($segment_check);die;
+        $data['list']=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null,'status'=>$segment_check['status']])->get();
+        $data['status']=$segment_check;
+        $data['draftCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>1])->count();
+        $data['awaitingApprovalCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>2])->count();
+        $data['approvedCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>3])->count();
+        $data['rejectedCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>8])->count();
+        $data['actionedCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>4])->count();
+        $data['paidCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>5])->count();
+        return view('frontEnd.salesAndFinance.purchase_order.purchase_order_list',$data);
+    }
+    private function check_segment_purchaseOrder($lastSegment=null){
+        if($lastSegment === 'AwaitingApprivalPurchaseOrders'){
+            return ['status'=>2,'list_status'=>'Awaiting Approval Purchase Oreders'];
+        }else if($lastSegment === 'Approved'){
+            return ['status'=>3,'list_status'=>'Approved'];
+        }else if($lastSegment === 'Rejected'){
+            return ['status'=>8,'list_status'=>'Rejected'];
+        }else if($lastSegment === 'Actioned'){
+            return ['status'=>4,'list_status'=>'Actioned'];
+        }else if($lastSegment === 'Paid'){
+            return ['status'=>5,'list_status'=>'Paid'];
+        }else{
+            return ['status'=>1,'list_status'=>'Draft'];
+        }
+    }
 }

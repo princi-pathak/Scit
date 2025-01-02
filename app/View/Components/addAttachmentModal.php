@@ -52,8 +52,8 @@ class addAttachmentModal extends Component
      */
     public function render(): View|Closure|string
     {
-        $data['attachmentType'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
-        // echo "<pre>";print_r($data['attachmentType']);die;
-        return view('components.add-attachment-modal',$data);
+        // $attachmentType = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
+        // echo "<pre>";print_r($attachmentType);die;
+        return view('components.add-attachment-modal');
     }
 }

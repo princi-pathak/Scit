@@ -214,7 +214,7 @@
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Site</label>
                                                 <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions get_site_result" id="purchase_site_id" name="site_id" <?php if(!isset($purchase_orders) && $purchase_orders ==''){echo 'disabled'; }?>>
-                                                    <option selected>None</option>
+                                                    <option selected disabled value="">None</option>
                                                     @foreach($site as $siteVal)
                                                         <option value="{{$siteVal->id}}" <?php if(isset($purchase_orders) && $purchase_orders->site_id == $siteVal->id){echo 'selected';}?>>{{$siteVal->site_name}}</option>
                                                     @endforeach
@@ -867,7 +867,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 if (data.customers && data.customers.length > 0) {
                 var customerData = data.customers[0];
                 // Populate project options
-                var project = '<option value="0" selected>Select Project</option>';
+                var project = '<option value="0" selected disabled>Select Project</option>';
                 if (customerData.customer_project && Array.isArray(customerData.customer_project)) {
                     for (let i = 0; i < customerData.customer_project.length; i++) {
                         project += '<option value="' + customerData.customer_project[i].id + '">' + customerData.customer_project[i].project_name + '</option>';
@@ -876,7 +876,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 document.getElementById('purchase_project_id').innerHTML = project;
 
                 // Populate site options
-                var site = '<option value="default" selected>Select Site</option>';
+                var site = '<option value="" disabled selected>Select Site</option>';
                 if (customerData.sites && Array.isArray(customerData.sites)) {
                     for (let i = 0; i < customerData.sites.length; i++) {
                         site += '<option value="' + customerData.sites[i].id + '">' + customerData.sites[i].site_name + '</option>';
@@ -1031,7 +1031,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 cache: false,
                 processData: false,
                 success: function(response) {
-                    // console.log(response);
+                    console.log(response);
                 if(response.vali_error){
                         alert(response.vali_error);
                         $(window).scrollTop(0);
