@@ -104,8 +104,8 @@
     <div class="modal-dialog">
         <div class="modal-content add_Customer">
             <div class="modal-header terques-bg">
-                <button aria-hidden="true" data-bs-dismiss="modal" class="close" type="button">×</button>
                 <h5 class="modal-title pupTitle">Quote Sources - Add</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form role="form" id="quote_source_form">
@@ -129,7 +129,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="btn profileDrop" id="saveChanges">Save</button>
                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
             </div>

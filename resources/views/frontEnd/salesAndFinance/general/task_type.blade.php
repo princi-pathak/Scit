@@ -114,7 +114,7 @@
                                     </div>
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="formDtail">
-                                                <form id="form_data" class="customerForm">
+                                                <form id="form_data" class="customerForm pt-0">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
 
@@ -141,7 +141,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="row form-group mt-3">
+                                        <!-- <div class="row form-group mt-3">
                                             <label for="inputProject" class="col-sm-3 col-form-label">Status</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control editInput selectOptions" id="statusModal" name="status">
@@ -149,7 +149,7 @@
                                                     <option value="0">Inactive</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </form>
                                 </div>
                                 <!-- End row -->
