@@ -30,8 +30,6 @@
         border-radius: 3px;
     }
 
-
-
     .orange-tab a {
         color: #fff;
         padding: 5px;
@@ -42,13 +40,12 @@
         color: #fff;
         background-color: #333;
         padding: 5px;
-
     }
 
-    .tab-content {
+    /* .tab-content {
         display: none;
 
-    }
+    } */
 
     .tab-content.current {
         display: block;
@@ -84,7 +81,8 @@
                 <form action="{{ url('/quote/saveQuoteData') }}" method="post" class="customerForm mt-3">
                     @csrf
                     <div class="newJobForm card">
-
+                        <input type="hidden" id="quote_id" name="quote_id" value="{{ $quoteData['id'] }}">
+                        <input type="hidden" id="" name="quote_ref" value="{{ $quoteData['quote_ref'] }}">
                         <div class="row" id="hideCustomerDetails">
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="formDtail">
@@ -92,7 +90,6 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Quote Ref</label>
                                         <div class="col-sm-9">
-                                            <input type="hidden" id="quote_id" name="quote_id" value="{{ $quoteData['id'] }}">
                                             <input type="text" class="form-control-plaintext editInput" id="" value="{{ $quoteData['quote_ref'] }}" readonly>
                                         </div>
                                     </div>
@@ -463,7 +460,7 @@
                                         <div class="mb-3 row">
                                             <label for="inputJobRef" class="col-sm-3 col-form-label">Quote Ref</label>
                                             <div class="col-sm-9">
-                                                <input type="hidden" name="quote_id">
+
                                                 <!-- <input type="hidden" name="quote_ref"> -->
                                                 <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['quote_ref'] }}" readonly>
                                             </div>
@@ -721,7 +718,7 @@
                                         <div class="col-sm-7">
                                             <div class="plusandText">
                                                 <a href="#!" class="formicon" id="openAddProductModal" onclick="itemsAddProductModal(2)"><i class="fa-solid fa-square-plus"></i> </a>
-                                                <span class="afterPlusText"> (Type to view product or <a href="#!" onclick="openProductListModal()">Click here</a> to view all assets)</span>
+                                                <span class="afterPlusText"> (Type to view product or <a href="javaScript:void(0);" onclick="openProductListModal()">Click here</a> to view all assets)</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1143,134 +1140,17 @@
                                                                     </div>
                                                                 </div>
                                                                 <!--End off tab two  -->
-
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="contantbodypopup p-0">
 
-
-                                                    <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                                        <li class="nav-item me-2" role="presentation">
-                                                            <button class="nav-link profileDrop active" id="paymentDetails-tab" data-bs-toggle="pill" data-bs-target="#paymentDetails" type="button" role="tab" aria-controls="paymentDetails" aria-selected="false" tabindex="-1">Payment Details</button>
-                                                        </li>
-                                                        <li class="nav-item me-2" role="presentation">
-                                                            <button class="nav-link profileDrop " id="paymentType-tab" data-bs-toggle="pill" data-bs-target="#paymentType" type="button" role="tab" aria-controls="paymentType" aria-selected="true">Payment Type</button>
-                                                        </li>
-                                                    </ul> -->
-                                                    <!-- <div class="tab-content" id="pills-tabContent">
-                                                        <form action=""> -->
-
-
-
-                                                    <!-- Payment Details -->
-                                                    <!-- <div class="tab-pane fade show active" id="paymentDetails" role="tabpanel" aria-labelledby="paymentDetails-tab" tabindex="0">
-                                                                <div class="newJobForm card">
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['quote_ref'] }} - Quote Date {{ $quoteData['quota_date_deposit'] }}" readonly="">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['customer']['name'] }}" readonly="">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT)</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['sub_total'] }}" readonly="">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['total_amount'] }}" readonly="">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
-                                                                            <span class="radStar">*</span></label>
-                                                                        <div class="col-sm-5">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" value="100">
-                                                                        </div>
-                                                                        <div class="col-sm-1 ps-0">
-                                                                            <input class="form-control editInput text-center" value="%" disabled="">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-1 pe-0">
-                                                                            <input class="form-control editInput text-center" value="&#163;" disabled="">
-                                                                        </div>
-                                                                        <div class="col-sm-4">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" value="0.00">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div> -->
-                                                    <!-- Payment Details -->
-
-                                                    <!--  Payment Types -->
-                                                    <!-- <div class="tab-pane fade  " id="paymentType" role="tabpanel" aria-labelledby="paymentType-tab" tabindex="0">
-                                                                <div class="mb-2 row">
-                                                                    <div class="col-sm-12">
-                                                                        <div class="text-end">
-                                                                            <h5>Paying Now: $12000.00</h5>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="newJobForm card">
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
-                                                                        <div class="col-sm-9">
-                                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                @foreach($paymentType as $value)
-                                                                                <option value="{{ $value->id }}">{{ $value->title }}</option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-2 row">
-                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
-                                                                            <span class="radStar">*</span></label>
-                                                                        <div class="col-sm-5">
-                                                                            <input type="date" class="form-control editInput" id="inputCity" value="{{ now()->format('Y-m-d') }}">
-                                                                        </div>
-                                                                        <div class="col-sm-1 ps-0">
-                                                                            <span class="material-symbols-outlined">
-                                                                                calendar_month
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div> -->
-                                                    <!-- Payment Types -->
-                                                    <!-- </form>
-                                                    </div> -->
                                                 </div>
                                             </div> <!-- end modal body -->
                                             <div class="modal-footer customer_Form_Popup">
                                                 <button type="button" id="next_button" class="btn profileDrop">Next</button>
-                                                <!-- <button type="button" class="btn profileDrop">Next</button> -->
                                                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-
                                             </div>
                                         </div>
                                     </div>
@@ -1328,7 +1208,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Sub Totle <span class="radStar">*</span></label>
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Sub Totel <span class="radStar">*</span></label>
                                                             <div class="col-sm-1 pe-0">
                                                                 <input class="form-control editInput text-center" value="$" disabled="">
                                                             </div>
@@ -1361,14 +1241,11 @@
                                             <div class="modal-footer customer_Form_Popup">
                                                 <button type="button" class="btn profileDrop">Save</button>
                                                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- *********************** -->
-
-
                                 <!-- <div class="col-sm-3 mb-3 mt-2">
                                     <div class=" p-0">
                                         <a href="#" class="profileDrop">Creadit Deposit</a>
@@ -2531,6 +2408,7 @@
         document.getElementById('hideTaskData').style.display = "none";
         // document.getElementById('hideDepositSection').style.display = "none";
         document.getElementById('yourQuoteSection').style.display = "none";
+        getTags(document.getElementById('quoteTag'))
 
         $('#OpenQuoteTypeModel').on('click', function() {
             $('#quoteTypeModal').modal('show');
@@ -2647,9 +2525,9 @@
             success: function(response) {
                 console.log(response.message);
 
-                response.data.forEach(data => {
-                    quoteProductTable(response.data, 'quoteProducts');
-                });
+                // response.data.forEach(data => {
+                quoteProductTable(response.data, 'quoteProducts', 'edit');
+                // });
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -2689,6 +2567,17 @@
         } else {
             setCustomerBillingData(edit_customer_billing_id);
         }
+
+        $('#saveQuoteTag').on('click', function() {
+            var quoteTag = document.getElementById('quoteTag');
+            saveFormData(
+                'add_quote_tag_form', // formId
+                '{{ route("General.ajax.saveQuoteTag") }}', // saveUrl
+                'quoteTagModal', // modalId
+                getTags, // callback function after success
+                quoteTag
+            );
+        });
 
         $('#saveQuoteTypeQuote').on('click', function() {
             var formData = $('#add_quote_type_form').serialize();
@@ -2757,7 +2646,7 @@
             if (customer === "") {
                 alert('Please select the customer');
             } else {
-                // getTags(document.getElementById('quoteTag'))
+                getTags(document.getElementById('quoteTag'))
                 // getRegions(document.getElementById('siteDeliveryRegions'));
                 const selectCustomer = document.getElementById('getCustomerList');
                 const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
@@ -2812,6 +2701,10 @@
             $('#add_customer_contact_modal').modal('show');
         });
 
+        $('#OpenAddQuoteTag').on('click', function() {
+            $('#quoteTagModal').modal('show');
+        });
+
         $('#openCustomerSiteAddress').on('click', function() {
             var customer = document.getElementById('getCustomerList').value;
             if (customer === "") {
@@ -2824,9 +2717,6 @@
                 getCountriesList(document.getElementById('siteAddressTelephoneCode'));
                 $('#add_site_address_modal').modal('show');
             }
-
-
-
         });
 
         $('#new_Attachment_open_model').on('click', function() {
@@ -2846,7 +2736,6 @@
                 processData: false, // Required for FormData
                 success: function(response) {
                     // Handle success
-                    alert(response.data);
                     console.log(response.id);
                     $('#new_Attachment_model').modal('hide'); // Hide the modal
                     getQuoteAttachments(response.id);
@@ -2866,6 +2755,27 @@
         });
 
     });
+
+    function saveFormData(formId, saveUrl, modalId, callback, callBackValue = null) {
+        var formData = $('#' + formId).serialize();
+        console.log(formData);
+
+        $.ajax({
+            url: saveUrl,
+            method: 'POST',
+            data: formData,
+            success: function(response) {
+                alert(response.message);
+                $('#' + modalId).modal('hide');
+                if (callback && typeof callback === 'function') {
+                    callback(callBackValue);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 
     function attachRowEventListeners(row, table) {
         // Attach change events for quantity, costPrice, price, etc.
@@ -2893,6 +2803,25 @@
         });
     }
 
+    function getTags(tags) {
+        $.ajax({
+            url: '{{ route("General.ajax.getTags") }}',
+            method: 'GET',
+            success: function(response) {
+                console.log("jxcnjfjnfnk", response.data);
+                tags.innerHTML = '';
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.title;
+                    tags.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 
     function getProductData(selectedId) {
         $.ajax({
@@ -2903,7 +2832,7 @@
             },
             success: function(response) {
                 console.log("response.data", response.data);
-                quoteProductTable(response.data, 'quoteProducts');
+                quoteProductTable(response.data, 'quoteProducts', 'add');
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -2919,7 +2848,7 @@
             tableFoot.innerHTML += `<tr>
                                         <td colspan="10" class="borderNone"></td>
                                         <td>Sub Total (exc. VAT) <input type="hidden" name="sub_total" id="InputFootAmount"></td>
-                                        <td class="tableAmountRight" id="footAmount">$00.00</td>
+                                        <td class="tableAmountRight" id="footAmount">£00.00</td>
                                     </tr>
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
@@ -2929,30 +2858,29 @@
                                                 <span>%</span>
                                             </div>
                                         </td>
-                                        <td class="tableAmountRight" id="footDiscount">$00.00</td>
+                                        <td class="tableAmountRight" id="footDiscount">£00.00</td>
                                     </tr>
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
                                         <td>
                                             <span id="markUpLinkRemove"><a href="javascript:void(0)" onclick="applyMarkup();"> Apply overall markup</a> </span>
-                                            
                                         </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
-                                        <td>VAT<input type="hdden" name="vat_amount" id="InputFootVatAmount"></td>
-                                        <td class="tableAmountRight" id="footVatAmount">$00.00</td>
+                                        <td>VAT<input type="hidden" name="vat_amount" id="InputFootVatAmount"></td>
+                                        <td class="tableAmountRight" id="footVatAmount">£00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)<input type="hidden" name="total" id="inputFootTotalDiscountVat"></strong></td>
-                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">$00.00</td>
+                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">£00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Profit<input type="hidden" name="profit" id="inputFootProfit"></td>
-                                        <td class="tableAmountRight" id="footProfit">$00.00</td>
+                                        <td class="tableAmountRight" id="footProfit">£00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
@@ -2962,17 +2890,17 @@
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Deposit</td>
-                                        <td class="tableAmountRight" id="footDeposit">$00.00</td>
+                                        <td class="tableAmountRight" id="footDeposit">£00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Refund</td>
-                                        <td class="tableAmountRight" id="footRefund">$00.00</td>
+                                        <td class="tableAmountRight" id="footRefund">£00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)<input type="hidden" name="outstanding" id="inputFootOutstandingAmount"></strong></td>
-                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">$00.00</td>
+                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">£00.00</td>
                                     </tr>`;
             isFooterAppended = true;
 
@@ -3026,10 +2954,9 @@
         let profitValue;
         let numericProfit;
         let totalMargin = 0;
-
         let price = 0;
 
-        const doller = '$';
+        const doller = `£`;
 
         rows.forEach(row => {
 
@@ -3106,7 +3033,6 @@
         document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
 
-
     }
 
     function taxRate() {
@@ -3148,7 +3074,7 @@
     let isFooterAppended = false;
     let rowIndex = 0;
 
-    function quoteProductTable(data, tableId) {
+    function quoteProductTable(data, tableId, type) {
         const table = document.querySelector(`#${tableId}`);
         // Populate rows as usual if data is not empty
         data.forEach(item => {
@@ -3161,6 +3087,7 @@
                     <div class="CSPlus">
                         <span class="plusandText">
                             <a href="javascript:void(0)" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                            <input type="hidden" name="products[${rowIndex}][type]" value="${type}">
                             <input type="hidden" name="products[${rowIndex}][id]" value="${item.id}">
                             <input type="text" class="form-control editInput input80" name="products[${rowIndex}][product_code]" value="${item.product_code}">
                         </span>
@@ -3224,10 +3151,10 @@
                     </div>
                 </td>
                 <td>
-                    <span class="amount">$00.00</span>
+                    <span class="amount">£00.00</span>
                 </td>
                 <td>
-                    <span class="profit">$00.00</span>
+                    <span class="profit">£00.00</span>
                     <div class="pt-1 footRowMargin">(00.00%)</div>
                 </td>
                 <td>
@@ -3365,11 +3292,8 @@
             data: {
                 attachment_id: attachment_id
             },
-            // contentType: false, // Required for FormData
-            // processData: false, // Required for FormData
             success: function(response) {
                 // Handle success
-                alert(response);
                 const tableBody = $('#attachmentTable tbody');
                 console.log(tableBody);
 
@@ -3381,10 +3305,8 @@
 
                     attachments.forEach(attachment => {
                         console.log(attachment);
-                        // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
                         const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
                         const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
-
                         const id = attachment.id;
                         const row = `
                             <tr>
@@ -3422,7 +3344,7 @@
     }
 
     function deleteAttachmentFile(id) {
-        alert(id);
+        // alert(id);
 
         // Confirm deletion
         if (confirm("Are you sure you want to delete this row?")) {
@@ -3794,9 +3716,7 @@
 
 
     });
-</script>
 
-<script>
     $('#next_button').click(function(e) {
         var tab_id = $('ul.tabs .orange-tab.current').attr('data-tab');
         var first = $('ul.tabs .orange-tab:first').attr('data-tab');
