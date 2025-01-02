@@ -1017,7 +1017,15 @@ class LeadController extends Controller
     }
 
     public function searchLead(){
-        $page = "Lead";
-        return view('frontEnd.salesAndFinance.lead.search_leads', compact('page'));
+       
+        $page = "leads";
+        $allLead = Lead::getAllLeadCount(Auth::user()->home_id);
+        $myLeads = Lead::getLeadByUser(Auth::user()->id, Auth::user()->home_id);
+        $unAssignLead = Lead::getUnassignedCount(Auth::user()->home_id);
+        $actionedLead =   Lead::getActionedLead(Auth::user()->home_id);
+        $rejectLead = Lead::getRejectedCount(Auth::user()->home_id);
+        $authorizedLead     = Lead::getAuthorizationCount(Auth::user()->home_id);
+        $convertedLead = Customer::getConvertedCustomersCount(Auth::user()->home_id);
+        return view('frontEnd.salesAndFinance.lead.search_leads', compact('page', 'allLead', 'myLeads', 'unAssignLead', 'actionedLead', 'rejectLead', 'authorizedLead', 'convertedLead'));
     }
 }

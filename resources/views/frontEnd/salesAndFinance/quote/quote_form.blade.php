@@ -2877,7 +2877,7 @@
             tableFoot.innerHTML += `<tr>
                                         <td colspan="10" class="borderNone"></td>
                                         <td>Sub Total (exc. VAT) <input type="hidden" name="sub_total" id="InputFootAmount"></td>
-                                        <td class="tableAmountRight" id="footAmount">$00.00</td>
+                                        <td class="tableAmountRight" id="footAmount">£00.00</td>
                                     </tr>
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
@@ -2887,30 +2887,29 @@
                                                 <span>%</span>
                                             </div>
                                         </td>
-                                        <td class="tableAmountRight" id="footDiscount">$00.00</td>
+                                        <td class="tableAmountRight" id="footDiscount">£00.00</td>
                                     </tr>
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
                                         <td>
                                             <span id="markUpLinkRemove"><a href="javascript:void(0)" onclick="applyMarkup();"> Apply overall markup</a> </span>
-                                            
                                         </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
-                                        <td>VAT<input type="hdden" name="vat_amount" id="InputFootVatAmount"></td>
-                                        <td class="tableAmountRight" id="footVatAmount">$00.00</td>
+                                        <td>VAT<input type="hidden" name="vat_amount" id="InputFootVatAmount"></td>
+                                        <td class="tableAmountRight" id="footVatAmount">£00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)<input type="hidden" name="total" id="inputFootTotalDiscountVat"></strong></td>
-                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">$00.00</td>
+                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">£00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Profit<input type="hidden" name="profit" id="inputFootProfit"></td>
-                                        <td class="tableAmountRight" id="footProfit">$00.00</td>
+                                        <td class="tableAmountRight" id="footProfit">£00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
@@ -2920,17 +2919,17 @@
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Deposit</td>
-                                        <td class="tableAmountRight" id="footDeposit">$00.00</td>
+                                        <td class="tableAmountRight" id="footDeposit">£00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Refund</td>
-                                        <td class="tableAmountRight" id="footRefund">$00.00</td>
+                                        <td class="tableAmountRight" id="footRefund">£00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)<input type="hidden" name="outstanding" id="inputFootOutstandingAmount"></strong></td>
-                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">$00.00</td>
+                                        <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">£00.00</td>
                                     </tr>`;
             isFooterAppended = true;
 
@@ -2982,7 +2981,7 @@
 
         let price = 0;
 
-        const doller = '$';
+        const doller = `£`;
 
         rows.forEach(row => {
 
@@ -3141,10 +3140,10 @@
                     </div>
                 </td>
                 <td>
-                    <span class="amount">$00.00</span>
+                    <span class="amount">£00.00</span>
                 </td>
                 <td>
-                    <span class="profit">$00.00</span>
+                    <span class="profit">£00.00</span>
                     <div class="pt-1 footRowMargin">(00.00%)</div>
                 </td>
                 <td>
@@ -3740,181 +3739,7 @@
     });
     // **************************End Product Cetagory
 
-    //**************insrtProduct
-    // function insrtProduct() {
-    //     const node = document.createElement("tr");
-
-    //     node.classList.add("add_table_insrt");
-    //     node.innerHTML = `
-
-    //      <td>
-    //         <div class="CSPlus">
-    //             <span class="plusandText">
-    //                 <a href="#!" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
-    //                 <input type="text" class="form-control editInput input80" value="CS-0001">
-    //             </span>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <input type="hidden" name="item[][itemDetails]" value="product">
-    //             <input type="text" class="form-control editInput" value="CS-0001">
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <textarea class="form-control textareaInput" name="address" id="inputAddress" rows="2" placeholder="Address"></textarea>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <select class="form-control editInput selectOptions" id="accoutCodeList">
-    //                 <option>No account</option>
-    //                 <option>Default</option>
-    //                 <option>Default</option>
-    //             </select>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class=""><input type="text" class="form-control editInput input50" value="1"></div>
-    //     </td>
-    //     <td>
-    //         <div class=""> <input type="text" class="form-control editInput input50" value="100.00"></div>
-    //     </td>
-    //     <td>
-    //         <div class="calculatorIcon">
-    //             <span class="plusandText">
-    //                 <a href="#!" class="formicon pt-0" data-bs-toggle="modal" data-bs-target="#calculatePop"> <span class="material-symbols-outlined">calculate </span> </a>
-    //             </span>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <input type="text" class="form-control editInput input50" value="90.00">
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <input type="text" class="form-control editInput input50" value="0">
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="">
-    //             <select class="form-control editInput selectOptions" id="inputCustomer">
-    //                 <option>Please Select</option>
-    //                 <option>Default</option>
-    //                 <option>Default</option>
-    //             </select>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <div class="d-flex">
-    //             <input type="text" class="form-control editInput input50 me-2" value="0">
-    //             <select class="form-control editInput selectOptions input50" id="inputCustomer">
-    //                 <option>Please Select</option>
-    //                 <option>Default</option>
-    //                 <option>Default</option>
-    //             </select>
-    //         </div>
-    //     </td>
-    //     <td>
-    //         <span>$90.00</span>
-    //     </td>
-    //     <td>
-    //         <span>$-10.00</span>
-    //         <div class="minusnmber pt-1">(-11.11%)</div>
-    //     </td>
-    //     <td>
-    //         <div class="statuswating">
-    //             <span class="oNOfswich">
-    //                 <input type="checkbox">
-    //             </span>
-    //             <a href="#!"><i class="fa-solid fa-circle-xmark"></i></a>
-    //         </div>
-    //     </td>
-
-    //         `;
-
-    //     // const tableFoot = document.getElementsByClassName('add_table_insrt33');
-    //     const tableFoot = document.querySelector('.add_table_insrt33');
-
-    //     tableFoot.innerHTML += ` 
-
-    //     <tr>
-
-    //                                               <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Sub Total (exc. VAT)</td>
-    //                                                 <td>$90.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                                 <td colspan="12" class="borderNone"></td>
-    //                                                 <td>
-    //                                                     <div class="discountInput">
-    //                                                         <span>Discount</span><input type="text" class="form-control editInput input50" value="0">
-    //                                                         <span>%</span>
-    //                                                     </div>
-    //                                                 </td>
-    //                                                 <td>$0.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                                 <td colspan="12" class="borderNone"></td>
-    //                                                 <td>
-    //                                                     Apply overall markup
-    //                                                 </td>
-    //                                                 <td></td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                                 <td colspan="12" class="borderNone"></td>
-    //                                                 <td>VAT</td>
-    //                                                 <td>$18.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td><strong>Total(inc.VAT)</strong></td>
-    //                                                 <td><strong>$108.00</strong></td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Profit</td>
-    //                                                 <td>$-10.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Margin</td>
-    //                                                 <td>-11.11%</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Deposit</td>
-    //                                                 <td>$0.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td>Refund</td>
-    //                                                 <td>$0.00</td>
-    //                                             </tr>
-    //                                             <tr>
-    //                                             <td colspan="12" class="borderNone"></td>
-    //                                                 <td><strong>Outstanding (inc.VAT)</strong></td>
-    //                                                 <td><strong>$108.00</strong></td>
-    //                                             </tr>
-    //     `;
-    //     const tableBody = document.querySelector(".add_table_insrt");
-    //     // const tableBodyFoot = document.querySelector(".add_table_insrt33");
-
-    //     if (tableBody) {
-    //         tableBody.appendChild(node);
-    //         // tableBodyFoot.appendChild(tableFoot);
-    //         // Add event listener to the close button
-    //         const closeButton = node.querySelector('.closeappend');
-    //         closeButton.addEventListener('click', function() {
-    //             node.remove(); // Remove the row when close button is clicked
-    //         });
-    //     } else {
-    //         console.error("Table body with ID 'add_table_insrt' not found.");
-    //     }
-    // }
-    // ************End of InsrtProduct
+ 
     //**************insrtTitle
     function insrtTitle() {
         const node = document.createElement("tr");

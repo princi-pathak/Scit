@@ -9,9 +9,9 @@
         margin-bottom: 0;
         color: #168fdb;
     }
-    .addProduvtBg.costUpdatePop a.udateBtn{
+    /* .addProduvtBg.costUpdatePop a.udateBtn{
 
-    }
+    } */
 </style>
 
 <!-- Because you are alive, everything is possible. - Thich Nhat Hanh -->
@@ -111,11 +111,11 @@
                                             <li><a href="#" class="alphabeticLink" data-term="all" data-search_mode="ALL">All</a></li>
                                             @for ($i = 65; $i <= 90; $i++)
                                                 <li><a href="#" class="alphabeticLink" data-term="{{ chr($i) }}" data-search_mode="STARTS">{{ chr($i) }}</a></li>
-                                                @endfor
-                                                <li>&nbsp;</li>
-                                                @for($j = 0; $j <= 9; $j++)
-                                                    <li><a href="#" class="alphabeticLink" data-term="{{ $j }}" data-search_mode="STARTS">{{ $j }}</a></li>
-                                                    @endfor
+                                            @endfor
+                                            <li>&nbsp;</li>
+                                            @for($j = 0; $j <= 9; $j++)
+                                                <li><a href="#" class="alphabeticLink" data-term="{{ $j }}" data-search_mode="STARTS">{{ $j }}</a></li>
+                                            @endfor
                                         </ul>
                                         <br class="clear">
                                     </div>
@@ -404,7 +404,7 @@
     }
 
     function populateTable(data, tableId) {
-        // console.log(data.type);return false;
+        console.log("tableId", tableId);
         var type=data.type;
         var data=data.data;
         const tableBody = document.querySelector(`#${tableId} tbody`);
@@ -422,6 +422,7 @@
             tableBody.appendChild(noDataRow);
         } else {
             data.forEach(item => {
+             
                 const row = document.createElement('tr');
                 row.setAttribute('data-id', item.id);
                 if(type == 4){
@@ -488,6 +489,7 @@
                     descriptionCell.textContent = item.description;
                     row.appendChild(descriptionCell);
                 }
+                console.log("row", tableBody.appendChild(row));
                 tableBody.appendChild(row);
             });
         }
@@ -520,7 +522,7 @@
             url: '{{ url("item/ProductGroupProductsdetails") }}',
             method: 'Post',
             data: {
-                id: id,_token:'{{ csrf_token() }}'
+                id: id, _token:'{{ csrf_token() }}'
             },
             success: function(response) {
                 if (response.data && response.data.length > 0 && response.data[0].name) {
