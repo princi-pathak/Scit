@@ -430,7 +430,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/leads/create', 'store')->name('lead.store');
 		Route::get('/leads/edit/{id}', 'edit')->name('lead.edit');
 		Route::get('/leads/authorization/{id}', 'sentToAuthorization')->name('lead.authorization');
-		Route::get('/lead/searchLead', 'searchLead');
+		Route::get('leads/search', 'searchLead');
 
 		// Lead Task Type
 		Route::get('/leads/tasks', 'task_list')->name('lead.task_list');
@@ -545,7 +545,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('quote/saveAttachmentData', 'saveAttachmentData')->name('quote.ajax.saveAttachmentData');
 		Route::post('quote/getAttachmentData', 'getAttachmentData')->name('quote.ajax.getAttachmentData');
 		Route::get('quote-details/add_multi_attachment', 'add_multi_attachment')->name('quote.addMultiAttachment');
-		Route::post('/quote/saveQuoteData', 'store');
 		Route::get('/quote/getAttachmentList', 'getAttachmentList')->name('quote.ajax.getAttachmentList');
 		Route::post('/quote/saveQuoteAttachments', 'saveQuoteAttachments')->name('quote.ajax.saveQuoteAttachments');
 		Route::post('/quote/getAttachmentDataOnQuoteId', 'getAttachmentDataOnQuoteId')->name('quote.ajax.getAttachmentDataOnQuoteId');
@@ -556,7 +555,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/callBack', 'callBack');
 		Route::post('/quote/save-quote-task', 'saveQuoteTask')->name('quote.ajax.saveQuoteTask');
 		Route::post('/quote/getQuoteTaskList', 'getQuoteTaskList')->name('quote.ajax.getQuoteTaskList');
+		Route::post('/quotes/change-to-accepted', 'changeToAccept')->name('quote.ajax.changeToAccept');
 
+		Route::get('quote/search', 'searchQuote');
+		
 		
 	});
 

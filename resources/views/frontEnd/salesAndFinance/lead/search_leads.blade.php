@@ -183,6 +183,195 @@
                                 </form>
                             </div>
 
+                            <div class="markendDelete">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="jobsection">
+                                    <a href="#" class="profileDrop">Delete</a>
+                                    <a href="#" class="profileDrop">Mark As completed</a>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="pageTitleBtn p-0">
+                                    <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a>        
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                            <div class="productDetailTable pt-3">
+                            <table class="table mb-0" id="containerA">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Quote Ref </th>
+                                        <th>Quote Date</th>
+                                        <th>Customer Name</th>
+                                        <th>Site / Delivery</th>
+                                        <th>No. Quotes  </th>
+                                        <th>Sub Total </th>
+                                        <th>VAT</th>
+                                        <th>Total  </th>
+                                        <th>Deposit  </th>
+                                        <th>Outstanding</th>
+                                        <th>profit</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>QU-0001</td>
+                                        <td>2024-12-06</td>
+                                        <td>Webnmob</td>
+                                        <td>B-36 Sector 59</td>
+                                        <td>1</td>
+                                        <td>£220.00</td>
+                                        <td>£44.00</td>
+                                        <td>£264.00</td>
+                                        <td>£0.00</td>
+                                        <td>£264.00</td>
+                                        <td>£120.00</td>
+                                        <td>
+                                            <div class="d-inline-flex align-items-center ">
+                                                <div class="nav-item dropdown">
+                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Action
+                                                    </a>
+                                                    <div class="dropdown-menu fade-up m-0" style="">
+                                                        <a href="#" class="dropdown-item">Send SMS</a>
+                                                        <a href="" class="dropdown-item">Preview</a>
+                                                        <a href="" class="dropdown-item">Print</a>
+                                                        <a href="" class="dropdown-item">Email</a>
+                                             
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>QU-0001</td>
+                                        <td>2024-12-06</td>
+                                        <td>Webnmob</td>
+                                        <td>B-36 Sector 59</td>
+                                        <td>1</td>
+                                        <td>£220.00</td>
+                                        <td>£44.00</td>
+                                        <td>£264.00</td>
+                                        <td>£0.00</td>
+                                        <td>£264.00</td>
+                                        <td>£120.00</td>
+                                        <td>
+                                            <div class="d-inline-flex align-items-center ">
+                                                <div class="nav-item dropdown">
+                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Action
+                                                    </a>
+                                                    <div class="dropdown-menu fade-up m-0" style="">
+                                                        <a href="#" class="dropdown-item">Send SMS</a>
+                                                        <a href="" class="dropdown-item">Preview</a>
+                                                        <a href="" class="dropdown-item">Print</a>
+                                                        <a href="" class="dropdown-item">Email</a>
+                                             
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>QU-0001</td>
+                                        <td>2024-12-06</td>
+                                        <td>Webnmob</td>
+                                        <td>B-36 Sector 59</td>
+                                        <td>1</td>
+                                        <td>£220.00</td>
+                                        <td>£44.00</td>
+                                        <td>£264.00</td>
+                                        <td>£0.00</td>
+                                        <td>£264.00</td>
+                                        <td>£120.00</td>
+                                        <td>
+                                            <div class="d-inline-flex align-items-center ">
+                                                <div class="nav-item dropdown">
+                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Action
+                                                    </a>
+                                                    <div class="dropdown-menu fade-up m-0" style="">
+                                                        <a href="#" class="dropdown-item">Send SMS</a>
+                                                        <a href="" class="dropdown-item">Preview</a>
+                                                        <a href="" class="dropdown-item">Print</a>
+                                                        <a href="" class="dropdown-item">Email</a>
+                                             
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>QU-0001</td>
+                                        <td>2024-12-06</td>
+                                        <td>Webnmob</td>
+                                        <td>B-36 Sector 59</td>
+                                        <td>1</td>
+                                        <td>£220.00</td>
+                                        <td>£44.00</td>
+                                        <td>£264.00</td>
+                                        <td>£0.00</td>
+                                        <td>£264.00</td>
+                                        <td>£120.00</td>
+                                        <td>
+                                            <div class="d-inline-flex align-items-center ">
+                                                <div class="nav-item dropdown">
+                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Action
+                                                    </a>
+                                                    <div class="dropdown-menu fade-up m-0" style="">
+                                                        <a href="#" class="dropdown-item">Send SMS</a>
+                                                        <a href="" class="dropdown-item">Preview</a>
+                                                        <a href="" class="dropdown-item">Print</a>
+                                                        <a href="" class="dropdown-item">Email</a>
+                                             
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>QU-0001</td>
+                                        <td>2024-12-06</td>
+                                        <td>Webnmob</td>
+                                        <td>B-36 Sector 59</td>
+                                        <td>1</td>
+                                        <td>£220.00</td>
+                                        <td>£44.00</td>
+                                        <td>£264.00</td>
+                                        <td>£0.00</td>
+                                        <td>£264.00</td>
+                                        <td>£120.00</td>
+                                        <td>
+                                            <div class="d-inline-flex align-items-center ">
+                                                <div class="nav-item dropdown">
+                                                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Action
+                                                    </a>
+                                                    <div class="dropdown-menu fade-up m-0">
+                                                        <a href="#" class="dropdown-item">Send SMS</a>
+                                                        <a href="" class="dropdown-item">Preview</a>
+                                                        <a href="" class="dropdown-item">Print</a>
+                                                        <a href="" class="dropdown-item">Email</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>                                
+                            </table>
+                        </div>
+
                         </div> <!-- End off main Table -->
                     </div>
                 </di>
