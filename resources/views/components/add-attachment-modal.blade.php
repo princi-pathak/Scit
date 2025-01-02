@@ -20,8 +20,9 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Type</label>
                         <div class="col-md-9">
+                        <?php $attachmentType = App\Models\AttachmentType::getActiveAttachmentType(Auth::user()->home_id);?>
                             <select name="attachment_type" id="{{ $typeId }}" class="form-control editInput">
-                                <option value="">Please Select</option>
+                                <option value="" selected disabled>Please Select</option>
                                 @foreach($attachmentType as $value)
                                 <option value="{{ $value->id }}">{{ $value->title }}</option>
                                 @endforeach
