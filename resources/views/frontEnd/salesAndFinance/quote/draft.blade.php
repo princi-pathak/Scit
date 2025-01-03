@@ -1,5 +1,7 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
+<style>
 
+</style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
         <div class="row">
@@ -276,7 +278,7 @@
                                     }
                                     @endphp
                                     <td>
-                                        <div class="d-inline-flex align-items-center ">
+                                        <div class="d-flex justify-content-end actionDropdown">
                                             <div class="nav-item dropdown">
                                                 <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
                                                     Action
@@ -284,27 +286,22 @@
                                                 <div class="dropdown-menu fade-up m-0">
                                                     <a href="#" class="dropdown-item">Send SMS</a>
                                                     <a href="{{ url('/quote/edit').'/'.$value->id }}" class="dropdown-item">Edit</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Preview</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Print</a>
                                                     <a href="" class="dropdown-item">Email</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Convert To Recurring Quote </a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Convert To New Job</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Convert To Recurring Job</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Convert To Invoice</a>
+
                                                     <hr class="dropdown-divider">
                                                     <a href="javaScript:void(0);" onclick="statusChange('{{ $value->id }}', 'Processed')" class="dropdown-item">Change To Processed</a>
                                                     <a href="javaScript:void(0)" onclick="openCallBackModal()" id="changeToCallBack" data-id="{{ $value->id }}" data-quote_ref="{{ $value->quote_ref }}" class="dropdown-item">Change To Call Back</a>
                                                     <a href="javaScript:void(0);" onclick="statusChange('{{ $value->id }}', 'Accepted')" data-id="{{ $value->id }}" class="dropdown-item">Change To Accepted</a>
                                                     <a href="javaScript:void(0);" class="dropdown-item" onclick="openRejectModal('{{ $value->quote_ref }}');">Change To Rejected</a>
                                                     <hr class="dropdown-divider">
+
                                                     <a href="#" class="dropdown-item set_value_on_CRM_model" class="dropdown-item">CRM History</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="#" class="dropdown-item">Start Timer</a>
                                                 </div>
                                             </div>
