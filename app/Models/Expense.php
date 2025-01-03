@@ -10,7 +10,7 @@ class Expense extends Model
     use HasFactory;
     protected $table="expenses";
     protected $fillable=[
-       'home_id', 'job_id', 'title', 'amount', 'vat', 'vat_amount', 'gross_amount', 'expense_date', 'user_id', 'reference', 'customer_id', 'project_id', 'job', 'job_appointment_id', 'authorised', 'billable', 'paid', 'reject', 'notes', 'attachments', 'deleted_at'
+       'home_id', 'login_user_id', 'job_id', 'title', 'amount', 'vat', 'vat_amount', 'gross_amount', 'expense_date', 'user_id', 'reference', 'customer_id', 'project_id', 'job', 'job_appointment_id', 'authorised', 'billable', 'paid', 'reject', 'notes', 'attachments', 'deleted_at'
     ];
 
     public static function expense_save($data){
