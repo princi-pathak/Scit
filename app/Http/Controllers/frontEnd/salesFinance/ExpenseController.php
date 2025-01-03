@@ -29,23 +29,23 @@ class ExpenseController extends Controller
         $data['home_id']=$home_id;
         if(isset($key) && isset($value)){
             if($key === 'reject' && $value == 1){
-                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'user_id'=>Auth::user()->id])->get();
+                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'login_user_id'=>Auth::user()->id])->get();
             }else if($key === 'authorised'){
-                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'paid'=>0,'user_id'=>Auth::user()->id])->get();
+                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'paid'=>0,'login_user_id'=>Auth::user()->id])->get();
             }else{
-                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'user_id'=>Auth::user()->id])->get();
+                $expense=Expense::getAllExpense($home_id)->where(["$key"=>$value,'reject'=>0,'login_user_id'=>Auth::user()->id])->get();
             }
             
         }else{
-            $expense=Expense::getAllExpense($home_id)->where('user_id',Auth::user()->id)->get();
+            $expense=Expense::getAllExpense($home_id)->where('login_user_id',Auth::user()->id)->get();
         }
         $data['expense']=$expense;
         // echo "<pre>";print_r($data['expense']);die;
-        $data['authorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>1,'reject'=>0,'paid'=>0,'user_id'=>Auth::user()->id])->count();
-        $data['unauthorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>0,'reject'=>0,'paid'=>0,'user_id'=>Auth::user()->id])->count();
-        $data['rejectCount']=Expense::getAllExpense($home_id)->where(['reject'=>1,'user_id'=>Auth::user()->id])->count();
-        $data['paidCount']=Expense::getAllExpense($home_id)->where(['paid'=>1,'reject'=>0,'user_id'=>Auth::user()->id])->count();
-        $data['expenseCount']=Expense::getAllExpense($home_id)->where('user_id',Auth::user()->id)->count();
+        $data['authorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>1,'reject'=>0,'paid'=>0,'login_user_id'=>Auth::user()->id])->count();
+        $data['unauthorisedCount']=Expense::getAllExpense($home_id)->where(['authorised'=>0,'reject'=>0,'paid'=>0,'login_user_id'=>Auth::user()->id])->count();
+        $data['rejectCount']=Expense::getAllExpense($home_id)->where(['reject'=>1,'login_user_id'=>Auth::user()->id])->count();
+        $data['paidCount']=Expense::getAllExpense($home_id)->where(['paid'=>1,'reject'=>0,'login_user_id'=>Auth::user()->id])->count();
+        $data['expenseCount']=Expense::getAllExpense($home_id)->where('login_user_id',Auth::user()->id)->count();
         // echo "<pre>";print_r($data['paidWithAuthCount']);die;
         return view('frontEnd.salesAndFinance.expenses.expense',$data);
     }
@@ -124,9 +124,16 @@ class ExpenseController extends Controller
         } else {
             $requestData = $request->all();
         }
+        $requestData['login_user_id']=Auth::user()->id;
+        // echo "<pre>";print_r($requestData);die;
         try {
             $expense=Expense::expense_save($requestData);
-            return response()->json(['success' => true, 'expense' => $expense]);
+            if($request->id == ''){
+                return response()->json(['success' => true,'message'=>'Expense has been saved', 'expense' => $expense]);
+            }else{
+                return response()->json(['success' => true,'message'=>'Expense has been updated', 'expense' => $expense]);
+            }
+            
         } catch (\Exception $e) {
             Log::error('Error saving Tag: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
@@ -166,6 +173,7 @@ class ExpenseController extends Controller
             ->where('home_id', $home_id)
             ->where('status', 1)
             ->whereNull('deleted_at')
+            ->take(10)
             ->get();
 
         return response()->json(['data' => $CustomerSearchData]);

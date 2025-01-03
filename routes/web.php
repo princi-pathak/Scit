@@ -393,6 +393,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/purchase_order_new_task_save','purchase_order_new_task_save');
 		Route::post('/getAllNewTaskList','getAllNewTaskList');
 		Route::get('/draft_purchase_order','draft_purchase_order');
+		Route::post('/searchPurchaseOrders','searchPurchaseOrders');
+		Route::post('/searchDepartment','searchDepartment');
+		Route::post('/searchTag','searchTag');
+		Route::post('/searchSupplier','searchSupplier');
+		Route::post('/searchCreatedBy','searchCreatedBy');
+		Route::post('/searchProject','searchProject');
 	});
 	
 	// Forontend Customer Controller
@@ -555,9 +561,13 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/callBack', 'callBack');
 		Route::post('/quote/save-quote-task', 'saveQuoteTask')->name('quote.ajax.saveQuoteTask');
 		Route::post('/quote/getQuoteTaskList', 'getQuoteTaskList')->name('quote.ajax.getQuoteTaskList');
-		Route::post('/quotes/change-to-accepted', 'changeToAccept')->name('quote.ajax.changeToAccept');
-
+		Route::patch('/quotes/statusChange', 'statusChange')->name('quote.ajax.statusChange');
+		Route::get('/quote/accepted', 'index');
+		Route::get('/quote/actioned', 'index');
 		Route::get('quote/search', 'searchQuote');
+		Route::get('/quotes/getActiveRejectType', 'getActiveRejectType')->name('quote.ajax.getActiveRejectType');
+
+		
 		
 		
 	});

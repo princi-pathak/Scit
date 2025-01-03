@@ -11,7 +11,11 @@ class QuoteRejectType extends Model
     
     protected $fillable = ['title' ,'status', 'home_id'];
 
-    public static function getAllQuoteRejectType(){
-        return QuoteRejectType::where('deleted_at', null)->get();
+    public static function getAllQuoteRejectType($home_id){
+        return QuoteRejectType::where('deleted_at', null)->where('home_id', $home_id)->get();
+    }
+
+    public static function getActiveQuoteRejectType($home_id){
+        return QuoteRejectType::where('deleted_at', null)->where('status', 1)->where('home_id', $home_id)->get();
     }
 }
