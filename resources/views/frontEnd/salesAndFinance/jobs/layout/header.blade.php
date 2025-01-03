@@ -120,9 +120,9 @@ $access_rights = explode(',', $rights);
                                     <li class="nav-item1"><a href="{{ url('/quote/dashboard') }}" class="dropdown-item"><span><i class="fa fa-dashboard"></i> Dashboard</span></a></li>
                                     <li class="nav-item1"><a href="{{ url('/quote/add') }}" class="dropdown-item"><span><i class="fa fa-plus"></i> New Quote</span></a></li>
                                     <li class="nav-item1"><a href="{{ url('/quote/draft') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Draft Quote</span></a></li>
-                                    <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Actioned Quote</span></a></li>
+                                    <li class="nav-item1"><a href="{{ url('/quote/actioned') }}" class="dropdown-item"><span><i class="fa fa-file-text"></i> Actioned Quote</span></a></li>
                                     <li class="nav-item1"><a href="{{ url('/quote/callBack') }}" class="dropdown-item"><span><i class="fa fa-file-text"></i> Call Back Quote</span></a></li>
-                                    <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Accepted Quote</span></a></li>
+                                    <li class="nav-item1"><a href="{{ url('/quote/accepted') }}" class="dropdown-item"><span><i class="fa fa-file-text"></i> Accepted Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Converted Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Reminders</span></a></li>
                                     <li class="nav-item1"><a href="{{ url('quote/search') }}" class="dropdown-item"><span><i class="fa fa-search"></i> Search Quote</span></a></li>

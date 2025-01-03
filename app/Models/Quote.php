@@ -75,9 +75,18 @@ class Quote extends Model
         return self::where('status', 'Draft')->where('home_id', $home_id)->count();
     }
  
-    
     public static function getCallBackCount($home_id){
         return self::where('status', 'Call Back')->where('home_id', $home_id)->count();
     }
+
+    public static function getAcceptedCount($home_id){
+        return self::where('status', 'Accepted')->where('home_id', $home_id)->count();
+    }
+
+    
+    public static function getActionedCount($home_id){
+        return self::where('status', 'Processed')->where('home_id', $home_id)->count();
+    }
+    
 
 }
