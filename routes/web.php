@@ -561,9 +561,13 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/callBack', 'callBack');
 		Route::post('/quote/save-quote-task', 'saveQuoteTask')->name('quote.ajax.saveQuoteTask');
 		Route::post('/quote/getQuoteTaskList', 'getQuoteTaskList')->name('quote.ajax.getQuoteTaskList');
-		Route::post('/quotes/change-to-accepted', 'changeToAccept')->name('quote.ajax.changeToAccept');
-
+		Route::patch('/quotes/statusChange', 'statusChange')->name('quote.ajax.statusChange');
+		Route::get('/quote/accepted', 'index');
+		Route::get('/quote/actioned', 'index');
 		Route::get('quote/search', 'searchQuote');
+		Route::get('/quotes/getActiveRejectType', 'getActiveRejectType')->name('quote.ajax.getActiveRejectType');
+
+		
 		
 		
 	});

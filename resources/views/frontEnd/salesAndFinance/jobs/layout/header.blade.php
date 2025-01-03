@@ -120,9 +120,9 @@ $access_rights = explode(',', $rights);
                                     <li class="nav-item1"><a href="{{ url('/quote/dashboard') }}" class="dropdown-item"><span><i class="fa fa-dashboard"></i> Dashboard</span></a></li>
                                     <li class="nav-item1"><a href="{{ url('/quote/add') }}" class="dropdown-item"><span><i class="fa fa-plus"></i> New Quote</span></a></li>
                                     <li class="nav-item1"><a href="{{ url('/quote/draft') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Draft Quote</span></a></li>
-                                    <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Actioned Quote</span></a></li>
+                                    <li class="nav-item1"><a href="{{ url('/quote/actioned') }}" class="dropdown-item"><span><i class="fa fa-file-text"></i> Actioned Quote</span></a></li>
                                     <li class="nav-item1"><a href="{{ url('/quote/callBack') }}" class="dropdown-item"><span><i class="fa fa-file-text"></i> Call Back Quote</span></a></li>
-                                    <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Accepted Quote</span></a></li>
+                                    <li class="nav-item1"><a href="{{ url('/quote/accepted') }}" class="dropdown-item"><span><i class="fa fa-file-text"></i> Accepted Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Converted Quote</span></a></li>
                                     <li class="nav-item1"><a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Reminders</span></a></li>
                                     <li class="nav-item1"><a href="{{ url('quote/search') }}" class="dropdown-item"><span><i class="fa fa-search"></i> Search Quote</span></a></li>
@@ -208,7 +208,7 @@ $access_rights = explode(',', $rights);
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span><i class="fa fa-list"></i> Invoices </span> <i class="fa-solid fa-angle-right"></i>
+                                            <span><i class="fa fa-list"></i> Invoices </span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-columns"></i>Dashboard</span></a></li>
@@ -222,7 +222,7 @@ $access_rights = explode(',', $rights);
                                             <li><a class="dropdown-item" href="#"><span><i class="fa-solid fa-stopwatch"></i>Reminders</span></a></li>
                                             <li class="nav-item1 dropend">
                                                 <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span><i class="fa fa-rotate-right"></i>Recurring Invoices</span> <i class="fa-solid fa-angle-right"></i>
+                                                    <span><i class="fa fa-rotate-right"></i>Recurring Invoices</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                                 </a>
                                                 <ul class="dropdown-menu1">
                                                     <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i> New Recurring Invoice</span></a></li>
@@ -231,7 +231,7 @@ $access_rights = explode(',', $rights);
                                             </li>
                                             <li class="nav-item1 dropend">
                                                 <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span><i class="fa fa-list"></i>Credit Notes</span> <i class="fa-solid fa-angle-right"></i>
+                                                    <span><i class="fa fa-list"></i>Credit Notes</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                                 </a>
                                                 <ul class="dropdown-menu1">
                                                     <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i>New Credit Note</span></a></li>
@@ -246,7 +246,7 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span><i class="fa fa-file"></i>Purchase Orders</span> <i class="fa-solid fa-angle-right"></i>
+                                            <span><i class="fa fa-file"></i>Purchase Orders</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
@@ -278,10 +278,10 @@ $access_rights = explode(',', $rights);
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('customer_add_edit')}}"><i class="fa fa-plus"></i>New Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=ACTIVE') }}"><i class="fa fa-check-circle"></i>Active Customers</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=INACTIVE') }}"><i class="fa fa-times-circle"></i>Inactive Customers</a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Customers Logins</a></li>
+                                            <li><a class="dropdown-item" href="{{url('customer_add_edit')}}"><span><i class="fa fa-plus"></i>New Customers</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=ACTIVE') }}"><span><i class="fa fa-check-circle"></i>Active Customers</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('customers?list_mode=INACTIVE') }}"><span><i class="fa fa-times-circle"></i>Inactive Customers</span></a></li>
+                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i>Customers Logins</span></a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -289,9 +289,9 @@ $access_rights = explode(',', $rights);
                                             <span><i class="fa fa-users"></i> Suppliers</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('supplier_add')}}"><i class="fa fa-plus"></i>New Supllier</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('supplier?list_mode=ACTIVE') }}"><i class="fa fa-check-circle"></i>Active Suppliers</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('supplier?list_mode=INACTIVE') }}"><i class="fa fa-times-circle"></i>Inactive Suppliers</a></li>
+                                            <li><a class="dropdown-item" href="{{url('supplier_add')}}"><span><i class="fa fa-plus"></i>New Supllier</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('supplier?list_mode=ACTIVE') }}"><span><i class="fa fa-check-circle"></i>Active Suppliers</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('supplier?list_mode=INACTIVE') }}"><span><i class="fa fa-times-circle"></i>Inactive Suppliers</span></a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -376,12 +376,12 @@ $access_rights = explode(',', $rights);
                                                 Leads</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list-ul"></i>Lead Settings</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_sources') }}"> <i class="fa fa-list-ul"></i> Lead Sources</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_status') }}"><i class="fa fa-list-ul"></i>Lead Status</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_task_type') }}"><i class="fa fa-list-ul"></i>Lead Task Types</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_reject_types') }}"><i class="fa fa-list-ul"></i>Lead Reject Types</a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_notes_type') }}"><i class="fa fa-list-ul"></i>Lead Notes Type</a></li>
+                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-list-ul"></i>Lead Settings</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_sources') }}"> <span><i class="fa fa-list-ul"></i> Lead Sources</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_status') }}"><span><i class="fa fa-list-ul"></i>Lead Status</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_task_type') }}"><span><i class="fa fa-list-ul"></i>Lead Task Types</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_reject_types') }}"><span><i class="fa fa-list-ul"></i>Lead Reject Types</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/lead_notes_type') }}"><span><i class="fa fa-list-ul"></i>Lead Notes Type</span></a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -389,9 +389,9 @@ $access_rights = explode(',', $rights);
                                                 Quotes</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{ url('/quote/quote_type') }}"><i class="fa fa-list-ul"></i>Quote Type </a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/quote/quote_sources') }}"><i class="fa fa-list-ul"></i>Quote Source </a></li>
-                                            <li><a class="dropdown-item" href="{{ url('/quote/quote_reject_types') }}"><i class="fa fa-list-ul"></i>Quote Reject Type </a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/quote/quote_type') }}"><span><i class="fa fa-list-ul"></i>Quote Type </span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/quote/quote_sources') }}"><span><i class="fa fa-list-ul"></i>Quote Source </span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/quote/quote_reject_types') }}"><span><i class="fa fa-list-ul"></i>Quote Reject Type </span></a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -402,10 +402,10 @@ $access_rights = explode(',', $rights);
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <?php if (array_key_exists(314, $access_rights)) { ?>
-                                                <li><a class="dropdown-item" href="{{url('job_type')}}"><i class="fa fa-list"></i>Job Type </a></li>
+                                                <li><a class="dropdown-item" href="{{url('job_type')}}"><span><i class="fa fa-list"></i>Job Type </span></a></li>
                                             <?php } ?>
-                                            <li><a class="dropdown-item" href="{{url('job_appointment_type_list')}}"><i class="fa fa-list"></i>Job Appointment Type </a></li>
-                                            <li><a class="dropdown-item" href="{{url('appointment_rejection_cat_list')}}"><i class="fa fa-list"></i>Appointment Rejection Categories </a></li>
+                                            <li><a class="dropdown-item" href="{{url('job_appointment_type_list')}}"><span><i class="fa fa-list"></i>Job Appointment Type </span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('appointment_rejection_cat_list')}}"><span><i class="fa fa-list"></i>Appointment Rejection Categories </span></a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -413,8 +413,8 @@ $access_rights = explode(',', $rights);
                                                 Invoices</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('/account_codes')}}"><i class="fa fa-list"></i>Account Codes </a></li>
-                                            <li><a class="dropdown-item" href="{{url('/tax_rate')}}"><i class="fa fa-list"></i>Tax Rate </a></li>
+                                            <li><a class="dropdown-item" href="{{url('/account_codes')}}"><span><i class="fa fa-list"></i>Account Codes </span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('/tax_rate')}}"><span><i class="fa fa-list"></i>Tax Rate </span></a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -422,7 +422,7 @@ $access_rights = explode(',', $rights);
                                                 Purchase Orders</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('departments')}}"><i class="fa fa-list"></i>Departments </a></li>
+                                            <li><a class="dropdown-item" href="{{url('departments')}}"><span><i class="fa fa-list"></i>Departments </span></a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -430,9 +430,9 @@ $access_rights = explode(',', $rights);
                                                 Customers</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('customer_type')}}"><i class="fa fa-list"></i>Customer Type </a></li>
-                                            <li><a class="dropdown-item" href="{{url('job_titles')}}"><i class="fa fa-list"></i>Customer Job Title </a></li>
-                                            <li><a class="dropdown-item" href="{{url('complaint_type')}}"><i class="fa fa-list"></i>Complaint Type </a></li>
+                                            <li><a class="dropdown-item" href="{{url('customer_type')}}"><span><i class="fa fa-list"></i>Customer Type </span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('job_titles')}}"><span><i class="fa fa-list"></i>Customer Job Title </span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('complaint_type')}}"><span><i class="fa fa-list"></i>Complaint Type </span></a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -440,12 +440,12 @@ $access_rights = explode(',', $rights);
                                                 Users</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Type </a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Profiles </a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Working Areas </a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>Personal Time Type </a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Contractors </a></li>
-                                            <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i>User Location </a></li>
+                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i>User Type </span></a></li>
+                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i>User Profiles </span></a></li>
+                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i>User Working Areas </span></a></li>
+                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i>Personal Time Type </span></a></li>
+                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i>User Contractors </span></a></li>
+                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-list"></i>User Location </span></a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -453,7 +453,7 @@ $access_rights = explode(',', $rights);
                                                 CRM</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{ url('/lead/CRM_section_types') }}"><i class="fa fa-list-ul"></i> CRM Section Types </a></li>
+                                            <li><a class="dropdown-item" href="{{ url('/lead/CRM_section_types') }}"><span><i class="fa fa-list-ul"></i> CRM Section Types </span></a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
@@ -461,11 +461,11 @@ $access_rights = explode(',', $rights);
                                                 General</span> <span><i class="fa-solid fa-angle-right"></i></span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                            <li><a class="dropdown-item" href="{{url('/attachments_types')}}"><i class="fa fa-paperclip"></i>Attachment Types </a></li>
-                                            <li><a class="dropdown-item" href="{{url('/Payment_type')}}"><i class="nav-icon fas fa-money-bill-alt"></i>Payment Types </a></li>
-                                            <li><a class="dropdown-item" href="{{url('/regions')}}"><i class="fa fa-globe"></i>Regions </a></li>
-                                            <li><a class="dropdown-item" href="{{url('/task_types')}}"><i class="fa fa-list-ul"></i>Task Types </a></li>
-                                            <li><a class="dropdown-item" href="{{url('/tags')}}"><i class="fa fa-tags"></i>Tags </a></li>
+                                            <li><a class="dropdown-item" href="{{url('/attachments_types')}}"><span><i class="fa fa-paperclip"></i>Attachment Types </span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('/Payment_type')}}"><span><i class="nav-icon fas fa-money-bill-alt"></i>Payment Types </span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('/regions')}}"><span><i class="fa fa-globe"></i>Regions </span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('/task_types')}}"><span><i class="fa fa-list-ul"></i>Task Types </span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('/tags')}}"><span><i class="fa fa-tags"></i>Tags </span></a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><span><i class="fa fa-check-circle"></i> Quick Setup Wizard</span></a></li>

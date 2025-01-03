@@ -1,11 +1,13 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
+<style>
 
+</style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>Draft Quotes</h3>
+                    <h3>{{ $text }} Quotes</h3>
                 </div>
             </div>
             <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -223,6 +225,13 @@
                                     <th>Deposit </th>
                                     <th>Outstanding</th>
                                     <th>profit</th>
+                                    @php
+                                    if ($lastSegment == "accepted"){
+                                    @endphp
+                                    <th>Status</th>
+                                    @php
+                                    }
+                                    @endphp
                                     <th></th>
                                 </tr>
                             </thead>
@@ -260,8 +269,16 @@
                                     <td>{{ $value->deposit > 0 ? '£' . $value->deposit : '-'}}</td>
                                     <td>{{ $value->outstanding > 0 ? '£' . $value->outstanding : '-' }}</td>
                                     <td>{{ $value->profit > 0 ? '£' . $value->profit : '-' }}</td>
+                                    <!-- <th>profit</th> -->
+                                    @php
+                                    if ($lastSegment == "accepted"){
+                                    @endphp
+                                    <td>{{ $value->status }}</td>
+                                    @php
+                                    }
+                                    @endphp
                                     <td>
-                                        <div class="d-inline-flex align-items-center ">
+                                        <div class="d-flex justify-content-end actionDropdown">
                                             <div class="nav-item dropdown">
                                                 <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
                                                     Action
@@ -269,27 +286,22 @@
                                                 <div class="dropdown-menu fade-up m-0">
                                                     <a href="#" class="dropdown-item">Send SMS</a>
                                                     <a href="{{ url('/quote/edit').'/'.$value->id }}" class="dropdown-item">Edit</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Preview</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Print</a>
                                                     <a href="" class="dropdown-item">Email</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Convert To Recurring Quote </a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Convert To New Job</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Convert To Recurring Job</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="" class="dropdown-item">Convert To Invoice</a>
+
                                                     <hr class="dropdown-divider">
-                                                    <a href="" class="dropdown-item">Change To Processed</a>
+                                                    <a href="javaScript:void(0);" onclick="statusChange('{{ $value->id }}', 'Processed')" class="dropdown-item">Change To Processed</a>
                                                     <a href="javaScript:void(0)" onclick="openCallBackModal()" id="changeToCallBack" data-id="{{ $value->id }}" data-quote_ref="{{ $value->quote_ref }}" class="dropdown-item">Change To Call Back</a>
-                                                    <a href="javaScript:void(0);" onclick="statusChangeToAccept()" data-id="{{ $value->id }}" class="dropdown-item">Change To Accepted</a>
-                                                    <a href="" class="dropdown-item">Change To Rejected</a>
+                                                    <a href="javaScript:void(0);" onclick="statusChange('{{ $value->id }}', 'Accepted')" data-id="{{ $value->id }}" class="dropdown-item">Change To Accepted</a>
+                                                    <a href="javaScript:void(0);" class="dropdown-item" onclick="openRejectModal('{{ $value->quote_ref }}');">Change To Rejected</a>
                                                     <hr class="dropdown-divider">
+
                                                     <a href="#" class="dropdown-item set_value_on_CRM_model" class="dropdown-item">CRM History</a>
-                                                    <hr class="dropdown-divider">
                                                     <a href="#" class="dropdown-item">Start Timer</a>
                                                 </div>
                                             </div>
@@ -326,16 +338,89 @@
         </di>
     </div>
 </section>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="quote_reject_model" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title pupTitle">Change To Rejected</h5>
+                <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button"></button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="attachmentTypeForm">
+                    <div><span id="error-message" class="error"></span></div>
+                    <div class="row form-group">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Quote Ref </label>
+                        <div class="col-md-9">
+                            <input type="hidden" value="" name="quote_id">
+                            <input type="text" class="form-control-plaintext editInput" id="setQuoteRef" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Reject Type</label>
+                        <div class="col-sm-6">
+                            <select class="form-control editInput selectOptions" name="reject_type_id" id="quote_reject_type">
+                                <option>Please Select</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <a href="javascript:void(0)" class="formicon" onclick="openRejectTypeModal('quote_reject_type')" ><i class="fa-solid fa-square-plus"></i></a>
+                        </div>
+                    </div>
+                    <div class="row form-group mt-3">
+                        <label class="col-lg-3 col-sm-3 col-form-label">Reject Reason <span class="radStar ">*</span></label>
+                        <div class="col-md-9">
+                            <textarea name="description" class="form-control textareaInput" rows="4" placeholder="Enter the reject reason" id=""></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+                <button type="button" class="btn profileDrop" id="saveAttachmentType">Save</button>
+                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('divTohide').style.display = 'none'; // Hide content
     });
 
-    function statusChangeToAccept(){
-        alert();
+    function statusChange(id, status) {
+        $.ajax({
+            url: '{{ route("quote.ajax.statusChange") }}',
+            method: 'PATCH',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                quote_id: id,
+                status: status
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.data == true) {
+                    window.location.reload();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function openRejectModal(quote_ref) {
+        document.getElementById('setQuoteRef').value = quote_ref;
+        
+        // quote_reject_type
+   
+        $('#quote_reject_model').modal('show');
     }
 </script>
 
 @include('components.quote.call-back')
+@include('components.quote.quote-reject-type')
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

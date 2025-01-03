@@ -20,10 +20,10 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-4 col-form-label">Call Back Date <span class="red_sorryText">*</span></label>
                                 <div class="col-sm-5">
-                                    <input type="date" name="call_back_date" class="form-control editInput" id="" >
+                                    <input type="date" name="call_back_date" class="form-control editInput" id="">
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="time" name="call_back_time" class="form-control editInput" id="" >
+                                    <input type="time" name="call_back_time" class="form-control editInput" id="">
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -119,28 +119,28 @@
     });
 
     function saveCallBack() {
-    const formData = new FormData(document.getElementById('quoteCallBackForm'));
-    console.log(formData);
-    fetch("{{ route('quote.callback.save') }}", {
-        method: "POST",
-        headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert(data.data); // Success message
-            // Optionally close the modal
-            document.getElementById('quoteCallBackForm').reset(); // Reset form
-            const modal = bootstrap.Modal.getInstance(document.getElementById('callBackModal'));
-            modal.hide();
-            window.location.reload();
-        } else {
-            alert("Something went wrong.");
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
+        const formData = new FormData(document.getElementById('quoteCallBackForm'));
+        console.log(formData);
+        fetch("{{ route('quote.callback.save') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.data); // Success message
+                    // Optionally close the modal
+                    document.getElementById('quoteCallBackForm').reset(); // Reset form
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('callBackModal'));
+                    modal.hide();
+                    window.location.reload();
+                } else {
+                    alert("Something went wrong.");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
 </script>
