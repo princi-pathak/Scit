@@ -357,12 +357,12 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
+                                
                                 <div class="modal-body">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="mt-1 mb-0 text-center" id="message_save"></div>
+                                </div>
                                     <div class="row">
-                                    <div class="alert alert-success text-center success_message" style="display:none;height:50px">
-                                    <p>The Expense has been saved Successfully</p>
-                                    </div>
-                                    
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="formDtail">
                                                 <form id="form_data" class="customerForm">
@@ -737,21 +737,28 @@
             contentType: false,
             cache: false,
             processData: false,
-                success: function(data) {
-                    console.log(data);
-                    if(data.vali_error){
-                        alert(data.vali_error);
+                success: function(response) {
+                    console.log(response);
+                    if(response.vali_error){
+                        alert(response.vali_error);
                         $("#email").css('border','1px solid red');
-                        $(window).scrollTop($('#email').position().top);
-                        return false;
-                    }else{
                         $(window).scrollTop(0);
-                        $("#email").css('border','');
-                        $('.alert').show();
+                        return false;
+                    }else if(response.success === true){
+                        $(window).scrollTop(0);
+                        $('#message_save').addClass('success-message').text(response.message).show();
                         setTimeout(function() {
-                            $('.alert').hide();
+                            $('#message_save').removeClass('success-message').text('').hide();
                             location.reload();
                         }, 3000);
+                    }else if(response.success === false){
+                        $('#message_save').addClass('error-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#error-message').text('').fadeOut();
+                        }, 3000);
+                    }else{
+                        alert("Something went wrong");
+                        return false;
                     }
                 },
                 error: function(xhr, status, error) {

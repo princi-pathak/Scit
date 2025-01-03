@@ -430,14 +430,14 @@ class Purchase_orderController extends Controller
         $lastSegment = $request->list_mode;
         $segment_check=$this->check_segment_purchaseOrder($lastSegment);
         // echo "<pre>"; print_r($segment_check);die;
-        $data['list']=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null,'status'=>$segment_check['status']])->get();
+        $data['list']=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>$segment_check['status']])->get();
         $data['status']=$segment_check;
-        $data['draftCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>1])->count();
-        $data['awaitingApprovalCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>2])->count();
-        $data['approvedCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>3])->count();
-        $data['rejectedCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>8])->count();
-        $data['actionedCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>4])->count();
-        $data['paidCount']=PurchaseOrder::where(['deleted_at'=>null,'status'=>5])->count();
+        $data['draftCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>1])->count();
+        $data['awaitingApprovalCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>2])->count();
+        $data['approvedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>3])->count();
+        $data['rejectedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>8])->count();
+        $data['actionedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>4])->count();
+        $data['paidCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>5])->count();
         return view('frontEnd.salesAndFinance.purchase_order.purchase_order_list',$data);
     }
     private function check_segment_purchaseOrder($lastSegment=null){
@@ -454,5 +454,205 @@ class Purchase_orderController extends Controller
         }else{
             return ['status'=>1,'list_status'=>'Draft'];
         }
+    }
+    public function searchPurchaseOrders(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $po_ref=$request->po_ref;
+        $department=$request->department;
+        $tag=$request->tag;
+        $supplier=$request->supplier;
+        $edd_startDate=$request->edd_startDate;
+        $edd_endDate=$request->edd_endDate;
+        $po_startDate=$request->po_startDate;
+        $po_endDate=$request->po_endDate;
+        $customer=$request->customer;
+        $created_by=$request->created_by;
+        $po_posted=$request->po_posted;
+        $project=$request->project;
+        $keywords=$request->keywords;
+        $delivery_status=$request->delivery_status;
+        $key=$request->key;
+        $value=$request->value;
+        $status=$request->status;
+        $list_status=$request->list_status;
+        $selectedDeptId=$request->selectedDeptId;
+        $selectedTagtId=$request->selectedTagtId;
+        $selectedsupplierId=$request->selectedsupplierId;
+        $selectedCustomerId=$request->selectedCustomerId;
+        $selectedcreatedById=$request->selectedcreatedById;
+        $selectedProjectId=$request->selectedProjectId;
+        $home_id=Auth::user()->home_id;
+        $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null,'status'=>$status]);
+        // echo "<pre>";print_r($query->get());die;
+        if ($request->filled('po_ref')) {
+            $query->where('purchase_order_ref', $po_ref);
+        }
+        
+        if ($request->filled('department')) {
+            $query->where('department_id', $selectedDeptId);
+        }
+
+        if ($request->filled('tag')) {
+            $query->where('tag_id', $selectedTagtId);
+        }
+        if ($request->filled('supplier')) {
+            $query->where('supplier_id', $selectedsupplierId);
+        }
+        if ($request->filled('edd_startDate') && $request->filled('edd_endDate')) {
+            $query->whereBetween('expected_deleveryDate', [$edd_startDate, $edd_endDate]);
+        }
+        if ($request->filled('po_startDate') && $request->filled('po_endDate')) {
+            $query->whereBetween('purchase_date', [$po_startDate, $po_endDate]);
+        }
+        if ($request->filled('customer')) {
+            $query->where('customer_id', $selectedCustomerId);
+        }
+        if ($request->filled('created_by')) {
+            $query->where('user_id', $selectedcreatedById);
+        }
+        if ($request->filled('project')) {
+            $query->where('project_id', $selectedProjectId);
+        }
+        if ($request->filled('keywords')) {
+            $query->where(function ($q) use ($keywords) {
+                $q->where('purchase_order_ref', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('name', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('qoute_ref', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('job_ref', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('invoice_ref', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('reference', 'LIKE', '%' . $keywords . '%');
+            });
+        }
+        // echo $query->toSql();
+        // print_r($query->getBindings());
+        // die;
+        $search_data = $query->where('user_id',Auth::user()->id)->get();
+        // echo "<pre>";print_r($search_data);die;
+        $array_data='';
+        $all_subTotalAmount=0;
+        $all_vatTotalAmount=0;
+        $all_TotalAmount=0;
+        foreach($search_data as $key=>$val){
+            $customer=Customer::find($val->customer_id);
+            $sub_total_amount=0;
+            $total_amount=0;
+            $vat_amount=0;
+            foreach($val->purchaseOrderProducts as $product){
+                $qty=$product->qty*$product->price;
+                $sub_total_amount=$sub_total_amount+$qty;
+                $vat=$product->vat+$sub_total_amount;
+                $total_amount=$total_amount+$vat;
+                $vat_amount=$vat_amount+$product->vat;
+
+                $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
+                $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
+                $all_TotalAmount=$all_TotalAmount+$total_amount;
+            }
+            
+            $array_data .= '<tr>
+                        <td><input type="checkbox" class="delete_checkbox" value="' . $val->id . '"></td>
+                        <td>' . ++$key . '</td>
+                        <td>' . $val->purchase_order_ref . '</td>
+                        <td>' . htmlspecialchars($val->purchase_date) . '</td>
+                        <td>' . $val->suppliers->name . '</td>
+                        <td>' . ($customer->name ?? '') . '</td>
+                        <td>' . $val->city . '</td>
+                        <td>£' . $sub_total_amount . '</td>
+                        <td>£' . $vat_amount . '</td>
+                        <td>£' . $total_amount . '</td>
+                        <td>£' . $total_amount . '</td>
+                        <td>' . $list_status . '</td>
+                        <td>-</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="nav-item dropdown">
+                                    <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Action
+                                    </a>
+                                    <div class="dropdown-menu fade-up m-0">
+                                        <a href="'.url('purchase_order_edit?key=').''.base64_encode($val->id).'" class="dropdown-item">Edit</a>
+                                        <a href="#!" class="dropdown-item">Preview</a>
+                                        <a href="#!" class="dropdown-item">Duplicate</a>
+                                        <a href="#!" class="dropdown-item">Approve</a>
+                                        <a href="#!" class="dropdown-item">CRM / History</a>
+                                        <a href="#!" class="dropdown-item">Start Timer</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>';
+        }
+
+        return response()->json(['data' => $array_data,'all_subTotalAmount'=>$all_subTotalAmount,'all_vatTotalAmount'=>$all_vatTotalAmount,'all_TotalAmount'=>$all_TotalAmount]);
+    }
+    public function searchDepartment(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $query = $request->input('search_deptquery');  
+        $home_id = Auth::user()->home_id;
+
+        $DeptSearchData = Department::where('title', 'LIKE', "%$query%")
+            ->where('home_id', $home_id)
+            ->where('status', 1)
+            ->whereNull('deleted_at')
+            ->take(10)
+            ->get();
+
+        return response()->json(['data' => $DeptSearchData]);
+    }
+    public function searchTag(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $query = $request->input('search_tagquery');  
+        $home_id = Auth::user()->home_id;
+
+        $TagSearchData = Tag::where('title', 'LIKE', "%$query%")
+            ->where('home_id', $home_id)
+            ->where('status', 1)
+            ->whereNull('deleted_at')
+            ->take(10)
+            ->get();
+
+        return response()->json(['data' => $TagSearchData]);
+    }
+    public function searchSupplier(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $query = $request->input('search_supplierquery');  
+        $home_id = Auth::user()->home_id;
+
+        $SupplierSearchData = Supplier::where('name', 'LIKE', "%$query%")
+            ->where('home_id', $home_id)
+            ->where('status', 1)
+            ->whereNull('deleted_at')
+            ->take(10)
+            ->get();
+
+        return response()->json(['data' => $SupplierSearchData]);
+    }
+    public function searchCreatedBy(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $query = $request->input('search_createdbyquery');  
+        $home_id = Auth::user()->home_id;
+
+        $CreatedBySearchData = User::where('name', 'LIKE', "%$query%")
+            ->where('home_id', $home_id)
+            ->where('status', 1)
+            ->where('is_deleted',0)
+            ->take(10)
+            ->get();
+
+        return response()->json(['data' => $CreatedBySearchData]);
+    }
+    public function searchProject(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $query = $request->input('search_projectquery');  
+        $home_id = Auth::user()->home_id;
+
+        $ProjectSearchData = Project::where('project_name', 'LIKE', "%$query%")
+            ->where('home_id', $home_id)
+            ->where('status', 1)
+            ->whereNull('deleted_at')
+            ->take(10)
+            ->get();
+
+        return response()->json(['data' => $ProjectSearchData]);
     }
 }

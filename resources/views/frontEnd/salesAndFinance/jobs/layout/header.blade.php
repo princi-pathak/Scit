@@ -254,10 +254,10 @@ $access_rights = explode(',', $rights);
                                             <li><a class="dropdown-item" href="{{url('purchase_order')}}"><span><i class="fa fa-plus"></i>New Purchase Order</span></a></li>
                                             <li><a class="dropdown-item" href="{{ url('draft_purchase_order') }}"><span><i class="fa fa-list"></i>Draft Purchase Orders</span></a></li>
                                             <li><a class="dropdown-item" href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}"><span><i class="fa-solid fa-hourglass"></i>Awaiting Approval Purchase Orders</span></a></li>
-                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-check"></i>Approved Purchase Orders </span></a></li>
-                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-check"></i>Rejected Purchase Orders </span></a></li>
-                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-check"></i>Actioned Purchase Orders</span></a></li>
-                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-thumbs-up"></i>Paid Purchase Orders</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('draft_purchase_order?list_mode=Approved') }}"><span><i class="fa fa-check"></i>Approved Purchase Orders </span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('draft_purchase_order?list_mode=Rejected') }}"><span><i class="fa fa-check"></i>Rejected Purchase Orders </span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('draft_purchase_order?list_mode=Actioned') }}"><span><i class="fa fa-check"></i>Actioned Purchase Orders</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ url('draft_purchase_order?list_mode=Paid') }}"><span><i class="fa fa-thumbs-up"></i>Paid Purchase Orders</span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-search"></i>Search Purchase Orders</span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-file"></i>Invoices Received</span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-file"></i>Purchase Orders Statements</span></a></li>
