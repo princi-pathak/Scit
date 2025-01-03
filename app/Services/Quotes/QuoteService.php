@@ -26,8 +26,8 @@ class QuoteService
 
     public static function getQuoteData($lastSegment, $homeId)
     {
-
-        $quotes =  Quote::with(['customer'])
+        if($lastSegment == "draft"){
+            $quotes =  Quote::with(['customer'])
             ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
             ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
             ->where('quotes.home_id', $homeId)
@@ -42,6 +42,40 @@ class QuoteService
             ->where('quotes.status', "Draft")
             ->orderByDesc('created_at')
             ->get();
+        } elseif($lastSegment == "accepted"){
+            $quotes =  Quote::with(['customer'])
+            ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
+            ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
+            ->where('quotes.home_id', $homeId)
+            ->select(
+                'quotes.*',
+                'constructor_customer_sites.address as site_address',
+                DB::raw("CASE 
+                        WHEN quotes.customer_id = quotes.site_add_id THEN customers.address 
+                        ELSE constructor_customer_sites.address 
+                    END as customer_address")
+            )
+            ->where('quotes.status', "Accepted")
+            ->orderByDesc('created_at')
+            ->get();
+        } elseif ($lastSegment == "actioned"){
+            $quotes =  Quote::with(['customer'])
+            ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
+            ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
+            ->where('quotes.home_id', $homeId)
+            ->select(
+                'quotes.*',
+                'constructor_customer_sites.address as site_address',
+                DB::raw("CASE 
+                        WHEN quotes.customer_id = quotes.site_add_id THEN customers.address 
+                        ELSE constructor_customer_sites.address 
+                    END as customer_address")
+            )
+            ->where('quotes.status', "Processed")
+            ->orderByDesc('created_at')
+            ->get();
+        }
+     
 
         $quoteArr = array();
         foreach ($quotes as $quote) {
@@ -62,6 +96,7 @@ class QuoteService
             $quote['deposit'] = $quote->deposit;
             $quote['profit'] = $quote->profit;
             $quote['outstanding'] = $quote->outstanding;
+            $quote['status'] = $quote->status;
             array_push($quoteArr, $quote);
         }
         return $quoteArr;

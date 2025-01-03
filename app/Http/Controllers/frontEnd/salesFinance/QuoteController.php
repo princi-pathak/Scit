@@ -72,11 +72,24 @@ class QuoteController extends Controller
         $path = $request->path();
         $segments = explode('/', $path);
         $lastSegment = end($segments);
+        // dd($lastSegment);
         $data['lastSegment'] = $lastSegment;
+        if($lastSegment == "draft"){
+            $text = "Draft";
+        } elseif ($lastSegment == "accepted"){
+            $text = "Accepted";
+        } elseif ($lastSegment == "actioned") {
+            $text = "Actioned";
+        } else { $text = ''; }
+        $data['text'] = $text;
+        $class = in_array($lastSegment, ['draft', 'accepted', 'actioned']) ? "page-btn-selected" : null;
+        $data['class'] = $class;
         $data['quotes'] = $this->quoteService->getQuoteData($lastSegment, Auth::user()->home_id);
         // dd($data['quotes']);
         $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
         $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
+        $data['acceptedCount'] = Quote::getAcceptedCount(Auth::user()->home_id);
+        $data['actionedCount'] = Quote::getActionedCount(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.draft', $data);
     }
 
@@ -159,7 +172,7 @@ class QuoteController extends Controller
     public function quote_reject_type()
     {
         $data['page'] = "setting";
-        $data['quote_reject_type'] = QuoteRejectType::getAllQuoteRejectType();
+        $data['quote_reject_type'] = QuoteRejectType::getAllQuoteRejectType(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.quote_reject_type', $data);
     }
 
@@ -496,8 +509,10 @@ class QuoteController extends Controller
         $lastSegment = end($segments);
         $data['lastSegment'] = $lastSegment;
         $data['quotes'] = $this->quoteService->getQuoteCallBack($lastSegment, Auth::user()->home_id);
-        $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
+        $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);  
         $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
+        $data['acceptedCount'] = Quote::getAcceptedCount(Auth::user()->home_id);
+        $data['actionedCount'] = Quote::getActionedCount(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.call_back', $data);
     }
 
@@ -544,6 +559,36 @@ class QuoteController extends Controller
         $data['quotes'] = $this->quoteService->getQuoteCallBack($lastSegment, Auth::user()->home_id);
         $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
         $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
+        $data['acceptedCount'] = Quote::getAcceptedCount(Auth::user()->home_id);
+        $data['actionedCount'] = Quote::getActionedCount(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.search_quote', $data);
+    }
+
+    public function statusChange(Request $request) {
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'quote_id' => 'required|integer',
+            'status' => 'required|string'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = Quote::where('id', $request->quote_id)->update(['status' => $request->status]);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'Error'
+        ]);
+    }
+
+    public function getActiveRejectType(){
+        
+        $data = QuoteRejectType::getActiveQuoteRejectType(Auth::user()->home_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'Error'
+        ]);
     }
 }
