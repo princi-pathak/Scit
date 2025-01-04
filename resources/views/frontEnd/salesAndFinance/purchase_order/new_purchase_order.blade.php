@@ -31,6 +31,12 @@
 .image_style {
     cursor: pointer;
 }
+ul#purchase_qoute_refList {
+    padding: 0 5px;
+    height: 156px;
+    overflow: auto;
+}
+
 </style>
         <section class="main_section_page px-3">
             <div class="container-fluid">
@@ -51,7 +57,7 @@
                     
                         <div class="pageTitleBtn">
                             <a href="javascript:void(0)" class="profileDrop" onclick="save_all_data()"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                            <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                            <a href="{{url('draft_purchase_order')}}" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
                         </div>
                     </div>
@@ -359,13 +365,17 @@
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Ref</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_qoute_ref" name="qoute_ref" placeholder="Quote, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->qoute_ref != ''){echo $purchase_orders->qoute_ref;}?>">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_qoute_ref" name="purchase_qoute_ref" placeholder="Quote, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->qoute_ref != ''){echo $purchase_orders->qoute_ref;}?>">
+                                                    <input type="hidden" id="selectedPurchaseQuotRefId" name="qoute_ref">
+                                                    <div class="parent-container purchase_qoute_ref-container"></div>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPurchase" class="col-sm-3 col-form-label">Job Ref</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_job_ref" name="job_ref" placeholder="Job Ref, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->job_ref != ''){echo $purchase_orders->job_ref;}?>">
+                                                    <input type="text" class="form-control editInput textareaInput" id="purchase_job_ref" name="purchase_job_ref" placeholder="Job Ref, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->job_ref != ''){echo $purchase_orders->job_ref;}?>">
+                                                    <input type="hidden" id="selectedPurchaseJobRefId" name="job_ref">
+                                                    <div class="parent-container purchase_job_ref-container"></div>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -682,7 +692,7 @@
                     <div class="col-md-8 col-lg-8 col-xl-8 px-3">
                         <div class="pageTitleBtn">
                             <a href="javascript:void(0)" class="profileDrop" onclick="save_all_data()"><i class="fa-solid fa-floppy-disk" ></i> Save</a>
-                            <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                            <a href="{{url('draft_purchase_order')}}" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
                             <div class="pageTitleBtn p-0">
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
@@ -902,7 +912,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
         var purchase_ref='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->purchase_order_ref;}?>'
         var po_id='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>'
         var supplier_select_check=$("#purchase_supplier_id").val();
-        var modal_array=[1,2,4,7];
+        var modal_array=[1,2,7];
         if(supplier_select_check == null && modal_array.includes(modal)){
             alert("Please select Supplier");
             return false;
@@ -1069,7 +1079,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             cache: false,
             processData: false,
             success: function(response) {
-                // console.log(response);
+                console.log(response);
                 if(response.vali_error){
                         alert(response.vali_error);
                         $(window).scrollTop(0);
@@ -1884,7 +1894,7 @@ $('#search-product').on('keyup', function() {
         var notes = $(this).data('notes');
         
         $('#task_id').val(taskId); 
-        $('#task_po_id').val(po_id); 
+        $('#task_po_id').val(task_po_id); 
         $('#task_supplier_id').val(task_supplier_id); 
         $('#task_user_id').val(userId);
         $('#taskTitle').val(title);
@@ -1996,6 +2006,163 @@ $(document).on('click','.attachment_delete', function() {
         var vatList=data.data;
         $(".vat_id").append('<option value="'+vatList.id+'">'+vatList.name+'</option>');
     }
+ </script>
+ <script>
+    $('#purchase_qoute_ref').on('keyup', function() {
+            let search_purchase_qoute_ref = $(this).val();
+            const purchase_customer_id=$("#purchase_customer_id").val();
+            const purchase_qoute_refdivList = document.querySelector('.purchase_qoute_ref-container');
+
+            if (search_purchase_qoute_ref === '') {
+                purchase_qoute_refdivList.innerHTML = '';
+            }
+            if (search_purchase_qoute_ref.length > 2) {
+                $.ajax({
+                    url: "{{ url('searchPurchase_qoute_ref') }}",
+                    method: 'post',
+                    data: {
+                        search_purchase_qoute_ref: search_purchase_qoute_ref,purchase_customer_id:purchase_customer_id,_token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // return false;
+                        purchase_qoute_refdivList.innerHTML = "";
+                        const div = document.createElement('div');
+                        div.className = 'purchase_qoute_ref_container';
+
+                      
+                        const ul = document.createElement('ul');
+                        ul.id = "purchase_qoute_refList";
+                        if(response.data.length >0){
+                            response.data.forEach(item => {
+                                const li = document.createElement('li'); 
+                                li.textContent = item.quote_ref; 
+                                li.id = item.id;
+                                li.name = item.quote_ref;
+                                li.className = "editInput";
+                                ul.appendChild(li); 
+                                const hr = document.createElement('hr');
+                                // hr.className='dropdown-divider';
+                                ul.appendChild(hr);
+                            });
+
+                            div.appendChild(ul);
+
+                            purchase_qoute_refdivList.appendChild(div);
+
+                            ul.addEventListener('click', function(event) {
+                                purchase_qoute_refdivList.innerHTML = '';
+                                document.getElementById('purchase_qoute_ref').value = '';
+                                if (event.target.tagName.toLowerCase() === 'li') {
+                                    const selectedPurchaseQuotRefId = event.target.id;
+                                    const selectedPurchaseQuoteName = event.target.name;
+                                    console.log('Selected Customer ID:', selectedPurchaseQuotRefId);
+                                    console.log('Selected Customer Name:', selectedPurchaseQuoteName);
+                                    $("#purchase_qoute_ref").val(selectedPurchaseQuoteName);
+                                    $("#selectedPurchaseQuotRefId").val(selectedPurchaseQuotRefId);
+                                }
+                            });
+                        }else{
+                            const Errorli = document.createElement('li'); 
+                            Errorli.textContent = 'Sorry Data Not found'; 
+                            Errorli.id = 'searchError';
+                            Errorli.className = "editInput";
+                            ul.appendChild(Errorli); 
+                            div.appendChild(ul);
+                            purchase_qoute_refdivList.appendChild(div);
+                            setTimeout(function() {
+                                purchase_qoute_refdivList.innerHTML = '';
+                            }, 1000);
+                        }
+
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            } else {
+                purchase_qoute_refdivList.innerHTML = '';
+                $('#results').empty();
+            }
+        });
+
+        $('#purchase_job_ref').on('keyup', function() {
+            let search_purchase_job_ref = $(this).val();
+            const purchase_customer_id=$("#purchase_customer_id").val();
+            const purchase_job_refdivList = document.querySelector('.purchase_job_ref-container');
+
+            if (search_purchase_job_ref === '') {
+                purchase_job_refdivList.innerHTML = '';
+            }
+            if (search_purchase_job_ref.length > 2) {
+                $.ajax({
+                    url: "{{ url('searchPurchase_job_ref') }}",
+                    method: 'post',
+                    data: {
+                        search_purchase_job_ref: search_purchase_job_ref,purchase_customer_id:purchase_customer_id,_token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // return false;
+                        purchase_job_refdivList.innerHTML = "";
+                        const div = document.createElement('div');
+                        div.className = 'purchase_job_ref_container';
+
+                      
+                        const ul = document.createElement('ul');
+                        ul.id = "purchase_job_refList";
+                        if(response.data.length >0){
+                            response.data.forEach(item => {
+                                const li = document.createElement('li'); 
+                                li.textContent = item.job_ref; 
+                                li.id = item.id;
+                                li.name = item.job_ref;
+                                li.className = "editInput";
+                                ul.appendChild(li); 
+                                const hr = document.createElement('hr');
+                                // hr.className='dropdown-divider';
+                                ul.appendChild(hr);
+                            });
+
+                            div.appendChild(ul);
+
+                            purchase_job_refdivList.appendChild(div);
+
+                            ul.addEventListener('click', function(event) {
+                                purchase_job_refdivList.innerHTML = '';
+                                document.getElementById('purchase_job_ref').value = '';
+                                if (event.target.tagName.toLowerCase() === 'li') {
+                                    const selectedPurchaseJobRefId = event.target.id;
+                                    const selectedPurchaseJobName = event.target.name;
+                                    console.log('Selected Customer ID:', selectedPurchaseJobRefId);
+                                    console.log('Selected Customer Name:', selectedPurchaseJobName);
+                                    $("#purchase_job_ref").val(selectedPurchaseJobName);
+                                    $("#selectedPurchaseJobRefId").val(selectedPurchaseJobRefId);
+                                }
+                            });
+                        }else{
+                            const Errorli = document.createElement('li'); 
+                            Errorli.textContent = 'Sorry Data Not found'; 
+                            Errorli.id = 'searchError';
+                            Errorli.className = "editInput";
+                            ul.appendChild(Errorli); 
+                            div.appendChild(ul);
+                            purchase_job_refdivList.appendChild(div);
+                            setTimeout(function() {
+                                purchase_job_refdivList.innerHTML = '';
+                            }, 1000);
+                        }
+
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            } else {
+                purchase_job_refdivList.innerHTML = '';
+                $('#results').empty();
+            }
+        });
  </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
