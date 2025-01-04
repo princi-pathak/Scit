@@ -1,7 +1,5 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
-<style>
 
-</style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
         <div class="row">
@@ -43,7 +41,6 @@
                                                 <option>Yes</option>
                                                 <option>No</option>
                                             </select>
-
                                         </div>
                                     </div>
                                     <div class="row form-group mb-2">
@@ -67,7 +64,6 @@
                                             <input type="date" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div class="col-md-3">
@@ -226,11 +222,11 @@
                                     <th>Outstanding</th>
                                     <th>profit</th>
                                     @php
-                                    if ($lastSegment == "accepted"){
+                                        if ($lastSegment == "accepted"){
                                     @endphp
-                                    <th>Status</th>
+                                        <th>Status</th>
                                     @php
-                                    }
+                                        }
                                     @endphp
                                     <th></th>
                                 </tr>
@@ -269,7 +265,6 @@
                                     <td>{{ $value->deposit > 0 ? '£' . $value->deposit : '-'}}</td>
                                     <td>{{ $value->outstanding > 0 ? '£' . $value->outstanding : '-' }}</td>
                                     <td>{{ $value->profit > 0 ? '£' . $value->profit : '-' }}</td>
-                                    <!-- <th>profit</th> -->
                                     @php
                                     if ($lastSegment == "accepted"){
                                     @endphp
@@ -298,7 +293,7 @@
                                                     <a href="javaScript:void(0);" onclick="statusChange('{{ $value->id }}', 'Processed')" class="dropdown-item">Change To Processed</a>
                                                     <a href="javaScript:void(0)" onclick="openCallBackModal()" id="changeToCallBack" data-id="{{ $value->id }}" data-quote_ref="{{ $value->quote_ref }}" class="dropdown-item">Change To Call Back</a>
                                                     <a href="javaScript:void(0);" onclick="statusChange('{{ $value->id }}', 'Accepted')" data-id="{{ $value->id }}" class="dropdown-item">Change To Accepted</a>
-                                                    <a href="javaScript:void(0);" class="dropdown-item" onclick="openRejectModal('{{ $value->quote_ref }}');">Change To Rejected</a>
+                                                    <a href="javaScript:void(0);" class="dropdown-item" onclick="openRejectModal('{{ $value->quote_ref }}', '{{ $value->id}}');">Change To Rejected</a>
                                                     <hr class="dropdown-divider">
 
                                                     <a href="#" class="dropdown-item set_value_on_CRM_model" class="dropdown-item">CRM History</a>
@@ -322,12 +317,12 @@
                                 <tr>
                                     <th></th>
                                     <th colspan="6">Page Sub Total</th>
-                                    <th>&#163;{{ number_format($subTotal, 2) }}</th>
-                                    <th>&#163;{{ number_format($vat, 2) }}</th>
-                                    <th>&#163;{{ number_format($total, 2) }}</th>
-                                    <th>&#163;{{ number_format($deposit, 2) }}</th>
-                                    <th>&#163;{{ number_format($outstanding, 2) }}</th>
-                                    <th>&#163;{{ number_format($profit, 2) }}</th>
+                                    <th>{{ number_format($subTotal, 2) > 0 ? '£' . number_format($subTotal, 2) : '-' }}</th>
+                                    <th>{{ number_format($vat, 2) > 0 ? '£' . number_format($vat, 2) : '-'  }}</th>
+                                    <th>{{ number_format($total, 2) > 0 ? '£' . number_format($total, 2) : '-'  }}</th>
+                                    <th>{{ number_format($deposit, 2) > 0 ? '£' . number_format($deposit, 2) : '-'  }}</th>
+                                    <th>{{ number_format($outstanding, 2) > 0 ? '£' . number_format($outstanding, 2) : '-'  }}</th>
+                                    <th>{{ number_format($profit, 2) > 0 ? '£' . number_format($profit, 2) : '-' }}</th>
                                     <th></th>
                                 </tr>
                             </tfoot>
@@ -347,13 +342,14 @@
                 <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button"></button>
             </div>
             <div class="modal-body">
-                <form role="form" id="attachmentTypeForm">
+                <form role="form" id="rejectReasonsForm">
                     <div><span id="error-message" class="error"></span></div>
                     <div class="row form-group">
                         <label class="col-lg-3 col-sm-3 col-form-label">Quote Ref </label>
                         <div class="col-md-9">
-                            <input type="hidden" value="" name="quote_id">
-                            <input type="text" class="form-control-plaintext editInput" id="setQuoteRef" value="" readonly>
+                            <input type="hidden" value="" name="quote_id" id="setQuoteId">
+                            <input type="hidden" name="quote_reject_reason_id" value="">
+                            <input type="text" class="form-control-plaintext editInput" id = "setQuoteRef" value="" readonly>
                         </div>
                     </div>
                     <div class="row form-group mt-3">
@@ -370,13 +366,13 @@
                     <div class="row form-group mt-3">
                         <label class="col-lg-3 col-sm-3 col-form-label">Reject Reason <span class="radStar ">*</span></label>
                         <div class="col-md-9">
-                            <textarea name="description" class="form-control textareaInput" rows="4" placeholder="Enter the reject reason" id=""></textarea>
+                            <textarea name="reject_reasons" class="form-control textareaInput" rows="4" placeholder="Enter the reject reason" id=""></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer customer_Form_Popup">
-                <button type="button" class="btn profileDrop" id="saveAttachmentType">Save</button>
+                <button type="button" class="btn profileDrop" onclick="saveQuoteRejectReasons();">Save</button>
                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
@@ -411,12 +407,35 @@
         });
     }
 
-    function openRejectModal(quote_ref) {
+    function openRejectModal(quote_ref, quote_id) {
+
         document.getElementById('setQuoteRef').value = quote_ref;
+        document.getElementById('setQuoteId').value = quote_id;
         
-        // quote_reject_type
-   
+        getAllRejectTypeList(document.getElementById('quote_reject_type'));
         $('#quote_reject_model').modal('show');
+    }
+
+    function saveQuoteRejectReasons(){
+        
+        var formData = $('#rejectReasonsForm').serialize();
+        console.log(formData);
+        $.ajax({
+            url: '{{ route("quote.ajax.saveQuoteRejectReasonsType") }}', // Define the URL route for saving
+            method: 'Post',
+            headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+            data: formData,
+            success: function(response) {
+                $('#quote_reject_model').modal('hide');
+                // alert(response.data);
+                window.location.reload();
+            },
+            error: function(error) {
+                console.error('Error saving reject reasons:', error);
+            }
+        });
     }
 </script>
 
