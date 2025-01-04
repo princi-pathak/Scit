@@ -399,6 +399,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/searchSupplier','searchSupplier');
 		Route::post('/searchCreatedBy','searchCreatedBy');
 		Route::post('/searchProject','searchProject');
+		Route::post('/searchPurchase_qoute_ref','searchPurchase_qoute_ref');
+		Route::post('/searchPurchase_job_ref','searchPurchase_job_ref');
 	});
 	
 	// Forontend Customer Controller
@@ -566,8 +568,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/actioned', 'index');
 		Route::get('quote/search', 'searchQuote');
 		Route::get('/quotes/getActiveRejectType', 'getActiveRejectType')->name('quote.ajax.getActiveRejectType');
-
-		
+		Route::post('/quotes/saveQuoteRejectReasonsType', 'saveQuoteRejectReasonsType')->name('quote.ajax.saveQuoteRejectReasonsType');
+		Route::get('/quote/rejected', 'index');
 		
 		
 	});

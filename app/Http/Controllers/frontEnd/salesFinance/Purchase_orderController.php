@@ -34,6 +34,7 @@ use App\Models\AttachmentType;
 use App\Models\PoAttachment;
 use App\Models\PrucahseOrderNewTask;
 use App\Models\Task_type;
+use App\Models\Quote;
 use App\User;
 
 class Purchase_orderController extends Controller
@@ -259,12 +260,11 @@ class Purchase_orderController extends Controller
         try{
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                $imageName = time() . '.' . $file->extension();      
-                $file->move(public_path('images/purchase_order'), $imageName);
-        
+                $imageName = time() . '.' . $file->extension();
                 $original_name = $file->getClientOriginalName();
                 $mime_type = $file->getMimeType();
                 $file_size_bytes = $file->getSize();
+                $file->move(public_path('images/purchase_order'), $imageName);
 
                 if ($file_size_bytes >= 1073741824) {
                     $file_size = round($file_size_bytes / 1073741824, 2) . ' GB';
@@ -654,5 +654,35 @@ class Purchase_orderController extends Controller
             ->get();
 
         return response()->json(['data' => $ProjectSearchData]);
+    }
+    public function searchPurchase_qoute_ref(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $query = $request->input('search_projectquery');  
+        $home_id = Auth::user()->home_id;
+
+        $QuoteSearchData = Quote::where('quote_ref', 'LIKE', "%$query%")
+            ->where('home_id', $home_id)
+            ->where('customer_id',$request->purchase_customer_id)
+            // ->where('status', 1)
+            // ->whereNull('deleted_at')
+            ->take(10)
+            ->get();
+
+        return response()->json(['data' => $QuoteSearchData]);
+    }
+    public function searchPurchase_job_ref(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $query = $request->input('search_projectquery');  
+        $home_id = Auth::user()->home_id;
+
+        $QuoteSearchData = Job::where('job_ref', 'LIKE', "%$query%")
+            ->where('home_id', $home_id)
+            ->where('customer_id',$request->purchase_customer_id)
+            ->where('status', 1)
+            ->whereNull('deleted_at')
+            ->take(10)
+            ->get();
+
+        return response()->json(['data' => $QuoteSearchData]);
     }
 }

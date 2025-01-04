@@ -43,6 +43,8 @@
     }
 
     function saveQuoteRejectType(){
+        let reject_type = document.getElementById('reject_type_id').getAttribute('data-rjectType-id');
+
         var formData = $('#rejectTypeForm').serialize();
         console.log(formData);
         $.ajax({
@@ -55,19 +57,27 @@
             success: function(response) {
                 // document.getElementById('quote_reject_type_modal').reset();
                 $('#quote_reject_type_modal').modal('hide');
-                getAllRejectTypeList();
+                getAllRejectTypeList(document.getElementById(reject_type));
             },
             error: function(error) {
                 console.error('Error saving account code:', error);
             }
         });
     }
-    function getAllRejectTypeList(){
+    function getAllRejectTypeList(reject_type){
+        console.log(reject_type);
         $.ajax({
             url: '{{ route("quote.ajax.getActiveRejectType") }}', 
             method: 'GET',
            success: function(response) {
                 console.log(response.data);
+                reject_type.innerHTML = '';
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.title;
+                    reject_type.appendChild(option);
+                });
             },
             error: function(error) {
                 console.error('Error saving account code:', error);

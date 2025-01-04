@@ -323,6 +323,8 @@ table.tablechange tbody td a {
 
 .maimTable .dataTables_wrapper .dataTables_paginate .paginate_button {
   padding: 4px 12px;
+  font-size: 12px;
+  margin-bottom: 5px;
 }
 
 .maimTable div#exampleOne_length label select {
@@ -2172,9 +2174,9 @@ span.oNOfswich {
   white-space: nowrap;
   padding: 0 10px;
  }
- div#exampleOne_wrapper {
+ /* div#exampleOne_wrapper {
   overflow: auto;
-}
+} */
 div#exampleOne_wrapper::-webkit-scrollbar {
   height: 10px;
 }

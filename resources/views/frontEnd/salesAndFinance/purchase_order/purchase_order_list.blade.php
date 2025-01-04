@@ -52,6 +52,18 @@
 #tagList li:hover{
     cursor: pointer;
 }
+#supplierList li:hover{
+    cursor: pointer;
+}
+#customerList li:hover{
+    cursor: pointer;
+}
+#cretaedByList li:hover{
+    cursor: pointer;
+}
+#projectList li:hover{
+    cursor: pointer;
+}
 ul#deptList {
     padding: 0 5px;
     height: 156px;
@@ -62,11 +74,27 @@ ul#tagList {
     height: 156px;
     overflow: auto;
 }
+ul#supplierList {
+    padding: 0 5px;
+    height: 156px;
+    overflow: auto;
+}
 ul#customerList {
     padding: 0 5px;
     height: 156px;
     overflow: auto;
 }
+ul#cretaedByList {
+    padding: 0 5px;
+    height: 156px;
+    overflow: auto;
+}
+ul#projectList {
+    padding: 0 5px;
+    height: 156px;
+    overflow: auto;
+}
+
 </style>
 <section class="main_section_page px-3">
         <div class="container-fluid">
@@ -315,7 +343,8 @@ ul#customerList {
                                     }
                                 ?>
                                 <tr>
-                                    <td><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></td>
+                                    <td>
+                                    <div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></div></td>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$val->purchase_order_ref}}</td>
                                     <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
@@ -350,8 +379,8 @@ ul#customerList {
                             </tbody>
                             @if(count($list)>0)
                             <tr class="calcualtionShowHide">
-                                <th colspan="2"></th>
-                                <th colspan="16">Page Sub Total:</th>
+                                <th colspan="2"> <label class="col-form-label p-0">Page Sub Total:</label></th>
+                                <th colspan="12"></th>
                             </tr>
                             <tr class="calcualtionShowHide">
                                 <td colspan="7"></td>
@@ -958,11 +987,11 @@ $('.delete_checkbox').on('click', function() {
                         // return false;
                         projectdivList.innerHTML = "";
                         const div = document.createElement('div');
-                        div.className = 'cretedby_container';
+                        div.className = 'project_container';
 
                       
                         const ul = document.createElement('ul');
-                        ul.id = "cretaedByList";
+                        ul.id = "projectList";
                         if(response.data.length >0){
                             response.data.forEach(item => {
                                 const li = document.createElement('li'); 
