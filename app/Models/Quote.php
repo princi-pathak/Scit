@@ -65,7 +65,6 @@ class Quote extends Model
         return $this->hasMany(QuoteAttachment::class);
     }
 
-    
     public function callBack()
     {
         return $this->hasOne(QuoteCallBack::class, 'quote_id');
@@ -83,9 +82,12 @@ class Quote extends Model
         return self::where('status', 'Accepted')->where('home_id', $home_id)->count();
     }
 
-    
     public static function getActionedCount($home_id){
         return self::where('status', 'Processed')->where('home_id', $home_id)->count();
+    }
+        
+    public static function getRejectedCount($home_id){
+        return self::where('status', 'Rejected')->where('home_id', $home_id)->count();
     }
     
 
