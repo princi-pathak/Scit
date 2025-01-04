@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use App\Models\QuoteCallBack;
 use App\Models\QuoteTask;
 use App\User;
+use App\Models\Quotes\QuoteRejectReasons;
 
 
 class QuoteService
@@ -74,8 +75,29 @@ class QuoteService
             ->where('quotes.status', "Processed")
             ->orderByDesc('created_at')
             ->get();
+        } elseif ($lastSegment == "rejected"){
+            $quotes =  Quote::with(['customer'])
+            ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
+            ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
+            ->leftJoin('quote_reject_reasons', 'quote_reject_reasons.quote_id', '=', 'quotes.id')
+            ->leftJoin('quote_reject_types', 'quote_reject_types.id', '=', 'quote_reject_reasons.reject_type_id')
+            ->where('quotes.home_id', $homeId)
+            ->select(
+                'quotes.*',
+                'constructor_customer_sites.address as site_address',
+                'quote_reject_reasons.reject_reasons', 'quote_reject_reasons.reject_type_id',
+                'quote_reject_types.title',
+                DB::raw("CASE 
+                        WHEN quotes.customer_id = quotes.site_add_id THEN customers.address 
+                        ELSE constructor_customer_sites.address 
+                    END as customer_address")
+            )
+            ->where('quotes.status', "Rejected")
+            ->orderByDesc('created_at')
+            ->get();
         }
      
+        // dd($quotes);
 
         $quoteArr = array();
         foreach ($quotes as $quote) {
@@ -284,6 +306,18 @@ class QuoteService
         // dd($record);
         return $record;
      
+    }
+
+    public function updateQuoteStatus($quote_id, $status){
+        return Quote::where('id', $quote_id)->update(['status' => $status]);
+    }
+
+    public function saveQuoteRejectReasons($data){
+      
+        $quoteRejectReason =  QuoteRejectReasons::updateOrCreate(['id' => $data['quote_reject_reason_id']], $data);
+
+        $this->updateQuoteStatus($data['quote_id'], 'Rejected');
+        return $quoteRejectReason;
     }
 }
  
