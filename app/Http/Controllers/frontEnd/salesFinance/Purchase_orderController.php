@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\NewTaskRequest;
 use Auth,Log;
-use App\Customer;
+use App\Models\Customer;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\Country;

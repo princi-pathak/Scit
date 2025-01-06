@@ -345,6 +345,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('getAllUserList','getAllUserList');
 		Route::post('GetCustomerWithContact','GetCustomerWithContact');
 		Route::post('GetFullHistory','GetFullHistory');
+		Route::post('getAllSite','getAllSite');
+		Route::post('getAllLogin','getAllLogin');
 	});
 
 	// Frontend Controller for setting in General section 
