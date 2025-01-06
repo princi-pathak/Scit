@@ -11,7 +11,7 @@
                     <div class="col-md-8 col-lg-8 col-xl-8 px-3">
                         <div class="pageTitleBtn">
                             <a href="javascript:void(0)" class="profileDrop" onclick="save_all_data('no')"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                            <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                            <a href="{{url('customers?list_mode=ACTIVE')}}" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
                         </div>
                     </div>
@@ -447,7 +447,20 @@
                                             <label class="col-form-label"><a href="#!">Click here </a>to download import
                                                 template</label>
                                             <label>
-                                                <a href="#" class="profileDrop dropdown-toggle ms-2">Bulk Action</a>
+                                            <div class="d-inline-flex align-items-center ">
+                                                    <div class="nav-item dropdown">
+                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                            Bulk Action
+                                                        </a>
+                                                        <div class="dropdown-menu fade-up m-0">
+                                                            <!-- <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#SiteModel" class="dropdown-item modal_dataSite" >Edit Details</a>
+                                                            <hr class="dropdown-divider"> -->
+                                                            <a href="javascript:void(0)" class="dropdown-item" id="deleteSelectedContactRows">Delete</a>
+                                                            <!-- <hr class="dropdown-divider">
+                                                            <a href="javascript:void(0)" class="dropdown-item" >Manage Document/Equipments</a> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </label>
                                         </div>
                                     </div>
@@ -457,7 +470,7 @@
                                             <table class="table">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th></th>
+                                                        <th style=" width:60px;"><input type="checkbox" id="selectAllContact"></th>
                                                         <th>Contact Name</th>
                                                         <th>Customer Job Title </th>
                                                         <th>Email</th>
@@ -472,30 +485,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="contact_result">
-                                                <?php foreach($contact as $conv){
-                                                        $job_title_details=App\Models\Job_title::find($conv->job_title_id);
-                                                ?>
-                                                    <tr>
-                                                        <td><input type="checkbox" class="checkboxContactId" value="{{$conv->id}}"></td>
-                                                        <td>{{$conv->contact_name}}</td>
-                                                        <td>{{$job_title_details->name ?? ""}}</td>
-                                                        <td>{{$conv->email}}</td>
-                                                        <td>{{$conv->telephone}}</td>
-                                                        <td>{{$conv->mobile}}</td>
-                                                        <td>{{$conv->address}}</td>
-                                                        <td>{{$conv->city}}</td>
-                                                        <td>{{$conv->country}}</td>
-                                                        <td>{{$conv->postcode}}</td>
-                                                        <td><?php echo ($conv->default_billing == 1)?"Yes":"No";?></td>
-                                                        <td>
-                                                            <img src="{{url('public/frontEnd/jobs/images/pencil.png')}}" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#ContactModel" class="modal_dataFetch" data-id="{{ $conv->id }}" data-title="{{ $conv->contact_name }}" data-job_title="{{ $job_title_details->id??'' }}" data-email="{{$conv->email}}" data-telephone="{{$conv->telephone}}" data-mobile="{{$conv->mobile}}" data-address="{{$conv->address}}" data-city="{{$conv->city}}" data-country="{{$conv->country}}" data-postcode="{{$conv->postcode}}" data-default_billing="{{$conv->default_billing}}" data-fax="{{$conv->fax}}" data-country_id="{{$conv->country_id}}" >&nbsp;
-                                                            <img src="{{url('public/frontEnd/jobs/images/delete.png')}}" alt="" class="contact_delete" data-delete="{{$conv->id}}">
-                                                        </td>
-
-                                                    </tr>
-                                                    <?php }?>
+                                                
                                                 </tbody>
                                             </table>
+                                            <div id="pagination-controls-contact"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -512,7 +505,20 @@
                                             <label class="col-form-label"><a href="#!">Click here </a>to download import
                                                 template</label>
                                             <label>
-                                                <a href="#" class="profileDrop dropdown-toggle ms-2">Bulk Action</a>
+                                                <div class="d-inline-flex align-items-center ">
+                                                    <div class="nav-item dropdown">
+                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                                            Bulk Action
+                                                        </a>
+                                                        <div class="dropdown-menu fade-up m-0">
+                                                            <!-- <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#SiteModel" class="dropdown-item modal_dataSite" >Edit Details</a>
+                                                            <hr class="dropdown-divider"> -->
+                                                            <a href="javascript:void(0)" class="dropdown-item" id="deleteSelectedRows">Delete</a>
+                                                            <!-- <hr class="dropdown-divider">
+                                                            <a href="javascript:void(0)" class="dropdown-item" >Manage Document/Equipments</a> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </label>
                                         </div>
                                     </div>
@@ -522,7 +528,7 @@
                                             <table class="table">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th></th>
+                                                        <th style=" width:60px;"><input type="checkbox" id="selectAll"></th>
                                                         <th>Site Name </th>
                                                         <th>Contact Name</th>
                                                         <th>Company</th>
@@ -538,43 +544,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="site_result">
-                                                    <?php foreach($site as $sitev){
-                                                        $job_title_detail=App\Models\Job_title::find($sitev->title_id);
-                                                        $site_regionName=App\Models\Region::find($sitev->region);
-                                                        ?>
-                                                        <tr>
-                                                            <td><input type="checkbox" value="{{$sitev->id}}"></td>
-                                                            <td>{{$sitev->site_name}}</td>
-                                                            <td>{{$sitev->contact_name}}</td>
-                                                            <td>{{$job_title_detail->name ?? ""}}</td>
-                                                            <td>{{$sitev->email}}</td>
-                                                            <td>{{$sitev->telephone}}</td>
-                                                            <td>{{$sitev->mobile}}</td>
-                                                            <td>{{$sitev->address}}</td>
-                                                            <td>{{$sitev->city}}</td>
-                                                            <td>{{$sitev->country}}</td>
-                                                            <td>{{$sitev->post_code}}</td>
-                                                            <td>{{$site_regionName->title ?? ""}}</td>
-                                                            <td>
-                                                                <div class="d-inline-flex align-items-center ">
-                                                                    <div class="nav-item dropdown">
-                                                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                                                            Action
-                                                                        </a>
-                                                                        <div class="dropdown-menu fade-up m-0">
-                                                                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#SiteModel" class="dropdown-item modal_dataSite" data-id="{{ $sitev->id }}" data-site_name="{{ $sitev->site_name }}" data-contact_name="{{ $sitev->contact_name }}" data-title_id="{{$sitev->title_id}}" data-company_name="{{$sitev->company_name}}" data-email="{{$sitev->email}}" data-telephone="{{$sitev->telephone}}" data-mobile="{{$sitev->mobile}}" data-fax="{{$sitev->fax}}" data-region="{{$sitev->region}}" data-address="{{$sitev->address}}" data-city="{{$sitev->city}}" data-country="{{$sitev->country}}" data-post_code="{{$sitev->post_code}}" data-country_id="{{$sitev->country_id}}" data-catalogue="{{$sitev->catalogue}}" data-notes="{{$sitev->notes}}">Edit Details</a>
-                                                                            <hr class="dropdown-divider">
-                                                                            <a href="javascript:void(0)" class="dropdown-item site_delete" data-delete="{{ $sitev->id }}">Delete</a>
-                                                                            <hr class="dropdown-divider">
-                                                                            <a href="javascript:void(0)" class="dropdown-item" data-id="{{ $sitev->id }}">Manage Document/Equipments</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                    </tr>
-                                                    <?php }?>
+                                                   
                                                 </tbody>
                                             </table>
+                                            <div id="pagination-controls-site"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -623,6 +596,7 @@
                                                     <?php }?>
                                                 </tbody>
                                             </table>
+                                            <div id="pagination-controls-login"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -876,136 +850,145 @@
             </div>
             <!-- Site Model start -->
             <div class="modal fade" id="SiteModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content add_Customer">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Site Address</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="mb-3 row">
-                            <label for="inputName" class="col-sm-3 col-form-label">&emsp;Customer</label>
-                            <div class="col-sm-9">
-                                <p id="customer_name" class="customer_name"><?php if(isset($customer)){echo $customer->name;}?></p>
-                            </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="mt-2 mb-0 text-center" id="message_site"></div>
                         </div>
                         <div class="modal-body">
                             <form role="form" id="site_form">
                                 <input type="hidden" id="site_id" name="site_id">
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Site Name<span class="radStar">*</span></label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control editInput" name="site_name" id="site_name">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Contact Name<span class="radStar">*</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_contact_name" id="site_contact_name">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Job Title(Position)</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control editInput selectOptions" id="site_title_id" name="site_title_id">
-                                            <option selected disabled>Select Job Title</option>
-                                            <?php foreach($job_title as $titlev){?>
-                                            <option value="{{$titlev->id}}">{{$titlev->name}}</option>
-                                            <?php }?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Company Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="company_name" id="company_name">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_email" id="site_email" onblur="getemail(3)">
-                                        <span id="emailErr3" style="color: red;"></span>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Telephone</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_telephone" maxlength="10" id="site_telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Mobile</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" maxlength="10" name="site_mobile" id="site_mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Fax</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_fax" id="site_fax">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Region</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control editInput selectOptions" id="site_region" name="site_region">
-                                            <option selected disabled>None</option>
-                                            <?php foreach($region as $site_region){?>
-                                                    <option value="{{$site_region->id}}" >{{$site_region->title}}</option>
-                                            <?php }?>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Address<span class="radStar">*</span></label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control textareaInput" name="site_address" id="site_address" rows="3" placeholder="Site Notes"></textarea>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">City</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_city" id="site_city">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Country</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_country" id="site_country">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Postcode</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" name="site_postcode" id="site_postcode">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row field">
-                                        <label for="inputCountry" class="col-sm-3 col-form-label">Country</label>
-                                        <div class="col-sm-9">
-                                        <select class="form-control editInput selectOptions" name="site_country_id" id="site_country_id" required>
-                                                <option value="" selected disabled>None</option>
-                                                <?php foreach($country as $country_ids){?>
-                                                    <option value="{{$country_ids->id}}">{{$country_ids->name}} ({{$country_ids->code}})</option>
-                                                <?php }?>
-                                            </select>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                            <div class="col-sm-9">
+                                                <p id="customer_name" class="customer_name"><?php if(isset($customer)){echo $customer->name;}?></p>
+                                            </div>
                                         </div>
-                                </div>
-                                <div class="mb-3 row field">
-                                    <label for="inputCountry" class="col-sm-3 col-form-label">Default Catalogue</label>
-                                    <div class="col-sm-9">
-                                    <select class="form-control editInput selectOptions" name="site_catalogue_id" id="site_catalogue_id" required>
-                                            <option value="" selected disabled>None</option>
-                                            <option value="1">General Catalogue</option>
-                                            <option value="2">Custome Catalogue</option>
-                                        </select>
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Site Name<span class="radStar">*</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput" name="site_name" id="site_name">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Contact Name<span class="radStar">*</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput" name="site_contact_name" id="site_contact_name">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputCustomer" class="col-sm-3 col-form-label">Job Title(Position)</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control editInput selectOptions" id="site_title_id" name="site_title_id">
+                                                    <option selected disabled>Select Job Title</option>
+                                                    <?php foreach($job_title as $titlev){?>
+                                                    <option value="{{$titlev->id}}">{{$titlev->name}}</option>
+                                                    <?php }?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Company Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput" name="company_name" id="company_name">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Email</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput" name="site_email" id="site_email" onblur="getemail(3)">
+                                                <span id="emailErr3" style="color: red;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Telephone</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput" name="site_telephone" maxlength="10" id="site_telephone" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Mobile</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput" maxlength="10" name="site_mobile" id="site_mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Fax</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput" name="site_fax" id="site_fax">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <div class="mb-3 row">
+                                            <label for="inputCustomer" class="col-sm-3 col-form-label">Region</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control editInput selectOptions" id="site_region" name="site_region">
+                                                    <option selected disabled>None</option>
+                                                    <?php foreach($region as $site_region){?>
+                                                            <option value="{{$site_region->id}}" >{{$site_region->title}}</option>
+                                                    <?php }?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Address<span class="radStar">*</span></label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control textareaInput" name="site_address" id="site_address" rows="3" placeholder="Site Notes"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">City</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput" name="site_city" id="site_city">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Country</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput" name="site_country" id="site_country">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Postcode</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput" name="site_postcode" id="site_postcode">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row field">
+                                            <label for="inputCountry" class="col-sm-3 col-form-label">Country</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control editInput selectOptions" name="site_country_id" id="site_country_id" required>
+                                                    <option value="" selected disabled>None</option>
+                                                    <?php foreach($country as $country_ids){?>
+                                                        <option value="{{$country_ids->id}}">{{$country_ids->name}} ({{$country_ids->code}})</option>
+                                                    <?php }?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row field">
+                                            <label for="inputCountry" class="col-sm-3 col-form-label">Default Catalogue</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control editInput selectOptions" name="site_catalogue_id" id="site_catalogue_id" required>
+                                                    <option value="" selected disabled>None</option>
+                                                    <option value="1">General Catalogue</option>
+                                                    <option value="2">Custome Catalogue</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="mb-3 row field">
                                     <label for="inputCountry" class="col-sm-3 col-form-label">Notes</label>
-                                    <div class="col-sm-12">
-                                        <textarea name="site_note" id="site_note" rows="3" class="form-control editInput textareaInput"></textarea>
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                        <textarea name="site_note" id="site_note" rows="3" class="form-control textareaInput"></textarea>
                                     </div>
                                 </div>
                             </form>
@@ -1092,7 +1075,7 @@
                                 <div class="mb-3 row field">
                                     <label for="inputCountry" class="col-sm-3 col-form-label">Notes</label>
                                     <div class="col-sm-12">
-                                        <textarea name="login_note" id="login_note" rows="3" class="form-control editInput textareaInput"></textarea>
+                                        <textarea name="login_note" id="login_note" rows="3" class="form-control textareaInput"></textarea>
                                     </div>
                                 </div>
                             </form>
@@ -1363,6 +1346,78 @@
         }
         
     }
+    function GetAllContact(userType,id,pageUrl){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {
+                userType:userType,id: id,_token:token
+            },
+            success: function(response) {
+                // console.log(response);
+                // return false;
+                var data = response.data;
+                var paginationContact = response.pagination;
+                var tableBody = $("#contact_result"); 
+                tableBody.empty();
+                var html='';
+                if(data.length>0){
+                    data.forEach(function(item) {
+                        
+                        html+= '<tr>' +
+                            '<td><input type="checkbox" id="" class="checkboxContactId text-center" value="'+item.id+'">'+
+                            '<td>' + item.contact + '</td>' +
+                            '<td>' + item.job_title + '</td>' +       
+                            '<td>' + item.email + '</td>' +       
+                            '<td>' + item.telephone + '</td>' +        
+                            '<td>' + item.mobile + '</td>' +
+                            '<td>' + item.address + '</td>' +
+                            '<td>' + item.city + '</td>' +
+                            '<td>' + item.country + '</td>' +
+                            '<td>' + item.postcode + '</td>' +
+                            '<td>' + (item.default_billing == 1 ? "Yes" : "No") + '</td>' +
+                            '<td>' +
+                                    '<img src="public/frontEnd/jobs/images/pencil.png" height="16px" alt="Edit" ' +
+                                    'class="modal_dataFetch" data-bs-toggle="modal" data-bs-target="#ContactModel" ' +
+                                    'data-id="' + item.id + '" ' +
+                                    'data-title="' + item.contact + '" ' +
+                                    'data-job_title="' + (item.job_title ?? '') + '" ' +
+                                    'data-email="' + item.email + '" ' +
+                                    'data-telephone="' + item.telephone + '" ' +
+                                    'data-mobile="' + item.mobile + '" ' +
+                                    'data-address="' + item.address + '" ' +
+                                    'data-city="' + item.city + '" ' +
+                                    'data-country="' + item.country + '" ' +
+                                    'data-postcode="' + item.postcode + '" ' +
+                                    'data-default_billing="' + item.default_billing + '" ' +
+                                    'data-fax="' + (item.fax ?? '') + '" ' +
+                                    'data-country_id="' + item.country_id + '">' +
+                                    '&nbsp;' +
+                                    '<img src="public/frontEnd/jobs/images/delete.png" alt="Delete" class="contact_delete" data-delete="' + item.id + '">' +
+                                    '</td>' +
+                            '</tr>';
+                    });
+                }else{
+                    html+='<tr> <td colspan="12"> <label class="red_sorryText">Sorry, no records to show</label> </td> </tr>';
+                    
+                }
+                tableBody.html(html);
+                var paginationControlsContact = $("#pagination-controls-contact");
+                paginationControlsContact.empty();
+                if (paginationContact.prev_page_url) {
+                    paginationControlsContact.append('<button class="profileDrop" onclick="GetAllContact(1,' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationContact.next_page_url) {
+                    paginationControlsContact.append('<button class="profileDrop" onclick="GetAllContact(1,' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                location.reload();
+            }
+        });
+    }
     $("#show_msg").change(function() {
         if ($('#show_msg').is(':checked')) {
             $("#show_msg").val(1);
@@ -1440,7 +1495,7 @@
             alert(emailErr3);
             return false;
         }else{
-            alert(123);return false;
+            // alert(123);return false;
             $("#site_name").css('border','');
             $("#site_contact_name").css('border','');
             $("#site_address").css('border','');
@@ -1450,20 +1505,97 @@
             data: {id:id,site_name:site_name,contact_name:contact_name,customer_id:customer_id,title_id:title_id,company_name:company_name,
                 email:email,telephone:telephone,mobile:mobile,fax:fax,region:region,address:address,city:city,country:country,
                 catalogue:catalogue,post_code:post_code,country_id:country_id,notes:notes,_token:token},
-                success: function(data) {
-                    console.log(data);
-                    if($.trim(data) == 'done'){
-                        $("#SiteModel").modal('hide');
-                        location.reload();
-                    }else{
-                        alert("Someting went Wrong");
+                success: function(response) {
+                    console.log(response);
+                    if(response.vali_error){
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
                         return false;
-                    }
-                    
+                    }else if(response.success === true){
+                        $(window).scrollTop(0);
+                        $('#message_site').addClass('success-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#message_site').removeClass('success-message').text('').hide();
+                            $("#SiteModel").modal('hide');
+                            getAllSite(customer_id,'{{ url("getAllSite") }}');
+                        }, 3000);
+                    }else if(response.success === false){
+                        $('#message_site').addClass('error-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#error-message').text('').fadeOut();
+                        }, 3000);
+                    }  
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    console.log('Error - ' + errorMessage + "\nMessage: " + error);
                 }
             });
         }
         
+    }
+    function getAllSite(customer_id,pageUrl = '{{ url("getAllSite") }}'){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {customer_id: customer_id,_token:token},
+            success: function(response) {
+                // console.log(response);
+                // return false;
+                var paginationSite = response.pagination;
+                var data = response.data;
+                // console.log(data);
+                const tbody = $('#site_result');
+                tbody.empty();
+                data.forEach(site => {
+                    tbody.append(`
+                        <tr>
+                            <td><input type="checkbox" id="" class="delete_checkbox text-center" value="`+site.id+`"></td>
+                            <td>${site.site_name}</td>
+                            <td>${site.contact_name}</td>
+                            <td>${site.company_name || ''}</td>
+                            <td>${site.email || ''}</td>
+                            <td>${site.telephone || ''}</td>
+                            <td>${site.mobile || ''}</td>
+                            <td>${site.address}</td>
+                            <td>${site.city || ''}</td>
+                            <td>${site.country || ''}</td>
+                            <td>${site.post_code || ''}</td>
+                            <td>${site.site_regionName || ''}</td>
+                            <td>
+                                <div class="d-inline-flex align-items-center ">
+                                    <div class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
+                                            Action
+                                        </a>
+                                        <div class="dropdown-menu fade-up m-0">
+                                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#SiteModel" class="dropdown-item modal_dataSite" data-id="` +site.id+ `" data-site_name="` +site.site_name+ `" data-contact_name="` +site.contact_name+ `" data-title_id="` +site.title_id+ `" data-company_name="` +site.company_name+ `" data-email="` +site.email+ `" data-telephone="` +site.telephone+ `" data-mobile="` +site.mobile+ `" data-fax="` +site.fax+ `" data-region="` +site.region+ `" data-address="` +site.address+ `" data-city="` +site.city+ `" data-country="` +site.country+ `" data-post_code="` +site.post_code+ `" data-country_id="` +site.country_id+ `" data-catalogue="` +site.catalogue+ `" data-notes="` +site.notes+ `">Edit Details</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="javascript:void(0)" class="dropdown-item site_delete" data-delete="` +site.id+ `">Delete</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="javascript:void(0)" class="dropdown-item" data-id="` +site.id+ `">Manage Document/Equipments</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    `);
+                });
+                var paginationControlsSite = $("#pagination-controls-site");
+                paginationControlsSite.empty();
+                if (paginationSite.prev_page_url) {
+                    paginationControlsSite.append('<button class="profileDrop" onclick="getAllSite(' + customer_id + ', \'' + paginationSite.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationSite.next_page_url) {
+                    paginationControlsSite.append('<button class="profileDrop" onclick="getAllSite(' + customer_id + ', \'' + paginationSite.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                location.reload();
+            }
+        });
     }
     function save_login(){
         var token='<?php echo csrf_token();?>'
@@ -1511,17 +1643,73 @@
                     access_rights:access_rights,projects:projects,notes:notes,_token:token},
                 success: function(data) {
                     console.log(data);
-                    $("#LoginModel").modal('hide');
-                    location.reload();
-                    
+                    if(data.success === true){
+                        $("#LoginModel").modal('hide');
+                        location.reload();
+                    }else{
+                        alert("Someting went wrong");
+                    } 
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    console.log('Error - ' + errorMessage + "\nMessage: " + error);
                 }
             });
         }
         
     }
+    function getAllLogin(customer_id,pageUrl = '{{ url("getAllLogin") }}'){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {customer_id: customer_id,_token:token},
+            success: function(response) {
+                console.log(response);
+                // return false;
+                var paginationLogin = response.pagination;
+                var data = response.data.data;
+                // console.log(data);
+                const tbody = $('#login_result');
+                tbody.empty();
+                var loginCount=1;
+                data.forEach(login => {
+                    const status=(login.status == 1)?'Active':'Inactive';
+                    tbody.append(`
+                        <tr>
+                            <td>${loginCount}</td>
+                            <td>${login.name}</td>
+                            <td>${login.email}</td>
+                            <td>${login.email || ''}</td>
+                            <td>${login.telephone || ''}</td>
+                            <td></td>
+                            <td>${status}</td>
+                            <td>
+                                <img src="public/frontEnd/jobs/images/pencil.png" height="16px" alt="Edit" class="modal_datalogin" data-bs-toggle="modal" data-bs-target="#LoginModel" data-id="${login.id }" data-email="${login.email}" data-password_type="${ login.password_type}" data-name="${login.name}" data-telephone="${login.telephone}" data-access_rights="${login.access_rights}" data-projects="${login.projects}" data-notes="${login.notes}" data-last_login="${login.last_login}" data-status="${login.status}">&nbsp;
+                                <img src="public/frontEnd/jobs/images/delete.png" alt="Delete" class="login_delete" data-delete="${login.id}">
+                            </td>
+                        </tr>
+                    `);
+                    loginCount++;
+                });
+                var paginationControlsLogin = $("#pagination-controls-login");
+                paginationControlsLogin.empty();
+                if (paginationLogin.prev_page_url) {
+                    paginationControlsLogin.append('<button class="profileDrop" onclick="getAllLogin(' + customer_id + ', \'' + paginationLogin.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationLogin.next_page_url) {
+                    paginationControlsLogin.append('<button class="profileDrop" onclick="getAllLogin(' + customer_id + ', \'' + paginationLogin.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                location.reload();
+            }
+        });
+    }
 </script>
 <script>
-    $('.contact_delete').on('click', function() {
+    $(document).on('click','.contact_delete', function() {
         var id = $(this).data('delete');
         if (confirm("Are you sure you want to delete this row?")) {
             $(this).closest('tr').remove();
@@ -1552,7 +1740,7 @@
         });
         }
     });
-    $('.login_delete').on('click',function(){
+    $(document).on('click','.login_delete', function(){
         var id = $(this).data('delete');
         if (confirm("Are you sure you want to delete this row?")) {
             $(this).closest('tr').remove();
@@ -1569,7 +1757,7 @@
     });
 </script>
 <script>
-    $('.modal_dataFetch').on('click', function() {
+    $(document).on('click','.modal_dataFetch', function() {
         var id = $(this).data('id');
         var title = $(this).data('title');
         var job_title = $(this).data('job_title');
@@ -1599,7 +1787,7 @@
         $('#contact_country_code').val(country_id);
     });
 
-    $('.modal_dataSite').on('click', function() {
+    $(document).on('click','.modal_dataSite', function() {
         var id = $(this).data('id');
         var site_name = $(this).data('site_name');
         var contact_name = $(this).data('contact_name');
@@ -1637,7 +1825,7 @@
         $("#site_note").val(notes);
     });
     
-    $('.modal_datalogin').on('click', function() {
+    $(document).on('click','.modal_datalogin', function() {
         var id = $(this).data('id');
         var email = $(this).data('email');
         var name = $(this).data('name');
@@ -1689,4 +1877,103 @@
     }
   }
 </script>
+<script>
+   $("#deleteSelectedRows").on('click', function() {
+    let ids = [];
+    
+    $('.delete_checkbox:checked').each(function() {
+        ids.push($(this).val());
+    });
+    if(ids.length == 0){
+        alert("Please check the checkbox for delete");
+    }else{
+        if(confirm("Are you sure to delete?")){
+            // console.log(ids);
+            var token='<?php echo csrf_token();?>'
+            var model='Constructor_customer_site';
+            $.ajax({
+                type: "POST",
+                url: "{{url('/bulk_delete')}}",
+                data: {ids:ids,model:model,_token:token},
+                success: function(data) {
+                    // console.log(data);
+                    if(data){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    }
+    
+});
+
+$('.delete_checkbox').on('click', function() {
+    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+        $('#selectAll').prop('checked', true);
+    } else {
+        $('#selectAll').prop('checked', false);
+    }
+});
+
+$("#deleteSelectedContactRows").on('click', function() {
+    let ids = [];
+    
+    $('.checkboxContactId:checked').each(function() {
+        ids.push($(this).val());
+    });
+    if(ids.length == 0){
+        alert("Please check the checkbox for delete");
+    }else{
+        if(confirm("Are you sure to delete?")){
+            // console.log(ids);
+            var token='<?php echo csrf_token();?>'
+            var model='Constructor_additional_contact';
+            $.ajax({
+                type: "POST",
+                url: "{{url('/bulk_delete')}}",
+                data: {ids:ids,model:model,_token:token},
+                success: function(data) {
+                    // console.log(data);
+                    if(data){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    }
+    
+});
+$('.checkboxContactId').on('click', function() {
+    if ($('.checkboxContactId:checked').length === $('.checkboxContactId').length) {
+        $('#selectAllContact').prop('checked', true);
+    } else {
+        $('#selectAllContact').prop('checked', false);
+    }
+});
+$("#selectAllContact").on('click',function(){
+    $('.checkboxContactId').prop('checked', $(this).prop('checked'));
+})
+ </script>
+ <script>
+    $(document).ready(function(){
+        var customer_id=$("#id").val();
+        getAllSite(customer_id,pageUrl = '{{ url("getAllSite") }}');
+        GetAllContact(1,customer_id,pageUrl = '{{ url("get_all_crm_customer_contacts") }}');
+        getAllLogin(customer_id,pageUrl = '{{ url("getAllLogin") }}');
+    });
+ </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

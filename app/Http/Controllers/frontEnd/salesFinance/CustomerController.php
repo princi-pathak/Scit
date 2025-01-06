@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\User;
-use App\Customer;
+use App\Models\Customer;
 use App\Models\Week;
 use App\Models\Region;
 use App\Models\Country;
@@ -49,11 +49,9 @@ class CustomerController extends Controller
         $data['customer'] = Customer::find($key);
         if($key){
             $contact=Constructor_additional_contact::whereNull('deleted_at')->where('customer_id', $key)->get();
-            $site=Constructor_customer_site::whereNull('deleted_at')->where('customer_id', $key)->get();
             $login=Construction_customer_login::whereNull('deleted_at')->where('customer_id', $key)->get();
         }else{
             $contact=array();
-            $site=array();
             $login=array();
         }
         $data['task'] = $task;
@@ -62,7 +60,6 @@ class CustomerController extends Controller
         $data['customer_type'] = Customer_type::whereNull('deleted_at')->where('status', 1)->get();
         $data['job_title'] = Job_title::whereNull('deleted_at')->where('status', 1)->get();
         $data['contact'] = $contact;
-        $data['site'] = $site;
         $data['login'] = $login;
         $data['country'] = Country::all_country_list();
         $data['country_code']=Country::getCountriesNameCode();
@@ -170,7 +167,11 @@ class CustomerController extends Controller
         $data['home_id']=Auth::user()->home_id;
         try {
             $customer = Constructor_additional_contact::saveCustomerAdditional($data);
-            return response()->json(['success'=>true,'message'=>'Contact Added Succuessfully Done','data'=>$customer]);
+            if($request->id == ''){
+                return response()->json(['success'=>true,'message'=>'Contact Added Succuessfully Done','data'=>$customer]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'Contact Updated Succuessfully Done','data'=>$customer]);
+            }
         } catch (\Exception $e) {
             Log::error('Error saving Tag: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
@@ -185,12 +186,61 @@ class CustomerController extends Controller
         // echo "<pre>";print_r($request->all());die;
         try {
             $customer = Constructor_customer_site::saveCustomerAdditional($request->all());
-            echo "done";
+            if($request->id ==''){
+                return response()->json(['success'=>true,'message'=>'Site has been saved','data'=>$customer]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'Site has been Updated','data'=>$customer]);
+            }
         } catch (\Exception $e) {
             Log::error('Error saving Tag: ' . $e->getMessage());
-            // return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
-            echo "error";
+            return response()->json(['error' => $e->getMessage()], 500);
+            // echo "error";
         }
+    }
+    public function getAllSite(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $getAllSite=Constructor_customer_site::whereNull('deleted_at')->where('customer_id', $request->customer_id)->orderBy('id', 'desc')->paginate(10);
+        $data=array();
+        foreach($getAllSite as $sitev){
+            // $job_title_detail=Job_title::find($sitev->title_id);
+            $site_regionName=Region::find($sitev->region);
+            $data[]=[
+                'id'=>$sitev->id,
+                'customer_id'=>$sitev->customer_id,
+                'site_name'=>$sitev->site_name,
+                'contact_name'=>$sitev->contact_name,
+                'title_id'=>$sitev->title_id,
+                'company_name'=>$sitev->company_name,
+                'email'=>$sitev->email,
+                'telephone_country_code'=>$sitev->telephone_country_code,
+                'telephone'=>$sitev->telephone,
+                'mobile_country_code'=>$sitev->mobile_country_code,
+                'mobile'=>$sitev->mobile,
+                'fax'=>$sitev->fax,
+                'region'=>$sitev->region,
+                'address'=>$sitev->address,
+                'city'=>$sitev->city,
+                'country'=>$sitev->country,
+                'country_id'=>$sitev->country_id,
+                'catalogue'=>$sitev->catalogue,
+                'notes'=>$sitev->notes,
+                'post_code'=>$sitev->post_code,
+                'status'=>$sitev->status,
+                'site_regionName'=>$site_regionName->title ?? "",
+            ];
+        }
+        // return response()->json(['success' =>true,'data'=>$data]);
+        return response()->json([
+            'success' => true, 'data' => $data, 
+            'pagination' => [
+                    'total' => $getAllSite->total(),
+                    'current_page' => $getAllSite->currentPage(),
+                    'last_page' => $getAllSite->lastPage(),
+                    'per_page' => $getAllSite->perPage(),
+                    'next_page_url' => $getAllSite->nextPageUrl(),
+                    'prev_page_url' => $getAllSite->previousPageUrl(),
+                ]
+        ]);
     }
     public function delete_site(Request $request){
         $delete= Constructor_customer_site::where('id', $request->id)->update(['deleted_at' => Carbon::now()]);
@@ -201,12 +251,32 @@ class CustomerController extends Controller
         // echo "<pre>";print_r($request->all());die;
         try {
             $customer = Construction_customer_login::saveCustomerAdditional($request->all());
-            echo "done";
+            if($request->id == ''){
+                return response()->json(['success'=>true,'message'=>'Contact has been saved successfully','data'=>$customer]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'Contact has been updated successfully','data'=>$customer]);
+            }
         } catch (\Exception $e) {
             Log::error('Error saving Tag: ' . $e->getMessage());
-            // return response()->json(['error' => 'Failed to save Tag. Please try again.'], 500);
-            echo "error";
+            return response()->json(['error' => $e->getMessage()], 500);
+            // echo "error";
         }
+    }
+    public function getAllLogin(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $getAllContact=Construction_customer_login::whereNull('deleted_at')->where('customer_id', $request->customer_id)->orderBy('id', 'desc')->paginate(10);
+        // return response()->json(['success' =>true,'data'=>$getAllContact]);
+        return response()->json([
+            'success' => true, 'data' => $getAllContact, 
+            'pagination' => [
+                    'total' => $getAllContact->total(),
+                    'current_page' => $getAllContact->currentPage(),
+                    'last_page' => $getAllContact->lastPage(),
+                    'per_page' => $getAllContact->perPage(),
+                    'next_page_url' => $getAllContact->nextPageUrl(),
+                    'prev_page_url' => $getAllContact->previousPageUrl(),
+                ]
+        ]);
     }
     public function delete_login(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -1058,21 +1128,37 @@ class CustomerController extends Controller
         $contact_list=Constructor_additional_contact::getAllcrmContacts($request->id)->where('userType',$userType)->orderBy('id', 'desc')->paginate(10);
         $data=array();
         foreach($contact_list as $val){
-            $customer=Customer::find($val->customer_id);
+            if($userType == 1){
+                $customer=Customer::find($val->customer_id);
+                $job_title_details=Job_title::find($val->job_title_id);
+            }else if($userType == 2){
+                $customer=Supplier::find($val->customer_id);
+                $job_title_details='';
+            }
+            $country_name=Country::find($val->country_id);
+            
             $data[]=[
                 'id'=>$val->id,
                 'customer_id'=>$request->id,
                 'contact'=>$val->contact_name ?? "",
+                'job_title_id'=>$val->job_title_id,
+                'job_title'=>$job_title_details->name ?? "",
                 'crm_section_type_id'=>'',
                 'customer_name'=>$customer->name ?? "",
                 'email'=>$val->email ?? "",
+                'telephone_country_code'=>$val->telephone_country_code,
                 'telephone'=>$val->telephone ?? "",
+                'mobile_country_code'=>$val->mobile_country_code,
                 'mobile'=>$val->mobile ?? "",
                 'address'=>$val->address ?? "",
                 'city'=>$val->city ?? "",
-                'country'=>$val->country ?? "",
+                'country'=>$country_name->name ?? "",
                 'postcode'=>$val->postcode ?? "",
                 'default_billing'=>$val->default_billing,
+                'fax'=>$val->fax,
+                'country_id'=>$val->country_id,
+                'userType'=>$val->userType,
+                'status'=>$val->status,
             ];
         }
         // return response()->json(['success' =>true,'data'=>$data]);
