@@ -326,7 +326,7 @@ ul#projectList {
                                 ?>
                                 @foreach($list as $val)
                                 <?php 
-                                    $customer=App\Customer::find($val->customer_id);
+                                    $customer=App\Models\Customer::find($val->customer_id);
                                     $sub_total_amount=0;
                                     $total_amount=0;
                                     $vat_amount=0;
