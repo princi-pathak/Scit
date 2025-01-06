@@ -1601,10 +1601,10 @@ $('#search-product').on('keyup', function() {
                 var paginationControlsAttachment = $("#pagination-controls-Attachments");
                 paginationControlsAttachment.empty();
                 if (paginationAttachment.prev_page_url) {
-                    paginationControlsAttachment.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                    paginationControlsAttachment.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationAttachment.prev_page_url + '\')">Previous</button>');
                 }
                 if (paginationAttachment.next_page_url) {
-                    paginationControlsAttachment.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                    paginationControlsAttachment.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationAttachment.next_page_url + '\')">Next</button>');
                 }
             },
             error: function(xhr, status, error) {
@@ -1861,10 +1861,10 @@ $('#search-product').on('keyup', function() {
                 var paginationControlsNewTask = $("#pagination-controls-New-task");
                 paginationControlsNewTask.empty();
                 if (paginationNewTask.prev_page_url) {
-                    paginationControlsNewTask.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                    paginationControlsNewTask.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationNewTask.prev_page_url + '\')">Previous</button>');
                 }
                 if (paginationNewTask.next_page_url) {
-                    paginationControlsNewTask.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                    paginationControlsNewTask.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationNewTask.next_page_url + '\')">Next</button>');
                 }
             },
             error: function(xhr, status, error) {

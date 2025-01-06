@@ -345,6 +345,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('getAllUserList','getAllUserList');
 		Route::post('GetCustomerWithContact','GetCustomerWithContact');
 		Route::post('GetFullHistory','GetFullHistory');
+		Route::post('getAllSite','getAllSite');
+		Route::post('getAllLogin','getAllLogin');
 	});
 
 	// Frontend Controller for setting in General section 
@@ -570,6 +572,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quotes/getActiveRejectType', 'getActiveRejectType')->name('quote.ajax.getActiveRejectType');
 		Route::post('/quotes/saveQuoteRejectReasonsType', 'saveQuoteRejectReasonsType')->name('quote.ajax.saveQuoteRejectReasonsType');
 		Route::get('/quote/rejected', 'index');
+		Route::post('/quotes/saveQuoteDeposite', 'saveQuoteDeposite')->name('quote.ajax.saveQuoteDeposite');
+		
 		
 		
 	});
