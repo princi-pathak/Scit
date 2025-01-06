@@ -9,6 +9,7 @@ use App\Models\QuoteCallBack;
 use App\Models\QuoteTask;
 use App\User;
 use App\Models\Quotes\QuoteRejectReasons;
+use App\Models\Quotes\QuoteCustomerDeposit;
 
 
 class QuoteService
@@ -318,6 +319,10 @@ class QuoteService
 
         $this->updateQuoteStatus($data['quote_id'], 'Rejected');
         return $quoteRejectReason;
+    }
+
+    public function saveQuoteCredit($data){
+        return QuoteCustomerDeposit::updateOrCreate(['id' => $data['quote_deposit_id']], $data);
     }
 }
  

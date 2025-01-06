@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\QuoteRequest;
 use App\Http\Requests\Quotes\CallBackRequest;
 use App\Http\Requests\Quotes\QuoteTaskRequest;
+use App\Http\Requests\Quotes\QuoteCustomerDeposit;
 
 use App\Services\Quotes\QuoteService;
 use App\Services\Quotes\QuoteProductService;
@@ -610,5 +611,19 @@ class QuoteController extends Controller
             'success' => (bool) $data,
             'data' => $data ? 'Quote rejected' : 'Error in quote rejection'
         ]);
+    }
+
+    public function saveQuoteDeposite(QuoteCustomerDeposit $request){
+        
+        $validatedData = $request->validated();
+
+        $data = $this->quoteService->saveQuoteCredit($validatedData);
+       
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? 'Quote deposite created' : 'Error in quote deposit'
+        ]);
+        
+
     }
 }
