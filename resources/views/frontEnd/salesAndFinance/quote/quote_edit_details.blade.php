@@ -42,10 +42,10 @@
         padding: 5px;
     }
 
-    /* .tab-content {
+    .deposit-tab.tab-content {
         display: none;
 
-    } */
+    }
 
     .tab-content.current {
         display: block;
@@ -1017,7 +1017,7 @@
                             <div class="row">
                                 <div class="col-sm-3 mb-3 mt-2">
                                     <div class=" p-0">
-                                        <a href="javascript:void(0)" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Create Deposit</a>
+                                        <a href="javascript:void(0)" class="profileDrop" id="createDepositModelOpen" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Create Deposit</a>
                                         <span class="col-form-label">
                                             or
                                         </span>
@@ -1027,226 +1027,225 @@
 
 
                                 <!-- ************************* -->
-                                <div class="modal fade" id="creaditDepositModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositModalLabel" style="display: none;" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content add_Customer">
+                                <div class="modal fade" id="creaditDepositModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title fs-5" id="creaditDepositModalLabel">Create Deposit</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body ">
-                                                <div id="page-content" class="header-clear">
-                                                    <div id="page-content-scroll">
-                                                        <!--Enables this element to be scrolled -->
-                                                        <div class="content padding-content-tab">
-                                                            <div id="test-tab">
-                                                                <ul class="tabs padding-tab">
-                                                                    <div class="orange-tab current text-center" data-tab="tabs-1">
-                                                                        <li class="tab-link"><a href="#tabs-1" class="profileDrop">Payment Details</a></li>
-                                                                    </div>
-                                                                    <div class="orange-tab text-center" data-tab="tabs-2">
-                                                                        <li class="tab-link"><a href="#tabs-2" class="profileDrop">Payment Type</a></li>
-                                                                    </div>
-                                                                </ul>
+                                            <div class="modal-body">
+                                                <!-- Tabs -->
+                                                <ul class="nav nav-tabs" id="modalTabs">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" href="#tab1" data-toggle="tab">Payment Details</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#tab2" data-toggle="tab">Payment Type</a>
+                                                    </li>
+                                                </ul>
 
-                                                                <div id="tabs-1" class="tab-content current">
-                                                                    <div class="newJobForm card">
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
-                                                                            <div class="col-sm-9">
-                                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['quote_ref'] }} - Quote Date {{ $quoteData['quota_date_deposit'] }}" readonly="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
-                                                                            <div class="col-sm-9">
-                                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['customer']['name'] }}" readonly="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT)</label>
-                                                                            <div class="col-sm-9">
-                                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['sub_total'] }}" readonly="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
-                                                                            <div class="col-sm-9">
-                                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="&#163;{{ $quoteData['total_amount'] }}" readonly="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Deposit Percentage <span class="radStar">*</span></label>
-                                                                            <div class="col-sm-5">
-                                                                                <input type="text" class="form-control editInput" id="inputCity" value="100">
-                                                                            </div>
-                                                                            <div class="col-sm-1 ps-0">
-                                                                                <input class="form-control editInput text-center" value="%" disabled="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
-                                                                            <div class="col-sm-1 pe-0">
-                                                                                <input class="form-control editInput text-center" value="&#163;" disabled="">
-                                                                            </div>
-                                                                            <div class="col-sm-4">
-                                                                                <input type="text" class="form-control editInput" id="inputCity" value="0.00">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
-                                                                            <div class="col-sm-9">
-                                                                                <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
-                                                                            <div class="col-sm-9">
-                                                                                <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
-                                                                            </div>
-                                                                        </div>
+                                                <!-- Tab Content -->
+                                                <div class="tab-content">
+                                                    <form action="" id="createDepositForm">
+                                                        <div class="tab-pane fade show active" id="tab1">
+                                                            <div class="newJobForm card">
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="hidden" name="quote_deposit_id" id="quote_deposit_id">
+                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName"
+                                                                            value="{{ $quoteData['quote_ref'] }} - Quote Date {{ $quoteData['quota_date_deposit'] }}" readonly="">
                                                                     </div>
                                                                 </div>
-                                                                <!--End off tab one  -->
-                                                                <div id="tabs-2" class="tab-content">
-                                                                    <div class="mb-2 row">
-                                                                        <div class="col-sm-12">
-                                                                            <div class="text-end">
-                                                                                <h5>Paying Now: $12000.00</h5>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="newJobForm card">
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
-                                                                            <div class="col-sm-9">
-                                                                                <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                                    @foreach($paymentType as $value)
-                                                                                    <option value="{{ $value->id }}">{{ $value->title }}</option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mb-2 row">
-                                                                            <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
-                                                                                <span class="radStar">*</span></label>
-                                                                            <div class="col-sm-5">
-                                                                                <input type="date" class="form-control editInput" id="inputCity" value="{{ now()->format('Y-m-d') }}">
-                                                                            </div>
-                                                                            <div class="col-sm-1 ps-0">
-                                                                                <span class="material-symbols-outlined">calendar_month</span>
-                                                                            </div>
-                                                                        </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="hidden">
+                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['customer']['name'] }}" readonly="">
                                                                     </div>
                                                                 </div>
-                                                                <!--End off tab two  -->
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT)</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control-plaintext editInput" id="setTotalCreditAmount" value="" readonly="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control-plaintext editInput" id="setOustandingCreditAmount" value="" readonly="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Percentage <span class="radStar">*</span></label>
+                                                                    <div class="col-sm-5">
+                                                                        <input type="text" class="form-control editInput" name="deposit_percantage" id="deposit_percantage" value="100">
+                                                                    </div>
+                                                                    <div class="col-sm-1 ps-0">
+                                                                        <input class="form-control editInput text-center" value="%" disabled="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-1 pe-0">
+                                                                        <input class="form-control editInput text-center" value="&#163;" disabled="">
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <input type="text" class="form-control editInput" name="amount" id="deposit_amount" value="123">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control editInput" name="reference" id="reference" placeholder="Reference">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <textarea class="form-control textareaInput rounded-1" name="description" id="description" rows="3" placeholder="Description"></textarea>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                        <div class="tab-pane fade" id="tab2">
+                                                            <div class="mb-2 row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="text-end">
+                                                                        <h5>Paying Now: <span id="payingNow">$12000.00</span></h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="newJobForm card">
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-control editInput selectOptions" name="payment_type" id="payment_type">
+                                                                            @foreach($paymentType as $value)
+                                                                            <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row">
+                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date <span class="radStar">*</span></label>
+                                                                    <div class="col-sm-5">
+                                                                        <input type="date" class="form-control editInput" id="deposit_date" name="deposit_date" value="{{ now()->format('Y-m-d') }}">
+                                                                    </div>
+                                                                    <div class="col-sm-1 ps-0">
+                                                                        <span class="material-symbols-outlined">calendar_month</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <div class="contantbodypopup p-0">
-
-                                                </div>
-                                            </div> <!-- end modal body -->
-                                            <div class="modal-footer customer_Form_Popup">
-                                                <button type="button" id="next_button" class="btn profileDrop">Next</button>
-                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn profileDrop" id="prevTab" style="display: none;">Previous</button>
+                                                <button type="button" class="btn profileDrop" id="nextTab">Next</button>
+                                                <button type="button" class="btn profileDrop" id="saveButton" style="display: none;">Save</button>
+                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal" id="cancelButton">Cancel</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- ************************ -->
-                                <!-- *********************** -->
-                                <div class="modal fade" id="creaditDepositInvoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositInvoiceModalModalLabel" style="display: none;" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content add_Customer">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title fs-5" id="creaditDepositInvoiceModalModalLabel">Creadit Deposit Invoice</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body ">
-                                                <div class="contantbodypopup p-0">
-                                                    <div class="newJobForm card">
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
-                                                            <div class="col-sm-5">
-                                                                <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
-                                                            </div>
-                                                            <div class="col-sm-1 ps-0">
-                                                                <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Due Date<span class="radStar">*</span></label>
-                                                            <div class="col-sm-5">
-                                                                <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
-                                                            </div>
-                                                            <div class="col-sm-1 ps-0">
-                                                                <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Line Item</label>
-                                                            <div class="col-sm-9">
-                                                                <input type="text" class="form-control editInput" id="inputName" placeholder="Line Item">
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
-                                                            <div class="col-sm-9">
-                                                                <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
-                                                                <span class="radStar">*</span></label>
-                                                            <div class="col-sm-5">
-                                                                <input type="text" class="form-control editInput" id="inputCity" value="100">
-                                                            </div>
-                                                            <div class="col-sm-2 ps-0">
-                                                                <input class="form-control editInput text-center" value="% of $.00" disabled="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Sub Totel <span class="radStar">*</span></label>
-                                                            <div class="col-sm-1 pe-0">
-                                                                <input class="form-control editInput text-center" value="$" disabled="">
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <input type="text" class="form-control editInput" id="inputCity" value="0.00">
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
-                                                            <div class="col-sm-9">
-                                                                <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                    <option>-Please Select-</option>
-                                                                    <option>Customer-2</option>
-                                                                    <option>Customer-3</option>
-                                                                    <option>Customer-4</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
+                            </div>
+                            <!-- ************************ -->
 
-                                                        <div class="mb-2 row">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Totel (inc. VAT)</label>
-                                                            <div class="col-sm-9">
-                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
-                                                            </div>
+                            <!-- *********************** -->
+                            <div class="modal fade" id="creaditDepositInvoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositInvoiceModalModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content add_Customer">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title fs-5" id="creaditDepositInvoiceModalModalLabel">Creadit Deposit Invoice</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body ">
+                                            <div class="contantbodypopup p-0">
+                                                <div class="newJobForm card">
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
                                                         </div>
-
+                                                        <div class="col-sm-1 ps-0">
+                                                            <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
+                                                        </div>
                                                     </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Due Date<span class="radStar">*</span></label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                        </div>
+                                                        <div class="col-sm-1 ps-0">
+                                                            <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Line Item</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control editInput" id="inputName" placeholder="Line Item">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
+                                                        <div class="col-sm-9">
+                                                            <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
+                                                            <span class="radStar">*</span></label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                        </div>
+                                                        <div class="col-sm-2 ps-0">
+                                                            <input class="form-control editInput text-center" value="% of $.00" disabled="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Sub Totel <span class="radStar">*</span></label>
+                                                        <div class="col-sm-1 pe-0">
+                                                            <input class="form-control editInput text-center" value="$" disabled="">
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" class="form-control editInput" id="inputCity" value="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                <option>-Please Select-</option>
+                                                                <option>Customer-2</option>
+                                                                <option>Customer-3</option>
+                                                                <option>Customer-4</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-2 row">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Totel (inc. VAT)</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
+                                                        </div>
+                                                    </div>
+
                                                 </div>
-                                            </div> <!-- end modal body -->
-                                            <div class="modal-footer customer_Form_Popup">
-                                                <button type="button" class="btn profileDrop">Save</button>
-                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
                                             </div>
+                                        </div> <!-- end modal body -->
+                                        <div class="modal-footer customer_Form_Popup">
+                                            <button type="button" class="btn profileDrop">Save</button>
+                                            <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- *********************** -->
-                                <!-- <div class="col-sm-3 mb-3 mt-2">
+                            </div>
+                            <!-- *********************** -->
+
+                            <!-- <div class="col-sm-3 mb-3 mt-2">
                                     <div class=" p-0">
                                         <a href="#" class="profileDrop">Creadit Deposit</a>
                                         <span class="col-form-label">
@@ -1256,173 +1255,129 @@
                                     </div>
                                 </div> -->
 
-                                <div class="col-sm-12">
-                                    <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
-                                    <div class="productDetailTable">
-                                        <table class="table" id="containerA">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>Deposit Date </th>
-                                                    <th>Mode of Payment </th>
-                                                    <th>Reference</th>
-                                                    <th>Description </th>
-                                                    <th>Created On </th>
-                                                    <th>Deposit Amount </th>
-                                                    <th>Refunded</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="7">
-                                                        <label class="red_sorryText">Sorry, no records to show</label>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                            <div class="col-sm-12">
+                                <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
+                                <div class="productDetailTable">
+                                    <table class="table" id="containerA">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Deposit Date </th>
+                                                <th>Mode of Payment </th>
+                                                <th>Reference</th>
+                                                <th>Description </th>
+                                                <th>Created On </th>
+                                                <th>Deposit Amount </th>
+                                                <th>Refunded</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="7">
+                                                    <label class="red_sorryText">Sorry, no records to show</label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </div>
 
-                                <div class="col-sm-12">
-                                    <h4 class="contTitle text-start mb-2 mt-2 ">Deposit Invoices</h4>
-                                    <div class="productDetailTable">
-                                        <table class="table" id="containerA">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>Invoice Ref </th>
-                                                    <th>Invoice </th>
-                                                    <th>Due Date</th>
-                                                    <th>Sub Total </th>
-                                                    <th>VAT </th>
-                                                    <th>Total </th>
-                                                    <th>Outstanding Created On</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="8"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                            <div class="col-sm-12">
+                                <h4 class="contTitle text-start mb-2 mt-2 ">Deposit Invoices</h4>
+                                <div class="productDetailTable">
+                                    <table class="table" id="containerA">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Invoice Ref </th>
+                                                <th>Invoice </th>
+                                                <th>Due Date</th>
+                                                <th>Sub Total </th>
+                                                <th>VAT </th>
+                                                <th>Total </th>
+                                                <th>Outstanding Created On</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="8"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <!-- **************************************End of deposit Details****************************************** -->
                     </div>
-                    <!--  -->
-                    <div id="hideAttachmentTask">
+                    <!-- **************************************End of deposit Details****************************************** -->
+            </div>
+            <!--  -->
+            <div id="hideAttachmentTask">
 
-                        <!-- ************************************* Start Attechments ******************************** -->
-                        <div class="newJobForm mt-4">
-                            <label class="upperlineTitle">Attachments</label>
-                            <div class="row">
+                <!-- ************************************* Start Attechments ******************************** -->
+                <div class="newJobForm mt-4">
+                    <label class="upperlineTitle">Attachments</label>
+                    <div class="row">
 
-                                <div class="col-sm-12 mb-3 mt-2">
-                                    <div class=" p-0">
-                                        <a href="javascript:void(0)" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
-                                        <a href="{{ route('quote.addMultiAttachment', ['quote_id' => $quoteData['id']]) }}" class="profileDrop">Upload Multi Attachment</a>
-                                        <a href="javascript:void(0)" id="downloadSelected" class="profileDrop">Download Attachment(s)</a>
-                                        <a href="javascript:void(0)" id="deleteSelected" class="profileDrop">Delete Attachment(s)</a>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <div class="productDetailTable">
-                                        <table class="table" id="attachmentTable">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th><input type="checkbox" id="selectAll"></th>
-                                                    <th>Type</th>
-                                                    <th>Title </th>
-                                                    <th>Description</th>
-                                                    <th>Section </th>
-                                                    <th>Customer Visible </th>
-                                                    <th>Mobile User Visible </th>
-                                                    <th>File Name</th>
-                                                    <th>Mime Type / Size</th>
-                                                    <th>Created On</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
+                        <div class="col-sm-12 mb-3 mt-2">
+                            <div class=" p-0">
+                                <a href="javascript:void(0)" class="profileDrop" id="new_Attachment_open_model">New Attachment</a>
+                                <a href="{{ route('quote.addMultiAttachment', ['quote_id' => $quoteData['id']]) }}" class="profileDrop">Upload Multi Attachment</a>
+                                <a href="javascript:void(0)" id="downloadSelected" class="profileDrop">Download Attachment(s)</a>
+                                <a href="javascript:void(0)" id="deleteSelected" class="profileDrop">Delete Attachment(s)</a>
                             </div>
                         </div>
-                        <!-- ************************************* End Of Attechment ******************************** -->
+
+                        <div class="col-sm-12">
+                            <div class="productDetailTable">
+                                <table class="table" id="attachmentTable">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th><input type="checkbox" id="selectAll"></th>
+                                            <th>Type</th>
+                                            <th>Title </th>
+                                            <th>Description</th>
+                                            <th>Section </th>
+                                            <th>Customer Visible </th>
+                                            <th>Mobile User Visible </th>
+                                            <th>File Name</th>
+                                            <th>Mime Type / Size</th>
+                                            <th>Created On</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
-                    <!-- ******************************* Start Task ***************************** -->
-                    <div id="hideTaskData">
-                        <div class="newJobForm mt-4">
-                            <label class="upperlineTitle">Tasks</label>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="tabheadingTitle pb-3 pt-2">
-                                        <a href="#" class="profileDrop me-3" onclick="openTaskModal();"> New Task</a>
+                </div>
+                <!-- ************************************* End Of Attechment ******************************** -->
+            </div>
+            <!-- ******************************* Start Task ***************************** -->
+            <div id="hideTaskData">
+                <div class="newJobForm mt-4">
+                    <label class="upperlineTitle">Tasks</label>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="tabheadingTitle pb-3 pt-2">
+                                <a href="#" class="profileDrop me-3" onclick="openTaskModal();"> New Task</a>
+                            </div>
+                            <div class="extraInformationTab">
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <button class="nav-link active" id="tab_quoteTask" data-bs-toggle="tab" data-bs-target="#nav-tab_quoteTask" type="button" role="tab"
+                                            aria-controls="nav-Notes" aria-selected="true">Task</button>
+                                        <button class="nav-link" id="nav-RecurringTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-RecurringTasks" type="button" role="tab"
+                                            aria-controls="nav-Tasks" aria-selected="false">Recurring Task</button>
                                     </div>
-                                    <div class="extraInformationTab">
-                                        <nav>
-                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                <button class="nav-link active" id="tab_quoteTask" data-bs-toggle="tab" data-bs-target="#nav-tab_quoteTask" type="button" role="tab"
-                                                    aria-controls="nav-Notes" aria-selected="true">Task</button>
-                                                <button class="nav-link" id="nav-RecurringTasks-tab" data-bs-toggle="tab" data-bs-target="#nav-RecurringTasks" type="button" role="tab"
-                                                    aria-controls="nav-Tasks" aria-selected="false">Recurring Task</button>
-                                            </div>
-                                        </nav>
-                                        <div class="tab-content" id="nav-tabContent">
-                                            <div class="tab-pane fade show active" id="nav-tab_quoteTask" role="tabpanel" aria-labelledby="tab_quoteTask" tabindex="0">
-                                                <div class="col-sm-12">
-                                                    <div class="mb-3 row">
-                                                        <div class="col-md-12">
-                                                            <div class="productDetailTable pt-3">
-                                                                <table class="table" id="containerA">
-                                                                    <thead class="table-light">
-                                                                        <tr>
-                                                                            <th># </th>
-                                                                            <th>Quote Ref </th>
-                                                                            <th>Job Ref</th>
-                                                                            <th>Quote Date </th>
-                                                                            <th>Expiry Date </th>
-                                                                            <th>Sub Total</th>
-                                                                            <th>VAT</th>
-                                                                            <th>Total</th>
-                                                                            <th>Deposit </th>
-                                                                            <th>Outstanding</th>
-                                                                            <th>Status</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                            <td>...</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Button trigger modal -->
-                                                </div>
-                                                <!-- ENd col-9 -->
-                                            </div>
-                                            <div class="tab-pane fade" id="nav-RecurringTasks" role="tabpanel" aria-labelledby="nav-RecurringTasks-tab" tabindex="0">
-
-                                                <div class="col-sm-12">
-
+                                </nav>
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-tab_quoteTask" role="tabpanel" aria-labelledby="tab_quoteTask" tabindex="0">
+                                        <div class="col-sm-12">
+                                            <div class="mb-3 row">
+                                                <div class="col-md-12">
                                                     <div class="productDetailTable pt-3">
                                                         <table class="table" id="containerA">
                                                             <thead class="table-light">
@@ -1459,32 +1414,76 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- Button trigger modal -->
+                                        </div>
+                                        <!-- ENd col-9 -->
+                                    </div>
+                                    <div class="tab-pane fade" id="nav-RecurringTasks" role="tabpanel" aria-labelledby="nav-RecurringTasks-tab" tabindex="0">
 
+                                        <div class="col-sm-12">
+
+                                            <div class="productDetailTable pt-3">
+                                                <table class="table" id="containerA">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th># </th>
+                                                            <th>Quote Ref </th>
+                                                            <th>Job Ref</th>
+                                                            <th>Quote Date </th>
+                                                            <th>Expiry Date </th>
+                                                            <th>Sub Total</th>
+                                                            <th>VAT</th>
+                                                            <th>Total</th>
+                                                            <th>Deposit </th>
+                                                            <th>Outstanding</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- ****************************** End of Task ***************************** -->
-
-
-
-
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12 col-xl-12 px-3">
-                            <div class="pageTitleBtn">
-                                <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a> -->
-                                <button type="submit" class="profileDrop">Save</button>
-                                <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
-            <!-- End col-12 -->
+
+            <!-- ****************************** End of Task ***************************** -->
+
+
+
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xl-12 px-3">
+                    <div class="pageTitleBtn">
+                        <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a> -->
+                        <button type="submit" class="profileDrop">Save</button>
+                        <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            </form>
         </div>
+        <!-- End col-12 -->
+    </div>
     </div>
 </section>
 
@@ -2404,6 +2403,8 @@
 
     $(document).ready(function() {
 
+
+
         document.getElementById('hideCustomerDetails').style.display = "none";
         document.getElementById('hideTaskData').style.display = "none";
         // document.getElementById('hideDepositSection').style.display = "none";
@@ -2840,6 +2841,10 @@
         });
     }
 
+    // $('#createDepositModelOpen').on('click', function() {
+
+    //     });
+
     function tableFootForProduct(tableName) {
         const table = document.querySelector(`#${tableName}`);
 
@@ -3026,12 +3031,15 @@
         document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
         document.getElementById('InputFootVatAmount').value = totalVAT.toFixed(2);
         document.getElementById('footTotalDiscountVat').textContent = doller + (price + totalVAT).toFixed(2);
+        document.getElementById('setTotalCreditAmount').value = doller + (price + totalVAT).toFixed(2);
         document.getElementById('inputFootTotalDiscountVat').value = (price + totalVAT).toFixed(2);
         document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
         document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
         document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
         document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
+        document.getElementById('setOustandingCreditAmount').value = doller + (price + totalVAT).toFixed(2);
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
+        document.getElementById('payingNow').textContent = doller + (price + totalVAT).toFixed(2);
 
     }
 
@@ -3717,20 +3725,176 @@
 
     });
 
-    $('#next_button').click(function(e) {
-        var tab_id = $('ul.tabs .orange-tab.current').attr('data-tab');
-        var first = $('ul.tabs .orange-tab:first').attr('data-tab');
 
-        $current = $('ul.tabs div.orange-tab.current').removeClass('current').next();
-        $currentTabContent = $('#' + tab_id).removeClass('current').next();
 
-        if ($current.length) {
-            $current.addClass('current');
-            $currentTabContent.addClass('current');
-        } else {
-            $('ul.tabs div.orange-tab:first').addClass('current');
-            $("#" + first).addClass('current');
+
+    $(document).ready(function() {
+        const $prevButton = $("#prevTab");
+        const $nextButton = $("#nextTab");
+
+        // Initial setup
+        updateButtons();
+
+        // Event listeners for navigation
+        $prevButton.click(function() {
+            navigateTab(-1);
+        });
+
+        $nextButton.click(function() {
+            navigateTab(1);
+        });
+
+        function navigateTab(offset) {
+            const $tabs = $("#modalTabs .nav-link");
+            const $activeTab = $tabs.filter(".active");
+            let currentIndex = $tabs.index($activeTab);
+
+            let newIndex = currentIndex + offset;
+
+            // Ensure the new index is within bounds
+            if (newIndex >= 0 && newIndex < $tabs.length) {
+                $tabs.eq(newIndex).tab("show"); // Bootstrap's tab method
+                updateButtons();
+            }
         }
 
+        function updateButtons() {
+            const $tabs = $("#modalTabs .nav-link");
+            const $activeTab = $tabs.filter(".active");
+            const currentIndex = $tabs.index($activeTab);
+
+            // Hide Previous button on the first tab
+            if (currentIndex === 0) {
+                $prevButton.hide();
+            } else {
+                $prevButton.show();
+            }
+
+            // Hide Next button on the last tab
+            if (currentIndex === $tabs.length - 1) {
+                $nextButton.hide();
+            } else {
+                $nextButton.show();
+            }
+        }
+
+        // Update buttons on tab change
+        $("#modalTabs .nav-link").on("shown.bs.tab", function() {
+            updateButtons();
+        });
     });
+
+    $(document).ready(function() {
+        const $prevButton = $("#prevTab");
+        const $nextButton = $("#nextTab");
+        const $saveButton = $("#saveButton");
+        const $cancelButton = $("#cancelButton");
+        const $closeButton = $("#closeButton");
+
+        // Initial setup
+        updateButtons();
+
+        // Event listeners for navigation
+        $prevButton.click(function() {
+            navigateTab(-1);
+        });
+
+        $nextButton.click(function() {
+            navigateTab(1);
+        });
+
+        $cancelButton.click(function() {
+            $("#exampleModal").modal("hide"); // Close the modal
+        });
+
+        $saveButton.click(function() {
+            // alert(quote_id);
+            var data = {
+                quote_id: document.getElementById('quote_id').value,
+                customer_id: document.getElementById('setCustomerId').value,
+                deposit_percantage: document.getElementById('deposit_percantage').value,
+                deposit_amount: document.getElementById('deposit_amount').value,
+                reference: document.getElementById('reference').value,
+                description: document.getElementById('description').value,
+                payment_type: document.getElementById('payment_type').value,
+                deposit_date: document.getElementById('deposit_date').value,
+                quote_deposit_id : document.getElementById('quote_deposit_id'),
+            };
+
+            $.ajax({
+                url: '{{ route("quote.ajax.saveQuoteDeposite") }}', // Your server endpoint
+                method: 'POST', // HTTP method
+                data: data,
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function() {
+                    alert("An error occurred while deleting the rows.");
+                }
+            });
+        });
+
+        function navigateTab(offset) {
+            const $tabs = $("#modalTabs .nav-link");
+            const $activeTab = $tabs.filter(".active");
+            let currentIndex = $tabs.index($activeTab);
+
+            let newIndex = currentIndex + offset;
+
+            // Ensure the new index is within bounds
+            if (newIndex >= 0 && newIndex < $tabs.length) {
+                $tabs.eq(newIndex).tab("show"); // Bootstrap's tab method
+                updateButtons();
+            }
+        }
+
+        function updateButtons() {
+            const $tabs = $("#modalTabs .nav-link");
+            const $activeTab = $tabs.filter(".active");
+            const currentIndex = $tabs.index($activeTab);
+
+            // First Tab: Show Next and Close
+            if (currentIndex === 0) {
+                $prevButton.hide();
+                $nextButton.show();
+                $saveButton.hide();
+                // $cancelButton.hide();
+                $closeButton.show();
+            }
+
+            // Second Tab: Show Previous, Save, and Cancel
+            else if (currentIndex === 1) {
+                $prevButton.show();
+                $nextButton.hide();
+                $saveButton.show();
+                $cancelButton.show();
+                $closeButton.hide();
+            }
+        }
+
+        // Update buttons on tab change
+        $("#modalTabs .nav-link").on("shown.bs.tab", function() {
+            updateButtons();
+        });
+    });
+
+
+
+
+    // $('#next_button').click(function(e) {
+    //     var tab_id = $('ul.tabs .orange-tab.current').attr('data-tab');
+    //     var first = $('ul.tabs .orange-tab:first').attr('data-tab');
+
+    //     $current = $('ul.tabs div.orange-tab.current').removeClass('current').next();
+    //     $currentTabContent = $('#' + tab_id).removeClass('current').next();
+
+    //     if ($current.length) {
+    //         $current.addClass('current');
+    //         $currentTabContent.addClass('current');
+    //     } else {
+    //         $('ul.tabs div.orange-tab:first').addClass('current');
+    //         $("#" + first).addClass('current');
+    //     }
+
+    // });
 </script>

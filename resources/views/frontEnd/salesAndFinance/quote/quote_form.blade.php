@@ -2769,7 +2769,7 @@
             },
             success: function(response) {
                 console.log("response.data", response.data);
-                quoteProductTable(response.data, 'quoteProducts');
+                quoteProductTable(response.data, 'quoteProducts' , 'add');
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3064,7 +3064,7 @@
     let isFooterAppended = false;
     let rowIndex = 0;
 
-    function quoteProductTable(data, tableId) {
+    function quoteProductTable(data, tableId, type) {
         const table = document.querySelector(`#${tableId}`);
         // Populate rows as usual if data is not empty
         data.forEach(item => {
@@ -3077,6 +3077,7 @@
                     <div class="CSPlus">
                         <span class="plusandText">
                             <a href="javascript:void(0)" class="formicon pt-0 me-2"> <i class="fa-solid fa-square-plus"></i> </a>
+                              <input type="hidden" name="products[${rowIndex}][type]" value="${type}">
                             <input type="hidden" name="products[${rowIndex}][id]" value="${item.id}">
                             <input type="text" class="form-control editInput input80" name="products[${rowIndex}][product_code]" value="${item.product_code}">
                         </span>
