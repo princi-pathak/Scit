@@ -570,6 +570,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quotes/getActiveRejectType', 'getActiveRejectType')->name('quote.ajax.getActiveRejectType');
 		Route::post('/quotes/saveQuoteRejectReasonsType', 'saveQuoteRejectReasonsType')->name('quote.ajax.saveQuoteRejectReasonsType');
 		Route::get('/quote/rejected', 'index');
+		Route::post('/quotes/saveQuoteDeposite', 'saveQuoteDeposite')->name('quote.ajax.saveQuoteDeposite');
+		
 		
 		
 	});
