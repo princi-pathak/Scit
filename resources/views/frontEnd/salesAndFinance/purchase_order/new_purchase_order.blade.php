@@ -148,7 +148,7 @@ ul#purchase_qoute_refList {
                                                 <div class="col-sm-3">
                                                     <select class="form-control editInput selectOptions" id="purchase_telephone_code" name="telephone_code">
                                                         @foreach($country as $Codeval)
-                                                        <option value="{{$Codeval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->telephone_code == $Codeval->id){echo 'selcted';}?>>+{{$Codeval->code}}</option>
+                                                        <option value="{{$Codeval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->telephone_code == $Codeval->id){echo 'selcted';}else if($Codeval->id == 230){echo 'selected';}?>>+{{$Codeval->code}} - {{$Codeval->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -162,7 +162,7 @@ ul#purchase_qoute_refList {
                                                 <div class="col-sm-3">
                                                     <select class="form-control editInput selectOptions" id="purchase_mobile_code" name="mobile_code">
                                                     @foreach($country as $Codeval)
-                                                        <option value="{{$Codeval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->mobile_code == $Codeval->id){echo 'selcted';}?>>+{{$Codeval->code}}</option>
+                                                        <option value="{{$Codeval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->mobile_code == $Codeval->id){echo 'selcted';}else if($Codeval->id == 230){echo 'selected';}?>>+{{$Codeval->code}} - {{$Codeval->name}}</option>
                                                     @endforeach
                                                     </select>
                                                 </div>
@@ -221,6 +221,7 @@ ul#purchase_qoute_refList {
                                                 <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions get_site_result" id="purchase_site_id" name="site_id" <?php if(!isset($purchase_orders) && $purchase_orders ==''){echo 'disabled'; }?>>
                                                     <option selected disabled value="">None</option>
+                                                    <option <?php if(isset($purchase_orders) && $purchase_orders->site_id == 0){echo 'selected';}?> value="0">Same as customer</option>
                                                     @foreach($site as $siteVal)
                                                         <option value="{{$siteVal->id}}" <?php if(isset($purchase_orders) && $purchase_orders->site_id == $siteVal->id){echo 'selected';}?>>{{$siteVal->site_name}}</option>
                                                     @endforeach
@@ -463,7 +464,7 @@ ul#purchase_qoute_refList {
                                             <div class="plusandText">
                                                 <a href="javascript:void(0)" class="formicon" onclick="get_modal(7)"><i class="fa-solid fa-square-plus"></i>
                                                 </a>
-                                                <span class="afterPlusText"> (Type to view product or <a href="Javascript:void(0)" onclick="openProductListModal();">Click
+                                                <span class="afterPlusText"> (Type to view product or <a href="Javascript:void(0)" onclick="openProductmodal();">Click
                                                         here</a> to view all assets)</span>
                                             </div>
                                         </div>
@@ -587,17 +588,20 @@ ul#purchase_qoute_refList {
                                 <div class="row">
                                     <div class="col-sm-12 mb-3 mt-2">
                                         <div class="jobsection">
-                                            <a href="javascript:void(0)" class="profileDrop @if(!isset($key) || $key == '') disabled-tab @endif" @if(!isset($key) || $key == '') disabled @else  onclick="get_modal(10)" @endif>New Attachment</a>
+                                            <a href="javascript:void(0)" class="profileDrop" onclick="get_modal(10)">New Attachment</a>
+                                            @if(isset($key) && $key != '')
                                             <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete Attachment(s)</a>
+                                            @endif
                                         </div>
                                     </div>
+                                    @if(isset($key) && $key != '')
                                     <div class="col-sm-12">
                                         <div class="productDetailTable">
                                             <table class="table">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll"> <label for="selectAll"></label></th>
-                                                        <th>#</th>
+                                                      
                                                         <th>Type</th>
                                                         <th>Title</th>
                                                         <th>Description</th>
@@ -613,7 +617,7 @@ ul#purchase_qoute_refList {
                                             <div id="pagination-controls-Attachments"></div>
                                         </div>
                                     </div>
-                                    
+                                    @endif
                                 </div>
                             </div>
 
@@ -837,16 +841,72 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 _token: token
             },
             success: function(response) {
-                // console.log(response);
+                console.log(response);
+                const data=response.data;
                 $('#purchase_contact_id').removeAttr('disabled');
                 var contactSelect=document.getElementById("purchase_contact_id");
+                $("#purchase_name").val(data.contact_name);
+                $("#purchase_address").val(data.address);
+                $("#purchase_city").val(data.city);
+                $("#purchase_county").val(data.county);
+                $("#purchase_postcode").val(data.postcode);
+                $("#purchase_telephone").val(data.telephone);
+                $("#purchase_mobile").val(data.mobile);
+                $("#purchase_email").val(data.email);
+                
+                $.ajax({
+                    url: '{{ route("ajax.getCountriesList") }}',
+                    method: 'GET',
+                    success: function(response1) {
+                        console.log(response1.Data);
+                        const selectElement=$("#purchase_telephone_code")[0];
+                        const selectElement1=$("#purchase_mobile_code")[0];
+                        selectElement.innerHTML = '';
+                        selectElement1.innerHTML = '';
+                        const defaultOptionTelephone = document.createElement("option");
+                        const defaultOptionMobile = document.createElement("option");
+                        // defaultOptionTelephone.value = "0";
+                        defaultOptionTelephone.text = "Please Select";
+                        defaultOptionTelephone.disabled = true;
+                        defaultOptionTelephone.selected = true;
+                        selectElement.appendChild(defaultOptionTelephone);
+
+                        // defaultOptionMobile.value = "0";
+                        defaultOptionMobile.text = "Please Select";
+                        defaultOptionMobile.disabled = true;
+                        defaultOptionMobile.selected = true;
+                        selectElement1.appendChild(defaultOptionMobile);
+
+                        response1.Data.forEach(user => {
+                            const option1 = document.createElement('option');
+                            option1.value = user.id;
+                            option1.text =  user.name + " " + "(+" + user.code +")";
+                            selectElement.appendChild(option1);
+                        });
+                        response1.Data.forEach(user1 => {
+                            const option1 = document.createElement('option');
+                            option1.value = user1.id;
+                            option1.text =  user1.name + " " + "(+" + user1.code +")";
+                            selectElement1.appendChild(option1);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
                 $("#contact_customer_id").val(response.data.id);
                 $("#contact_customer_name").text(response.data.name);
                 $("#task_supplier_id").val(response.data.id);
                 $(".customer_name").text(response.data.name);
                 const all_contact=response.data.contacts;
+                contactSelect.innerHTML='';
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "0";
+                defaultOption.text = "Default";
+                defaultOption.disabled = false;
+                defaultOption.selected = false;
+                contactSelect.appendChild(defaultOption);
                 if (all_contact && all_contact.length > 0) {
-                    contactSelect.innerHTML='';
                     all_contact.forEach((cont) => {
                         const option = document.createElement("option");
                         option.value = cont.id;
@@ -871,13 +931,13 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 _token: token
             },
             success: function(data) {
-                // console.log(data);
+                console.log(data);
                 $('#purchase_project_id').removeAttr('disabled');
                 $('#purchase_site_id').removeAttr('disabled');
                 if (data.customers && data.customers.length > 0) {
                 var customerData = data.customers[0];
                 // Populate project options
-                var project = '<option value="0" selected disabled>Select Project</option>';
+                var project = '<option value="0" selected disabled>None</option>';
                 if (customerData.customer_project && Array.isArray(customerData.customer_project)) {
                     for (let i = 0; i < customerData.customer_project.length; i++) {
                         project += '<option value="' + customerData.customer_project[i].id + '">' + customerData.customer_project[i].project_name + '</option>';
@@ -886,14 +946,15 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 document.getElementById('purchase_project_id').innerHTML = project;
 
                 // Populate site options
-                var site = '<option value="" disabled selected>Select Site</option>';
+                var site = '<option value="0">Same as customer</option>';
                 if (customerData.sites && Array.isArray(customerData.sites)) {
                     for (let i = 0; i < customerData.sites.length; i++) {
                         site += '<option value="' + customerData.sites[i].id + '">' + customerData.sites[i].site_name + '</option>';
                     }
                 }
                 document.getElementById('purchase_site_id').innerHTML = site;
-
+                $("#project_customer_name").text(customerData.name);
+                $("#site_customer_name").text(customerData.name);
                 // Enable the relevant fields
                 $('#purchase_project_id').removeAttr('disabled');
                 $('#purchase_site_id').removeAttr('disabled');
@@ -912,7 +973,8 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
         var purchase_ref='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->purchase_order_ref;}?>'
         var po_id='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>'
         var supplier_select_check=$("#purchase_supplier_id").val();
-        var modal_array=[1,2,7];
+        var modal_array=[1,7];
+        var customer_id=$("#purchase_customer_id").val();
         if(supplier_select_check == null && modal_array.includes(modal)){
             alert("Please select Supplier");
             return false;
@@ -923,13 +985,14 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 $('#contactModalLabel').text("Add Supplier Contact");
                 $('#contactLabel').text("Supplier");
                 $('#userType').val(2);
+                $("#contact_billing_radio").hide();
                 $("#contact_modal").modal('show');
                 
             }else if(modal == 2){
                 $("#AddCustomerModal")[0].reset();
+                $("#job_title_plusIcon").hide();
                 $("#customerPop").modal('show');
             }else if(modal == 3){
-                var customer_id=$("#purchase_customer_id").val();
                 if(customer_id =='' || customer_id == null){
                     $("#HideShowFieldText").hide();
                     $("#HideShowFieldSelect").show();
@@ -940,8 +1003,13 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 $("#project_form")[0].reset();
                 $("#project_modal").modal('show');
             }else if(modal == 4){
-                $("#site_form")[0].reset();
-                $("#site_modal").modal('show');
+                if(customer_id =='' || customer_id == null){
+                    alert("Please select Customer");
+                    return false;
+                }else{
+                    $("#site_form")[0].reset();
+                    $("#site_modal").modal('show');
+                }
             }else if(modal == 5){
                 $("#department_form_data")[0].reset();
                 $("#departmentPop").modal('show');
@@ -951,10 +1019,16 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             }else if(modal == 7){
                 itemsAddProductModal(1);
             }else if(modal == 10){
-                $("#purchase_Attachmentform")[0].reset();
-                $("#Purchase_ref").val(purchase_ref);
-                $("#po_id").val(po_id);
-                $("#purchase_model").modal('show');
+                if(po_id == ''){
+                    if(confirm("Purchase order details should be saved before attaching any files. Do you want to save the purchase order now?")){
+                        save_all_data();
+                    }
+                }else{
+                    $("#purchase_Attachmentform")[0].reset();
+                    $("#Purchase_ref").val(purchase_ref);
+                    $("#po_id").val(po_id);
+                    $("#purchase_model").modal('show');
+                }
             }else if(modal == 11){
                 $("#newTaskform")[0].reset();
                 get_supplier_details();
@@ -972,6 +1046,15 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
     }
     function open_customer_type_modal(){
         $('#cutomer_type_modal').modal('show');
+    }
+    function openProductmodal(){
+        var supplier_select_check=$("#purchase_supplier_id").val();
+        if(supplier_select_check == null){
+            alert("Please select supplier first");
+            return false;
+        }else{
+            openProductListModal();
+        }
     }
  </script>
  <script>
@@ -1189,7 +1272,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 id: id, key:key, _token: token
             },
             success: function(data) {
-                // console.log(data);
+                // console.log(data);return false;
                 const tableBody = document.querySelector(`#result tbody`);
         
                 if (data.length === 0) {
@@ -1237,7 +1320,12 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         row.appendChild(nameCell);
 
                         const codeCell = document.createElement('td');
-                        codeCell.textContent = data.product_detail.product_code;
+                        // codeCell.textContent = data.product_detail.product_code;
+                        const inputCode = document.createElement('input');
+                        inputCode.className = 'product_code';
+                        inputCode.name = 'product_code[]';
+                        inputCode.value = '';
+                        codeCell.appendChild(inputCode);
                         row.appendChild(codeCell);
 
                         const hiddenInput = document.createElement('input');
@@ -1251,7 +1339,8 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const inputDescription = document.createElement('textarea');
                         inputDescription.className = 'description';
                         inputDescription.name = 'description[]';
-                        inputDescription.value = data.product_detail.description;
+                        // inputDescription.value = data.product_detail.description;
+                        inputDescription.value = '';
                         descriptionCell.appendChild(inputDescription);
                         row.appendChild(descriptionCell);
 
@@ -1315,12 +1404,19 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const optVat = document.createElement('option');
                         optVat.value = optionVat.id;
                         if(optionVat.id == data.product_detail.tax_rate){
+                            alert()
                             tax_rate=optionVat.tax_rate;
                             optVat.setAttribute("selected", "selected");
                         }
                         optVat.textContent = optionVat.name;
                         selectDropdownVat.appendChild(optVat);
                         });
+                        const inputVatRate = document.createElement('input');
+                        inputVatRate.type = 'hidden';
+                        inputVatRate.className = 'vat_ratePercentage';
+                        inputVatRate.name = 'vat_ratePercentage[]'; 
+                        inputVatRate.value = tax_rate;
+                        dropdownVat.appendChild(inputVatRate);
                         dropdownVat.appendChild(selectDropdownVat);
                         row.appendChild(dropdownVat);
 
@@ -1328,6 +1424,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const inputVat = document.createElement('input');
                         inputVat.type = 'text';
                         inputVat.className = 'vat';
+                        inputVat.setAttribute('disabled','disabled');
                         inputVat.addEventListener('input', function() {
                             updateAmount(row);
                         });
@@ -1417,7 +1514,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
     });
 
     function updateAmount(row) {
-        // console.log(row)
+        console.log(row)
         // const priceInput = row.querySelector('.price');
         const priceInput = row.querySelector('.product_price');
         const qtyInput = row.querySelector('.qty');
@@ -1426,6 +1523,11 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
         const qty = parseInt(qtyInput.value) || 1;
         const amount = price * qty;
         amountCell.textContent = '£'+amount.toFixed(2);
+        const vat_ratePercentage = row.querySelector('.vat_ratePercentage').value;
+        const vat = row.querySelector('.vat');
+        const percentage=amount*vat_ratePercentage/100;
+        // alert(percentage)
+        vat.value=percentage.toFixed(2);
 
         var calculation=0;
         $('.price').each(function () {
@@ -1456,13 +1558,14 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             url: "{{url('/vat_tax_details')}}",
             data: {vat_id:vat_id,_token:token},
             success: function(response) {
-                // console.log(response);
+                console.log(response);
                 if(response){
                     const vat_value=Number(response.data);
-                    var td=row.querySelector('td:nth-last-child(4)');
-                    var input = td.querySelector('.vat');
-                    // console.log(typeof(vat_value));
-                    input.value = vat_value.toFixed(2) || 0;
+                    const vat_ratePercentage = row.querySelector('.vat_ratePercentage').value=vat_value;
+                    // var td=row.querySelector('td:nth-last-child(4)');
+                    // var input = td.querySelector('.vat');
+                    // // console.log(typeof(vat_value));
+                    // input.value = vat_value.toFixed(2) || 0;
                     updateAmount(row);
                 }else{
                     alert("Something went wrong");
@@ -1570,7 +1673,6 @@ $('#search-product').on('keyup', function() {
                 // console.log(attachments);
                 const tbody = $('#attachments_result');
                 tbody.empty();
-                var attachmentCount=1;
                 attachments.forEach(attachment => {
                     const attachmentType = attachment.attachment_type?.title || ''; 
                     const title = attachment.title || ''; 
@@ -1585,9 +1687,8 @@ $('#search-product').on('keyup', function() {
                     tbody.append(`
                         <tr>
                             <td><input type="checkbox" id="" class="delete_checkbox" value="`+attachment.id+`"></td>
-                            <td>${attachmentCount}</td>
                             <td>${attachmentType}</td>
-                            <td>${title}</td>
+                            <td><input type="hidden" name="purchaseattachment_id[]" value="${attachment.id}"><input type="text" name="purchaseattachment_title[]" value="${title}"></td>
                             <td>${description}</td>
                             <td>${section}</td>
                             <td>${fileName}</td>
@@ -1596,7 +1697,6 @@ $('#search-product').on('keyup', function() {
                             <td><a href="`+imag_url+`" target="_blank"><i class="fa fa-eye"></i></a> &emsp; <img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="attachment_delete image_style" data-delete=`+attachment.id+`></td>
                         </tr>
                     `);
-                    attachmentCount++;
                 });
                 var paginationControlsAttachment = $("#pagination-controls-Attachments");
                 paginationControlsAttachment.empty();
@@ -1672,7 +1772,12 @@ $('#search-product').on('keyup', function() {
                         row.appendChild(nameCell);
 
                         const codeCell = document.createElement('td');
-                        codeCell.textContent = data.purchase_order_products_detail.product_code;
+                        // codeCell.textContent = data.purchase_order_products_detail.product_code;
+                        const inputCode = document.createElement('input');
+                        inputCode.className = 'product_code';
+                        inputCode.name = 'product_code[]';
+                        inputCode.value = product.code;
+                        codeCell.appendChild(inputCode);
                         row.appendChild(codeCell);
 
                         const hiddenInput = document.createElement('input');
