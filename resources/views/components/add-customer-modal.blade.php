@@ -1,3 +1,10 @@
+<style>
+    .tag_box{
+        background: #f5f5f5;
+        display: grid;
+        border: 1px solid #dee2e6;
+    }
+</style>
 <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content add_Customer">
@@ -56,7 +63,7 @@
                                             <?php }?>
                                         </select>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-2" id="job_title_plusIcon">
                                         <a href="javascript:void(0)" class="formicon" onclick="openjobTitleModal('customer_job_titile_id')">
                                             <i class="fa-solid fa-square-plus"></i>
                                         </a>
@@ -76,7 +83,7 @@
                                         <select class="form-control editInput selectOptions" id="customer_telephone_country_code" name="telephone_country_code">
                                             <option selected disabled>Please Select</option>
                                             @foreach($country as $custteleCode)
-                                                <option value="{{$custteleCode->id}}" >+{{$custteleCode->code}}</option>
+                                                <option value="{{$custteleCode->id}}" <?php if($custteleCode->id == 230){echo 'selected';}?>>+{{$custteleCode->code}} - {{$custteleCode->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -92,7 +99,7 @@
                                         <select class="form-control editInput selectOptions" id="customer_mobile_country_code" name="mobile_country_code">
                                             <option selected disabled>Please Select</option>
                                             @foreach($country as $custmobCode)
-                                                <option value="{{$custmobCode->id}}" >+{{$custmobCode->code}}</option>
+                                                <option value="{{$custmobCode->id}}" <?php if($custmobCode->id == 230){echo 'selected';}?>>+{{$custmobCode->code}} - {{$custmobCode->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -110,7 +117,12 @@
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputCity" class="col-sm-3 col-form-label">Website</label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-2">
+                                        <div class="tag_box text-center">
+                                            <span style="padding:3px">http://</span> 
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
                                         <input type="text" class="form-control editInput textareaInput" placeholder="Enter Customer Website" id="customer_website" name="website">
                                     </div>
                                 </div>
@@ -146,7 +158,12 @@
 
                                 <div class="mb-2 row">
                                     <label for="inputCounty" class="col-sm-3 col-form-label">Credit Limit</label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-1">
+                                        <div class="tag_box text-center">
+                                            <span style="padding:3px">£</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control editInput textareaInput" placeholder="Enter Credit Limit" id="customer_credit_limit" name="credit_limit" oninput="customervalidateDecimal(this)">
                                     </div>
                                 </div>

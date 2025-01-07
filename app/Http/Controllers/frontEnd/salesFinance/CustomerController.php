@@ -100,6 +100,7 @@ class CustomerController extends Controller
     }
     public function default_address(Request $request)
     {
+        // echo "<pre>";print_r($request->all());die;
         // return $customer_id=$request->customer_id;
 
         $country = Country::all_country_list();
@@ -115,7 +116,7 @@ class CustomerController extends Controller
         if(!$address_details){
             return response()->json(['error'=>"something went wrong"]);
         }
-        
+        // echo $country_code;die;
         $result = '';
         if ($request->check == 1) {
             $result .= '<option value="" selected disabled>None</option>';
@@ -123,12 +124,13 @@ class CustomerController extends Controller
                 $select = ($country_codev->id == $country_code) ? "selected" : "";
                 $result .= '<option value="' . $country_codev->code . '" ' . $select . '>' . $country_codev->name . ' (' . $country_codev->code . ')</option>';
             }
-        } else {
-            $result .= '<option value="" selected disabled>None</option>';
-            foreach ($country as $country_codev) {
-                $result .= '<option value="' . $country_codev->code . '">' . $country_codev->name . ' (' . $country_codev->code . ')</option>';
-            }
-        }
+        } 
+        // else {
+        //     $result .= '<option value="" selected disabled>None</option>';
+        //     foreach ($country as $country_codev) {
+        //         $result .= '<option value="' . $country_codev->code . '">' . $country_codev->name . ' (' . $country_codev->code . ')</option>';
+        //     }
+        // }
         $data['reslut'] = $result;
         $data['details'] = $address_details;
         return response()->json($data);
