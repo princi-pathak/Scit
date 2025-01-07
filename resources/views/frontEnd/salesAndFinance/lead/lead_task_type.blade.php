@@ -133,7 +133,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="profileDrop" id="saveChanges">Save</button>
                 <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
             </div>

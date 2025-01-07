@@ -106,23 +106,23 @@
     <div class="modal-dialog">
         <div class="modal-content add_Customer">
             <div class="modal-header terques-bg">
-                <button aria-hidden="true" data-bs-dismiss="modal" class="close" type="button">×</button>
                 <h5 class="modal-title pupTitle">Quote Reject Type - Add</h5>
+                <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button"></button>
             </div>
             <div class="modal-body">
                 <form role="form" id="quote_reject_type_form">
                     @csrf
                     <div><span id="error-message" class="error"></span></div>
                     <div class="row form-group">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Quote Reject Type <span class="radStar ">*</span></label>
-                        <div class="col-md-9">
+                        <label class="col-lg-4 col-sm-4 col-form-label">Quote Reject Type <span class="radStar ">*</span></label>
+                        <div class="col-md-8">
                             <input type="hidden" name="quote_reject_type_id" id="quote_reject_type_id">
                             <input type="text" name="title" class="form-control editInput " placeholder="Quote Reject Type" id="title">
                         </div>
                     </div>
                     <div class="row form-group mt-3">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
-                        <div class="col-md-9">
+                        <label class="col-lg-4 col-sm-4 col-form-label">Status</label>
+                        <div class="col-md-8">
                             <select name="status" id="modale_status" class="form-control editInput">
                                 <option value="1">Active</option>
                                 <option value="0">InActive</option>
@@ -131,7 +131,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="btn profileDrop" id="saveChanges">Save</button>
                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
             </div>
