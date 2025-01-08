@@ -403,6 +403,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/searchProject','searchProject');
 		Route::post('/searchPurchase_qoute_ref','searchPurchase_qoute_ref');
 		Route::post('/searchPurchase_job_ref','searchPurchase_job_ref');
+		Route::post('/purchase_order_approve','purchase_order_approve');
 	});
 	
 	// Forontend Customer Controller

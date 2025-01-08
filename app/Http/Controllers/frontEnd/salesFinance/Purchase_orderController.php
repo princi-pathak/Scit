@@ -70,12 +70,13 @@ class Purchase_orderController extends Controller
         
     }
     public function purchase_order(Request $request){
-        // echo "<pre>";print_r(Auth::user());die;
+        // echo "<pre>";print_r($request->all());die;
         $home_id = Auth::user()->home_id;
         $user_id=Auth::user()->id;
         $home_table=Home::find($home_id);
         $data['company_name']=Admin::find($home_table->admin_id)->company;
-        $key=base64_decode($request->key);
+        $key=base64_decode($request->key) ?: base64_decode($request->duplicate);
+        $data['duplicate']=base64_decode($request->duplicate);
         $data['key']=$key;
         $purchase_orders=PurchaseOrder::find($key);
         $site=array();
@@ -179,7 +180,8 @@ class Purchase_orderController extends Controller
     public function getPurchaesOrderProductDetail(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $home_id=Auth::user()->home_id;
-        $purchase_order_products = PurchaseOrder::with(['purchaseOrderProducts'])->where(['id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
+        // $purchase_order_products = PurchaseOrder::with(['purchaseOrderProducts'])->where(['id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
+        $purchase_order_products = PurchaseOrder::with(['purchaseOrderProducts'])->where(['id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->get();
         // return $purchase_order_products;
         $tax=Product::tax_detail($home_id);
         $all_job=Job::getAllJob($home_id)->where('status',1)->get();
@@ -205,14 +207,14 @@ class Purchase_orderController extends Controller
         // return $data_array;
         return response()->json([
             'success' => true, 'data' => $data_array, 
-            'pagination' => [
-                    'total' => $purchase_order_products->total(),
-                    'current_page' => $purchase_order_products->currentPage(),
-                    'last_page' => $purchase_order_products->lastPage(),
-                    'per_page' => $purchase_order_products->perPage(),
-                    'next_page_url' => $purchase_order_products->nextPageUrl(),
-                    'prev_page_url' => $purchase_order_products->previousPageUrl(),
-                ]
+            // 'pagination' => [
+            //         'total' => $purchase_order_products->total(),
+            //         'current_page' => $purchase_order_products->currentPage(),
+            //         'last_page' => $purchase_order_products->lastPage(),
+            //         'per_page' => $purchase_order_products->perPage(),
+            //         'next_page_url' => $purchase_order_products->nextPageUrl(),
+            //         'prev_page_url' => $purchase_order_products->previousPageUrl(),
+            //     ]
         ]);
     }
     public function vat_tax_details(Request $request){
@@ -305,7 +307,8 @@ class Purchase_orderController extends Controller
     }
     public function getAllAttachmens(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $purchase_orders = PurchaseOrder::with(['poAttachments.attachmentType'])->where(['id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
+        // $purchase_orders = PurchaseOrder::with(['poAttachments.attachmentType'])->where(['id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
+        $purchase_orders = PoAttachment::with(['attachmentType'])->where(['po_id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
 
         return response()->json([
             'success' => true, 'data' => $purchase_orders, 
@@ -435,6 +438,7 @@ class Purchase_orderController extends Controller
         ]);
     }
     public function draft_purchase_order(Request $request){
+        $home_id=Auth::user()->home_id;
         $lastSegment = $request->list_mode;
         $segment_check=$this->check_segment_purchaseOrder($lastSegment);
         // echo "<pre>"; print_r($segment_check);die;
@@ -446,6 +450,9 @@ class Purchase_orderController extends Controller
         $data['rejectedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>8])->count();
         $data['actionedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>4])->count();
         $data['paidCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>5])->count();
+        $data['customer_data'] = Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
+        $data['users'] = User::where('home_id', $home_id)->select('id', 'name','email','phone_no')->where('is_deleted', 0)->get();
+        // echo "<pre>";print_r($data['users']);die;
         return view('frontEnd.salesAndFinance.purchase_order.purchase_order_list',$data);
     }
     private function check_segment_purchaseOrder($lastSegment=null){
@@ -692,5 +699,8 @@ class Purchase_orderController extends Controller
             ->get();
 
         return response()->json(['data' => $QuoteSearchData]);
+    }
+    public function purchase_order_approve(Request $request){
+        echo "<pre>";print_r($request->all());die;
     }
 }

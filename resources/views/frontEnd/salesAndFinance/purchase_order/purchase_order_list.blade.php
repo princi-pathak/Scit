@@ -368,9 +368,9 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Preview</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Duplicate</a>
+                                                    <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Approve</a>
+                                                    <a href="javascript:void(0)" onclick="openApproveModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Approve</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">CRM / History</a>
                                                     <hr class="dropdown-divider">
@@ -404,7 +404,81 @@ ul#projectList {
         </div>
 </section>
 <!-- Models Start Here -->
+<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerModalLabel">Authorise Purchase Order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <div class="text-center mt-3" id="message_approveModal" style="display:none"></div>
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="formDtail">
+                            <form id="approveForm" class="customerForm pt-0">
+                                @csrf
+                                <input type="hidden" name="id" id="id">
+                                <div class="row">
+                                    <label for="inputName" class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-form-label">Would you like to notify anyone that this purchase order '<span id="purchaseOrderRef"></span>' has been approved?</label>
+                                </div>
+                                <div class="mb-2 row">
+                                <label for="inputName" class="col-md-3 col-lg-3 col-xl-3 col-sm-3 col-form-label">Notify?</label>
+                                    <div class="col-sm-9">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="radio" id="radioNo" value="0" checked="">
+                                            <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="radio" value="1" id="radioYes">
+                                            <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
+                                        </div>
+                                        <input type="hidden" id="notify" name="notify" value="0">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-2 row notificationHideShow" style="display:none">
+                                    <label for="inputProject"
+                                        class="col-sm-3 col-form-label">Notify Who?</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control editInput selectOptions" id="notifywhoUser" name="user_id">
+                                            <option value=""></option>
+                                            <option value="{{Auth::user()->id}}">Me - {{Auth::user()->email}} / {{Auth::user()->phone_no ?? 'No Mobile'}}</option>
+                                            @foreach($users as $value)
+                                            @if($value->id != Auth::user()->id)
+                                            <option value="{{ $value->id }}">{{ $value->name }} - {{$value->email}} / {{$value->phone_no ?? 'No Mobile'}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row notificationHideShow" style="display:none">
+                                    <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                                    <div class="col-sm-9">
+                                        <label for="purchase_notify_who1" class="editInput">
+                                            <input type="checkbox" name="notification" id="purchase_notify_who1" value="1" checked=""> Notification (User Only)
+                                        </label>
+                                        <label for="purchase_notify_who2" class="editInput">
+                                            <input type="checkbox" name="sms" id="purchase_notify_who2" value="1"> SMS
+                                        </label>
+                                        <label for="purchase_notify_who3" class="editInput">
+                                            <input type="checkbox" name="email" id="purchase_notify_who3" value="1" checked=""> Email
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> <!-- End row -->
+            </div>
+            <div class="modal-footer customer_Form_Popup">
 
+                <button type="button" class="profileDrop" id="saveApproveModal" onclick="saveApproveModal()">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- End here -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
@@ -1051,5 +1125,57 @@ $('.delete_checkbox').on('click', function() {
         });
 
     });
+</script>
+<script>
+    function openApproveModal(id,po_ref){
+        $("#purchaseOrderRef").text(po_ref);
+        $("#approveModal").modal('show');
+    }
+    $('input[name="radio"]').on('change',function(){
+        if($(this).val() == 1){
+            $(".notificationHideShow").show();
+        }else{
+            $(".notificationHideShow").hide();
+        }
+        $("#notify").val($(this).val());
+        
+    });
+    function saveApproveModal(){
+        $.ajax({
+                type: "POST",
+                url: "{{url('/purchase_order_approve')}}",
+                data: new FormData($("#approveForm")[0]),
+                async: false,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);return false;
+                if(response.vali_error){
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
+                        return false;
+                    }else if(response.success === true){
+                        $(window).scrollTop(0);
+                        $('#message_save').addClass('success-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#message_save').removeClass('success-message').text('').hide();
+                            var id = parseInt(response.data.id, 10) || 0;
+                            var encodedId = btoa(unescape(encodeURIComponent(id)));
+                            location.href = '<?php echo url('purchase_order_edit'); ?>?key=' + encodedId;
+                        }, 3000);
+                    }else if(response.success === false){
+                        $('#message_save').addClass('error-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#error-message').text('').fadeOut();
+                        }, 3000);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + error);
+                }
+            });
+    }
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
