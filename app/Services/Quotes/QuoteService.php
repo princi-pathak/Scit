@@ -313,16 +313,21 @@ class QuoteService
         return Quote::where('id', $quote_id)->update(['status' => $status]);
     }
 
-    public function saveQuoteRejectReasons($data){
-      
+    public function saveQuoteRejectReasons($data)
+    {
         $quoteRejectReason =  QuoteRejectReasons::updateOrCreate(['id' => $data['quote_reject_reason_id']], $data);
 
         $this->updateQuoteStatus($data['quote_id'], 'Rejected');
         return $quoteRejectReason;
     }
 
-    public function saveQuoteCredit($data){
+    public function saveQuoteCredit($data)
+    {
         return QuoteCustomerDeposit::updateOrCreate(['id' => $data['quote_deposit_id']], $data);
+    }
+
+    public function getDepositeData($data){
+       return QuoteCustomerDeposit::where('quote_id', $data->quote_id)->get();
     }
 }
  

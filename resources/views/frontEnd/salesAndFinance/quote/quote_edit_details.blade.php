@@ -968,48 +968,7 @@
                         </div>
                         <!-- End  off newJobForm -->
 
-                        <!-- End off View Product -->
-                        <div class="newJobForm mt-4">
-                            <label class="upperlineTitle">Extra Information</label>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="">
-                                        <h4 class="contTitle text-start">Description</h4>
-                                        <div class="mt-3">
-                                            <textarea cols="40" rows="5" name="extra_information" id="textarea8">{{ $quoteData['extra_information'] }} </textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="">
-                                        <h4 class="contTitle text-start">Customer Notes</h4>
-                                        <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea9" name="customer_notes"> {{ $quoteData['customer_notes'] }}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="pt-3">
-                                        <h4 class="contTitle text-start">Terms</h4>
-                                        <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea10" name="tearms"> {{ $quoteData['tearms'] }}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="pt-3">
-                                        <h4 class="contTitle text-start">Internal Notes</h4>
-                                        <div class="mt-3">
-                                            <textarea cols="40" rows="5" id="textarea11" name="internal_notes">{{ $quoteData['internal_notes'] }} </textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End  off newJobForm -->
-
-                    <!--  -->
+                        <!--  -->
                     <div id="hideDepositSection">
                         <!-- ***************************************Start deposit Details****************************************** -->
                         <div class="newJobForm mt-4">
@@ -1155,36 +1114,43 @@
                             <!-- ************************ -->
 
                             <!-- *********************** -->
-                            <div class="modal fade" id="creaditDepositInvoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositInvoiceModalModalLabel" style="display: none;" aria-hidden="true">
+                            <div class="modal fade" id="creaditDepositInvoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none;" aria-labelledby="creaditDepositInvoiceModalModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content add_Customer">
                                         <div class="modal-header">
-                                            <h5 class="modal-title fs-5" id="creaditDepositInvoiceModalModalLabel">Creadit Deposit Invoice</h5>
+                                            <h5 class="modal-title fs-5" id="creaditDepositInvoiceModalModalLabel">Create Deposit Invoice</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
+                                        @php
+                                        use Carbon\Carbon;
+
+                                        $today = Carbon::now(); // Get today's date
+                                        $dateAfter21Days = $today->addDays(21); // Add 21 days to today's date
+                                        @endphp
                                         <div class="modal-body ">
                                             <div class="contantbodypopup p-0">
                                                 <div class="newJobForm card">
                                                     <div class="mb-2 row">
                                                         <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
                                                         <div class="col-sm-5">
-                                                            <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                            <input type="text" class="form-control editInput" id="invoice_date" value="{{ now()->format('d/m/Y') }}">
                                                         </div>
                                                         <div class="col-sm-1 ps-0">
                                                             <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
                                                         </div>
                                                     </div>
+
                                                     <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">Due Date<span class="radStar">*</span></label>
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Due Date <span class="radStar">*</span></label>
                                                         <div class="col-sm-5">
-                                                            <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                            <input type="text" class="form-control editInput" id="inputCity" value="{{ $dateAfter21Days->format('d/m/Y') }}">
                                                         </div>
                                                         <div class="col-sm-1 ps-0">
                                                             <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Line Item</label>
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Line Item <span class="radStar">*</span></label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput" id="inputName" placeholder="Line Item">
                                                         </div>
@@ -1196,40 +1162,36 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
-                                                            <span class="radStar">*</span></label>
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Percentage <span class="radStar">*</span></label>
                                                         <div class="col-sm-5">
-                                                            <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                            <input type="number" class="form-control editInput" id="deposit_percentage_invoice" min="0" max="100" maxlength="3" oninput="this.value = this.value.slice(0, 3)" value="0">
                                                         </div>
                                                         <div class="col-sm-2 ps-0">
-                                                            <input class="form-control editInput text-center" value="% of $.00" disabled="">
+                                                            <input class="form-control editInput text-center" value="" id="setDepositAmount" disabled="">
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">Sub Totel <span class="radStar">*</span></label>
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Sub Total <span class="radStar">*</span></label>
                                                         <div class="col-sm-1 pe-0">
-                                                            <input class="form-control editInput text-center" value="$" disabled="">
+                                                            <input class="form-control editInput text-center" value="$"  disabled="">
                                                         </div>
                                                         <div class="col-sm-4">
-                                                            <input type="text" class="form-control editInput" id="inputCity" value="0.00">
+                                                            <input type="text" class="form-control editInput" id="sub_total_invoice" value="0.00">
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
                                                         <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
                                                         <div class="col-sm-9">
-                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                            <select class="form-control editInput selectOptions" id="getTaxRateValue">
                                                                 <option>-Please Select-</option>
-                                                                <option>Customer-2</option>
-                                                                <option>Customer-3</option>
-                                                                <option>Customer-4</option>
                                                             </select>
                                                         </div>
                                                     </div>
 
                                                     <div class="mb-2 row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Totel (inc. VAT)</label>
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT) <span class="radStar">*</span></label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
+                                                            <input type="text" class="form-control-plaintext editInput" id="setDepositInvoiceAmount" value="$0.00" readonly="">
                                                         </div>
                                                     </div>
 
@@ -1258,7 +1220,7 @@
                             <div class="col-sm-12">
                                 <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
                                 <div class="productDetailTable">
-                                    <table class="table" id="containerA">
+                                    <table class="table" id="depositData">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Deposit Date </th>
@@ -1268,14 +1230,11 @@
                                                 <th>Created On </th>
                                                 <th>Deposit Amount </th>
                                                 <th>Refunded</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td colspan="7">
-                                                    <label class="red_sorryText">Sorry, no records to show</label>
-                                                </td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -1308,6 +1267,49 @@
                         </div>
                     </div>
                     <!-- **************************************End of deposit Details****************************************** -->
+
+                        <!-- End off View Product -->
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Extra Information</label>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="">
+                                        <h4 class="contTitle text-start">Description</h4>
+                                        <div class="mt-3">
+                                            <textarea cols="40" rows="5" name="extra_information" id="textarea8">{{ $quoteData['extra_information'] }} </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="">
+                                        <h4 class="contTitle text-start">Customer Notes</h4>
+                                        <div class="mt-3">
+                                            <textarea cols="40" rows="5" id="textarea9" name="customer_notes"> {{ $quoteData['customer_notes'] }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="pt-3">
+                                        <h4 class="contTitle text-start">Terms</h4>
+                                        <div class="mt-3">
+                                            <textarea cols="40" rows="5" id="textarea10" name="tearms"> {{ $quoteData['tearms'] }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="pt-3">
+                                        <h4 class="contTitle text-start">Internal Notes</h4>
+                                        <div class="mt-3">
+                                            <textarea cols="40" rows="5" id="textarea11" name="internal_notes">{{ $quoteData['internal_notes'] }} </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End  off newJobForm -->
+
+                    
             </div>
             <!--  -->
             <div id="hideAttachmentTask">
@@ -2699,22 +2701,42 @@
 
         $('#deposit_percantage').on('input', function() {
             let percentage = parseInt($(this).val(), 10);
-         
+
             if (percentage > 100) {
                 document.getElementById('deposit_percantage').value = 100;
                 percentage = 100;
-            } 
+            }
             if (isNaN(percentage)) {
                 percentage = 0;
             }
             let outsatandingAmount = document.getElementById('setOustandingCreditAmount').value;
             outsatandingAmount = parseFloat(outsatandingAmount.replace("£", ""))
-            
-            console.log(outsatandingAmount);          
+
+            console.log(outsatandingAmount);
             console.log(percentage);
-            
+
             deposit_amount = (percentage / 100) * outsatandingAmount;
             document.getElementById('deposit_amount').value = deposit_amount.toFixed(2);
+        });
+
+        $('#deposit_percentage_invoice').on('input', function() {
+            let percentage = parseInt($(this).val(), 10);
+
+            if (percentage > 100) {
+                document.getElementById('deposit_percentage_invoice').value = 100;
+                percentage = 100;
+            }
+            if (isNaN(percentage)) {
+                percentage = 0;
+            }
+            let outsatandingAmount = document.getElementById('setDepositAmount').value;
+            outsatandingAmount = parseFloat(outsatandingAmount.replace("% of  £", ""))
+
+            console.log(outsatandingAmount);
+            console.log(percentage);
+
+            deposit_amount = (percentage / 100) * outsatandingAmount;
+            document.getElementById('sub_total_invoice').value = deposit_amount.toFixed(2);
         });
 
         $('#OpenAddCustomerContact').on('click', function() {
@@ -2777,22 +2799,22 @@
 
     });
 
-    function updateQuoteDepositTotal(){
+    function updateQuoteDepositTotal() {
         let percentage = $(this).val();
-            // Regex for non-alphanumeric validation
-            const nonAlphanumericRegex = /^[^a-zA-Z0-9]+$/;
+        // Regex for non-alphanumeric validation
+        const nonAlphanumericRegex = /^[^a-zA-Z0-9]+$/;
 
-            // Check for non-alphanumeric characters
-            if (!nonAlphanumericRegex.test(percentage)) {
-                percentage = 100;
-                return;
-            }
+        // Check for non-alphanumeric characters
+        if (!nonAlphanumericRegex.test(percentage)) {
+            percentage = 100;
+            return;
+        }
 
-            const numericValue = parseFloat(percentage);
-            if (!isNaN(numericValue) && numericValue > 100) {
-                percentage = 100;
-                return;
-            }
+        const numericValue = parseFloat(percentage);
+        if (!isNaN(numericValue) && numericValue > 100) {
+            percentage = 100;
+            return;
+        }
     }
 
     function saveFormData(formId, saveUrl, modalId, callback, callBackValue = null) {
@@ -2878,10 +2900,6 @@
             }
         });
     }
-
-    // $('#createDepositModelOpen').on('click', function() {
-
-    //     });
 
     function tableFootForProduct(tableName) {
         const table = document.querySelector(`#${tableName}`);
@@ -2981,7 +2999,8 @@
 
     function calculateRowsValue(table) {
         const rows = table.querySelectorAll('tbody tr');
-
+        const quote_id = document.getElementById('quote_id').value;
+        // getDepositData(quote_id);
         const markupOnPriceOrCostPrice = document.getElementById('markupOnPriceOrCostPrice').value;
         console.log(markupOnPriceOrCostPrice);
         let totalQuantity = 0;
@@ -3066,6 +3085,7 @@
         console.log("Total totalMargin: ", totalMargin);
 
         document.getElementById('footAmount').textContent = doller + price.toFixed(2);
+        document.getElementById('setDepositAmount').value = "% of  "+ doller + price.toFixed(2);
         document.getElementById('InputFootAmount').value = price.toFixed(2);
         document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
         document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
@@ -3092,7 +3112,7 @@
                 console.log("response.data", response.data);
                 if (Array.isArray(response.data)) {
                     // Iterate over all Account Code dropdowns and populate them
-                    document.querySelectorAll('#getTaxRate').forEach(dropdown => {
+                    document.querySelectorAll('.getTaxRate').forEach(dropdown => {
                         dropdown.innerHTML = ''; // Clear existing options
 
                         const optionInitial = document.createElement('option');
@@ -3119,6 +3139,12 @@
             }
         });
     }
+
+
+
+
+
+
 
     let isFooterAppended = false;
     let rowIndex = 0;
@@ -3185,7 +3211,7 @@
                 <td>
                     <div class="">
                         <input type="hidden" class="selectedTaxID">
-                        <select class="form-control editInput selectOptions vat" name="products[${rowIndex}][VAT]" id="getTaxRate">
+                        <select class="form-control editInput selectOptions vat getTaxRate" name="products[${rowIndex}][VAT]" id="getTaxRate">
                             <option>Please Select</option>
                         </select>
                     </div>
@@ -3223,7 +3249,6 @@
             if (tableBody) {
                 tableBody.appendChild(node);
 
-
                 attachRowEventListeners(node, table)
                 const closeButton = node.querySelector('.closeappend');
                 closeButton.addEventListener('click', function() {
@@ -3238,10 +3263,6 @@
         });
         calculateRowsValue(table);
     }
-
-    // function openTaskModal() {
-    //     $('#quote_task_modal').modal('show');
-    // }
 
     function getQuoteType(quoteType) {
         $.ajax({
@@ -3603,7 +3624,6 @@
         });
     }
 
-
     function setCustomerBillingData(id) {
         // alert(id)
         $.ajax({
@@ -3652,7 +3672,6 @@
         });
     }
 
-
     function selectPrevious(Select, previouslySelected) {
         // Loop through the options in the select field
         const options = Select.options;
@@ -3684,7 +3703,87 @@
         image.drawTo(imgcanvas);
     }
 
+    function getDepositData(quote_id) {
+        $.ajax({
+            url: '{{ route("quote.ajax.getDepositeData") }}',
+            method: 'POST',
+            data: {
+                quote_id: quote_id
+            },
+            success: function(response) {
+                console.log(response);
+                populateTable(response.data, document.querySelector('#depositData tbody'))
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
+    function populateTable(data, tableBody) {
+
+        tableBody.innerHTML = '';
+
+        if (data.length === 0) {
+            // Handle the case where there is no data
+            const errorRow = document.createElement('tr');
+            const errorCell = document.createElement('td');
+            errorCell.colSpan = 8; // Adjust this based on the number of columns in your table
+            errorCell.classList.add('red_sorryText');
+            errorCell.textContent = 'Sorry, no records to show ';
+            errorCell.style.textAlign = 'center'; // Optional: Center the text
+            errorRow.appendChild(errorCell);
+            tableBody.appendChild(errorRow);
+            return; // Exit the function
+        }
+        data.forEach(item => {
+            // Create a new row
+            const row = document.createElement('tr');
+
+            const depositDate = document.createElement('td');
+            depositDate.textContent = item.deposit_date;
+            row.appendChild(depositDate);
+
+            const mode_of_payment = document.createElement('td');
+            const icon = document.createElement('i');
+            icon.classList.add('fa', 'fa-money');
+            mode_of_payment.appendChild(icon);
+            mode_of_payment.textContent = item.payment_type;
+            row.appendChild(mode_of_payment);
+
+            const refrences = document.createElement('td');
+            refrences.innerHTML = item.reference;
+            row.appendChild(refrences);
+
+            const description = document.createElement('td');
+            description.innerHTML = item.description;
+            row.appendChild(description);
+
+            const created_on = document.createElement('td');
+            created_on.textContent = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+            row.appendChild(created_on);
+
+            const deposit_amount = document.createElement('td');
+            deposit_amount.textContent = '£' + item.amount;
+            row.appendChild(deposit_amount);
+
+            const refunded = document.createElement('td');
+            refunded.innerHTML = '-';
+            row.appendChild(refunded);
+
+            const idCell = document.createElement('td');
+            idCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="edit"><i class="fa fa-edit"></i></a> <i class="fa fa-times"></i>`;
+            row.appendChild(idCell);
+
+            // Append the row to the table body
+            tableBody.appendChild(row);
+        });
+    }
+
     $(document).ready(function() {
+
+        getDepositData(document.getElementById('quote_id').value);
         // Enable/disable "Delete Selected" button based on checkbox selection
         $(document).on("change", ".selectRow, #selectAll", function() {
             const anySelected = $(".selectRow:checked").length > 0;
@@ -3763,13 +3862,6 @@
             });
         }
 
-
-    });
-
-
-
-
-    $(document).ready(function() {
         const $prevButton = $("#prevTab");
         const $nextButton = $("#nextTab");
 
@@ -3823,7 +3915,43 @@
         $("#modalTabs .nav-link").on("shown.bs.tab", function() {
             updateButtons();
         });
+
+        $('#getTaxRateValue').on('click', function() {
+            $.ajax({
+                url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log("response.data", response.data);
+                    if (Array.isArray(response.data)) {
+                        // Iterate over all Account Code dropdowns and populate them
+                        const dropdown = document.getElementById('getTaxRateValue');
+                        dropdown.innerHTML = ''; // Clear existing options
+
+                        const optionInitial = document.createElement('option');
+                        optionInitial.textContent = "Please Select"; // Use appropriate key from your response
+                        optionInitial.value = 0;
+                        dropdown.appendChild(optionInitial);
+                        // Append new options
+                        response.data.forEach(code => {
+                            const option = document.createElement('option');
+                            option.value = code.id; // Use appropriate key from your response
+                            option.textContent = code.name; // Use appropriate key from your response
+                            dropdown.appendChild(option);
+                        });
+                    } else {
+                        console.error("Invalid response format");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+
     });
+
+
 
     $(document).ready(function() {
         const $prevButton = $("#prevTab");
@@ -3844,13 +3972,14 @@
             navigateTab(1);
         });
 
-        $cancelButton.click(function() {
-            $("#exampleModal").modal("hide"); // Close the modal
-        });
+        // $cancelButton.click(function() {
+        //     $("#exampleModal").modal("hide"); // Close the modal
+        // });
 
         $saveButton.click(function() {
+            const quote_id = document.getElementById('quote_id').value;
             var data = {
-                quote_id: document.getElementById('quote_id').value,
+                quote_id: quote_id,
                 customer_id: document.getElementById('setCustomerId').value,
                 deposit_percantage: document.getElementById('deposit_percantage').value,
                 amount: document.getElementById('deposit_amount').value,
@@ -3871,6 +4000,7 @@
                 success: function(response) {
                     alert(response.data);
                     $("#creaditDepositModal").modal("hide"); // Close the modal
+                    getDepositData(quote_id);
                 },
                 error: function() {
                     alert("An error occurred while deleting the rows.");
@@ -3878,11 +4008,12 @@
             });
         });
 
+
+
         function navigateTab(offset) {
             const $tabs = $("#modalTabs .nav-link");
             const $activeTab = $tabs.filter(".active");
             let currentIndex = $tabs.index($activeTab);
-
             let newIndex = currentIndex + offset;
 
             // Ensure the new index is within bounds
@@ -3902,7 +4033,6 @@
                 $prevButton.hide();
                 $nextButton.show();
                 $saveButton.hide();
-                // $cancelButton.hide();
                 $closeButton.show();
             }
 
@@ -3921,24 +4051,4 @@
             updateButtons();
         });
     });
-
-
-
-
-    // $('#next_button').click(function(e) {
-    //     var tab_id = $('ul.tabs .orange-tab.current').attr('data-tab');
-    //     var first = $('ul.tabs .orange-tab:first').attr('data-tab');
-
-    //     $current = $('ul.tabs div.orange-tab.current').removeClass('current').next();
-    //     $currentTabContent = $('#' + tab_id).removeClass('current').next();
-
-    //     if ($current.length) {
-    //         $current.addClass('current');
-    //         $currentTabContent.addClass('current');
-    //     } else {
-    //         $('ul.tabs div.orange-tab:first').addClass('current');
-    //         $("#" + first).addClass('current');
-    //     }
-
-    // });
 </script>

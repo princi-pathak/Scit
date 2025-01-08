@@ -77,18 +77,20 @@ class QuoteController extends Controller
         $data['rejectedCount'] = Quote::getRejectedCount(Auth::user()->home_id);
         $data['class'] = in_array($lastSegment, ['draft', 'accepted', 'actioned', 'rejected']) ? "page-btn-selected" : null;
         // dd($data);
-        if($lastSegment == "draft"){
+        if ($lastSegment == "draft") {
             $text = "Draft";
-        } elseif ($lastSegment == "accepted"){
+        } elseif ($lastSegment == "accepted") {
             $text = "Accepted";
         } elseif ($lastSegment == "actioned") {
             $text = "Actioned";
         } elseif ($lastSegment == "rejected") {
             $text = "Rejected";
-        } else { $text = ''; }
-            $data['text'] = $text;
-    
-        if($lastSegment == "rejected"){
+        } else {
+            $text = '';
+        }
+        $data['text'] = $text;
+
+        if ($lastSegment == "rejected") {
             return view('frontEnd.salesAndFinance.quote.rejected', $data);
         }
         return view('frontEnd.salesAndFinance.quote.draft', $data);
@@ -230,7 +232,7 @@ class QuoteController extends Controller
 
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 
@@ -257,7 +259,7 @@ class QuoteController extends Controller
 
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 
@@ -267,7 +269,7 @@ class QuoteController extends Controller
 
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 
@@ -277,7 +279,7 @@ class QuoteController extends Controller
 
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 
@@ -334,7 +336,7 @@ class QuoteController extends Controller
 
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
     public function details()
@@ -392,7 +394,7 @@ class QuoteController extends Controller
 
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 
@@ -488,7 +490,7 @@ class QuoteController extends Controller
         // dd($data);
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 
@@ -510,7 +512,7 @@ class QuoteController extends Controller
         $lastSegment = end($segments);
         $data['lastSegment'] = $lastSegment;
         $data['quotes'] = $this->quoteService->getQuoteCallBack($lastSegment, Auth::user()->home_id);
-        $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);  
+        $data['draftCount'] = Quote::getDraftCount(Auth::user()->home_id);
         $data['callbackCount'] = Quote::getCallBackCount(Auth::user()->home_id);
         $data['acceptedCount'] = Quote::getAcceptedCount(Auth::user()->home_id);
         $data['actionedCount'] = Quote::getActionedCount(Auth::user()->home_id);
@@ -536,7 +538,8 @@ class QuoteController extends Controller
             'data' => $quoteTask ? "Task added successfully!" : 'Failed to save task.'
         ]);
     }
-    public function getQuoteTaskList(Request $request){
+    public function getQuoteTaskList(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'quote_id' => 'required',
@@ -549,11 +552,12 @@ class QuoteController extends Controller
 
         return response()->json([
             'success' => (bool) $data,
-            'data' => $data ? $data : 'No data.'
+            'data' => $data ? $data : 'No data'
         ]);
     }
 
-    public function searchQuote(Request $request){
+    public function searchQuote(Request $request)
+    {
         $data['page'] = "quotes";
         $path = $request->path();
         $segments = explode('/', $path);
@@ -568,7 +572,8 @@ class QuoteController extends Controller
         return view('frontEnd.salesAndFinance.quote.search_quote', $data);
     }
 
-    public function statusChange(Request $request) {
+    public function statusChange(Request $request)
+    {
         // dd($request);
         $validator = Validator::make($request->all(), [
             'quote_id' => 'required|integer',
@@ -586,8 +591,9 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function getActiveRejectType(){
-        
+    public function getActiveRejectType()
+    {
+
         $data = QuoteRejectType::getActiveQuoteRejectType(Auth::user()->home_id);
 
         return response()->json([
@@ -596,7 +602,8 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function saveQuoteRejectReasonsType(Request $request){
+    public function saveQuoteRejectReasonsType(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'quote_id' => 'required|integer',
             'reject_reasons' => 'required|string'
@@ -614,17 +621,34 @@ class QuoteController extends Controller
     }
 
     // CustomerDepositRequest
-    public function saveQuoteDeposite(CustomerDepositRequest $request){
+    public function saveQuoteDeposite(CustomerDepositRequest $request)
+    {
         // dd($request->all());
         $validatedData = $request->validated();
-        
+
         $data = $this->quoteService->saveQuoteCredit($validatedData);
-       
+
         return response()->json([
             'success' => (bool) $data,
             'data' => $data ? 'Quote deposite created' : 'Error in quote deposit'
         ]);
-        
+    }
 
+    public function getDepositeData(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'quote_id' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data =  $this->quoteService->getDepositeData($request);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No Data'
+        ]);
     }
 }
