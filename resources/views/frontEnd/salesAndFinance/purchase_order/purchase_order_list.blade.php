@@ -365,10 +365,15 @@ ul#projectList {
                                                 </a>
                                                 <div class="dropdown-menu fade-up m-0">
                                                     <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
+                                                    <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Preview</a>
+                                                    <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Duplicate</a>
+                                                    <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Approve</a>
+                                                    <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">CRM / History</a>
+                                                    <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Start Timer</a>
                                                 </div>
                                             </div>
