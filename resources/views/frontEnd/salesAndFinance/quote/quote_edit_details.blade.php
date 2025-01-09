@@ -735,9 +735,9 @@
                                     <div class="mb-3 row">
                                         <label for="inputCountry" class="col-sm-2 col-form-label">Markup Based on</label>
                                         <div class="col-sm-3">
-                                            <select class="form-control editInput selectOptions" id="">
-                                                <option>Price</option>
-                                                <option>Cost Price</option>
+                                            <select class="form-control editInput selectOptions" id="markupOnPriceOrCostPrice">
+                                                <option value="1">Price</option>
+                                                <option value="2">Cost Price</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1080,7 +1080,7 @@
                                                                 <div class="mb-2 row">
                                                                     <label for="inputCity" class="col-sm-3 col-form-label">Deposit Percentage <span class="radStar">*</span></label>
                                                                     <div class="col-sm-5">
-                                                                        <input type="text" class="form-control editInput" name="deposit_percantage" id="deposit_percantage" value="100">
+                                                                        <input type="number" class="form-control editInput" name="deposit_percantage" min="0" max="100" maxlength="3" oninput="this.value = this.value.slice(0, 3)" id="deposit_percantage" value="100">
                                                                     </div>
                                                                     <div class="col-sm-1 ps-0">
                                                                         <input class="form-control editInput text-center" value="%" disabled="">
@@ -1092,7 +1092,7 @@
                                                                         <input class="form-control editInput text-center" value="&#163;" disabled="">
                                                                     </div>
                                                                     <div class="col-sm-4">
-                                                                        <input type="text" class="form-control editInput" name="amount" id="deposit_amount" value="123">
+                                                                        <input type="text" class="form-control editInput" name="amount" id="deposit_amount" value="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
@@ -2697,6 +2697,26 @@
             });
         });
 
+        $('#deposit_percantage').on('input', function() {
+            let percentage = parseInt($(this).val(), 10);
+         
+            if (percentage > 100) {
+                document.getElementById('deposit_percantage').value = 100;
+                percentage = 100;
+            } 
+            if (isNaN(percentage)) {
+                percentage = 0;
+            }
+            let outsatandingAmount = document.getElementById('setOustandingCreditAmount').value;
+            outsatandingAmount = parseFloat(outsatandingAmount.replace("£", ""))
+            
+            console.log(outsatandingAmount);          
+            console.log(percentage);
+            
+            deposit_amount = (percentage / 100) * outsatandingAmount;
+            document.getElementById('deposit_amount').value = deposit_amount.toFixed(2);
+        });
+
         $('#OpenAddCustomerContact').on('click', function() {
             getCustomerJobTitle(document.getElementById('customer_job_titile_id'));
             $('#add_customer_contact_modal').modal('show');
@@ -2756,6 +2776,24 @@
         });
 
     });
+
+    function updateQuoteDepositTotal(){
+        let percentage = $(this).val();
+            // Regex for non-alphanumeric validation
+            const nonAlphanumericRegex = /^[^a-zA-Z0-9]+$/;
+
+            // Check for non-alphanumeric characters
+            if (!nonAlphanumericRegex.test(percentage)) {
+                percentage = 100;
+                return;
+            }
+
+            const numericValue = parseFloat(percentage);
+            if (!isNaN(numericValue) && numericValue > 100) {
+                percentage = 100;
+                return;
+            }
+    }
 
     function saveFormData(formId, saveUrl, modalId, callback, callBackValue = null) {
         var formData = $('#' + formId).serialize();
@@ -2944,6 +2982,8 @@
     function calculateRowsValue(table) {
         const rows = table.querySelectorAll('tbody tr');
 
+        const markupOnPriceOrCostPrice = document.getElementById('markupOnPriceOrCostPrice').value;
+        console.log(markupOnPriceOrCostPrice);
         let totalQuantity = 0;
         let totalCostPrice = 0;
         let totalPrice = 0;
@@ -3038,6 +3078,7 @@
         document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
         document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
         document.getElementById('setOustandingCreditAmount').value = doller + (price + totalVAT).toFixed(2);
+        document.getElementById('deposit_amount').value = (price + totalVAT).toFixed(2);
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
         document.getElementById('payingNow').textContent = doller + (price + totalVAT).toFixed(2);
 
@@ -3153,7 +3194,7 @@
                     <div class="d-flex">
                         <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="0">
                         <select class="form-control editInput selectOptions input50" name="" id="">
-                            <option>Please Select</option>
+                            <option>£</option>
                             <option>%</option>
                         </select>
                     </div>
@@ -3808,25 +3849,28 @@
         });
 
         $saveButton.click(function() {
-            // alert(quote_id);
             var data = {
                 quote_id: document.getElementById('quote_id').value,
                 customer_id: document.getElementById('setCustomerId').value,
                 deposit_percantage: document.getElementById('deposit_percantage').value,
-                deposit_amount: document.getElementById('deposit_amount').value,
+                amount: document.getElementById('deposit_amount').value,
                 reference: document.getElementById('reference').value,
                 description: document.getElementById('description').value,
                 payment_type: document.getElementById('payment_type').value,
                 deposit_date: document.getElementById('deposit_date').value,
-                quote_deposit_id : document.getElementById('quote_deposit_id'),
+                quote_deposit_id: document.getElementById('quote_deposit_id').value,
             };
-
+            console.log(data);
             $.ajax({
                 url: '{{ route("quote.ajax.saveQuoteDeposite") }}', // Your server endpoint
                 method: 'POST', // HTTP method
                 data: data,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 success: function(response) {
-                    console.log(response);
+                    alert(response.data);
+                    $("#creaditDepositModal").modal("hide"); // Close the modal
                 },
                 error: function() {
                     alert("An error occurred while deleting the rows.");

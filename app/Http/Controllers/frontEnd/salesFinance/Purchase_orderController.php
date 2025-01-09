@@ -101,7 +101,7 @@ class Purchase_orderController extends Controller
         $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
         $data['contact_name']=$contact_name;
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
-        // echo "<pre>";print_r($data['attachments']);die;
+        // echo "<pre>";print_r($data['country']);die;
         return view('frontEnd.salesAndFinance.purchase_order.new_purchase_order',$data);
     }
     public function purchase_order_save(Request $request){
@@ -122,6 +122,14 @@ class Purchase_orderController extends Controller
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
         try {
+            if(!empty($request->purchaseattachment_id)){
+                $purchaseattachment_id=$request->purchaseattachment_id;
+                for($i=0;$i<count($purchaseattachment_id);$i++){
+                    $poTable=PoAttachment::find($purchaseattachment_id[$i]);
+                    $poTable->title=$request->purchaseattachment_title[$i];
+                    $poTable->save();
+                }
+            }
             if ($request->hasFile('attachment')) {
                 $imageName = time().'.'.$request->attachment->extension();      
                 $request->attachment->move(public_path('images/purchase_order'), $imageName);
