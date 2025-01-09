@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\User;
-use App\Customer;
+use App\Models\Customer;
 use App\ServiceUser;
 use App\Models\Job;
 use App\Models\Quote;

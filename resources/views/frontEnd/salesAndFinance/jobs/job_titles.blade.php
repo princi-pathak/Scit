@@ -107,7 +107,7 @@
                     <!-- Job type Modal start here -->
                     <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel"
                         aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
+                        <div class="modal-dialog modal-md">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="customerModalLabel">Job Title-Add</h5>
@@ -119,7 +119,7 @@
                                     <div class="alert alert-success text-center success_message" style="display:none;height:50px">
                                         <p id="message"></p>
                                     </div>
-                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="formDtail">
                                                 <form id="form_data" class="customerForm">
                                                     <input type="hidden" name="id" id="id">

@@ -85,7 +85,7 @@
                                                     <select class="form-control editInput selectOptions" id="contact_telephone_code" name="telephone_country_code">
                                                         <option selected disabled>Please Select</option>
                                                         @foreach($country as $contacttelCode)
-                                                            <option value="{{$contacttelCode->id}}" >+{{$contacttelCode->code}}</option>
+                                                            <option value="{{$contacttelCode->id}}" <?php if($contacttelCode->id == 230){echo 'selected';}?>>+{{$contacttelCode->code}} - {{$contacttelCode->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -103,7 +103,7 @@
                                                         <select class="form-control editInput selectOptions" id="contact_mobile_code" name="mobile_country_code">
                                                             <option selected disabled>Please Select</option>
                                                             @foreach($country as $contactmobCode)
-                                                                <option value="{{$contactmobCode->id}}">+{{$contactmobCode->code}}</option>
+                                                                <option value="{{$contactmobCode->id}}" <?php if($contactmobCode->id == 230){echo 'selected';}?>>+{{$contactmobCode->code}} - {{$contactmobCode->name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -242,7 +242,9 @@
                     $("#contact_country_input").val('');
                     $("#contact_pincode").val('');
                 }
-                $("#contact_country_id").html(response.reslut);
+                if(response.reslut){
+                    $("#contact_country_id").html(response.reslut);
+                }
             }
         });
     }

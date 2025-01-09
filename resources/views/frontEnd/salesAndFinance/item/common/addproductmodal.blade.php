@@ -195,7 +195,8 @@
                                     <div class="col-sm-7">
                                         <select class="form-control editInput selectOptions" id="salestax"
                                             onclick="taxratelist(1)" name="tax_rate">
-                                            <option value="20">Vat-20</option>
+                                            <!-- <option value="20">Vat-20</option> -->
+                                            <option value="">-Please Select-</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1 ps-0">
