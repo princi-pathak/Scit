@@ -125,7 +125,7 @@
                                     </div>
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="formDtail">
-                                                <form id="form_data" class="customerForm">
+                                                <form id="form_data" class="customerForm pt-0">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
 
