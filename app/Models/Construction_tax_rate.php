@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Session;
 
 class Construction_tax_rate extends Model
 {
@@ -22,35 +23,33 @@ class Construction_tax_rate extends Model
 
     public static function getAllTax_rate($home_id,$mode){
         $status = ($mode == 'Active') ? 1 : 0;
+        $query = self::whereNull('deleted_at')->where(['home_id'=>$home_id]);
         if($mode){
-            $data = self::whereNull('deleted_at')->where(['home_id'=>$home_id,'status'=>$status])->get();
+            return $query->where('status', $status)->get();
         }else{
-            $data = self::whereNull('deleted_at')->where(['home_id'=>$home_id])->get();
+            return $query->get();
         }
-        
-        return $data;
     }
 
     public static function saveTax_rate($data){
-        try {
-            $Task_type=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
-            return $Task_type;
-        }catch (\Exception $e) {
-            Log::error('Error saving Payment Type: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to save Payment Type. Please try again.']);
-        }
+        $Task_type=self::updateOrCreate(['id' => $data['id'] ?? null],$data);
+        return $Task_type;
     }
 
     public static function saveTaxRateData(array $data, $taxRateID = null)
     {
-        $data['home_id'] = Auth::user()->home_id;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $data['home_id'] = Auth::user()->home_id ?? $home_id;
         return self::updateOrCreate(['id' => $taxRateID], $data);
         // Return the ID of the created or updated product category
         //return $taxRate->id;
     }
     public static function checkTaxRatename($taxrate_name,$taxRateID = null)
     {
-        $homeId = Auth::user()->home_id;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $homeId = Auth::user()->home_id ?? $home_id;
 
         // If no product category ID is provided, count categories with the same name
         if (empty($taxRateID)) {
@@ -74,5 +73,10 @@ class Construction_tax_rate extends Model
         $taxRate = self::find($taxRateID);
         $taxRate->status = $status;
         return $taxRate->save();
+    }
+
+    public static function getTaxRateOnId($id){
+        $tax = self::find($id);
+        return $tax->tax_rate;
     }
 }

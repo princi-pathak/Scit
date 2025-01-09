@@ -72,10 +72,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> </h5>
+                <!-- <h5 class="modal-title" id="exampleModalLabel"> </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </button> -->
             </div>
             <div class="modal-body">
                 <form action="" id="lead_source_form">
@@ -112,7 +112,7 @@
             $('#status').val(1);
             $('.modal-title').text('');
             $('#saveChanges').text('');
-
+            $('#title').css('border','');
             if (itemId) {
                 // Editing existing record
                 $('#lead_source_id').val(itemId);
@@ -129,21 +129,35 @@
         });
 
         $('#saveChanges').on('click', function() {
-            var formData = $('#lead_source_form').serialize();
-
-            $.ajax({
-                url: '{{ route("leads.ajax.saveLeadSource") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    $('#secondModal').modal('hide');
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
+            var title= $("#title").val();
+            if(title == ''){
+                $("#title").css('border','1px solid red');
+                $(window).scrollTop($('#title').position().top);
+                return false;
+            }else{
+                var formData = $('#lead_source_form').serialize();
+                $.ajax({
+                    url: '{{ route("leads.ajax.saveLeadSource") }}',
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        if(response.errors){
+                            // alert(response.errors);
+                            $("#title").css('border','1px solid red');
+                            $(window).scrollTop($('#title').position().top);
+                            return false;
+                        }else{
+                            alert(response.message);
+                            $('#secondModal').modal('hide');
+                            location.reload();
+                        }
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
         });
     });
 </script>

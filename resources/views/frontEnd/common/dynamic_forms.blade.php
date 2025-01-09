@@ -29,7 +29,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default add-new-btn active" type="button"> Add New </button>
                         <button class="btn label-default logged-btn dyn-logged-btn active logged-dyn-btn" type="button"> Logged Plans </button>
-                        <!-- <button class="btn label-default search-btn active" type="button"> Search </button> -->
+                        <button class="btn label-default search-btn active" type="button"> Search </button>
                     </div>
                     <!-- Add new Details -->
                     <div class="add-new-box risk-tabs custm-tabs">
@@ -98,6 +98,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                             <!-- alert messages -->
                             @include('frontEnd.common.popup_alert_messages')
 
+                            
+
                             <div class="dynamic-form-fields">
 
                             </div>
@@ -152,7 +154,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Search</h3>
                         </div>
-                        <div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">
+                        <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">
                             <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 cus-lbl text-right"> Title: </label>
                             <div class="col-md-11 col-sm-11 col-xs-12 m-b-15 title">
                                 <div class="select-style">
@@ -162,24 +164,22 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                         <option value='2'> Date </option>
                                     </select>
                                 </div>
-                                <!-- <input type="text" name="search_dyn_record" class="form-control" maxlength="255"> -->
+                                <input type="text" name="search_dyn_record" class="form-control" maxlength="255">
                             </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-xs-12 p-0 search_title">
+                        </div> -->
+                        <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 search_title">
                             <label class="col-md-1 col-sm-1 col-xs-12 p-t-7 cus-lbl"> Title: </label>
                             <div class="col-md-11 col-sm-11 col-xs-12 m-b-15 title">
                                 <input type="text" name="search_dyn_title" class="form-control" maxlength="255">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd search_date">
                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Date: </label>
                             <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
-
                                 <input name="search_dyn_date" type="date" size="45" class="form-control">
                                 <!-- <span class="input-group-btn add-on">
                                         <button class="btn clndr btn-primary" type="button"><i class="fa fa-calendar"></i></button>
                                     </span> -->
-
                             </div>
                         </div>
                         <!-- alert messages -->
@@ -322,7 +322,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
     </div>
 </div>
 <!-- Su Daily Log Book Modal End -->
-
 <!-- dynamic form script start -->
 <script>
     $(document).ready(function() {
@@ -501,11 +500,11 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
                     if (resp == "true") {
 
-                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                        // const hideImageDivs = document.getElementsByClassName('hideImageDiv');
 
-                        for (let i = 0; i < hideImageDivs.length; i++) {
-                            hideImageDivs[i].style.display = "none";
-                        }
+                        // for (let i = 0; i < hideImageDivs.length; i++) {
+                        //     hideImageDivs[i].style.display = "none";
+                        // }
 
                         console.log("true");
                         $('#' + form_id + ' span.popup_success_txt').text('Record has been Added Successfully');
@@ -543,7 +542,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
         });
 
         $('.e-sbt-dyn-form-btn').click(function() {
-            alert("hello");
             var model_id = $(this).closest('.modal').attr('id');
             var previous_model_id = $(this).closest('.modal').find('.previous_modal_btn').attr('pre_modal');
             var logged_box = $('#' + previous_model_id).find('.logged-box');
@@ -612,11 +610,11 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
                     if (resp == true) {
 
-                        const hideImageDivs = document.getElementsByClassName('hideImageDiv');
+                        // const hideImageDivs = document.getElementsByClassName('hideImageDiv');
 
-                            for (let i = 0; i < hideImageDivs.length; i++) {
-                                hideImageDivs[i].style.display = "none";
-                            }
+                        //     for (let i = 0; i < hideImageDivs.length; i++) {
+                        //         hideImageDivs[i].style.display = "none";
+                        //     }
 
                         $('#' + model_id).modal('hide');
                         $('#' + previous_model_id).modal('show');
@@ -625,6 +623,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         $('#' + previous_model_id + ' .popup_success').show();
                         setTimeout(function() {
                             $('#' + previous_model_id + ' .popup_success').fadeOut()
+                            location.reload()
                         }, 5000);
 
                         $('#' + previous_model_id + ' .dyn-logged-btn').click();
@@ -711,27 +710,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                     if (isAuthenticated(resp) == false) {
                         return false;
                     }
-
-                    // if (resp['imageName'] !== null && resp['imageName'] !== undefined) {
-                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-                    //     const imagePreviews = document.getElementsByClassName('imagePreview');
-
-                    //     // Show or hide the image preview for each form
-                    //     for (let i = 0; i < hideImageDivs.length; i++) {
-                    //         hideImageDivs[i].style.display = "block";
-                    //     }
-
-                    //     // Set the src attribute for each image preview
-                    //     for (let i = 0; i < imagePreviews.length; i++) {
-                    //         imagePreviews[i].src = resp['image'];
-                    //     }
-                    // } else {
-                    //     const hideImageDivs = document.getElementsByClassName('hideImageDiv');
-
-                    //     for (let i = 0; i < hideImageDivs.length; i++) {
-                    //         hideImageDivs[i].style.display = "none";
-                    //     }
-                    // }
 
                     var response = resp['response'];
                     var form_builder_id = resp['form_builder_id'];
@@ -955,7 +933,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
         function update_search_list() {
             // alert("data aaya");
-            var searchType = document.getElementById('search_type').value;
+            // var searchType = document.getElementById('search_type').value;
+            var searchType = 2;
             var search_input = (searchType == 1) ? $('input[name="search_dyn_title"]') : $('input[name="search_dyn_date"]');
             var search = search_input.val();
             // console.log(searchType);
@@ -1289,7 +1268,7 @@ $(document).ready(function(){
             //dataType: "json",
         };
         $.ajax(settings).done(function(response) {
-            // console.log(response[0].pattern);
+            console.log(response);
             if (isAuthenticated(response) == false) {
                 return false;
             }
@@ -1309,20 +1288,22 @@ $(document).ready(function(){
 
 
     }
-    $(document).ready(function() {
-        $('.search_title, .search_date').hide(); // hide both elements on page load
+    // $(document).ready(function() {
+    //     $('.search_title, .search_date').hide(); // hide both elements on page load
 
-        $('#search_type').on('change', function() {
-            var searchType = document.getElementById('search_type').value;
-            $('.search_title, .search_date').hide(); // hide both elements first
-            switch (searchType) {
-                case '1':
-                    $('.search_title').show();
-                    break;
-                case '2':
-                    $('.search_date').show();
-                    break;
-            }
-        });
-    });
+    //     $('#search_type').on('change', function() {
+    //         var searchType = document.getElementById('search_type').value;
+    //         $('.search_title, .search_date').hide(); // hide both elements first
+    //         switch (searchType) {
+    //             case '1':
+    //                 $('.search_title').show();
+    //                 break;
+    //             case '2':
+    //                 $('.search_date').show();
+    //                 break;
+    //         }
+    //     });
+
+        
+    // });
 </script>

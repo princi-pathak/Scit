@@ -61,7 +61,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if(!$quote_type->isEmpty())
+                            <!-- Ram hide 10/12/2024 -->
+                            <!-- @if(!$quote_type->isEmpty()) -->
                             @foreach ($quote_type as $value)
                             <tr>
                                 <td><input type="checkbox" id="" class="delete_checkbox" value="{{$value->id}}"></td>
@@ -90,11 +91,12 @@
                                 </td>
                             </tr>
                             @endforeach
-                            @else
+                            <!-- Ram hide 10/12/2024 -->
+                            <!-- @else
                             <tr>
-                                <td colspan="10" class="text-center"><strong>Sorry, there are no items available..</strong></td>
+                                <td colspan="6" class="text-center"><strong>Sorry, there are no items available..</strong></td>
                             </tr>
-                            @endif
+                            @endif -->
                         </tbody>
                     </table>
                 </div> <!-- End off main Table -->
@@ -107,8 +109,8 @@
     <div class="modal-dialog">
         <div class="modal-content add_Customer">
             <div class="modal-header terques-bg">
-                <button aria-hidden="true" data-bs-dismiss="modal" class="close" type="button">×</button>
                 <h5 class="modal-title pupTitle">Quote Type - Add</h5>
+                <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button"></button>
             </div>
             <div class="modal-body">
                 <form role="form" id="quote_type_form">
@@ -138,7 +140,7 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="btn profileDrop" id="saveChanges">Save</button>
                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
             </div>

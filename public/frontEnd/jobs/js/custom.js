@@ -63,6 +63,7 @@ $(document).ready(function() {
           },
           info: "Showing _START_ to _END_ of _TOTAL_ entries",
           infoEmpty: "No entries available",
+          emptyTable: '<span style="color: red; font-weight: bold;">Sorry, there are no items available</span>',
           infoFiltered: "(filtered from _MAX_ total entries)",
           lengthMenu: "Show _MENU_ entries",
           search: "Search:",
@@ -112,12 +113,15 @@ document.getElementById('onclickbtnHideShow').addEventListener('click', function
 // search leads show search Filter
 function hideShowDiv() {
   let div = document.getElementById("divTohide");
+  let hideBtn = document.querySelector(".hidebtn");
 
   if (div.style.display === 'none' || div.style.opacity === '0') {
       div.style.display = 'block';
       div.style.height = div.scrollHeight + 'px'; // Ensures the height is set for the transition
       div.style.opacity = '1';
+      hideBtn.textContent = "Hide Search Filter";
   } else {
+      hideBtn.textContent = "Show Search Filter";
       div.style.height = '0px';
       div.style.opacity = '0';
       // Use a timeout to set display to none after the transition

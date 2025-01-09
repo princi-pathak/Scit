@@ -8,6 +8,7 @@
             </div>
             <div class="modal-body">
                 <form id="jobTitleForm">
+                    @csrf
                     <div class="mb-3 row">
                         <label for="inputJobRef" class="col-sm-3 col-form-label">Job Title <span class="radStar ">*</span></label>
                         <div class="col-sm-9">
@@ -43,7 +44,7 @@
     function saveJobTitle() {
 
         let JobTitleId = document.getElementById('job_title_id').getAttribute('data-jobTitle-id');
-     
+
         var formData = $('#jobTitleForm').serialize();
         $.ajax({
             url: '{{ route("customer.ajax.saveJobTitle") }}', // Define the URL route for saving
@@ -63,12 +64,18 @@
     }
 
     function getCustomerJobTitle(jobTitle) {
+        console.log('jobTitle',jobTitle);
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerJobTitle") }}',
             method: 'GET',
             success: function(response) {
                 console.log("jxcnjfjnfnk", response.data);
                 jobTitle.innerHTML = '';
+
+                const optionJob = document.createElement('option');
+                optionJob.text = "Please Select";
+                jobTitle.appendChild(optionJob);
+
                 response.data.forEach(user => {
                     const option = document.createElement('option');
                     option.value = user.id;
@@ -81,5 +88,4 @@
             }
         });
     }
-
 </script>

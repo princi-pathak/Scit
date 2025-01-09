@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\User;
-use App\Customer;
+use App\Models\Customer;
 use App\ServiceUser;
 use App\Models\Job;
 use App\Models\Quote;
@@ -35,6 +35,8 @@ use App\Models\Construction_job_appointment_type;
 use App\Models\Construction_product_supplier_list;
 use App\Models\construction_appointment_rejection_category;
 use App\Models\Region;
+use App\Models\LogHistory;
+use App\Models\Tag;
 use DB,Auth,Session,Validator;
 
 class JobController extends Controller
@@ -66,10 +68,33 @@ class JobController extends Controller
         $data['page']="job_index";
         return view('frontEnd.salesAndFinance.jobs.index',$data);
     }
-    public function job_list(){
-        $data['job']=Job::whereNull('deleted_at')->get();
+    public function job_list(Request $request){
+        $lastSegment = request()->segment(request()->segments() ? count(request()->segments()) : 1);
+        // echo $lastSegment;die;
+        $home_id = Auth::user()->home_id;
+        $job=Job::getAllJob($home_id)->where('user_id',Auth::user()->id)->get();
         $data['access_rights']=$this->access_rights();
-        // echo "<pre>";print_r($data['access_rights']);die;
+        $data_arr=array();
+        foreach($job as $val){
+            $customer_name=Customer::where('id',$val->customer_id)->first();
+            $job_type_detail=Job_type::where('id',$val->job_type)->first(); 
+            // $product_details=Product::where('id',$val->product_id)->first();  
+            $site=Constructor_customer_site::where('id',$val->site_id)->first();
+            $customers = Customer::with('sites','additional_contact','customer_project')->where('id', $val->customer_id)->first();
+            $data_arr[]=[
+                'id'=>$val->id,
+                'job_ref'=>$val->job_ref,
+                'customer_name'=>$customer_name->name,
+                'job_type'=>$job_type_detail->name,
+                'site'=>$site->site_name,
+                'short_decinc'=>$val->short_decinc,
+                'complete_by'=>$val->complete_by
+            ];
+        }
+        // echo "<pre>";print_r($data_arr);die;
+        $data['lastSegment']=$lastSegment;
+        $data['job']=$data_arr;
+        // echo "<pre>";print_r($data['job']);die;
         return view('frontEnd.salesAndFinance.jobs.job',$data);
     }
     public function job_type(Request $request){
@@ -99,34 +124,6 @@ class JobController extends Controller
             $html='<option value="'.$result->id.'">'.$result->name.'</option>';
             return $html;
         }else{
-            // $all_data=Job_type::whereNull('deleted_at')->where(['home_id'=>$home_id])->get();
-            // $html = '';
-            // foreach($all_data as $key=>$val){
-            //     $html.='<tr>
-            //                 <td></td>
-            //                 <td>'.++$key.'</td>
-            //                 <td>'.$val->name.'</td>
-            //             <td>' . (($val->status == 1) ? "Yes" : "No") . '</td>
-            //                 <td>'.$val->default_days.'</td>
-            //                 <td><span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span></td>
-            //                 <td>-</td>
-            //                 <td><span class="grencheck"><i class="fa-solid fa-circle-check"></i></span></td>
-            //                 <td> <div class="d-inline-flex align-items-center ">
-            //                         <div class="nav-item dropdown">
-            //                             <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-            //                                 Action
-            //                             </a>
-            //                             <div class="dropdown-menu fade-up m-0">
-            //                                 <a href="javascript:void(0)" onclick="get_model_with_id('.$val->id.')" class="dropdown-item">Edit Details</a>
-            //                                 <hr class="dropdown-divider">
-            //                                 <a href="#!" class="dropdown-item">Manage Workflow</a>
-            //                             </div>
-            //                         </div>
-            //                     </div>
-            //                 </td>
-            //             </tr>';
-
-            // }
             return response()->json(['success'=>'true','message' => "Successfully  Done"], 200);
         }
        } else {
@@ -237,22 +234,23 @@ class JobController extends Controller
     public function jobs_create(Request $request){
         // echo 1;die;
         // echo "<pre>";print_r(Auth::user());die;
-        if($request->key == '') {
-            $task="Added";
-        }else {
-            $task="Eddited";
-        }
-        $key=$request->key;
-        $data['task']=$task;
-        $data['projects']=Project::where('status',1)->get();
-        $data['last_job_id']=Job::orderBy('id','DESC')->first();
-        $data['job_details']=Job::find($key);
-        $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1])->get();
+        $home_id = Auth::user()->home_id;
+        $user_id=Auth::user()->id;
+        $key=base64_decode($request->key);
+        // echo $key;die;
+        $data['key']=$key;
+        $data['projects']=Project::where(['status'=>1,'home_id'=>$home_id])->get();
+        $job_details=Job::find($key);
+        $data['job_details']=$job_details;
+        $data['additional_contact'] = Constructor_additional_contact::where('home_id', $home_id)->get();
+        $data['tag'] = Tag::getAllTag($home_id);
+        // $product_details=Product::product_detail($request->id);
+        // $tax=Product::tax_detail($home_id);
+        $data['jobassign_products']=Construction_jobassign_product::where(['job_id'=>$key,'status'=>1,'deleted_at'=>null])->get();
+        $data['job_appointment']=Construction_job_appointment::where(['job_id'=>$key,'status'=>1,'deleted_at'=>null])->get();
         $data['job_type']=Job_type::where('status',1)->get();
         $data['country']=Country::all_country_list();
         // echo "<pre>";print_r($data['country']);die;
-        $home_id = Auth::user()->home_id;
-        $user_id=Auth::user()->id;
         $data['product_details1']=DB::table('products as pr')->select('pr.*','cat.id as cat_id','cat.name')
         ->join('product_categories as cat','cat.id','=','pr.cat_id')
         ->where(['pr.home_id'=>$home_id,'pr.adder_id'=>$user_id])->get();
@@ -267,14 +265,23 @@ class JobController extends Controller
         $data['category']=Product_category::with('parent', 'children')->where('status',1)->get();
         $data['account_code']=Construction_account_code::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['sales_tax']=Construction_tax_rate::where(['home_id'=>$home_id,'status'=>1])->get();
-        // $data['site']=Constructor_customer_site::where('customer_id',$user_id)->get();
-        // echo "<pre>";print_r($data['region']);die;
+        $customerId = optional($job_details)->customer_id;
+        $customer_details=optional(Customer::find($customerId));
+        $data['site']=Constructor_customer_site::where('customer_id',$customerId)->get();
+        $data['customer_profession']=Job_title::find($customer_details->job_title);
+        $data['contact_name']=$customer_details->contact_name;
+        // $customer_details=Customer::with('sites','additional_contact','customer_project')->where('id', $customerId)->first();
+        // $data['site']=$customer_details->sites;
+        // $data['customer_project']=$customer_details->customer_project;
+        // echo "<pre>";print_r($customer_profession);die;
+        // echo "<pre>";print_r($data['sales_tax']);die;
         return view('frontEnd.salesAndFinance.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $home_id=$request->home_id;
-
+        $home_id = Auth::user()->home_id;
+        $user_id=Auth::user()->id;
+        
         if ($request->hasFile('attachments')) {
             $imageName = time().'.'.$request->attachments->extension();      
             $request->attachments->move(public_path('images/jobs'), $imageName);
@@ -283,7 +290,17 @@ class JobController extends Controller
         } else {
             $requestData = $request->all();
         }
-        $job_id=Job::job_save($requestData);
+        $last_job_id=optional(Job::orderBy('id','DESC')->first());
+        $requestData['last_job_id'] = $last_job_id->id;
+        $requestData['user_id'] = $user_id;
+        $requestData['home_id'] = $home_id;
+        // echo "<pre>";print_r($requestData);die;
+        try {
+            $job_id=Job::job_save($requestData);
+        } catch (\Exception $e) {
+            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
+        }
+        
         // echo "<pre>";print_r($job_id);die;
         if(isset($request->quantity) && $request->quantity !=''){
             $job_product= $this->save_job_product($job_id,$request->all());
@@ -294,7 +311,7 @@ class JobController extends Controller
         }
         // echo "<pre>";print_r($job_product);die;
         
-        return response()->json($job_id);
+        return response()->json(['success'=>true, 'data'=>$job_id]);
 
     }
     public function get_customer_details_front(Request $request){
@@ -328,78 +345,105 @@ class JobController extends Controller
         $home_id = Auth::user()->home_id;
         $user_id=Auth::user()->id;
         $previous_ids=$request->previous_id;
-        $calculation=$this->calculation($previous_ids);
+        // $calculation=$this->calculation($previous_ids);
         // echo "<pre>";print_r($calculation);die;
         $product_details=Product::product_detail($request->id);
         $tax=Product::tax_detail($home_id);
-        $html.= '<tr>
-                <td>'.$product_details->product_code.'</td>
-                <td>'.$product_details->product_name.'</td>
-                <td>'.$product_details->description.'</td>
-                <td><input type="text" class="" value="'.$product_details->qty.'" name="quantity[]" id="quantity"></td>
-                <td>'.$product_details->cost_price.'</td>
-                <td>'.$product_details->price.'</td>
+        if($request->key ==''){
+            $html.= '<tr>
+                <td>'.$product_details->product_code.'<input type="hidden" id="product_codejob" name="product_codejob[]" value="'.$product_details->product_code.'"></td>
+                <td>'.$product_details->product_name.'<input type="hidden" id="product_namejob" name="product_namejob[]" value="'.$product_details->product_name.'"></td>
+                <td>'.$product_details->description.'<input type="hidden" id="descriptionjob" name="descriptionjob[]" value="'.$product_details->description.'"></td>
+                <td><input type="text" class="quantity" value="'.$product_details->qty.'" name="quantity[]" id="quantity"></td>
+                <td>'.$product_details->cost_price.'<input type="hidden" id="cost_pricejob" class="cost_pricejob" name="cost_pricejob[]" value="'.$product_details->cost_price.'"></td>
+                <td>'.$product_details->price.'<input type="hidden" id="pricejob" class="pricejob" name="pricejob[]" value="'.$product_details->price.'"></td>
                 <td><input type="text" class="" value="0" name="discount[]"></td>';
 
-        $html.= '<td><select id="" name="">';
-        foreach($tax as $taxv){
-        $html.= '<option value="'.$taxv->id.'">'.$taxv->name.'</option>';
+            $html.= '<td><select id="vatjob" name="vatjob[]">';
+            foreach($tax as $taxv){
+            $html.= '<option value="'.$taxv->id.'">'.$taxv->name.'</option>';
+            }
+            $html.= '</select></td>
+                    <td id="pre_total_amount" class="pre_total_amount">'.$product_details->price.'</td>
+                    <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Delete<input type="hidden" value="'.$product_details->id.'" name="product_detail_id[]" id="product_detail_id"></button></td>
+                </tr>';
+            return $data=['html'=>$html];
+        }else{
+            $all_job=Job::getAllJob($home_id)->where('status',1)->get();
+            $accountCode=Construction_account_code::getActiveAccountCode($home_id);
+            return response()->json(['success'=>true,'product_detail'=>$product_details,'tax'=>$tax,'job'=>$all_job,'accountCode'=>$accountCode]);
         }
-        $html.= '</select></td>
-                <td id="pre_total_amount">'.$product_details->price.'<input type="hidden" name="final_amount" id="final_amount" value="'.$product_details->price.'"></td>
-                <td><button type="button" class="btn btn-danger" onclick="removeRow('.$product_details->id.')">Delete<input type="hidden" value="'.$product_details->id.'" name="product_detail_id[]" id="product_detail_id"></button></td>
-            </tr>';
-        return $data=['calculation'=>$calculation,'html'=>$html];
-
-        $calculation;
+        
        
     }
-    private function calculation($data){
-        // echo "<pre>";print_r($data);die;
-        $cost_price=0;
-        $total_amount_assign=0;
-        for($i=0;$i<count($data);$i++){
-            $product_details=Product::find($data[$i]);
-            $cost_price=$cost_price+$product_details->cost_price;
-            $total_amount_assign=$total_amount_assign+$product_details->price;
+    // private function calculation($data){
+    //     $cost_price=0;
+    //     $total_amount_assign=0;
+    //     for($i=0;$i<count($data);$i++){
+    //         $product_details=Product::find($data[$i]);
+    //         $cost_price=$cost_price+$product_details->cost_price;
+    //         $total_amount_assign=$total_amount_assign+$product_details->price;
+    //     }
+    //    return $data=['cost_price'=>$cost_price,'total_amount_assign'=>$total_amount_assign];
+        
+    // }
+    public function jobassign_productsDelete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $id=$request->id;
+        try{
+            Construction_jobassign_product::find($id)->update(['deleted_at' => now()]);
+            return response()->json(['success'=>true,'message'=>'Deleted Successfully done']);
+        }catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-       return $data=['cost_price'=>$cost_price,'total_amount_assign'=>$total_amount_assign];
         
     }
     public function save_job_product($job_detail,$data){
-        // echo "<pre>";print_r($job_detail);die;
+        // echo "<pre>";print_r($data);die;
         $quantity=$data['quantity'];
         for($i=0;$i<count($quantity);$i++){
-            $table=new Construction_jobassign_product;
+            if(array_key_exists('idjobasign',$data) && $data['idjobasign'] !=''){
+                $table=Construction_jobassign_product::find($data['idjobasign'][$i]);
+            }else{
+                $table=new Construction_jobassign_product;
+            }
             $table->job_id=$job_detail['id'];
             $table->product_id=$data['product_detail_id'][$i];
             $table->qty=$data['quantity'][$i];
+            $table->code=$data['product_codejob'][$i];
+            $table->description=$data['descriptionjob'][$i];
+            $table->cost_price=$data['cost_pricejob'][$i];
+            $table->price=$data['pricejob'][$i];
+            $table->discount=$data['discount'][$i];
+            $table->vat=$data['vatjob'][$i];
+            $table->product_name=$data['product_namejob'][$i];
             $table->save();
         }
-        
-        // $job_table=Job::find($request->id);
-        // $job_table->pay_amount=$request->final_amount;
-        // $job_table->save();
-        // echo "done";
         return true;
     }
     public function get_save_appointment($job_detail,$data){
         // echo "<pre>";print_r($data);die;
         $array_data=[
+            'id'=>$data['appointment_id'] ?? null,
             'user_id'=>$data['Appointmentuser_id'],
             'home_id'=>$data['home_id'],
             'job_id'=>$job_detail['id'],
-            'appointment_type_id'=>$data['appointment_type_id'],
+            'appointment_type_id'=>$data['appointment_type_id'] ?? null,
             'start_date'=>$data['appointment_start_date'],
             'start_time'=>$data['start_time'],
             'end_date'=>$data['end_date'],
             'end_time'=>$data['end_time'],
-            'appointment_checkbox'=>$data['appointment_checkbox'],
+            'floating_appointment'=>$data['floating_appointment'],
+            'single_appointment'=>$data['single_appointment'],
+            'travel_time'=>$data['firstinput_time'],
+            'appointment_time'=>$data['secondinput_time'],
             'appointment_status'=>$data['appointment_status'],
-            'appointment_time'=>$data['appointment_time'],
             'priority'=>$data['priority'],
-            'alert_by'=>$data['alert_by'],
-            'notes'=>$data['appointment_notes']
+            'email'=>$data['alert_email_appointment'],
+            'sms'=>$data['alert_sms_appointment'],
+            'notes'=>$data['appointment_notes'],
+            'status'=>1
         ];
         // echo "<pre>";print_r($array_data);die;
         try {
@@ -413,7 +457,7 @@ class JobController extends Controller
     }
     public function new_appointment_add_section(Request $request){
         $home_id = Auth::user()->home_id;
-        $count_number = $request->count_number + 1;
+        $count_number = $request->count_number;
         $users = User::where('is_deleted', 0)->get();
         $appointment_type = Construction_job_appointment_type::where('home_id', $home_id)->get();
     
@@ -421,7 +465,7 @@ class JobController extends Controller
                     <td>
                         <div class="d-flex">
                             <p class="leftNum">'.$count_number.'</p>
-                            <select class="form-control editInput selectOptions" id="user_id" name="user_id[]">
+                            <select class="form-control editInput selectOptions" id="Appointmentuser_id" name="Appointmentuser_id[]">
                                 <option selected disabled>Select user</option>';
                                 foreach($users as $user){
                                     $html .= '<option value="'.$user->id.'">'.$user->name.'</option>';
@@ -432,14 +476,13 @@ class JobController extends Controller
                         <div class="alertBy">
                             <label><strong>Alert By:</strong></label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="alert_by_check_1" value="0">
+                                <input class="form-check-input" type="checkbox" id="alert_sms_appointment'.$count_number.'" value="0" name="alert_sms_appointment[]">
                                 <label class="form-check-label" for="inlineCheckbox1">SMS</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="alert_by_check_2" value="1">
+                                <input class="form-check-input" type="checkbox" id="alert_email_appointment'.$count_number.'" value="0" name="alert_email_appointment[]">
                                 <label class="form-check-label" for="inlineCheckbox2">Email</label>
                             </div>
-                            <input type="hidden" name="alert_by[]" id="alert_by" class="alert_by">
                         </div>
                     </td>
                     <td class="col-2">
@@ -473,14 +516,13 @@ class JobController extends Controller
                         </div>
                         <div class="pt-3">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="appointment_checkbox1" value="option1">
+                                <input class="form-check-input" type="checkbox" id="single_appointment'.$count_number.'" value="0" name="single_appointment[]">
                                 <label class="form-check-label" for="singleAppointment">Single Appointment</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="appointment_checkbox2" value="option2">
+                                <input class="form-check-input" type="checkbox" id="floating_appointment'.$count_number.'" value="0" name="floating_appointment[]">
                                 <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
                             </div>
-                            <input type="hidden" name="appointment_checkbox[]" id="appointment_checkbox" class="appointment_checkbox">
                         </div>
                     </td>
                     <td>
@@ -516,8 +558,8 @@ class JobController extends Controller
                                     -</strong></label>
                             <input type="text"
                                 class="form-control editInput"
-                                id="input_time1"
-                                placeholder="" onkeyup="get_time()"><label>
+                                id="firstinput_time'.$count_number.'" name="firstinput_time[]"
+                                placeholder="" onkeyup="get_time('.$count_number.')"><label>
                                 Mins</label>
                         </div>
                     </td>
@@ -528,12 +570,12 @@ class JobController extends Controller
                                     -</strong></label>
                             <input type="text"
                                 class="form-control editInput"
-                                id="input_time2"
-                                placeholder="" onkeyup="get_time()"><label> Mins
-                                <strong>Total Time -</strong><font id="time_show">0h
+                                id="secondinput_time'.$count_number.'" name="secondinput_time[]"
+                                placeholder="" onkeyup="get_time('.$count_number.')"><label> Mins
+                                <strong>Total Time -</strong><font id="time_show'.$count_number.'">0h
                                 0mins</font> </label>
                         </div>
-                        <input type="hidden" id="appointment_time" class="appointment_time" name="appointment_time[]">
+                        <input type="hidden" id="appointment_time'.$count_number.'" class="appointment_time" name="appointment_time[]">
                     </td>
                     <td></td>
                     <td></td>
@@ -672,7 +714,16 @@ class JobController extends Controller
 
     public function project_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'customer_name'=>'required',
+            'project_name'=>'required',
+            'start_date'=>'required',
+            'end_date'=>'required',
+        ]);
         
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
         $insert=Project::saveProject($request->all());
         if($insert){
             if($insert->status ==1){
@@ -684,8 +735,11 @@ class JobController extends Controller
     }
     public function contact_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $insert=Constructor_additional_contact::saveCustomerAdditional($request->all());
-        $data=Constructor_additional_contact::find($insert);
+        $data=$request->all();
+        $data['home_id']=Auth::user()->home_id;
+        // echo "<pre>";print_r($data);die;
+        $insert=Constructor_additional_contact::saveCustomerAdditional($data);
+        $data=Constructor_additional_contact::find($insert->id);
         if($data){
             if($data->status ==1){
                 echo '<option value="'.$data->id.'">'.$data->contact_name.'</option>';
@@ -696,6 +750,15 @@ class JobController extends Controller
     }
     public function site_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'site_name'=>'required',
+            'contact_name'=>'required',
+            'address'=>'required',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
         $result=Constructor_customer_site::saveCustomerAdditional($request->all());
         $data=Constructor_customer_site::find($result);
         if($data){

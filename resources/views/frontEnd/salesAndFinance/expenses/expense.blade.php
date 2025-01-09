@@ -86,6 +86,14 @@
 .select2-container .select2-selection--multiple{
     min-height:32px !important;
  }
+ .parent-container {
+    position: absolute;
+    background: #fff;
+    width:190px;
+}
+#productList li:hover{
+    cursor: pointer;
+}
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -100,35 +108,114 @@
 
         <div class="col-md-12 col-lg-12 col-xl-12 px-3">
             <div class="jobsection">
+                
                 <a href="#" class="profileDrop" onclick="modal_show()">Add</a>
-                <a href="#" class="profileDrop">Unauthorised (0)</a>
-                <a href="#" class="profileDrop">Authorised (0)</a>
-                <a href="#" class="profileDrop">Rejected (0)</a>
-                <a href="#" class="profileDrop">Paid (0)</a>
-                <a href="#" class="profileDrop">All (0)</a>
+                <a href="{{url('expenses?key=authorised&value=0')}}" class="profileDrop bgcolor" id="bgcolor1">Unauthorised ({{$unauthorisedCount}})</a>
+                <a href="{{url('expenses?key=authorised&value=1')}}" class="profileDrop bgcolor" id="bgcolor2">Authorised ({{$authorisedCount}})</a>
+                <a href="{{url('expenses?key=reject&value=1')}}" class="profileDrop bgcolor" id="bgcolor3">Rejected ({{$rejectCount}})</a>
+                <a href="{{url('expenses?key=paid&value=1')}}" class="profileDrop bgcolor" id="bgcolor4">Paid ({{$paidCount}})</a>
+                <a href="{{url('expenses')}}" class="profileDrop bgcolor" id="bgcolor5">All ({{$expenseCount}})</a>
                 <!-- <a href="#" class="profileDrop" id="impExpClickbtnPopup">Import/Export</a> -->
             </div>
         </div>
     </div>
+
+
+
+   
+
+
+
     <di class="row">
+    <div class="col-lg-12">
+        <div class="maimTable">
+            <div class="printExpt">
+                <div class="prntExpbtn">
+                    <a href="#!">Print</a>
+                    <a href="#!">Export</a>
+                </div>
+                <div class="searchFilter">
+                    <a href="javascript:void(0)" onclick="hideShowDiv()" class="hidebtn">Hide Search Filter</a>
+                </div>
+
+            </div>
+            <div class="searchJobForm" id="divTohide">
+                <form id="search_dataForm" class="p-4">
+                    <div class="row justify-content-center">
+                        <div class="col-md-3">
+                            <div class="row form-group mb-2">
+                                <label class="col-md-4 col-form-label text-end">Expense By:</label>
+                                <div class="col-md-8">
+                                    <select class="form-control editInput selectOptions" id="expenseBy">
+                                        <option selected disabled></option>
+                                        <option value="{{Auth::user()->id}}">{{Auth::user()->name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row form-group mb-2">
+                                <label class="col-md-4 col-form-label text-end">Expense Date:</label>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control editInput" id="start_date" >
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control editInput" id="end_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row form-group mb-2">
+                                <label class="col-md-4 col-form-label text-end">Customer:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control editInput" id="customer_name" placeholder="Type Customer Name">
+                                    <input type="hidden" id="selectedId" name="selectedId">
+                                    <div class="parent-container"></div>
+                                </div>
+                            </div>
+                            <div class="row form-group mb-2">
+                                <label class="col-md-4 col-form-label text-end">Keywords:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control editInput" id="keywords" keywords="" placeholder="Keywords to seacrh">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row form-group mb-2">
+                                <label class="col-md-4 col-form-label text-end">Billable:</label>
+                                <div class="col-md-8">
+                                    <select class="form-control editInput selectOptions" id="billable_search">
+                                        <option selected disabled>--Any--</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="pageTitleBtn justify-content-center">
+                                <a href="javascript:void(0)" onclick="searchBtn()" class="profileDrop px-3">Search </a>
+                                <a href="javascript:void(0)" onclick="clearBtn()" class="profileDrop px-3">Clear</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+
+        </div> <!-- End off main Table -->
+    </div>
         <div class="col-lg-12">
             <div class="maimTable mt-2 table_responsive">
-                <div class="printExpt">
-                    <div class="prntExpbtn">
-                        <a href="#!">Print</a>
-                        <a href="#!">Export</a>
-                    </div>
-                    <div class="searchFilter">
-                        <a href="#!">Show Search Filter</a>
-                    </div>
-
-                </div>
-                <!-- <div class="markendDelete">
+             
+                
+                <div class="markendDelete">
                     <div class="row">
                         <div class="col-md-7">
                             <div class="jobsection d-flex">
-                                <a href="#" class="profileDrop">Delete</a>
-                                <div class="pageTitleBtn p-0">
+                                <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                <!-- <div class="pageTitleBtn p-0">
                                     <div class="nav-item dropdown">
                                         <a href="#" class="nav-link dropdown-toggle profileDrop"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -142,33 +229,22 @@
                                                 product codes</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <!-- <div class="col-md-5">
                             <div class="pageTitleBtn p-0">
                                 <a href="#" class="profileDrop"> <i class="material-symbols-outlined">
                                         settings </i></a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
-                </div> -->
+                </div>
                 @if(session('message'))
                 <div class="alert alert-success text-center success_message mt-3 m-auto" style="height:50px; width:50%">
                     <p>{{ session('message') }}</p>
                 </div>
                 @endif
-                <div class="markendDelete">
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <div class="jobsection">
-                                        <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
-                                      
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
 
                 <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                     <thead>
@@ -196,7 +272,7 @@
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody id="expense_data">
                        <?php 
                         $net_amount=0;
                         $vat_amount=0;
@@ -218,8 +294,8 @@
                         <tr>
                             <td><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></td>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $val->expense_date }}</td>
-                            <td>{{ $user }}</td>
+                            <td><?php echo  date('d-m-Y',strtotime($val->expense_date));?></td>
+                            <td disabled>{{ $user }}</td>
                             <td>{{ $val->title }}</td>
                             <td>{{ $val->reference }}</td>
                             <td>{{ $val->job ?? "-" }}</td>
@@ -257,34 +333,36 @@
                         </tr>
                     <?php }?>
                     </tbody>
-                    <tr>
-                        <th colspan="2"></th>
-                        <th colspan="16">Page Sub Total:</th>
-                    </tr>
-                        <tr>
+                    @if(count($expense)>0)
+                        <tr class="calcualtionShowHide">
+                            <th colspan="2"></th>
+                            <th colspan="16">Page Sub Total:</th>
+                        </tr>
+                        <tr class="calcualtionShowHide">
                             <td colspan="9"></td>
                             
-                            <td>£<?php echo number_format($net_amount,2, '.', '');?></td>
-                            <td>£<?php echo number_format($vat_amount,2, '.', '');?></td>
-                            <td colspan="8">£<?php echo number_format($gross_amount,2, '.', '');?></td>
+                            <td id="Tablenet_amount">£<?php echo number_format($net_amount,2, '.', '');?></td>
+                            <td id="Tablevat_amount">£<?php echo number_format($vat_amount,2, '.', '');?></td>
+                            <td id="Tablegross_amount" colspan="8">£<?php echo number_format($gross_amount,2, '.', '');?></td>
                         </tr>
+                    @endif
                 </table>
                 <!-- Modal start here -->
                 <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel"
                         aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
+                        <div class="modal-dialog modal-lg">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="customerModalLabel">Expense</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
+                                
                                 <div class="modal-body">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="mt-1 mb-0 text-center" id="message_save"></div>
+                                </div>
                                     <div class="row">
-                                    <div class="alert alert-success text-center success_message" style="display:none;height:50px">
-                                    <p>The Expense has been saved Successfully</p>
-                                    </div>
-                                    
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="formDtail">
                                                 <form id="form_data" class="customerForm">
@@ -294,23 +372,23 @@
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-6 col-xl-6">
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense Name<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense Name<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="title" name="title" value="" placeholder="Expense Name">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Net Amount<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Net Amount<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="amount" name="amount" value="" placeholder="Net Amount">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
                                                                     <label for="inputProject"
-                                                                        class="col-sm-3 col-form-label">Vat<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                        class="col-sm-4 col-form-label">Vat<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <select class="form-control editInput selectOptions"
                                                                             id="vat" name="vat">
                                                                             <option value="0" selected>Custom VAT Amount</option>
@@ -321,29 +399,29 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Vat Amount</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Vat Amount</label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="vat_amount" name="vat_amount" value="" onkeyup="calculate_vat()">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Gross Amount<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Gross Amount<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="gross_amount" name="gross_amount" value="" disabled>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense Date<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense Date<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="date" class="form-control editInput"
                                                                             id="expense_date" name="expense_date" value="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense By</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense By</label>
+                                                                    <div class="col-sm-8">
                                                                         <select class="form-control editInput selectOptions"
                                                                             id="user_id" name="user_id">
                                                                             @foreach($users as $user_val)
@@ -354,8 +432,8 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Reference</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Reference</label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="reference" name="reference" value="">
                                                                     </div>
@@ -455,17 +533,17 @@
                                                     <div class="row">
                                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                                             <div class="mb-2 row">
-                                                                <label for="inputName" class="col-sm-3 col-form-label">Notes</label>
-                                                                <div class="col-sm-9">
+                                                                <label for="inputName" class="col-sm-2 col-form-label">Notes</label>
+                                                                <div class="col-sm-10">
                                                                     <textarea class="form-control textareaInput" name="notes" id="notes" rows="3" ></textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="mb-2 row">
-                                                                <label for="inputName" class="col-sm-3 col-form-label">Attachments</label>
-                                                                <div class="col-sm-9">
+                                                                <label for="inputName" class="col-sm-2 col-form-label">Attachments</label>
+                                                                <div class="col-sm-10">
                                                                     <input type="file" class="editInput"
                                                                         id="attachments" name="attachments" value="">
-                                                                    <p>(Max file size 25 MB)</p>
+                                                                    <p class="editInput">(Max file size 25 MB)</p>
                                                                     <p id="fileSizeError" style="color: red; display: none;">File larger than 25 MB.</p>
                                                                     <p id="file_name"></p>
                                                                 </div>
@@ -659,21 +737,28 @@
             contentType: false,
             cache: false,
             processData: false,
-                success: function(data) {
-                    console.log(data);
-                    if(data.vali_error){
-                        alert(data.vali_error);
+                success: function(response) {
+                    console.log(response);
+                    if(response.vali_error){
+                        alert(response.vali_error);
                         $("#email").css('border','1px solid red');
-                        $(window).scrollTop($('#email').position().top);
-                        return false;
-                    }else{
                         $(window).scrollTop(0);
-                        $("#email").css('border','');
-                        $('.alert').show();
+                        return false;
+                    }else if(response.success === true){
+                        $(window).scrollTop(0);
+                        $('#message_save').addClass('success-message').text(response.message).show();
                         setTimeout(function() {
-                            $('.alert').hide();
+                            $('#message_save').removeClass('success-message').text('').hide();
                             location.reload();
                         }, 3000);
+                    }else if(response.success === false){
+                        $('#message_save').addClass('error-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#error-message').text('').fadeOut();
+                        }, 3000);
+                    }else{
+                        alert("Something went wrong");
+                        return false;
                     }
                 },
                 error: function(xhr, status, error) {
@@ -729,7 +814,8 @@ $('.delete_checkbox').on('click', function() {
 });
  </script> 
  <script>
-    $(".fetch_data").on('click', function(){
+    // $(".fetch_data").on('click', function(){
+    $(document).on('click', '.fetch_data', function() {
         var id = $(this).data('id');
         var title = $(this).data('title');
         var amount = $(this).data('amount');
@@ -776,9 +862,14 @@ $('.delete_checkbox').on('click', function() {
         $('#notes').val(notes);
         // 
         // $('#attachments').val(attachments);
-        var imgSrc = "{{url('public/frontEnd/jobs/images/delete.png')}}";
-        var text = '&emsp;<img src="' + imgSrc + '" alt="" class="image_delete" data-delete="' + id + '">';
-        $("#file_name").html(attachments + text);
+        if(attachments){
+            var imgSrc = "{{url('public/frontEnd/jobs/images/delete.png')}}";
+            var text = '&emsp;<img src="' + imgSrc + '" alt="" class="image_delete" data-delete="' + id + '">';
+            $("#file_name").html(attachments + text);
+        }else{
+            $("#file_name").html('');
+        }
+        
     });
  </script>
  <script>
@@ -903,10 +994,216 @@ job_input.addEventListener('input', function() {
 </script>
 <script>
     $(document).ready(function(){
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+        const key = params.get('key');
+        const value = params.get('value');
+        console.log('Key:', key);
+        console.log('Value:', value);
+        $('.bgcolor').css("background-color","");
+        if (key === 'authorised' && value == 0) {
+            $("#bgcolor1").css("background-color", "#494949");
+        } else if (key === 'authorised' && value == 1) {
+            $("#bgcolor2").css("background-color", "#494949");
+        } else if (key === 'reject' && value == 1) {
+            $("#bgcolor3").css("background-color", "#494949");
+        } else if (key === 'paid' && value == 1) {
+            $("#bgcolor4").css("background-color", "#494949");
+        } else {
+            $("#bgcolor5").css("background-color", "#494949");
+        }
         setTimeout(function() {
             $('.alert').hide();
         }, 3000);
     })
+</script>
+<script>
+    $("#expenseBy").on('change', function(){
+        var expenseBy = $(this).find('option:selected');
+        if (expenseBy.val()) {
+            $(this).prop('disabled', true);
+        }
+    });
+    function clearBtn(){
+        $("#search_dataForm")[0].reset();
+    }
+    function searchBtn(){
+        var expenseBy=$("#expenseBy").val();
+        var customer_name=$("#customer_name").val();
+        var selectedId=$("#selectedId").val();
+        var billable=$("#billable_search").val();
+        var start_date=$("#start_date").val();
+        var end_date=$("#end_date").val();
+        var keywords=$("#keywords").val();
+        const Httpurl = new URL(window.location.href);
+        const params = new URLSearchParams(Httpurl.search);
+        const key = params.get('key');
+        const value = params.get('value');
+        let isEmpty = true;
+        $("#search_dataForm").find("input, select, textarea").each(function() {
+            if ($(this).val() && $(this).val().trim() !== "") {
+                isEmpty = false;
+                return false;
+            }
+        });
+
+        if (isEmpty) {
+            alert("Please fill in at least one field before searching.");
+            return false;
+        }
+        if(start_date != '' && end_date == ''){
+            alert("Please choose both date");
+            return false;
+        }
+        if(start_date == '' && end_date != ''){
+            alert("Please choose both date");
+            return false;
+        }
+        
+        $.ajax({
+            url: "{{ url('searchExpenses') }}",
+            method: 'post',
+            data: {
+                expenseBy: expenseBy,customer_name:customer_name,selectedId:selectedId,billable:billable,start_date:start_date,end_date:end_date,keywords:keywords,key:key,value:value,_token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                console.log(response);
+                // return false;
+                var table = $('#exampleOne').DataTable();
+                table.destroy();
+                if(response.data.length>0){
+                    $("#expense_data").html(response.data);
+                    $("#Tablenet_amount").text("£"+response.net_amount);
+                    $("#Tablevat_amount").text("£"+response.vat_amount);
+                    $("#Tablegross_amount").text("£"+response.gross_amount);
+                }else{
+                    $("#expense_data").html(response.data);
+                    $(".calcualtionShowHide").hide();
+                }
+                // $('#exampleOne').DataTable();
+                $('#exampleOne').DataTable({
+                    order: [[1, 'asc']],
+                    language: {
+                        paginate: {
+                            previous: "Previous",
+                            next: "Next"
+                        },
+                        info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                        infoEmpty: "No entries available",
+                        emptyTable: '<span style="color: red; font-weight: bold;">Sorry, there are no items available</span>',
+                        infoFiltered: "(filtered from _MAX_ total entries)",
+                        lengthMenu: "Show _MENU_ entries",
+                        search: "Search:",
+                        zeroRecords: "No matching records found"
+                    },
+                    paging: true
+                });
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+            }
+        }); 
+    }
+</script>
+<script>
+    $(document).ready(function() {
+        $('#customer_name').on('keyup', function() {
+            let search_query = $(this).val();
+            const divList = document.querySelector('.parent-container');
+
+            if (search_query === '') {
+                divList.innerHTML = '';
+            }
+            if (search_query.length > 2) {
+                $.ajax({
+                    url: "{{ url('searchCustomerName') }}",
+                    method: 'post',
+                    data: {
+                        search_query: search_query,_token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // return false;
+                        divList.innerHTML = "";
+                        const div = document.createElement('div');
+                        div.className = 'container';
+
+                      
+                        const ul = document.createElement('ul');
+                        ul.id = "productList";
+                        if(response.data.length >0){
+                            response.data.forEach(item => {
+                                const li = document.createElement('li'); 
+                                li.textContent = item.name; 
+                                li.id = item.id;
+                                li.name = item.name;
+                                li.className = "editInput";
+                                ul.appendChild(li); 
+                                const hr = document.createElement('hr');
+                                // hr.className='dropdown-divider';
+                                ul.appendChild(hr);
+                            });
+
+                            div.appendChild(ul);
+
+                            divList.appendChild(div);
+
+                            ul.addEventListener('click', function(event) {
+                                divList.innerHTML = '';
+                                document.getElementById('customer_name').value = '';
+                                if (event.target.tagName.toLowerCase() === 'li') {
+                                    const selectedId = event.target.id;
+                                    const selectedName = event.target.name;
+                                    console.log('Selected Customer ID:', selectedId);
+                                    console.log('Selected Customer Name:', selectedName);
+                                    $("#customer_name").val(selectedName);
+                                    $("#selectedId").val(selectedId);
+                                    // getCustomerData(selectedId,selectedName);
+                                }
+                            });
+                        }else{
+                            const Errorli = document.createElement('li'); 
+                            Errorli.textContent = 'Sorry Data Not found'; 
+                            Errorli.id = 'searchError';
+                            Errorli.className = "editInput";
+                            ul.appendChild(Errorli); 
+                            div.appendChild(ul);
+                            divList.appendChild(div);
+                            setTimeout(function() {
+                                divList.innerHTML = '';
+                            }, 1000);
+                        }
+
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            } else {
+                divList.innerHTML = '';
+                $('#results').empty();
+            }
+        });
+
+    });
+    $("#end_date").change(function () {
+      var startDate = document.getElementById("start_date").value;
+      var endDate = document.getElementById("end_date").value;
+
+      if ((Date.parse(startDate) >= Date.parse(endDate))) {
+          alert("End date should be greater than Start date");
+          document.getElementById("end_date").value = "";
+      }
+  });
+  $("#start_date").change(function () {
+      var startDate = document.getElementById("start_date").value;
+      var endDate = document.getElementById("end_date").value;
+
+      if ((Date.parse(endDate) <= Date.parse(startDate))) {
+          alert("Start date should be less than End date");
+          document.getElementById("start_date").value = "";
+      }
+  });
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="jobsection">
-                    <a href="#!" data-bs-toggle="modal" data-bs-target="#sourceModel" class="profileDrop open-modal">Add</a>
+                    <a href="javascript:void(0)" class="profileDrop" onclick="itemsAddCatalogueModal(1)">Add</a>
                 </div>
             </div>
         </div>
@@ -22,16 +22,17 @@
                     <div class="printExpt">
                         <div class="prntExpbtn">
                             <a href="#!">Print</a>
-                            <a href="#!">Export</a>
+                            <!-- <a href="#!">Export</a> -->
                         </div>
-                        <div class="searchFilter">
+                        <!-- <div class="searchFilter">
                             <a href="#!">Show Search Filter</a>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="markendDelete">
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="jobsection">
+                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                 </div>
                             </div>
                             <div class="col-md-5">
@@ -43,9 +44,9 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll"> <label for="selectAll"> </label></th>
                                 <th>#</th>
-                                <th>Catalogues</th>
+                                <th>Catalogue</th>
                                 <th>Type</th>
                                 <th>Item Count</th>
                                 <th>Created On</th>
@@ -53,8 +54,37 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-
+    
+                        <tbody id="CatalogueDataList">
+                            @foreach($catalogues as $key=>$val)
+                                <tr>
+                                    <td><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></td>
+                                    <td>{{++$key}}</td>
+                                    <td>{{$val->name}}</td>
+                                    <td>{{($val->catalogue_type == 1 ? 'Catalogue Pricing Only' : 'Mixed Pricing')}}</td>
+                                    <td>{{$val->product_catalogue_prices_count}}</td>
+                                    <td>{{$val->created_at}}</td>
+                                    <td>
+                                        @if($val->status == 1)
+                                            <span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>
+                                        @else
+                                            <span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="pageTitleBtn p-0">
+                                            <div class="nav-item dropdown">
+                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Action
+                                                </a>
+                                                <div class="dropdown-menu fade-up m-0">
+                                                    <a href="javascript:void(0)" class="dropdown-item col-form-label fetch_data" data-id="{{$val->id}}" data-name="{{$val->name}}" data-catalogue_type="{{$val->catalogue_type}}" data-status="{{$val->status}}" data-description="{{$val->description}}">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div> <!-- End off main Table -->
@@ -62,105 +92,100 @@
             </di>
         </div>
 </section>
-<!-- popup start -->
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="sourceModel" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content add_Customer">
-            <div class="modal-header terques-bg">
-                <button aria-hidden="true" data-bs-dismiss="modal" class="close" type="button">×</button>
-                <h5 class="modal-title pupTitle">Catalogue - Add</h5>
-            </div>
-            <div class="modal-body">
-                <form role="form" id="lead_source_form">
-                    @csrf
-                    <div><span id="error-message" class="error"></span></div>
-                    <div class="row form-group">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Catalogue Name </label>
-                        <div class="col-md-9">
-                            <input type="hidden" name="lead_source_id" id="lead_source_id">
-                            <input type="text" name="title" class="form-control editInput " placeholder="Catalogue Name" id="title">
-                        </div>
-                    </div>
-                    <div class="row form-group mt-3">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Description </label>
-                        <div class="col-md-9">
-                            <textarea class="form-control textareaInput" name="" id="" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="row form-group mt-3">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Type</label>
-                        <div class="col-md-9">
-                            <select name="status" id="modale_status" class="form-control editInput">
-                                <option value="1">Catelogue Pricing Only</option>
-                                <option value="2">Mixed Pricing</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group mt-3">
-                        <label class="col-lg-3 col-sm-3 col-form-label">Status</label>
-                        <div class="col-md-9">
-                            <select name="status" id="modale_status" class="form-control editInput">
-                                <option value="1">Active</option>
-                                <option value="0">InActive</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn profileDrop" id="saveChanges">Save</button>
-                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end Popup  -->
-
 <script>
-    $(document).ready(function() {
-        $('.open-modal').on('click', function() {
-            var itemId = $(this).data('id');
-            var itemTitle = $(this).data('title');
-            var itemStatus = $(this).data('status');
-            $('#lead_source_id').val('');
-            $('#title').val('');
-            $('#modale_status').val(1);
-            $('.modal-title').text('');
-            $('#saveChanges').text('');
-
-            if (itemId) {
-                // Editing existing record
-                $('#lead_source_id').val(itemId);
-                $('#title').val(itemTitle);
-                $('#modale_status').val(itemStatus);
-                $('.modal-title').text('Edit Lead Sources');
-                $('#saveChanges').text('Save Changes');
-            } else {
-                // Adding new record (clear form fields if needed)
-
-                $('.modal-title').text('Add Lead Sources');
-                $('#saveChanges').text('Add');
-            }
-        });
-
-        $('#saveChanges').on('click', function() {
-            var formData = $('#lead_source_form').serialize();
-
+   $("#deleteSelectedRows").on('click', function() {
+    let ids = [];
+    
+    $('.delete_checkbox:checked').each(function() {
+        ids.push($(this).val());
+    });
+    if(ids.length == 0){
+        alert("Please check the checkbox for delete");
+    }else{
+        if(confirm("Are you sure to delete?")){
+            // console.log(ids);
+            var token='<?php echo csrf_token();?>'
+            var model='ProductCatalogue';
             $.ajax({
-                url: '{{ route("lead.ajax.saveLeadSource") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    $('#secondModal').modal('hide');
-                    location.reload();
+                type: "POST",
+                url: "{{url('/bulk_delete')}}",
+                data: {ids:ids,model:model,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if(data){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
                 },
                 error: function(xhr, status, error) {
-                    console.error(error);
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
                 }
             });
+        }
+    }
+    
+});
+$('.delete_checkbox').on('click', function() {
+    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+        $('#selectAll').prop('checked', true);
+    } else {
+        $('#selectAll').prop('checked', false);
+    }
+});
+ </script> 
+ <script>
+    $('.fetch_data').on('click', function(){
+        var cat_id=$(this).data('id');
+        var name=$(this).data('name');
+        var catalogue_type=$(this).data('catalogue_type');
+        var description=$(this).data('description');
+        var status=$(this).data('status');
+        $("#nav-profile-tab").show();
+        $("#productname").val(name);
+        $("#description").val(description);
+        $("#type").val(catalogue_type);
+        $("#catalogue_status").val(status);
+        $("#catalogue_id").val(cat_id);
+        $.ajax({
+            url: '{{ url("item/ProductCataloguePriceList") }}',
+            method: 'Post',
+            data: {
+                _token:'{{ csrf_token() }}',cat_id:cat_id 
+            },
+            success: function(response) {
+                console.log(response.data);
+                var html1='';
+                if (response.data.length === 0) {
+                    html1 = `<tr><td colspan="5" class="text-center" style="color:red">Sorry, there are no items available</td></tr>`;
+                }else{
+                    response.data.forEach((item) => {
+                        var formattedPrice1 = parseFloat(item.catalogue_price).toFixed(2); 
+                        html1+=`  <tr> 
+                                    <td scope="row">`+ (item.product_code ?? "") +`<input type="hidden" name="product_id" id="product_id" value="`+ item.product_id +`"> <input type="hidden" name="product_type" id="product_type" value="`+ item.product_type +`"><input type="hidden" name="ProductCatPrice" id="ProductCatPrice" value="`+item.id+`"></td> 
+                                    <td>`+item.product_name+`</td> 
+                                    <td class="text-end">£`+item.default_price+`</td> 
+                                    <td class="text-center">
+                                        <input type="text" value="`+formattedPrice1+`" name="item_catalogue_item_prices[]" class="text item_price numericOnly catalogueItemCustomPrice" data-item_id="11" tabindex="1">
+                                    </td>
+                                    <td>
+                                        <img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="data_delete image_style" data-delete="`+item.id+`">
+                                    </td>
+                                </tr>`;
+                        
+                    });  
+                }
+                $("#CatalogueData").html(html1); 
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
         });
+        $('#itemsAddCatalogueModal').modal('show');
     });
-</script>
+ </script>
+@include('frontEnd.salesAndFinance.item.common.addcataloguemodal')
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

@@ -3987,7 +3987,7 @@ td.details table tr td,.dataTable tr:last-child {
     border:none !important;
 }
 .editable-table .dataTables_filter {
-    width:100%;
+    width: 310px;
 }
 tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gradeX,table.display tr.gradeX,tr.even.gradeU td.sorting_1,tr.even td.sorting_1,table.display tr.even.gradeC,table.display tr.gradeC,tr.odd.gradeC td.sorting_1,table.display tr.even.gradeU,table.display tr.gradeU,tr.odd.gradeU td.sorting_1 {
     background: none !important;
@@ -6066,4 +6066,44 @@ canvas#canv1 {
 /* end here */
 .popupcloseBtn .modal-header .close {
     margin-top: -20px;
+}
+.table-responsive {
+    overflow-x: scroll;
+}
+.table-responsive::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+.table-responsive::-webkit-scrollbar {
+    height: 10px;
+  }
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #1fb5ad; 
+    border-radius: 10px;
+  }
+.table-responsive .table thead > tr > th, .table-responsive .table tbody > tr > td{
+    white-space: nowrap;
+}
+.table-responsive .table tbody > tr > td a span i, .table-responsive .table tbody > tr > td a i {
+    font-size: 18px !important;
+}
+.table-responsive .table tbody > tr > td a{
+    margin: 0 6px;
+}
+.extra_Information{
+    padding: 15px;
+    float: left;
+    width: 100%;
+}
+.tabform .form-group {
+    margin-bottom: 15px;
+    display: inline-block;
+    width: 100%;
+}
+.tabform .modal-footer {
+    margin-top: 0px;
+    padding: 8px 20px;
+}
+.extra_informationTabs ul.nav li a {
+    padding: 6px 20px;
 }

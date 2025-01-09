@@ -195,7 +195,8 @@
                                     <div class="col-sm-7">
                                         <select class="form-control editInput selectOptions" id="salestax"
                                             onclick="taxratelist(1)" name="tax_rate">
-                                            <option value="20">Vat-20</option>
+                                            <!-- <option value="20">Vat-20</option> -->
+                                            <option value="">-Please Select-</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1 ps-0">
@@ -554,7 +555,8 @@ Array.prototype.slice.call(forms)
                     // Loop through the data and append options to the select box
                     $.each(data, function(index, category) {
                         $select.append($('<option>', {
-                            value: category.tax_rate, // Assuming the id field
+                            // value: category.tax_rate, // Assuming the id field
+                            value: category.id, // Assuming the id field
                             text: category.name // Assuming the name field
                         }));
                     });
@@ -646,6 +648,7 @@ Array.prototype.slice.call(forms)
 </script>
 <script>
     function itemsAddProductModal(th,id=null){
+        // alert(th)
         if(th==1){
             $('#attachment,#generateproductcode,#customerlist').css('display','block');
             $('.productimages,.productuploadedit,#onecustomer').css('display','none');

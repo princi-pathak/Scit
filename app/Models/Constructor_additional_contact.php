@@ -11,6 +11,7 @@ class Constructor_additional_contact extends Model
     protected $table = 'constructor_additional_contacts';
 
     protected $fillable = [
+        'home_id',
         'customer_id',
         'contact_name',
         'job_title_id',
@@ -24,6 +25,7 @@ class Constructor_additional_contact extends Model
         'default_billing',
         'fax',
         'country_id',
+        'userType',
         'status',
     ];
 
@@ -33,6 +35,12 @@ class Constructor_additional_contact extends Model
             ['id' => $data['id'] ?? null],
             $data
         );
-        return $insert->id;
+        return $insert;
+    }
+    public static function getAllcrmContacts($id){
+        return self::where(['customer_id'=>$id,'deleted_at'=>null])->whereNotNull('customer_id');
+    }
+    public function suppliers(){
+        return $this->belongsTo(Supplier::class, 'customer_id');
     }
 }

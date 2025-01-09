@@ -9,7 +9,7 @@ class Crm_customer_call extends Model
 {
     use HasFactory;
     protected $table="crm_customer_calls";
-    protected $fillable=['home_id', 'customer_id', 'direction', 'telephone', 'crm_type_id', 'notes', 'notify', 'user_id', 'notification', 'sms', 'email', 'customer_visibility'];
+    protected $fillable=['home_id', 'customer_id', 'contact_id', 'direction', 'telephone', 'crm_type_id', 'notes', 'notify', 'user_id', 'notification', 'sms', 'email', 'customer_visibility'];
 
     public static function save_customer_call($data){
         return self::updateOrCreate(
@@ -18,7 +18,7 @@ class Crm_customer_call extends Model
         );
     }
     public static function getAllcrmlist($id){
-        return self::where('customer_id',$id)->get();
+        return self::where('customer_id', $id);
     }
     
 }

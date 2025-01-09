@@ -24,7 +24,7 @@
                                     <div id="editable-sample_length" class="dataTables_length">
                                         <div class="btn-group">
                                             <a href="#" data-toggle="modal" class="open-modal" data-target="#secondModal">
-                                                <button id="editable-sample_new" class="btn btn-primary">New Region <i class="fa fa-plus"></i></button>
+                                                <button id="editable-sample_new" class="btn btn-primary">Add Region <i class="fa fa-plus"></i></button>
                                             </a>
                                         </div>
                                     </div>
@@ -91,7 +91,7 @@
                         <div class="col-sm-9">
                         <select name="status" id="status" class="form-control">
                             <option value="1">Active</option>
-                            <option value="0">InActive</option>
+                            <option value="0">Inactive</option>
                         </select>
 </div>
                     </div>
@@ -126,7 +126,7 @@
             } else {
                 // Adding new record (clear form fields if needed)
               
-                $('.modal-title').text('Add Payment Type');
+                $('.modal-title').text('Add Region');
                 $('#saveChanges').text('Add');
             }
         });

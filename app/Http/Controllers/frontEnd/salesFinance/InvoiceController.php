@@ -4,7 +4,7 @@ namespace App\Http\Controllers\frontEnd\salesFinance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Construction_account_code;
@@ -52,9 +52,18 @@ class InvoiceController extends Controller
         if ($validator->fails()) {
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
-
-        $data=Construction_tax_rate::saveTax_rate($request->all());
-        return response()->json(['data' => $data]);
+        try{
+            $data=Construction_tax_rate::saveTax_rate($request->all());
+            if($request->id == ''){
+                return response()->json(['success'=>true,'message'=>'Tax Rate added successfully done','data' => $data]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'Tax Rate updated successfully done','data' => $data]);
+            }
+        }catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+        
     }
 
     public function getAccountCode(){
@@ -65,4 +74,37 @@ class InvoiceController extends Controller
             'data' => $data ? $data : 'No data.'
         ]);
     }
+
+    public function getActiveAccountCode(){
+        $data =  Construction_account_code::getActiveAccountCode(Auth::user()->home_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function getActiveTaxRate(){
+        $data = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function getTaxRateOnTaxId(Request $request){
+
+        $data = Construction_tax_rate::getTaxRateOnId($request->id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+
+    
+
+    
 }

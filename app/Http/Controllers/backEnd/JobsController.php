@@ -4,7 +4,7 @@ namespace App\Http\Controllers\backEnd;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Session,DB;
+use Session,DB,Validator;
 use Carbon\Carbon;
 use App\Customer;
 use App\Models\Job;
@@ -14,9 +14,13 @@ use App\Models\Country;
 use App\Models\Job_type;
 use App\Models\Work_flow;
 use App\Models\Job_title;
+use App\Models\ProductGroup;
 use App\Models\Job_recurring;
 use App\Models\Product_category;
+use App\Models\ProductCatalogue;
+use App\Models\ProductGroupProduct;
 use App\Models\Construction_tax_rate;
+use App\Models\ProductCataloguePrice;
 use App\Models\Workflow_notification;
 use App\Models\Construction_account_code;
 use App\Models\Construction_jobassign_product;
@@ -562,7 +566,7 @@ class JobsController extends Controller
             $task='Add';
         }
         $data['cat']=Product_category::find($key);
-        $data['category']=Product_category::with('parent', 'children')->where('status',1)->get();
+        $data['category']=Product_category::with('parent', 'children')->where('status',1)->whereNull('deleted_at')->get();
         $data['task']=$task;
         $data['page']='product_category';
         $data['del_status']=0;
@@ -570,23 +574,31 @@ class JobsController extends Controller
     }
     public function product_cat_save_data(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $admin   = Session::get('scitsAdminSession');
-        $home_id = $admin->home_id;
-        if($request->id == ''){
-            $table=new Product_category;
-            $table->home_id=$home_id;
-            $table->name=$request->name;
-            $table->cat_id=$request->catetgory_id;
-            $table->save();
-            Session::flash('success','Added Successfully Done');
-            echo "done";
-        }else {
-            $table=Product_category::find($request->id);
-            $table->home_id=$home_id;
-            $table->name=$request->name;
-            $table->save();
-            Session::flash('success','Updated Successfully Done');
-            echo "done";
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->first()]);
+        }
+        if(Product_category::checkproductcategoryname($request->name,$request->productCategoryID)==0){
+            try{
+                Product_category::saveProductCategoryData($request->all(), $request->productCategoryID);
+                $Data=Product_category::with('parent', 'children')->where('status',1)->whereNull('deleted_at')->get();
+                if($request->productCategoryID){
+                    return response()->json(['success'=>true,'message'=>'Product Category Updated Successfully Done.','data'=>$Data]);
+                }else{
+                    return response()->json(['success'=>true,'message'=>'Product Category Added Successfully Done.','data'=>$Data]);
+                }
+                
+            }catch (\Exception $e) {
+                return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            }
+        }else{
+            return response()->json([
+                'success' => false,
+                'errors' => 'This Product category already exist.',
+                'lastid' => 0
+            ]);
         }
     }
     public function product_list(Request $request){
@@ -636,9 +648,6 @@ class JobsController extends Controller
     public function product_delete(Request $request){
         $id=base64_decode($request->id);
         $delete= Product::where('id', $id)->update(['deleted_at' => Carbon::now()]);
-        // $table=Product::find($id);
-        // $table->status=2;
-        // $table->save();
         Session::flash('success','Deleted Successfully Done');
         echo "done";  
     }
@@ -782,29 +791,32 @@ class JobsController extends Controller
     }
     public function tax_save_data(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $admin   = Session::get('scitsAdminSession');
-        $home_id = $admin->home_id;
-        if($request->id == '')
-        {
-            $table=new Construction_tax_rate;
-            $table->home_id=$home_id;
-            $table->name=$request->name;
-            $table->tax_rate=$request->tax_rate;
-            $table->tax_code=$request->tax_code;
-            $table->exp_date=$request->exp_date;
-            $table->save();
-            Session::flash('success','Addedd Successfully Done');
-            echo "done";
-        }else {
-            $table=Construction_tax_rate::find($request->id);
-            $table->home_id=$home_id;
-            $table->name=$request->name;
-            $table->tax_rate=$request->tax_rate;
-            $table->tax_code=$request->tax_code;
-            $table->exp_date=$request->exp_date;
-            $table->save();
-            Session::flash('success','Updated Successfully Done');
-            echo "done";
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'tax_rate' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->first()]);
+        }
+        if(Construction_tax_rate::checkTaxRatename($request->name,$request->taxrateID)==0){
+            try{
+                $saveData = Construction_tax_rate::saveTaxRateData($request->all(), $request->taxrateID);
+              
+                if($request->taxrateID){
+                    return response()->json(['success'=>true,'message'=>'Tax rate Updated Successfully Done.','data'=>$saveData]);
+                }else{
+                    return response()->json(['success'=>true,'message'=>'Tax Rate Added Successfully Done.','data'=>$saveData]);
+                }
+                
+            }catch (\Exception $e) {
+                return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            }
+        }else{
+            return response()->json([
+                'success' => false,
+                'errors' => 'This Tax Rate already exist.',
+                'lastid' => 0
+            ]);
         }
     }
     public function tax_status_change(Request $request){
@@ -826,6 +838,8 @@ class JobsController extends Controller
         echo "done";
     }
     public function product_add(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
         $key=base64_decode($request->key);
         if($key){
             $task='Edit';
@@ -834,10 +848,10 @@ class JobsController extends Controller
         }
         $data['product']=Product::find($key);
         // $data['product_category']=Product_category::where('status',1)->get();
-        $data['product_category']=Product_category::with('parent', 'children')->where('status',1)->get();
+        $data['product_category']=Product_category::with('parent', 'children')->where('status',1)->whereNull('deleted_at')->get();
         // echo "<pre>";print_r($data['product_category']);die;
-        $data['tax']=Construction_tax_rate::where('status',1)->get();
-        $data['acc_code']=Construction_account_code::where('status',1)->get();
+        $data['tax']=Construction_tax_rate::where(['deleted_at'=>null,'status'=>1])->get();
+        $data['acc_code']=Construction_account_code::where(['deleted_at'=>null,'status'=>1])->get();
         $data['supplier']=Construction_product_supplier_list::where('product_id',$key)->get();
         // echo "<pre>";print_r($data['supplier']);die;
         $data['task']=$task;
@@ -845,87 +859,56 @@ class JobsController extends Controller
         $data['del_status']=0;
         $data['product_count']=Product::count();
         $data['data']=['Ram','Deena','Harsh'];
-        // echo "<pre>";print_r($data['product_count']);die;
+        $data['customer']=Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
+        // echo "<pre>";print_r($data['customer']);die;
         return view('backEnd.jobs_management.product_form',$data);
     }
     public function product_save_data(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        $admin   = Session::get('scitsAdminSession');
-        $home_id = $admin->home_id;
-        $supplier_id=$request->supplier_id;
-        $part_number=$request->part_number;
-        $cost_price_supplier=$request->cost_price_supplierl;
+        
+        $validator = Validator::make($request->all(), [
+            'product_name' => 'required',
+            'price' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->first()]);
+        }
         if ($request->hasFile('attachment')) {
             $imageName = time().'.'.$request->attachment->extension();      
             $request->attachment->move(public_path('images/jobs'), $imageName);
         } else {
             $imageName=$request->old_image; 
         }
-        if($request->id == ''){
-            $table= new Product;
-            $table->home_id=$home_id;
-            $table->adder_id=$request->Customer_id;
-            $table->cat_id=$request->product_category;
-            $table->product_name=$request->name;
-            $table->cost_price=$request->cost_price;
-            $table->margin=$request->markup;
-            $table->price=$request->price;
-            $table->tax_rate=$request->tax_rate;
-            $table->description=$request->description;
-            $table->product_code=$request->product_code;
-            $table->show_temp=$request->show_temp;
-            $table->bar_code=$request->bar_code;
-            $table->tax_id=$request->tax_id;
-            $table->nominal_code=$request->nominal_code;
-            $table->sales_acc_code=$request->sales_acc_code;
-            $table->purchase_acc_code=$request->purchase_acc_code;
-            $table->expense_acc_code=$request->expense_acc_code;
-            $table->location=$request->location;
-            $table->attachment=$imageName;
-            $table->save();
+        $requestData=$request->all();
+        $requestData['attachment']=$imageName ?? '';
+        $requestData['cat_id']=$request->product_category ?? '';
+        $requestData['show_temp'] = $request->show_temp === 'on' ? 1 : 0;
+        $requestData['customer_only'] = $request->Customer_id;
+        $requestData['margin'] = $request->markup;
+        $supplier_id=$request->supplier_id;
+        $part_number=$request->part_number;
+        $cost_price_supplier=$request->cost_price_supplierl;
+        try{
+            $saveData = Product::saveProductdata($requestData, $request->productID);
             for($i=0;$i<count($supplier_id);$i++){
-                $productsupplier_table=new Construction_product_supplier_list;
-                $productsupplier_table->product_id=$table->id;
-                $productsupplier_table->supplier_id=$supplier_id[$i];
-                $productsupplier_table->part_number=$request->part_number[$i];
-                $productsupplier_table->cost_price_supplier=$request->cost_price_supplier[$i];
-                $productsupplier_table->save();
+                $data=[
+                    'id'=>$request->product_supplier_list_id[$i] ?? null,
+                    'product_id'=>$saveData->id,
+                    'supplier_id'=>$supplier_id[$i],
+                    'part_number'=>$request->part_number[$i],
+                    'cost_price_supplier'=>$request->cost_price_supplier[$i]
+                ];
+                $productsupplier_table=Construction_product_supplier_list::saveProductSupplierList($data);
             }
-            Session::flash('success','Added Successfully Done');
-            echo "done";
-        }else {
-            // echo "<pre>";print_r($request->all());die;
-            $table=Product::find($request->id);
-            $table->home_id=$home_id;
-            $table->adder_id=$request->Customer_id;
-            $table->cat_id=$request->product_category;
-            $table->product_name=$request->name;
-            $table->cost_price=$request->cost_price;
-            $table->margin=$request->markup;
-            $table->price=$request->price;
-            $table->tax_rate=$request->tax_rate;
-            $table->description=$request->description;
-            $table->product_code=$request->product_code;
-            $table->show_temp=$request->show_temp;
-            $table->bar_code=$request->bar_code;
-            $table->tax_id=$request->tax_id;
-            $table->nominal_code=$request->nominal_code;
-            $table->sales_acc_code=$request->sales_acc_code;
-            $table->purchase_acc_code=$request->purchase_acc_code;
-            $table->expense_acc_code=$request->expense_acc_code;
-            $table->location=$request->location;
-            $table->attachment=$imageName;
-            $table->save();
-            for($i=0;$i<count($supplier_id);$i++){
-                $productsupplier_table=new Construction_product_supplier_list;
-                $productsupplier_table->product_id=$request->id;
-                $productsupplier_table->supplier_id=$supplier_id[$i];
-                $productsupplier_table->part_number=$request->part_number[$i];
-                $productsupplier_table->cost_price_supplier=$request->cost_price_supplier[$i];
-                $productsupplier_table->save();
+          
+            if($request->productID){
+                return response()->json(['success'=>true,'message'=>'Product Updated Successfully Done.','data'=>$saveData]);
+            }else{
+                return response()->json(['success'=>true,'message'=>'Product Added Successfully Done.','data'=>$saveData]);
             }
-            Session::flash('success','Updated Successfully Done');
-            echo "done";
+            
+        }catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
     public function supplier_result(Request $request){
@@ -942,10 +925,239 @@ class JobsController extends Controller
                    $res.='</select>
                 </td>
                 <td><input type="text" id="part_number" name="part_number[]"></td>
-                <td><span class="currency">£</span><input type="text" id="cost_price_supplier" name="cost_price_supplier[]"></td>
+                <td><span class="currency">$</span><input type="text" id="cost_price_supplier" name="cost_price_supplier[]"></td>
                 <td class="delete_row">X</td>
             </tr>';
         echo $res;
+    }
+    public function catalogue(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $query = ProductCatalogue::withCount('productCataloguePrices')->where(['home_id' => $home_id,'deleted_at'=>null])->orderBy('id','DESC');
+
+            $search = '';
+
+            if(isset($request->limit)) {
+                $limit = $request->limit;
+                Session::put('page_record_limit',$limit);
+            } else {
+
+                if(Session::has('page_record_limit')){
+                    $limit = Session::get('page_record_limit');
+                } else{
+                    $limit = 20;
+                }
+            }
+            if(isset($request->search))
+            {
+                $search      = trim($request->search);
+                $query = $query->where('project_name','like','%'.$search.'%');
+            }
+            $catalogue = $query->paginate($limit);
+            $data['catalogue']=$catalogue;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='catalogue';
+            return view('backEnd.jobs_management.catalogue',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
+    }
+    public function save_catalogue(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->first()]);
+        }
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($request->TabId == 0){
+            $catlogueTable=['id'=>$request->id ?? null,'home_id'=>$home_id,'user_id'=>$admin->id,'name'=>$request->name,'description'=>$request->description,'catalogue_type'=>$request->catalogue_type,'status'=>$request->status];
+            // echo "<pre>";print_r($catlogueTable);die;
+            try {
+                $catlogueSave=ProductCatalogue::CatalogueSave($catlogueTable);
+                // $catlogueSave=['id'=>1];
+                if($request->id){
+                    return response()->json(['success' => true,'message'=>'Catalogue Updated Successfully Done', 'data' => $catlogueSave]);
+                }else{
+                    return response()->json(['success' => true,'message'=>'Catalogue Added Successfully Done', 'data' => $catlogueSave]);
+                }
+                
+            }catch (\Exception $e) {
+                return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            }
+        }else{
+            // echo count($request->tableData);die;
+            $cataloguePriceResults = [];
+            foreach($request->tableData as $val){
+                 $cataloguePriceTable=[
+                        'id'=>$val['id'] ?? null,
+                        'product_catalogue_id'=>$request->catalogue_id,
+                        'product_id'=>$val['product_id'],
+                        'product_code'=>$val['product_code'],
+                        'product_name'=>$val['product_name'],
+                        'default_price'=>$val['price'],
+                        'catalogue_price'=>$val['custom_price'],
+                        'product_type'=>$val['product_type'],
+                        'status'=>1
+                    ];
+                try {
+                        $cataloguePriceSave=ProductCataloguePrice::productCatalogueSave($cataloguePriceTable);
+                        $cataloguePriceResults[] = $cataloguePriceSave;
+                }catch (\Exception $e) {
+                    return response()->json(['success' => false, 'message' => $e->getMessage()]);
+                }
+                
+            }
+            return response()->json(['success' => true, 'data' => $cataloguePriceResults]);
+            
+        }
+    }
+    public function getCategoryList(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $data = Product_category::getProductCategory($home_id);
+        
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+    public function getProduct_List(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($request->type == 4){
+            $data = ProductGroup::getProductGroupData($home_id);   
+        }else{
+            $data = Product::getProductList($request->type);
+        }
+
+        return response()->json([
+            'success' => (bool) $data,
+            'type'=>$request->type ?? null,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+    public function getProductListCounts(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $data['product'] = Product::getProductListCountType(1);
+        $data['service'] = Product::getProductListCountType(2);
+        $data['consumable'] = Product::getProductListCountType(3);
+        $product_group= ProductGroup::getProductGroupData($home_id); 
+         $data['product_group']=count($product_group);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+    public function getProductSelectId(Request $request){
+        $data =  Product::getProductFromId($request->id);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+    public function ProductCataloguePriceList(Request $request){
+        $catalogues = ProductCataloguePrice::where(['product_catalogue_id'=>$request->cat_id,'status'=>1,'deleted_at'=>null])->get();
+        return response()->json(['data'=>$catalogues]);
+    }
+    public function ProductGroupProductsdetail(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $ProductGroupProduct=ProductGroup::with('productGroupProduct')->where('id',$request->id)->get();
+        return response()->json(['data'=>$ProductGroupProduct]);
+    }
+    public function product_group(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        if($home_id){
+            $query = ProductGroup::where('home_id',$home_id)->whereNull('deleted_at')->orderBy('id','DESC');
+
+            $search = '';
+
+            if(isset($request->limit)) {
+                $limit = $request->limit;
+                Session::put('page_record_limit',$limit);
+            } else {
+
+                if(Session::has('page_record_limit')){
+                    $limit = Session::get('page_record_limit');
+                } else{
+                    $limit = 20;
+                }
+            }
+            if(isset($request->search))
+            {
+                $search      = trim($request->search);
+                $query = $query->where('project_name','like','%'.$search.'%');
+            }
+            $product_group = $query->paginate($limit);
+            $data['product_group']=$product_group;
+            $data['limit']=$limit;
+            $data['search']=$search;
+            $data['page']='product_group';
+            return view('backEnd.jobs_management.productGroup',$data);
+        }else {
+            return redirect('admin/')->with('error',NO_HOME_ERR);
+        }
+    }
+    public function save_productGroup(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->first()]);
+        }
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $productsData = json_decode($request->input('products'), true);
+        $formData=[
+            'id'=>$request->id ?? null,
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'code'=>$request->code,
+            'status'=>$request->status,
+            'cost'=>$request->cost,
+            'price'=>$request->price
+        ];
+        try {
+            $saveData = ProductGroup::saveProductGroup($formData, $home_id, 0);
+            // $catlogueSave=['id'=>1];
+            if (!empty($productsData['products']) && is_array($productsData['products'])) {
+                $saveProduct = ProductGroupProduct::saveProductGroupData($saveData->id, $productsData);
+                if($request->id){
+                    return response()->json([
+                        'success' => true,
+                        'message' =>'Product group updated successfully.',
+                    ]);
+                }else{
+                    return response()->json([
+                        'success' => (bool) $saveProduct,
+                        'message' => $saveProduct ? 'Product group and products added successfully.' : 'Product Group products could not be added.',
+                    ]);
+                }
+                
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Product group added successfully (no products provided).',
+                ]);
+            } 
+        }catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+    public function ProductGroupProductsList(Request $request){
+        $admin   = Session::get('scitsAdminSession');
+        $home_id = $admin->home_id;
+        $ProductGroupProduct=ProductGroupProduct::getProductGroupProductData($home_id)->where('product_group_id',$request->id)->get();
+        return response()->json(['data'=>$ProductGroupProduct]);
     }
     public function customer_list(Request $request){
         echo 1;die;

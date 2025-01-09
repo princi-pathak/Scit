@@ -17,7 +17,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
 
                 <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -126,7 +125,7 @@
                                     </div>
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="formDtail">
-                                                <form id="form_data" class="customerForm">
+                                                <form id="form_data" class="customerForm pt-0">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
 
@@ -135,6 +134,13 @@
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
                                                                 id="name" name="title" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <div class="col-sm-3">
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <label for="inputJobRef" class="col-form-label red_sorryText"> Note: Comma not allowed in the tag. The previous name will not be populated by the rename tag.</label>
                                                         </div>
                                                     </div>
                                                     <div class="mb-2 row">
@@ -191,7 +197,6 @@
                 var title = $("#name").val().trim();
                 
                 var status = $.trim($('#statusModal option:selected').val());
-                var home_id = '<?php echo $home_id;?>';
                 var id = $("#id").val();
                 var message;
 
@@ -207,10 +212,11 @@
                     $("#name").addClass('addError');
                     return false;
                 } else {
+                    $("#name").removeClass('addError');
                     $.ajax({
                         type: "POST",
                         url: '{{ url("/save_tag") }}',
-                        data: {id: id, home_id: home_id, title: title, status: status, _token: token},
+                        data: {id: id, title: title, status: status, _token: token},
                         success: function(data) {
                             console.log(data);
                             if(data.vali_error){

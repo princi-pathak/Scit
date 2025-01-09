@@ -1,0 +1,110 @@
+<?php
+
+namespace App\Services\Quotes;
+
+use App\Models\QuoteAttachment;
+
+class AttachmentTypeService
+{
+    public function saveAttachmentType(array $attachments, $file): ?QuoteAttachment
+    {
+        // Save the image using a reusable method
+        $imageData = $this->saveImage($file);
+
+        if ($imageData) {
+            $data = [
+                'quote_id' => $attachments['quote_id'],
+                'attachment_type' => $attachments['attachment_type'],
+                'original_name' => $imageData['original_name'],
+                'timestamp_name' => $imageData['timestamped_name'],
+                'mime_type' => $imageData['mime_type'],
+                'size' => $imageData['size'], // Size in KiB
+                'title' => $attachments['title'] ?? null,
+                'description' => $attachments['description'] ?? null,
+            ];
+    
+            // Save the data to the database
+            return QuoteAttachment::create($data) ?: null;
+        }
+    }
+
+
+    private function saveImage($file, $path = 'public/images/quoteAttachment'): ?array
+    {
+        if ($file) {
+
+            // Get original file name and extension
+            $originalName = $file->getClientOriginalName(); // Get original file name
+
+            // Generate a unique file name with timestamp
+            $timestampedName = time() . '.' . $file->getClientOriginalExtension();
+
+            // Get MIME type and size
+            $mimeType = $file->getClientMimeType(); // Get the MIME type
+            $sizeInBytes  = $file->getSize(); // Get the file size
+            $sizeInKiB = $sizeInBytes / 1024; // Convert bytes to kilobytes
+
+            // You can round it to two decimal places for better readability
+            $sizeInKiB = round($sizeInKiB, 2);
+
+            // Move the file to the specified path with the timestamped name
+            $file->storeAs($path, $timestampedName);
+
+
+            return [
+                'original_name' => $originalName,
+                'timestamped_name' => $timestampedName,
+                'mime_type' => $mimeType,
+                'size' => $sizeInKiB,
+            ];
+        }
+        return null;
+    }
+
+    public function getAttachmentType($id)
+    {
+        $quoteAtt =  QuoteAttachment::with('attachmentType')->where('deleted_at', null)->find($id);
+        
+        return [
+            'id' => $quoteAtt->id ,
+            'attachmentType' => $quoteAtt->attachmentType ? $quoteAtt->attachmentType->title : '',
+            'title' => $quoteAtt->title ? $quoteAtt->title : '',
+            'description' => $quoteAtt->description ? $quoteAtt->description : '',
+            'original_name' => $quoteAtt->original_name,
+            'timestamp_name' => asset('storage/app/public/images/quoteAttachment/' . $quoteAtt->timestamp_name),
+            'mime_type' => $quoteAtt->mime_type,
+            'size' => $quoteAtt->size,
+            'mobile_user_visible' => $quoteAtt->mobile_user_visible,
+            'customer_visible' => $quoteAtt->customer_visible,
+            'created_at' => $quoteAtt->created_at
+        ];
+    }
+
+    public function getAllAttachmentTypeOnQuote($quote_id){
+        $quoteAttachment =  QuoteAttachment::with('attachmentType')->where('quote_id', $quote_id)->where('deleted_at', null)->get();
+
+        $attachments = array();
+        foreach($quoteAttachment as $value){
+         
+            $data['id'] = $value->id;
+            $data['attachmentType'] = $value->attachmentType ? $value->attachmentType->title : '';
+            $data['title'] = $value->title ? $value->title : '';
+            $data['description'] = $value->description ? $value->description : '';
+            $data['original_name'] = $value->original_name;
+            $data['timestamp_name'] =   asset('storage/app/public/images/quoteAttachment/' . $value->timestamp_name);
+            $data['mime_type'] = $value->mime_type;
+            $data['size'] = $value->size;
+            $data['mobile_user_visible'] = $value->mobile_user_visible;
+            $data['customer_visible'] = $value->customer_visible;
+            $data['created_at'] = $value->created_at;
+            array_push($attachments, $data);
+        }
+
+        return $attachments;
+    }
+
+    public function deleteAttachment($id){
+        return QuoteAttachment::whereIn('id', $id)->update(['deleted_at' => now()]);
+    }
+
+}

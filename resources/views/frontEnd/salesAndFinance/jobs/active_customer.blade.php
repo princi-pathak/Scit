@@ -72,6 +72,32 @@
     color: #D1822B;
 }
 
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+.pagination li {
+    margin: 0 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+}
+.pagination .active {
+    background-color: #007bff;
+    color: white;
+}
+.pagination li:hover {
+    background-color: #f0f0f0;
+}
+.contact-row:hover {
+    cursor: pointer;
+}
+.selected-row td {
+    background-color: #f0f8ff;
+    /* border:2px solid red; */
+}
+    
 @keyframes showItem {
     0% {
         opacity: 0;
@@ -169,6 +195,9 @@
 
     .days_check .form-check-input {
         margin-top: 2px;
+    }
+    #CRMPop td .fa {
+        color:#0877bd;
     }
 </style>
 <section class="main_section_page px-3">
@@ -361,23 +390,23 @@
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-6 col-xl-6">
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense Name<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense Name<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="title" name="title" value="" placeholder="Expense Name">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Net Amount<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Net Amount<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="amount" name="amount" value="" placeholder="Net Amount">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
                                                                     <label for="inputProject"
-                                                                        class="col-sm-3 col-form-label">Vat<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                        class="col-sm-4 col-form-label">Vat<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <select class="form-control editInput selectOptions"
                                                                             id="vat" name="vat">
                                                                             <option value="0" selected>Custom VAT Amount</option>
@@ -388,29 +417,29 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Vat Amount</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Vat Amount</label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="vat_amount" name="vat_amount" value="" onkeyup="calculate_vat()">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Gross Amount<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Gross Amount<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="gross_amount" name="gross_amount" value="" disabled>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense Date<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense Date<span class="radStar">*</span></label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="date" class="form-control editInput"
                                                                             id="expense_date" name="expense_date" value="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Expense By</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Expense By</label>
+                                                                    <div class="col-sm-8">
                                                                         <select class="form-control editInput selectOptions"
                                                                             id="user_id" name="user_id">
                                                                             @foreach($users as $user_val)
@@ -421,8 +450,8 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Reference</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputName" class="col-sm-4 col-form-label">Reference</label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control editInput"
                                                                             id="reference" name="reference" value="">
                                                                     </div>
@@ -522,14 +551,14 @@
                                                     <div class="row">
                                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                                             <div class="mb-2 row">
-                                                                <label for="inputName" class="col-sm-3 col-form-label">Notes</label>
-                                                                <div class="col-sm-9">
+                                                                <label for="inputName" class="col-sm-2 col-form-label">Notes</label>
+                                                                <div class="col-sm-10">
                                                                     <textarea class="form-control textareaInput" name="notes" id="notes" rows="3" ></textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="mb-2 row">
-                                                                <label for="inputName" class="col-sm-3 col-form-label">Attachments</label>
-                                                                <div class="col-sm-9">
+                                                                <label for="inputName" class="col-sm-2 col-form-label">Attachments</label>
+                                                                <div class="col-sm-10">
                                                                     <input type="file" class="editInput"
                                                                         id="attachments" name="attachments" value="">
                                                                     <p>(Max file size 25 MB)</p>
@@ -632,6 +661,9 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link " id="pills-complaints-tab" data-bs-toggle="pill" data-bs-target="#pills-complaints" type="button" role="tab" aria-controls="pills-complaints" aria-selected="false">Complaints</button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link " id="pills-contacts-tab" data-bs-toggle="pill" data-bs-target="#pills-contacts" type="button" role="tab" aria-controls="pills-contacts" aria-selected="false">Contacts</button>
+                    </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-fullHistory" role="tabpanel" aria-labelledby="pills-fullHistory-tab" tabindex="0">
@@ -642,7 +674,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3 mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            <button type="button" class="input-group-text editInput">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -660,7 +692,7 @@
                                                     <th>Customer Visible</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="crm_customer_all_data">
                                                 <tr>
                                                     <td></td>
                                                     <td> </td>
@@ -672,6 +704,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <ul class="pagination" id="pagination"></ul>
                                     </div>
                                 </div>
                             </div>
@@ -691,7 +724,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            <button type="button" class="input-group-text editInput">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -712,6 +745,7 @@
                                             <tbody id="customer_crmData">
                                             </tbody>
                                         </table>
+                                        <div id="pagination-controls-call"></div>
                                     </div>
                                 </div>
                             </div>
@@ -742,7 +776,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            <button type="button" class="input-group-text editInput">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -772,6 +806,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div id="pagination-controls-email"></div>
                                     </div>
                                 </div>
                             </div>
@@ -851,7 +886,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">Start Date <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" name="start_date" id="TaskStartDate">
+                                                                            <input type="date" class="form-control editInput" name="start_date" id="TaskStartDate" onchange="setMinEndDate()" min="">
                                                                         </div>
                                                                         <div class="col-sm-4">
                                                                             <input type="time" class="form-control editInput" name="start_time" id="TaskStartTime">
@@ -860,7 +895,7 @@
                                                                     <div class="mb-3 row">
                                                                         <label for="staticEmail" class="col-sm-4 col-form-label">End Date <span class="radStar ">*</span></label>
                                                                         <div class="col-sm-4">
-                                                                            <input type="date" class="form-control editInput" name="end_date" id="TaskEndDate" value="">
+                                                                            <input type="date" class="form-control editInput" name="end_date" id="TaskEndDate" value="" min="" disabled>
                                                                         </div>
                                                                         <div class="col-sm-4">
                                                                             <input type="time" class="form-control editInput" name="end_time" id="TaskEndTime" value="">
@@ -1259,7 +1294,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Keywords to search" name="email">
-                                            <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            <button type="button" class="input-group-text editInput">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1299,6 +1334,7 @@
                                             <tbody id="crm_customer_task">
                                             </tbody>
                                         </table>
+                                        <div id="pagination-controls-task"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1317,7 +1353,7 @@
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
                                             <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
-                                            <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            <button type="button" class="input-group-text editInput">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1339,6 +1375,7 @@
                                                 
                                             </tbody>
                                         </table>
+                                        <div id="pagination-controls-note"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1356,8 +1393,8 @@
                                 <div class="col-sm-3">
                                     <form class="searchForm" action="">
                                         <div class="input-group mb-3  mt-3">
-                                            <input type="text" class="form-control editInput" placeholder="Keyword to search" name="email">
-                                            <button type="button" class="input-group-text sarchBtn">Search</button>
+                                            <input type="text" class="form-control editInput search_data_email" onkeyup="searchDataWithEmail('Complaints')" placeholder="Keyword to search" name="email">
+                                            <button type="button" class="input-group-text editInput">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1373,21 +1410,55 @@
                                                     <th>Source Ref</th>
                                                     <th>Note(s)</th>
                                                     <th>Customer Visible</th>
-                                                    <th>Actioned</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                    <td>.</td>
-                                                </tr>
+                                            <tbody id="crm_customer_complaint">
+                                                
                                             </tbody>
                                         </table>
+                                        <div id="pagination-controls"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="tab-pane fade" id="pills-contacts" role="tabpanel" aria-labelledby="pills-contacts-tab" tabindex="0">
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Contacts</label>
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <div class="jobsection mt-3">
+                                        <a href="#" class="profileDrop p-2 crmNewBtn contact_add" id="openContactsModel"> New</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form class="searchForm" action="">
+                                        <div class="input-group mb-3  mt-3">
+                                            <input type="text" class="form-control editInput" placeholder="Keyword to search" name="email">
+                                            <button type="button" class="input-group-text editInput">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="crmLeadComplaintsTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>By</th>
+                                                    <th>Contact</th>
+                                                    <th>Type</th>
+                                                    <th>Note(s)</th>
+                                                    <th>Customer Visible</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="crm_customer_contact">
+                                                
+                                            </tbody>
+                                        </table>
+                                        <div id="pagination-controls-contact"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1414,7 +1485,37 @@
                 <form action="" class="customerForm" id="CRM_calls_form">
                     @csrf
                     <div class="mb-2 row">
-                        <input type="hidden" name="call_customer_id" id="call_customer_id" class="customer_id">
+                        <label for="type_title" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <div class="col-form-label">
+                                <button type="button" class="profileDrop search_contacts" id="search_contacts">Search Contacts</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Customer<span class="radStar ">*</span></label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="call_customer_id" id="call_customer_id">
+                                @foreach($customer as $value)
+                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Contact </label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="call_contact" id="call_contact" class="notes_contact">
+                                
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="#!" class="formicon contact_add" id="contact_add"><i class="fa-solid fa-square-plus"></i></a>
+                        </div>
+
+                    </div>
+                    <div class="mb-2 row">
+                        <!-- <input type="hidden" name="call_customer_id" id="call_customer_id" class="customer_id"> -->
                         <label for="" class="col-sm-3 col-form-label">Direction </label>
                         <div class="col-sm-9">
                             <input class="form-check-input" type="radio" name="direction" id="direction_radio1" value="0" checked>
@@ -1527,7 +1628,7 @@
                         <label for="type_title" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
                             <div class="col-form-label">
-                                <button type="button" class="profileDrop" id="search_contacts">Search Contacts</button>
+                                <button type="button" class="profileDrop search_contacts" id="search_contacts">Search Contacts</button>
                             </div>
                         </div>
                     </div>
@@ -1544,12 +1645,12 @@
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Contact </label>
                         <div class="col-sm-8">
-                            <select class="form-control editInput" name="notes_contact" id="notes_contact">
+                            <select class="form-control editInput" name="notes_contact" id="notes_contact" class="notes_contact">
                                 
                             </select>
                         </div>
                         <div class="col-sm-1">
-                            <a href="#!" class="formicon" id="contact_add"><i class="fa-solid fa-square-plus"></i></a>
+                            <a href="#!" class="formicon contact_add" id="contact_add"><i class="fa-solid fa-square-plus"></i></a>
                         </div>
 
                     </div>
@@ -1628,6 +1729,152 @@
         </div>
     </div>
 </div>
+<!-- CRM Add compliants Modal Start -->
+<div class="modal fade" id="compliantsModal" tabindex="-1" role="dialog" aria-labelledby="compliantsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="compliantsModalLabel">Complaint</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeCrmComplaintBtn" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form  id="crm_lead_complaint_form">
+                    @csrf
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <div class="col-form-label">
+                                <button type="button" class="profileDrop search_contacts" id="search_contacts1">Search Contacts</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Customer<span class="radStar ">*</span></label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="complaint_customer_id" id="complaint_customer_id">
+                                @foreach($customer as $value)
+                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Contact </label>
+                        <div class="col-sm-8">
+                            <select class="form-control editInput" name="comaplint_contact" id="comaplint_contact" class="notes_contact">
+                                
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="#!" class="formicon contact_add" id="contact_add1"><i class="fa-solid fa-square-plus"></i></a>
+                        </div>
+
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
+                        <div class="col-sm-8">
+                            <input type="hidden" class="form-control editInput" name="crm_lead_complaint_id" id="">
+                            <select class="form-control editInput" name="crm_section_type_id" id="lead_complaint_crm">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="#!" class="formicon" id="openCrmTypeModelComplaints"><i class="fa-solid fa-square-plus"></i></a>
+                        </div>
+
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Notes <span class="radStar ">*</span> </label>
+                        <div class="col-sm-9">
+                            <div class="col-form-label">
+                                <div id="complaintEditor">
+                                </div>
+                                <textarea name="compliant" id="CRMComplaint" style="display: none;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2 row">
+                        <label for="" class="col-sm-3 col-form-label">Notify? </label>
+                        <div class="col-sm-9">
+                            <input class="form-check-input" type="radio" name="notify" id="notify_complaint1" value="0" checked>
+                            <label class="form-check-label editInput" for="notify_complaint1"> No </label>
+                            <input class="form-check-input" type="radio" name="notify" id="notify_complaint2" value="1">
+                            <label class="form-check-label editInput" for="notify_complaint2"> Yes </label>
+                        </div>
+                    </div>
+                    <div id="notification_complaint_div">
+                        <div class="mb-2 row">
+                            <label for="user_notifiy" class="col-sm-3 col-form-label">Notify Who?<span class="radStar ">*</span> </label>
+                            <div class="col-sm-9">
+                                <select name="user_id" class="form-control editInput" id="user_notifiy">
+                                    <option value=""></option>
+                                    @foreach($users as $value)
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
+                            <div class="col-sm-9">
+                                <label for="calls_complaint_who1" class="editInput">
+                                    <input type="checkbox" name="notification" id="calls_complaint_who1" value="1" checked> Notification (User Only)
+                                </label>
+                                <label for="calls_complaint_who2" class="editInput">
+                                    <input type="checkbox" name="sms" id="calls_complaint_who2" value="1"> SMS
+                                </label>
+                                <label for="calls_complaint_who3" class="editInput">
+                                    <input type="checkbox" name="email" id="calls_complaint_who3" value="1" checked> Email
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmComplaintBtn">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMLeadComplaint">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CRM Types Modal Complaint Start -->
+<div class="modal fade" id="crmTypeModelComplaint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add - CRM Section Types</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="">
+                    @csrf
+                    <div class="mb-2 row">
+                        <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control editInput" name="title" id="type_title_complaint" value="">
+                            <input type="hidden" class="form-control editInput" name="crm_section_complaint" id="crm_section_complaint" value="4">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="colour_code" class="col-sm-3 col-form-label">Colour Code </label>
+                        <div class="col-sm-9">
+                            <input type="color" class="form-control editInput" name="colour_code" id="colour_code_complaint" value="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="profileDrop" data-bs-dismiss="modal" id="closeCrmModalBtn">Close</button>
+                <button type="button" class="profileDrop" id="saveCRMTypesComplaint">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- CRM Types Modal Notes Start -->
 <div class="modal fade" id="crmTypeModelNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -1673,6 +1920,7 @@
             </div>
             <div class="modal-body">
                 <form action="" id="crm_section_type_form">
+                    @csrf
                     <div class="mb-2 row">
                         <label for="type_title" class="col-sm-3 col-form-label">Type <span class="radStar ">*</span> </label>
                         <div class="col-sm-9">
@@ -1821,7 +2069,7 @@
 <!-- CRM Add Email Modal End -->
   <!--  Modal start here -->
   <div class="modal fade" id="task_type_modal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog">
             <div class="modal-content add_Customer">
                 <div class="modal-header">
                     <h5 class="modal-title" id="customerModalLabel">Task Type - Add</h5>
@@ -1833,7 +2081,7 @@
                     <div class="alert alert-success text-center success_message" style="display:none;height:50px">
                         <p id="message"></p>
                     </div>
-                        <div class="col-md-6 col-lg-6 col-xl-6">
+                        <div class="col-md-6 col-lg-12 col-xl-12">
                             <div class="formDtail">
                                 <form id="task_type_form_data" class="customerForm">
                                     <input type="hidden" name="id" id="id">
@@ -1874,7 +2122,236 @@
         </div>
     </div>
                     <!-- end here -->
-    <!-- Contact Modal start here -->
+    
+        
+      <!-- Search Modal start here -->
+      <div class="modal fade" id="search_contactsModal" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content add_Customer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thirdModalLabel">All Contacts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body crmModelCont pt-2">
+                    <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-search_customers-tab" data-bs-toggle="pill" data-bs-target="#pills-search_customers" type="button" role="tab" aria-controls="pills-search_customers" aria-selected="true">Customers</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link " id="pills-search_suppliers-tab" data-bs-toggle="pill" data-bs-target="#pills-search_suppliers" type="button" role="tab" aria-controls="pills-search_suppliers" aria-selected="false">Suppliers</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link " id="pills-search_users-tab" data-bs-toggle="pill" data-bs-target="#pills-search_users" type="button" role="tab" aria-controls="pills-search_users" aria-selected="false">Users</button>
+                        </li>
+                        
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-search_customers" role="tabpanel" aria-labelledby="pills-search_customers-tab" tabindex="0">
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Customer Contacts</label>
+                            <div class="row">
+                                    <label class="col-sm-1  mt-3 col-form-label">Search:</label>
+                                <div class="col-sm-3">
+                                   
+                                    <div class="jobsection  mt-3">
+                                        <select name="" class="form-control editInput" id="">
+                                            <option value="1">All</option>
+                                            <option value="2">Customer</option>
+                                            <option value="3">Contacts</option>
+                                            <option value="4">Customer Sites</option>
+                                                                                
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    <form class="searchForm" action="">
+                                        <div class="input-group mb-3 mt-3">
+                                            <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                            <button type="button" class="input-group-text editInput">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3 mt-3">
+                                        <button type="button" class="profileDrop" onclick="get_contactModal(1)" id="search_contacts">Add Contact</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="CRMFullHistoryData">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Company</th>
+                                                    <th>Contact Name</th>
+                                                    <th>Full Name</th>
+                                                    <th>Email Address</th>
+                                                    <th>Telephone</th>
+                                                    <th>Mobile</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="customer_contact_list">
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 d-flex justify-content-end mt-4">
+                                    <button type="button" class="profileDrop me-2" onclick="insertSelectedContact()">Insert</button>
+                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-search_suppliers" role="tabpanel" aria-labelledby="pills-search_suppliers-tab" tabindex="0">
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Supplier Contacts</label>
+                            <div class="row">
+                                <label class="col-sm-1  mt-3 col-form-label">Search:</label>
+                                <div class="col-sm-3">
+                                    <div class="jobsection  mt-3">
+                                        <select name="" class="form-control editInput" id="">
+                                            <option value="1">All</option>
+                                            <option value="2">Supplier</option>
+                                            <option value="3">Contacts</option>
+                                                                                
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    <form class="searchForm" action="">
+                                        <div class="input-group mb-3 mt-3">
+                                            <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                            <button type="button" class="input-group-text editInput">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3 mt-3">
+                                        <button type="button" class="profileDrop" onclick="get_contactModal(2)" id="search_contacts">Add Contact</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="CRMFullHistoryData">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Company</th>
+                                                    <th>Contact Name</th>
+                                                    <th>Full Name</th>
+                                                    <th>Email Address</th>
+                                                    <th>Telephone</th>
+                                                    <th>Mobile</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="supplier_contact_list">
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 d-flex justify-content-end mt-4">
+                                    <button type="button" class="profileDrop me-2" onclick="insertSelectedContact()">Insert</button>
+                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-search_users" role="tabpanel" aria-labelledby="pills-search_users-tab" tabindex="0">
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">User Contacts</label>
+                            <div class="row">
+                            <label class="col-sm-1  mt-3 col-form-label">Search:</label>
+                                <div class="col-sm-3">
+                                    
+                                    <div class="jobsection  mt-3">
+                                        <select name="" class="form-control editInput" id="">
+                                            <option value="1">All</option>
+                                            <option value="2">User</option>
+                                            <option value="3">Contacts</option>
+                                                                                
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    <form class="searchForm" action="">
+                                        <div class="input-group mb-3 mt-3">
+                                            <input type="text" class="form-control editInput" placeholder="Your Email" name="email">
+                                            <button type="button" class="input-group-text editInput">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3 mt-3">
+                                        <button type="button" class="profileDrop" onclick="get_contactModal(3)" id="search_contacts">Add Contact</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="CRMFullHistoryData">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Company</th>
+                                                    <th>Contact Name</th>
+                                                    <th>Full Name</th>
+                                                    <th>Email Address</th>
+                                                    <th>Telephone</th>
+                                                    <th>Mobile</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="user_contact_list">
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 d-flex justify-content-end mt-4">
+                                    <button type="button" class="profileDrop me-2" onclick="insertSelectedContact()">Insert</button>
+                                    <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+      <!-- end here -->
+       <!-- Contact Modal start here -->
     <div class="modal fade" id="contact_modal" tabindex="-1" aria-labelledby="customerModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-xl">
@@ -1889,8 +2366,9 @@
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <div class="formDtail">
                                         <form id="contact_form">
+                                            <input type="hidden" id="userType" value="1">
                                             <div class="mb-2 row">
-                                                <label for="inputProject" class="col-sm-3 col-form-label">Customer<span class="radStar">*</span></label>
+                                                <label for="inputProject" class="col-sm-3 col-form-label CustomerLabel">Customer<span class="radStar">*</span></label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control editInput selectOptions" id="contact_customer_id">
                                                         <option selected disabled>Select Customer</option>
@@ -2074,7 +2552,7 @@
                 </div>
             </div>
         <!-- end here -->
-         <!-- Job title Modal start -->
+          <!-- Job title Modal start -->
      <div class="modal fade" id="job_modaltitle" tabindex="-1" aria-labelledby="thirdModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content add_Customer">
@@ -2125,7 +2603,7 @@
                 url: "{{url('/status_change')}}",
                 data: {id:id,status:status,model:model,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if($.trim(data)==1){
                         // $('.alert').show().fadeOut(800);
                         $(".alert").show('slow' , 'linear').delay(2000).fadeOut(setTimeout(function() {
@@ -2158,7 +2636,7 @@
                 url: "{{url('/bulk_delete')}}",
                 data: {ids:ids,model:model,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data){
                         location.reload();
                     }else{
@@ -2193,10 +2671,13 @@ $('.delete_checkbox').on('click', function() {
             // $("#form_data")[0].reset();
             $("#CRMPop").modal('show');
             get_customer_details(id);
-            get_all_crm_customer_call(id);
-            get_all_crm_customer_email(id);
-            get_all_crm_customer_task(id);
-            get_all_crm_customer_note(id);
+            get_all_crm_customer_call(id,pageUrl = '{{ url("get_all_crm_customer_call") }}');
+            get_all_crm_customer_email(id,pageUrl = '{{ url("get_all_crm_customer_email") }}');
+            get_all_crm_customer_task(id,pageUrl = '{{ url("get_all_crm_customer_task") }}');
+            get_all_crm_customer_note(id,pageUrl = '{{ url("get_all_crm_customer_note") }}');
+            get_all_crm_customer_complaint(id,pageUrl = '{{ url("get_all_crm_customer_complaint") }}');
+            get_all_crm_customer_contacts(id,pageUrl = '{{ url("get_all_crm_customer_contacts") }}');
+            full_history();
         }
     }
     function get_customer_details(id){
@@ -2206,14 +2687,18 @@ $('.delete_checkbox').on('click', function() {
                 url: "{{url('/get_customer_details')}}",
                 data: {id:id,_token:token},
                 success: function(data) {
-                    console.log(data)
+                    // console.log(data)
                     $('.customer_name').text(data.customer.name);
                     $("#notes_customer_id").val(data.customer.id);
+                    $("#call_customer_id").val(data.customer.id);
+                    $("#complaint_customer_id").val(data.customer.id);
                     // 
                     var selectHTML='';
                     $.each(data.contact, function(index, contact) {
                             selectHTML += '<option value="' + contact.id + '">' + contact.contact_name + '</option>';
                             $("#notes_contact").html(selectHTML);
+                            $("#call_contact").html(selectHTML);
+                            $("#comaplint_contact").html(selectHTML);
                         });
                 },
                 error: function(xhr, status, error) {
@@ -2293,7 +2778,7 @@ $('.delete_checkbox').on('click', function() {
                 url: "{{url('/find_project')}}",
                 data: {customer_id:customer_id,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     const projectArr=data.project;
                     projectArr.forEach((project) => {
                         const option = document.createElement("option");
@@ -2390,7 +2875,7 @@ $('.delete_checkbox').on('click', function() {
             cache: false,
             processData: false,
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data.vali_error){
                         alert(data.vali_error);
                         $("#email").css('border','1px solid red');
@@ -2479,7 +2964,7 @@ job_input.addEventListener('input', function() {
                 url: "{{url('/find_appointment')}}",
                 data: {job_id:job_id,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if(data.length>0){
                         $('#job_appointment_id').prop('disabled',false);
                         var selectHTML = '';
@@ -2540,6 +3025,18 @@ job_input.addEventListener('input', function() {
         $('#openThirdModal2').on('click', function() {
             $('#task_type_modal').modal('show');
         });
+        $('.search_contacts').on('click', function(){
+            GetCustomerWithContact();
+            $("#search_contactsModal").modal('show');
+        })
+
+        mainCheckbox.addEventListener('change', function() {
+            if (mainCheckbox.checked) {
+                optionsDiv.style.display = 'block';
+            } else {
+                optionsDiv.style.display = 'none';
+            }
+        });
 
         // Notes model show and hide
         const openNotesModel = document.getElementById('openNotesModel');
@@ -2548,34 +3045,98 @@ job_input.addEventListener('input', function() {
             getCRMTypeData();
             $('#NewNotesModel').modal('show');
         }
+        const openComplaintsModel = document.getElementById('openComplaintsModel');
+        const compliantsModal = document.getElementById('compliantsModal');
+        openComplaintsModel.onclick = function() {
+            getCRMTypeData();
+            $('#compliantsModal').modal('show');
+        }
          // CRM Section Type ADD model in Complaints Js Start for model  show
          const openCrmTypeModelNotes = document.getElementById('openCrmTypeModelNotes');
         const crmTypeModelNotes = document.getElementById('crmTypeModelNotes');
         openCrmTypeModelNotes.onclick = function() {
             $('#crmTypeModelNotes').modal('show');
         }
+        const openCrmTypeModelComplaints = document.getElementById('openCrmTypeModelComplaints');
+        const crmTypeModelComplaint = document.getElementById('crmTypeModelComplaint');
+        openCrmTypeModelComplaints.onclick = function() {
+            $('#crmTypeModelComplaint').modal('show');
+        }
 
         $(".job_title_modal").on('click', function(){
             $("#job_title_form")[0].reset();
             $("#job_modaltitle").modal('show');
         });
-        $("#contact_add").on('click', function(){
+        $(".contact_add").on('click', function(){
+            $('#contact_form')[0].reset();
+            $("#contact_address").val('');
             $('#contact_modal').modal('show');
         });
+        function get_contactModal(userType){
+            $('#contact_form')[0].reset();
+            $("#userType").val(userType);
+            var url='';
+            var CustomerLabel='';
+            if(userType == 1){
+                CustomerLabel='Customer<span class="radStar">*</span>';
+                url='{{ url("getAllCustomerList") }}';
+            }else if(userType == 2){    
+                CustomerLabel='Supplier<span class="radStar">*</span>';
+                url='{{ url("getAllSupplierList") }}';
+            }else{
+                CustomerLabel='User<span class="radStar">*</span>';
+                url='{{ url("getAllUserList") }}';
+            }
+            $('.CustomerLabel').html(CustomerLabel);
+            var token='<?php echo csrf_token();?>'
+            $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {_token:token},
+                    success: function(data) {
+                        // console.log(data);
+                         if(data.success){
+                            var data = data.data;
+                            var selectBody = $("#contact_customer_id"); 
+                            selectBody.empty();
+                            var contact_html='<option selected disabled>Please Select</option>';
+                            if(userType == 1){
+                                data.forEach(function(item) {
+                                    contact_html+='<option value="'+ item.id +'">'+ item.name +'</option>';
+                                });
+                            }else if(userType == 2){    
+                               data.forEach(function(item) {
+                                contact_html+='<option value="'+ item.id +'">'+ item.name +'</option>';
+                                });
+                            }else{
+                                data.forEach(function(item) {
+                                    contact_html+='<option value="'+ item.id +'">'+ item.name +'</option>';
+                                });
+                            }
+                            selectBody.html(contact_html);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            $("#contact_address").val('');
+            $('#contact_modal').modal('show');
+        }
         
         function getCRMTypeData() {
         $.ajax({
             url: '{{ route("lead.ajax.getCRMTypeData") }}',
             method: 'GET',
             success: function(response) {
-                console.log(response.Data);
+                // console.log(response.Data);
                 const selectElement = document.getElementById('calls_type');
                 const lead_notes_crm = document.getElementById('lead_notes_crm');
                 const lead_complaint_crm = document.getElementById('lead_complaint_crm');
 
-                // selectElement.innerHTML = '';
-                // lead_notes_crm.innerHTML = '';
-                // lead_complaint_crm.innerHTML = '';
+                selectElement.innerHTML = '';
+                lead_notes_crm.innerHTML = '';
+                lead_complaint_crm.innerHTML = '';
 
                 response.Data.forEach(index => {
                     const option = document.createElement('option');
@@ -2657,7 +3218,7 @@ job_input.addEventListener('input', function() {
                     method: 'POST',
                     data: formData,
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         if(data.vali_error){
                         alert(data.vali_error);
                         $("#user_notifiy").css('border','1px solid red');
@@ -2665,30 +3226,9 @@ job_input.addEventListener('input', function() {
                         return false;
                     }else if(data.success){
                             const responseData = data.data[0]; 
-                            const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
-                            var visibilityCell = '';
-
-                            if (responseData.customer_visibility == "0") {
-                                visibilityCell += '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
-                            } else if (responseData.customer_visibility == "1") {
-                                visibilityCell += '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
-                            }
-
-                            var html = '<tr>' +
-                                '<td>' + date + '</td>' +
-                                '<td><?php echo Auth::user()->name . "<br>" . Auth::user()->email; ?></td>' +
-                                '<td>' + responseData.telephone + '</td>' +  
-                                '<td>' + data.data.type + '</td>' +        
-                                '<td>' + responseData.notes + '</td>' +
-                                '<td>' + visibilityCell + '</td>' +
-                                '<td><i class="fa fa-phone"></i> ' +
-                                '<i class="fa fa-envelope"></i> ' +
-                                '<i class="fa fa-list-ul"></i> ' +
-                                '<i class="fa fa-file"></i> ' +
-                                '<i class="fa fa-exclamation-triangle"></i></td>' +
-                                '</tr>';
-                            $("#customer_crmData").append(html);
+                            get_all_crm_customer_call(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_call") }}');
                             $('#callsModal').modal('hide');
+                            full_history()
                         } else {
                             alert("Something went wrong");
                         }
@@ -2787,7 +3327,7 @@ job_input.addEventListener('input', function() {
                     contentType: false,
                     processData: false,
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         if(data.vali_error){
                         alert(data.vali_error);
                         $("#user_notifiy").css('border','1px solid red');
@@ -2795,29 +3335,7 @@ job_input.addEventListener('input', function() {
                         return false;
                     }else if(data.success){
                             const responseData = data.data; 
-                            const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
-                            var visibilityCell = '';
-
-                            if (responseData.customer_visibility == "0") {
-                                visibilityCell += '<span class="grayCheck" onclick="customer_visibility('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
-                            } else if (responseData.customer_visibility == "1") {
-                                visibilityCell += '<span class="grencheck" onclick="customer_visibility('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
-                            }
-
-                            var html = '<tr>' +
-                                '<td>' + date + '</td>' +
-                                '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
-                                '<td>' + responseData.name + '<br>Email:'+responseData.customer_email + '</td>' +  
-                                '<td>System</td>' +        
-                                '<td>Eamil sent to' + responseData.send_email + 'from'+ responseData.name +'</td>' +
-                                '<td id="visible_check'+responseData.id+'">' + visibilityCell + '</td>' +
-                                '<td><i class="fa fa-phone"></i> ' +
-                                '<i class="fa fa-envelope"></i> ' +
-                                '<i class="fa fa-list-ul"></i> ' +
-                                '<i class="fa fa-file"></i> ' +
-                                '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
-                                '</tr>';
-                            $("#crm_customer_email").append(html);
+                            get_all_crm_customer_email(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_email") }}');
                             $('#NewEmailModel').modal('hide');
                         } else {
                             alert("Something went wrong");
@@ -2860,7 +3378,7 @@ job_input.addEventListener('input', function() {
                     // processData: false,  
                     // contentType: false,  
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
                         if(response.vali_error){
                         alert(response.vali_error);
                         $("#user_notifiy").css('border','1px solid red');
@@ -2868,35 +3386,7 @@ job_input.addEventListener('input', function() {
                         return false;
                     }else if(response.success){
                             const responseData = response.data; 
-                            const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
-                            var visibilityCell = '';
-
-                            if (responseData.customer_visibility == "0") {
-                                visibilityCell += '<span class="grayCheck" onclick="customer_visibility1('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
-                            } else if (responseData.customer_visibility == "1") {
-                                visibilityCell += '<span class="grencheck" onclick="customer_visibility1('+responseData.id+')"><i class="fa-solid fa-circle-check"></i></span>';
-                            }
-                            var contact;
-                            if(responseData.contact == ''){
-                                contact=responseData.customer_name;
-                            }else{
-                                contact=responseData.contact;
-                            }
-
-                            var html = '<tr>' +
-                                '<td>' + date + '</td>' +
-                                '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
-                                '<td>' + contact + '</td>' +  
-                                '<td>'+ responseData.type +'</td>' +        
-                                '<td>' + responseData.notes + '</td>' +
-                                '<td id="visible_note'+responseData.id+'">' + visibilityCell + '</td>' +
-                                '<td><i class="fa fa-phone"></i> ' +
-                                '<i class="fa fa-envelope"></i> ' +
-                                '<i class="fa fa-list-ul"></i> ' +
-                                '<i class="fa fa-file"></i> ' +
-                                '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
-                                '</tr>';
-                            $("#crm_customer_note").append(html);
+                            get_all_crm_customer_note(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_note") }}');
                             $('#NewNotesModel').modal('hide');
                         } else {
                             alert("Something went wrong");
@@ -2935,15 +3425,28 @@ job_input.addEventListener('input', function() {
                 var formData = $('#crm_lead_complaint_form').serialize();
                 // console.log(formData);
                 $.ajax({
-                    url: '{{ route("lead.ajax.saveCRMLeadComplaint") }}',
+                    url: '{{ url("save_crm_customer_complaints") }}',
                     method: 'POST',
                     data: formData,
                     // processData: false,  
                     // contentType: false,  
                     success: function(response) {
-                        alert(response.message);
-                        getComplaintDataAjax();
-                        // $('#compliantsModal').modal('hide');
+                        // console.log(response);
+                        
+                        if(response.vali_error){
+                            alert(response.vali_error);
+                            return false;
+                        }else if(response.success){
+                            const responseData = response.data; 
+                            get_all_crm_customer_complaint(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_complaint") }}');
+                            $("#notification_complaint_div").hide();
+                            $('#compliantsModal').modal('hide');
+                            $('#notify_complaint1').prop('checked',true);
+
+                            editor.setData('');
+                        } else {
+                            alert("Something went wrong");
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -2971,48 +3474,13 @@ job_input.addEventListener('input', function() {
                 method: 'POST',
                 data: formData,
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.vali_error) {
                         alert(data.vali_error);
                         return false;
                     } else {
                         const responseData = data.data;
-                        const date = moment(responseData.created_at).format('DD/MM/YYYY HH:mm');
-                        const start_date = moment(responseData.start_date).format('DD/MM/YYYY HH:mm');
-
-                        // Check if the row with the same task id already exists
-                        var existingRow = $('#crm_customer_task tr[data-task-id="' + responseData.id + '"]');
-                        
-                        // Prepare the row HTML content
-                        var html = '<tr data-task-id="' + responseData.id + '">' + // Added data-task-id attribute
-                            '<td> </td>' +
-                            '<td>' + start_date + '</td>' +
-                            '<td><?php echo Auth::user()->name; ?></td>' +
-                            '<td>' + responseData.customer_name + '</td>' +
-                            '<td>' + responseData.type + '</td>' +
-                            '<td>' + responseData.title + '</td>' +
-                            '<td>' + responseData.notes + '</td>' +
-                            '<td>' + responseData.customer_name + '</td>' +
-                            '<td>' + date + '</td>' +
-                            '<td><?php echo Auth::user()->name; ?></td>' +
-                            '<td>' +
-                                '<img src="<?php echo url('public/frontEnd/jobs/images/pencil.png');?>" height="16px" alt="" data-bs-toggle="modal" data-bs-target="#secondModal" class="modal_data_crm_task image_style" ' +
-                                'data-id="'+responseData.id+'" data-title="'+responseData.title+'" data-user_id="'+responseData.user_id+'" data-task_type_id="'+responseData.task_type_id+'" data-start_date="'+responseData.start_date+'" ' +
-                                'data-start_time="'+responseData.start_time+'" data-end_date="'+responseData.end_date+'" data-end_time="'+responseData.end_time+'" data-is_recurring="'+responseData.is_recurring+'" data-notify="'+responseData.notify+'" ' +
-                                'data-notification="'+responseData.notification+'" data-email="'+responseData.email+'" data-sms="'+responseData.sms+'" data-notify_date="'+responseData.notify_date+'" data-notify_time="'+responseData.notify_time+'" data-notes="'+responseData.notes+'">&emsp;' +
-                                '<img src="<?php echo url('public/frontEnd/jobs/images/delete.png');?>" alt="" class="crm_task_delete image_style" data-delete="'+responseData.id+'">' +
-                            '</td>' +
-                        '</tr>';
-
-                        if (existingRow.length > 0) {
-                            // If the row exists, replace the existing row with the updated one
-                            existingRow.replaceWith(html);
-                        } else {
-                            // If it's a new task, append the row
-                            $("#crm_customer_task").append(html);
-                        }
-
-                        // Close the modal after saving
+                        get_all_crm_customer_task(responseData.customer_id,pageUrl = '{{ url("get_all_crm_customer_task") }}');
                         $('#secondModal').modal('hide');
                     }
                 },
@@ -3036,7 +3504,7 @@ job_input.addEventListener('input', function() {
                     url: '{{ url("/save_task_type") }}',
                     data: {home_id: home_id, title: title, status: status, _token: token},
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         if(data.vali_error){
                             alert(data.vali_error);
                             return false;
@@ -3058,16 +3526,49 @@ job_input.addEventListener('input', function() {
             var title = $('#type_title_notes').val();
             var colourCode = $('#colour_code_notes').val();
             var crmSection = $('#crm_section_notes').val();
-
+            var token='<?php echo csrf_token();?>'
             var formData = {
                 title: title,
                 colour_code: colourCode,
-                crm_section: crmSection
+                crm_section: crmSection,
+                _token:token
             };
-            console.log(formData);
+            // console.log(formData);
             addCRMTypes(formData, 3);
         });
+        $('#saveCRMTypesComplaint').on('click', function() {
+            var title = $('#type_title_complaint').val();
+            var colourCode = $('#colour_code_complaint').val();
+            var crmSection = $('#crm_section_complaint').val();
+            var token='<?php echo csrf_token();?>'
+            var formData = {
+                title: title,
+                colour_code: colourCode,
+                crm_section: crmSection,
+                _token:token
+            };
+            // console.log(formData);
+            addCRMTypes(formData, 4);
+        });
+        // Ajax Call for saving CRM section Type
+        $('#saveCRMTypes').on('click', function() {
+            var formData = $('#crm_section_type_form').serialize();
+            $.ajax({
+                url: '{{ route("lead.ajax.saveCRMSectionType") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#crmTypeModel').modal('hide');
+                    getCRMTypeData();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
         function addCRMTypes(formData, type) {
+            // alert(type)
             $.ajax({
                 url: '{{ route("lead.ajax.saveCRMSectionType") }}',
                 method: 'POST',
@@ -3090,17 +3591,18 @@ job_input.addEventListener('input', function() {
 </script>
 
 <script>
-    function get_all_crm_customer_call(id){
+    function get_all_crm_customer_call(id,pageUrl){
         var token='<?php echo csrf_token();?>'
         $.ajax({
-            url: '{{ url("get_all_crm_customer_call") }}',
+            url: pageUrl,
             method: 'POST',
             data: {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response.data);
+                // console.log(response.data);
                 var data = response.data;
+                var paginationCall = response.pagination;
                 var tableBody = $("#customer_crmData"); 
                 tableBody.empty();
                 
@@ -3132,25 +3634,36 @@ job_input.addEventListener('input', function() {
                     '</tr>';
 
                     // Append each row to the table body
+                    // 
+                    // full_history();
                     tableBody.append(html);
                 });
+                var paginationControlsClll = $("#pagination-controls-call");
+                paginationControlsClll.empty();
+                if (paginationCall.prev_page_url) {
+                    paginationControlsClll.append('<button class="profileDrop" onclick="get_all_crm_customer_call(' + id + ', \'' + paginationCall.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationCall.next_page_url) {
+                    paginationControlsClll.append('<button class="profileDrop" onclick="get_all_crm_customer_call(' + id + ', \'' + paginationCall.next_page_url + '\')">Next</button>');
+                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
         });
     }
-    function get_all_crm_customer_email(id){
+    function get_all_crm_customer_email(id,pageUrl){
         var token='<?php echo csrf_token();?>'
         $.ajax({
-            url: '{{ url("get_all_crm_customer_email") }}',
+            url: pageUrl,
             method: 'POST',
             data: {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
+                var paginationEmail = response.pagination;
                 var tableBody = $("#crm_customer_email"); 
                 tableBody.empty();
                 
@@ -3184,24 +3697,33 @@ job_input.addEventListener('input', function() {
                     // Append each row to the table body
                     tableBody.append(html);
                 });
+                var paginationControlsEmail = $("#pagination-controls-email");
+                paginationControlsEmail.empty();
+                if (paginationEmail.prev_page_url) {
+                    paginationControlsEmail.append('<button class="profileDrop" onclick="get_all_crm_customer_email(' + id + ', \'' + paginationEmail.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationEmail.next_page_url) {
+                    paginationControlsEmail.append('<button class="profileDrop" onclick="get_all_crm_customer_email(' + id + ', \'' + paginationEmail.next_page_url + '\')">Next</button>');
+                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
         });
     }
-    function get_all_crm_customer_task(id){
+    function get_all_crm_customer_task(id,pageUrl){
         var token='<?php echo csrf_token();?>'
         $.ajax({
-            url: '{{ url("get_all_crm_customer_task") }}',
+            url: pageUrl,
             method: 'POST',
             data: {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
                 var tableBody = $("#crm_customer_task"); 
+                var paginationTask = response.pagination;
                 tableBody.empty();
                 
                 data.forEach(function(item) {
@@ -3228,23 +3750,32 @@ job_input.addEventListener('input', function() {
                                 '</tr>';
                     tableBody.append(html);
                 });
+                var paginationControlsTask = $("#pagination-controls-task");
+                paginationControlsTask.empty();
+                if (paginationTask.prev_page_url) {
+                    paginationControlsTask.append('<button class="profileDrop" onclick="get_all_crm_customer_task(' + id + ', \'' + paginationTask.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationTask.next_page_url) {
+                    paginationControlsTask.append('<button class="profileDrop" onclick="get_all_crm_customer_task(' + id + ', \'' + paginationTask.next_page_url + '\')">Next</button>');
+                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
         });
     }
-    function get_all_crm_customer_note(id){
+    function get_all_crm_customer_note(id,pageUrl){
         var token='<?php echo csrf_token();?>'
         $.ajax({
-            url: '{{ url("get_all_crm_customer_note") }}',
+            url: pageUrl,
             method: 'POST',
             data: {
                 id: id,_token:token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var data = response.data;
+                var paginationNotes = response.pagination;
                 var tableBody = $("#crm_customer_note"); 
                 tableBody.empty();
                 
@@ -3283,6 +3814,144 @@ job_input.addEventListener('input', function() {
                     // Append each row to the table body
                     tableBody.append(html);
                 });
+                var paginationControlsNotes = $("#pagination-controls-note");
+                paginationControlsNotes.empty();
+                if (paginationNotes.prev_page_url) {
+                    paginationControlsNotes.append('<button class="profileDrop" onclick="get_all_crm_customer_note(' + id + ', \'' + paginationNotes.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationNotes.next_page_url) {
+                    paginationControlsNotes.append('<button class="profileDrop" onclick="get_all_crm_customer_note(' + id + ', \'' + paginationNotes.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+    function get_all_crm_customer_complaint(id,pageUrl){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {
+                id: id,_token:token
+            },
+            success: function(response) {
+                // console.log(response);
+                var data = response.data;
+                var pagination = response.pagination;
+                var tableBody = $("#crm_customer_complaint"); 
+                tableBody.empty();
+                
+                data.forEach(function(item) {
+                    var date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+                    
+                    var visibilityCell = '';
+                    if (item.customer_visibility === 0) {
+                        visibilityCell = '<span class="grayCheck" onclick="customer_visibility1('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    } else if (item.customer_visibility === 1) {
+                        visibilityCell = '<span class="grencheck" onclick="customer_visibility1('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    }
+                    
+                    var contact = item.contact === '' ? item.customer_name : item.customer_name + '<br><b>Contact:</b>' + item.contact;
+                    
+                    let notify = '';
+                    if (item.notify == 1) {
+                        notify += '<br><b>Notify:</b> <?php echo Auth::user()->name; ?><br><b>Send As:</b> ' 
+                                + (item.sms == 1 ? "SMS," : "") 
+                                + (item.notification == 1 ? " Notification," : "") 
+                                + (item.email == 1 ? " Email" : "");
+                    }
+
+                    var html = '<tr>' +
+                        '<td>' + date + '</td>' +
+                        '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                        '<td>' + contact + '</td>' +  
+                        '<td>' + item.type + '</td>' +        
+                        '<td></td>' +        
+                        '<td>' + item.notes + notify + '</td>' +
+                        '<td id="visible_complaint' + item.id + '">' + visibilityCell + '</td>' +
+                        '<td><i class="fa fa-phone"></i> ' +
+                        '<i class="fa fa-envelope"></i> ' +
+                        '<i class="fa fa-list-ul"></i> ' +
+                        '<i class="fa fa-file"></i> ' +
+                        '<i class="fa fa-exclamation-triangle"></i>Sent</td>' +
+                        '</tr>';
+                    
+                    tableBody.append(html);
+                });
+
+                var paginationControls = $("#pagination-controls");
+                paginationControls.empty();
+                if (pagination.prev_page_url) {
+                    paginationControls.append('<button class="profileDrop" onclick="get_all_crm_customer_complaint(' + id + ', \'' + pagination.prev_page_url + '\')">Previous</button>');
+                }
+                if (pagination.next_page_url) {
+                    paginationControls.append('<button class="profileDrop" onclick="get_all_crm_customer_complaint(' + id + ', \'' + pagination.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+    function get_all_crm_customer_contacts(id,pageUrl){
+        var token='<?php echo csrf_token();?>'
+        var userTyep=1;
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {
+                userTyep:userTyep,id: id,_token:token
+            },
+            success: function(response) {
+                // console.log(response);
+                var data = response.data;
+                var paginationContact = response.pagination;
+                var tableBody = $("#crm_customer_contact"); 
+                tableBody.empty();
+                
+                data.forEach(function(item) {
+                    
+                    var date = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+                    
+              
+                    var visibilityCell = '';
+                    if (item.customer_visibility === 0) {
+                        visibilityCell = '<span class="grayCheck" onclick="customer_visibility1('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    } else if (item.customer_visibility === 1) {
+                        visibilityCell = '<span class="grencheck" onclick="customer_visibility1('+item.id+')"><i class="fa-solid fa-circle-check"></i></span>';
+                    }
+                    var contact;
+                    if(item.contact == ''){
+                        contact=item.customer_name;
+                    }else{
+                        contact=item.contact;
+                    }
+
+                    var html = '<tr>' +
+                        '<td>' + date + '</td>' +
+                        '<td><?php echo Auth::user()->name . "<br>(" . Auth::user()->email .")"; ?></td>' +
+                        '<td>' + contact + '</td>' +       
+                        '<td></td>' +        
+                        '<td></td>' +
+                        '<td>' + visibilityCell + '</td>' +
+                        '<td><i class="fa fa-phone"></i> ' +
+                        '<i class="fa fa-envelope"></i> ' +
+                        '<i class="fa fa-list-ul"></i> ' +
+                        '<i class="fa fa-file"></i> ' +
+                        '<i class="fa fa-exclamation-triangle"></i></td>' +
+                        '</tr>';
+                    tableBody.append(html);
+                });
+                var paginationControlsContact = $("#pagination-controls-contact");
+                paginationControlsContact.empty();
+                if (paginationContact.prev_page_url) {
+                    paginationControlsContact.append('<button class="profileDrop" onclick="get_all_crm_customer_contacts(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationContact.next_page_url) {
+                    paginationControlsContact.append('<button class="profileDrop" onclick="get_all_crm_customer_contacts(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3298,7 +3967,7 @@ job_input.addEventListener('input', function() {
             url: "{{url('/visibility_change')}}",
             data: {id:id,_token:token},
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 // visible_check1
                 var visibilityCell = '';
                 if(data.data.customer_visibility == 0){
@@ -3363,20 +4032,27 @@ job_input.addEventListener('input', function() {
         let isRunning = false;
 
         function toggleTimer() {
-            if (isRunning) {
-                // Pause the timer
-                clearInterval(timerInterval);
-                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-play"></i> Start';
-            } else {
-                // Start the timer with an interval of 100ms for faster updates
-                timerInterval = setInterval(function() {
-                    elapsedSeconds++;
-                    document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
-                    document.getElementById('start_time').value = formatTime(elapsedSeconds);
-                }, 100); // Now the timer updates every 100 milliseconds
-                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
+            var staticEmail=$("input[name=title_timer]").val();
+            if(staticEmail == ''){
+                alert("Please fill all required field");
+                return false;
+            }else{
+                if (isRunning) {
+                    // Pause the timer
+                    clearInterval(timerInterval);
+                    document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-play"></i> Start';
+                } else {
+                    // Start the timer with an interval of 100ms for faster updates
+                    timerInterval = setInterval(function() {
+                        elapsedSeconds++;
+                        document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+                        document.getElementById('start_time').value = formatTime(elapsedSeconds);
+                    }, 100); // Now the timer updates every 100 milliseconds
+                    document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
+                }
+                isRunning = !isRunning; // Toggle the running state
             }
-            isRunning = !isRunning; // Toggle the running state
+            
         }
 
         function formatTime(seconds) {
@@ -3459,7 +4135,7 @@ job_input.addEventListener('input', function() {
                 url: "{{url('/save_job_title')}}",
                 data: {name:name,status:status,home_id:home_id,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     
                     $("#job_modaltitle").modal('hide');
                     $('.get_job_title_result').append(data);
@@ -3472,6 +4148,7 @@ job_input.addEventListener('input', function() {
             });
         }
     }
+    
     function save_contact(){
         var token='<?php echo csrf_token();?>'
         var default_billing; 
@@ -3492,6 +4169,7 @@ job_input.addEventListener('input', function() {
         var country=$("#contact_country_input").val();
         var postcode=$("#contact_pincode").val();
         var country_id=$("#contact_country_id").val();
+        var userType=$("#userType").val();
         if(customer_id == '' || customer_id == null){
             $("#contact_customer_id").css('border','1px solid red');
             return false;
@@ -3510,14 +4188,256 @@ job_input.addEventListener('input', function() {
             $.ajax({
                 type: "POST",
                 url: "{{url('/contact_save')}}",
-                data: {country_id:country_id,postcode:postcode,country:country,city:city,address:address,fax:fax,mobile:mobile,telephone:telephone,email:email,job_title_id:job_title_id,contact_name:contact_name,customer_id:customer_id,default_billing:default_billing,_token:token},
+                data: {userType:userType,country_id:country_id,postcode:postcode,country:country,city:city,address:address,fax:fax,mobile:mobile,telephone:telephone,email:email,job_title_id:job_title_id,contact_name:contact_name,customer_id:customer_id,default_billing:default_billing,_token:token},
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     $("#contact_modal").modal('hide');
                     $("#notes_contact").append(data);
+                    $("#comaplint_contact").append(data);
+                    get_all_crm_customer_contacts(customer_id,pageUrl = '{{ url("get_all_crm_customer_contacts") }}');   
+                    GetCustomerWithContact();
                 }
             });
         }
+    }
+    function default_address(){
+        var check;
+        if ($('#contact_default_address').is(':checked')) {
+            check=1;
+        }else {
+            check=0;
+        }
+        var token='<?php echo csrf_token();?>'
+        var customer_id=$("#contact_customer_id").val();
+        if(customer_id == null || customer_id == ''){
+            alert("please select Customer");
+            $('#contact_default_address').prop('checked',false);
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "{{url('/default_address')}}",
+            data: {check:check,customer_id:customer_id,_token:token},
+            success: function(data) {
+                // console.log(data);
+                if(check == 1){
+                    $("#contact_address").val(data.details.address);
+                    $("#contact_city").val(data.details.city);
+                    $("#contact_country_input").val(data.details.country);
+                    $("#contact_pincode").val(data.details.postal_code);
+                }else{
+                    $("#contact_address").val('');
+                    $("#contact_city").val('');
+                    $("#contact_country_input").val('');
+                    $("#contact_pincode").val('');
+                }
+                $("#contact_country_code").html(data.reslut);
+            }
+        });
+    }
+    function GetCustomerWithContact(){
+        var token = '<?php echo csrf_token(); ?>'
+        $.ajax({
+            type: "POST",
+            url: "{{url('GetCustomerWithContact')}}",
+            data: {
+                _token: token
+            },
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if (response.data.length > 0) {
+                var ContactData=response.data;
+                // console.log(customerData);return false;
+                var customer_contact = '';
+                var supplier_contact = '';
+                var user_contact = '';
+                for (let i = 0; i < ContactData.length; i++) {
+                    var customerData = ContactData[i].customers;
+                    var user=ContactData[i].user;
+                    if(ContactData[i].userType == 1){
+                        customer_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>CUSTOMER</td><td>' + (customerData.name ?? '') + '</td><td>' + (customerData.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
+                    }else if(ContactData[i].userType == 2){
+                        supplier_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>Supplier</td><td>' + (customerData.name ?? '') + '</td><td>' + (customerData.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
+                    }else if(ContactData[i].userType == 3){
+                        user_contact += '<tr onclick="select_row(this, ' + ContactData[i].id + ', \'' + ContactData[i].contact_name + '\')" class="contact-row"><td>User</td><td>' + (user.name ?? '') + '</td><td>' + (user.contact_name ?? '') + '</td><td>' + (ContactData[i].contact_name ?? "") + '</td><td>' + (ContactData[i].email ?? "") + '</td><td>' + (ContactData[i].telephone ?? "") + '</td><td>' + (ContactData[i].mobile ?? "") + '</td></tr>';
+                    }else{
+                        alert("Something is wrong");
+                        return false;
+                    }
+                    
+                }
+                document.getElementById('customer_contact_list').innerHTML = customer_contact;
+                document.getElementById('supplier_contact_list').innerHTML = supplier_contact;
+                document.getElementById('user_contact_list').innerHTML = user_contact;
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+    function select_row(rowElement,id,name){
+        $('.contact-row').removeClass('selected-row');
+        $(rowElement).addClass('selected-row');
+        // console.log(rowElement);
+        selectedContactId = id;
+        selectedContactName = name;
+    }
+    let selectedContactId = null;
+    let selectedContactName = null;
+    function insertSelectedContact(){
+        if (selectedContactId && selectedContactName) {
+        $('#search_contactsModal').modal('hide');
+        // $('#notes_contact').append(new Option(selectedContactName, selectedContactId));
+        // This code is used when we need to differentiate data among the Customer, Supplier, and User.↓
+        // $('#notes_contact').html(new Option(selectedContactName, selectedContactId).attr('data-type', selectedContactType));
+        $('#notes_contact').html(new Option(selectedContactName, selectedContactId));
+        $('#comaplint_contact').html(new Option(selectedContactName, selectedContactId));
+        
+        // Clear selection if needed
+        selectedContactId = null;
+        selectedContactName = null;
+        } else {
+            alert("Please select a contact row first.");
+        }
+    }
+    function full_history() {
+    var tableBody = $("#crm_customer_all_data");
+    const itemsPerPage = 10;
+    let currentPage = 1;
+    let data = [];
+
+    // Fetch data from the server
+    function fetchData() {
+        const token = '{{ csrf_token() }}';
+
+        $.ajax({
+            type: "POST",
+            url: "{{ url('GetFullHistory') }}",
+            data: {
+                _token: token
+            },
+            success: function(response) {
+                // console.log(response);
+                if (response.success && response.callHistoryData.length > 0) {
+                    data = response.callHistoryData;
+                    setupPagination();
+                    displayData(currentPage);
+                } else {
+                    tableBody.empty().append('<tr><td colspan="7" class="text-center">No history available</td></tr>');
+                    $("#pagination").empty();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error: ", error);
+            }
+        });
+    }
+
+    // Display data in the table
+    function displayData(page) {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const itemsToShow = data.slice(startIndex, endIndex);
+
+        tableBody.empty();
+
+        itemsToShow.forEach(function(item) {
+            const date = moment(item.date).format('DD/MM/YYYY HH:mm');
+
+            // Visibility cell based on customer visibility status
+            var visibilityCell = '';
+            if (item.customer_visibility == 0) {
+                visibilityCell = '<span class="grayCheck"><i class="fa-solid fa-circle-check"></i></span>';
+            } else if (item.customer_visibility == 1) {
+                visibilityCell = '<span class="grencheck"><i class="fa-solid fa-circle-check"></i></span>';
+            }
+
+            let notes = '';
+            try {
+                const notesObj = JSON.parse(item.notes); // Parsing the JSON stored in 'notes'
+
+                // If notes contains a message and send_as data
+                const message = notesObj.message || '';
+                const notify = notesObj.notify || 'Unknown';
+                const sendAs = notesObj.send_as ? notesObj.send_as.join(', ') : 'Unknown';
+
+                // Format the notes
+                notes = `${message}<br><b>Notify:</b> ${notify}<br><b>Send As:</b> ${sendAs}`;
+            } catch (e) {
+                console.error("Error parsing notes: ", e);
+                notes = item.notes || '-'; // If parsing fails, show the raw notes or default '-'
+            }
+
+            const html = '<tr>' +
+                '<td>' + date + '</td>' +
+                '<td>' + item.by + '</td>' +
+                '<td>' + (item.contact || '-') + '</td>' +
+                '<td>' + (item.type || '-') + '</td>' +
+                '<td>' + notes + '</td>' +  // Display formatted notes
+                '<td></td>' + // Empty column, customize as needed
+                '<td>' + visibilityCell + '</td>' +
+            '</tr>';
+
+            tableBody.append(html);
+        });
+    }
+
+    // Set up pagination
+    function setupPagination() {
+        const pageCount = Math.ceil(data.length / itemsPerPage);
+        const pagination = $("#pagination");
+        pagination.empty();
+
+        for (let i = 1; i <= pageCount; i++) {
+            const pageItem = $('<li>').text(i).addClass('page-item');
+            if (i === currentPage) {
+                pageItem.addClass('active');
+            }
+            pageItem.on('click', function() {
+                currentPage = i;
+                displayData(currentPage);
+                updatePagination();
+            });
+            pagination.append(pageItem);
+        }
+
+        updatePagination();
+    }
+
+    // Update the pagination UI
+    function updatePagination() {
+        $("#pagination li").removeClass('active');
+        $("#pagination li").eq(currentPage - 1).addClass('active');
+    }
+
+    fetchData(); // Call fetchData to load the data when the page loads
+}
+
+
+
+</script>
+<!-- Searching Via Email data -->
+<script>
+function searchDataWithEmail(text){
+    var search_data_email=$('.search_data_email').val();
+    if(search_data_email.length > 3){
+        if(text == 'Complaints'){
+            alert(search_data_email)
+        }
+    }
+}
+</script>
+<script>
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("TaskStartDate").setAttribute("min", today);
+    document.getElementById("TaskEndDate").setAttribute("min", today);
+
+    function setMinEndDate() {
+        $('#TaskEndDate').removeAttr('disabled');
+        const startDate = document.getElementById("TaskStartDate").value;
+        document.getElementById("TaskEndDate").setAttribute("min", startDate);
     }
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor5-build-classic/ckeditor.js"></script>

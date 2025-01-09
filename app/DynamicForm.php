@@ -56,8 +56,19 @@ class DynamicForm extends Model //FormBuilder
             $formdata .= "<input type='hidden' value='" . $form_builder_id . "' id='formid'>";
             $formdata .= "<input type='hidden' value='" . $home_id . "' id='home_id'>";
             $formdata .= "<input type='hidden' value='.$form_pattern.' id='getdatamodel'>";
-            $formdata .= "<input type='hidden' value='". $form->image."' id='imageName'>";
-            
+
+            if ($form->is_image == "1") {
+                $formdata .= '  <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="uploadimg222">
+                                        <input type="hidden" name="formImage" class="uploded_image" id="imageName">                           
+                                        <div id="previewContainer" class="formImageHide" style="overflow: hidden; margin-bottom: 20px; height: 300px; display :none;">
+                                            <img id="formImagePreview" style=" width:100%; object-fit: contain; height: 100%;" alt="Image Preview">  
+                                        </div>
+                                        <input type="file" multiple="false" accept="image/*" name="form_image" class="form-control finput" id="finput" onchange="upload()">
+                                    </div> 
+                                </div>';
+            }
+
             //  echo "<pre>";   print_r($form->alert_field);  echo "<pre>";
             if ($form->alert_field == '1') {
                 $static_field = '<div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
@@ -138,12 +149,8 @@ class DynamicForm extends Model //FormBuilder
             }
             $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12 cog-panel' id='formiotest'></div>";
             $formdata .= '';
-            if(!empty($form->image)){
-                $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12" id="formiotestimage">
-                                <div class="uploadPopImg mt-0 hideImageDiv" ><img class="my-2 imagePreview" src="'.asset('public/images/formio/' . $form->image).'" width="100px"></div>
-                            </div>';    
-            }
-            
+
+
             $result['response']         = true;
             $result['form_builder_id']  = $form_builder_id;
             $result['pattern']          = $formdata;
@@ -175,10 +182,8 @@ class DynamicForm extends Model //FormBuilder
         $admin_id  = DB::table('home')->where('id', $home_idme)->value('admin_id');
         $image_id  = DB::table('admin')->where('id', $admin_id)->value('image');
 
-        $form_info    = DynamicForm::select('dynamic_form.pattern_data', 'dynamic_form.form_builder_id', 'dynamic_form.date', 'dynamic_form.created_at', 'u.name', 'dynamic_form.title', 'dynamic_form.time', 'dynamic_form.details', 'dynamic_form.alert_status', 'dynamic_form.form_builder_id', 'dynamic_form.service_user_id', 'dynamic_form_builder.image')
-            // ->join('service_user as su','su.id','=','dynamic_form.service_user_id')
+        $form_info    = DynamicForm::select('dynamic_form.pattern_data', 'dynamic_form.form_builder_id', 'dynamic_form.date', 'dynamic_form.created_at', 'u.name', 'dynamic_form.title', 'dynamic_form.time', 'dynamic_form.details', 'dynamic_form.alert_status', 'dynamic_form.form_builder_id', 'dynamic_form.service_user_id', 'dynamic_form.image_path')
             ->join('user as u', 'u.id', 'dynamic_form.user_id')
-            ->join('dynamic_form_builder', 'dynamic_form_builder.id', 'dynamic_form.form_builder_id')
             ->where('dynamic_form.id', $dynamic_form_id)
             // ->where('su.home_id',$home_id)
             ->where('dynamic_form.home_id', $home_id)
@@ -199,9 +204,7 @@ class DynamicForm extends Model //FormBuilder
         }
 
         //first get the form default id from tag
-        $form_builder   =   DynamicFormBuilder::where('id', $form_builder_id)
-            ->where('home_id', $home_id)
-            ->first();
+        $form_builder   =   DynamicFormBuilder::where('id', $form_builder_id)->where('home_id', $home_id)->first();
 
         if (!empty($form_builder)) {
 
@@ -223,10 +226,9 @@ class DynamicForm extends Model //FormBuilder
             // echo $form_date; die;
             $static_fields    = '<div class="col-md-12 col-sm-12 col-xs-12">
                                     <h3 class="m-t-0 m-b-20 clr-blue fnt-20 dynamic_form_h3">Details </h3>
-                                    
                                 </div>
                                 <div class="prient-btn">
-                                        <input type="button" onclick="PrintDivwithvalue(this)" data-id="' . $image_id . '" value="download PDF" />
+                                        <input type="button" onclick="PrintDivwithvalue(this)" data-id="" value="download PDF" />
                                         </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12 cog-panel">
                                     <div class="form-group col-md-12 col-sm-12 col-xs-12 p-0">
@@ -244,7 +246,36 @@ class DynamicForm extends Model //FormBuilder
             $formdata .= $static_fields;
             $total_fields = 0;
             $formdata .= "<input type='hidden' value='" . $dynamic_form_id . "' id='dynamic_form_idformio'>";
-            $formdata .= "<input type='hidden' value='". $form_builder->image."' id='imageName'>";
+
+
+            if ($form_builder->is_image == "1") {
+                if ($form_info->image_path !== null) {
+                    $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <div class="uploadimg222"> 
+                                        <input type="hidden" name="formImage" class="uploded_image" id="imageName">                           
+                                        <input type="hidden" name="formImage2" class="" value="'.$form_info->image_path.'">                           
+                                        <div id="previewContainer2" style="overflow: hidden; margin-bottom: 20px; height: 300px;">';
+                    // Check if a previous image exists
+                    if (!empty($form_info->image_path)) {
+                        $formdata .= '<img src="' . url("/public/" . $form_info->image_path) . '" alt="Uploaded Image" id="previousImage" style=" width:100%; object-fit: contain; height: 100%;">';
+                    }
+
+                    $formdata .= '      </div>
+                                        <input type="file" multiple="false" accept="image/*" name="form_image" class="form-control finput" disabled id="finput2" onchange="uploadImageFun()">
+                                    </div>
+                                </div>';
+                } else {
+                    $formdata .= '  <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                        <div class="uploadimg222">
+                            <input type="hidden" name="formImage" class="uploded_image" id="imageName">                           
+                            <div id="previewContainer" class="formImageHide" style="overflow: hidden; margin-bottom: 20px; height: 300px; display :none;">
+                                <img id="formImagePreview" style=" width:100%; object-fit: contain; height: 100%;" alt="Image Preview">  
+                            </div>
+                            <input type="file" multiple="false" accept="image/*" name="form_image" class="form-control finput" disabled id="finput" onchange="upload()">
+                        </div> 
+                    </div>';
+                }
+            }
 
             //echo '<pre>'; print_r($static_fields); die;
 
@@ -586,11 +617,7 @@ class DynamicForm extends Model //FormBuilder
                 $formdata .= $static_field;
             }
 
-            if(!empty($form_info->image)){
-                $formdata .= '<div class="col-md-12 col-sm-12 col-xs-12" id="formiotestimage">
-                                <div class="uploadPopImg mt-0 hideImageDiv" ><img class="my-2 imagePreview" src="'.asset('public/images/formio/' . $form_info->image).'" width="100px"></div>
-                            </div>';    
-            }
+
 
             $result['response']         = true;
             $formdata .= "<div class='col-md-12 col-sm-12 col-xs-12' id='formioView'></div>";
@@ -598,8 +625,6 @@ class DynamicForm extends Model //FormBuilder
             //$result['title']            = $form_builder->title;
             $result['service_user_id']  = $form_info->service_user_id;
             //$result['detail']     = `->detail;
-            // $result['image']            = asset('public/images/formio/' . $form_info->image);
-            // $result['imageName']        = $form_info->image;
             $result['form_data']        = $formdata;
         } else {
             $result['response']     = false;
@@ -1394,12 +1419,18 @@ class DynamicForm extends Model //FormBuilder
         // return $data['title'];
         // //return $formdata;
         // die;
+        if(isset($data['formImage'])){
+            $formImage = $data['formImage'];
+        } else {
+            $formImage = null;
+        }
         /*----- June 07,2018 End ---*/
 
         $form                   = new DynamicForm;
         $form->home_id          = Auth::user()->home_id;
         $form->user_id          = Auth::user()->id;
         $form->form_builder_id  = $data['dynamic_form_builder_id'];
+        $form->image_path       = $formImage;
         // $form->user_id          = $data['user_id']; 
         /*----- June 07,2018 (Akhil) -----*/
         if ($data['service_user_id'] != '') {

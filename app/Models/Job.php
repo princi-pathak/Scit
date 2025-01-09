@@ -62,7 +62,7 @@ class Job extends Model
         'status',
     ];
     public static function job_save($data){
-        // echo "<pre>";print_r($data['attachments']);die;
+        // echo "<pre>";print_r($data);die;
         $last_id=$data['last_job_id'];
         if($last_id == ''){
             $job_ref="JOB-1";    
@@ -83,15 +83,10 @@ class Job extends Model
         if(isset($data['final_amount'])){
             $data['pay_amount']=$data['final_amount'];
         }
-        
-        try {
             $insert=self::updateOrCreate(
                 ['id' => $data['id'] ?? null],
                 $data
             );
-        } catch (\Exception $e) {
-            return response()->json(['success'=>'false','message' => $e->getMessage()], 500);
-        }
             $data=['id'=>$insert->id,'name'=>$insert->name,'job_ref'=>$insert->job_ref];
             return $data;
     }
@@ -103,6 +98,13 @@ class Job extends Model
                 ->where('appoint.status',1)
                 ->whereNull('appoint.deleted_at')
                 ->get();
+    }
+    public static function getAllJob($home_id){
+        return self::where('home_id',$home_id)->whereNull('deleted_at');
+    }
+
+    public function product(){
+
     }
     
 }

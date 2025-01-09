@@ -5,14 +5,13 @@ namespace App\Http\Controllers\frontEnd\salesFinance\Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Session, DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use App\Models\Product_category;
 use App\Models\Product;
 use App\Models\Construction_tax_rate;
 use App\Models\Construction_account_code;
 use App\Models\ProductImage;
+use App\Models\ProductGroup;
 use App\Customer;
 use App\User;
 
@@ -35,7 +34,7 @@ class ProductController extends Controller
         }else{
             $productstatus = 1;
         }
-        $productlist = Product::where('home_id',Auth::user()->home_id)->where('adder_id',Auth::user()->id)->where('status',$productstatus)->where('deleted_at',NULL)->get();
+        $productlist = Product::where('home_id',Auth::user()->home_id)->where('adder_id',Auth::user()->id)->where('status',$productstatus)->where('deleted_at',NULL)->orderBy('id','DESC')->get();
         foreach($productlist as $product_val){
             $arr['id'] = $product_val->id;
             $arr['customer_only'] = $product_val->customer_only;
@@ -111,7 +110,7 @@ class ProductController extends Controller
         //     array_push($productcategory_array,$arr);
         // }
         // $product_categories_list = $productcategory_array;
-        return view('frontEnd.salesAndFinance.Item.product', compact('product', 'page', 'lastSegment', 'users', 'product_inactive','product_categories','product_list_array'));
+        return view('frontEnd.salesAndFinance.item.product', compact('product', 'page', 'lastSegment', 'users', 'product_inactive','product_categories','product_list_array'));
     }
 
     function productcategorylist(Request $request){
@@ -333,6 +332,51 @@ class ProductController extends Controller
         ProductImage::deleteproductimage($request->productimgid);
     }
 
+    public function getProductList(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        if($request->type == 4){
+            $data = ProductGroup::getProductGroupData(Auth::user()->home_id);   
+        }else{
+            $data = Product::getProductList($request->type);
+        }
+
+        return response()->json([
+            'success' => (bool) $data,
+            'type'=>$request->type ?? null,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }
+
+    public function getProductCounts(){
+        $data['product'] = Product::getProductListCountType(1);
+        $data['service'] = Product::getProductListCountType(2);
+        $data['consumable'] = Product::getProductListCountType(3);
+        $product_group= ProductGroup::getProductGroupData(Auth::user()->home_id); 
+         $data['product_group']=count($product_group);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data.'
+        ]);
+    }  
     
+    public function searchProduct(Request $request){
+        $query = $request->get('query');
+
+        // Fetch data from database (replace `YourModel` with your actual model)
+        $results = Product::where('product_name', 'LIKE', "%{$query}%")->select('id', 'product_name')->get();
+
+        // Return the results as JSON or a rendered view
+        return response()->json($results); // For JSON response
+    }
+
+    public function getProductFromId(Request $request){
+       $data =  Product::getProductFromId($request->id);
+
+       return response()->json([
+        'success' => (bool) $data,
+        'data' => $data ? $data : 'No data.'
+    ]);
+
+    }
 
 }

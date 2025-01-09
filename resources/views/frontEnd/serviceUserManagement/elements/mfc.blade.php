@@ -11,7 +11,7 @@
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 serch-btns text-right">
                         <button class="btn label-default add-new-btn active" type="button"> Add New </button>
                         <button class="btn label-default logged-btn active mfc-logged-btn" type="button"> Logged Records </button>
-                        <!-- <button class="btn label-default search-btn active" type="button"> Search </button> -->
+                        <button class="btn label-default search-btn active" type="button"> Search </button>
                     </div>
 
                     <div class="add-new-box risk-tabs custm-tabs">
@@ -134,7 +134,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h3 class="m-t-0 m-b-20 clr-blue fnt-20">Search</h3>
                         </div>
-                        <div class="col-md-12 col-sm-12 col-xs-12 p-0 type-field">
+                        <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 type-field">
                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Type: </label>
                             <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
                                 <div class="select-style">
@@ -144,13 +144,13 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">
+                        </div> -->
+                        <!-- <div class="col-md-12 col-sm-12 col-xs-12 p-0 srch-field">
                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Title: </label>
                             <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15 title">
                                 <input type="text" name="search_mfc_record" class="form-control" maxlength="255">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 col-sm-12 col-xs-12 p-0 add-rcrd srch-field">
                             <label class="col-md-2 col-sm-2 col-xs-12 p-t-7 cus-lbl"> Date: </label>
                             <div class="col-md-9 col-sm-9 col-xs-12 p-0 m-b-15">
@@ -281,7 +281,7 @@
 </script>
 <script>
     //click search btn
-    $('input[name=\'mfc_date\']').closest('.srch-field').hide();
+    // $('input[name=\'mfc_date\']').closest('.srch-field').hide();
 
     $(document).ready(function() {
 
@@ -327,6 +327,7 @@
 
             var mfc_date = mfc_search_date.val();
             var mfc_search_type = mfc_search_type.val();
+            var mfc_search_type = 2;
 
             search = jQuery.trim(search);
             search = search.replace(/[&\/\\#,+()$~%.'":*?<>^@{}]/g, '');

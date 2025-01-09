@@ -14,9 +14,11 @@ use App\Http\Controllers\frontEnd\salesFinance\InvoiceController;
 use App\Http\Controllers\frontEnd\salesFinance\Purchase_orderController;
 use App\Http\Controllers\backEnd\ManagersController;
 use App\Http\Controllers\frontEnd\salesFinance\item\CataloguesController;
-use App\Http\Controllers\frontEnd\salesFinance\Item\ProductCategoryController as FrontendProductCategoryController;
-use App\Http\Controllers\frontEnd\salesFinance\Item\ProductController;
+use App\Http\Controllers\frontEnd\salesFinance\item\ProductCategoryController as FrontendProductCategoryController;
+use App\Http\Controllers\frontEnd\salesFinance\item\ProductController;
+use App\Http\Controllers\frontEnd\salesFinance\item\ProductGroupController;
 use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
+use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
 
 
 
@@ -251,6 +253,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::get('/jobs_index', 'App\Http\Controllers\frontEnd\salesFinance\JobController@index');
 	Route::get('/planner_day', 'App\Http\Controllers\frontEnd\salesFinance\JobController@planner_day');
 	Route::get('/jobs_create', 'App\Http\Controllers\frontEnd\salesFinance\JobController@jobs_create');
+	Route::get('/job_edit', 'App\Http\Controllers\frontEnd\salesFinance\JobController@jobs_create');
 	Route::post('/job_add_edit_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_add_edit_save');
 	Route::post('/get_customer_details_front', 'App\Http\Controllers\frontEnd\salesFinance\JobController@get_customer_details_front');
 	Route::post('/result_product_calculation', 'App\Http\Controllers\frontEnd\salesFinance\JobController@result_product_calculation');
@@ -267,6 +270,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/save_job_title', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_job_title');
 	Route::post('/job_title_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_title_edit_form');
 	Route::post('/save_region', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_region');
+	Route::post('/jobassign_productsDelete', 'App\Http\Controllers\frontEnd\salesFinance\JobController@jobassign_productsDelete');
 	// Customer
 	Route::get('/customer_add_edit', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit_save');
@@ -300,15 +304,26 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(SupplierController::class)->group(function () {
 		Route::get('/suppliers', 'index');
 		Route::get('/supplier_add', 'supplier_add');
+		Route::get('/supplier_edit', 'supplier_add');
+		Route::post('/supplier_save', 'supplier_save');
+		Route::get('/supplier', 'supplier_list');
+		Route::post('/supplier_attachment_save', 'supplier_attachment_save');
+		Route::post('/getAllSupplierAttachment', 'getAllSupplierAttachment');
+		Route::post('/supplier_attachment_image_delete', 'supplier_attachment_image_delete');
+		Route::post('/get_supplier_details', 'get_supplier_details');
+		Route::post('/search_email_list', 'search_email_list');
+		Route::post('/getsupplier_purchaseList', 'getsupplier_purchaseList');
 	});
 	Route::controller(ExpenseController::class)->group(function(){
-		Route::get('/expenses','expenses');
+		Route::match(['get','post'],'/expenses','expenses');
 		Route::post('/find_project','find_project');
 		Route::post('/find_job','find_job');
 		Route::post('/find_appointment','find_appointment');
 		Route::post('/expense_save','expense_save');
 		Route::post('/expense_image_delete','expense_image_delete');
 		Route::get('/reject_expense','reject_expense');
+		Route::post('/searchCustomerName','searchCustomerName');
+		Route::post('/searchExpenses','searchExpenses');
 	});
 
 	Route::controller(CustomerController::class)->group(function(){
@@ -322,9 +337,19 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('get_all_crm_customer_task','get_all_crm_customer_task');
 		Route::post('save_crm_customer_notes','save_crm_customer_notes');
 		Route::post('get_all_crm_customer_note','get_all_crm_customer_note');
+		Route::post('save_crm_customer_complaints','save_crm_customer_complaints');
+		Route::post('get_all_crm_customer_complaint','get_all_crm_customer_complaint');
+		Route::post('get_all_crm_customer_contacts','get_all_crm_customer_contacts');
+		Route::post('getAllCustomerList','getAllCustomerList');
+		Route::post('getAllSupplierList','getAllSupplierList');
+		Route::post('getAllUserList','getAllUserList');
+		Route::post('GetCustomerWithContact','GetCustomerWithContact');
+		Route::post('GetFullHistory','GetFullHistory');
+		Route::post('getAllSite','getAllSite');
+		Route::post('getAllLogin','getAllLogin');
 	});
 
-	// General section Front 
+	// Frontend Controller for setting in General section 
 	Route::controller(GeneralSectionController::class)->group(function () {
 		Route::get('/attachments_types', 'attachments_types');
 		Route::post('/save_attachment_type', 'save_attachment_type');
@@ -333,6 +358,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/regions', 'regions');
 		Route::get('/task_types', 'task_types');
 		Route::post('/save_task_type', 'save_task_type');
+		Route::post('/save_task_type_data', 'save_task_type_data')->name('General.ajax.save_task_type_data');
+		Route::get('/getTaskTypeList', 'getTaskTypeList')->name('General.ajax.getTaskTypeList');
 		Route::get('/tags', 'tags');
 		Route::post('/save_tag', 'save_tag')->name('General.ajax.saveQuoteTag');
 		Route::get('/getTags', 'getTags')->name('General.ajax.getTags');
@@ -346,9 +373,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/tax_rate', 'tax_rate');
 		Route::post('/save_tax_rate', 'save_tax_rate');
 		Route::get('/getAccountCode', 'getAccountCode')->name('Invoice.ajax.getAccountCode');
-
-		
-
+		Route::get('/getActiveAccountCode', 'getActiveAccountCode')->name('Invoice.ajax.getActiveAccountCode');
+		Route::get('/getTaxRate', 'getActiveTaxRate')->name('invoice.ajax.getActiveTaxRate');
+		Route::post('/getTaxRateOnTaxId', 'getTaxRateOnTaxId')->name('invoice.ajax.getTaxRateOnTaxId');
 	});
 
 	
@@ -356,8 +383,29 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(Purchase_orderController::class)->group(function(){
 		Route::get('/departments','departments');
 		Route::post('/save_department','save_department');
+		Route::get('/purchase_order','purchase_order');
+		Route::post('/purchase_order_save','purchase_order_save');
+		Route::get('/purchase_order_edit','purchase_order');
+		Route::post('/purchase_order_attachment_save','purchase_order_attachment_save');
+		Route::post('/getAllAttachmens','getAllAttachmens');
+		Route::post('/delete_po_attachment','delete_po_attachment');
+		Route::post('/vat_tax_details','vat_tax_details');
+		Route::post('/getPurchaesOrderProductDetail','getPurchaesOrderProductDetail');
+		Route::post('/purchase_productsDelete','purchase_productsDelete');
+		Route::post('/purchase_order_new_task_save','purchase_order_new_task_save');
+		Route::post('/getAllNewTaskList','getAllNewTaskList');
+		Route::get('/draft_purchase_order','draft_purchase_order');
+		Route::post('/searchPurchaseOrders','searchPurchaseOrders');
+		Route::post('/searchDepartment','searchDepartment');
+		Route::post('/searchTag','searchTag');
+		Route::post('/searchSupplier','searchSupplier');
+		Route::post('/searchCreatedBy','searchCreatedBy');
+		Route::post('/searchProject','searchProject');
+		Route::post('/searchPurchase_qoute_ref','searchPurchase_qoute_ref');
+		Route::post('/searchPurchase_job_ref','searchPurchase_job_ref');
 	});
-  
+	
+	// Forontend Customer Controller
 	Route::controller(CustomerController::class)->group(function () {
 		Route::prefix('customers')->group(function () {
 			Route::post('/addCustomer', 'SaveCustomerData')->name('customer.ajax.SaveCustomerData');
@@ -392,7 +440,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/leads/create', 'store')->name('lead.store');
 		Route::get('/leads/edit/{id}', 'edit')->name('lead.edit');
 		Route::get('/leads/authorization/{id}', 'sentToAuthorization')->name('lead.authorization');
-		Route::get('/lead/searchLead', 'searchLead');
+		Route::get('leads/search', 'searchLead');
 
 		// Lead Task Type
 		Route::get('/leads/tasks', 'task_list')->name('lead.task_list');
@@ -472,7 +520,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(FrontendQuoteController::class)->group(function () {
 
 		Route::get('/quote/dashboard', 'dashboard')->name('quote.dashboard');
-		Route::get('/quote/quotes', 'create')->name('quote.quotes');
+		Route::get('/quote/add', 'create')->name('quote.quotes');
+		Route::get('/quote/add-details', 'details')->name('quote.details');
 		Route::get('/quote/draft', 'index')->name('quote.draft');
 
 		// Add Quote Types
@@ -499,17 +548,42 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/getRegions', 'getRegions')->name('quote.ajax.getRegions');
 
 		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
-
 		Route::post('/quote/saveQuoteData', 'store');
-
 		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 
-
+		Route::get('/quote/edit/{id}', 'edit')->name('quote.edit');
+		Route::post('quote/saveAttachmentData', 'saveAttachmentData')->name('quote.ajax.saveAttachmentData');
+		Route::post('quote/getAttachmentData', 'getAttachmentData')->name('quote.ajax.getAttachmentData');
+		Route::get('quote-details/add_multi_attachment', 'add_multi_attachment')->name('quote.addMultiAttachment');
+		Route::get('/quote/getAttachmentList', 'getAttachmentList')->name('quote.ajax.getAttachmentList');
+		Route::post('/quote/saveQuoteAttachments', 'saveQuoteAttachments')->name('quote.ajax.saveQuoteAttachments');
+		Route::post('/quote/getAttachmentDataOnQuoteId', 'getAttachmentDataOnQuoteId')->name('quote.ajax.getAttachmentDataOnQuoteId');
+		Route::post('/quote/deleteAttachment', 'deleteAttachment')->name('quote.ajax.deleteAttachment');
+		Route::get('/quote-details/edit/{id}', 'editQuoteDetails')->name('quote.editDetails');
+		Route::post('quote/getQuoteProductList', 'getQuoteProductList')->name('quote.ajax.getQuoteProductList');
+		Route::post('/quote/save-quote-callback', 'storeCallBackData')->name('quote.callback.save');
+		Route::get('/quote/callBack', 'callBack');
+		Route::post('/quote/save-quote-task', 'saveQuoteTask')->name('quote.ajax.saveQuoteTask');
+		Route::post('/quote/getQuoteTaskList', 'getQuoteTaskList')->name('quote.ajax.getQuoteTaskList');
+		Route::patch('/quotes/statusChange', 'statusChange')->name('quote.ajax.statusChange');
+		Route::get('/quote/accepted', 'index');
+		Route::get('/quote/actioned', 'index');
+		Route::get('quote/search', 'searchQuote');
+		Route::get('/quotes/getActiveRejectType', 'getActiveRejectType')->name('quote.ajax.getActiveRejectType');
+		Route::post('/quotes/saveQuoteRejectReasonsType', 'saveQuoteRejectReasonsType')->name('quote.ajax.saveQuoteRejectReasonsType');
+		Route::get('/quote/rejected', 'index');
+		Route::post('/quotes/saveQuoteDeposite', 'saveQuoteDeposite')->name('quote.ajax.saveQuoteDeposite');
+		
+		
+		
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {
 
 		Route::get('/item/catalogues', 'index')->name('catalogues.index');
+		Route::post('/item/catalogues_save', 'catalogues_save');
+		Route::post('item/ProductCataloguePriceList', 'ProductCataloguePriceList');
+		Route::post('item/ProductCataloguePriceDelete', 'ProductCataloguePriceDelete');
 		
 	});
 
@@ -518,24 +592,76 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/item/add_product_category','saveProductCategoryData')->name('item.saveProductCategoryData');
 		Route::post('/item/change_product_category_status','changeProductCategoryStatus')->name('item.changeProductCategoryStatus');
 		Route::post('/item/delete_product_category','deleteProductCategory')->name('item.delete_product_category');
+		Route::get('/item/get_product_categories','getCategoriesList')->name('item.ajax.getCategoriesList');
+
 	});
-	Route::controller(ProductController::class)->group(function(){
-		Route::get('/item/products','productlist')->name('item.products');
-		Route::get('/item/products/active','productlist')->name('item.products.active');
-		Route::get('/item/products/inactive','productlist')->name('item.products.inactive');
-		Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
-		Route::post('/item/generateproductcode','generateproductcode')->name('item.generateproductcode');
-		Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
-		Route::post('/item/taxratelist','taxratelist')->name('item.taxratelist');
-		Route::post('/item/account_code','account_code')->name('item.account_code');
-		Route::post('/item/saveproductdata','saveproductdata')->name('item.saveproductdata');
-		Route::post('/item/changeProductStatus','changeProductStatus')->name('item.changeProductStatus');
-		Route::post('/item/deleteProduct','deleteProduct')->name('item.deleteProduct');
-		Route::post('/item/getproductdata','getproductdata')->name('item.getproductdata');
-		Route::post('/item/getproductimage','getproductimage')->name('item.getproductimage');
-		Route::post('/item/saveproductimages','saveproductimages')->name('item.saveproductimages');
-		Route::post('/item/deleteproductimage','deleteproductimage')->name('item.deleteproductimage');
-	});
+	
+		// Route::controller(ProductController::class)->group(function(){
+		// 	Route::get('/item/products','productlist')->name('item.products');
+		// 	Route::get('/item/products/active','productlist')->name('item.products.active');
+		// 	Route::get('/item/products/inactive','productlist')->name('item.products.inactive');
+		// 	Route::post('/item/productcategorylist','productcategorylist')->name('item.productcategorylist');
+		// 	Route::post('/item/generateproductcode','generateproductcode')->name('item.generateproductcode');
+		// 	Route::post('/item/saveTaxrateData','saveTaxrateData')->name('item.saveTaxrateData');
+		// 	Route::post('/item/taxratelist','taxratelist')->name('item.taxratelist');
+		// 	Route::post('/item/account_code','account_code')->name('item.account_code');
+		// 	Route::post('/item/saveproductdata','saveproductdata')->name('item.saveproductdata');
+		// 	Route::post('/item/changeProductStatus','changeProductStatus')->name('item.changeProductStatus');
+		// 	Route::post('/item/deleteProduct','deleteProduct')->name('item.deleteProduct');
+		// 	Route::post('/item/getproductdata','getproductdata')->name('item.getproductdata');
+		// 	Route::post('/item/getproductimage','getproductimage')->name('item.getproductimage');
+		// 	Route::post('/item/saveproductimages','saveproductimages')->name('item.saveproductimages');
+		// 	Route::post('/item/deleteproductimage','deleteproductimage')->name('item.deleteproductimage');
+		// 	Route::post('/item/getProductList','getProductList')->name('item.ajax.getProductList');
+		// 	Route::get('/item/getProductCounts','getProductCounts')->name('item.ajax.getProductCounts');
+		// });
+
+		Route::controller(ProductController::class)->prefix('item')->name('item.')->group(function () {
+    
+			// GET routes
+			Route::get('/products', 'productlist')->name('products');
+			Route::get('/products/active', 'productlist')->name('products.active');
+			Route::get('/products/inactive', 'productlist')->name('products.inactive');
+			Route::get('/getProductCounts', 'getProductCounts')->name('ajax.getProductCounts');
+			
+			// POST routes for product-related actions
+			Route::post('/productcategorylist', 'productcategorylist')->name('productcategorylist');
+			Route::post('/generateproductcode', 'generateproductcode')->name('generateproductcode');
+			Route::post('/saveTaxrateData', 'saveTaxrateData')->name('saveTaxrateData');
+			Route::post('/taxratelist', 'taxratelist')->name('taxratelist');
+			Route::post('/account_code', 'account_code')->name('account_code');
+			Route::post('/saveproductdata', 'saveproductdata')->name('saveproductdata');
+			Route::post('/changeProductStatus', 'changeProductStatus')->name('changeProductStatus');
+			Route::post('/deleteProduct', 'deleteProduct')->name('deleteProduct');
+			Route::post('/getproductdata', 'getproductdata')->name('getproductdata');
+			
+			// POST routes for product image actions
+			Route::post('/getproductimage', 'getproductimage')->name('getproductimage');
+			Route::post('/saveproductimages', 'saveproductimages')->name('saveproductimages');
+			Route::post('/deleteproductimage', 'deleteproductimage')->name('deleteproductimage');
+			
+			// Additional POST route
+			Route::post('/getProductList', 'getProductList')->name('ajax.getProductList');
+
+			Route::get('/searchProduct', 'searchProduct')->name('ajax.searchProduct');
+			Route::post('/getProductFromId', 'getProductFromId')->name('ajax.getProductFromId');
+			
+		});
+		
+
+		Route::controller(ProductGroupController::class)->prefix('item')->name('item.')->group(function () {
+    
+			// GET routes
+			Route::get('/item-groups', 'productGroupList');
+
+			// post routes
+			Route::post('/saveProductGroup', 'saveProductGroup')->name('ajax.saveProductGroup');
+			Route::post('/ProductGroupProductsList','ProductGroupProductsList');
+			Route::post('/ProductGroupProductsdetails','ProductGroupProductsdetails');
+		
+			
+	
+		});
 
 
 	// ------------- Personal Management - My profile ---------------------// 
@@ -587,7 +713,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	//not
 	Route::match(['get', 'post'], '/service/dynamic-forms', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@index');
-
+	Route::post('/saveFormDotIoImage', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@saveFormDotIoImage')->name('saveFormDotIoImage');
 	Route::post('/service/dynamic-form/save', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@save_form');
 	Route::post('/service/dynamic-form/edit', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@edit_form');
 	Route::post('/service/dynamic-form/view/pattern', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DynamicFormController@view_form_pattern');
@@ -1231,6 +1357,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::post('/tax_delete', 'App\Http\Controllers\backEnd\JobsController@tax_delete');
 	Route::get('/product_add', 'App\Http\Controllers\backEnd\JobsController@product_add');
 	Route::post('/product_save_data', 'App\Http\Controllers\backEnd\JobsController@product_save_data');
+	Route::get('/catalogue','App\Http\Controllers\backEnd\JobsController@catalogue');
+	Route::post('/save_catalogue','App\Http\Controllers\backEnd\JobsController@save_catalogue');
+	Route::get('/getCategoryList','App\Http\Controllers\backEnd\JobsController@getCategoryList');
+	Route::post('/getProduct_List','App\Http\Controllers\backEnd\JobsController@getProduct_List');
+	Route::get('/getProductListCounts','App\Http\Controllers\backEnd\JobsController@getProductListCounts');
+	Route::post('/getProductSelectId','App\Http\Controllers\backEnd\JobsController@getProductSelectId');
+	Route::post('/ProductCataloguePriceList','App\Http\Controllers\backEnd\JobsController@ProductCataloguePriceList');
+	Route::post('/ProductGroupProductsdetail','App\Http\Controllers\backEnd\JobsController@ProductGroupProductsdetail');
+	Route::match(['get','post'],'/product_group','App\Http\Controllers\backEnd\JobsController@product_group');
+	Route::post('/save_productGroup','App\Http\Controllers\backEnd\JobsController@save_productGroup');
+	Route::post('/ProductGroupProductsList','App\Http\Controllers\backEnd\JobsController@ProductGroupProductsList');
 	Route::post('/supplier_result', 'App\Http\Controllers\backEnd\JobsController@supplier_result');
 	Route::match(['get', 'post'], '/customer_list', 'App\Http\Controllers\backEnd\JobsController@customer_list');
 	Route::match(['get', 'post'], '/project_list', 'App\Http\Controllers\backEnd\JobsController@project_list');
@@ -1473,6 +1610,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	//form-builder
 	Route::match(['get', 'post'], '/form-builder', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@index');
 	Route::match(['get', 'post'], '/form-builder/add', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@add');
+
+	
 	Route::match(['get', 'post'], '/form-builder/edit/{form_id}', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@edit');
 	Route::match(['get', 'post'], '/form-builder/delete/{form_id}', 'App\Http\Controllers\backEnd\systemManage\FormBuilderController@delete');
 
@@ -1708,66 +1847,68 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		});
 	});
 
-	Route::controller(BackendLeadController::class)->group(function () {
+	// Route::controller(BackendLeadController::class)->group(function () {
 
-		Route::prefix('sales-finance/leads')->group(function () {
-			// Admin leads
-			Route::get('/', 'index')->name('leads.index');
-			Route::get('/add', 'create')->name('leads.create');
-			Route::post('/create', 'store')->name('leads.store');
-			Route::get('/edit/{id}', 'edit')->name('leads.edit');
-			Route::get('/unassigned', 'index')->name('leads.unassigned');
-			Route::get('/actioned', 'index')->name('leads.actioned');
-			Route::get('/rejected', 'index')->name('leads.rejected');
-			Route::get('/authorization', 'index')->name('leads.authorization');
-			Route::get('/convert_to_customer/{id}', 'convert_to_customer')->name('leads.convertCustomer');
-			Route::get('/converted', 'index')->name('leads.converted');
-			Route::post('/saveLeadNotes', 'save_lead_notes')->name('leads.ajax.saveLeadNotes');
-			Route::get('/tasks', 'task_list')->name('leads.list');
-			Route::get('/lead_task_delete/{id}', 'lead_task_list_delete');
-			Route::get('/authorized/{id}', 'lead_authorized_by_admin');
+	// 	Route::prefix('sales-finance/leads')->group(function () {
+	// 		// Admin leads
+	// 		Route::get('/', 'index')->name('leads.index');
+	// 		Route::get('/add', 'create')->name('leads.create');
+	// 		Route::post('/create', 'store')->name('leads.store');
+	// 		Route::get('/edit/{id}', 'edit')->name('leads.edit');
+	// 		Route::get('/unassigned', 'index')->name('leads.unassigned');
+	// 		Route::get('/actioned', 'index')->name('leads.actioned');
+	// 		Route::get('/rejected', 'index')->name('leads.rejected');
+	// 		Route::get('/authorization', 'index')->name('leads.authorization');
+	// 		Route::get('/convert_to_customer/{id}', 'convert_to_customer')->name('leads.convertCustomer');
+	// 		Route::get('/converted', 'index')->name('leads.converted');
+	// 		Route::post('/saveLeadNotes', 'save_lead_notes')->name('leads.ajax.saveLeadNotes');
+	// 		Route::get('/tasks', 'task_list')->name('leads.list');
+	// 		Route::get('/lead_task_delete/{id}', 'lead_task_list_delete');
+	// 		Route::get('/authorized/{id}', 'lead_authorized_by_admin');
 
-			// Lead Task 
-			Route::post('/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
-			Route::get('/lead_task/delete/{task}/{lead}', 'lead_task_delete');
+	// 		// Lead Task 
+	// 		Route::post('/saveLeadTasks', 'save_lead_tasks')->name('leads.ajax.saveLeadTasks');
+	// 		Route::get('/lead_task/delete/{task}/{lead}', 'lead_task_delete');
 
-			// Lead Status
-			Route::get('/lead_status', 'lead_status')->name('leads.lead_status');
-			Route::post('/saveLeadStatus', 'saveLeadStatus')->name('leads.ajax.saveLeadStatus');
-			Route::get('/lead_status/delete/{id}', 'lead_status_delete');
+	// 		// Lead Status
+	// 		Route::get('/lead_status', 'lead_status')->name('leads.lead_status');
+	// 		Route::post('/saveLeadStatus', 'saveLeadStatus')->name('leads.ajax.saveLeadStatus');
+	// 		Route::get('/lead_status/delete/{id}', 'lead_status_delete');
 
-			// Lead Sources
-			Route::get('/lead_sources', 'lead_sources')->name('leads.lead_sources');
-			Route::post('/saveLeadSource', 'saveLeadSource')->name('leads.ajax.saveLeadSource');
-			Route::get('/lead_source/delete/{id}', 'lead_source_delete');
+	// 		// Lead Sources
+	// 		Route::get('/lead_sources', 'lead_sources')->name('leads.lead_sources');
+	// 		Route::post('/saveLeadSource', 'saveLeadSource')->name('leads.ajax.saveLeadSource');
+	// 		Route::get('/lead_source/delete/{id}', 'lead_source_delete');
 
-			// Lead Task Type
-			Route::get('/lead_task_type', 'lead_task_type')->name('leads.lead_task_type');
-			Route::post('/saveLeadTaskType', 'saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
-			Route::get('/lead_task_type/delete/{id}', 'lead_task_type_delete');
-			Route::get('/lead_mark_as_completed/{task}/{lead}', 'lead_mark_as_completed');
+	// 		// Lead Task Type
+	// 		Route::get('/lead_task_type', 'lead_task_type')->name('leads.lead_task_type');
+	// 		Route::post('/saveLeadTaskType', 'saveLeadTaskType')->name('leads.ajax.saveLeadTaskType');
+	// 		Route::get('/lead_task_type/delete/{id}', 'lead_task_type_delete');
+	// 		Route::get('/lead_mark_as_completed/{task}/{lead}', 'lead_mark_as_completed');
 
-			// Lead Notes Type
-			Route::get('/lead_notes_type', 'lead_notes_type')->name('leads.lead_notes_type');
-			Route::post('/saveLeadNotesType', 'saveLeadNotesType')->name('leads.ajax.saveLeadNoteType');
-			Route::get('/lead_note_type/delete/{id}', 'lead_note_type_delete');
+	// 		// Lead Notes Type
+	// 		Route::get('/lead_notes_type', 'lead_notes_type')->name('leads.lead_notes_type');
+	// 		Route::post('/saveLeadNotesType', 'saveLeadNotesType')->name('leads.ajax.saveLeadNoteType');
+	// 		Route::get('/lead_note_type/delete/{id}', 'lead_note_type_delete');
 
-			// Lead reject type or resons
-			Route::get('/lead_reject_type', 'lead_reject_type')->name('leads.lead_reject_type');
-			Route::post('/saveLeadRejectType', 'saveLeadRejectType')->name('leads.ajax.saveLeadRejectType');
-			Route::get('/lead_reject_type/delete/{id}', 'lead_reject_type_delete');
-			Route::post('/saveLeadRejectReason', 'saveLeadRejectReason')->name('leads.ajax.saveLeadRejectReason');
+	// 		// Lead reject type or resons
+	// 		Route::get('/lead_reject_type', 'lead_reject_type')->name('leads.lead_reject_type');
+	// 		Route::post('/saveLeadRejectType', 'saveLeadRejectType')->name('leads.ajax.saveLeadRejectType');
+	// 		Route::get('/lead_reject_type/delete/{id}', 'lead_reject_type_delete');
+	// 		Route::post('/saveLeadRejectReason', 'saveLeadRejectReason')->name('leads.ajax.saveLeadRejectReason');
 
-			// Lead Attachment 
-			Route::post('/saveLeadAttachment', 'saveLeadAttachment')->name('leads.ajax.saveLeadAttachment');
-			Route::get('/lead_attachments/delete/{attachment}/{lead}', 'lead_attachments_delete');
+	// 		// Lead Attachment 
+	// 		Route::post('/saveLeadAttachment', 'saveLeadAttachment')->name('leads.ajax.saveLeadAttachment');
+	// 		Route::get('/lead_attachments/delete/{attachment}/{lead}', 'lead_attachments_delete');
 
-			// CRM Section Types
-			Route::get('/CRM_section_types', 'CRM_section_type')->name('leads.crm_section');
-			Route::post('/saveCRMSectionType', 'saveCRMSectionType')->name('leads.ajax.saveCRMSectionType');
-			Route::get('/crm_section_type/delete/{id}', 'crm_section_type_delete');
-		});
-	});
+	// 		// CRM Section Types
+	// 		Route::get('/CRM_section_types', 'CRM_section_type')->name('leads.crm_section');
+	// 		Route::post('/saveCRMSectionType', 'saveCRMSectionType')->name('leads.ajax.saveCRMSectionType');
+	// 		Route::get('/crm_section_type/delete/{id}', 'crm_section_type_delete');
+	// 	});
+	// });
+
+// Bbackend Controller for setting in General section
 
 	Route::controller(GeneralController::class)->group(function () {
 
@@ -1783,6 +1924,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('/region/delete','region_delete');
 			Route::get('/task_types','task_types');
 			Route::post('saveTaskType','saveTaskType');
+		
 			Route::get('task_type/delete','task_type_delete');
 			Route::get('/tags','tags');
 			Route::post('/saveTag','saveTag');
@@ -1791,6 +1933,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 
 		});
 	});
+
+	//Backend Controller for General Section E
+	Route::controller(ExpenseControllerAdmin::class)->group(function() {
+		Route::prefix('sales-finance/expense')->group(function() {
+			Route::match(['get', 'post'],'/', 'index');
+			Route::post('find_project','find_project');
+			Route::post('find_job','find_job');
+			Route::post('find_appointment','find_appointment');
+			Route::post('expense_save','expense_save');
+			Route::post('expense_image_delete','expense_image_delete');
+			Route::post('expense_delete','expense_delete');
+			Route::post('expense_reject','expense_reject');
+		});
+	});
+	// Route::match(['get', 'post'], '/job_recurring_list', 'App\Http\Controllers\backEnd\JobsController@job_recurring_list');
 });
 
 //super admin path

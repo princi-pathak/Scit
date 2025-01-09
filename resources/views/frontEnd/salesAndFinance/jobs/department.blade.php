@@ -109,7 +109,7 @@
                     <!--  Modal start here -->
                     <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel"
                         aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
+                        <div class="modal-dialog">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="customerModalLabel">Department - Add</h5>
@@ -124,9 +124,9 @@
                                     <div class="alert alert-danger text-center error_message" style="display:none;height:50px">
                                         <p id="error_message"></p>
                                     </div>
-                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="formDtail">
-                                                <form id="form_data" class="customerForm">
+                                                <form id="form_data" class="customerForm pt-0">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
                                                         <label for="inputName" class="col-sm-3 col-form-label">Department <span class="radStar ">*</span></label>
@@ -193,7 +193,6 @@
                 var tax_code=$("#tax_code").val();
                 var exp_date=$("#exp_date").val();
                 var status = $.trim($('#statusModal option:selected').val());
-                var home_id = '<?php echo $home_id;?>';
                 var id = $("#id").val();
                 var message;
 
@@ -213,7 +212,7 @@
                     $.ajax({
                         type: "POST",
                         url: '{{ url("/save_department") }}',
-                        data: {id: id, home_id: home_id, title: title,status: status, _token: token},
+                        data: {id: id, title: title, status: status, _token: token},
                         success: function(data) {
                             console.log(data);
                             if(data.vali_error){

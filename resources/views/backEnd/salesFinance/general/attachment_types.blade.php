@@ -24,7 +24,7 @@
                                     <div id="editable-sample_length" class="dataTables_length">
                                         <div class="btn-group">
                                             <a href="#" data-toggle="modal" class="open-modal" data-target="#secondModal">
-                                                <button id="editable-sample_new" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+                                                <button id="editable-sample_new" class="btn btn-primary">Add attachment type <i class="fa fa-plus"></i></button>
                                             </a>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                         <label class="col-lg-3 col-sm-3 ">Status</label>
                         <select name="status" id="status" class="form-control">
                             <option value="1">Active</option>
-                            <option value="0">InActive</option>
+                            <option value="0">Inactive</option>
                         </select>
                     </div>
                 </form>
@@ -126,21 +126,28 @@
         });
 
         $('#saveChanges').on('click', function() {
-            var formData = $('#attachments_types_form').serialize();
+            var title=$("#title").val();
+            if(title == ''){
+                $("#title").css('border','1px solid red');
+                return false;
+            }else{
+                var formData = $('#attachments_types_form').serialize();
 
-            $.ajax({
-                url: '{{ route("general.ajax.saveAttachmentType") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    $('#secondModal').modal('hide');
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
+                $.ajax({
+                    url: '{{ route("general.ajax.saveAttachmentType") }}',
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        alert(response.message);
+                        $('#secondModal').modal('hide');
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+            
         });
     });
 </script>
