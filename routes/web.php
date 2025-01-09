@@ -404,6 +404,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/searchPurchase_qoute_ref','searchPurchase_qoute_ref');
 		Route::post('/searchPurchase_job_ref','searchPurchase_job_ref');
 		Route::post('/purchase_order_approve','purchase_order_approve');
+		Route::post('/purchase_order_record_delivered','purchase_order_record_delivered');
 	});
 	
 	// Forontend Customer Controller

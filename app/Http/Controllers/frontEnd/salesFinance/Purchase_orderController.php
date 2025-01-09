@@ -33,6 +33,7 @@ use App\Models\PurchaseOrderProduct;
 use App\Models\AttachmentType;
 use App\Models\PoAttachment;
 use App\Models\PrucahseOrderNewTask;
+use App\Models\PurchaseOrderApproveNotification;
 use App\Models\Task_type;
 use App\Models\Quote;
 use App\User;
@@ -180,41 +181,49 @@ class Purchase_orderController extends Controller
     public function getPurchaesOrderProductDetail(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $home_id=Auth::user()->home_id;
-        // $purchase_order_products = PurchaseOrder::with(['purchaseOrderProducts'])->where(['id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
-        $purchase_order_products = PurchaseOrder::with(['purchaseOrderProducts'])->where(['id'=> $request->id,'deleted_at'=>null])->orderBy('id', 'desc')->get();
+        $purchase_order_products = PurchaseOrder::with(['purchaseOrderProducts'])
+        ->where(['id' => $request->id, 'deleted_at' => null])
+        ->first();
         // return $purchase_order_products;
-        $tax=Product::tax_detail($home_id);
-        $all_job=Job::getAllJob($home_id)->where('status',1)->get();
-        $accountCode=Construction_account_code::getActiveAccountCode($home_id);
-        $data_array = [];
-        foreach ($purchase_order_products as $purchase_order) {
-            $product=$purchase_order->purchaseOrderProducts->toArray();
-            $product_details = $purchase_order->toArray();
-            foreach($product as $val){
-                // return $val['product_id'];
-                $purchase_order_products_detail = Product::product_detail($val['product_id']);
-
-                $data_array[] = [
-                    'product_details' => $product_details,
-                    'tax'=>$tax,
-                    'all_job'=>$all_job,
-                    'accountCode'=>$accountCode,
-                    'purchase_order_products_detail'=>$purchase_order_products_detail
-                ];
-            }
-            
+        if (!$purchase_order_products) {
+            return response()->json(['success' => false, 'message' => 'Purchase Order not found.']);
         }
-        // return $data_array;
+        
+        $tax = Product::tax_detail($home_id);
+        $all_job = Job::getAllJob($home_id)->where('status', 1)->get();
+        $accountCode = Construction_account_code::getActiveAccountCode($home_id);
+        
+        if ($purchase_order_products->purchaseOrderProducts->isEmpty()) {
+            return response()->json(['success' => false, 'message' => 'No products found for this purchase order.']);
+        }
+        
+        $purchase_order_products_paginated = $purchase_order_products->purchaseOrderProducts()
+            ->paginate(10);
+        
+        $data_array = [];
+        foreach ($purchase_order_products_paginated as $val) {
+            $purchase_order_products_detail = Product::product_detail($val->product_id);
+        
+            $data_array[] = [
+                'product_details' => $purchase_order_products,
+                'tax' => $tax,
+                'all_job' => $all_job,
+                'accountCode' => $accountCode,
+                'purchase_order_products_detail' => $purchase_order_products_detail,
+            ];
+        }
+        
         return response()->json([
-            'success' => true, 'data' => $data_array, 
-            // 'pagination' => [
-            //         'total' => $purchase_order_products->total(),
-            //         'current_page' => $purchase_order_products->currentPage(),
-            //         'last_page' => $purchase_order_products->lastPage(),
-            //         'per_page' => $purchase_order_products->perPage(),
-            //         'next_page_url' => $purchase_order_products->nextPageUrl(),
-            //         'prev_page_url' => $purchase_order_products->previousPageUrl(),
-            //     ]
+            'success' => true,
+            'data' => $data_array,
+            'pagination' => [
+                'total' => $purchase_order_products_paginated->total(),
+                'current_page' => $purchase_order_products_paginated->currentPage(),
+                'last_page' => $purchase_order_products_paginated->lastPage(),
+                'per_page' => $purchase_order_products_paginated->perPage(),
+                'next_page_url' => $purchase_order_products_paginated->nextPageUrl(),
+                'prev_page_url' => $purchase_order_products_paginated->previousPageUrl(),
+            ]
         ]);
     }
     public function vat_tax_details(Request $request){
@@ -452,7 +461,7 @@ class Purchase_orderController extends Controller
         $data['paidCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>5])->count();
         $data['customer_data'] = Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
         $data['users'] = User::where('home_id', $home_id)->select('id', 'name','email','phone_no')->where('is_deleted', 0)->get();
-        // echo "<pre>";print_r($data['users']);die;
+        // echo "<pre>";print_r($data['list']);die;
         return view('frontEnd.salesAndFinance.purchase_order.purchase_order_list',$data);
     }
     private function check_segment_purchaseOrder($lastSegment=null){
@@ -576,26 +585,54 @@ class Purchase_orderController extends Controller
                         <td>£' . $vat_amount . '</td>
                         <td>£' . $total_amount . '</td>
                         <td>£' . $total_amount . '</td>
-                        <td>' . $list_status . '</td>
-                        <td>-</td>
-                        <td>
-                            <div class="d-flex justify-content-end">
-                                <div class="nav-item dropdown">
-                                    <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                    </a>
-                                    <div class="dropdown-menu fade-up m-0">
-                                        <a href="'.url('purchase_order_edit?key=').''.base64_encode($val->id).'" class="dropdown-item">Edit</a>
-                                        <a href="#!" class="dropdown-item">Preview</a>
-                                        <a href="#!" class="dropdown-item">Duplicate</a>
-                                        <a href="#!" class="dropdown-item">Approve</a>
-                                        <a href="#!" class="dropdown-item">CRM / History</a>
-                                        <a href="#!" class="dropdown-item">Start Timer</a>
+                        <td>' . $list_status . '</td>';
+                        if($status == 1){
+                            $array_data.='<td>-</td>
+                            <td>
+                                <div class="d-flex justify-content-end">
+                                    <div class="nav-item dropdown">
+                                        <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Action
+                                        </a>
+                                        <div class="dropdown-menu fade-up m-0">
+                                            <a href="'.url('purchase_order_edit?key=').''.base64_encode($val->id).'" class="dropdown-item">Edit</a>
+                                            <a href="#!" class="dropdown-item">Preview</a>
+                                            <a href="#!" class="dropdown-item">Duplicate</a>
+                                            <a href="#!" class="dropdown-item">Approve</a>
+                                            <a href="#!" class="dropdown-item">CRM / History</a>
+                                            <a href="#!" class="dropdown-item">Start Timer</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>';
+                            </td>';
+                        }else{
+                            $array_data.='<td>';
+                            if($val->status == 9){
+                                $array_data.='<span class="grencheck"><i class="fa-solid fa-check"></i></span>';
+                            }else{
+                                $array_data.='<a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>';
+                            }
+                            $array_data.='</td>
+                            <td>
+                                <div class="d-flex justify-content-end">
+                                    <div class="nav-item dropdown">
+                                        <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Action
+                                        </a>
+                                        <div class="dropdown-menu fade-up m-0">
+                                            <a href="'.url('purchase_order_edit?key=').''.base64_encode($val->id).'" class="dropdown-item">Edit</a>
+                                            <a href="#!" class="dropdown-item">Preview</a>
+                                            <a href="#!" class="dropdown-item">Duplicate</a>
+                                            <a href="#!" class="dropdown-item">Approve</a>
+                                            <a href="#!" class="dropdown-item">CRM / History</a>
+                                            <a href="#!" class="dropdown-item">Start Timer</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>';
+                        }
+                        
+                    $array_data.='</tr>';
         }
 
         return response()->json(['data' => $array_data,'all_subTotalAmount'=>$all_subTotalAmount,'all_vatTotalAmount'=>$all_vatTotalAmount,'all_TotalAmount'=>$all_TotalAmount]);
@@ -701,6 +738,59 @@ class Purchase_orderController extends Controller
         return response()->json(['data' => $QuoteSearchData]);
     }
     public function purchase_order_approve(Request $request){
-        echo "<pre>";print_r($request->all());die;
+        // echo "<pre>";print_r($request->all());die;
+        $po_id=$request->po_id;
+        if ($request->notify_radio == 1) {
+            $validator = Validator::make($request->all(), [
+                'notify_user_id' => 'required'
+            ],
+            [
+                'notify_user_id.required' => 'The Notify Who field is required.',
+            ]);
+        
+            if ($validator->fails()) {
+                return response()->json(['vali_error' => $validator->errors()->first()]);
+            }
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
+            $notification = $sms = $email = null;
+        }
+        try{
+            if ($request->notify_radio == 1) {
+                PurchaseOrderApproveNotification::purchaseOrderApproveSave($request->all());
+            }
+            PurchaseOrder::find($po_id)->update(['status' => 3]);
+            return response()->json(['success'=>true,'message'=>'Purchase Order Apporoved']);
+        }catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function purchase_order_record_delivered(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $po_id=$request->po_id;
+        $purchase_product_id=$request->purchase_product_id;
+        if(count($purchase_product_id)>0){
+            for($i=0;$i<count($purchase_product_id);$i++){
+                $data=[
+                    'id'=>$purchase_product_id[$i],
+                    'deliverd_qty'=>$request->already_deliver[$i],
+                    'receive_more'=>$request->receive_more[$i],
+                ];
+                // echo "<pre>";print_r($data);die;
+                try{
+                    PurchaseOrderProduct::savePurchaseOrderProduct($data);
+                    PurchaseOrder::find($po_id)->update(['status' => 9]);
+                    return response()->json(['success'=>true,'message'=>'The Purchase Order Delivered has been saved successfully.']);
+                }catch (\Exception $e) {
+                    Log::error('Error: ' . $e->getMessage());
+                    return response()->json(['error' => $e->getMessage()], 500);
+                }
+                
+            }
+        }
     }
 }

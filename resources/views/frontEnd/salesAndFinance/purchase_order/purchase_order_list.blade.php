@@ -123,10 +123,10 @@ ul#projectList {
                                     New
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
-                                    <a href="#!" class="dropdown-item">Send SMS</a>
-                                    <a href="#!" class="dropdown-item">Preview</a>
-                                    <a href="#!" class="dropdown-item">Print</a>
-                                    <a href="#!" class="dropdown-item">Email</a>
+                                    <a href="{{url('purchase_order')}}" class="dropdown-item">Purchase Order</a>
+                                    <a href="#!" class="dropdown-item">Credit Note</a>
+                                    <!-- <a href="#!" class="dropdown-item">Print</a>
+                                    <a href="#!" class="dropdown-item">Email</a> -->
                                 </div>
                             </div>
                         </div>
@@ -356,6 +356,7 @@ ul#projectList {
                                     <td>£{{$total_amount}}</td>
                                     <td>£{{$total_amount}}</td>
                                     <td>{{$status['list_status']}}</td>
+                                    @if($status['status'] == 1)
                                     <td>-</td>
                                     <td>
                                         <div class="d-flex justify-content-end">
@@ -379,6 +380,48 @@ ul#projectList {
                                             </div>
                                         </div>
                                     </td>
+                                    @else
+                                    <td>
+                                        @if($val->status == 9)
+                                        <span class="grencheck"><i class="fa-solid fa-check"></i></span>
+                                        @else
+                                        <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-end">
+                                            <div class="nav-item dropdown">
+                                                <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Action
+                                                </a>
+                                                <div class="dropdown-menu fade-up m-0">
+                                                    <a href="javascript:void(0)" onclick="openRecordDeliveryModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Record Delivery</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="#!" class="dropdown-item">Preview</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="#!" class="dropdown-item">Print</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="#!" class="dropdown-item">Email</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="#!" class="dropdown-item">Record Payment</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="#!" class="dropdown-item">Invoice Received</a>
+                                                    <!-- <hr class="dropdown-divider">
+                                                    <a href="#!" class="dropdown-item">CRM / History</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="#!" class="dropdown-item">Start Timer</a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    @endif
+                                    
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -403,7 +446,7 @@ ul#projectList {
             </di>
         </div>
 </section>
-<!-- Models Start Here -->
+<!-- Approve Model Start Here -->
 <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content add_Customer">
@@ -419,6 +462,7 @@ ul#projectList {
                             <form id="approveForm" class="customerForm pt-0">
                                 @csrf
                                 <input type="hidden" name="id" id="id">
+                                <input type="hidden" name="po_id" id="po_id">
                                 <div class="row">
                                     <label for="inputName" class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-form-label">Would you like to notify anyone that this purchase order '<span id="purchaseOrderRef"></span>' has been approved?</label>
                                 </div>
@@ -426,14 +470,13 @@ ul#projectList {
                                 <label for="inputName" class="col-md-3 col-lg-3 col-xl-3 col-sm-3 col-form-label">Notify?</label>
                                     <div class="col-sm-9">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="radio" id="radioNo" value="0" checked="">
+                                            <input class="form-check-input" type="radio" name="notify_radio" id="radioNo" value="0" checked="">
                                             <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="radio" value="1" id="radioYes">
+                                            <input class="form-check-input" type="radio" name="notify_radio" value="1" id="radioYes">
                                             <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
                                         </div>
-                                        <input type="hidden" id="notify" name="notify" value="0">
                                     </div>
                                 </div>
                                 
@@ -441,7 +484,7 @@ ul#projectList {
                                     <label for="inputProject"
                                         class="col-sm-3 col-form-label">Notify Who?</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control editInput selectOptions" id="notifywhoUser" name="user_id">
+                                        <select class="form-control editInput selectOptions" id="notifywhoUser" name="notify_user_id">
                                             <option value=""></option>
                                             <option value="{{Auth::user()->id}}">Me - {{Auth::user()->email}} / {{Auth::user()->phone_no ?? 'No Mobile'}}</option>
                                             @foreach($users as $value)
@@ -481,6 +524,55 @@ ul#projectList {
 </div>
 
 <!-- End here -->
+ <!-- Record Delivery Modal start here -->
+ <div class="modal fade" id="recordDeliveryModal" tabindex="-1" aria-labelledby="recordDeliveryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crecordDeliveryModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <div class="text-center mt-3" id="message_recordDeliveryModal" style="display:none"></div>
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="formDtail">
+                            <form id="recordDeliveryForm" class="customerForm pt-0">
+                                <input type="hidden" name="po_id" id="recordDelivery_po_id">
+                                @csrf
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="recordDelivery_result">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Product</th>
+                                                    <th>Description</th>
+                                                    <th>Price</th>
+                                                    <th>Qty</th>
+                                                    <th>Allredy Delivered</th>
+                                                    <th>Receive More</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        <div id="pagination-controls-recordDelivery"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> <!-- End row -->
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+
+                <button type="button" class="profileDrop" id="saverecordDeliveryModal" onclick="saverecordDeliveryModal()">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <!-- end here -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <script>
    $("#deleteSelectedRows").on('click', function() {
@@ -1129,15 +1221,15 @@ $('.delete_checkbox').on('click', function() {
 <script>
     function openApproveModal(id,po_ref){
         $("#purchaseOrderRef").text(po_ref);
+        $("#po_id").val(id);
         $("#approveModal").modal('show');
     }
-    $('input[name="radio"]').on('change',function(){
+    $('input[name="notify_radio"]').on('change',function(){
         if($(this).val() == 1){
             $(".notificationHideShow").show();
         }else{
             $(".notificationHideShow").hide();
         }
-        $("#notify").val($(this).val());
         
     });
     function saveApproveModal(){
@@ -1150,22 +1242,20 @@ $('.delete_checkbox').on('click', function() {
                 cache: false,
                 processData: false,
                 success: function(response) {
-                    console.log(response);return false;
+                    console.log(response);
                 if(response.vali_error){
                         alert(response.vali_error);
                         $(window).scrollTop(0);
                         return false;
                     }else if(response.success === true){
                         $(window).scrollTop(0);
-                        $('#message_save').addClass('success-message').text(response.message).show();
+                        $('#message_approveModal').addClass('success-message').text(response.message).show();
                         setTimeout(function() {
-                            $('#message_save').removeClass('success-message').text('').hide();
-                            var id = parseInt(response.data.id, 10) || 0;
-                            var encodedId = btoa(unescape(encodeURIComponent(id)));
-                            location.href = '<?php echo url('purchase_order_edit'); ?>?key=' + encodedId;
+                            $('#message_approveModal').removeClass('success-message').text('').hide();
+                            location.reload();
                         }, 3000);
                     }else if(response.success === false){
-                        $('#message_save').addClass('error-message').text(response.message).show();
+                        $('#message_approveModal').addClass('error-message').text(response.message).show();
                         setTimeout(function() {
                             $('#error-message').text('').fadeOut();
                         }, 3000);
@@ -1176,6 +1266,178 @@ $('.delete_checkbox').on('click', function() {
                     alert('Error - ' + errorMessage + "\nMessage: " + error);
                 }
             });
+    }
+    function openRecordDeliveryModal(id,po_ref){
+        $("#crecordDeliveryModalLabel").text('Record Payment - '+po_ref);
+        $("#recordDelivery_po_id").val(id);
+        getProductDetail(id,pageUrl = '{{ url("getPurchaesOrderProductDetail") }}');
+        $("#recordDeliveryModal").modal('show');
+    }
+    function getProductDetail(id,pageUrl = '{{ url("getPurchaesOrderProductDetail") }}'){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {id: id,_token:token},
+            success: function(response) {
+                console.log(response);
+                var data=response.data[0];
+                const tableBody = document.querySelector(`#recordDelivery_result tbody`);
+                var purchase_order_products=data.product_details.purchase_order_products;
+                // console.log(purchase_order_products);return false;
+                if (purchase_order_products.length === 0) {
+                    const noDataRow = document.createElement('tr');
+                    noDataRow.id='EmptyError'
+                    const noDataCell = document.createElement('td');
+
+                    noDataCell.setAttribute('colspan', 4);
+                    noDataCell.textContent = 'No products found';
+                    noDataCell.style.textAlign = 'center'; 
+
+                    noDataRow.appendChild(noDataCell);
+                    tableBody.appendChild(noDataRow);
+                }else{
+                    const emptyErrorRow = document.getElementById('EmptyError');
+                    if (emptyErrorRow) {
+                        emptyErrorRow.remove();
+                    }
+                    purchase_order_products.forEach(product => {
+                        const row = document.createElement('tr');
+
+                        const codeCell = document.createElement('td');
+                        codeCell.textContent = product.code;
+                        const inputCode = document.createElement('input');
+                        inputCode.type = 'hidden';
+                        inputCode.className = 'product_code';
+                        inputCode.name = 'product_code[]';
+                        inputCode.value = product.code;
+                        codeCell.appendChild(inputCode);
+                        row.appendChild(codeCell);
+
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = data.purchase_order_products_detail.product_name;
+                        row.appendChild(nameCell);
+
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.className = 'product_id';
+                        hiddenInput.name = 'product_id[]';
+                        hiddenInput.value = data.purchase_order_products_detail.id;
+                        row.appendChild(hiddenInput);
+
+                        // purchase order product hidden id if not duplicate is null
+                        const hiddenID = document.createElement('input');
+                        hiddenID.type = 'hidden';
+                        hiddenID.className = 'purchase_product_id';
+                        hiddenID.name = 'purchase_product_id[]';
+                        hiddenID.value = product.id;
+                        row.appendChild(hiddenID);
+                    // end
+
+                        const descriptionCell = document.createElement('td');
+                        descriptionCell.textContent=product.description;
+                        // const inputDescription = document.createElement('textarea');
+                        // inputDescription.className = 'description';
+                        // inputDescription.name = 'description[]';
+                        // inputDescription.value = product.description;
+                        // descriptionCell.appendChild(inputDescription);
+                        row.appendChild(descriptionCell);
+
+                        const priceCell = document.createElement('td');
+                        priceCell.textContent = product.price;
+                        // const inputPrice = document.createElement('input');
+                        // inputPrice.type = 'text';
+                        // inputPrice.className = 'product_price input50';
+                        // inputPrice.name = 'price[]'; 
+                        // inputPrice.value = product.price;
+                        // priceCell.appendChild(inputPrice);
+                        row.appendChild(priceCell);
+
+                        const qtyCell = document.createElement('td');
+                        qtyCell.textContent = product.qty;
+                        // const inputQty = document.createElement('input');
+                        // inputQty.type = 'text';
+                        // inputQty.className = 'qty input50';
+                        // inputQty.name = 'qty[]';
+                        // inputQty.value = product.qty;
+                        // qtyCell.appendChild(inputQty);
+                        row.appendChild(qtyCell);
+
+                        const alreadyDelivered = document.createElement('td');
+                        const inputDelivered = document.createElement('input');
+                        inputDelivered.type = 'number';
+                        inputDelivered.className = 'already_deliver';
+                        inputDelivered.name = 'already_deliver[]'; 
+                        inputDelivered.value = 0;
+                        alreadyDelivered.appendChild(inputDelivered);
+                        row.appendChild(alreadyDelivered);
+
+                        const receiveMore = document.createElement('td');
+                        const inputReceive = document.createElement('input');
+                        inputReceive.type = 'number';
+                        inputReceive.className = 'receive_more input50';
+                        inputReceive.name = 'receive_more[]'; 
+                        inputReceive.value = 0;
+                        receiveMore.appendChild(inputReceive);
+                        row.appendChild(receiveMore);
+
+                        tableBody.appendChild(row);
+                    });
+                    $("#product_calculation").show();
+                    
+                }
+                
+                var paginationProductDetails = response.pagination;
+
+                var paginationControlsProductDetail = $("#pagination-controls-recordDelivery");
+                paginationControlsProductDetail.empty();
+                if (paginationProductDetails.prev_page_url) {
+                    paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                }
+                if (paginationProductDetails.next_page_url) {
+                    paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                // location.reload();
+            }
+        });
+    }
+    function saverecordDeliveryModal(){
+        $.ajax({
+            type: "POST",
+            url: "{{url('/purchase_order_record_delivered')}}",
+            data: new FormData($("#recordDeliveryForm")[0]),
+            async: false,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+            if(response.vali_error){
+                    alert(response.vali_error);
+                    $(window).scrollTop(0);
+                    return false;
+                }else if(response.success === true){
+                    $(window).scrollTop(0);
+                    $('#message_recordDeliveryModal').addClass('success-message').text(response.message).show();
+                    setTimeout(function() {
+                        $('#message_recordDeliveryModal').removeClass('success-message').text('').hide();
+                        location.reload();
+                    }, 3000);
+                }else if(response.success === false){
+                    $('#message_recordDeliveryModal').addClass('error-message').text(response.message).show();
+                    setTimeout(function() {
+                        $('#error-message').text('').fadeOut();
+                    }, 3000);
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
     }
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
