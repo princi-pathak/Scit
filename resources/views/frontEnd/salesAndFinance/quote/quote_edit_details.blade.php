@@ -968,6 +968,312 @@
                         </div>
                         <!-- End  off newJobForm -->
 
+                        <!--  -->
+                        <div id="hideDepositSection">
+                            <!-- ***************************************Start deposit Details****************************************** -->
+                            <div class="newJobForm mt-4">
+                                <label class="upperlineTitle">Deposit Details</label>
+                                <div class="row">
+                                    <div class="col-sm-3 mb-3 mt-2">
+                                        <div class=" p-0">
+                                            <a href="javascript:void(0)" class="profileDrop" id="createDepositModelOpen" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Create Deposit</a>
+                                            <span class="col-form-label">
+                                                or
+                                            </span>
+                                            <a href="javascript:void(0)" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Create Deposit Invoice</a>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- ************************* -->
+                                    <div class="modal fade" id="creaditDepositModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title fs-5" id="creaditDepositModalLabel">Create Deposit</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Tabs -->
+                                                    <ul class="nav nav-tabs" id="modalTabs">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" href="#tab1" data-toggle="tab">Payment Details</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="#tab2" data-toggle="tab">Payment Type</a>
+                                                        </li>
+                                                    </ul>
+
+                                                    <!-- Tab Content -->
+                                                    <div class="tab-content">
+                                                        <form action="" id="createDepositForm">
+                                                            <div class="tab-pane fade show active" id="tab1">
+                                                                <div class="newJobForm card">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="hidden" name="quote_deposit_id" id="quote_deposit_id">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName"
+                                                                                value="{{ $quoteData['quote_ref'] }} - Quote Date {{ $quoteData['quota_date_deposit'] }}" readonly="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="hidden">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['customer']['name'] }}" readonly="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT)</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="setTotalCreditAmount" value="" readonly="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control-plaintext editInput" id="setOustandingCreditAmount" value="" readonly="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Percentage <span class="radStar">*</span></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="number" class="form-control editInput" name="deposit_percantage" min="0" max="100" maxlength="3" oninput="this.value = this.value.slice(0, 3)" id="deposit_percantage" value="100">
+                                                                        </div>
+                                                                        <div class="col-sm-1 ps-0">
+                                                                            <input class="form-control editInput text-center" value="%" disabled="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-1 pe-0">
+                                                                            <input class="form-control editInput text-center" value="&#163;" disabled="">
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <input type="text" class="form-control editInput" name="amount" id="deposit_amount" value="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control editInput" name="reference" id="reference" placeholder="Reference">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <textarea class="form-control textareaInput rounded-1" name="description" id="description" rows="3" placeholder="Description"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane fade" id="tab2">
+                                                                <div class="mb-2 row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="text-end">
+                                                                            <h5>Paying Now: <span id="payingNow">$12000.00</span></h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="newJobForm card">
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
+                                                                        <div class="col-sm-9">
+                                                                            <select class="form-control editInput selectOptions" name="payment_type" id="payment_type">
+                                                                                @foreach($paymentType as $value)
+                                                                                <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 row">
+                                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date <span class="radStar">*</span></label>
+                                                                        <div class="col-sm-5">
+                                                                            <input type="date" class="form-control editInput" id="deposit_date" name="deposit_date" value="{{ now()->format('Y-m-d') }}">
+                                                                        </div>
+                                                                        <div class="col-sm-1 ps-0">
+                                                                            <span class="material-symbols-outlined">calendar_month</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn profileDrop" id="prevTab" style="display: none;">Previous</button>
+                                                    <button type="button" class="btn profileDrop" id="nextTab">Next</button>
+                                                    <button type="button" class="btn profileDrop" id="saveButton" style="display: none;">Save</button>
+                                                    <button type="button" class="btn profileDrop" data-bs-dismiss="modal" id="cancelButton">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ************************ -->
+
+                                <!-- *********************** -->
+                                <div class="modal fade" id="creaditDepositInvoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none;" aria-labelledby="creaditDepositInvoiceModalModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content add_Customer">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title fs-5" id="creaditDepositInvoiceModalModalLabel">Create Deposit Invoice</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            @php
+                                            use Carbon\Carbon;
+
+                                            $today = Carbon::now(); // Get today's date
+                                            $dateAfter21Days = $today->addDays(21); // Add 21 days to today's date
+                                            @endphp
+                                            <div class="modal-body ">
+                                                <div class="contantbodypopup p-0">
+                                                    <div class="newJobForm card">
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
+                                                            <div class="col-sm-5">
+                                                                <input type="text" class="form-control editInput" id="invoice_date" value="{{ now()->format('d/m/Y') }}">
+                                                            </div>
+                                                            <div class="col-sm-1 ps-0">
+                                                                <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Due Date <span class="radStar">*</span></label>
+                                                            <div class="col-sm-5">
+                                                                <input type="text" class="form-control editInput" id="inputCity" value="{{ $dateAfter21Days->format('d/m/Y') }}">
+                                                            </div>
+                                                            <div class="col-sm-1 ps-0">
+                                                                <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 row">
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Line Item <span class="radStar">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" class="form-control editInput" id="inputName" placeholder="Line Item">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Deposit Percentage <span class="radStar">*</span></label>
+                                                            <div class="col-sm-5">
+                                                                <input type="number" class="form-control editInput" id="deposit_percentage_invoice" min="0" max="100" maxlength="3" oninput="this.value = this.value.slice(0, 3)" value="0">
+                                                            </div>
+                                                            <div class="col-sm-2 ps-0">
+                                                                <input class="form-control editInput text-center" value="" id="setDepositAmount" disabled="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">Sub Total <span class="radStar">*</span></label>
+                                                            <div class="col-sm-1 pe-0">
+                                                                <input class="form-control editInput text-center" value="$" disabled="">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <input type="text" class="form-control editInput" id="sub_total_invoice" value="0.00">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-2 row">
+                                                            <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                <select class="form-control editInput selectOptions" id="getTaxRateValue">
+                                                                    <option>-Please Select-</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-2 row">
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT) <span class="radStar">*</span></label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" class="form-control-plaintext editInput" id="setDepositInvoiceAmount" value="$0.00" readonly="">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end modal body -->
+                                            <div class="modal-footer customer_Form_Popup">
+                                                <button type="button" class="btn profileDrop">Save</button>
+                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- *********************** -->
+
+                                <!-- <div class="col-sm-3 mb-3 mt-2">
+                                    <div class=" p-0">
+                                        <a href="#" class="profileDrop">Creadit Deposit</a>
+                                        <span class="col-form-label">
+                                            or
+                                        </span>
+                                        <a href="#" class="profileDrop">Creadit Deposit Invoice</a>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-sm-12">
+                                    <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
+                                    <div class="productDetailTable">
+                                        <table class="table" id="depositData">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Deposit Date </th>
+                                                    <th>Mode of Payment </th>
+                                                    <th>Reference</th>
+                                                    <th>Description </th>
+                                                    <th>Created On </th>
+                                                    <th>Deposit Amount </th>
+                                                    <th>Refunded</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <h4 class="contTitle text-start mb-2 mt-2 ">Deposit Invoices</h4>
+                                    <div class="productDetailTable">
+                                        <table class="table" id="containerA">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Invoice Ref </th>
+                                                    <th>Invoice </th>
+                                                    <th>Due Date</th>
+                                                    <th>Sub Total </th>
+                                                    <th>VAT </th>
+                                                    <th>Total </th>
+                                                    <th>Outstanding Created On</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="8">No Records</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="5">Sub Total</th>
+                                                    <th colspan="3">500</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- **************************************End of deposit Details****************************************** -->
+
                         <!-- End off View Product -->
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Extra Information</label>
@@ -1009,305 +1315,7 @@
                     </div>
                     <!-- End  off newJobForm -->
 
-                    <!--  -->
-                    <div id="hideDepositSection">
-                        <!-- ***************************************Start deposit Details****************************************** -->
-                        <div class="newJobForm mt-4">
-                            <label class="upperlineTitle">Deposit Details</label>
-                            <div class="row">
-                                <div class="col-sm-3 mb-3 mt-2">
-                                    <div class=" p-0">
-                                        <a href="javascript:void(0)" class="profileDrop" id="createDepositModelOpen" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Create Deposit</a>
-                                        <span class="col-form-label">
-                                            or
-                                        </span>
-                                        <a href="javascript:void(0)" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Create Deposit Invoice</a>
-                                    </div>
-                                </div>
 
-
-                                <!-- ************************* -->
-                                <div class="modal fade" id="creaditDepositModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title fs-5" id="creaditDepositModalLabel">Create Deposit</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- Tabs -->
-                                                <ul class="nav nav-tabs" id="modalTabs">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" href="#tab1" data-toggle="tab">Payment Details</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="#tab2" data-toggle="tab">Payment Type</a>
-                                                    </li>
-                                                </ul>
-
-                                                <!-- Tab Content -->
-                                                <div class="tab-content">
-                                                    <form action="" id="createDepositForm">
-                                                        <div class="tab-pane fade show active" id="tab1">
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="hidden" name="quote_deposit_id" id="quote_deposit_id">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName"
-                                                                            value="{{ $quoteData['quote_ref'] }} - Quote Date {{ $quoteData['quota_date_deposit'] }}" readonly="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="hidden">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['customer']['name'] }}" readonly="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT)</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="setTotalCreditAmount" value="" readonly="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="setOustandingCreditAmount" value="" readonly="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Percentage <span class="radStar">*</span></label>
-                                                                    <div class="col-sm-5">
-                                                                        <input type="number" class="form-control editInput" name="deposit_percantage" min="0" max="100" maxlength="3" oninput="this.value = this.value.slice(0, 3)" id="deposit_percantage" value="100">
-                                                                    </div>
-                                                                    <div class="col-sm-1 ps-0">
-                                                                        <input class="form-control editInput text-center" value="%" disabled="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-1 pe-0">
-                                                                        <input class="form-control editInput text-center" value="&#163;" disabled="">
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <input type="text" class="form-control editInput" name="amount" id="deposit_amount" value="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" name="reference" id="reference" placeholder="Reference">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <textarea class="form-control textareaInput rounded-1" name="description" id="description" rows="3" placeholder="Description"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tab-pane fade" id="tab2">
-                                                            <div class="mb-2 row">
-                                                                <div class="col-sm-12">
-                                                                    <div class="text-end">
-                                                                        <h5>Paying Now: <span id="payingNow">$12000.00</span></h5>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <select class="form-control editInput selectOptions" name="payment_type" id="payment_type">
-                                                                            @foreach($paymentType as $value)
-                                                                            <option value="{{ $value->id }}">{{ $value->title }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date <span class="radStar">*</span></label>
-                                                                    <div class="col-sm-5">
-                                                                        <input type="date" class="form-control editInput" id="deposit_date" name="deposit_date" value="{{ now()->format('Y-m-d') }}">
-                                                                    </div>
-                                                                    <div class="col-sm-1 ps-0">
-                                                                        <span class="material-symbols-outlined">calendar_month</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn profileDrop" id="prevTab" style="display: none;">Previous</button>
-                                                <button type="button" class="btn profileDrop" id="nextTab">Next</button>
-                                                <button type="button" class="btn profileDrop" id="saveButton" style="display: none;">Save</button>
-                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal" id="cancelButton">Cancel</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ************************ -->
-
-                            <!-- *********************** -->
-                            <div class="modal fade" id="creaditDepositInvoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositInvoiceModalModalLabel" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content add_Customer">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title fs-5" id="creaditDepositInvoiceModalModalLabel">Creadit Deposit Invoice</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body ">
-                                            <div class="contantbodypopup p-0">
-                                                <div class="newJobForm card">
-                                                    <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
-                                                        <div class="col-sm-5">
-                                                            <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
-                                                        </div>
-                                                        <div class="col-sm-1 ps-0">
-                                                            <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">Due Date<span class="radStar">*</span></label>
-                                                        <div class="col-sm-5">
-                                                            <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
-                                                        </div>
-                                                        <div class="col-sm-1 ps-0">
-                                                            <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-2 row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Line Item</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" class="form-control editInput" id="inputName" placeholder="Line Item">
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
-                                                        <div class="col-sm-9">
-                                                            <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
-                                                            <span class="radStar">*</span></label>
-                                                        <div class="col-sm-5">
-                                                            <input type="text" class="form-control editInput" id="inputCity" value="100">
-                                                        </div>
-                                                        <div class="col-sm-2 ps-0">
-                                                            <input class="form-control editInput text-center" value="% of $.00" disabled="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">Sub Totel <span class="radStar">*</span></label>
-                                                        <div class="col-sm-1 pe-0">
-                                                            <input class="form-control editInput text-center" value="$" disabled="">
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <input type="text" class="form-control editInput" id="inputCity" value="0.00">
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-2 row">
-                                                        <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
-                                                        <div class="col-sm-9">
-                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                <option>-Please Select-</option>
-                                                                <option>Customer-2</option>
-                                                                <option>Customer-3</option>
-                                                                <option>Customer-4</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mb-2 row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Totel (inc. VAT)</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div> <!-- end modal body -->
-                                        <div class="modal-footer customer_Form_Popup">
-                                            <button type="button" class="btn profileDrop">Save</button>
-                                            <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- *********************** -->
-
-                            <!-- <div class="col-sm-3 mb-3 mt-2">
-                                    <div class=" p-0">
-                                        <a href="#" class="profileDrop">Creadit Deposit</a>
-                                        <span class="col-form-label">
-                                            or
-                                        </span>
-                                        <a href="#" class="profileDrop">Creadit Deposit Invoice</a>
-                                    </div>
-                                </div> -->
-
-                            <div class="col-sm-12">
-                                <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
-                                <div class="productDetailTable">
-                                    <table class="table" id="containerA">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Deposit Date </th>
-                                                <th>Mode of Payment </th>
-                                                <th>Reference</th>
-                                                <th>Description </th>
-                                                <th>Created On </th>
-                                                <th>Deposit Amount </th>
-                                                <th>Refunded</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="7">
-                                                    <label class="red_sorryText">Sorry, no records to show</label>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <h4 class="contTitle text-start mb-2 mt-2 ">Deposit Invoices</h4>
-                                <div class="productDetailTable">
-                                    <table class="table" id="containerA">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Invoice Ref </th>
-                                                <th>Invoice </th>
-                                                <th>Due Date</th>
-                                                <th>Sub Total </th>
-                                                <th>VAT </th>
-                                                <th>Total </th>
-                                                <th>Outstanding Created On</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="8"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- **************************************End of deposit Details****************************************** -->
             </div>
             <!--  -->
             <div id="hideAttachmentTask">
@@ -2403,8 +2411,6 @@
 
     $(document).ready(function() {
 
-
-
         document.getElementById('hideCustomerDetails').style.display = "none";
         document.getElementById('hideTaskData').style.display = "none";
         // document.getElementById('hideDepositSection').style.display = "none";
@@ -2699,22 +2705,42 @@
 
         $('#deposit_percantage').on('input', function() {
             let percentage = parseInt($(this).val(), 10);
-         
+
             if (percentage > 100) {
                 document.getElementById('deposit_percantage').value = 100;
                 percentage = 100;
-            } 
+            }
             if (isNaN(percentage)) {
                 percentage = 0;
             }
             let outsatandingAmount = document.getElementById('setOustandingCreditAmount').value;
             outsatandingAmount = parseFloat(outsatandingAmount.replace("£", ""))
-            
-            console.log(outsatandingAmount);          
+
+            console.log(outsatandingAmount);
             console.log(percentage);
-            
+
             deposit_amount = (percentage / 100) * outsatandingAmount;
             document.getElementById('deposit_amount').value = deposit_amount.toFixed(2);
+        });
+
+        $('#deposit_percentage_invoice').on('input', function() {
+            let percentage = parseInt($(this).val(), 10);
+
+            if (percentage > 100) {
+                document.getElementById('deposit_percentage_invoice').value = 100;
+                percentage = 100;
+            }
+            if (isNaN(percentage)) {
+                percentage = 0;
+            }
+            let outsatandingAmount = document.getElementById('setDepositAmount').value;
+            outsatandingAmount = parseFloat(outsatandingAmount.replace("% of  £", ""))
+
+            console.log(outsatandingAmount);
+            console.log(percentage);
+
+            deposit_amount = (percentage / 100) * outsatandingAmount;
+            document.getElementById('sub_total_invoice').value = deposit_amount.toFixed(2);
         });
 
         $('#OpenAddCustomerContact').on('click', function() {
@@ -2777,22 +2803,22 @@
 
     });
 
-    function updateQuoteDepositTotal(){
+    function updateQuoteDepositTotal() {
         let percentage = $(this).val();
-            // Regex for non-alphanumeric validation
-            const nonAlphanumericRegex = /^[^a-zA-Z0-9]+$/;
+        // Regex for non-alphanumeric validation
+        const nonAlphanumericRegex = /^[^a-zA-Z0-9]+$/;
 
-            // Check for non-alphanumeric characters
-            if (!nonAlphanumericRegex.test(percentage)) {
-                percentage = 100;
-                return;
-            }
+        // Check for non-alphanumeric characters
+        if (!nonAlphanumericRegex.test(percentage)) {
+            percentage = 100;
+            return;
+        }
 
-            const numericValue = parseFloat(percentage);
-            if (!isNaN(numericValue) && numericValue > 100) {
-                percentage = 100;
-                return;
-            }
+        const numericValue = parseFloat(percentage);
+        if (!isNaN(numericValue) && numericValue > 100) {
+            percentage = 100;
+            return;
+        }
     }
 
     function saveFormData(formId, saveUrl, modalId, callback, callBackValue = null) {
@@ -2879,13 +2905,10 @@
         });
     }
 
-    // $('#createDepositModelOpen').on('click', function() {
-
-    //     });
-
     function tableFootForProduct(tableName) {
         const table = document.querySelector(`#${tableName}`);
-
+        const quote_id = document.getElementById('quote_id').value;
+        // getDepositData(quote_id, 2);
         if (!isFooterAppended) {
             const tableFoot = table.querySelector('.add_table_insrt33');
             tableFoot.innerHTML += `<tr>
@@ -2933,7 +2956,7 @@
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
                                         <td>Deposit</td>
-                                        <td class="tableAmountRight" id="footDeposit">£00.00</td>
+                                        <td class="tableAmountRight" id="footDeposit"> £00.00</td>
                                     </tr>
                                     <tr>
                                     <td colspan="10" class="borderNone"></td>
@@ -2980,8 +3003,10 @@
     }
 
     function calculateRowsValue(table) {
-        const rows = table.querySelectorAll('tbody tr');
 
+        const rows = table.querySelectorAll('tbody tr');
+        const subtotal_amount = document.getElementById('subtotal_amount').value;
+        console.log("subtotal_amount", subtotal_amount);
         const markupOnPriceOrCostPrice = document.getElementById('markupOnPriceOrCostPrice').value;
         console.log(markupOnPriceOrCostPrice);
         let totalQuantity = 0;
@@ -3066,6 +3091,7 @@
         console.log("Total totalMargin: ", totalMargin);
 
         document.getElementById('footAmount').textContent = doller + price.toFixed(2);
+        document.getElementById('setDepositAmount').value = "% of  " + doller + price.toFixed(2);
         document.getElementById('InputFootAmount').value = price.toFixed(2);
         document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
         document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
@@ -3076,9 +3102,10 @@
         document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
         document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
         document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
-        document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
-        document.getElementById('setOustandingCreditAmount').value = doller + (price + totalVAT).toFixed(2);
-        document.getElementById('deposit_amount').value = (price + totalVAT).toFixed(2);
+        document.getElementById('footOutstandingAmount').textContent = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
+        document.getElementById('setOustandingCreditAmount').value = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
+        document.getElementById('deposit_amount').value = ((price + totalVAT) - subtotal_amount).toFixed(2);
+        document.getElementById('footDeposit').textContent = '-'+doller + subtotal_amount; 
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
         document.getElementById('payingNow').textContent = doller + (price + totalVAT).toFixed(2);
 
@@ -3092,7 +3119,7 @@
                 console.log("response.data", response.data);
                 if (Array.isArray(response.data)) {
                     // Iterate over all Account Code dropdowns and populate them
-                    document.querySelectorAll('#getTaxRate').forEach(dropdown => {
+                    document.querySelectorAll('.getTaxRate').forEach(dropdown => {
                         dropdown.innerHTML = ''; // Clear existing options
 
                         const optionInitial = document.createElement('option');
@@ -3185,7 +3212,7 @@
                 <td>
                     <div class="">
                         <input type="hidden" class="selectedTaxID">
-                        <select class="form-control editInput selectOptions vat" name="products[${rowIndex}][VAT]" id="getTaxRate">
+                        <select class="form-control editInput selectOptions vat getTaxRate" name="products[${rowIndex}][VAT]" id="getTaxRate">
                             <option>Please Select</option>
                         </select>
                     </div>
@@ -3223,7 +3250,6 @@
             if (tableBody) {
                 tableBody.appendChild(node);
 
-
                 attachRowEventListeners(node, table)
                 const closeButton = node.querySelector('.closeappend');
                 closeButton.addEventListener('click', function() {
@@ -3238,10 +3264,6 @@
         });
         calculateRowsValue(table);
     }
-
-    // function openTaskModal() {
-    //     $('#quote_task_modal').modal('show');
-    // }
 
     function getQuoteType(quoteType) {
         $.ajax({
@@ -3603,7 +3625,6 @@
         });
     }
 
-
     function setCustomerBillingData(id) {
         // alert(id)
         $.ajax({
@@ -3652,7 +3673,6 @@
         });
     }
 
-
     function selectPrevious(Select, previouslySelected) {
         // Loop through the options in the select field
         const options = Select.options;
@@ -3684,7 +3704,128 @@
         image.drawTo(imgcanvas);
     }
 
+    function getDepositData(quote_id) {
+        $.ajax({
+            url: '{{ route("quote.ajax.getDepositeData") }}',
+            method: 'POST',
+            data: {
+                quote_id: quote_id
+            },
+            success: function(response) {
+                console.log(response);
+                populateTable(response.data, document.querySelector('#depositData tbody'))
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
+    function populateTable(data, tableBody) {
+
+        tableBody.innerHTML = '';
+
+        if (data.length === 0) {
+            // Handle the case where there is no data
+            const errorRow = document.createElement('tr');
+            const errorCell = document.createElement('td');
+            errorCell.colSpan = 8; // Adjust this based on the number of columns in your table
+            errorCell.classList.add('red_sorryText');
+            errorCell.textContent = 'Sorry, no records to show ';
+            errorCell.style.textAlign = 'center'; // Optional: Center the text
+            errorRow.appendChild(errorCell);
+            tableBody.appendChild(errorRow);
+            return; // Exit the function
+        }
+
+        let totalAmount = 0;
+        data.forEach(item => {
+
+            // Create a new row
+            const row = document.createElement('tr');
+
+            const depositDate = document.createElement('td');
+            depositDate.textContent = item.deposit_date;
+            row.appendChild(depositDate);
+
+            const mode_of_payment = document.createElement('td');
+            const icon = document.createElement('i');
+            icon.classList.add('fa', 'fa-money');
+            mode_of_payment.appendChild(icon);
+            mode_of_payment.textContent = item.payment_type;
+            row.appendChild(mode_of_payment);
+
+            const refrences = document.createElement('td');
+            refrences.innerHTML = item.reference;
+            row.appendChild(refrences);
+
+            const description = document.createElement('td');
+            description.innerHTML = item.description;
+            row.appendChild(description);
+
+            const created_on = document.createElement('td');
+            created_on.textContent = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+            row.appendChild(created_on);
+
+            totalAmount += parseFloat(item.amount);
+
+            const deposit_amount = document.createElement('td');
+            deposit_amount.textContent = '£' + item.amount;
+            row.appendChild(deposit_amount);
+
+            const refunded = document.createElement('td');
+            refunded.innerHTML = '-';
+            row.appendChild(refunded);
+
+            const idCell = document.createElement('td');
+            idCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="edit"><i class="fa fa-edit"></i></a> <i class="fa fa-times"></i>`;
+            row.appendChild(idCell);
+            console.log(totalAmount);
+            // Append the row to the table body
+            tableBody.appendChild(row);
+
+        });
+
+        depositeFoot(totalAmount, tableBody)
+    }
+
+    function depositeFoot(amount, table) {
+
+        const tfoot = document.createElement('tfoot');
+
+        // Create the footer row
+        const footerRow = document.createElement('tr');
+
+        // Create the "Sub Total" cell
+        const subtotalLabelCell = document.createElement('th');
+        subtotalLabelCell.colSpan = 5; // Adjust colspan based on your table structure
+        subtotalLabelCell.textContent = 'Sub Total';
+        footerRow.appendChild(subtotalLabelCell);
+
+        // Create the "Amount" cell
+        const subtotalAmountCell = document.createElement('th');
+        subtotalAmountCell.colSpan = 3; // Adjust colspan based on your table structure
+        subtotalAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
+        
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.id = 'subtotal_amount';
+        // hiddenInput.name = 'subtotal_amount'; // Set the name for the hidden input
+        hiddenInput.value = amount.toFixed(2);
+        subtotalAmountCell.appendChild(hiddenInput);
+        footerRow.appendChild(subtotalAmountCell);
+
+        // Append the row to the <tfoot> element
+        tfoot.appendChild(footerRow);
+
+        // Append the <tfoot> to the table
+        table.appendChild(tfoot);
+    }
+
     $(document).ready(function() {
+
+        getDepositData(document.getElementById('quote_id').value);
         // Enable/disable "Delete Selected" button based on checkbox selection
         $(document).on("change", ".selectRow, #selectAll", function() {
             const anySelected = $(".selectRow:checked").length > 0;
@@ -3763,13 +3904,6 @@
             });
         }
 
-
-    });
-
-
-
-
-    $(document).ready(function() {
         const $prevButton = $("#prevTab");
         const $nextButton = $("#nextTab");
 
@@ -3823,7 +3957,41 @@
         $("#modalTabs .nav-link").on("shown.bs.tab", function() {
             updateButtons();
         });
+
+        $('#getTaxRateValue').on('click', function() {
+            $.ajax({
+                url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
+                method: 'GET',
+                success: function(response) {
+                    console.log("response.data", response.data);
+                    if (Array.isArray(response.data)) {
+                        // Iterate over all Account Code dropdowns and populate them
+                        const dropdown = document.getElementById('getTaxRateValue');
+                        dropdown.innerHTML = ''; // Clear existing options
+
+                        const optionInitial = document.createElement('option');
+                        optionInitial.textContent = "Please Select"; // Use appropriate key from your response
+                        optionInitial.value = 0;
+                        dropdown.appendChild(optionInitial);
+                        // Append new options
+                        response.data.forEach(code => {
+                            const option = document.createElement('option');
+                            option.value = code.id; // Use appropriate key from your response
+                            option.textContent = code.name; // Use appropriate key from your response
+                            dropdown.appendChild(option);
+                        });
+                    } else {
+                        console.error("Invalid response format");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
     });
+
+
 
     $(document).ready(function() {
         const $prevButton = $("#prevTab");
@@ -3844,13 +4012,14 @@
             navigateTab(1);
         });
 
-        $cancelButton.click(function() {
-            $("#exampleModal").modal("hide"); // Close the modal
-        });
+        // $cancelButton.click(function() {
+        //     $("#exampleModal").modal("hide"); // Close the modal
+        // });
 
         $saveButton.click(function() {
+            const quote_id = document.getElementById('quote_id').value;
             var data = {
-                quote_id: document.getElementById('quote_id').value,
+                quote_id: quote_id,
                 customer_id: document.getElementById('setCustomerId').value,
                 deposit_percantage: document.getElementById('deposit_percantage').value,
                 amount: document.getElementById('deposit_amount').value,
@@ -3871,6 +4040,7 @@
                 success: function(response) {
                     alert(response.data);
                     $("#creaditDepositModal").modal("hide"); // Close the modal
+                    getDepositData(quote_id);
                 },
                 error: function() {
                     alert("An error occurred while deleting the rows.");
@@ -3878,11 +4048,12 @@
             });
         });
 
+
+
         function navigateTab(offset) {
             const $tabs = $("#modalTabs .nav-link");
             const $activeTab = $tabs.filter(".active");
             let currentIndex = $tabs.index($activeTab);
-
             let newIndex = currentIndex + offset;
 
             // Ensure the new index is within bounds
@@ -3902,7 +4073,6 @@
                 $prevButton.hide();
                 $nextButton.show();
                 $saveButton.hide();
-                // $cancelButton.hide();
                 $closeButton.show();
             }
 
@@ -3921,24 +4091,4 @@
             updateButtons();
         });
     });
-
-
-
-
-    // $('#next_button').click(function(e) {
-    //     var tab_id = $('ul.tabs .orange-tab.current').attr('data-tab');
-    //     var first = $('ul.tabs .orange-tab:first').attr('data-tab');
-
-    //     $current = $('ul.tabs div.orange-tab.current').removeClass('current').next();
-    //     $currentTabContent = $('#' + tab_id).removeClass('current').next();
-
-    //     if ($current.length) {
-    //         $current.addClass('current');
-    //         $currentTabContent.addClass('current');
-    //     } else {
-    //         $('ul.tabs div.orange-tab:first').addClass('current');
-    //         $("#" + first).addClass('current');
-    //     }
-
-    // });
 </script>
