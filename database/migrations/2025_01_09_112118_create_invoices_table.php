@@ -26,7 +26,7 @@ return new class extends Migration
             $table->date('due_date');
             $table->enum('status', ['Draft', 'Invoiced', 'Outstanding', 'Paid', 'Cancellled'])->default('Draft');
             $table->integer('tags')->nullable();
-            $table->text('customer_ref')->nullable();
+            $table->text('customer_notes')->nullable();
             $table->text('terms')->nullable();
             $table->text('internal_notes')->nullable();
             $table->timestamps();

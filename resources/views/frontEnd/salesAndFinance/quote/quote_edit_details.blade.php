@@ -980,7 +980,7 @@
                                             <span class="col-form-label">
                                                 or
                                             </span>
-                                            <a href="javascript:void(0)" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Create Deposit Invoice</a>
+                                            <a href="javascript:void(0)" class="profileDrop" id="getTaxtInvoiceRateValue" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Create Deposit Invoice</a>
                                         </div>
                                     </div>
 
@@ -1143,7 +1143,7 @@
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Due Date <span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
-                                                                <input type="text" class="form-control editInput" id="inputCity" value="{{ $dateAfter21Days->format('d/m/Y') }}">
+                                                                <input type="text" class="form-control editInput" id="due_date" value="{{ $dateAfter21Days->format('d/m/Y') }}">
                                                             </div>
                                                             <div class="col-sm-1 ps-0">
                                                                 <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
@@ -1152,21 +1152,21 @@
                                                         <div class="mb-2 row">
                                                             <label for="inputName" class="col-sm-3 col-form-label">Line Item <span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
-                                                                <input type="text" class="form-control editInput" id="inputName" placeholder="Line Item">
+                                                                <input type="text" class="form-control editInput" id="line_item" placeholder="Line Item">
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
-                                                                <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                                <textarea class="form-control textareaInput rounded-1" name="address" id="line_description" rows="3" placeholder="Description"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Deposit Percentage <span class="radStar">*</span></label>
-                                                            <div class="col-sm-5">
+                                                            <div class="col-sm-4">
                                                                 <input type="number" class="form-control editInput" id="deposit_percentage_invoice" min="0" max="100" maxlength="3" oninput="this.value = this.value.slice(0, 3)" value="0">
                                                             </div>
-                                                            <div class="col-sm-2 ps-0">
+                                                            <div class="col-sm-3 ps-0">
                                                                 <input class="form-control editInput text-center" value="" id="setDepositAmount" disabled="">
                                                             </div>
                                                         </div>
@@ -1191,7 +1191,7 @@
                                                         <div class="mb-2 row">
                                                             <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT) <span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
-                                                                <input type="text" class="form-control-plaintext editInput" id="setDepositInvoiceAmount" value="$0.00" readonly="">
+                                                                <input type="text" class="form-control-plaintext editInput" id="setDepositInvoiceAmount" value="£0.00" readonly="">
                                                             </div>
                                                         </div>
 
@@ -1199,7 +1199,7 @@
                                                 </div>
                                             </div> <!-- end modal body -->
                                             <div class="modal-footer customer_Form_Popup">
-                                                <button type="button" class="btn profileDrop">Save</button>
+                                                <button type="button" class="btn profileDrop" id="saveInvoiceDepositAmount">Save</button>
                                                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
@@ -2741,6 +2741,24 @@
 
             deposit_amount = (percentage / 100) * outsatandingAmount;
             document.getElementById('sub_total_invoice').value = deposit_amount.toFixed(2);
+            depositInvoice = (deposit_amount * 20)/100;
+            document.getElementById('setDepositInvoiceAmount').value = "£"+(deposit_amount + depositInvoice).toFixed(2);
+            
+        });
+
+        $('#getTaxRateValue').on('change', function(){
+
+            var id = $(this).val();
+            const selectedOption = $(this).find(':selected');
+            const rate = selectedOption.data('rate'); 
+            const sub_total_invoice = document.getElementById('sub_total_invoice').value;
+            console.log("sub_total_invoice", sub_total_invoice);
+            let total = (sub_total_invoice * rate)/100; 
+            console.log("total", total);
+            total = "£"+(parseFloat(sub_total_invoice) + parseFloat(total)).toFixed(2)
+            console.log("total s", total);
+            document.getElementById('setDepositInvoiceAmount').value = total;
+
         });
 
         $('#OpenAddCustomerContact').on('click', function() {
@@ -2764,6 +2782,44 @@
                 getCountriesList(document.getElementById('siteAddressTelephoneCode'));
                 $('#add_site_address_modal').modal('show');
             }
+        });
+
+        $('#saveInvoiceDepositAmount').on('click', function(){
+
+
+            data = {
+                quote_id:document.getElementById('quote_id').value,
+                customer_id: document.getElementById('setCustomerId').value,
+                invoice_date: document.getElementById('invoice_date').value,
+                due_date: document.getElementById('due_date').value,
+                line_item: document.getElementById('line_item').value,
+                description: document.getElementById('line_description').value,
+                desposit_perceantage: document.getElementById('deposit_percentage_invoice').value,
+                setDepositAmount: document.getElementById('setDepositAmount').value,
+                sub_total: document.getElementById('sub_total_invoice').value,
+                VAT: document.getElementById('getTaxRateValue').value,
+                setDepositInvoiceAmount: document.getElementById('setDepositInvoiceAmount').value
+            };
+
+            $.ajax({
+                url: '{{ route("quote.ajax.saveInvoiceDeposite") }}', // Your server endpoint
+                method: 'POST', // HTTP method
+                data: data,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    console.log(response);
+                    alert(response.data);
+                    $("#creaditDepositInvoiceModal").modal("hide"); // Close the modal
+                    // getDepositData(quote_id);
+                },
+                error: function() {
+                    alert("An error occurred while deleting the rows.");
+                }
+            });
+
+          
         });
 
         $('#new_Attachment_open_model').on('click', function() {
@@ -3958,7 +4014,8 @@
             updateButtons();
         });
 
-        $('#getTaxRateValue').on('click', function() {
+
+        $('#getTaxtInvoiceRateValue').on('click', function() {
             $.ajax({
                 url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
                 method: 'GET',
@@ -3977,6 +4034,7 @@
                         response.data.forEach(code => {
                             const option = document.createElement('option');
                             option.value = code.id; // Use appropriate key from your response
+                            option.setAttribute('data-rate', code.tax_rate);
                             option.textContent = code.name; // Use appropriate key from your response
                             dropdown.appendChild(option);
                         });
@@ -4011,10 +4069,6 @@
         $nextButton.click(function() {
             navigateTab(1);
         });
-
-        // $cancelButton.click(function() {
-        //     $("#exampleModal").modal("hide"); // Close the modal
-        // });
 
         $saveButton.click(function() {
             const quote_id = document.getElementById('quote_id').value;

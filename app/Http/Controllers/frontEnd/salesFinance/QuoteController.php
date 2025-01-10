@@ -14,6 +14,8 @@ use App\Http\Requests\QuoteRequest;
 use App\Http\Requests\Quotes\CallBackRequest;
 use App\Http\Requests\Quotes\QuoteTaskRequest;
 use App\Http\Requests\Quotes\CustomerDepositRequest;
+use App\Http\Requests\Invoice\InvoiceRequest;
+
 
 use App\Services\Quotes\QuoteService;
 use App\Services\Quotes\QuoteProductService;
@@ -650,5 +652,9 @@ class QuoteController extends Controller
             'success' => (bool) $data,
             'data' => $data ? $data : 'No Data'
         ]);
+    }
+
+    public function saveInvoiceDeposite(InvoiceRequest $request){
+        dd($request);
     }
 }
