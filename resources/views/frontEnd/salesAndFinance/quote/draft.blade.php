@@ -398,7 +398,7 @@ tfoot.draftFoot tr th {
             url: '{{ route("quote.ajax.statusChange") }}',
             method: 'PATCH',
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('cont ent')
             },
             data: {
                 quote_id: id,
