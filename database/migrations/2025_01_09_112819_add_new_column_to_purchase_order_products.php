@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('purchase_order_products', function (Blueprint $table) {
             $table->string('receive_more')->after('quantity_available')->nullable();
+            $table->string('outstanding_amount')->after('quantity_available')->nullable();
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('purchase_order_products', function (Blueprint $table) {
             $table->dropColumn('receive_more');
+            $table->dropColumn('outstanding_amount');
         });
     }
 };

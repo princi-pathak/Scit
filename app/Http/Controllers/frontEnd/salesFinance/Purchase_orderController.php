@@ -36,6 +36,8 @@ use App\Models\PrucahseOrderNewTask;
 use App\Models\PurchaseOrderApproveNotification;
 use App\Models\Task_type;
 use App\Models\Quote;
+use App\Models\Payment_type;
+use App\Models\PurchaseOrderRecordPayment;
 use App\User;
 
 class Purchase_orderController extends Controller
@@ -451,17 +453,22 @@ class Purchase_orderController extends Controller
         $lastSegment = $request->list_mode;
         $segment_check=$this->check_segment_purchaseOrder($lastSegment);
         // echo "<pre>"; print_r($segment_check);die;
-        $data['list']=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>$segment_check['status']])->get();
+        if($segment_check['status'] == 3){
+            $data['list']=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['user_id'=>Auth::user()->id,'deleted_at'=>null])->whereIn('status',[3,9])->get();
+        }else{
+            $data['list']=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>$segment_check['status']])->get();
+        }
         $data['status']=$segment_check;
         $data['draftCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>1])->count();
         $data['awaitingApprovalCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>2])->count();
-        $data['approvedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>3])->count();
+        $data['approvedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null])->whereIn('status',[3,9])->count();
         $data['rejectedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>8])->count();
         $data['actionedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>4])->count();
         $data['paidCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>5])->count();
         $data['customer_data'] = Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
         $data['users'] = User::where('home_id', $home_id)->select('id', 'name','email','phone_no')->where('is_deleted', 0)->get();
-        // echo "<pre>";print_r($data['list']);die;
+        $data['paymentTypeList']=Payment_type::getActivePaymentType($home_id);
+        // echo "<pre>";print_r($data['paymentTypeList']);die;
         return view('frontEnd.salesAndFinance.purchase_order.purchase_order_list',$data);
     }
     private function check_segment_purchaseOrder($lastSegment=null){
@@ -506,7 +513,11 @@ class Purchase_orderController extends Controller
         $selectedcreatedById=$request->selectedcreatedById;
         $selectedProjectId=$request->selectedProjectId;
         $home_id=Auth::user()->home_id;
-        $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null,'status'=>$status]);
+        if($status == 3){
+        $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null])->whereIn('status',[3,9,10]);
+        }else{
+            $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null,'status'=>$status]);
+        }
         // echo "<pre>";print_r($query->get());die;
         if ($request->filled('po_ref')) {
             $query->where('purchase_order_ref', $po_ref);
@@ -565,8 +576,9 @@ class Purchase_orderController extends Controller
                 $qty=$product->qty*$product->price;
                 $sub_total_amount=$sub_total_amount+$qty;
                 $vat=$product->vat+$sub_total_amount;
-                $total_amount=$total_amount+$vat;
                 $vat_amount=$vat_amount+$product->vat;
+                $percentage=$sub_total_amount*$vat_amount/100;
+                $total_amount=$total_amount+$percentage+$sub_total_amount;
 
                 $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
                 $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
@@ -791,6 +803,43 @@ class Purchase_orderController extends Controller
                 }
                 
             }
+        }
+    }
+    // public function record_payment_details(Request $request){
+    //     // echo "<pre>";print_r($request->all());die;
+    //     $data=PurchaseOrderProduct::with('purchaseOrders')->where('purchase_order_id',$request->id)->get();
+    //     return $data;
+    // }
+    public function savePurchaseOrderRecordPayment(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'po_id' => 'required',
+            'record_amount_paid' => 'required',
+            'record_payment_date' => 'required',
+            'record_payment_type' => 'required',
+        ],
+        [
+            'po_id.required' => 'The Purchase Order Id not found.',
+            'record_amount_paid.required' => 'Amount Paid field required.',
+            'record_payment_date.required' => 'Payment Date field required.',
+            'record_payment_type.required' => 'Payment Type field required.',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        $data=$request->all();
+        $data['home_id']=Auth::user()->home_id;
+        $data['loginUserId']=Auth::user()->id;
+        $data['loginUserName']=Auth::user()->name;
+        $recordPayment_ppurchaseProduct=$request->recordPayment_ppurchaseProduct;
+        try{
+            $orderRecord=PurchaseOrderRecordPayment::savePurchaseOrderRecordPayment($data);
+            $itt=PurchaseOrderProduct::find($recordPayment_ppurchaseProduct)->update(['outstanding_amount' => $request->record_amount_paid]);
+            return response()->json(['success'=>true,'message'=>'The Record Payment has been saved successfully.','data'=>$orderRecord]);
+        }catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

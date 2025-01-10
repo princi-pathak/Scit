@@ -94,6 +94,11 @@ ul#projectList {
     height: 156px;
     overflow: auto;
 }
+.tag_box{
+    background: #f5f5f5;
+    display: grid;
+    border: 1px solid #dee2e6;
+}
 
 </style>
 <section class="main_section_page px-3">
@@ -330,12 +335,19 @@ ul#projectList {
                                     $sub_total_amount=0;
                                     $total_amount=0;
                                     $vat_amount=0;
+                                    $purchaseProductId=0;
+                                    $outstandingAmountTotal=0;
+                                    $outstandingAmount=0;
                                     foreach($val->purchaseOrderProducts as $product){
+                                        $purchaseProductId=$product->id;
+                                        $outstandingAmount=$product->outstanding_amount;
+                                        $outstandingAmountTotal=$outstandingAmountTotal+$product->outstanding_amount;
                                         $qty=$product->qty*$product->price;
                                         $sub_total_amount=$sub_total_amount+$qty;
                                         $vat=$product->vat+$sub_total_amount;
-                                        $total_amount=$total_amount+$vat;
                                         $vat_amount=$vat_amount+$product->vat;
+                                        $percentage=$sub_total_amount*$vat_amount/100;
+                                        $total_amount=$total_amount+$percentage+$sub_total_amount;
 
                                         $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
                                         $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
@@ -354,7 +366,7 @@ ul#projectList {
                                     <td>£{{$sub_total_amount}}</td>
                                     <td>£{{$vat_amount}}</td>
                                     <td>£{{$total_amount}}</td>
-                                    <td>£{{$total_amount}}</td>
+                                    <td>£{{$outstandingAmountTotal}}</td>
                                     <td>{{$status['list_status']}}</td>
                                     @if($status['status'] == 1)
                                     <td>-</td>
@@ -409,7 +421,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Record Payment</a>
+                                                    <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$purchaseProductId}},{{$outstandingAmount}})" class="dropdown-item">Record Payment</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Invoice Received</a>
                                                     <!-- <hr class="dropdown-divider">
@@ -573,6 +585,120 @@ ul#projectList {
     </div>
 </div>
  <!-- end here -->
+  <!-- Record Payment Modal start here -->
+ <div class="modal fade" id="recordPaymentModal" tabindex="-1" aria-labelledby="recordPaymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recordPaymentModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <div class="text-center mt-3" id="message_recordPaymentModal" style="display:none"></div>
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="formDtail">
+                            <form id="recordPaymentForm" class="customerForm pt-0">
+                                <input type="hidden" name="po_id" id="recordPayment_po_id">
+                                <input type="hidden" name="recordPayment_ppurchaseProduct" id="recordPayment_ppurchaseProduct">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Purchase Order</label>
+                                            <div class="col-sm-9">
+                                                <p id="purchaseOrderRecordDate"></p>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Supplier</label>
+                                            <div class="col-sm-9">
+                                                <p id="record_supplierName"></p>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Purchase Order Total</label>
+                                            <div class="col-sm-9">
+                                                <p id="record_TotalAmount"></p>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Outstanding Amount</label>
+                                            <div class="col-sm-9">
+                                                <p id="record_OutstandingAmount"></p>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Amount Paid<span class="radStar">*</span></label>
+                                            <div class="col-sm-1">
+                                                <div class="tag_box text-center">
+                                                    <span style="padding:3px">£</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control editInput textareaInput" id="record_AmountPaid" name="record_amount_paid">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Payment Date<span class="radStar ">*</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="date" id="record_PaymentDate" name="record_payment_date" class="form-control editInput">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputProject" class="col-sm-3 col-form-label">Payment Type<span class="radStar ">*</span></label>
+                                                <div class="col-sm-7">
+                                                    <select class="form-control editInput selectOptions" id="record_PaymentType" name="record_payment_type">
+                                                        @foreach($paymentTypeList as $type)
+                                                            <option value="{{$type->id}}">{{$type->title}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <a href="javascript:void(0)" class="formicon" onclick="openPaymentTypeModal()"><i class="fa-solid fa-square-plus"></i></a>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Reference</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput textareaInput" placeholder="Reference (if any)" id="record_Reference" name="record_reference">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Description</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control textareaInput CustomercheckError" id="record_Description" name="record_description" rows="10" maxlength="500"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> <!-- End row -->
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+
+                <button type="button" class="profileDrop" id="saverecordPaymentModal" onclick="saverecordPaymentModal()">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+ <!-- end here -->
+ <x-payment-type-modal 
+    paymentTypeModalId="paymentTypeModal"
+    modalTitle="New Payment Type - Add"
+    paymentTypeformId="paymenTypeform"
+    paymentTypeId="paymentType_id"
+    inputPaymentType="payment_type_name"
+    radioYes="paymentTypeYes"
+    radioNo="paymentTypeNo"
+    selectStatus="paymentTypeStatus"
+    saveButtonId="paymentTypeSave"
+ />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <script>
    $("#deleteSelectedRows").on('click', function() {
@@ -1283,6 +1409,7 @@ $('.delete_checkbox').on('click', function() {
                 console.log(response);
                 var data=response.data[0];
                 const tableBody = document.querySelector(`#recordDelivery_result tbody`);
+                tableBody.innerHTML='';
                 var purchase_order_products=data.product_details.purchase_order_products;
                 // console.log(purchase_order_products);return false;
                 if (purchase_order_products.length === 0) {
@@ -1428,6 +1555,89 @@ $('.delete_checkbox').on('click', function() {
                     }, 3000);
                 }else if(response.success === false){
                     $('#message_recordDeliveryModal').addClass('error-message').text(response.message).show();
+                    setTimeout(function() {
+                        $('#error-message').text('').fadeOut();
+                    }, 3000);
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
+    }
+    function openRecordPaymentModal(id,po_ref,supplier_name,total_amount,date,purchase_productId,outstandingAmount){
+        $("#purchaseOrderRecordDate").text(po_ref+' On '+date);
+        $("#recordPayment_po_id").val(id);
+        $("#recordPayment_ppurchaseProduct").val(purchase_productId);
+        $("#record_supplierName").text(supplier_name);
+        $("#record_TotalAmount").text('£'+total_amount.toFixed(2));
+        $("#record_OutstandingAmount").text('£'+outstandingAmount.toFixed(2));
+        var calculateOutstandingAmount=total_amount-outstandingAmount;
+        $("#record_AmountPaid").val(calculateOutstandingAmount.toFixed(2));
+        $("#recordPaymentModalLabel").text("Record Payment - "+po_ref);
+        // $.ajax({
+        //     type: "POST",
+        //     url: "{{url('/record_payment_details')}}",
+        //     data: {id: id,_token:'{{ csrf_token() }}'},
+        //     success: function(response) {
+        //         console.log(response);
+        //     if(response.vali_error){
+        //             alert(response.vali_error);
+        //             $(window).scrollTop(0);
+        //             return false;
+        //         }else if(response.success === true){
+        //             $(window).scrollTop(0);
+        //             $('#message_recordDeliveryModal').addClass('success-message').text(response.message).show();
+        //             setTimeout(function() {
+        //                 $('#message_recordDeliveryModal').removeClass('success-message').text('').hide();
+        //                 location.reload();
+        //             }, 3000);
+        //         }else if(response.success === false){
+        //             $('#message_recordDeliveryModal').addClass('error-message').text(response.message).show();
+        //             setTimeout(function() {
+        //                 $('#error-message').text('').fadeOut();
+        //             }, 3000);
+        //         }
+        //     },
+        //     error: function(xhr, status, error) {
+        //         var errorMessage = xhr.status + ': ' + xhr.statusText;
+        //         alert('Error - ' + errorMessage + "\nMessage: " + error);
+        //     }
+        // });
+        $("#recordPaymentModal").modal('show');
+    }
+    function openPaymentTypeModal(){
+        $("#paymenTypeform")[0].reset();
+        $("#paymentTypeModal").modal('show');
+    }
+    function getAllPaymentType(data){
+        $("#record_PaymentType").append('<option value="'+data.id+'">'+data.title+'</option>');
+    }
+    function saverecordPaymentModal(){
+        $.ajax({
+            type: "POST",
+            url: "{{url('/savePurchaseOrderRecordPayment')}}",
+            data: new FormData($("#recordPaymentForm")[0]),
+            async: false,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                // console.log(response);return false;
+            if(response.vali_error){
+                    alert(response.vali_error);
+                    $(window).scrollTop(0);
+                    return false;
+                }else if(response.success === true){
+                    $(window).scrollTop(0);
+                    $('#message_recordPaymentModal').addClass('success-message').text(response.message).show();
+                    setTimeout(function() {
+                        $('#message_recordPaymentModal').removeClass('success-message').text('').hide();
+                        location.reload();
+                    }, 3000);
+                }else if(response.success === false){
+                    $('#message_recordPaymentModal').addClass('error-message').text(response.message).show();
                     setTimeout(function() {
                         $('#error-message').text('').fadeOut();
                     }, 3000);
