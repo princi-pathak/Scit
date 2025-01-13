@@ -1167,6 +1167,7 @@
                                                                 <input type="number" class="form-control editInput" id="deposit_percentage_invoice" min="0" max="100" maxlength="3" oninput="this.value = this.value.slice(0, 3)" value="0">
                                                             </div>
                                                             <div class="col-sm-3 ps-0">
+                                                                <input type="hidden" id="setDepositAmountHidden">
                                                                 <input class="form-control editInput text-center" value="" id="setDepositAmount" disabled="">
                                                             </div>
                                                         </div>
@@ -1182,6 +1183,7 @@
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
+                                                                <input type="hidden" id="getTaxtRateHidden">
                                                                 <select class="form-control editInput selectOptions" id="getTaxRateValue">
                                                                     <option>-Please Select-</option>
                                                                 </select>
@@ -1191,6 +1193,7 @@
                                                         <div class="mb-2 row">
                                                             <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT) <span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
+                                                                <input type="hidden" id="setDepositInvoiceAmountHidden">
                                                                 <input type="text" class="form-control-plaintext editInput" id="setDepositInvoiceAmount" value="£0.00" readonly="">
                                                             </div>
                                                         </div>
@@ -2741,21 +2744,23 @@
 
             deposit_amount = (percentage / 100) * outsatandingAmount;
             document.getElementById('sub_total_invoice').value = deposit_amount.toFixed(2);
-            depositInvoice = (deposit_amount * 20)/100;
-            document.getElementById('setDepositInvoiceAmount').value = "£"+(deposit_amount + depositInvoice).toFixed(2);
-            
+            depositInvoice = (deposit_amount * 20) / 100;
+            document.getElementById('setDepositInvoiceAmountHidden').value = (deposit_amount + depositInvoice).toFixed(2);
+            document.getElementById('setDepositInvoiceAmount').value = "£" + (deposit_amount + depositInvoice).toFixed(2);
+
         });
 
-        $('#getTaxRateValue').on('change', function(){
+        $('#getTaxRateValue').on('change', function() {
 
             var id = $(this).val();
             const selectedOption = $(this).find(':selected');
-            const rate = selectedOption.data('rate'); 
+            const rate = selectedOption.data('rate');
+            document.getElementById('getTaxtRateHidden').value = rate; 
             const sub_total_invoice = document.getElementById('sub_total_invoice').value;
             console.log("sub_total_invoice", sub_total_invoice);
-            let total = (sub_total_invoice * rate)/100; 
+            let total = (sub_total_invoice * rate) / 100;
             console.log("total", total);
-            total = "£"+(parseFloat(sub_total_invoice) + parseFloat(total)).toFixed(2)
+            total = "£" + (parseFloat(sub_total_invoice) + parseFloat(total)).toFixed(2)
             console.log("total s", total);
             document.getElementById('setDepositInvoiceAmount').value = total;
 
@@ -2784,21 +2789,35 @@
             }
         });
 
-        $('#saveInvoiceDepositAmount').on('click', function(){
 
+        $('#saveInvoiceDepositAmount').on('click', function() {
+
+            // const selectElement = document.getElementById('getTaxRateValue');
+    
+            // selectElement.addEventListener('change', function() {
+            //     const selectedOption = selectElement.options[selectElement.selectedIndex];
+            //     const dataRate = selectedOption.getAttribute('data-rate');
+            //     console.log(`Selected data-rate: ${dataRate}`);
+            // });
+
+
+            // const element = document.getElementById('getTaxRateValue');
+            // const dataRate = element.attributes['data-rate'].value;
+            // console.log("dataRate", dataRate);
 
             data = {
-                quote_id:document.getElementById('quote_id').value,
+                quote_id: document.getElementById('quote_id').value,
                 customer_id: document.getElementById('setCustomerId').value,
                 invoice_date: document.getElementById('invoice_date').value,
                 due_date: document.getElementById('due_date').value,
                 line_item: document.getElementById('line_item').value,
                 description: document.getElementById('line_description').value,
-                desposit_perceantage: document.getElementById('deposit_percentage_invoice').value,
-                setDepositAmount: document.getElementById('setDepositAmount').value,
-                sub_total: document.getElementById('sub_total_invoice').value,
-                VAT: document.getElementById('getTaxRateValue').value,
-                setDepositInvoiceAmount: document.getElementById('setDepositInvoiceAmount').value
+                desposit_percentage: document.getElementById('deposit_percentage_invoice').value,
+                sub_total: document.getElementById('setDepositAmountHidden').value,
+                vat_amount : document.getElementById('sub_total_invoice').value,
+                VAT: document.getElementById('getTaxtRateHidden').value,
+                total: document.getElementById('setDepositInvoiceAmountHidden').value,
+                oustanding: parseFloat(document.getElementById('setDepositAmountHidden').value - document.getElementById('setDepositInvoiceAmountHidden').value)
             };
 
             $.ajax({
@@ -2819,7 +2838,7 @@
                 }
             });
 
-          
+
         });
 
         $('#new_Attachment_open_model').on('click', function() {
@@ -3148,6 +3167,7 @@
 
         document.getElementById('footAmount').textContent = doller + price.toFixed(2);
         document.getElementById('setDepositAmount').value = "% of  " + doller + price.toFixed(2);
+        document.getElementById('setDepositAmountHidden').value = price.toFixed(2);
         document.getElementById('InputFootAmount').value = price.toFixed(2);
         document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
         document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
@@ -3161,7 +3181,7 @@
         document.getElementById('footOutstandingAmount').textContent = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
         document.getElementById('setOustandingCreditAmount').value = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
         document.getElementById('deposit_amount').value = ((price + totalVAT) - subtotal_amount).toFixed(2);
-        document.getElementById('footDeposit').textContent = '-'+doller + subtotal_amount; 
+        document.getElementById('footDeposit').textContent = '-' + doller + subtotal_amount;
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
         document.getElementById('payingNow').textContent = doller + (price + totalVAT).toFixed(2);
 
@@ -3863,7 +3883,7 @@
         const subtotalAmountCell = document.createElement('th');
         subtotalAmountCell.colSpan = 3; // Adjust colspan based on your table structure
         subtotalAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
-        
+
         const hiddenInput = document.createElement('input');
         hiddenInput.type = 'hidden';
         hiddenInput.id = 'subtotal_amount';

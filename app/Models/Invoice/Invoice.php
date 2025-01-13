@@ -10,6 +10,7 @@ class Invoice extends Model
     use HasFactory;
 
     protected $fillable = [
+        'home_id',
         'customer_id',
         'project_id',
         'site_delivery_add_id',
@@ -21,8 +22,14 @@ class Invoice extends Model
         'invoice_date',
         'payment_terms',
         'due_date',
+        'sub_total',
+        'VAT',
+        'Total',
+        'Outstanding',
         'status',
         'tags',
+        'is_printed',
+        'is_emailed',
         'customer_notes', 
         'terms',
         'internal_notes'

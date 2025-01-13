@@ -41,15 +41,15 @@ class InvoiceRequest extends FormRequest
             'quote_id' => 'required|integer|exists:quotes,id',
             'customer_id' => 'required|integer|exists:customers,id',
             // 'invoice_id'=> 'required|integer|exists:invoices,id',
-            'invoice_date' => 'required|date',
+            'invoice_date' => 'required|date_format:d/m/Y',
             'due_date' => 'required|date',
             'line_item' => 'required|string',
             'description' => 'required|string',
             'desposit_perceantage' => 'required|integer',
-            'sub_total' => 'required|integer',
-            'discount' => 'required|integer',
+            'sub_total' => 'required|numeric',
+            // 'discount' => 'required|integer',
             'VAT' => 'required|integer',
-            'total' => 'required|integer'
+            'total' => 'required|numeric'
         ];
     }
 }
