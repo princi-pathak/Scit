@@ -70,10 +70,9 @@
                 return false;
             }
         })
-        var url ='{{$saveButtonUrl}}';
         $.ajax({
                 type: "POST",
-                url: url,
+                url: "{{ url('/save_tax_rate') }}",
                 data: new FormData($("#{{$formId}}")[0]),
                 async: false,
                 contentType: false,
