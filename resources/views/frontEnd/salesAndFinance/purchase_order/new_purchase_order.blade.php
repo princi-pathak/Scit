@@ -43,7 +43,7 @@ ul#purchase_qoute_refList {
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-xl-4 ">
                         <div class="pageTitle">
-                            @if(isset($key) && $key !='')
+                            @if((isset($key) && $key !='') && (isset($duplicate) && $duplicate ==''))
                             <h3 class="header_text">{{$purchase_orders->purchase_order_ref}}</h3>
                             @else
                             <h3 class="header_text">New Purchase Order</h3>
@@ -71,7 +71,7 @@ ul#purchase_qoute_refList {
                                     <div class="formDtail">
                                         <h4 class="contTitle">Supplier Details</h4>
                                        @csrf
-                                        <input type="hidden" id="id" name="id" value="<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id; }?>">
+                                        <input type="hidden" id="id" name="id" value="<?php if((isset($purchase_orders) && $purchase_orders !='') && (isset($duplicate) && $duplicate =='')){echo $purchase_orders->id; }?>">
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer"
                                                     class="col-sm-3 col-form-label">Supplier<span class="radStar">*</span></label>
@@ -589,18 +589,18 @@ ul#purchase_qoute_refList {
                                     <div class="col-sm-12 mb-3 mt-2">
                                         <div class="jobsection">
                                             <a href="javascript:void(0)" class="profileDrop" onclick="get_modal(10)">New Attachment</a>
-                                            @if(isset($key) && $key != '')
+                                            @if((isset($key) && $key !='') && (isset($duplicate) && $duplicate ==''))
                                             <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete Attachment(s)</a>
                                             @endif
                                         </div>
                                     </div>
-                                    @if(isset($key) && $key != '')
+                                    @if((isset($key) && $key !='') && (isset($duplicate) && $duplicate ==''))
                                     <div class="col-sm-12">
                                         <div class="productDetailTable">
                                             <table class="table">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th class="text-center" style=" width:60px;"><input type="checkbox" id="selectAll"> <label for="selectAll"></label></th>
+                                                        <th style=" width:30px;"><input type="checkbox" id="selectAll"> <label for="selectAll"></label></th>
                                                       
                                                         <th>Type</th>
                                                         <th>Title</th>
@@ -627,7 +627,7 @@ ul#purchase_qoute_refList {
                                 <div class="row">
                                     <div class="col-sm-12 mb-3 mt-2">
                                         <div class="jobsection">
-                                            <a href="javascript:void(0)" class="profileDrop @if(!isset($key) || $key == '') disabled-tab @endif" @if(!isset($key) || $key == '') disabled @else  onclick="get_modal(11)" @endif>New Task</a>
+                                            <a href="javascript:void(0)" class="profileDrop @if(!isset($key) || $key == '' || isset($duplicate) && $duplicate) disabled-tab @endif" @if(!isset($key) || $key == '' || isset($duplicate) && $duplicate) disabled @else  onclick="get_modal(11)" @endif>New Task</a>
 
                                         </div>
                                     </div>
@@ -770,7 +770,6 @@ ul#purchase_qoute_refList {
     taskNotesText="taskNotesText"
     modalLabelTitle="modal_label_title"
     saveButtonId="saveNewTask"
-    saveButtonUrl="{{url('/purchase_order_new_task_save')}}"
 />
 
 <x-vat-tax-rate 
@@ -784,7 +783,6 @@ ul#purchase_qoute_refList {
     expDate="vat_tax_expdate"
     status="vat_tax_satatus"
     saveButtonId="saveVatTaxRate"
-    saveButtonUrl="{{ url('/save_tax_rate') }}"
 />
 
 <!-- End here -->
@@ -841,7 +839,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 _token: token
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 const data=response.data;
                 $('#purchase_contact_id').removeAttr('disabled');
                 var contactSelect=document.getElementById("purchase_contact_id");
@@ -858,7 +856,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                     url: '{{ route("ajax.getCountriesList") }}',
                     method: 'GET',
                     success: function(response1) {
-                        console.log(response1.Data);
+                        // console.log(response1.Data);
                         const selectElement=$("#purchase_telephone_code")[0];
                         const selectElement1=$("#purchase_mobile_code")[0];
                         selectElement.innerHTML = '';
@@ -931,7 +929,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 _token: token
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 $('#purchase_project_id').removeAttr('disabled');
                 $('#purchase_site_id').removeAttr('disabled');
                 if (data.customers && data.customers.length > 0) {
@@ -970,8 +968,8 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
 <script>
     function get_modal(modal){  
         // alert(modal)
-        var purchase_ref='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->purchase_order_ref;}?>'
-        var po_id='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>'
+        var purchase_ref='<?php if((isset($purchase_orders) && $purchase_orders !='') && (isset($duplicate) && $duplicate =='')){echo $purchase_orders->purchase_order_ref;}?>'
+        var po_id='<?php if((isset($purchase_orders) && $purchase_orders !='') && (isset($duplicate) && $duplicate =='')){echo $purchase_orders->id;}?>'
         var supplier_select_check=$("#purchase_supplier_id").val();
         var modal_array=[1,7];
         var customer_id=$("#purchase_customer_id").val();
@@ -1152,45 +1150,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             });
         }
     }
-    $("#savePurchaseAttachment").on('click', function(){
-        $.ajax({
-            type: "POST",
-            url: "{{url('/purchase_order_attachment_save')}}",
-            data: new FormData($("#purchase_Attachmentform")[0]),
-            async: false,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(response) {
-                console.log(response);
-                if(response.vali_error){
-                        alert(response.vali_error);
-                        $(window).scrollTop(0);
-                        return false;
-                }else if(response.success === true){
-                    $(window).scrollTop(0);
-                    $('#attachment_messagse').addClass('success-message').text(response.message).show();
-                    setTimeout(function() {
-                        $('#attachment_messagse').removeClass('success-message').text('').hide();
-                        location.reload();
-                    }, 3000);
-                }else if(response.success === false){
-                    $('#attachment_messagse').addClass('error-message').text(response.message).show();
-                    setTimeout(function() {
-                        $('#attachment_messagse').text('').fadeOut();
-                    }, 3000);
-                }
-            },
-            error: function(xhr, status, error) {
-                var errorMessage = xhr.status + ': ' + xhr.statusText;
-                // alert('Error - ' + errorMessage + "\nMessage: " + error);
-                $('#attachment_messagse').addClass('error-message').text(error).show();
-                    setTimeout(function() {
-                        $('#attachment_messagse').text('').fadeOut();
-                    }, 3000);
-            }
-        });
-    });
+    
     $("#saveTag").on('click', function(){
         var title = $("#tag_title").val().trim(); 
         var status = $.trim($('#tag_status option:selected').val());
@@ -1404,7 +1364,6 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const optVat = document.createElement('option');
                         optVat.value = optionVat.id;
                         if(optionVat.id == data.product_detail.tax_rate){
-                            alert()
                             tax_rate=optionVat.tax_rate;
                             optVat.setAttribute("selected", "selected");
                         }
@@ -1514,7 +1473,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
     });
 
     function updateAmount(row) {
-        console.log(row)
+        // console.log(row)
         // const priceInput = row.querySelector('.price');
         const priceInput = row.querySelector('.product_price');
         const qtyInput = row.querySelector('.qty');
@@ -1558,7 +1517,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             url: "{{url('/vat_tax_details')}}",
             data: {vat_id:vat_id,_token:token},
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 if(response){
                     const vat_value=Number(response.data);
                     const vat_ratePercentage = row.querySelector('.vat_ratePercentage').value=vat_value;
@@ -1652,13 +1611,20 @@ $('#search-product').on('keyup', function() {
  </script>
  <script>
     $(document).ready(function(){
-        var purchaseOrderId='<?php if(isset($purchase_orders)){echo $purchase_orders->id;}?>'
+        var purchaseOrderId='<?php if((isset($purchase_orders) && $purchase_orders !='') && (isset($duplicate) && $duplicate =='')){echo $purchase_orders->id;}?>'
+       
         if(purchaseOrderId){
             getAttachment(purchaseOrderId,'{{ url("getAllAttachmens") }}');
             getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
             getAllNewTaskList(purchaseOrderId,'{{ url("getAllNewTaskList") }}');
+        }else{
+            var purchaseOrderId='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>'
+            getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
         }
     });
+    function getAllAttachment(data){
+        getAttachment(data.po_id,pageUrl = '{{ url("getAllAttachmens") }}')
+    }
     function getAttachment(id,pageUrl = '{{ url("getAllAttachmens") }}'){
         var token='<?php echo csrf_token();?>'
         $.ajax({
@@ -1666,10 +1632,11 @@ $('#search-product').on('keyup', function() {
             method: 'POST',
             data: {id: id,_token:token},
             success: function(response) {
-                // console.log(response.data.data);
+                // console.log(response);
                 var paginationAttachment = response.pagination;
                 var data = response.data.data;
-                const attachments = response.data.data[0].po_attachments || [];
+                // const attachments = response.data.data[0].po_attachments || [];
+                const attachments = data;
                 // console.log(attachments);
                 const tbody = $('#attachments_result');
                 tbody.empty();
@@ -1701,10 +1668,10 @@ $('#search-product').on('keyup', function() {
                 var paginationControlsAttachment = $("#pagination-controls-Attachments");
                 paginationControlsAttachment.empty();
                 if (paginationAttachment.prev_page_url) {
-                    paginationControlsAttachment.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationAttachment.prev_page_url + '\')">Previous</button>');
+                    paginationControlsAttachment.append('<button type="button" class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationAttachment.prev_page_url + '\')">Previous</button>');
                 }
                 if (paginationAttachment.next_page_url) {
-                    paginationControlsAttachment.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationAttachment.next_page_url + '\')">Next</button>');
+                    paginationControlsAttachment.append('<button type="button" class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationAttachment.next_page_url + '\')">Next</button>');
                 }
             },
             error: function(xhr, status, error) {
@@ -1722,7 +1689,6 @@ $('#search-product').on('keyup', function() {
             success: function(response) {
                 // console.log(response);
                 var data=response.data[0];
-                // console.log(data);
                 const tableBody = document.querySelector(`#result tbody`);
                 var purchase_order_products=data.product_details.purchase_order_products;
                 // console.log(purchase_order_products);return false;
@@ -1786,13 +1752,15 @@ $('#search-product').on('keyup', function() {
                         hiddenInput.name = 'product_id[]';
                         hiddenInput.value = data.purchase_order_products_detail.id;
                         row.appendChild(hiddenInput);
-                        // purchase order product hidden id
+                        // purchase order product hidden id if not duplicate is null
+                        <?php if((isset($purchase_orders) && $purchase_orders !='') && (isset($duplicate) && $duplicate =='')){?>
                         const hiddenID = document.createElement('input');
                         hiddenID.type = 'hidden';
                         hiddenID.className = 'purchase_product_id';
                         hiddenID.name = 'purchase_product_id[]';
                         hiddenID.value = product.id;
                         row.appendChild(hiddenID);
+                        <?php }?>
                     // end
 
                         const descriptionCell = document.createElement('td');
@@ -1872,6 +1840,12 @@ $('#search-product').on('keyup', function() {
                         optVat.textContent = optionVat.name;
                         selectDropdownVat.appendChild(optVat);
                         });
+                        const inputVatRate = document.createElement('input');
+                        inputVatRate.type = 'hidden';
+                        inputVatRate.className = 'vat_ratePercentage';
+                        inputVatRate.name = 'vat_ratePercentage[]'; 
+                        inputVatRate.value = tax_rate;
+                        dropdownVat.appendChild(inputVatRate);
                         dropdownVat.appendChild(selectDropdownVat);
                         row.appendChild(dropdownVat);
 
@@ -1917,10 +1891,10 @@ $('#search-product').on('keyup', function() {
                 // var paginationControlsProductDetail = $("#pagination-controls-Produc-details");
                 // paginationControlsProductDetail.empty();
                 // if (paginationProductDetails.prev_page_url) {
-                //     paginationControlsProductDetail.append('<button class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                //     paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
                 // }
                 // if (paginationProductDetails.next_page_url) {
-                //     paginationControlsProductDetail.append('<button class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                //     paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
                 // }
             },
             error: function(xhr, status, error) {
@@ -1966,10 +1940,10 @@ $('#search-product').on('keyup', function() {
                 var paginationControlsNewTask = $("#pagination-controls-New-task");
                 paginationControlsNewTask.empty();
                 if (paginationNewTask.prev_page_url) {
-                    paginationControlsNewTask.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationNewTask.prev_page_url + '\')">Previous</button>');
+                    paginationControlsNewTask.append('<button type="button" class="profileDrop" onclick="getAllNewTaskList(' + id + ', \'' + paginationNewTask.prev_page_url + '\')">Previous</button>');
                 }
                 if (paginationNewTask.next_page_url) {
-                    paginationControlsNewTask.append('<button class="profileDrop" onclick="getAttachment(' + id + ', \'' + paginationNewTask.next_page_url + '\')">Next</button>');
+                    paginationControlsNewTask.append('<button type="button" class="profileDrop" onclick="getAllNewTaskList(' + id + ', \'' + paginationNewTask.next_page_url + '\')">Next</button>');
                 }
             },
             error: function(xhr, status, error) {
@@ -2087,7 +2061,7 @@ $(document).on('click','.attachment_delete', function() {
  </script>
  <script>
     function getAllNewTask(data){
-        console.log(data);
+        // console.log(data);
         getAllNewTaskList(data.po_id,pageUrl = '{{ url("getAllNewTaskList") }}');
     }
     function bgColorChange(button){
@@ -2103,7 +2077,7 @@ $(document).on('click','.attachment_delete', function() {
         }
     }
     function getAllAccountCodeList(data){
-        console.log(data.data);
+        // console.log(data.data);
         var accList=data.data;
         $('.accountCode_id').append('<option value="'+accList.id+'">'+accList.name+'</option>')
     }
@@ -2129,7 +2103,7 @@ $(document).on('click','.attachment_delete', function() {
                         search_purchase_qoute_ref: search_purchase_qoute_ref,purchase_customer_id:purchase_customer_id,_token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
                         // return false;
                         purchase_qoute_refdivList.innerHTML = "";
                         const div = document.createElement('div');
@@ -2161,8 +2135,8 @@ $(document).on('click','.attachment_delete', function() {
                                 if (event.target.tagName.toLowerCase() === 'li') {
                                     const selectedPurchaseQuotRefId = event.target.id;
                                     const selectedPurchaseQuoteName = event.target.name;
-                                    console.log('Selected Customer ID:', selectedPurchaseQuotRefId);
-                                    console.log('Selected Customer Name:', selectedPurchaseQuoteName);
+                                    // console.log('Selected Customer ID:', selectedPurchaseQuotRefId);
+                                    // console.log('Selected Customer Name:', selectedPurchaseQuoteName);
                                     $("#purchase_qoute_ref").val(selectedPurchaseQuoteName);
                                     $("#selectedPurchaseQuotRefId").val(selectedPurchaseQuotRefId);
                                 }
@@ -2207,7 +2181,7 @@ $(document).on('click','.attachment_delete', function() {
                         search_purchase_job_ref: search_purchase_job_ref,purchase_customer_id:purchase_customer_id,_token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
                         // return false;
                         purchase_job_refdivList.innerHTML = "";
                         const div = document.createElement('div');
@@ -2239,8 +2213,8 @@ $(document).on('click','.attachment_delete', function() {
                                 if (event.target.tagName.toLowerCase() === 'li') {
                                     const selectedPurchaseJobRefId = event.target.id;
                                     const selectedPurchaseJobName = event.target.name;
-                                    console.log('Selected Customer ID:', selectedPurchaseJobRefId);
-                                    console.log('Selected Customer Name:', selectedPurchaseJobName);
+                                    // console.log('Selected Customer ID:', selectedPurchaseJobRefId);
+                                    // console.log('Selected Customer Name:', selectedPurchaseJobName);
                                     $("#purchase_job_ref").val(selectedPurchaseJobName);
                                     $("#selectedPurchaseJobRefId").val(selectedPurchaseJobRefId);
                                 }
