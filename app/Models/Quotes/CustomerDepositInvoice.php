@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Quotes;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,11 +12,15 @@ class CustomerDepositInvoice extends Model
     protected $fillable = [
         'quote_id', 
         'customer_id',
-        'deposit_percantage',
-        'amount',
-        'reference', 
+        'invoice_id',
+        'invoice_date',
+        'due_date',
+        'line_item',
         'description', 
-        'payment_type', 
-        'deposit_date'
+        'deposit_percantage',
+        'sub_total',
+        'discount',
+        'VAT',
+        'total'
     ];
 }
