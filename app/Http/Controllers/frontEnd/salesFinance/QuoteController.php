@@ -14,12 +14,16 @@ use App\Http\Requests\QuoteRequest;
 use App\Http\Requests\Quotes\CallBackRequest;
 use App\Http\Requests\Quotes\QuoteTaskRequest;
 use App\Http\Requests\Quotes\CustomerDepositRequest;
+use App\Http\Requests\Invoice\InvoiceRequest;
+
 
 use App\Services\Quotes\QuoteService;
 use App\Services\Quotes\QuoteProductService;
 use App\Services\Quotes\AttachmentTypeService;
+use App\Services\Invoice\InvoiceService;
 
 use App\Models\QuoteType;
+use App\Models\Quotes\CustomerDepositInvoice;
 use App\Models\Quote;
 use App\Models\QuoteSource;
 use App\Models\Quotes\QuoteRejectType;
@@ -40,12 +44,14 @@ class QuoteController extends Controller
     protected $quoteService;
     protected $itemService;
     protected $attachmentService;
+    protected $invoiceService;
 
-    public function __construct(QuoteService $quoteService, QuoteProductService $itemService, AttachmentTypeService $attachmentService)
+    public function __construct(QuoteService $quoteService, QuoteProductService $itemService, AttachmentTypeService $attachmentService, InvoiceService $invoiceService)
     {
         $this->quoteService = $quoteService;
         $this->itemService = $itemService;
         $this->attachmentService =  $attachmentService;
+        $this->invoiceService = $invoiceService;
     }
 
     public function dashboard()
@@ -650,5 +656,18 @@ class QuoteController extends Controller
             'success' => (bool) $data,
             'data' => $data ? $data : 'No Data'
         ]);
+    }
+
+    public function saveInvoiceDeposite(InvoiceRequest $request){
+
+        $quote = Quote::where('id', $request->quote_id)->get();
+
+
+        $invoice = $this->invoiceService->saveInvoiceData($quote, $request, Auth::user()->home_id);
+
+        dd($invoice);
+        // CustomerDepositInvoice::saveCus
+
+        // dd($request);
     }
 }
