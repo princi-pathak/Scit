@@ -328,6 +328,7 @@ ul#projectList {
                                     $all_subTotalAmount=0;
                                     $all_vatTotalAmount=0;
                                     $all_TotalAmount=0;
+                                    $outstandingAmountTotal=0;
                                 ?>
                                 @foreach($list as $val)
                                 <?php 
@@ -335,23 +336,23 @@ ul#projectList {
                                     $sub_total_amount=0;
                                     $total_amount=0;
                                     $vat_amount=0;
+                                    $vatTotal=0;
                                     $purchaseProductId=0;
-                                    $outstandingAmountTotal=0;
                                     $outstandingAmount=0;
                                     foreach($val->purchaseOrderProducts as $product){
                                         $purchaseProductId=$product->id;
-                                        $outstandingAmount=$product->outstanding_amount;
-                                        $outstandingAmountTotal=$outstandingAmountTotal+$product->outstanding_amount;
                                         $qty=$product->qty*$product->price;
                                         $sub_total_amount=$sub_total_amount+$qty;
-                                        $vat=$product->vat+$sub_total_amount;
+                                        $vatTotal=$vatTotal+$product->vat;
                                         $vat_amount=$vat_amount+$product->vat;
                                         $percentage=$sub_total_amount*$vat_amount/100;
                                         $total_amount=$total_amount+$percentage+$sub_total_amount;
-
+                                        $outstandingAmount=$total_amount-$product->outstanding_amount;
+                                        
                                         $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
                                         $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
                                         $all_TotalAmount=$all_TotalAmount+$total_amount;
+                                        $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
                                     }
                                 ?>
                                 <tr>
@@ -366,7 +367,7 @@ ul#projectList {
                                     <td>£{{$sub_total_amount}}</td>
                                     <td>£{{$vat_amount}}</td>
                                     <td>£{{$total_amount}}</td>
-                                    <td>£{{$outstandingAmountTotal}}</td>
+                                    <td>£{{$outstandingAmount}}</td>
                                     <td>{{$status['list_status']}}</td>
                                     @if($status['status'] == 1)
                                     <td>-</td>
@@ -394,7 +395,7 @@ ul#projectList {
                                     </td>
                                     @else
                                     <td>
-                                        @if($val->status == 9)
+                                        @if($val->delivery_status == 1)
                                         <span class="grencheck"><i class="fa-solid fa-check"></i></span>
                                         @else
                                         <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>
@@ -415,7 +416,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Print</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Email</a>
+                                                    <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Email</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
                                                     <hr class="dropdown-divider">
@@ -423,7 +424,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$purchaseProductId}},{{$outstandingAmount}})" class="dropdown-item">Record Payment</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Invoice Received</a>
+                                                    <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vatTotal}},{{$outstandingAmount}})" class="dropdown-item">Invoice Received</a>
                                                     <!-- <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">CRM / History</a>
                                                     <hr class="dropdown-divider">
@@ -448,7 +449,7 @@ ul#projectList {
                                 <td id="Tablesub_total_amount">£{{$all_subTotalAmount}}</td>
                                 <td id="Tablevat_amount">£{{$all_vatTotalAmount}}</td>
                                 <td id="Tabletotal_amount">£{{$all_TotalAmount}}</td>
-                                <td id="Tableoutstanding_amount" colspan="8">£{{$all_TotalAmount}}</td>
+                                <td id="Tableoutstanding_amount" colspan="8">£{{$outstandingAmountTotal}}</td>
                             </tr>
                             @endif
                         </table>
@@ -699,6 +700,39 @@ ul#projectList {
     selectStatus="paymentTypeStatus"
     saveButtonId="paymentTypeSave"
  />
+ <x-add-invoice-modal 
+    invoiceModalId="invoiceModal"
+    modalTitle="Invoice_modal_title"
+    invoiceformId="invoiceform"
+    invoiceId="invoice_id"
+    purchaseOrder="purchaseOrder_ref"
+    inputInvoiceSupplierName="invoiceSupplier_name"
+    inputInvoiceRef="invoiuce_ref"
+    invoiceNetAmount="invoiceNetAmount"
+    invoiceVatId="invoiceVatId"
+    invoiceVatAmount="invoiceVatAmount"
+    invoiceGrossAmount="invoiceGrossAmount"
+    invoiceDate="invoiceDate"
+    invoiceDueDate="invoiceDueDate"
+    invoiceNotes="invoiceNotes"
+    invoiceAttachemnt="invoiceAttachemnt"
+    saveButtonId="invoiceSave"
+ />
+
+ <x-purchase-order-reject
+    rejectModalId="rejectModal"
+    modalTitle="Reject Purchase Order"
+    rejectformId="rejectform"
+    rejectId="reject_id"
+    inputRejectMessage="reject_message"
+    radioYes="reject_radioYes"
+    radioNo="reject_redioNo"
+    rejectNotifyWho="rejectnotify_who"
+    rejectNotification="rejectNotification"
+    rejectSms="rejectSms"
+    rejectEmail="rejectEmail"
+    saveButtonId="rejectSave"
+ />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <script>
    $("#deleteSelectedRows").on('click', function() {
@@ -810,7 +844,7 @@ $('.delete_checkbox').on('click', function() {
                     $("#Tablesub_total_amount").text("£"+response.all_subTotalAmount);
                     $("#Tablevat_amount").text("£"+response.all_vatTotalAmount);
                     $("#Tabletotal_amount").text("£"+response.all_TotalAmount);
-                    $("#Tableoutstanding_amount").text("£"+response.all_TotalAmount);
+                    $("#Tableoutstanding_amount").text("£"+response.outstandingAmountTotal);
                     $(".calcualtionShowHide").show();
                 }else{
                     $("#search_data").html(response.data);
@@ -1532,7 +1566,8 @@ $('.delete_checkbox').on('click', function() {
         });
     }
     function saverecordDeliveryModal(){
-        $.ajax({
+        if(confirm("Are you sure you want to receive these stock quantities?")){
+            $.ajax({
             type: "POST",
             url: "{{url('/purchase_order_record_delivered')}}",
             data: new FormData($("#recordDeliveryForm")[0]),
@@ -1542,29 +1577,31 @@ $('.delete_checkbox').on('click', function() {
             processData: false,
             success: function(response) {
                 console.log(response);
-            if(response.vali_error){
-                    alert(response.vali_error);
-                    $(window).scrollTop(0);
-                    return false;
-                }else if(response.success === true){
-                    $(window).scrollTop(0);
-                    $('#message_recordDeliveryModal').addClass('success-message').text(response.message).show();
-                    setTimeout(function() {
-                        $('#message_recordDeliveryModal').removeClass('success-message').text('').hide();
-                        location.reload();
-                    }, 3000);
-                }else if(response.success === false){
-                    $('#message_recordDeliveryModal').addClass('error-message').text(response.message).show();
-                    setTimeout(function() {
-                        $('#error-message').text('').fadeOut();
-                    }, 3000);
+                if(response.vali_error){
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
+                        return false;
+                    }else if(response.success === true){
+                        $(window).scrollTop(0);
+                        $('#message_recordDeliveryModal').addClass('success-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#message_recordDeliveryModal').removeClass('success-message').text('').hide();
+                            location.reload();
+                        }, 3000);
+                    }else if(response.success === false){
+                        $('#message_recordDeliveryModal').addClass('error-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#error-message').text('').fadeOut();
+                        }, 3000);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + error);
                 }
-            },
-            error: function(xhr, status, error) {
-                var errorMessage = xhr.status + ': ' + xhr.statusText;
-                alert('Error - ' + errorMessage + "\nMessage: " + error);
-            }
-        });
+            });
+        }
+        
     }
     function openRecordPaymentModal(id,po_ref,supplier_name,total_amount,date,purchase_productId,outstandingAmount){
         $("#purchaseOrderRecordDate").text(po_ref+' On '+date);
@@ -1574,7 +1611,7 @@ $('.delete_checkbox').on('click', function() {
         $("#record_TotalAmount").text('£'+total_amount.toFixed(2));
         $("#record_OutstandingAmount").text('£'+outstandingAmount.toFixed(2));
         var calculateOutstandingAmount=total_amount-outstandingAmount;
-        $("#record_AmountPaid").val(calculateOutstandingAmount.toFixed(2));
+        $("#record_AmountPaid").val(outstandingAmount.toFixed(2));
         $("#recordPaymentModalLabel").text("Record Payment - "+po_ref);
         // $.ajax({
         //     type: "POST",
@@ -1648,6 +1685,31 @@ $('.delete_checkbox').on('click', function() {
                 alert('Error - ' + errorMessage + "\nMessage: " + error);
             }
         });
+    }
+    function openInvoiceRecieveModal(id,po_ref,supplier_name,supplier_id,sub_total_amount,date,vat,outstandingAmount){
+        // alert("supplier_id "+supplier_id);
+        $("#invoice_po_id").val(id);
+        $("#invoice_supplier_id").val(supplier_id);
+        $("#Invoice_modal_title").text("Invoice Recieved - "+po_ref);
+        $("#invoiuce_ref").text(po_ref+" On "+date);
+        $("#invoiceSupplier_name").text(supplier_name);
+        $("#invoiceNetAmount").val(sub_total_amount.toFixed(2));
+        $("#invoiceVatAmount").val(vat.toFixed(2));
+        $("#invoiceGrossAmount").val(sub_total_amount+vat);
+        $("#invoiceModal").modal('show');
+    }
+    function getAllPurchaseInvices(data){
+        location.reload();
+    }
+    function openRejectModal(id,po_ref){
+        // alert("id "+id);
+        // alert("po_ref "+po_ref);
+        $("#reject_po_id").val(id);
+        $("#rejectpurchaseOrderRef").text(po_ref);
+        $("#rejectModal").modal('show');
+    }
+    function openEmailModal(id,po_ref){
+        alert();
     }
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

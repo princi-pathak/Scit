@@ -38,6 +38,8 @@ use App\Models\Task_type;
 use App\Models\Quote;
 use App\Models\Payment_type;
 use App\Models\PurchaseOrderRecordPayment;
+use App\Models\PurchaseOrderInvoiceReceives;
+use App\Models\PurchaseOrderReject;
 use App\User;
 
 class Purchase_orderController extends Controller
@@ -253,6 +255,7 @@ class Purchase_orderController extends Controller
                     'price' => $data['price'][$i] ?? 0,
                     'vat_id' => $data['vat_id'][$i] ?? null,
                     'vat' => $data['vat'][$i] ?? 0,
+                    'outstanding_amount'=>0
                 ];
                 // echo "<pre>";print_r($productData);die;
                 $PurchaseOrderProduct = PurchaseOrderProduct::savePurchaseOrderProduct($productData);
@@ -453,11 +456,7 @@ class Purchase_orderController extends Controller
         $lastSegment = $request->list_mode;
         $segment_check=$this->check_segment_purchaseOrder($lastSegment);
         // echo "<pre>"; print_r($segment_check);die;
-        if($segment_check['status'] == 3){
-            $data['list']=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['user_id'=>Auth::user()->id,'deleted_at'=>null])->whereIn('status',[3,9])->get();
-        }else{
-            $data['list']=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>$segment_check['status']])->get();
-        }
+        $data['list']=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>$segment_check['status']])->get();
         $data['status']=$segment_check;
         $data['draftCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>1])->count();
         $data['awaitingApprovalCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>2])->count();
@@ -468,7 +467,7 @@ class Purchase_orderController extends Controller
         $data['customer_data'] = Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
         $data['users'] = User::where('home_id', $home_id)->select('id', 'name','email','phone_no')->where('is_deleted', 0)->get();
         $data['paymentTypeList']=Payment_type::getActivePaymentType($home_id);
-        // echo "<pre>";print_r($data['paymentTypeList']);die;
+        // echo "<pre>";print_r($data['status']);die;
         return view('frontEnd.salesAndFinance.purchase_order.purchase_order_list',$data);
     }
     private function check_segment_purchaseOrder($lastSegment=null){
@@ -513,11 +512,7 @@ class Purchase_orderController extends Controller
         $selectedcreatedById=$request->selectedcreatedById;
         $selectedProjectId=$request->selectedProjectId;
         $home_id=Auth::user()->home_id;
-        if($status == 3){
-        $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null])->whereIn('status',[3,9,10]);
-        }else{
-            $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null,'status'=>$status]);
-        }
+        $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null,'status'=>$status]);
         // echo "<pre>";print_r($query->get());die;
         if ($request->filled('po_ref')) {
             $query->where('purchase_order_ref', $po_ref);
@@ -567,22 +562,29 @@ class Purchase_orderController extends Controller
         $all_subTotalAmount=0;
         $all_vatTotalAmount=0;
         $all_TotalAmount=0;
+        $outstandingAmountTotal=0;
         foreach($search_data as $key=>$val){
             $customer=Customer::find($val->customer_id);
             $sub_total_amount=0;
             $total_amount=0;
             $vat_amount=0;
+            $vatTotal=0;
+            $purchaseProductId=0;
+            $outstandingAmount=0;
             foreach($val->purchaseOrderProducts as $product){
+                $purchaseProductId=$product->id;
                 $qty=$product->qty*$product->price;
                 $sub_total_amount=$sub_total_amount+$qty;
-                $vat=$product->vat+$sub_total_amount;
+                $vatTotal=$vatTotal+$product->vat;
                 $vat_amount=$vat_amount+$product->vat;
                 $percentage=$sub_total_amount*$vat_amount/100;
                 $total_amount=$total_amount+$percentage+$sub_total_amount;
-
+                $outstandingAmount=$total_amount-$product->outstanding_amount;
+                
                 $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
                 $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
                 $all_TotalAmount=$all_TotalAmount+$total_amount;
+                $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
             }
             
             $array_data .= '<tr>
@@ -596,7 +598,7 @@ class Purchase_orderController extends Controller
                         <td>£' . $sub_total_amount . '</td>
                         <td>£' . $vat_amount . '</td>
                         <td>£' . $total_amount . '</td>
-                        <td>£' . $total_amount . '</td>
+                        <td>£' . $outstandingAmount . '</td>
                         <td>' . $list_status . '</td>';
                         if($status == 1){
                             $array_data.='<td>-</td>
@@ -608,10 +610,15 @@ class Purchase_orderController extends Controller
                                         </a>
                                         <div class="dropdown-menu fade-up m-0">
                                             <a href="'.url('purchase_order_edit?key=').''.base64_encode($val->id).'" class="dropdown-item">Edit</a>
+                                            <hr class="dropdown-divider">
                                             <a href="#!" class="dropdown-item">Preview</a>
-                                            <a href="#!" class="dropdown-item">Duplicate</a>
-                                            <a href="#!" class="dropdown-item">Approve</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="'.url('purchase_order?duplicate=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Duplicate</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="javascript:void(0)" onclick="openApproveModal('.$val->id.','.$val->purchase_order_ref.')" class="dropdown-item">Approve</a>
+                                            <hr class="dropdown-divider">
                                             <a href="#!" class="dropdown-item">CRM / History</a>
+                                            <hr class="dropdown-divider">
                                             <a href="#!" class="dropdown-item">Start Timer</a>
                                         </div>
                                     </div>
@@ -619,35 +626,46 @@ class Purchase_orderController extends Controller
                             </td>';
                         }else{
                             $array_data.='<td>';
-                            if($val->status == 9){
+                            if($val->delivery_status == 1){
                                 $array_data.='<span class="grencheck"><i class="fa-solid fa-check"></i></span>';
                             }else{
                                 $array_data.='<a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>';
                             }
-                            $array_data.='</td>
-                            <td>
-                                <div class="d-flex justify-content-end">
-                                    <div class="nav-item dropdown">
-                                        <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Action
-                                        </a>
-                                        <div class="dropdown-menu fade-up m-0">
-                                            <a href="'.url('purchase_order_edit?key=').''.base64_encode($val->id).'" class="dropdown-item">Edit</a>
-                                            <a href="#!" class="dropdown-item">Preview</a>
-                                            <a href="#!" class="dropdown-item">Duplicate</a>
-                                            <a href="#!" class="dropdown-item">Approve</a>
-                                            <a href="#!" class="dropdown-item">CRM / History</a>
-                                            <a href="#!" class="dropdown-item">Start Timer</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>';
+                            $array_data .= '</td>
+                                        <td>
+                                            <div class="d-flex justify-content-end">
+                                                <div class="nav-item dropdown">
+                                                    <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Action
+                                                    </a>
+                                                    <div class="dropdown-menu fade-up m-0">
+                                                        <a href="javascript:void(0)" onclick="openRecordDeliveryModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\')" class="dropdown-item">Record Delivery</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="' . url('purchase_order_edit?key=') . base64_encode($val->id) . '" class="dropdown-item">Edit</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="#!" class="dropdown-item">Preview</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="#!" class="dropdown-item">Print</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="#!" class="dropdown-item">Email</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="' . url('purchase_order?duplicate=') . base64_encode($val->id) . '" target="_blank" class="dropdown-item">Duplicate</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="javascript:void(0)" onclick="openRejectModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\')" class="dropdown-item">Reject</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="javascript:void(0)" onclick="openRecordPaymentModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\',\'' . $val->suppliers->name . '\',' . $total_amount . ',\'' . date('d/m/Y', strtotime($val->purchase_date)) . '\',' . $purchaseProductId . ',' . $outstandingAmount . ')" class="dropdown-item">Record Payment</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="javascript:void(0)" onclick="openInvoiceRecieveModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\',\'' . $val->suppliers->name . '\',' . $val->suppliers->id . ',' . $sub_total_amount . ',\'' . date('d/m/Y', strtotime($val->purchase_date)) . '\',' . $vatTotal . ',' . $outstandingAmount . ')" class="dropdown-item">Invoice Received</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>';
                         }
                         
                     $array_data.='</tr>';
         }
 
-        return response()->json(['data' => $array_data,'all_subTotalAmount'=>$all_subTotalAmount,'all_vatTotalAmount'=>$all_vatTotalAmount,'all_TotalAmount'=>$all_TotalAmount]);
+        return response()->json(['data' => $array_data,'all_subTotalAmount'=>$all_subTotalAmount,'all_vatTotalAmount'=>$all_vatTotalAmount,'all_TotalAmount'=>$all_TotalAmount,'outstandingAmountTotal'=>$outstandingAmountTotal]);
     }
     public function searchDepartment(Request $request){
         // echo "<pre>";print_r($request->all());die;
@@ -795,7 +813,7 @@ class Purchase_orderController extends Controller
                 // echo "<pre>";print_r($data);die;
                 try{
                     PurchaseOrderProduct::savePurchaseOrderProduct($data);
-                    PurchaseOrder::find($po_id)->update(['status' => 9]);
+                    PurchaseOrder::find($po_id)->update(['delivery_status' => 1]);
                     return response()->json(['success'=>true,'message'=>'The Purchase Order Delivered has been saved successfully.']);
                 }catch (\Exception $e) {
                     Log::error('Error: ' . $e->getMessage());
@@ -837,6 +855,89 @@ class Purchase_orderController extends Controller
             $orderRecord=PurchaseOrderRecordPayment::savePurchaseOrderRecordPayment($data);
             $itt=PurchaseOrderProduct::find($recordPayment_ppurchaseProduct)->update(['outstanding_amount' => $request->record_amount_paid]);
             return response()->json(['success'=>true,'message'=>'The Record Payment has been saved successfully.','data'=>$orderRecord]);
+        }catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function purchaseOrderInviceRecieve(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'po_id' => 'required',
+            'supplier_id' => 'required',
+            'inv_ref' => 'required',
+            'net_amount' => 'required',
+            'vat_id' => 'required',
+            'gross_amount' => 'required',
+            'invoice_date' => 'required',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        if ($request->hasFile('file')) {
+            $imageName = time().'.'.$request->file->extension();
+            $original_name=$request->file->getClientOriginalName();      
+            $request->file->move(public_path('images/purchase_invoice'), $imageName);
+            $requestData = $request->all();
+            $requestData['file'] = $imageName;
+            $requestData['original_file_name'] = $original_name;
+        } else {
+            $requestData = $request->all();
+        }
+        $requestData['loginUserId']=Auth::user()->id;
+        $requestData['home_id']=Auth::user()->home_id;
+        // echo "<pre>";print_r($requestData);die;
+        try {
+            $invoice=PurchaseOrderInvoiceReceives::purchaseOrderInvoiceReceives_save($requestData);
+            if($request->id == ''){
+                return response()->json(['success' => true,'message'=>'Invoice has been saved', 'expense' => $invoice]);
+            }else{
+                return response()->json(['success' => true,'message'=>'Invoice has been updated', 'expense' => $invoice]);
+            }
+            
+        } catch (\Exception $e) {
+            Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function purchaseOrderreject(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'po_id' => 'required',
+            'message' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        if ($request->notify_radio == 1) {
+            $validator = Validator::make($request->all(), [
+                'notification' => 'required',
+                'sms' => 'required',
+                'email' => 'required'
+            ]);
+        
+            if ($validator->fails()) {
+                return response()->json(['vali_error' => $validator->errors()->first()]);
+            }
+            $notification = $request->has('notification') ? 1 : 0;
+            $sms = $request->has('sms') ? 1 : 0;
+            $email = $request->has('email') ? 1 : 0;
+        }
+        if (!isset($notification) || !isset($sms) || !isset($email)) {
+            $notification = $sms = $email = null;
+        }
+        $data=$request->all();
+        $data['notification']=$notification;
+        $data['sms']=$sms;
+        $data['email']=$email;
+        $data['home_id']=Auth::user()->home_id;
+        $data['loginUserId']=Auth::user()->id;
+        // echo "<pre>";print_r($data);die;
+        try{
+            $reject=PurchaseOrderReject::savePurchaseOrderReject($data);
+            PurchaseOrder::find($request->po_id)->update(['status' => 8]);
+            return response()->json(['success'=>true,'message'=>'The Purchase Order has been rejected successfully.','data'=>$reject]);
         }catch (\Exception $e) {
             Log::error('Error: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
