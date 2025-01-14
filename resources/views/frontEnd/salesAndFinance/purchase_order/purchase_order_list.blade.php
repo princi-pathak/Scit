@@ -416,7 +416,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Print</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Email</a>
+                                                    <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
                                                     <hr class="dropdown-divider">
@@ -733,7 +733,20 @@ ul#projectList {
     rejectEmail="rejectEmail"
     saveButtonId="rejectSave"
  />
+ <x-purchase-order-email
+    emailModalId="emailModal"
+    modalTitle="email_modalTitle"
+    emailformId="emailformId"
+    emailId="emailId"
+    toField="toField"
+    ccField="ccField"
+    subject="emailsubject"
+    selectBoxsubject="selectBoxsubject"
+    body="emailbody"
+    saveButtonId="emailSave"
+ />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
 <script>
    $("#deleteSelectedRows").on('click', function() {
     let ids = [];
@@ -1708,8 +1721,13 @@ $('.delete_checkbox').on('click', function() {
         $("#rejectpurchaseOrderRef").text(po_ref);
         $("#rejectModal").modal('show');
     }
-    function openEmailModal(id,po_ref){
-        alert();
+    function openEmailModal(id,po_ref,email,name){
+        $("#emailformId")[0].reset();
+        $("#dropdownButton").append('<span class="optext">'+email+'&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
+        $("#dropdownMenu").append('<li><input type="checkbox" class="option" value="Option 1">'+email+' - '+name+'(Supplier)</label>');
+        $("#email_modalTitle").text("Email Purchase Order - "+po_ref);
+        $("#emailsubject").val("Purchase Order from The Contructor - "+po_ref);
+        $("#emailModal").modal('show');
     }
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
