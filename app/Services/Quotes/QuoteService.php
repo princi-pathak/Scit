@@ -10,6 +10,8 @@ use App\Models\QuoteTask;
 use App\User;
 use App\Models\Quotes\QuoteRejectReasons;
 use App\Models\Quotes\QuoteCustomerDeposit;
+use App\Models\Quotes\CustomerDepositInvoice;
+
 
 
 class QuoteService
@@ -329,5 +331,40 @@ class QuoteService
     public function getDepositeData($data){
        return QuoteCustomerDeposit::where('quote_id', $data->quote_id)->get();
     }
+
+    public function saveCustomerInvoiceDeposit($data, $invoice_id){
+
+        // dd($data);
+        $record = [
+            'quote_id' => $data->quote_id, 
+            'customer_id' => $data->customer_id,
+            'invoice_id' => $invoice_id,
+            'invoice_date'=> Carbon::createFromFormat('d/m/Y', $data->invoice_date)->format('Y-m-d'),
+            'due_date' => Carbon::createFromFormat('d/m/Y', $data->due_date)->format('Y-m-d'),
+            'line_item' => $data->line_item,
+            'description' => $data->description, 
+            'deposit_percentage' => $data->deposit_percentage,
+            'sub_total' => $data->sub_total,
+            'VAT_amount' =>  $data->VAT_amount,
+            'total' => $data->total     
+        ];
+
+        return CustomerDepositInvoice::updateOrCreate(['id' => $data['edit_customer_deposit_invoice']], $record);
+
+    }
+
+    public function getCustomerInvoiceDeposit($quote_id){
+    
+                return  DB::table('quote_customer_deposit_invoices')
+                ->join('invoices', 'quote_customer_deposit_invoices.invoice_id', '=', 'invoices.id') // Adjust column names
+                ->select('quote_customer_deposit_invoices.*', 'invoices.invoice_ref', 'invoices.status')
+                ->where('quote_customer_deposit_invoices.quote_id', $quote_id)
+                ->get();
+    }
+
+
+
+
+
 }
  

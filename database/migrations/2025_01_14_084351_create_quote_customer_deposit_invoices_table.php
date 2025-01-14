@@ -20,9 +20,9 @@ return new class extends Migration
             $table->date('due_date');
             $table->string('line_item');
             $table->text('description');
-            $table->integer('desposit_percentage');    
+            $table->integer('deposit_percentage');    
             $table->decimal('sub_total', 8,2)->comment('Amount included tax');
-            $table->integer('VAT');
+            $table->integer('VAT_amount');
             $table->decimal('total', 8,2)->comment('amount in including VAT');
             $table->timestamps();
             $table->foreign('quote_id')->references('id')->on('quotes')->onDelete('cascade');

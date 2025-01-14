@@ -26,11 +26,11 @@ return new class extends Migration
             $table->integer('payment_terms')->default('21');
             $table->date('due_date');
             $table->decimal('sub_total', 8,2);
-            $table->integer('discount_percentage');
+            $table->integer('deposit_percentage');
             $table->integer('VAT_id');
             $table->decimal('VAT_amount', 8,2);
             $table->decimal('Total', 8,2);
-            $table->decimal('oustanding', 8,2);
+            $table->decimal('outstanding', 8,2);
             $table->enum('status', ['Draft', 'Invoiced', 'Outstanding', 'Paid', 'Cancellled'])->default('Draft');
             $table->integer('tags')->nullable();
             $table->boolean('is_printed')->default(0);

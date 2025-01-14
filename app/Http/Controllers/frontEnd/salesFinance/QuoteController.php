@@ -661,13 +661,37 @@ class QuoteController extends Controller
     public function saveInvoiceDeposite(InvoiceRequest $request){
 
         $quote = Quote::where('id', $request->quote_id)->get();
-
+        $quote = $quote->first();
 
         $invoice = $this->invoiceService->saveInvoiceData($quote, $request, Auth::user()->home_id);
 
-        dd($invoice);
-        // CustomerDepositInvoice::saveCus
+        // dd($invoice);
+        $data = $this->quoteService->saveCustomerInvoiceDeposit($request, $invoice->id);
 
-        // dd($request);
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? "save record" : 'No Data'
+        ]);
+
+    }
+
+    public function getQuoteInvoiceDeposit(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'quote_id' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $this->quoteService->getCustomerInvoiceDeposit($request->quote_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No Data'
+        ]);
+
     }
 }
+    

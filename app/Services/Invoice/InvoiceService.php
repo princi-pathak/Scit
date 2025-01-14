@@ -22,31 +22,34 @@ class InvoiceService
 
     public function saveInvoiceData($data, $request, $home_id){
 
+        // dd($data);
+        // print_r($data->project_id);
+        // die;
     $invoice = [
         'home_id' => $home_id,
-        'customer_id' =>  $data['customer_id'], 
-        'project_id' =>  $data['project_id'],
-        'site_delivery_add_id' =>   $data['site_delivery_add_id'],
+        'customer_id' =>  $request->customer_id, 
+        'project_id' =>  $data->project_id,
+        'site_delivery_add_id' =>  $data->site_delivery_add_id ?? null,
         'invoice_ref' => $this->generateInvoiceRef(),
-        'invoice_type' => $data['invoice_type'],
-        'customer_ref' => $data['customer_ref'],
-        'invoice_date' => $data['invoice_date'],
-        'customer_job_ref' => $data['customer_job_ref'],
-        'purchase_order_ref' => $data['purchase_order_ref'],
-        'invoice_date' => $request['invoice_date'],
-        'payment_terms' => $data['payment_terms'],
-        'due_date' => $request['due_date'],
+        'invoice_type' => 1,
+        'customer_ref' => $data->customer_ref ?? null,
+        'invoice_date' =>  Carbon::createFromFormat('d/m/Y', $request->invoice_date)->format('Y-m-d'),
+        'customer_job_ref' => $data->customer_job_ref ?? null,
+        'purchase_order_ref' => $data->purchase_order_ref ?? null,
+        'payment_terms' => $data->payment_terms ?? 21,
+        'due_date' => Carbon::createFromFormat('d/m/Y', $request->due_date)->format('Y-m-d'),
         'status' => 'Draft',
-        'tags' => $data['tags'],
-        'customer_notes' => $data['customer_notes'],    
-        'terms' => $data['tearms'],
-        'internal_notes' => $data['internal_notes'],
-        'sub_total' => $request['sub_total'],
-        'VAT'=> $request['VAT'],
-        'Total' => $request['total'],
-        'outstanding' => $request['outstanding'],
-        'terms' => $request['terms'],
-        'internal_notes' => $request['internal_notes']
+        'deposit_percentage' => $request->deposit_percentage,
+        'tags' => $data->tags ?? null,
+        'customer_notes' => $data->customer_notes ?? null,    
+        'terms' => $data->tearms ?? null,
+        'internal_notes' => $data->internal_notes ?? null,
+        'sub_total' => $request->sub_total ,
+        'VAT_id'=> $request->VAT_id,
+        'VAT_amount' => $request->VAT_amount,
+        'Total' => $request->total,
+        'outstanding' => $request->outstanding,
+        'terms' => $request->terms ?? null
     ];
 
     return Invoice::create($invoice);
