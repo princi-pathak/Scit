@@ -15,7 +15,6 @@ class PurchaseOrderEmail extends Component
     public $modalTitle;
     public $emailformId;
     public $emailId;
-    public $inputRejectMessage;
     public $toField;
     public $ccField;
     public $subject;
@@ -39,7 +38,6 @@ class PurchaseOrderEmail extends Component
         $this->modalTitle = $modalTitle;
         $this->emailformId = $emailformId;
         $this->emailId = $emailId;
-        $this->inputRejectMessage = $inputRejectMessage;
         $this->toField = $toField;
         $this->ccField = $ccField;
         $this->subject = $subject;

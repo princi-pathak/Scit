@@ -1131,6 +1131,7 @@
                                                 <div class="contantbodypopup p-0">
                                                     <div class="newJobForm card">
                                                         <div class="mb-2 row">
+                                                            <input type="hidden" id="edit_customer_deposit_invoice">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
                                                                 <input type="text" class="form-control editInput" id="invoice_date" value="{{ now()->format('d/m/Y') }}">
@@ -1246,7 +1247,7 @@
                                 <div class="col-sm-12">
                                     <h4 class="contTitle text-start mb-2 mt-2 ">Deposit Invoices</h4>
                                     <div class="productDetailTable">
-                                        <table class="table" id="containerA">
+                                        <table class="table" id="invoiceDeposit">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Invoice Ref </th>
@@ -1255,8 +1256,10 @@
                                                     <th>Sub Total </th>
                                                     <th>VAT </th>
                                                     <th>Total </th>
-                                                    <th>Outstanding Created On</th>
+                                                    <th>Outstanding</th>
+                                                    <th>Created On</th>
                                                     <th>Status</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1264,12 +1267,6 @@
                                                     <td colspan="8">No Records</td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="5">Sub Total</th>
-                                                    <th colspan="3">500</th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -2413,10 +2410,8 @@
     CKEDITOR.replace('textarea11', editor_config);
 
     $(document).ready(function() {
-
         document.getElementById('hideCustomerDetails').style.display = "none";
         document.getElementById('hideTaskData').style.display = "none";
-        // document.getElementById('hideDepositSection').style.display = "none";
         document.getElementById('yourQuoteSection').style.display = "none";
         getTags(document.getElementById('quoteTag'))
 
@@ -2428,7 +2423,7 @@
             $('#quoteSourceModal').modal('show');
         });
 
-        getQuoteType(document.getElementById('quoteType'));
+        // const quote_id = document.getElementById('quoteType').value;
 
 
         $.ajaxSetup({
@@ -2437,6 +2432,8 @@
             }
         });
 
+        getInvoiceDeposit(document.getElementById('quote_id').value);
+        getQuoteType(document.getElementById('quote_id').value);
         getQuoteAttachmentsOnPageLoad();
         $('#search-product').on('keyup', function() {
             let query = $(this).val();
@@ -2755,7 +2752,7 @@
             var id = $(this).val();
             const selectedOption = $(this).find(':selected');
             const rate = selectedOption.data('rate');
-            document.getElementById('getTaxtRateHidden').value = rate; 
+            document.getElementById('getTaxtRateHidden').value = rate;
             const sub_total_invoice = document.getElementById('sub_total_invoice').value;
             console.log("sub_total_invoice", sub_total_invoice);
             let total = (sub_total_invoice * rate) / 100;
@@ -2792,32 +2789,26 @@
 
         $('#saveInvoiceDepositAmount').on('click', function() {
 
-            // const selectElement = document.getElementById('getTaxRateValue');
-    
-            // selectElement.addEventListener('change', function() {
-            //     const selectedOption = selectElement.options[selectElement.selectedIndex];
-            //     const dataRate = selectedOption.getAttribute('data-rate');
-            //     console.log(`Selected data-rate: ${dataRate}`);
-            // });
-
-
-            // const element = document.getElementById('getTaxRateValue');
-            // const dataRate = element.attributes['data-rate'].value;
-            // console.log("dataRate", dataRate);
+            const subTotal = document.getElementById('sub_total_invoice').value;
+            const varPer = document.getElementById('getTaxtRateHidden').value
+            const quote_id = document.getElementById('quote_id').value;
+            const vatAmount = (subTotal * varPer) / 100;
 
             data = {
-                quote_id: document.getElementById('quote_id').value,
+                edit_customer_deposit_invoice: document.getElementById('edit_customer_deposit_invoice').value,
+                quote_id: quote_id,
                 customer_id: document.getElementById('setCustomerId').value,
                 invoice_date: document.getElementById('invoice_date').value,
                 due_date: document.getElementById('due_date').value,
                 line_item: document.getElementById('line_item').value,
                 description: document.getElementById('line_description').value,
-                desposit_percentage: document.getElementById('deposit_percentage_invoice').value,
-                sub_total: document.getElementById('setDepositAmountHidden').value,
-                vat_amount : document.getElementById('sub_total_invoice').value,
-                VAT: document.getElementById('getTaxtRateHidden').value,
+                amount: document.getElementById('setDepositAmountHidden').value,
+                deposit_percentage: document.getElementById('deposit_percentage_invoice').value,
+                sub_total: document.getElementById('sub_total_invoice').value,
+                VAT_amount: vatAmount,
+                VAT_id: document.getElementById('getTaxRateValue').value,
                 total: document.getElementById('setDepositInvoiceAmountHidden').value,
-                oustanding: parseFloat(document.getElementById('setDepositAmountHidden').value - document.getElementById('setDepositInvoiceAmountHidden').value)
+                outstanding: parseFloat(document.getElementById('setDepositAmountHidden').value - document.getElementById('setDepositInvoiceAmountHidden').value)
             };
 
             $.ajax({
@@ -2829,9 +2820,9 @@
                 },
                 success: function(response) {
                     console.log(response);
-                    alert(response.data);
+                    // alert(response.data);
                     $("#creaditDepositInvoiceModal").modal("hide"); // Close the modal
-                    // getDepositData(quote_id);
+                    getInvoiceDeposit(quote_id);
                 },
                 error: function() {
                     alert("An error occurred while deleting the rows.");
@@ -2877,6 +2868,169 @@
         });
 
     });
+
+    function getInvoiceDeposit(id) {
+        alert(quote_id);
+        $.ajax({
+            url: '{{ route("quote.ajax.getQuoteInvoiceDeposit") }}',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            data: {
+                quote_id: id
+            },
+            success: function(response) {
+                // alert(response.message);   
+                setDataOnInvoiceDeposit(response.data, document.querySelector('#invoiceDeposit tbody'))
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function setDataOnInvoiceDeposit(data, tableBody) {
+
+        tableBody.innerHTML = '';
+
+        if (data.length === 0) {
+            // Handle the case where there is no data
+            const errorRow = document.createElement('tr');
+            const errorCell = document.createElement('td');
+            errorCell.colSpan = 8; // Adjust this based on the number of columns in your table
+            errorCell.classList.add('red_sorryText');
+            errorCell.textContent = 'Sorry, no records to show ';
+            errorCell.style.textAlign = 'center'; // Optional: Center the text
+            errorRow.appendChild(errorCell);
+            tableBody.appendChild(errorRow);
+            return; // Exit the function
+        }
+
+        let totalAmount = 0;
+        data.forEach(item => {
+
+            // Create a new row
+            const row = document.createElement('tr');
+
+            const invoiceRef = document.createElement('td');
+
+            const link = document.createElement('a');
+            link.textContent = item.invoice_ref; // Set the text of the link
+            link.href = `/invoices/edit/${item.invoice_id}`; // Set the URL of the link
+            link.target = '_blank'; // Optional: Opens the link in a new tab
+
+            // Append the link to the <td> element
+            invoiceRef.appendChild(link);
+
+            // Append the <td> element to the row
+            row.appendChild(invoiceRef);
+
+
+            // invoiceRef.textContent = item.invoice_ref;
+            // row.appendChild(invoiceRef);
+
+            const invoice_date = document.createElement('td');
+            invoice_date.innerHTML = moment(item.invoice_date).format('DD/MM/YYYY');
+            row.appendChild(invoice_date);
+
+            const due_date = document.createElement('td');
+            due_date.innerHTML = moment(item.due_date).format('DD/MM/YYYY');
+            row.appendChild(due_date);
+
+            totalAmount += parseFloat(item.total);
+
+            const sub_total = document.createElement('td');
+            sub_total.textContent = '£' + item.sub_total;
+            row.appendChild(sub_total);
+
+            const VAT_amount = document.createElement('td');
+            VAT_amount.textContent = '£' + item.VAT_amount;
+            row.appendChild(VAT_amount);
+
+            const total = document.createElement('td');
+            total.textContent = '£' + item.total;
+            row.appendChild(total);
+
+            const outstanding = document.createElement('td');
+            outstanding.textContent = '£' + item.total;
+            row.appendChild(outstanding);
+
+            const created_on = document.createElement('td');
+            created_on.innerHTML = moment(item.created_on).format('DD/MM/YYYY HH:mm');
+            row.appendChild(created_on);
+
+            const status = document.createElement('td');
+            status.textContent = item.status;
+            row.appendChild(status);
+
+
+            const idCell = document.createElement('td');
+            idCell.innerHTML = `<a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">Action</a>
+                                <div class="dropdown-menu fade-up m-0" style="">
+                                    <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">Edit</a>
+                                    <a href="#!" class="dropdown-item col-form-label" onclick="insrtTitle()">Preview</a>
+                                    <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">Print</a>
+                                    <a href="#!" class="dropdown-item col-form-label" onclick="insrtDescription()">Email</a>
+                                    <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">Duplicate</a>
+                                    <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">Record Payment</a>
+                                    <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">CRM / History</a>
+                                </div>`;
+            row.appendChild(idCell);
+            console.log(totalAmount);
+            // Append the row to the table body
+            tableBody.appendChild(row);
+
+        });
+
+        depositeInvoiceFoot(totalAmount, tableBody)
+    }
+
+    function depositeInvoiceFoot(amount, table) {
+
+        const tfoot = document.createElement('tfoot');
+
+        // Create the footer row
+        const footerRow = document.createElement('tr');
+
+        // Create the "Sub Total" cell
+        const subtotalLabelCell = document.createElement('th');
+        subtotalLabelCell.colSpan = 5; // Adjust colspan based on your table structure
+        subtotalLabelCell.textContent = 'Sub Total';
+        footerRow.appendChild(subtotalLabelCell);
+
+        // Create the "total" cell
+        const subtotalAmountCell = document.createElement('th');
+        // subtotalAmountCell.colSpan = 3; // Adjust colspan based on your table structure
+        subtotalAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
+
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.id = 'total_amount';
+        // hiddenInput.name = 'subtotal_amount'; // Set the name for the hidden input
+        hiddenInput.value = amount.toFixed(2);
+        subtotalAmountCell.appendChild(hiddenInput);
+
+        const outstandingAmountCell = document.createElement('th');
+        outstandingAmountCell.colSpan = 3; // Adjust colspan based on your table structure
+        outstandingAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
+
+        const hiddenInputOutstanding = document.createElement('input');
+        hiddenInputOutstanding.type = 'hidden';
+        hiddenInputOutstanding.id = 'outstanding_amount';
+        hiddenInputOutstanding.value = amount.toFixed(2);
+        outstandingAmountCell.appendChild(hiddenInputOutstanding);
+
+        footerRow.appendChild(subtotalAmountCell);
+        footerRow.appendChild(outstandingAmountCell);
+
+        // Append the row to the <tfoot> element
+        tfoot.appendChild(footerRow);
+
+        // Append the <tfoot> to the table
+        table.appendChild(tfoot);
+    }
 
     function updateQuoteDepositTotal() {
         let percentage = $(this).val();
@@ -3081,7 +3235,15 @@
 
         const rows = table.querySelectorAll('tbody tr');
         const subtotal_amount = document.getElementById('subtotal_amount').value;
+        const total_amount = document.getElementById('total_amount').value;
         console.log("subtotal_amount", subtotal_amount);
+
+        const subtotalAmount = parseFloat(subtotal_amount) || 0;
+        const totalAmount = parseFloat(total_amount) || 0;
+
+        // Calculate the sum
+        const sum = subtotalAmount + totalAmount;
+
         const markupOnPriceOrCostPrice = document.getElementById('markupOnPriceOrCostPrice').value;
         console.log(markupOnPriceOrCostPrice);
         let totalQuantity = 0;
@@ -3178,10 +3340,10 @@
         document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
         document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
         document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
-        document.getElementById('footOutstandingAmount').textContent = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
+        document.getElementById('footOutstandingAmount').textContent = doller + ((price + totalVAT) - sum).toFixed(2);
         document.getElementById('setOustandingCreditAmount').value = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
         document.getElementById('deposit_amount').value = ((price + totalVAT) - subtotal_amount).toFixed(2);
-        document.getElementById('footDeposit').textContent = '-' + doller + subtotal_amount;
+        document.getElementById('footDeposit').textContent = '-' + doller + sum.toFixed(2);
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
         document.getElementById('payingNow').textContent = doller + (price + totalVAT).toFixed(2);
 
@@ -3784,6 +3946,9 @@
         $.ajax({
             url: '{{ route("quote.ajax.getDepositeData") }}',
             method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             data: {
                 quote_id: quote_id
             },
