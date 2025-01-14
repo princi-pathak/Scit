@@ -22,33 +22,16 @@ class InvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'customer_id' => 'required|integer|exists:customers,id',
-            // 'project_id' => 'required|integer',
-            // 'site_delivery_add_id'=> 'required|integer',
-            // 'invoice_ref' => 'required|string',
-            // 'invoice_type' => 'required|integer',
-            // 'customer_ref' => 'nullable|string',
-            // 'customer_job_ref' => 'nullable|string',
-            // 'purchase_order_ref' => 'nullable|string',
-            // 'invoice_date' => 'required|date',
-            // 'payment_terms' => 'nullable|integer',
-            // 'due_date' => 'required|date',
-            // 'status' => 'required|string',
-            // 'tags' => 'nullable|integer|tags,id',
-            // 'customer_notes' => 'nullable|string',
-            // 'terms' => 'nullable|string',
-            // 'internal_notes' => 'nullable|string',
             'quote_id' => 'required|integer|exists:quotes,id',
             'customer_id' => 'required|integer|exists:customers,id',
-            // 'invoice_id'=> 'required|integer|exists:invoices,id',
             'invoice_date' => 'required|date_format:d/m/Y',
             'due_date' => 'required|date',
             'line_item' => 'required|string',
             'description' => 'required|string',
-            'desposit_perceantage' => 'required|integer',
+            'deposit_percentage' => 'required|integer',
             'sub_total' => 'required|numeric',
-            // 'discount' => 'required|integer',
-            'VAT' => 'required|integer',
+            'VAT_id' => 'required|integer',
+            'VAT_amount' => 'required|numeric',
             'total' => 'required|numeric'
         ];
     }

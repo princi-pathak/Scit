@@ -9,6 +9,8 @@ class CustomerDepositInvoice extends Model
 {
     use HasFactory;
 
+    protected  $table = 'quote_customer_deposit_invoices';
+
     protected $fillable = [
         'quote_id', 
         'customer_id',
@@ -17,10 +19,9 @@ class CustomerDepositInvoice extends Model
         'due_date',
         'line_item',
         'description', 
-        'deposit_percantage',
+        'deposit_percentage',
         'sub_total',
-        'discount',
-        'VAT',
+        'VAT_amount',
         'total'
     ];
 }
