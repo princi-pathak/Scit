@@ -237,6 +237,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/add-incident-report', 'App\Http\Controllers\frontEnd\DashboardController@add_incident_report');
 
 	// Ram 14/06/2024 path for jobs create
+
 	Route::controller(JobController::class)->group(function () {
 		Route::get('/jobs_list', 'job_list');
 		Route::post('/job_save_all', 'job_save_all');
@@ -282,6 +283,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/save_tax_rate', 'save_tax_rate');
 		Route::post('/product_modal_list', 'product_modal_list');
 	});
+
+
+	Route::get('/get-appointment-type', 'App\Http\Controllers\frontEnd\salesFinance\JobController@getActiveJobAppointment')->name('job.ajax.jobAppointment');
+
 	// Customer
 	Route::get('/customer_add_edit', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit_save');
@@ -556,7 +561,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
 		Route::post('/quote/saveQuoteData', 'store');
-		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
+		Route::get('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 
 		Route::get('/quote/edit/{id}', 'edit')->name('quote.edit');
 		Route::post('quote/saveAttachmentData', 'saveAttachmentData')->name('quote.ajax.saveAttachmentData');
