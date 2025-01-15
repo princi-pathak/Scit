@@ -271,6 +271,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/job_title_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_title_edit_form');
 	Route::post('/save_region', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_region');
 	Route::post('/jobassign_productsDelete', 'App\Http\Controllers\frontEnd\salesFinance\JobController@jobassign_productsDelete');
+	Route::get('/get-appointment-type', 'App\Http\Controllers\frontEnd\salesFinance\JobController@getActiveJobAppointment')->name('job.ajax.jobAppointment');
+
+
 	// Customer
 	Route::get('/customer_add_edit', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit');
 	Route::post('/customer_add_edit_save', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit_save');
@@ -554,7 +557,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		Route::get('/quote/getCurrencyData', 'getCurrencyData')->name('currency.ajax.getCurrencyData');
 		Route::post('/quote/saveQuoteData', 'store');
-		Route::post('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
+		Route::get('quote/getHomeUsers', 'getHomeUsers')->name('quote.ajax.getUsersData');
 
 		Route::get('/quote/edit/{id}', 'edit')->name('quote.edit');
 		Route::post('quote/saveAttachmentData', 'saveAttachmentData')->name('quote.ajax.saveAttachmentData');
