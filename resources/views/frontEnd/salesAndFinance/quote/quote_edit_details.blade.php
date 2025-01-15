@@ -1237,9 +1237,8 @@
                                                     <th></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-
-                                            </tbody>
+                                            <tbody></tbody>
+                                            <tfoot></tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -2593,7 +2592,7 @@
                 method: 'POST',
                 data: formData,
                 success: function(response) {
-                    alert(response.message);
+                    // alert(response.message);
                     console.log(response.id);
                     setSiteAddressDetails(response.id);
                     $('#quoteTypeModal').modal('hide');
@@ -2870,7 +2869,6 @@
     });
 
     function getInvoiceDeposit(id) {
-        alert(quote_id);
         $.ajax({
             url: '{{ route("quote.ajax.getQuoteInvoiceDeposit") }}',
             headers: {
@@ -2881,9 +2879,9 @@
                 quote_id: id
             },
             success: function(response) {
-                // alert(response.message);   
-                setDataOnInvoiceDeposit(response.data, document.querySelector('#invoiceDeposit tbody'))
-
+                const table = document.getElementById('invoiceDeposit'); 
+                const tableBody = table.querySelector('tbody');  
+                setDataOnInvoiceDeposit(response.data, tableBody, table)
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -2891,7 +2889,7 @@
         });
     }
 
-    function setDataOnInvoiceDeposit(data, tableBody) {
+    function setDataOnInvoiceDeposit(data, tableBody, table) {
 
         tableBody.innerHTML = '';
 
@@ -2978,13 +2976,13 @@
                                     <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">CRM / History</a>
                                 </div>`;
             row.appendChild(idCell);
-            console.log(totalAmount);
-            // Append the row to the table body
             tableBody.appendChild(row);
-
         });
 
-        depositeInvoiceFoot(totalAmount, tableBody)
+        const existingFoot = table.querySelector('tfoot');
+        if (existingFoot) existingFoot.remove();
+
+        depositeInvoiceFoot(totalAmount, table)
     }
 
     function depositeInvoiceFoot(amount, table) {
@@ -3528,16 +3526,13 @@
         $.ajax({
             url: '{{ route("quote.ajax.getAttachmentDataOnQuoteId") }}', // Replace with your Laravel route URL
             type: 'POST',
-            data: {
-                quote_id: quote_id
-            },
+            data: { quote_id: quote_id },
             success: function(response) {
                 // Handle success
                 console.log(response);
                 const tableBody = $('#attachmentTable tbody');
                 console.log(tableBody);
                 tableBody.empty(); // Clear existing rows
-
                 if (response.data == "No data") {
                     console.log(response.data);
                 } else {
@@ -3653,7 +3648,6 @@
     }
 
     function deleteAttachmentFile(id) {
-        // alert(id);
 
         // Confirm deletion
         if (confirm("Are you sure you want to delete this row?")) {
@@ -3661,9 +3655,7 @@
             $.ajax({
                 url: '{{ route("quote.ajax.deleteAttachment") }}', // Replace with your server URL
                 method: 'POST', // Replace with appropriate HTTP method
-                data: {
-                    id: id
-                },
+                data: { id: id },
                 success: function(response) {
                     if (response.success) {
                         // Remove the row from the table
@@ -3723,7 +3715,6 @@
     }
 
     function setCustomerBillingData(id) {
-        // alert(id)
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
             method: 'POST',
@@ -3816,7 +3807,6 @@
     }
 
     function setCustomerBillingData(id) {
-        // alert(id)
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
             method: 'POST',
@@ -3864,7 +3854,6 @@
     }
 
     function setCustomerBillingData(id) {
-        // alert(id)
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
             method: 'POST',
@@ -3954,7 +3943,9 @@
             },
             success: function(response) {
                 console.log(response);
-                populateTable(response.data, document.querySelector('#depositData tbody'))
+                const table = document.getElementById('depositData'); // Replace with your table's ID
+                const tableBody = table.querySelector('tbody'); // Select the tbody within the table
+                populateTable(response.data, tableBody, table)
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3963,7 +3954,7 @@
     }
 
 
-    function populateTable(data, tableBody) {
+    function populateTable(data, tableBody, table) {
 
         tableBody.innerHTML = '';
 
@@ -4023,12 +4014,16 @@
             idCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="edit"><i class="fa fa-edit"></i></a> <i class="fa fa-times"></i>`;
             row.appendChild(idCell);
             console.log(totalAmount);
+
             // Append the row to the table body
             tableBody.appendChild(row);
 
         });
 
-        depositeFoot(totalAmount, tableBody)
+        const existingFoot = table.querySelector('tfoot');
+        if (existingFoot) existingFoot.remove();
+
+        depositeFoot(totalAmount, table);
     }
 
     function depositeFoot(amount, table) {
@@ -4277,7 +4272,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    alert(response.data);
+                    // alert(response.data);
                     $("#creaditDepositModal").modal("hide"); // Close the modal
                     getDepositData(quote_id);
                 },

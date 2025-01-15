@@ -336,7 +336,7 @@ class QuoteController extends Controller
         $data['taskType'] = Task_type::getAllAciveTask_type(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
-    public function getUsersList()
+    public function getHomeUsers()
     {
         $data = User::getHomeUsers(Auth::user()->home_id);
 
