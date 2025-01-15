@@ -118,7 +118,7 @@
                     <!-- Job type Modal start here -->
                     <div class="modal fade" id="customerPop" tabindex="-1" aria-labelledby="customerModalLabel"
                         aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
+                        <div class="modal-dialog">
                             <div class="modal-content add_Customer">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="customerModalLabel">Job Appointment Type-Add</h5>
@@ -130,12 +130,12 @@
                                     <div class="alert alert-success text-center success_message" style="display:none;height:50px">
                                         <p id="message"></p>
                                     </div>
-                                        <div class="col-md-10 col-lg-10 col-xl-10">
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="formDtail">
-                                                <form id="form_data" class="customerForm">
+                                                <form id="form_data" class="customerForm pt-0">
                                                     <input type="hidden" name="id" id="id">
                                                     <div class="mb-2 row">
-                                                        <label for="inputName" class="col-sm-3 col-form-label">Job Appointment Type*</label>
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Job App. Type*</label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control editInput"
                                                                 id="name" name="name" value="">
@@ -145,30 +145,36 @@
 
                                                     <div class="mb-2 row">
                                                         <label for="inputName" class="col-sm-3 col-form-label">Default Duration</label>
-                                                        <div class="col-sm-9">
-                                                        <select name="hours" id="hours" class="hours">
+                                                        <div class="col-sm-3">
+                                                            <select name="hours" id="hours" class="hours form-control editInput selectOptions">
                                                                 <option value="01">01</option>
                                                                 <option value="02">02</option>
                                                                 <option value="03">03</option>
                                                                 <option value="04">04</option>
                                                                 <option value="05">05+</option>
                                                             </select>
-                                                            <select name="minutes" id="minutes" class="minutes">
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <select name="minutes" id="minutes" class="minutes form-control editInput selectOptions">
                                                                 <?php for($i=0;$i<60;$i++){
                                                                     $time=str_pad($i, 2, '0', STR_PAD_LEFT);?>
                                                                     <option value="{{$time}}"><?php echo $time; ?></option>
                                                                 <?php }?>
                                                             </select>
-                                                            &emsp;(Hours:Minutes)
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label class="col-form-label">(Hours:Minutes)</label>
                                                         </div>
                                                     </div>
 
                                                     <div class="mb-2 row">
                                                         <label class="col-sm-3 col-form-label">Auto Auth</label>
                                                         <div class="col-sm-9">
-                                                            <div class="form-check form-check-inline">
-                                                            <input type="radio" name="radio" id="yes" checked >Yes,autometically go for Authorisation when complete<br>
-                                                            <input type="radio" name="radio" id="no">No go to Action Required when complete (Mobile only)
+                                                            <div class="form-group">
+                                                            <input type="radio" name="radio" id="yes" checked > <label for="yes" class="col-form-label">Yes,autometically go for Authorisation when complete</label>
+                                                            </div>
+                                                            <div class="form-group">
+                                                            <input type="radio" name="radio" id="no"> <label for="no" class="col-form-label">No go to Action Required when complete (Mobile only)</label>
                                                                 <!-- <label class="form-check-label checkboxtext" for="inlineRadio1">Yes,visible to customer</label> -->
                                                             </div>
                                                         </div>
