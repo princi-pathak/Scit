@@ -21,14 +21,37 @@ span.optext {
     border-radius: 4px;
     display: inline-block;
 }
-.emailSpan {
-    margin-top:-30px;
+span#emailCount {
+    background-color: lightgray;
+    padding: 0px 4px;
+    border-radius: 4px;
     display: inline-block;
+}
+span#emailCount1 {
+    background-color: lightgray;
+    padding: 0px 4px;
+    border-radius: 4px;
+    display: inline-block;
+}
+.emailSpan {
+    /* margin-top:-30px; */
+    display: inline-block;
+    width: 100%;
+}
+.emailSpan1 {
+    display: inline-block;
+    width: 100%;
 }
 .dropdownMaltiSelect {
     position: relative;
 }
 .dropdownMaltiSelect #dropdownButton {
+    text-align: left;
+    position: relative;
+    padding-right: 30px; 
+    width: 100%;
+}
+.dropdownMaltiSelect #dropdownButton1 {
     text-align: left;
     position: relative;
     padding-right: 30px; 
@@ -50,7 +73,23 @@ span.optext {
     height: 18px;
     transition: transform 0.2s ease;
 }
+.dropdownMaltiSelect #dropdownButton1::after {
+    content: '';
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M7 10L12 15L17 10" stroke="%23ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    transition: transform 0.2s ease;
+}
 .dropdownMaltiSelect #dropdownButton.active::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+.dropdownMaltiSelect #dropdownButton1.active::after {
     transform: translateY(-50%) rotate(180deg);
 }
 .dropdownMaltiSelect .dropdown-menu {
@@ -83,10 +122,12 @@ span.optext {
 }
 .dropdownMaltiSelect .dropdown-menu label {
     display: block;
-    padding: 5px 8px;
+    padding: 7px 8px;
     cursor: pointer;
     margin: 0;
     user-select: none;
+    border-bottom: 1px solid #e5e4e4;
+    font-size: 12px;
 }
 .dropdownMaltiSelect .dropdown-menu label:hover {
     background-color: #f1f0f0;
@@ -135,24 +176,35 @@ display: block;
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-3 col-form-label">To<span class="radStar ">*</span></label>
                                     <div class="col-sm-9">
-                                    <div class="dropdownMaltiSelect">
-                                        <button type="button" id="dropdownButton" class="form-control editInput"></button>
-                                        <div id="dropdownMenu" class="dropdown-menu">
-                                            <label><input type="search" id="{{ $toField }}" class="form-control"></label>
-                                            <!-- <div class="emailSpan">
-                                            
-                                            </div> -->
-                                            <div class="parent-container to-container"></div>
+                                        <div class="dropdownMaltiSelect">
+                                            <button type="button" id="dropdownButton" class="form-control editInput"></button>
+                                            <div id="dropdownMenu" class="dropdown-menu">
+                                                <label><input type="search" id="{{ $toField }}" class="form-control"></label>
+                                                <div class="emailSpan">
+                                                
+                                                </div>
+                                                <!-- <div class="parent-container to-container"></div> -->
+                                            </div>
                                         </div>
-                                    </div>
-                                        <input type="hidden" id="selectedToId" name="selectedToId">
+                                        <input type="hidden" id="selectedToEmail" name="selectedToEmail">
                                         
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-3 col-form-label">Cc</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control editInput" id="{{ $ccField }}" name="vat_amount">
+                                        <div class="dropdownMaltiSelect">
+                                            <button type="button" id="dropdownButton1" class="form-control editInput"></button>
+                                            <div id="dropdownMenu1" class="dropdown-menu">
+                                                <label><input type="search" id="{{ $ccField }}" class="form-control"></label>
+                                                <div class="emailSpan1">
+                                                
+                                                </div>
+                                                <!-- <div class="parent-container to-container"></div> -->
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="selectedToEmail1" name="selectedToEmail1">
+                                        <!-- <input type="text" class="form-control editInput" id="{{ $ccField }}" name="vat_amount"> -->
                                     </div>
                                 </div>
                                 
@@ -251,117 +303,246 @@ CKEDITOR.replace('{{ $body }}', editor_config );
     });
 </script>
 <script>
-    $(document).ready(function() {
-        $('#{{ $toField }}').on('keyup click', function() {
-            let to = $(this).val();
-            const deptdivList = document.querySelector('.to-container');
-
-            if (to === '') {
-                deptdivList.innerHTML = '';
-            }
-            if (to.length > 2) {
-                $.ajax({
-                    url: "{{ url('search_email_list') }}",
-                    method: 'post',
-                    data: {
-                        email: to,_token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        // return false;
-                        deptdivList.innerHTML = "";
-                        const div = document.createElement('div');
-                        div.className = 'to_container';
-
-                      
-                        const ul = document.createElement('ul');
-                        ul.id = "toList";
-                        if(response.all_emails.length >0){
-                            response.all_emails.forEach(item => {
-                                // console.log(item);return false;
-                                const userType=item.userType;
-                                
-                                var userTypeText='';
-                                if(userType == 1){
-                                    userTypeText='Customer';
-                                }else if(userType == 2){
-                                    userTypeText='Supplier';
-                                }else{
-                                    userTypeText='User';
-                                }
-                                const li = document.createElement('li'); 
-                                li.textContent = `${item.email || ''}${item.email && item.name ? '-' : ''}${item.name || ''} (${userTypeText})`;
-                               
-                                li.id = item.id;
-                                li.name = item.email;
-                                li.className = "editInput";
-                                ul.appendChild(li); 
-                                const hr = document.createElement('hr');
-                                ul.appendChild(hr);
-                            });
-
-                            div.appendChild(ul);
-
-                            deptdivList.appendChild(div);
-
-                            ul.addEventListener('click', function(event) {
-                                deptdivList.innerHTML = '';
-                                document.getElementById('{{ $toField }}').value = '';
-                                if (event.target.tagName.toLowerCase() === 'li') {
-                                    const selectedToId = event.target.id;
-                                    const selectedDeptName = '<span class="optext">'+event.target.name+'&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>';
-                                    
-                                    $("#dropdownButton").append(selectedDeptName);
-                                    $("#selectedToId").val(event.target.name);
-                                }
-                            });
+    $('#{{ $toField }}').on('keyup', function() {
+        let to = $(this).val();
+        searchTo(to);
+    });
+    $('#{{ $ccField }}').on('keyup', function() {
+        let cc = $(this).val();
+        searchCC(cc);
+    });
+    function searchTo(to=null){
+        // alert(to);return false;
+        $.ajax({
+        url: "{{ url('search_email_list') }}",
+        method: 'post',
+        data: {
+            email: to,_token: '{{ csrf_token() }}'
+        },
+            success: function(response) {
+                console.log(response);
+                // return false;
+                const deptdivList = document.querySelector('.emailSpan');
+                // deptdivList.innerHTML = "";
+                if(response.all_emails.length >0){
+                    var data_response='';
+                    response.all_emails.forEach(item => {
+                        const userType=item.userType;
+                        
+                        var userTypeText='';
+                        if(userType == 1){
+                            userTypeText='Customer';
+                        }else if(userType == 2){
+                            userTypeText='Supplier';
                         }else{
-                            const Errorli = document.createElement('li'); 
-                            Errorli.textContent = 'Sorry Data Not found'; 
-                            Errorli.id = 'searchError';
-                            Errorli.className = "editInput";
-                            ul.appendChild(Errorli); 
-                            div.appendChild(ul);
-                            deptdivList.appendChild(div);
-                            setTimeout(function() {
-                                deptdivList.innerHTML = '';
-                            }, 1000);
+                            userTypeText='User';
                         }
-
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
+                        data_response += `<label class="editInput email_lists" data-email="${item.email}" data-name="${item.name}" data-user-type="${userType}">${item.email} - ${item.name} (${userTypeText})</label>`;
+                    });
+                    deptdivList.innerHTML=data_response;
+                    var EmailExist=$("#selectedToEmail").val();
+                    const selectedEmails = [];
+                    if(EmailExist !=''){
+                        selectedEmails.push(EmailExist);
                     }
-                });
-            } else {
-                deptdivList.innerHTML = '';
-                $('#results').empty();
+                    document.querySelectorAll('.email_lists').forEach(label => {
+                        label.addEventListener('click', function () {
+                            const email = this.getAttribute('data-email');
+                            const name = this.getAttribute('data-name');
+                            const userType = this.getAttribute('data-user-type');
+
+                            // console.log(`Email: ${email}`);
+                            // console.log(`Name: ${name}`);
+                            // console.log(`User Type: ${userType}`);
+                            selectedEmails.push(email);
+                            $("#selectedToEmail").val(selectedEmails);
+                            const countEmailExist=$("#selectedToEmail").val();
+                            var exp = countEmailExist ? countEmailExist.split(",") : [];
+                            console.log(exp);
+                            if(exp.length >2){
+                                const countList=exp.length-2;
+                                $("#emailCount").remove();
+                                $("#dropdownButton").append('<span id="emailCount">+'+countList+'</span>');
+                            }else{
+                                $("#dropdownButton").append('<span class="optext">'+email+'&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
+                            }
+                            // alert(`Selected: ${email} - ${name} (${userType})`);
+                        });
+                    });
+                }else{
+                    deptdivList.innerHTML = '<li>No data found</li>';
+                }
+
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
             }
         });
-    });
-    function removeSpan(button){
-        var row = button.parentNode;
-        console.log(row);
-        row.parentNode.removeChild(row);
-    };
+    }
+    function searchCC(cc=null){
+        // alert(to);return false;
+        $.ajax({
+        url: "{{ url('search_email_list') }}",
+        method: 'post',
+        data: {
+            email: cc,_token: '{{ csrf_token() }}'
+        },
+            success: function(response) {
+                console.log(response);
+                // return false;
+                const deptdivList1 = document.querySelector('.emailSpan1');
+                deptdivList1.innerHTML = "";
+                if(response.all_emails.length >0){
+                    var data_response1='';
+                    response.all_emails.forEach(item => {
+                        const userType1=item.userType;
+                        
+                        var userTypeText1='';
+                        if(userType1 == 1){
+                            userTypeText1='Customer';
+                        }else if(userType1 == 2){
+                            userTypeText1='Supplier';
+                        }else{
+                            userTypeText1='User';
+                        }
+                        data_response1 += `<label class="editInput email_lists1" data-email="${item.email}" data-name="${item.name}" data-user-type="${userType1}">${item.email} - ${item.name} (${userTypeText1})</label>`;
+                    });
+                    deptdivList1.innerHTML=data_response1;
+                    var EmailExist1=$("#selectedToEmail1").val();
+                    const selectedEmails1 = [];
+                    if(EmailExist1 != ''){
+                        selectedEmails1.push(EmailExist1);
+                    }
+                    // console.log("hee"+selectedEmails1);return false;
+                    document.querySelectorAll('.email_lists1').forEach(label => {
+                        label.addEventListener('click', function () {
+                            const email = this.getAttribute('data-email');
+                            const name = this.getAttribute('data-name');
+                            const userType = this.getAttribute('data-user-type');
+
+                            // console.log(`Email: ${email}`);
+                            // console.log(`Name: ${name}`);
+                            // console.log(`User Type: ${userType}`);
+                            selectedEmails1.push(email);
+                            $("#selectedToEmail1").val(selectedEmails1);
+                            const countEmailExist1=$("#selectedToEmail1").val();
+                            var exp1 = countEmailExist1 ? countEmailExist1.split(",") : [];
+                            console.log(exp1);
+                            if(exp1.length >2){
+                                const countList=exp1.length-2;
+                                $("#emailCount1").remove();
+                                $("#dropdownButton1").append('<span id="emailCount1">+'+countList+'</span>');
+                            }else{
+                                $("#dropdownButton1").append('<span class="optext">'+email+'&emsp;<b class="removeSpan1" onclick="removeSpan1(this)">X</b></span>');
+                            }
+                            // alert(`Selected: ${email} - ${name} (${userType})`);
+                        });
+                    });
+                }else{
+                    deptdivList1.innerHTML = '<li>No data found</li>';
+                }
+
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+    // function removeSpan(button){
+    //     var selectedToEmail=$("#selectedToEmail").val();
+    //     var row = button.parentNode;
+    //     console.log(row);
+    //     row.parentNode.removeChild(row);
+    // };
+function removeSpan(button) {
+    var selectedToEmail = $("#selectedToEmail").val();
+    var emailArray = selectedToEmail ? selectedToEmail.split(",") : [];
+    var emailToRemove = button.parentNode.textContent.trim().split("X")[0];
+    // console.log("email "+emailToRemove.trim());return false;
+    var row = button.parentNode;
+    row.parentNode.removeChild(row);
+    var reemailArray = emailArray.filter(email => email !== emailToRemove.trim());
+    $("#selectedToEmail").val(reemailArray.join(","));
+
+    // console.log(reemailArray);
+    const countExistEmail=reemailArray.length-2;
+    var dropdownButton= $("#dropdownButton");
+    dropdownButton.html('');
+    if(reemailArray.length <3){
+        for(var i=0;i<2;i++){
+            if(reemailArray[i] !=undefined){
+                dropdownButton.append('<span class="optext">'+reemailArray[i]+'&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
+            }
+        }
+    }else{
+        $("#emailCount").remove();
+        for(var i=0;i<reemailArray.length-1;i++){
+           dropdownButton.append('<span class="optext">'+reemailArray[i]+'&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
+        }
+        $("#dropdownButton").append('<span id="emailCount">+'+countExistEmail+'</span>');
+    }
+}
+function removeSpan1(button1) {
+    var selectedToEmail1 = $("#selectedToEmail1").val();
+    var emailArray1 = selectedToEmail1 ? selectedToEmail1.split(",") : [];
+    var emailToRemove1 = button1.parentNode.textContent.trim().split("X")[0];
+    // console.log("email "+emailToRemove1.trim());return false;
+    var row1 = button1.parentNode;
+    row1.parentNode.removeChild(row1);
+    var reemailArray1 = emailArray1.filter(email1 => email1 !== emailToRemove1.trim());
+    $("#selectedToEmail1").val(reemailArray1.join(","));
+
+    // console.log(reemailArray1);
+    const countExistEmail1=reemailArray1.length-2;
+    var dropdownButton1= $("#dropdownButton1");
+    dropdownButton1.html('');
+    if(reemailArray1.length <3){
+        for(var i=0;i<2;i++){
+            if(reemailArray1[i] !=undefined){
+                dropdownButton1.append('<span class="optext">'+reemailArray1[i]+'&emsp;<b class="removeSpan1" onclick="removeSpan1(this)">X</b></span>');
+            }
+        }
+    }else{
+        $("#emailCount1").remove();
+        for(var i=0;i<reemailArray1.length-1;i++){
+           dropdownButton1.append('<span class="optext">'+reemailArray1[i]+'&emsp;<b class="removeSpan1" onclick="removeSpan1(this)">X</b></span>');
+        }
+        $("#dropdownButton1").append('<span id="emailCount1">+'+countExistEmail1+'</span>');
+    }
+}
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
     const dropdownButton = document.getElementById("dropdownButton");
+    const dropdownButton1 = document.getElementById("dropdownButton1");
     const dropdownMenu = document.getElementById("dropdownMenu");
-    const selectAllCheckbox = document.getElementById("selectAll");
+    const dropdownMenu1 = document.getElementById("dropdownMenu1");
+    // const selectAllCheckbox = document.getElementById("selectAll");
     const optionCheckboxes = document.querySelectorAll(".option");
 
     dropdownButton.addEventListener("click", function() {
         dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
         dropdownButton.classList.toggle("active");
-        $("#toList").show();
+        // $("#toList").show();
+        searchTo(null);
+    });
+    dropdownButton1.addEventListener("click", function() {
+        dropdownMenu1.style.display = dropdownMenu1.style.display === "block" ? "none" : "block";
+        dropdownButton1.classList.toggle("active");
+        // $("#toList").show();
+        searchCC(null);
     });
 
     document.addEventListener("click", function(event) {
         if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
             dropdownMenu.style.display = "none";
             dropdownButton.classList.remove("active");
+        }
+    });
+    document.addEventListener("click", function(event) {
+        if (!dropdownButton1.contains(event.target) && !dropdownMenu1.contains(event.target)) {
+            dropdownMenu1.style.display = "none";
+            dropdownButton1.classList.remove("active");
         }
     });
 
