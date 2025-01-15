@@ -403,6 +403,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/searchProject','searchProject');
 		Route::post('/searchPurchase_qoute_ref','searchPurchase_qoute_ref');
 		Route::post('/searchPurchase_job_ref','searchPurchase_job_ref');
+		Route::post('/purchase_order_approve','purchase_order_approve');
+		Route::post('/purchase_order_record_delivered','purchase_order_record_delivered');
+		Route::post('/savePurchaseOrderRecordPayment','savePurchaseOrderRecordPayment');
+		Route::post('/purchaseOrderInviceRecieve','purchaseOrderInviceRecieve');
+		Route::post('/purchaseOrderreject','purchaseOrderreject');
 	});
 	
 	// Forontend Customer Controller
@@ -574,9 +579,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/quote/rejected', 'index');
 		Route::post('/quotes/saveQuoteDeposite', 'saveQuoteDeposite')->name('quote.ajax.saveQuoteDeposite');
 		Route::post('/quotes/getDepositeData', 'getDepositeData')->name('quote.ajax.getDepositeData');
-		
-		
-		
+		Route::post('/quotes/saveInvoiceDeposite', 'saveInvoiceDeposite')->name('quote.ajax.saveInvoiceDeposite');
+		Route::post('/quotes/getQuoteInvoiceDeposit', 'getQuoteInvoiceDeposit')->name('quote.ajax.getQuoteInvoiceDeposit');
+				
+
 		
 	});
 

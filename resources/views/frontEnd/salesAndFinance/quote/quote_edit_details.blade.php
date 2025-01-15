@@ -980,7 +980,7 @@
                                             <span class="col-form-label">
                                                 or
                                             </span>
-                                            <a href="javascript:void(0)" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Create Deposit Invoice</a>
+                                            <a href="javascript:void(0)" class="profileDrop" id="getTaxtInvoiceRateValue" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Create Deposit Invoice</a>
                                         </div>
                                     </div>
 
@@ -1131,6 +1131,7 @@
                                                 <div class="contantbodypopup p-0">
                                                     <div class="newJobForm card">
                                                         <div class="mb-2 row">
+                                                            <input type="hidden" id="edit_customer_deposit_invoice">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
                                                                 <input type="text" class="form-control editInput" id="invoice_date" value="{{ now()->format('d/m/Y') }}">
@@ -1143,7 +1144,7 @@
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Due Date <span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
-                                                                <input type="text" class="form-control editInput" id="inputCity" value="{{ $dateAfter21Days->format('d/m/Y') }}">
+                                                                <input type="text" class="form-control editInput" id="due_date" value="{{ $dateAfter21Days->format('d/m/Y') }}">
                                                             </div>
                                                             <div class="col-sm-1 ps-0">
                                                                 <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
@@ -1152,21 +1153,22 @@
                                                         <div class="mb-2 row">
                                                             <label for="inputName" class="col-sm-3 col-form-label">Line Item <span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
-                                                                <input type="text" class="form-control editInput" id="inputName" placeholder="Line Item">
+                                                                <input type="text" class="form-control editInput" id="line_item" placeholder="Line Item">
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
-                                                                <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                                <textarea class="form-control textareaInput rounded-1" name="address" id="line_description" rows="3" placeholder="Description"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Deposit Percentage <span class="radStar">*</span></label>
-                                                            <div class="col-sm-5">
+                                                            <div class="col-sm-4">
                                                                 <input type="number" class="form-control editInput" id="deposit_percentage_invoice" min="0" max="100" maxlength="3" oninput="this.value = this.value.slice(0, 3)" value="0">
                                                             </div>
-                                                            <div class="col-sm-2 ps-0">
+                                                            <div class="col-sm-3 ps-0">
+                                                                <input type="hidden" id="setDepositAmountHidden">
                                                                 <input class="form-control editInput text-center" value="" id="setDepositAmount" disabled="">
                                                             </div>
                                                         </div>
@@ -1182,6 +1184,7 @@
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
+                                                                <input type="hidden" id="getTaxtRateHidden">
                                                                 <select class="form-control editInput selectOptions" id="getTaxRateValue">
                                                                     <option>-Please Select-</option>
                                                                 </select>
@@ -1191,7 +1194,8 @@
                                                         <div class="mb-2 row">
                                                             <label for="inputName" class="col-sm-3 col-form-label">Total (inc. VAT) <span class="radStar">*</span></label>
                                                             <div class="col-sm-9">
-                                                                <input type="text" class="form-control-plaintext editInput" id="setDepositInvoiceAmount" value="$0.00" readonly="">
+                                                                <input type="hidden" id="setDepositInvoiceAmountHidden">
+                                                                <input type="text" class="form-control-plaintext editInput" id="setDepositInvoiceAmount" value="£0.00" readonly="">
                                                             </div>
                                                         </div>
 
@@ -1199,7 +1203,7 @@
                                                 </div>
                                             </div> <!-- end modal body -->
                                             <div class="modal-footer customer_Form_Popup">
-                                                <button type="button" class="btn profileDrop">Save</button>
+                                                <button type="button" class="btn profileDrop" id="saveInvoiceDepositAmount">Save</button>
                                                 <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
@@ -1243,7 +1247,7 @@
                                 <div class="col-sm-12">
                                     <h4 class="contTitle text-start mb-2 mt-2 ">Deposit Invoices</h4>
                                     <div class="productDetailTable">
-                                        <table class="table" id="containerA">
+                                        <table class="table" id="invoiceDeposit">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Invoice Ref </th>
@@ -1252,8 +1256,10 @@
                                                     <th>Sub Total </th>
                                                     <th>VAT </th>
                                                     <th>Total </th>
-                                                    <th>Outstanding Created On</th>
+                                                    <th>Outstanding</th>
+                                                    <th>Created On</th>
                                                     <th>Status</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1261,12 +1267,6 @@
                                                     <td colspan="8">No Records</td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="5">Sub Total</th>
-                                                    <th colspan="3">500</th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -2410,10 +2410,8 @@
     CKEDITOR.replace('textarea11', editor_config);
 
     $(document).ready(function() {
-
         document.getElementById('hideCustomerDetails').style.display = "none";
         document.getElementById('hideTaskData').style.display = "none";
-        // document.getElementById('hideDepositSection').style.display = "none";
         document.getElementById('yourQuoteSection').style.display = "none";
         getTags(document.getElementById('quoteTag'))
 
@@ -2425,7 +2423,7 @@
             $('#quoteSourceModal').modal('show');
         });
 
-        getQuoteType(document.getElementById('quoteType'));
+        // const quote_id = document.getElementById('quoteType').value;
 
 
         $.ajaxSetup({
@@ -2434,6 +2432,8 @@
             }
         });
 
+        getInvoiceDeposit(document.getElementById('quote_id').value);
+        getQuoteType(document.getElementById('quote_id').value);
         getQuoteAttachmentsOnPageLoad();
         $('#search-product').on('keyup', function() {
             let query = $(this).val();
@@ -2741,6 +2741,26 @@
 
             deposit_amount = (percentage / 100) * outsatandingAmount;
             document.getElementById('sub_total_invoice').value = deposit_amount.toFixed(2);
+            depositInvoice = (deposit_amount * 20) / 100;
+            document.getElementById('setDepositInvoiceAmountHidden').value = (deposit_amount + depositInvoice).toFixed(2);
+            document.getElementById('setDepositInvoiceAmount').value = "£" + (deposit_amount + depositInvoice).toFixed(2);
+
+        });
+
+        $('#getTaxRateValue').on('change', function() {
+
+            var id = $(this).val();
+            const selectedOption = $(this).find(':selected');
+            const rate = selectedOption.data('rate');
+            document.getElementById('getTaxtRateHidden').value = rate;
+            const sub_total_invoice = document.getElementById('sub_total_invoice').value;
+            console.log("sub_total_invoice", sub_total_invoice);
+            let total = (sub_total_invoice * rate) / 100;
+            console.log("total", total);
+            total = "£" + (parseFloat(sub_total_invoice) + parseFloat(total)).toFixed(2)
+            console.log("total s", total);
+            document.getElementById('setDepositInvoiceAmount').value = total;
+
         });
 
         $('#OpenAddCustomerContact').on('click', function() {
@@ -2764,6 +2784,52 @@
                 getCountriesList(document.getElementById('siteAddressTelephoneCode'));
                 $('#add_site_address_modal').modal('show');
             }
+        });
+
+
+        $('#saveInvoiceDepositAmount').on('click', function() {
+
+            const subTotal = document.getElementById('sub_total_invoice').value;
+            const varPer = document.getElementById('getTaxtRateHidden').value
+            const quote_id = document.getElementById('quote_id').value;
+            const vatAmount = (subTotal * varPer) / 100;
+
+            data = {
+                edit_customer_deposit_invoice: document.getElementById('edit_customer_deposit_invoice').value,
+                quote_id: quote_id,
+                customer_id: document.getElementById('setCustomerId').value,
+                invoice_date: document.getElementById('invoice_date').value,
+                due_date: document.getElementById('due_date').value,
+                line_item: document.getElementById('line_item').value,
+                description: document.getElementById('line_description').value,
+                amount: document.getElementById('setDepositAmountHidden').value,
+                deposit_percentage: document.getElementById('deposit_percentage_invoice').value,
+                sub_total: document.getElementById('sub_total_invoice').value,
+                VAT_amount: vatAmount,
+                VAT_id: document.getElementById('getTaxRateValue').value,
+                total: document.getElementById('setDepositInvoiceAmountHidden').value,
+                outstanding: parseFloat(document.getElementById('setDepositAmountHidden').value - document.getElementById('setDepositInvoiceAmountHidden').value)
+            };
+
+            $.ajax({
+                url: '{{ route("quote.ajax.saveInvoiceDeposite") }}', // Your server endpoint
+                method: 'POST', // HTTP method
+                data: data,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    console.log(response);
+                    // alert(response.data);
+                    $("#creaditDepositInvoiceModal").modal("hide"); // Close the modal
+                    getInvoiceDeposit(quote_id);
+                },
+                error: function() {
+                    alert("An error occurred while deleting the rows.");
+                }
+            });
+
+
         });
 
         $('#new_Attachment_open_model').on('click', function() {
@@ -2802,6 +2868,169 @@
         });
 
     });
+
+    function getInvoiceDeposit(id) {
+        alert(quote_id);
+        $.ajax({
+            url: '{{ route("quote.ajax.getQuoteInvoiceDeposit") }}',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            data: {
+                quote_id: id
+            },
+            success: function(response) {
+                // alert(response.message);   
+                setDataOnInvoiceDeposit(response.data, document.querySelector('#invoiceDeposit tbody'))
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function setDataOnInvoiceDeposit(data, tableBody) {
+
+        tableBody.innerHTML = '';
+
+        if (data.length === 0) {
+            // Handle the case where there is no data
+            const errorRow = document.createElement('tr');
+            const errorCell = document.createElement('td');
+            errorCell.colSpan = 8; // Adjust this based on the number of columns in your table
+            errorCell.classList.add('red_sorryText');
+            errorCell.textContent = 'Sorry, no records to show ';
+            errorCell.style.textAlign = 'center'; // Optional: Center the text
+            errorRow.appendChild(errorCell);
+            tableBody.appendChild(errorRow);
+            return; // Exit the function
+        }
+
+        let totalAmount = 0;
+        data.forEach(item => {
+
+            // Create a new row
+            const row = document.createElement('tr');
+
+            const invoiceRef = document.createElement('td');
+
+            const link = document.createElement('a');
+            link.textContent = item.invoice_ref; // Set the text of the link
+            link.href = `/invoices/edit/${item.invoice_id}`; // Set the URL of the link
+            link.target = '_blank'; // Optional: Opens the link in a new tab
+
+            // Append the link to the <td> element
+            invoiceRef.appendChild(link);
+
+            // Append the <td> element to the row
+            row.appendChild(invoiceRef);
+
+
+            // invoiceRef.textContent = item.invoice_ref;
+            // row.appendChild(invoiceRef);
+
+            const invoice_date = document.createElement('td');
+            invoice_date.innerHTML = moment(item.invoice_date).format('DD/MM/YYYY');
+            row.appendChild(invoice_date);
+
+            const due_date = document.createElement('td');
+            due_date.innerHTML = moment(item.due_date).format('DD/MM/YYYY');
+            row.appendChild(due_date);
+
+            totalAmount += parseFloat(item.total);
+
+            const sub_total = document.createElement('td');
+            sub_total.textContent = '£' + item.sub_total;
+            row.appendChild(sub_total);
+
+            const VAT_amount = document.createElement('td');
+            VAT_amount.textContent = '£' + item.VAT_amount;
+            row.appendChild(VAT_amount);
+
+            const total = document.createElement('td');
+            total.textContent = '£' + item.total;
+            row.appendChild(total);
+
+            const outstanding = document.createElement('td');
+            outstanding.textContent = '£' + item.total;
+            row.appendChild(outstanding);
+
+            const created_on = document.createElement('td');
+            created_on.innerHTML = moment(item.created_on).format('DD/MM/YYYY HH:mm');
+            row.appendChild(created_on);
+
+            const status = document.createElement('td');
+            status.textContent = item.status;
+            row.appendChild(status);
+
+
+            const idCell = document.createElement('td');
+            idCell.innerHTML = `<a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">Action</a>
+                                <div class="dropdown-menu fade-up m-0" style="">
+                                    <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#productModalBAC">Edit</a>
+                                    <a href="#!" class="dropdown-item col-form-label" onclick="insrtTitle()">Preview</a>
+                                    <a href="#!" class="dropdown-item col-form-label" data-bs-toggle="modal" data-bs-target="#attachmentsPopup">Print</a>
+                                    <a href="#!" class="dropdown-item col-form-label" onclick="insrtDescription()">Email</a>
+                                    <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">Duplicate</a>
+                                    <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">Record Payment</a>
+                                    <a href="#!" class="dropdown-item col-form-label" onclick="insrtSection()">CRM / History</a>
+                                </div>`;
+            row.appendChild(idCell);
+            console.log(totalAmount);
+            // Append the row to the table body
+            tableBody.appendChild(row);
+
+        });
+
+        depositeInvoiceFoot(totalAmount, tableBody)
+    }
+
+    function depositeInvoiceFoot(amount, table) {
+
+        const tfoot = document.createElement('tfoot');
+
+        // Create the footer row
+        const footerRow = document.createElement('tr');
+
+        // Create the "Sub Total" cell
+        const subtotalLabelCell = document.createElement('th');
+        subtotalLabelCell.colSpan = 5; // Adjust colspan based on your table structure
+        subtotalLabelCell.textContent = 'Sub Total';
+        footerRow.appendChild(subtotalLabelCell);
+
+        // Create the "total" cell
+        const subtotalAmountCell = document.createElement('th');
+        // subtotalAmountCell.colSpan = 3; // Adjust colspan based on your table structure
+        subtotalAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
+
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.id = 'total_amount';
+        // hiddenInput.name = 'subtotal_amount'; // Set the name for the hidden input
+        hiddenInput.value = amount.toFixed(2);
+        subtotalAmountCell.appendChild(hiddenInput);
+
+        const outstandingAmountCell = document.createElement('th');
+        outstandingAmountCell.colSpan = 3; // Adjust colspan based on your table structure
+        outstandingAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
+
+        const hiddenInputOutstanding = document.createElement('input');
+        hiddenInputOutstanding.type = 'hidden';
+        hiddenInputOutstanding.id = 'outstanding_amount';
+        hiddenInputOutstanding.value = amount.toFixed(2);
+        outstandingAmountCell.appendChild(hiddenInputOutstanding);
+
+        footerRow.appendChild(subtotalAmountCell);
+        footerRow.appendChild(outstandingAmountCell);
+
+        // Append the row to the <tfoot> element
+        tfoot.appendChild(footerRow);
+
+        // Append the <tfoot> to the table
+        table.appendChild(tfoot);
+    }
 
     function updateQuoteDepositTotal() {
         let percentage = $(this).val();
@@ -3006,7 +3235,15 @@
 
         const rows = table.querySelectorAll('tbody tr');
         const subtotal_amount = document.getElementById('subtotal_amount').value;
+        const total_amount = document.getElementById('total_amount').value;
         console.log("subtotal_amount", subtotal_amount);
+
+        const subtotalAmount = parseFloat(subtotal_amount) || 0;
+        const totalAmount = parseFloat(total_amount) || 0;
+
+        // Calculate the sum
+        const sum = subtotalAmount + totalAmount;
+
         const markupOnPriceOrCostPrice = document.getElementById('markupOnPriceOrCostPrice').value;
         console.log(markupOnPriceOrCostPrice);
         let totalQuantity = 0;
@@ -3092,6 +3329,7 @@
 
         document.getElementById('footAmount').textContent = doller + price.toFixed(2);
         document.getElementById('setDepositAmount').value = "% of  " + doller + price.toFixed(2);
+        document.getElementById('setDepositAmountHidden').value = price.toFixed(2);
         document.getElementById('InputFootAmount').value = price.toFixed(2);
         document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
         document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
@@ -3102,10 +3340,10 @@
         document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
         document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
         document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
-        document.getElementById('footOutstandingAmount').textContent = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
+        document.getElementById('footOutstandingAmount').textContent = doller + ((price + totalVAT) - sum).toFixed(2);
         document.getElementById('setOustandingCreditAmount').value = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
         document.getElementById('deposit_amount').value = ((price + totalVAT) - subtotal_amount).toFixed(2);
-        document.getElementById('footDeposit').textContent = '-'+doller + subtotal_amount; 
+        document.getElementById('footDeposit').textContent = '-' + doller + sum.toFixed(2);
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
         document.getElementById('payingNow').textContent = doller + (price + totalVAT).toFixed(2);
 
@@ -3708,6 +3946,9 @@
         $.ajax({
             url: '{{ route("quote.ajax.getDepositeData") }}',
             method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             data: {
                 quote_id: quote_id
             },
@@ -3807,7 +4048,7 @@
         const subtotalAmountCell = document.createElement('th');
         subtotalAmountCell.colSpan = 3; // Adjust colspan based on your table structure
         subtotalAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
-        
+
         const hiddenInput = document.createElement('input');
         hiddenInput.type = 'hidden';
         hiddenInput.id = 'subtotal_amount';
@@ -3958,7 +4199,8 @@
             updateButtons();
         });
 
-        $('#getTaxRateValue').on('click', function() {
+
+        $('#getTaxtInvoiceRateValue').on('click', function() {
             $.ajax({
                 url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
                 method: 'GET',
@@ -3977,6 +4219,7 @@
                         response.data.forEach(code => {
                             const option = document.createElement('option');
                             option.value = code.id; // Use appropriate key from your response
+                            option.setAttribute('data-rate', code.tax_rate);
                             option.textContent = code.name; // Use appropriate key from your response
                             dropdown.appendChild(option);
                         });
@@ -4011,10 +4254,6 @@
         $nextButton.click(function() {
             navigateTab(1);
         });
-
-        // $cancelButton.click(function() {
-        //     $("#exampleModal").modal("hide"); // Close the modal
-        // });
 
         $saveButton.click(function() {
             const quote_id = document.getElementById('quote_id').value;

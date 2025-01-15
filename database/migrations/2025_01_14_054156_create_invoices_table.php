@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->string('home_id');
             $table->integer('customer_id');
             $table->integer('project_id');
             $table->integer('site_delivery_add_id');
@@ -24,9 +25,17 @@ return new class extends Migration
             $table->date('invoice_date');
             $table->integer('payment_terms')->default('21');
             $table->date('due_date');
+            $table->decimal('sub_total', 8,2);
+            $table->integer('deposit_percentage');
+            $table->integer('VAT_id');
+            $table->decimal('VAT_amount', 8,2);
+            $table->decimal('Total', 8,2);
+            $table->decimal('outstanding', 8,2);
             $table->enum('status', ['Draft', 'Invoiced', 'Outstanding', 'Paid', 'Cancellled'])->default('Draft');
             $table->integer('tags')->nullable();
-            $table->text('customer_ref')->nullable();
+            $table->boolean('is_printed')->default(0);
+            $table->boolean('is_emailed')->default(0);
+            $table->text('customer_notes')->nullable();
             $table->text('terms')->nullable();
             $table->text('internal_notes')->nullable();
             $table->timestamps();
