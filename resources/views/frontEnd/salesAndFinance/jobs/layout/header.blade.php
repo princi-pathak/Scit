@@ -53,7 +53,7 @@ $access_rights = explode(',', $rights);
                 <div class="row gx-0 d-none d-lg-flex">
                     <div class="col-lg-3 px-3 text-start">
                         <div class="h-100 d-inline-flex align-items-center py-1 ms-3">
-                            <a href="{{url('jobs_index')}}" class="brand_logo"><img src="{{ url('public/images/ewm_logo.png')}}" alt="ewm_logo"></a>
+                            <a href="{{url('sales-finance/dashboard')}}" class="brand_logo"><img src="{{ url('public/images/ewm_logo.png')}}" alt="ewm_logo"></a>
                         </div>
                     </div>
                     <div class="col-lg-9 px-3 text-end toprigihticon">

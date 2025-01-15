@@ -19,6 +19,7 @@ use App\Http\Controllers\frontEnd\salesFinance\item\ProductController;
 use App\Http\Controllers\frontEnd\salesFinance\item\ProductGroupController;
 use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
 use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
+use App\Http\Controllers\frontEnd\salesFinance\JobController;
 
 
 
@@ -236,43 +237,55 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/add-incident-report', 'App\Http\Controllers\frontEnd\DashboardController@add_incident_report');
 
 	// Ram 14/06/2024 path for jobs create
-	Route::get('/jobs_list', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_list');
-	Route::post('/job_save_all', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_save_all');
-	// Route::post('/status_change','App\Http\Controllers\frontEnd\salesFinance\JobController@status_change');
-	Route::post('/delete_function', 'App\Http\Controllers\frontEnd\salesFinance\JobController@delete_function');
-	Route::post('/edit_job', 'App\Http\Controllers\frontEnd\salesFinance\JobController@edit_job');
-	Route::post('/search_value', 'App\Http\Controllers\frontEnd\salesFinance\JobController@search_value');
-	Route::post('/save_get_ajax', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_get_ajax');
-	Route::get('/job_type', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_type');
-	Route::post('/job_type_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_type_save');
-	Route::post('/job_type_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_type_edit_form');
-	Route::post('/workflow_save_data', 'App\Http\Controllers\frontEnd\salesFinance\JobController@workflow_save_data');
-	Route::post('/Workflow_notification_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@Workflow_notification_save');
-	Route::post('/workflow_list_job', 'App\Http\Controllers\frontEnd\salesFinance\JobController@workflow_list_job');
-	Route::post('/workflow_list_add', 'App\Http\Controllers\frontEnd\salesFinance\JobController@workflow_list_add');
-	Route::get('/jobs_index', 'App\Http\Controllers\frontEnd\salesFinance\JobController@index');
-	Route::get('/planner_day', 'App\Http\Controllers\frontEnd\salesFinance\JobController@planner_day');
-	Route::get('/jobs_create', 'App\Http\Controllers\frontEnd\salesFinance\JobController@jobs_create');
-	Route::get('/job_edit', 'App\Http\Controllers\frontEnd\salesFinance\JobController@jobs_create');
-	Route::post('/job_add_edit_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_add_edit_save');
-	Route::post('/get_customer_details_front', 'App\Http\Controllers\frontEnd\salesFinance\JobController@get_customer_details_front');
-	Route::post('/result_product_calculation', 'App\Http\Controllers\frontEnd\salesFinance\JobController@result_product_calculation');
-	Route::post('/save_job_product', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_job_product');
-	Route::post('/get_save_appointment', 'App\Http\Controllers\frontEnd\salesFinance\JobController@get_save_appointment');
-	Route::post('/new_appointment_add_section', 'App\Http\Controllers\frontEnd\salesFinance\JobController@new_appointment_add_section');
-	Route::get('/job_appointment_type_list', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_appointment_type_list');
-	Route::post('/job_type_appointment_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_type_appointment_save');
-	Route::post('/job_appointment_type_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_appointment_type_edit_form');
-	Route::get('/appointment_rejection_cat_list', 'App\Http\Controllers\frontEnd\salesFinance\JobController@appointment_rejection_cat_list');
-	Route::post('/appointment_rejection_cat_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@appointment_rejection_cat_save');
-	Route::post('/job_appointment_rejection_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_appointment_rejection_edit_form');
-	Route::get('/job_titles', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_titles');
-	Route::post('/save_job_title', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_job_title');
-	Route::post('/job_title_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\JobController@job_title_edit_form');
-	Route::post('/save_region', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_region');
-	Route::post('/jobassign_productsDelete', 'App\Http\Controllers\frontEnd\salesFinance\JobController@jobassign_productsDelete');
-	Route::get('/get-appointment-type', 'App\Http\Controllers\frontEnd\salesFinance\JobController@getActiveJobAppointment')->name('job.ajax.jobAppointment');
 
+	Route::controller(JobController::class)->group(function () {
+		Route::get('/jobs_list', 'job_list');
+		Route::post('/job_save_all', 'job_save_all');
+		// Route::post('/status_change','status_change');
+		Route::post('/delete_function', 'delete_function');
+		Route::post('/edit_job', 'edit_job');
+		Route::post('/search_value', 'search_value');
+		Route::post('/save_get_ajax', 'save_get_ajax');
+		Route::get('/job_type', 'job_type');
+		Route::post('/job_type_save', 'job_type_save');
+		Route::post('/job_type_edit_form', 'job_type_edit_form');
+		Route::post('/workflow_save_data', 'workflow_save_data');
+		Route::post('/Workflow_notification_save', 'Workflow_notification_save');
+		Route::post('/workflow_list_job', 'workflow_list_job');
+		Route::post('/workflow_list_add', 'workflow_list_add');
+		Route::get('/sales-finance/dashboard', 'index');
+		Route::get('/planner_day', 'planner_day');
+		Route::get('/jobs_create', 'jobs_create');
+		Route::get('/job_edit', 'jobs_create');
+		Route::post('/job_add_edit_save', 'job_add_edit_save');
+		Route::post('/get_customer_details_front', 'get_customer_details_front');
+		Route::post('/result_product_calculation', 'result_product_calculation');
+		Route::post('/save_job_product', 'save_job_product');
+		Route::post('/get_save_appointment', 'get_save_appointment');
+		Route::post('/new_appointment_add_section', 'new_appointment_add_section');
+		Route::get('/job_appointment_type_list', 'job_appointment_type_list');
+		Route::post('/job_type_appointment_save', 'job_type_appointment_save');
+		Route::post('/job_appointment_type_edit_form', 'job_appointment_type_edit_form');
+		Route::get('/appointment_rejection_cat_list', 'appointment_rejection_cat_list');
+		Route::post('/appointment_rejection_cat_save', 'appointment_rejection_cat_save');
+		Route::post('/job_appointment_rejection_edit_form', 'job_appointment_rejection_edit_form');
+		Route::get('/job_titles', 'job_titles');
+		Route::post('/save_job_title', 'save_job_title');
+		Route::post('/job_title_edit_form', 'job_title_edit_form');
+		Route::post('/save_region', 'save_region');
+		Route::post('/jobassign_productsDelete', 'jobassign_productsDelete');
+		Route::post('/project_save', 'project_save');
+		Route::post('/contact_save', 'contact_save');
+		Route::post('/site_save', 'site_save');
+		Route::post('/product_save', 'product_save');
+		Route::post('/supplier_result', 'supplier_result');
+		Route::post('/save_product_category', 'save_product_category');
+		Route::post('/save_tax_rate', 'save_tax_rate');
+		Route::post('/product_modal_list', 'product_modal_list');
+	});
+
+
+	Route::get('/get-appointment-type', 'App\Http\Controllers\frontEnd\salesFinance\JobController@getActiveJobAppointment')->name('job.ajax.jobAppointment');
 
 	// Customer
 	Route::get('/customer_add_edit', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_add_edit');
@@ -291,15 +304,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/save_customer_type', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@save_customer_type');
 	Route::post('/customer_type_edit_form', 'App\Http\Controllers\frontEnd\salesFinance\CustomerController@customer_type_edit_form');
 	// end here
-	Route::post('/project_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@project_save');
-	Route::post('/contact_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@contact_save');
-	Route::post('/site_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@site_save');
-	Route::post('/product_save', 'App\Http\Controllers\frontEnd\salesFinance\JobController@product_save');
-	Route::post('/supplier_result', 'App\Http\Controllers\frontEnd\salesFinance\JobController@supplier_result');
-	Route::post('/save_product_category', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_product_category');
-	Route::post('/save_tax_rate', 'App\Http\Controllers\frontEnd\salesFinance\JobController@save_tax_rate');
-	Route::post('/product_modal_list', 'App\Http\Controllers\frontEnd\salesFinance\JobController@product_modal_list');
-
 	// CRM Section Controller
 	Route::get('/complaint_type', [CrmSectionController::class, 'complaint_type']);
 	Route::post('/bulk_delete','App\Http\Controllers\ActionController@bulk_delete');

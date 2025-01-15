@@ -1724,7 +1724,7 @@ $('.delete_checkbox').on('click', function() {
     function openEmailModal(id,po_ref,email,name){
         $("#emailformId")[0].reset();
         $("#dropdownButton").append('<span class="optext">'+email+'&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
-        $("#dropdownMenu").append('<li><input type="checkbox" class="option" value="Option 1">'+email+' - '+name+'(Supplier)</label>');
+        $("#selectedToEmail").val(email);
         $("#email_modalTitle").text("Email Purchase Order - "+po_ref);
         $("#emailsubject").val("Purchase Order from The Contructor - "+po_ref);
         $("#emailModal").modal('show');
