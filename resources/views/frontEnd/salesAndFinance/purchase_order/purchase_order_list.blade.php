@@ -336,24 +336,22 @@ ul#projectList {
                                     $sub_total_amount=0;
                                     $total_amount=0;
                                     $vat_amount=0;
-                                    $vatTotal=0;
                                     $purchaseProductId=0;
                                     $outstandingAmount=0;
                                     foreach($val->purchaseOrderProducts as $product){
                                         $purchaseProductId=$product->id;
                                         $qty=$product->qty*$product->price;
                                         $sub_total_amount=$sub_total_amount+$qty;
-                                        $vatTotal=$vatTotal+$product->vat;
-                                        $vat_amount=$vat_amount+$product->vat;
-                                        $percentage=$sub_total_amount*$vat_amount/100;
-                                        $total_amount=$total_amount+$percentage+$sub_total_amount;
+                                        $vat=$qty*$product->vat/100;
+                                        $vat_amount=$vat_amount+$vat;
+                                        $total_amount=$total_amount+$vat+$qty;
                                         $outstandingAmount=$total_amount-$product->outstanding_amount;
                                         
-                                        $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
-                                        $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
-                                        $all_TotalAmount=$all_TotalAmount+$total_amount;
-                                        $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
                                     }
+                                    $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
+                                    $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
+                                    $all_TotalAmount=$all_TotalAmount+$total_amount;
+                                    $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
                                 ?>
                                 <tr>
                                     <td>
@@ -424,7 +422,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$purchaseProductId}},{{$outstandingAmount}})" class="dropdown-item">Record Payment</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vatTotal}},{{$outstandingAmount}})" class="dropdown-item">Invoice Received</a>
+                                                    <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$outstandingAmount}})" class="dropdown-item">Invoice Received</a>
                                                     <!-- <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">CRM / History</a>
                                                     <hr class="dropdown-divider">
