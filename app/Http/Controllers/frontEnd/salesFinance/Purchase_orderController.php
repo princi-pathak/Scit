@@ -127,6 +127,9 @@ class Purchase_orderController extends Controller
         if ($validator->fails()) {
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
+        if(empty($request->product_id) && !isset($request->product_id)){
+            return response()->json(['vali_error' => 'Please add at least one product for purchase order.']);
+        }
         try {
             if(!empty($request->purchaseattachment_id)){
                 $purchaseattachment_id=$request->purchaseattachment_id;
@@ -254,7 +257,7 @@ class Purchase_orderController extends Controller
                     'qty' => $data['qty'][$i] ?? 0,
                     'price' => $data['price'][$i] ?? 0,
                     'vat_id' => $data['vat_id'][$i] ?? null,
-                    'vat' => $data['vat'][$i] ?? 0,
+                    'vat' => $data['vat_ratePercentage'][$i] ?? 0,
                     'outstanding_amount'=>0
                 ];
                 // echo "<pre>";print_r($productData);die;
@@ -467,7 +470,7 @@ class Purchase_orderController extends Controller
         $data['customer_data'] = Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
         $data['users'] = User::where('home_id', $home_id)->select('id', 'name','email','phone_no')->where('is_deleted', 0)->get();
         $data['paymentTypeList']=Payment_type::getActivePaymentType($home_id);
-        // echo "<pre>";print_r($data['status']);die;
+        // echo "<pre>";print_r($data['list']);die;
         return view('frontEnd.salesAndFinance.purchase_order.purchase_order_list',$data);
     }
     private function check_segment_purchaseOrder($lastSegment=null){
@@ -568,24 +571,21 @@ class Purchase_orderController extends Controller
             $sub_total_amount=0;
             $total_amount=0;
             $vat_amount=0;
-            $vatTotal=0;
             $purchaseProductId=0;
             $outstandingAmount=0;
             foreach($val->purchaseOrderProducts as $product){
                 $purchaseProductId=$product->id;
                 $qty=$product->qty*$product->price;
                 $sub_total_amount=$sub_total_amount+$qty;
-                $vatTotal=$vatTotal+$product->vat;
-                $vat_amount=$vat_amount+$product->vat;
-                $percentage=$sub_total_amount*$vat_amount/100;
-                $total_amount=$total_amount+$percentage+$sub_total_amount;
+                $vat=$qty*$product->vat/100;
+                $vat_amount=$vat_amount+$vat;
+                $total_amount=$total_amount+$vat+$qty;
                 $outstandingAmount=$total_amount-$product->outstanding_amount;
-                
-                $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
-                $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
-                $all_TotalAmount=$all_TotalAmount+$total_amount;
-                $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
             }
+            $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
+            $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
+            $all_TotalAmount=$all_TotalAmount+$total_amount;
+            $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
             
             $array_data .= '<tr>
                         <td><input type="checkbox" class="delete_checkbox" value="' . $val->id . '"></td>
@@ -655,7 +655,7 @@ class Purchase_orderController extends Controller
                                                         <hr class="dropdown-divider">
                                                         <a href="javascript:void(0)" onclick="openRecordPaymentModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\',\'' . $val->suppliers->name . '\',' . $total_amount . ',\'' . date('d/m/Y', strtotime($val->purchase_date)) . '\',' . $purchaseProductId . ',' . $outstandingAmount . ')" class="dropdown-item">Record Payment</a>
                                                         <hr class="dropdown-divider">
-                                                        <a href="javascript:void(0)" onclick="openInvoiceRecieveModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\',\'' . $val->suppliers->name . '\',' . $val->suppliers->id . ',' . $sub_total_amount . ',\'' . date('d/m/Y', strtotime($val->purchase_date)) . '\',' . $vatTotal . ',' . $outstandingAmount . ')" class="dropdown-item">Invoice Received</a>
+                                                        <a href="javascript:void(0)" onclick="openInvoiceRecieveModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\',\'' . $val->suppliers->name . '\',' . $val->suppliers->id . ',' . $sub_total_amount . ',\'' . date('d/m/Y', strtotime($val->purchase_date)) . '\',' . $vat . ',' . $outstandingAmount . ')" class="dropdown-item">Invoice Received</a>
                                                     </div>
                                                 </div>
                                             </div>

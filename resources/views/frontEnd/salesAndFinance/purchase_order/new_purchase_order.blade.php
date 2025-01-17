@@ -388,10 +388,10 @@ ul#purchase_qoute_refList {
                                             <div class="mb-2 row">
                                                     <label class="col-sm-3 col-form-label">Payment Terms</label>
                                                     <div class="col-sm-6">
-                                                        <select class="form-control editInput selectOptions" id="purchase_payment_terms" name="payment_terms">
-                                                            <option value="21">Default (21)
+                                                        <select class="form-control editInput selectOptions" id="purchase_payment_terms" name="payment_terms" onchange="updateDueDate()">
+                                                            
                                                             </option>
-                                                            <?php for($i=1;$i<21;$i++){?>
+                                                            <?php for($i=0;$i<=90;$i++){?>
                                                             <option value="{{$i}}" <?php if(isset($purchase_orders) && $purchase_orders->payment_terms == $i){echo 'selected';}?>>{{$i}}</option>
                                                             <?php }?>
                                                         </select>
@@ -401,7 +401,7 @@ ul#purchase_qoute_refList {
                                                             days</label>
                                                     </div>
 
-                                                </div>
+                                            </div>
                                             <div class="mb-3 row">
                                                 <label for="inputTelephone" class="col-sm-6 col-form-label">Payment Due Date</label>
                                                 <div class="col-sm-4">
@@ -774,7 +774,7 @@ ul#purchase_qoute_refList {
 
 <x-vat-tax-rate 
     modalId="VatTaxRateModal"
-    modalTitle="Departmental Code - Add"
+    modalTitle="Add Tax Rate"
     formId="vattaxrateform"
     id="vattaxrate_id"
     name="vat_tax_name"
@@ -1132,9 +1132,10 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         $('#message_save').addClass('success-message').text(response.message).show();
                         setTimeout(function() {
                             $('#message_save').removeClass('success-message').text('').hide();
-                            var id = parseInt(response.data.id, 10) || 0;
-                            var encodedId = btoa(unescape(encodeURIComponent(id)));
-                            location.href = '<?php echo url('purchase_order_edit'); ?>?key=' + encodedId;
+                            // var id = parseInt(response.data.id, 10) || 0;
+                            // var encodedId = btoa(unescape(encodeURIComponent(id)));
+                            // location.href = '<?php echo url('purchase_order_edit'); ?>?key=' + encodedId;
+                            location.href='<?php echo url('draft_purchase_order');?>'
                         }, 3000);
                     }else if(response.success === false){
                         $('#message_save').addClass('error-message').text(response.message).show();
@@ -1853,6 +1854,7 @@ $('#search-product').on('keyup', function() {
                         const inputVat = document.createElement('input');
                         inputVat.type = 'text';
                         inputVat.className = 'vat';
+                        inputVat.setAttribute('disabled','disabled');
                         inputVat.addEventListener('input', function() {
                             updateAmount(row);
                         });
@@ -2243,5 +2245,14 @@ $(document).on('click','.attachment_delete', function() {
             }
         });
  </script>
-
+<script>
+    function updateDueDate() {
+    const selectElement = document.getElementById('purchase_payment_terms');
+    const days = parseInt(selectElement.value);
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + days);
+    const formattedDate = currentDate.toISOString().split('T')[0];
+    document.getElementById('purchase_payment_due_date').value = formattedDate;
+}
+</script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
