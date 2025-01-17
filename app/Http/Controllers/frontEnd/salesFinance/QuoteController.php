@@ -23,7 +23,7 @@ use App\Services\Quotes\AttachmentTypeService;
 use App\Services\Invoice\InvoiceService;
 
 use App\Models\QuoteType;
-use App\Models\Quotes\CustomerDepositInvoice;
+// use App\Models\Quotes\CustomerDepositInvoice;
 use App\Models\Quote;
 use App\Models\QuoteSource;
 use App\Models\Quotes\QuoteRejectType;
@@ -35,6 +35,7 @@ use App\Models\Product_category;
 use App\Models\AttachmentType;
 use App\Models\Payment_type;
 use App\Models\Task_type;
+use App\Models\Tag;
 use App\User;
 
 
@@ -575,6 +576,11 @@ class QuoteController extends Controller
         $data['acceptedCount'] = Quote::getAcceptedCount(Auth::user()->home_id);
         $data['actionedCount'] = Quote::getActionedCount(Auth::user()->home_id);
         $data['rejectedCount'] = Quote::getRejectedCount(Auth::user()->home_id);
+        $data['users'] = User::getHomeUsers(Auth::user()->home_id);
+        $data['quoteSources'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
+        $data['regions'] = Region::getRegions(Auth::user()->home_id);
+        $data['tags'] = Tag::getActivetags(Auth::user()->home_id);
+        $data['quoteTypes'] = QuoteType::getActiveQuoteType(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.search_quote', $data);
     }
 
@@ -692,6 +698,12 @@ class QuoteController extends Controller
             'data' => $data ? $data : 'No Data'
         ]);
 
+    }
+
+    public function searchQuoteData(Request $request){
+        dd($request);
+
+        $this->quoteService->getSearchQuoteList();
     }
 }
     

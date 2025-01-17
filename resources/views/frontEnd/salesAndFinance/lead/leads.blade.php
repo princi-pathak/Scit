@@ -150,13 +150,13 @@
                             @php
                             $authorizationText = '';
                             if ($customer->status_id == 7) {
-                            if ($customer->authorization_status == 1) {
-                            $authorizationText = 'Waiting for Authorization';
-                            } elseif ($customer->authorization_status == 2) {
-                            $authorizationText = 'Authorized';
-                            } else {
-                            $authorizationText = 'none';
-                            }
+                                if ($customer->authorization_status === 1) {
+                                    $authorizationText = 'Waiting for Authorization';
+                                } elseif ($customer->authorization_status === 2) {
+                                    $authorizationText = 'Authorized';
+                                } else {
+                                    $authorizationText = 'none';
+                                }
                             }
                             @endphp
                             <tr>
@@ -170,7 +170,7 @@
                                 <td>{{ $customer->telephone }}</td>
                                 <td>{{ $customer->mobile }}</td>
                                 <td>{{ App\User::getLeadAssignUserName($customer->assign_to) }}</td>
-                                <td>{{ $customer->status }}</td>
+                                <td>{{ $customer->status_id == 7 ? $authorizationText : $customer->status }}</td>
                                 <td>{{ $customer->website }}</td>
                                 <td>{{ $customer->address }}</td>
                                 <td>{{ $customer->city }}</td>

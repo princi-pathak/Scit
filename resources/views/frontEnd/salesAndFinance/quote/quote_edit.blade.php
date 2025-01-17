@@ -3734,7 +3734,6 @@
 
     $(document).ready(function() {
 
-
         // Enable/disable "Delete Selected" button based on checkbox selection
         $(document).on("change", ".selectRow, #selectAll", function() {
             const anySelected = $(".selectRow:checked").length > 0;
@@ -3920,7 +3919,6 @@
         }
 
         const tfoot = document.createElement('tfoot');
-
 
         const footerRow = document.createElement('tr');
         const footerCell = document.createElement('td');

@@ -30,76 +30,77 @@ class QuoteService
 
     public static function getQuoteData($lastSegment, $homeId)
     {
-        if($lastSegment == "draft"){
+        if ($lastSegment == "draft") {
             $quotes =  Quote::with(['customer'])
-            ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
-            ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
-            ->where('quotes.home_id', $homeId)
-            ->select(
-                'quotes.*',
-                'constructor_customer_sites.address as site_address',
-                DB::raw("CASE 
+                ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
+                ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
+                ->where('quotes.home_id', $homeId)
+                ->select(
+                    'quotes.*',
+                    'constructor_customer_sites.address as site_address',
+                    DB::raw("CASE 
                         WHEN quotes.customer_id = quotes.site_add_id THEN customers.address 
                         ELSE constructor_customer_sites.address 
                     END as customer_address")
-            )
-            ->where('quotes.status', "Draft")
-            ->orderByDesc('created_at')
-            ->get();
-        } elseif($lastSegment == "accepted"){
+                )
+                ->where('quotes.status', "Draft")
+                ->orderByDesc('created_at')
+                ->get();
+        } elseif ($lastSegment == "accepted") {
             $quotes =  Quote::with(['customer'])
-            ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
-            ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
-            ->where('quotes.home_id', $homeId)
-            ->select(
-                'quotes.*',
-                'constructor_customer_sites.address as site_address',
-                DB::raw("CASE 
+                ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
+                ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
+                ->where('quotes.home_id', $homeId)
+                ->select(
+                    'quotes.*',
+                    'constructor_customer_sites.address as site_address',
+                    DB::raw("CASE 
                         WHEN quotes.customer_id = quotes.site_add_id THEN customers.address 
                         ELSE constructor_customer_sites.address 
                     END as customer_address")
-            )
-            ->where('quotes.status', "Accepted")
-            ->orderByDesc('created_at')
-            ->get();
-        } elseif ($lastSegment == "actioned"){
+                )
+                ->where('quotes.status', "Accepted")
+                ->orderByDesc('created_at')
+                ->get();
+        } elseif ($lastSegment == "actioned") {
             $quotes =  Quote::with(['customer'])
-            ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
-            ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
-            ->where('quotes.home_id', $homeId)
-            ->select(
-                'quotes.*',
-                'constructor_customer_sites.address as site_address',
-                DB::raw("CASE 
+                ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
+                ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
+                ->where('quotes.home_id', $homeId)
+                ->select(
+                    'quotes.*',
+                    'constructor_customer_sites.address as site_address',
+                    DB::raw("CASE 
                         WHEN quotes.customer_id = quotes.site_add_id THEN customers.address 
                         ELSE constructor_customer_sites.address 
                     END as customer_address")
-            )
-            ->where('quotes.status', "Processed")
-            ->orderByDesc('created_at')
-            ->get();
-        } elseif ($lastSegment == "rejected"){
+                )
+                ->where('quotes.status', "Processed")
+                ->orderByDesc('created_at')
+                ->get();
+        } elseif ($lastSegment == "rejected") {
             $quotes =  Quote::with(['customer'])
-            ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
-            ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
-            ->leftJoin('quote_reject_reasons', 'quote_reject_reasons.quote_id', '=', 'quotes.id')
-            ->leftJoin('quote_reject_types', 'quote_reject_types.id', '=', 'quote_reject_reasons.reject_type_id')
-            ->where('quotes.home_id', $homeId)
-            ->select(
-                'quotes.*',
-                'constructor_customer_sites.address as site_address',
-                'quote_reject_reasons.reject_reasons', 'quote_reject_reasons.reject_type_id',
-                'quote_reject_types.title',
-                DB::raw("CASE 
+                ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
+                ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
+                ->leftJoin('quote_reject_reasons', 'quote_reject_reasons.quote_id', '=', 'quotes.id')
+                ->leftJoin('quote_reject_types', 'quote_reject_types.id', '=', 'quote_reject_reasons.reject_type_id')
+                ->where('quotes.home_id', $homeId)
+                ->select(
+                    'quotes.*',
+                    'constructor_customer_sites.address as site_address',
+                    'quote_reject_reasons.reject_reasons',
+                    'quote_reject_reasons.reject_type_id',
+                    'quote_reject_types.title',
+                    DB::raw("CASE 
                         WHEN quotes.customer_id = quotes.site_add_id THEN customers.address 
                         ELSE constructor_customer_sites.address 
                     END as customer_address")
-            )
-            ->where('quotes.status', "Rejected")
-            ->orderByDesc('created_at')
-            ->get();
+                )
+                ->where('quotes.status', "Rejected")
+                ->orderByDesc('created_at')
+                ->get();
         }
-     
+
         // dd($quotes);
 
         $quoteArr = array();
@@ -274,19 +275,21 @@ class QuoteService
         return $quoteArr;
     }
 
-    public function saveQuoteTaskData($validatedData){
+    public function saveQuoteTaskData($validatedData)
+    {
         return  QuoteTask::updateOrCreate(['id' => $validatedData['edit_quote_task_id']], $validatedData);
     }
 
-    public function getQuoteTaskList($quote_id){
+    public function getQuoteTaskList($quote_id)
+    {
         $quoteTaskData =   QuoteTask::with('taskType')->where('quote_id', $quote_id)->get();
         $record = [];
-        
-        foreach($quoteTaskData as $value){
+
+        foreach ($quoteTaskData as $value) {
             $data = [];
             $data['id'] = $value->id;
             $data['quote_ref'] = Quote::where('id', $value->quote_id)->value('quote_ref');
-            $data['userName'] = User::where('id',$value->user_id)->value('name');
+            $data['userName'] = User::where('id', $value->user_id)->value('name');
             $data['title'] = $value->title;
             $data['task_type_id'] = $value->taskType->title;
             $data['start_date'] = $value->start_date;
@@ -308,16 +311,16 @@ class QuoteService
         }
         // dd($record);
         return $record;
-     
     }
 
-    public function updateQuoteStatus($quote_id, $status){
+    public function updateQuoteStatus($quote_id, $status)
+    {
         return Quote::where('id', $quote_id)->update(['status' => $status]);
     }
 
     public function saveQuoteRejectReasons($data)
     {
-        $quoteRejectReason =  QuoteRejectReasons::updateOrCreate(['id' => $data['quote_reject_reason_id']], $data);
+        $quoteRejectReason = QuoteRejectReasons::updateOrCreate(['id' => $data['quote_reject_reason_id']], $data);
 
         $this->updateQuoteStatus($data['quote_id'], 'Rejected');
         return $quoteRejectReason;
@@ -328,43 +331,63 @@ class QuoteService
         return QuoteCustomerDeposit::updateOrCreate(['id' => $data['quote_deposit_id']], $data);
     }
 
-    public function getDepositeData($data){
-       return QuoteCustomerDeposit::where('quote_id', $data->quote_id)->get();
+    public function getDepositeData($data)
+    {
+        return QuoteCustomerDeposit::where('quote_id', $data->quote_id)->get();
     }
 
-    public function saveCustomerInvoiceDeposit($data, $invoice_id){
-
+    public function saveCustomerInvoiceDeposit($data, $invoice_id)
+    {
         // dd($data);
         $record = [
-            'quote_id' => $data->quote_id, 
+            'quote_id' => $data->quote_id,
             'customer_id' => $data->customer_id,
             'invoice_id' => $invoice_id,
-            'invoice_date'=> Carbon::createFromFormat('d/m/Y', $data->invoice_date)->format('Y-m-d'),
+            'invoice_date' => Carbon::createFromFormat('d/m/Y', $data->invoice_date)->format('Y-m-d'),
             'due_date' => Carbon::createFromFormat('d/m/Y', $data->due_date)->format('Y-m-d'),
             'line_item' => $data->line_item,
-            'description' => $data->description, 
+            'description' => $data->description,
             'deposit_percentage' => $data->deposit_percentage,
             'sub_total' => $data->sub_total,
             'VAT_amount' =>  $data->VAT_amount,
-            'total' => $data->total     
+            'total' => $data->total
         ];
 
         return CustomerDepositInvoice::updateOrCreate(['id' => $data['edit_customer_deposit_invoice']], $record);
-
     }
 
-    public function getCustomerInvoiceDeposit($quote_id){
-    
-                return  DB::table('quote_customer_deposit_invoices')
-                ->join('invoices', 'quote_customer_deposit_invoices.invoice_id', '=', 'invoices.id') // Adjust column names
-                ->select('quote_customer_deposit_invoices.*', 'invoices.invoice_ref', 'invoices.status')
-                ->where('quote_customer_deposit_invoices.quote_id', $quote_id)
-                ->get();
+    public function getCustomerInvoiceDeposit($quote_id)
+    {
+        return  DB::table('quote_customer_deposit_invoices')
+            ->join('invoices', 'quote_customer_deposit_invoices.invoice_id', '=', 'invoices.id') 
+            ->select('quote_customer_deposit_invoices.*', 'invoices.invoice_ref', 'invoices.status')
+            ->where('quote_customer_deposit_invoices.quote_id', $quote_id)
+            ->get();
     }
 
-
-
-
-
+    public function getSearchQuoteList(array $data) {
+        Quote::where([
+            'quote_ref' => $data['quote_ref'],
+            'customer_id' => $data['customer_id'],
+            'project_id' => $data['project_id'],
+            'quote_type' => $data['quote_type'],
+            'source' =>  $data['source'],
+            'user_id' => $data['user_id'],
+            'date_to' => $data['date_to'],
+            'date_from' => $data['date_from'],
+            'address' => $data['address'],
+            'tag' => $data['tag'],
+            'region' => $data['region'],
+            'expiry_date_to' => $data['expiry_date_to'],
+            'xpiry_date_from' => $data['expiry_date_from'],
+            'status' => $data['status'],
+            'accepted_to' => $data['accepted_from'],
+            'accepted_from' => $data['accepted_from'],
+            'rejected_to' => $data['rejected_to'],
+            'rejected_from' => $data['rejected_from'],
+            'converted_to' => $data['converted_to'],
+            'converted_from' => $data['converted_from'],
+            
+         ]); 
+    }
 }
- 

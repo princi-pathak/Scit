@@ -102,8 +102,8 @@ $access_rights = explode(',', $rights);
                                     <a href="{{ url('/leads/leads') }}" class="dropdown-item"><span><i class="fa fa-list"></i> All Lead </span></a>
                                     <a href="{{ url('/lead/myLeads') }}" class="dropdown-item"><span><i class="fa fa-list"></i> My Leads </span></a>
                                     <a href="{{ url('/leads/unassigned') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Unassigned Lead </span></a>
-                                    <a href="{{ url('/leads/actioned') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Actioned Lead </span></a>
-                                    <a href="{{ url('/leads/rejected') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Rejected Lead </span></a>
+                                    <a href="{{ url('/lead/actioned') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Actioned Lead </span></a>
+                                    <a href="{{ url('/lead/rejected') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Rejected Lead </span></a>
                                     <a href="{{ url('/lead/authorization') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Authorization </span></a>
                                     <a href="{{ url('/leads/converted') }}" class="dropdown-item"><span><i class="fa fa-list"></i> Converted Lead </span></a>
                                     <a href="{{ url('leads/search') }}" class="dropdown-item"><span><i class="fa fa-search"></i> Search Lead </span></a>
