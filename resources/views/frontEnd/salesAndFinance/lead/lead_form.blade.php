@@ -82,12 +82,12 @@ if (isset($lead)) {
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Preferred date to call</label>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3 pe-0">
                                             <input type="date" name="prefer_date" class="form-control editInput" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}" id="">
                                         </div>
-                                        <div class="col-sm-1"><label class="col-form-label">To</label></div>
+                                        <div class="col-sm-1 text-center"><label class="col-form-label">To</label></div>
 
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3 ps-0">
                                             <input type="time" name="prefer_time" class="form-control editInput" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}" id="">
 
                                         </div>

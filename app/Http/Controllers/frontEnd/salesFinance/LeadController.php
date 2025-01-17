@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Lead;
 use Illuminate\Support\Facades\Auth;
-use App\Customer;
+use App\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
