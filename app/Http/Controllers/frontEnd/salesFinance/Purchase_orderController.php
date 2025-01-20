@@ -40,6 +40,7 @@ use App\Models\Payment_type;
 use App\Models\PurchaseOrderRecordPayment;
 use App\Models\PurchaseOrderInvoiceReceives;
 use App\Models\PurchaseOrderReject;
+use App\Models\PurchaseReminder;
 use App\User;
 
 class Purchase_orderController extends Controller
@@ -87,10 +88,13 @@ class Purchase_orderController extends Controller
         $site=array();
         $contact_name=array();
         $attachments=array();
+        $reminder_data=array();
         if($key){
             $site=Constructor_customer_site::where('customer_id',$purchase_orders->customer_id)->get();
             $contact_name=Customer::find($purchase_orders->customer_id);
+            $reminder_data=$this->reminder_check($key);
         }
+        // echo "<pre>";print_r($reminder_data);die;
         $data['purchase_orders']=$purchase_orders;
         $data['attachments']=$attachments;
         $data['site']=$site;
@@ -107,6 +111,7 @@ class Purchase_orderController extends Controller
         $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
         $data['contact_name']=$contact_name;
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
+        $data['reminder_data']=$reminder_data;
         // echo "<pre>";print_r($data['country']);die;
         return view('frontEnd.salesAndFinance.purchase_order.new_purchase_order',$data);
     }
@@ -942,5 +947,55 @@ class Purchase_orderController extends Controller
             Log::error('Error: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function save_reminder(Request $request){
+        echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'reminder_date' => 'required',
+            'user_id' => 'required',
+            'title' => 'required',
+        ],
+        [
+            'reminder_date.required' => 'Reminder Date field is required.',
+            'user_id.required' => 'Reminder email field is required.',
+            'title.required' => 'Title field is required.',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        $notification = $request->has('notification') ? 1 : 0;
+        $sms = $request->has('sms') ? 1 : 0;
+        $email = $request->has('email') ? 1 : 0;
+
+        if ($notification==0 && $sms==0 && $email==0) {
+            return response()->json(['vali_error' => 'Send as field is requird']);
+        }
+        $data=$request->all();
+        $data['notification']=$notification;
+        $data['sms']=$sms;
+        $data['email']=$email;
+        $data['home_id']=Auth::user()->home_id;
+        $data['loginUserId']=Auth::user()->id;
+        $data['user_id']=implode(',',$request->user_id);
+        // echo "<pre>";print_r($data);die;
+        try{
+            $reminder=PurchaseReminder::saveReminder($data);
+            return response()->json(['success'=>true,'message'=>'The Reminder has been saved successfully.','data'=>$reminder]);
+        }catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    static function reminder_check($po_id){
+        $home_id=Auth::user()->home_id;
+        PurchaseReminder::allReminderData($home_id)
+        ->whereNull('po_id')
+        ->forceDelete();
+        $current_date=Date('Y-m-d');
+        PurchaseReminder::allReminderData($home_id)
+        ->where('po_id', $po_id)
+        ->whereDate('reminder_date', '<', $current_date)
+        ->update(['status' => 1]);
+        return PurchaseReminder::allReminderData($home_id)->where('po_id',$po_id)->get();
     }
 }

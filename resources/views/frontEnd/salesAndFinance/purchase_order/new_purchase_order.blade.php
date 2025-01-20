@@ -444,6 +444,55 @@ ul#purchase_qoute_refList {
                                                         <i class="fa-solid fa-square-plus" onclick="get_modal(6)"></i></a>
                                                 </div>
                                             </div>
+                                            <div class="mb-3 row">
+                                                <label for="" class="col-sm-4 col-form-label">
+                                                    <a href="javascript:void(0)" onclick="openReminderModal(<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>)" class="profileDrop"> <i class="fa fa-clock"></i> Set
+                                                        Riminder </a>
+                                                </label>
+
+                                            </div>
+                                            <div class="setRiminderTable" style="display:none">
+                                                <div class="productDetailTable">
+                                                    <table class="table" id="">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th>Title </th>
+                                                                <th>Date </th>
+                                                                <th>Time</th>
+                                                                <th>Status </th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="reminder_data">
+                                                            @foreach($reminder_data as $reminderVal)
+                                                            <tr>
+                                                                <td>{{$reminderVal->title}}</td>
+                                                                <td>{{$reminderVal->reminder_date}}</td>
+                                                                <td>{{$reminderVal->reminder_time}}</td>
+                                                                @if($reminderVal->status == 1)
+                                                                <td><span class="iconColrGreen">Sent</span></td>
+                                                                <td>
+                                                                    
+                                                                    <a href="#!" class=""><i class="material-symbols-outlined">
+                                                                        visibility
+                                                                    </i></a>
+                                                                    <a href="#!" class="iconColrGreen"><i class="material-symbols-outlined">
+                                                                        check_circle
+                                                                    </i></a>
+                                                                </td>
+                                                                @else
+                                                                <td><span class="iconColrRad">Pending</span></td>
+                                                                <td>
+                                                                    <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="{{$reminderVal->id}}" data-title="{{$reminderVal->title}}" data-user_id="{{$reminderVal->user_id}}" data-reminder_date="{{$reminderVal->reminder_date}}" data-reminder_time="{{$reminderVal->reminder_time}}" data-notification="{{$reminderVal->notification}}" data-sms="{{$reminderVal->sms}}" data-email="{{$reminderVal->email}}" data-notes="{{$reminderVal->notes}}" ><i class="material-symbols-outlined">edit</i></a>
+                                                                    <a href="javascript:void(0)" class="iconColrRad"><i class="material-symbols-outlined">close</i></a>
+                                                                </td>
+                                                                @endif
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
 
                                         <!-- </form> -->
                                     </div>
@@ -783,6 +832,23 @@ ul#purchase_qoute_refList {
     expDate="vat_tax_expdate"
     status="vat_tax_satatus"
     saveButtonId="saveVatTaxRate"
+/>
+
+<x-add-reminder
+    reminderModalId="ReminderModal"
+    modalTitle="PO Reminder"
+    reminderformId="reminderform"
+    reminderId="reminder_id"
+    reminderDate="reminder_date"
+    reminderTime="reminder_time"
+    reminderUser="reminder_user"
+    hiddenForeignId="reminder_po_id"
+    reminderNotification="reminder_notification"
+    reminderEmail="reminder_email"
+    reminderSms="reminder_sms"
+    reminderTitle="reminder_title"
+    reminderNotes="reminder_notes"
+    saveButtonId="saveReminder"
 />
 
 <!-- End here -->
@@ -1622,6 +1688,10 @@ $('#search-product').on('keyup', function() {
             var purchaseOrderId='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>'
             getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
         }
+        var reminderCount='<?php echo count($reminder_data);?>'
+        if(reminderCount>0){
+            $(".setRiminderTable").show();
+        }
     });
     function getAllAttachment(data){
         getAttachment(data.po_id,pageUrl = '{{ url("getAllAttachmens") }}')
@@ -2244,6 +2314,31 @@ $(document).on('click','.attachment_delete', function() {
                 $('#results').empty();
             }
         });
+    function openReminderModal(po_id){
+        // if(po_id == ''){
+        //     alert("Please save Purchase Order first!");
+        //     return false;
+        // }else{
+            
+        // }
+        
+        $("#reminder_po_id").val(po_id);
+        $("#ReminderModal").modal('show');
+    }
+    function getAllReminder(data){
+        $(".setRiminderTable").show();
+        $("#reminder_data").append(`<tr>
+            <td>`+data.title+`</td>    
+            <td>`+data.reminder_date+`</td>    
+            <td>`+data.reminder_time+`</td>    
+            <td><span class="iconColrRad">Pending</span></td>    
+            <td>
+                <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="`+data.id+`" data-title="`+data.title+`" data-user_id="`+data.user_id+`" data-reminder_date="`+data.reminder_date+`" data-reminder_time="`+data.reminder_time+`" data-notification="`+data.notification+`" data-sms="`+data.sms+`" data-email="`+data.email+`" data-notes="`+data.notes+`" ><i class="material-symbols-outlined">edit</i></a>
+                <a href="javascript:void(0)" class="iconColrRad"><i class="material-symbols-outlined">close</i></a>
+            </td>    
+        </tr>`);
+    }
+    
  </script>
 <script>
     function updateDueDate() {
@@ -2254,5 +2349,45 @@ $(document).on('click','.attachment_delete', function() {
     const formattedDate = currentDate.toISOString().split('T')[0];
     document.getElementById('purchase_payment_due_date').value = formattedDate;
 }
+</script>
+<script>
+    $(document).on('click','.fecth_data', function(){
+        $("#ReminderModal").modal('show');
+        var id = $(this).data('id');
+        var title = $(this).data('title');
+        var user_id = $(this).data('user_id');
+        var reminder_date = $(this).data('reminder_date');
+        var reminder_time = $(this).data('reminder_time');
+        var notification = $(this).data('notification');
+        var sms = $(this).data('sms');
+        var email = $(this).data('email');
+        var notes = $(this).data('notes');
+
+        $("#reminder_id").val(id);
+        $("#reminder_date").val(reminder_date);
+        $("#reminder_time").val(reminder_time);
+        $("#reminder_title").val(title);
+        $("#reminder_notes").val(notes);
+
+        $("#reminder_notification").prop('checked', notification == 1);
+        $("#reminder_sms").prop('checked', sms == 1);
+        $("#reminder_email").prop('checked', email == 1);
+
+        if (user_id) {
+            var userArray = user_id.split(',');
+            $("#reminder_user option").each(function () {
+                if (userArray.includes($(this).val())) {
+                    $(this).prop('selected', true);
+                } else {
+                    $(this).prop('selected', false);
+                }
+            });
+        } else {
+            $("#reminder_user option").prop('selected', false);
+        }
+        // $("#reminder_user").trigger('change');
+        $('#reminder_user').multiselect('reload');
+
+    });
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

@@ -415,6 +415,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/savePurchaseOrderRecordPayment','savePurchaseOrderRecordPayment');
 		Route::post('/purchaseOrderInviceRecieve','purchaseOrderInviceRecieve');
 		Route::post('/purchaseOrderreject','purchaseOrderreject');
+		Route::post('/save_reminder','save_reminder');
 	});
 	
 	// Forontend Customer Controller
