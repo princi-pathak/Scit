@@ -227,7 +227,6 @@ class QuoteService
 
     public static function getQuoteCallBack($lastSegment, $homeId)
     {
-
         $quotes =  Quote::with(['customer', 'callBack'])
             ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
             ->leftJoin('customers', 'customers.id', '=', 'quotes.customer_id')
@@ -247,10 +246,17 @@ class QuoteService
         $quoteArr = array();
         foreach ($quotes as $quote) {
 
-            $date = $quote->callBack->call_back_date; // e.g., '20/12/2024'
+            $date = $quote->callBack->call_back_date;
             $time = $quote->callBack->call_back_time;
-            // $callbackDate = Carbon::createFromFormat('d/m/Y', $date);
-            // $callbackTime = Carbon::createFromFormat('h:i:s', $time);    
+
+            if (strpos($date, '-') !== false) {
+                $callbackDate = Carbon::createFromFormat('Y-m-d', $date);
+            }
+
+            // Merge date with time
+            $callbackDateTime = $callbackDate->setTimeFromTimeString($time);
+            // Format the final datetime
+            $mergedDateTime = $callbackDateTime->format('d/m/Y H:i');
 
             $quote['id'] = $quote->id;
             $quote['quote_ref'] = $quote->quote_ref;
@@ -258,17 +264,17 @@ class QuoteService
             $quote['name'] = $quote->customer->name;
             if ($quote->customer_id == $quote->site_add_id) {
                 // Logic if customer_id equals site_add_id
-                $quote['address'] =  $quote->customer_address; // or whatever processing needed
+                $quote['address'] =  $quote->customer_address;
             } else {
                 // Logic if they are different
-                $quote['address'] =  $quote->site_address; // or whatever processing needed
+                $quote['address'] =  $quote->site_address;
             }
             $quote['sub_total'] = $quote->sub_total;
             $quote['vat_amount'] = $quote->vat_amount;
             $quote['total'] = $quote->total;
             $quote['deposit'] = $quote->deposit;
             $quote['profit'] = $quote->profit;
-            $quote['callBack_dateTime'] = $quote->callBack->call_back_date;
+            $quote['callBack_dateTime'] = $mergedDateTime;
             $quote['outstanding'] = $quote->outstanding;
             array_push($quoteArr, $quote);
         }
@@ -359,35 +365,40 @@ class QuoteService
     public function getCustomerInvoiceDeposit($quote_id)
     {
         return  DB::table('quote_customer_deposit_invoices')
-            ->join('invoices', 'quote_customer_deposit_invoices.invoice_id', '=', 'invoices.id') 
+            ->join('invoices', 'quote_customer_deposit_invoices.invoice_id', '=', 'invoices.id')
             ->select('quote_customer_deposit_invoices.*', 'invoices.invoice_ref', 'invoices.status')
             ->where('quote_customer_deposit_invoices.quote_id', $quote_id)
             ->get();
     }
 
-    public function getSearchQuoteList(array $data) {
-        Quote::where([
-            'quote_ref' => $data['quote_ref'],
-            'customer_id' => $data['customer_id'],
-            'project_id' => $data['project_id'],
-            'quote_type' => $data['quote_type'],
-            'source' =>  $data['source'],
-            'user_id' => $data['user_id'],
-            'date_to' => $data['date_to'],
-            'date_from' => $data['date_from'],
-            'address' => $data['address'],
-            'tag' => $data['tag'],
-            'region' => $data['region'],
-            'expiry_date_to' => $data['expiry_date_to'],
-            'xpiry_date_from' => $data['expiry_date_from'],
-            'status' => $data['status'],
-            'accepted_to' => $data['accepted_from'],
-            'accepted_from' => $data['accepted_from'],
-            'rejected_to' => $data['rejected_to'],
-            'rejected_from' => $data['rejected_from'],
-            'converted_to' => $data['converted_to'],
-            'converted_from' => $data['converted_from'],
-            
-         ]); 
+    public function getSearchQuoteList($data)
+    {
+        $query = Quote::join('customers', 'customers.id', '=', 'quotes.customer_id')
+            // where('quotes.customer_id', $data->customer_id)
+            ->leftJoin('constructor_customer_sites', 'constructor_customer_sites.id', '=', 'quotes.site_add_id')
+            ->select(
+                'quotes.*',
+                'customers.name as customer_name',
+                'constructor_customer_sites.address as site_address'
+            );
+
+
+        if (!empty($data->quote_ref)) {
+            $query->where('quotes.quote_ref', $data->quote_ref);
+        }
+
+        if (!empty($data->date_from) && !empty($data->date_to)) {
+            $dateFrom = $data->date_from;
+            $dateTo = $data->date_to;
+
+            // Ensure date_from is earlier than or equal to date_to
+            if ($dateFrom > $dateTo) {
+                [$dateFrom, $dateTo] = [$dateTo, $dateFrom]; // Swap the dates
+            }
+
+            $query->whereBetween('quotes.created_at', [$dateFrom, $dateTo]);
+        }
+
+        return $query->get();
     }
 }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('purchase_order_emails', function (Blueprint $table) {
             $table->json('to')->change();
             $table->json('cc')->nullable()->change();
+
         });
     }
 
