@@ -219,7 +219,7 @@ ul#purchase_qoute_refList {
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Site</label>
                                                 <div class="col-sm-7">
-                                                <select class="form-control editInput selectOptions get_site_result" id="purchase_site_id" name="site_id" <?php if(!isset($purchase_orders) && $purchase_orders ==''){echo 'disabled'; }?>>
+                                                <select class="form-control editInput selectOptions get_site_result" onchange="siteDetail()" id="purchase_site_id" name="site_id" <?php if(!isset($purchase_orders) && $purchase_orders ==''){echo 'disabled'; }?>>
                                                     <option selected disabled value="">None</option>
                                                     <option <?php if(isset($purchase_orders) && $purchase_orders->site_id == 0){echo 'selected';}?> value="0">Same as customer</option>
                                                     @foreach($site as $siteVal)
@@ -521,7 +521,7 @@ ul#purchase_qoute_refList {
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="pageTitleBtn p-0">
-                                        <a href="#" class="profileDrop">Add Title</a>
+                                        <!-- <a href="#" class="profileDrop">Add Title</a> -->
                                         <!-- <a href="#" class="profileDrop">Show Variations</a>
                                         <a href="#" class="profileDrop bg-secondary">Export</a> -->
 
@@ -984,6 +984,16 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
             }
         });
     }
+    var purchase_user_name='';
+    var purchase_company_name='';
+    var purchase_user_address='';
+    var purchase_user_city='';
+    var purchase_user_county='';
+    var purchase_user_post_code='';
+    var purchase_user_telephone_code;
+    var user_telephone='';
+    var purchase_user_mobile_code;
+    var purchase_user_mobile='';
     function get_customer_details() {
         var customer_id = $("#purchase_customer_id").val();
         var token = '<?php echo csrf_token(); ?>'
@@ -995,12 +1005,12 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 _token: token
             },
             success: function(data) {
-                // console.log(data);
+                console.log(data);
+                // return false;
                 $('#purchase_project_id').removeAttr('disabled');
                 $('#purchase_site_id').removeAttr('disabled');
                 if (data.customers && data.customers.length > 0) {
                 var customerData = data.customers[0];
-                // Populate project options
                 var project = '<option value="0" selected disabled>None</option>';
                 if (customerData.customer_project && Array.isArray(customerData.customer_project)) {
                     for (let i = 0; i < customerData.customer_project.length; i++) {
@@ -1009,7 +1019,6 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 }
                 document.getElementById('purchase_project_id').innerHTML = project;
 
-                // Populate site options
                 var site = '<option value="0">Same as customer</option>';
                 if (customerData.sites && Array.isArray(customerData.sites)) {
                     for (let i = 0; i < customerData.sites.length; i++) {
@@ -1019,13 +1028,74 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                 document.getElementById('purchase_site_id').innerHTML = site;
                 $("#project_customer_name").text(customerData.name);
                 $("#site_customer_name").text(customerData.name);
-                // Enable the relevant fields
+                purchase_user_name=customerData.name;
+                purchase_company_name=customerData.contact_name;
+                purchase_user_address=customerData.address;
+                purchase_user_city=customerData.city;
+                purchase_user_county=customerData.country;
+                purchase_user_post_code=customerData.postal_code;
+                purchase_user_telephone_code=customerData.telephone_country_code ?? 230;
+                user_telephone=customerData.telephone;
+                purchase_user_mobile_code=customerData.mobile_country_code ?? 230;
+                purchase_user_mobile=customerData.mobile;
+                $("#purchase_user_name").val(purchase_user_name);
+                $("#purchase_company_name").val(purchase_company_name);
+                $("#purchase_user_address").val(purchase_user_address);
+                $("#purchase_user_city").val(purchase_user_city);
+                $("#purchase_user_county").val(purchase_user_county);
+                $("#purchase_user_post_code").val(purchase_user_post_code);
+                $("#purchase_user_telephone_code").val(purchase_user_telephone_code);
+                $("#user_telephone").val(user_telephone);
+                $("#purchase_user_mobile_code").val(purchase_user_mobile_code);
+                $("#purchase_user_mobile").val(purchase_user_mobile);
+
                 $('#purchase_project_id').removeAttr('disabled');
                 $('#purchase_site_id').removeAttr('disabled');
             }
             },
             error: function(xhr, status, error) {
                 console.log(error);
+            }
+        });
+    }
+    function siteDetail(){
+        var id=$("#purchase_site_id").val();
+        $.ajax({
+            url: '{{ route("customer.ajax.getCustomerSiteDetails") }}',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                // console.log(response.data);
+                // return false;
+                if(id == 0){
+                    $("#purchase_user_name").val(purchase_user_name);
+                    $("#purchase_company_name").val(purchase_company_name);
+                    $("#purchase_user_address").val(purchase_user_address);
+                    $("#purchase_user_city").val(purchase_user_city);
+                    $("#purchase_user_county").val(purchase_user_county);
+                    $("#purchase_user_post_code").val(purchase_user_post_code);
+                    $("#purchase_user_telephone_code").val(purchase_user_telephone_code);
+                    $("#user_telephone").val(user_telephone);
+                    $("#purchase_user_mobile_code").val(purchase_user_mobile_code);
+                    $("#purchase_user_mobile").val(purchase_user_mobile);
+                }else{
+                    $("#purchase_user_name").val(response.data[0].contact_name);
+                    $("#purchase_company_name").val(response.data[0].company_name);
+                    $("#purchase_user_address").val(response.data[0].address);
+                    $("#purchase_user_city").val(response.data[0].city);
+                    $("#purchase_user_county").val(response.data[0].country);
+                    $("#purchase_user_post_code").val(response.data[0].post_code);
+                    $("#purchase_user_telephone_code").val(response.data[0].telephone_country_code ?? 230);
+                    $("#user_telephone").val(response.data[0].telephone);
+                    $("#purchase_user_mobile_code").val(response.data[0].mobile_country_code ?? 230);
+                    $("#purchase_user_mobile").val(response.data[0].mobile);
+                }
+                
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
             }
         });
     }
@@ -1397,6 +1467,10 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         inputQty.type = 'text';
                         inputQty.className = 'qty input50';
                         inputQty.addEventListener('input', function() {
+                            this.value = this.value.replace(/[^0-9.]/g, '');
+                            if ((this.value.match(/\./g) || []).length > 1) {
+                                this.value = this.value.slice(0, -1);
+                            }
                             updateAmount(row);
                         });
                         inputQty.name = 'qty[]';
@@ -1408,7 +1482,14 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const inputPrice = document.createElement('input');
                         inputPrice.type = 'text';
                         inputPrice.className = 'product_price input50';
-                        inputPrice.addEventListener('input', function() {
+                        // inputPrice.addEventListener('input', function() {
+                        //     updateAmount(row);
+                        // });
+                        inputPrice.addEventListener('input', function () {
+                            this.value = this.value.replace(/[^0-9.]/g, '');
+                            if ((this.value.match(/\./g) || []).length > 1) {
+                                this.value = this.value.slice(0, -1);
+                            }
                             updateAmount(row);
                         });
                         inputPrice.name = 'price[]'; 
@@ -1872,6 +1953,10 @@ $('#search-product').on('keyup', function() {
                         inputQty.type = 'text';
                         inputQty.className = 'qty input50';
                         inputQty.addEventListener('input', function() {
+                            this.value = this.value.replace(/[^0-9.]/g, '');
+                            if ((this.value.match(/\./g) || []).length > 1) {
+                                this.value = this.value.slice(0, -1);
+                            }
                             updateAmount(row);
                         });
                         inputQty.name = 'qty[]';
@@ -1884,6 +1969,10 @@ $('#search-product').on('keyup', function() {
                         inputPrice.type = 'text';
                         inputPrice.className = 'product_price input50';
                         inputPrice.addEventListener('input', function() {
+                            this.value = this.value.replace(/[^0-9.]/g, '');
+                            if ((this.value.match(/\./g) || []).length > 1) {
+                                this.value = this.value.slice(0, -1);
+                            }
                             updateAmount(row);
                         });
                         inputPrice.name = 'price[]'; 
@@ -2355,7 +2444,7 @@ $(document).on('click','.attachment_delete', function() {
         $("#ReminderModal").modal('show');
         var id = $(this).data('id');
         var title = $(this).data('title');
-        var user_id = $(this).data('user_id');
+        var user_id = $(this).data('user_id'); 
         var reminder_date = $(this).data('reminder_date');
         var reminder_time = $(this).data('reminder_time');
         var notification = $(this).data('notification');
@@ -2363,6 +2452,7 @@ $(document).on('click','.attachment_delete', function() {
         var email = $(this).data('email');
         var notes = $(this).data('notes');
 
+        
         $("#reminder_id").val(id);
         $("#reminder_date").val(reminder_date);
         $("#reminder_time").val(reminder_time);
@@ -2374,19 +2464,19 @@ $(document).on('click','.attachment_delete', function() {
         $("#reminder_email").prop('checked', email == 1);
 
         if (user_id) {
+            $('.multiselect-dropdown').hide();
             var userArray = user_id.split(',');
             $("#reminder_user option").each(function () {
-                if (userArray.includes($(this).val())) {
-                    $(this).prop('selected', true);
-                } else {
-                    $(this).prop('selected', false);
-                }
+                $(this).prop('selected', userArray.includes($(this).val()));
             });
         } else {
             $("#reminder_user option").prop('selected', false);
         }
-        // $("#reminder_user").trigger('change');
-        $('#reminder_user').multiselect('reload');
+        userArray.forEach(function (userId) {
+            $(`#reminder_user option[value="${userId}"]`).prop('selected', true);
+            $(`#reminder_user + .multiselect-container input[type="checkbox"][value="${userId}"]`).prop('checked', true);
+        });
+        MultiselectDropdown();
 
     });
 </script>
