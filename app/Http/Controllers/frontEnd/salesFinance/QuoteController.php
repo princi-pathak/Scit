@@ -669,7 +669,9 @@ class QuoteController extends Controller
         $quote = Quote::where('id', $request->quote_id)->get();
         $quote = $quote->first();
 
-        $invoice = $this->invoiceService->saveInvoiceData($quote, $request, Auth::user()->home_id);
+        $validatedData = $request->validated();
+
+        $invoice = $this->invoiceService->saveInvoiceData($quote, $validatedData, Auth::user()->home_id);
 
         // dd($invoice);
         $data = $this->quoteService->saveCustomerInvoiceDeposit($request, $invoice->id);
@@ -697,13 +699,19 @@ class QuoteController extends Controller
             'success' => (bool) $data,
             'data' => $data ? $data : 'No Data'
         ]);
-
     }
 
     public function searchQuoteData(Request $request){
-        dd($request);
+        // dd($request);
 
-        $this->quoteService->getSearchQuoteList();
+        $data = $this->quoteService->getSearchQuoteList($request);
+        // dd($data);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No Data'
+        ]);
+
     }
 }
     

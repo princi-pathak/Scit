@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('quotes', function (Blueprint $table) {
-            $table->integer('user_id');
+            $table->integer('user_id')->after('home_id');
         });
     }
 

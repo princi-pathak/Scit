@@ -2485,7 +2485,6 @@
                                 getProductData(selectedId);
                             }
                         });
-
                     },
                     error: function(xhr) {
                         console.error(xhr.responseText);
@@ -2511,7 +2510,6 @@
                     if (user.id == setCustomerId) {
                         option.selected = true; // Mark as selected
                     }
-
                     get_customer_type.appendChild(option);
                 });
             },
