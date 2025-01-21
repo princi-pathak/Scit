@@ -40,7 +40,10 @@ use App\Models\Payment_type;
 use App\Models\PurchaseOrderRecordPayment;
 use App\Models\PurchaseOrderInvoiceReceives;
 use App\Models\PurchaseOrderReject;
+use App\Models\PurchaseReminder;
+use App\Models\PurchaseOrderEmail;
 use App\User;
+use PDF;
 
 class Purchase_orderController extends Controller
 {
@@ -87,10 +90,13 @@ class Purchase_orderController extends Controller
         $site=array();
         $contact_name=array();
         $attachments=array();
+        $reminder_data=array();
         if($key){
             $site=Constructor_customer_site::where('customer_id',$purchase_orders->customer_id)->get();
             $contact_name=Customer::find($purchase_orders->customer_id);
+            $reminder_data=$this->reminder_check($key);
         }
+        // echo "<pre>";print_r($reminder_data);die;
         $data['purchase_orders']=$purchase_orders;
         $data['attachments']=$attachments;
         $data['site']=$site;
@@ -107,6 +113,7 @@ class Purchase_orderController extends Controller
         $data['region']=Region::where(['home_id'=>$home_id,'status'=>1,'deleted_at'=>null])->get();
         $data['contact_name']=$contact_name;
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
+        $data['reminder_data']=$reminder_data;
         // echo "<pre>";print_r($data['country']);die;
         return view('frontEnd.salesAndFinance.purchase_order.new_purchase_order',$data);
     }
@@ -591,7 +598,8 @@ class Purchase_orderController extends Controller
                         <td><input type="checkbox" class="delete_checkbox" value="' . $val->id . '"></td>
                         <td>' . ++$key . '</td>
                         <td>' . $val->purchase_order_ref . '</td>
-                        <td>' . htmlspecialchars($val->purchase_date) . '</td>
+                        <td>' . date('d/m/Y',strtotime($val->purchase_date)) . '</td>
+                        <td>' . date('d/m/Y',strtotime($val->payment_due_date)) . '</td>
                         <td>' . $val->suppliers->name . '</td>
                         <td>' . ($customer->name ?? '') . '</td>
                         <td>' . $val->city . '</td>
@@ -942,5 +950,121 @@ class Purchase_orderController extends Controller
             Log::error('Error: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function save_reminder(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'reminder_date' => 'required',
+            'user_id' => 'required',
+            'title' => 'required',
+        ],
+        [
+            'reminder_date.required' => 'Reminder Date field is required.',
+            'user_id.required' => 'Reminder email field is required.',
+            'title.required' => 'Title field is required.',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        $notification = $request->has('notification') ? 1 : 0;
+        $sms = $request->has('sms') ? 1 : 0;
+        $email = $request->has('email') ? 1 : 0;
+
+        if ($notification==0 && $sms==0 && $email==0) {
+            return response()->json(['vali_error' => 'Send as field is requird']);
+        }
+        $data=$request->all();
+        $data['notification']=$notification;
+        $data['sms']=$sms;
+        $data['email']=$email;
+        $data['home_id']=Auth::user()->home_id;
+        $data['loginUserId']=Auth::user()->id;
+        $data['user_id']=implode(',',$request->user_id);
+        // echo "<pre>";print_r($data);die;
+        try{
+            $reminder=PurchaseReminder::saveReminder($data);
+            return response()->json(['success'=>true,'message'=>'The Reminder has been saved successfully.','data'=>$reminder]);
+        }catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    static function reminder_check($po_id){
+        $home_id=Auth::user()->home_id;
+        PurchaseReminder::allReminderData($home_id)
+        ->whereNull('po_id')
+        ->forceDelete();
+        $current_date=Date('Y-m-d');
+        PurchaseReminder::allReminderData($home_id)
+        ->where('po_id', $po_id)
+        ->whereDate('reminder_date', '<', $current_date)
+        ->update(['status' => 1]);
+        return PurchaseReminder::allReminderData($home_id)->where('po_id',$po_id)->get();
+    }
+    public function purchaseOrderEmailSave(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $validator = Validator::make($request->all(), [
+            'selectedToEmail' => 'required',
+            'subject' => 'required',
+            'po_id' => 'required',
+        ],
+        [
+            'selectedToEmail.required' => 'To field is required.',
+            'subject.required' => 'Subject field is required.',
+            'po_id.required' => 'Purchase Order Id does not match.',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['vali_error' => $validator->errors()->first()]);
+        }
+        try{
+            $data=$request->all();
+            $data['home_id']=Auth::user()->home_id;
+            $data['loginUserId']=Auth::user()->home_id;
+            $data['to'] = json_encode(explode(',', $request->selectedToEmail));
+            $data['cc'] = $request->selectedToEmail1 ? json_encode(explode(',', $request->selectedToEmail1)) : json_encode([]);
+            // echo "<pre>";print_r($data);die;
+            $email=PurchaseOrderEmail::saveEmail($data);
+            return response()->json(['success'=>true,'message'=>'The Email has been saved successfully.','data'=>$email]);
+        }catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function pdfTest(){
+        // $data['data'] = [
+        //     'invoice_number' => $last_id,
+        //     'po_number'=>$po_number,
+        //     'date' => now()->format('d-m-Y'),
+        //     'customer' => $customer->first_name,
+        //     'amount' => $change_amount,
+        //     'cust_address' => $customer->address,
+        //     'cust_email' => $customer->email,
+        //     'cust_image' => $customer->emp_image,
+        //     'corpo_name' => $corpo->first_name,
+        //     'corpo_address' => $corpo->address,
+        //     'start_date' => $start_date,
+        //     'end_date' => $end_date,
+        //     'start_time' => $time_detail->start_time,
+        //     'end_time' => $time_detail->end_time,
+        // ];
+
+        // echo "<pre>";print_r($data['data']);die;
+        // return view('frontEnd.salesAndFinance.purchase_order.purchaseOrderPDF');
+        try{
+            $data = array(
+                'logBooks' => 123,
+                'image_id' => 321,
+            );
+            // view()->share('logBooks',$logBooks);
+            view()->share('data',$data);
+            $pdf = PDF::loadView('frontEnd.salesAndFinance.purchase_order.purchaseOrderPDF')->setPaper('a4', 'landscape');
+            return $pdf->stream('purchaseOrderPDF.frontEnd.salesAndFinance.purchase_order');
+            return response()->json(['success'=>true,'name'=>$invoice_name]);
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+        
+
+        
     }
 }

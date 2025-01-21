@@ -310,6 +310,7 @@ ul#projectList {
                                     <th>#</th>
                                     <th>PO Ref</th>
                                     <th>Date</th>
+                                    <th>Due Date</th>
                                     <th>Supplier</th>
                                     <th>Customer</th>
                                     <th>Delivery</th>
@@ -359,6 +360,7 @@ ul#projectList {
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$val->purchase_order_ref}}</td>
                                     <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($val->payment_due_date)) }}</td>
                                     <td>{{$val->suppliers->name}}</td>
                                     <td>{{$customer->name ?? ''}}</td>
                                     <td>{{$val->city}}</td>
@@ -1710,7 +1712,8 @@ $('.delete_checkbox').on('click', function() {
         $("#invoiceModal").modal('show');
     }
     function getAllPurchaseInvices(data){
-        location.reload();
+        // location.reload();
+        $("#emailModal").modal('hide');
     }
     function openRejectModal(id,po_ref){
         // alert("id "+id);
@@ -1725,6 +1728,7 @@ $('.delete_checkbox').on('click', function() {
         $("#selectedToEmail").val(email);
         $("#email_modalTitle").text("Email Purchase Order - "+po_ref);
         $("#emailsubject").val("Purchase Order from The Contructor - "+po_ref);
+        $("#email_po_id").val(id);
         $("#emailModal").modal('show');
     }
 </script>
