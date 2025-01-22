@@ -237,7 +237,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/add-incident-report', 'App\Http\Controllers\frontEnd\DashboardController@add_incident_report');
 
 	// Ram 14/06/2024 path for jobs create
-
 	Route::controller(JobController::class)->group(function () {
 		Route::get('/jobs_list', 'job_list');
 		Route::post('/job_save_all', 'job_save_all');
