@@ -211,11 +211,11 @@ display: block;
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-3 col-form-label">Subject<span class="radStar ">*</span></label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control editInput" id="{{ $subject }}" name="vat_amount">
+                                        <input type="text" class="form-control editInput" id="{{ $subject }}" name="subject">
                                     </div>
                                     <div class="col-sm-2">
                                         
-                                        <select class="form-control editInput selectOptions" id="{{ $selectBoxsubject }}" name="vat_id">
+                                        <select class="form-control editInput selectOptions" id="{{ $selectBoxsubject }}" name="defaultSelect">
                                             <option value="1">Default Purchase Order</option>
                                         </select>
                                     </div>
@@ -223,7 +223,7 @@ display: block;
                                 <div class="mb-2 row">
                                     <label for="inputAddress" class="col-sm-3 col-form-label">Body</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control textareaInput CustomercheckError" id="{{ $body }}" name="notes" rows="10" maxlength="500">Hello,<br>Please find attached purchase order<br><br><br><br><br>Regards,<br>The Contructor<br><br>Thanks for using SCITS</textarea>
+                                        <textarea class="form-control textareaInput CustomercheckError" id="{{ $body }}" name="body" rows="10" maxlength="500">Hello,<br>Please find attached purchase order<br><br><br><br><br>Regards,<br>The Contructor<br><br>Thanks for using SCITS</textarea>
                                     </div>
                                 </div>
                                 
@@ -263,9 +263,12 @@ CKEDITOR.replace('{{ $body }}', editor_config );
 <script>
     
     $("#{{ $saveButtonId }}").on('click',function(){
+        for (var instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
         $.ajax({
             type: "POST",
-            url: "{{url('purchaseOrderInviceRecieve')}}",
+            url: "{{url('purchaseOrderEmailSave')}}",
             data: new FormData($("#{{ $emailformId }}")[0]),
             async: false,
             contentType: false,
@@ -280,17 +283,17 @@ CKEDITOR.replace('{{ $body }}', editor_config );
                         return false;
                     }else if(response.success === true){
                         $(window).scrollTop(0);
-                        $('#message_invoiceModal').addClass('success-message').text(response.message).show();
+                        $('#message_emailModal').addClass('success-message').text(response.message).show();
                         setTimeout(function() {
-                            $('#message_invoiceModal').removeClass('success-message').text('').hide();
+                            $('#message_emailModal').removeClass('success-message').text('').hide();
                             getAllPurchaseInvices(response.data);
                         }, 3000);
                     }else{
                         // alert("Something went wrong");
-                        $('#message_invoiceModal').addClass('error-message').text(response.message).show();
+                        $('#message_emailModal').addClass('error-message').text(response.message).show();
                         setTimeout(function() {
                             // $('#error-message').text('').fadeOut();
-                            $('#message_invoiceModal').removeClass('error-message').text('').hide();
+                            $('#message_emailModal').removeClass('error-message').text('').hide();
                         }, 3000);
                         return false;
                     }

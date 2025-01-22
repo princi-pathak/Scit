@@ -23,7 +23,7 @@ use App\Services\Quotes\AttachmentTypeService;
 use App\Services\Invoice\InvoiceService;
 
 use App\Models\QuoteType;
-use App\Models\Quotes\CustomerDepositInvoice;
+// use App\Models\Quotes\CustomerDepositInvoice;
 use App\Models\Quote;
 use App\Models\QuoteSource;
 use App\Models\Quotes\QuoteRejectType;
@@ -35,6 +35,7 @@ use App\Models\Product_category;
 use App\Models\AttachmentType;
 use App\Models\Payment_type;
 use App\Models\Task_type;
+use App\Models\Tag;
 use App\User;
 
 
@@ -575,6 +576,11 @@ class QuoteController extends Controller
         $data['acceptedCount'] = Quote::getAcceptedCount(Auth::user()->home_id);
         $data['actionedCount'] = Quote::getActionedCount(Auth::user()->home_id);
         $data['rejectedCount'] = Quote::getRejectedCount(Auth::user()->home_id);
+        $data['users'] = User::getHomeUsers(Auth::user()->home_id);
+        $data['quoteSources'] = QuoteSource::getAllQuoteSourcesHome(Auth::user()->home_id);
+        $data['regions'] = Region::getRegions(Auth::user()->home_id);
+        $data['tags'] = Tag::getActivetags(Auth::user()->home_id);
+        $data['quoteTypes'] = QuoteType::getActiveQuoteType(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.search_quote', $data);
     }
 
@@ -663,7 +669,9 @@ class QuoteController extends Controller
         $quote = Quote::where('id', $request->quote_id)->get();
         $quote = $quote->first();
 
-        $invoice = $this->invoiceService->saveInvoiceData($quote, $request, Auth::user()->home_id);
+        $validatedData = $request->validated();
+
+        $invoice = $this->invoiceService->saveInvoiceData($quote, $validatedData, Auth::user()->home_id);
 
         // dd($invoice);
         $data = $this->quoteService->saveCustomerInvoiceDeposit($request, $invoice->id);
@@ -686,6 +694,18 @@ class QuoteController extends Controller
         }
 
         $data = $this->quoteService->getCustomerInvoiceDeposit($request->quote_id);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No Data'
+        ]);
+    }
+
+    public function searchQuoteData(Request $request){
+        // dd($request);
+
+        $data = $this->quoteService->getSearchQuoteList($request);
+        // dd($data);
 
         return response()->json([
             'success' => (bool) $data,

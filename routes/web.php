@@ -237,7 +237,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::post('/add-incident-report', 'App\Http\Controllers\frontEnd\DashboardController@add_incident_report');
 
 	// Ram 14/06/2024 path for jobs create
-
 	Route::controller(JobController::class)->group(function () {
 		Route::get('/jobs_list', 'job_list');
 		Route::post('/job_save_all', 'job_save_all');
@@ -415,6 +414,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/savePurchaseOrderRecordPayment','savePurchaseOrderRecordPayment');
 		Route::post('/purchaseOrderInviceRecieve','purchaseOrderInviceRecieve');
 		Route::post('/purchaseOrderreject','purchaseOrderreject');
+		Route::post('/save_reminder','save_reminder');
+		Route::post('/purchaseOrderEmailSave','purchaseOrderEmailSave');
+		Route::get('/preview','preview');
 	});
 	
 	// Forontend Customer Controller
@@ -588,8 +590,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/quotes/getDepositeData', 'getDepositeData')->name('quote.ajax.getDepositeData');
 		Route::post('/quotes/saveInvoiceDeposite', 'saveInvoiceDeposite')->name('quote.ajax.saveInvoiceDeposite');
 		Route::post('/quotes/getQuoteInvoiceDeposit', 'getQuoteInvoiceDeposit')->name('quote.ajax.getQuoteInvoiceDeposit');
+		Route::post('/quotes/searchQuoteData', 'searchQuoteData')->name('quote.ajax.searchQuoteData');
 				
 
+		
 		
 	});
 

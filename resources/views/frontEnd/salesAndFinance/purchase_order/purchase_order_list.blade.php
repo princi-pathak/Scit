@@ -310,6 +310,7 @@ ul#projectList {
                                     <th>#</th>
                                     <th>PO Ref</th>
                                     <th>Date</th>
+                                    <th>Due Date</th>
                                     <th>Supplier</th>
                                     <th>Customer</th>
                                     <th>Delivery</th>
@@ -336,24 +337,22 @@ ul#projectList {
                                     $sub_total_amount=0;
                                     $total_amount=0;
                                     $vat_amount=0;
-                                    $vatTotal=0;
                                     $purchaseProductId=0;
                                     $outstandingAmount=0;
                                     foreach($val->purchaseOrderProducts as $product){
                                         $purchaseProductId=$product->id;
                                         $qty=$product->qty*$product->price;
                                         $sub_total_amount=$sub_total_amount+$qty;
-                                        $vatTotal=$vatTotal+$product->vat;
-                                        $vat_amount=$vat_amount+$product->vat;
-                                        $percentage=$sub_total_amount*$vat_amount/100;
-                                        $total_amount=$total_amount+$percentage+$sub_total_amount;
+                                        $vat=$qty*$product->vat/100;
+                                        $vat_amount=$vat_amount+$vat;
+                                        $total_amount=$total_amount+$vat+$qty;
                                         $outstandingAmount=$total_amount-$product->outstanding_amount;
                                         
-                                        $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
-                                        $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
-                                        $all_TotalAmount=$all_TotalAmount+$total_amount;
-                                        $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
                                     }
+                                    $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
+                                    $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
+                                    $all_TotalAmount=$all_TotalAmount+$total_amount;
+                                    $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
                                 ?>
                                 <tr>
                                     <td>
@@ -361,6 +360,7 @@ ul#projectList {
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$val->purchase_order_ref}}</td>
                                     <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($val->payment_due_date)) }}</td>
                                     <td>{{$val->suppliers->name}}</td>
                                     <td>{{$customer->name ?? ''}}</td>
                                     <td>{{$val->city}}</td>
@@ -380,7 +380,7 @@ ul#projectList {
                                                 <div class="dropdown-menu fade-up m-0">
                                                     <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Preview</a>
+                                                    <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
                                                     <hr class="dropdown-divider">
@@ -412,7 +412,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Preview</a>
+                                                    <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Print</a>
                                                     <hr class="dropdown-divider">
@@ -424,7 +424,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$purchaseProductId}},{{$outstandingAmount}})" class="dropdown-item">Record Payment</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vatTotal}},{{$outstandingAmount}})" class="dropdown-item">Invoice Received</a>
+                                                    <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$outstandingAmount}})" class="dropdown-item">Invoice Received</a>
                                                     <!-- <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">CRM / History</a>
                                                     <hr class="dropdown-divider">
@@ -1712,7 +1712,8 @@ $('.delete_checkbox').on('click', function() {
         $("#invoiceModal").modal('show');
     }
     function getAllPurchaseInvices(data){
-        location.reload();
+        // location.reload();
+        $("#emailModal").modal('hide');
     }
     function openRejectModal(id,po_ref){
         // alert("id "+id);
@@ -1727,6 +1728,7 @@ $('.delete_checkbox').on('click', function() {
         $("#selectedToEmail").val(email);
         $("#email_modalTitle").text("Email Purchase Order - "+po_ref);
         $("#emailsubject").val("Purchase Order from The Contructor - "+po_ref);
+        $("#email_po_id").val(id);
         $("#emailModal").modal('show');
     }
 </script>

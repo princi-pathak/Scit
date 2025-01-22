@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Lead;
 use Illuminate\Support\Facades\Auth;
-use App\Customer;
+use App\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -1018,14 +1018,15 @@ class LeadController extends Controller
 
     public function searchLead(){
        
-        $page = "leads";
-        $allLead = Lead::getAllLeadCount(Auth::user()->home_id);
-        $myLeads = Lead::getLeadByUser(Auth::user()->id, Auth::user()->home_id);
-        $unAssignLead = Lead::getUnassignedCount(Auth::user()->home_id);
-        $actionedLead =   Lead::getActionedLead(Auth::user()->home_id);
-        $rejectLead = Lead::getRejectedCount(Auth::user()->home_id);
-        $authorizedLead     = Lead::getAuthorizationCount(Auth::user()->home_id);
-        $convertedLead = Customer::getConvertedCustomersCount(Auth::user()->home_id);
-        return view('frontEnd.salesAndFinance.lead.search_leads', compact('page', 'allLead', 'myLeads', 'unAssignLead', 'actionedLead', 'rejectLead', 'authorizedLead', 'convertedLead'));
+        $data['page'] = "leads";
+        $data['allLead'] = Lead::getAllLeadCount(Auth::user()->home_id);
+        $data['myLeads'] = Lead::getLeadByUser(Auth::user()->id, Auth::user()->home_id);
+        $data['unAssignLead'] = Lead::getUnassignedCount(Auth::user()->home_id);
+        $data['actionedLead'] =   Lead::getActionedLead(Auth::user()->home_id);
+        $data['rejectLead'] = Lead::getRejectedCount(Auth::user()->home_id);
+        $data['authorizedLead']     = Lead::getAuthorizationCount(Auth::user()->home_id);
+        $data['convertedLead'] = Customer::getConvertedCustomersCount(Auth::user()->home_id);
+        $data['statuses'] = LeadStatus::getLeadStatus();
+        return view('frontEnd.salesAndFinance.lead.search_leads', $data);
     }
 }
