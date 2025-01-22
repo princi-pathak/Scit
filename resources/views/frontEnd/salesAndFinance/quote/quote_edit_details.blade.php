@@ -3943,7 +3943,7 @@
                 console.log(response);
                 const table = document.getElementById('depositData'); // Replace with your table's ID
                 const tableBody = table.querySelector('tbody'); // Select the tbody within the table
-                populateTable(response.data, tableBody, table)
+                setDepositTableData(response.data, tableBody, table)
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3952,7 +3952,7 @@
     }
 
 
-    function populateTable(data, tableBody, table) {
+    function setDepositTableData(data, tableBody, table) {
 
         tableBody.innerHTML = '';
 

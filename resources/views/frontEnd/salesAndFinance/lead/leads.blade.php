@@ -3211,7 +3211,7 @@
                     success: function(data) {
                         console.log(data);
                         if (data) {
-                            location.reload();
+                            // location.reload();
                         } else {
                             alert("Something went wrong");
                         }
