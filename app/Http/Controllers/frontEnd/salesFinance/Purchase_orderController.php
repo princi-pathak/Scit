@@ -619,7 +619,7 @@ class Purchase_orderController extends Controller
                                         <div class="dropdown-menu fade-up m-0">
                                             <a href="'.url('purchase_order_edit?key=').''.base64_encode($val->id).'" class="dropdown-item">Edit</a>
                                             <hr class="dropdown-divider">
-                                            <a href="#!" class="dropdown-item">Preview</a>
+                                            <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Preview</a>
                                             <hr class="dropdown-divider">
                                             <a href="'.url('purchase_order?duplicate=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Duplicate</a>
                                             <hr class="dropdown-divider">
@@ -651,7 +651,7 @@ class Purchase_orderController extends Controller
                                                         <hr class="dropdown-divider">
                                                         <a href="' . url('purchase_order_edit?key=') . base64_encode($val->id) . '" class="dropdown-item">Edit</a>
                                                         <hr class="dropdown-divider">
-                                                        <a href="#!" class="dropdown-item">Preview</a>
+                                                        <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Preview</a>
                                                         <hr class="dropdown-divider">
                                                         <a href="#!" class="dropdown-item">Print</a>
                                                         <hr class="dropdown-divider">
@@ -1030,41 +1030,31 @@ class Purchase_orderController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    public function pdfTest(){
-        // $data['data'] = [
-        //     'invoice_number' => $last_id,
-        //     'po_number'=>$po_number,
-        //     'date' => now()->format('d-m-Y'),
-        //     'customer' => $customer->first_name,
-        //     'amount' => $change_amount,
-        //     'cust_address' => $customer->address,
-        //     'cust_email' => $customer->email,
-        //     'cust_image' => $customer->emp_image,
-        //     'corpo_name' => $corpo->first_name,
-        //     'corpo_address' => $corpo->address,
-        //     'start_date' => $start_date,
-        //     'end_date' => $end_date,
-        //     'start_time' => $time_detail->start_time,
-        //     'end_time' => $time_detail->end_time,
-        // ];
-
-        // echo "<pre>";print_r($data['data']);die;
-        // return view('frontEnd.salesAndFinance.purchase_order.purchaseOrderPDF');
+    public function preview(Request $request){
+        // echo "<pre>";print_r(Auth::user());die;
         try{
-            $data = array(
-                'logBooks' => 123,
-                'image_id' => 321,
-            );
-            // view()->share('logBooks',$logBooks);
-            view()->share('data',$data);
-            $pdf = PDF::loadView('frontEnd.salesAndFinance.purchase_order.purchaseOrderPDF')->setPaper('a4', 'landscape');
-            return $pdf->stream('purchaseOrderPDF.frontEnd.salesAndFinance.purchase_order');
-            return response()->json(['success'=>true,'name'=>$invoice_name]);
+            // $pdf = PDF::loadView('frontEnd.salesAndFinance.purchase_order.purchaseOrderPDF')->setPaper('a4', 'landscape');
+            $po_id=base64_decode($request->key);
+            $po_details=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['id' => $po_id, 'deleted_at' => null])
+            ->first();
+            // $site_detail=Customer::find($po_details->customer_id);
+			// echo "<pre>";print_r($site_detail);die;
+            // echo "<pre>";print_r($po_details->purchaseOrderProducts);die;
+            
+            $data=[
+                'email'=>Auth::user()->email,
+                'phone_no'=>Auth::user()->phone_no,
+                'job_title'=>Auth::user()->job_title,
+                'current_location'=>Auth::user()->current_location,
+                'company'=>Admin::find(Auth::user()->company_id)->company,
+                'po_details'=>$po_details,
+            ];
+            // echo "<pre>";print_r($data);die;
+            $pdf = PDF::loadView('frontEnd.salesAndFinance.purchase_order.purchaseOrderPDF',$data);
+            return $pdf->stream('frontEnd.salesAndFinance.purchase_order.purchaseOrderPDF');
+            // return $pdf->download('purchaseOrderPDF.pdf');
         }catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-        
-
-        
     }
 }

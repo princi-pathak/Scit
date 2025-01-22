@@ -380,7 +380,7 @@ ul#projectList {
                                                 <div class="dropdown-menu fade-up m-0">
                                                     <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Preview</a>
+                                                    <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
                                                     <hr class="dropdown-divider">
@@ -412,7 +412,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Preview</a>
+                                                    <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Print</a>
                                                     <hr class="dropdown-divider">
