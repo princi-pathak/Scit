@@ -95,9 +95,9 @@
 								<tr>
 									<td>
 										<h3 style="margin-bottom:0;font-size:24px;margin-top:0; padding: 8px;">
-											<strong>PurchaseOrder - {{$po_details->purchase_order_ref}} </strong> </h3>
+											<strong>PurchaseOrder - PO-0005 </strong> </h3>
 										<p style="margin-bottom:0;font-size:18px;margin-top:0; padding: 8px;">
-											<strong>Date: {{date('d/m/Y',strtotime($po_details->purchase_date))}} </strong> </p>
+											<strong>Date: 06/01/2025 </strong> </p>
 									</td>
 								</tr>
 							</table>
@@ -107,16 +107,18 @@
 								style="padding: 10px 0; width:100%;text-align: right;">
 								<tr>
 									<td style="font-size:18px;font-weight:600;color:#000;padding-top:15px;margin-bottom: 0">
-										{{$company}}
+										Blueprint Contruction
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<p style="margin:2px 0;font-size:14px;"><?php echo $current_location;?></p>
-										<p style="margin:2px 0;font-size:14px;"><strong>Tel:
-										</strong> +44{{$phone_no}}</p>
-										<p style="margin:2px 0;font-size:14px;"><strong>Email:		
-										</strong>{{$email}}</p>
+										<p style="margin:2px 0;font-size:14px;">13 POLAND STREET, LONDON</p>
+										<p style="margin:2px 0;font-size:14px;">LONDON</p>
+										<p style="margin:2px 0;font-size:14px;">UK</p>
+										<p style="margin:2px 0;font-size:14px;">W1F 8QB</p>
+										<p style="margin:2px 0;font-size:14px;"><strong>Tel:</strong> +447488803756</p>
+										<p style="margin:2px 0;font-size:14px;"><strong>Email:</strong>
+											geo@flash-interiors.co.uk</p>
 									</td>
 								</tr>
 							</table>
@@ -129,17 +131,18 @@
 								<thead>
 									<tr style="font-size: 14px;">
 										<th>
-											<p style="margin: 0; text-align:left;">{{$po_details->suppliers->name}}</p>
+											<p style="margin: 0; text-align:left;">Supplier1</p>
 										</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<td style="font-size: 13px;">
-											<p style="margin: 5px 0;">{{$po_details->suppliers->contact_name}} </p>
-											<p style="margin: 5px 0;">{{$po_details->suppliers->address}} </p>
-											<p style="margin: 5px 0;">{{$po_details->suppliers->city}}</p>
-											<!-- <p style="margin: 5px 0;">GB</p> -->
+											<p style="margin: 5px 0;">Mahendra Kumar </p>
+											<p style="margin: 5px 0;">13 POLAND STREET, LONDON</p>
+											<p style="margin: 5px 0;">London</p>
+											<p style="margin: 5px 0;">GB</p>
+											<p style="margin: 5px 0;">SW7 1EE</p>
 										</td>
 									</tr>
 								</tbody>
@@ -157,28 +160,13 @@
 								</thead>
 								<tbody>
 									<tr>
-										<?php if($po_details->site_id == 0){
-											$site_detail=App\models\Customer::find($po_details->customer_id);
-											// echo "<pre>";print_r($site_detail);die;
-										?>
 										<td style="font-size: 13px;">
-											<p style="margin: 5px 0;">{{$site_detail->address ?? ""}} </p>
-											<p style="margin: 5px 0;">{{$site_detail->city ?? ""}} </p>
-											<p style="margin: 0;font-size: 13px;">{{$site_detail->postal_code ?? ""}}</p>
-											<!-- <p style="margin: 5px 0;">London</p>
-											<p style="margin: 5px 0;">SW7 1EE</p> -->
+											<p style="margin: 5px 0;">Mahendra </p>
+											<p style="margin: 5px 0;">Home No.324 </p>
+											<p style="margin: 0;font-size: 13px;">4 MONTPELIER STREET, KINGHTSBRIDGE</p>
+											<p style="margin: 5px 0;">London</p>
+											<p style="margin: 5px 0;">SW7 1EE</p>
 										</td>
-										<?php }else{
-											$site_detail=App\models\Constructor_customer_site::find($po_details->site_id);
-										?>
-											<td style="font-size: 13px;">
-											<p style="margin: 5px 0;">{{$site_detail->address ?? ""}} </p>
-											<p style="margin: 5px 0;">{{$site_detail->city ?? ""}} </p>
-											<p style="margin: 0;font-size: 13px;">{{$site_detail->post_code ?? ""}}</p>
-											<!-- <p style="margin: 5px 0;">London</p>
-											<p style="margin: 5px 0;">SW7 1EE</p> -->
-										</td>
-										<?php }?>
 									</tr>
 
 								</tbody>
@@ -213,66 +201,100 @@
 												<p style="padding: 6px 4px;"><strong>Net Amount</strong></p>
 											</td>
 										</tr>
-										<?php 
-										$sub_total_amount=0;
-										$vat_amount=0;
-										foreach($po_details->purchaseOrderProducts as $key=>$val){
-											$qty=$val->qty*$val->price;
-											$sub_total_amount=$sub_total_amount+$qty;
-											$vat=$qty*$val->vat/100;
-											$vat_amount=$vat_amount+$vat;
-											$product_details=App\models\Product::find($val->product_id);
-										?>
 										<tr class="product_details">
 											<td>
-												<p style="margin: 0;font-size: 14px;">{{++$key}}</p>
+												<p style="margin: 0;font-size: 14px;">01</p>
 											</td>
 											<td>
-												<p style="margin: 0;font-size: 14px;">{{$product_details->product_name}}</p>
+												<p style="margin: 0;font-size: 14px;">Product1</p>
 											</td>
 											<td>
-												<p style="margin: 0;font-size: 14px;">{{$val->description}} </p>
+												<p style="margin: 0;font-size: 14px;">This is besic project </p>
 											</td>
 											<td>
-												<p style="margin: 0;font-size: 14px;">{{$val->qty}}</p>
+												<p style="margin: 0;font-size: 14px;">2</p>
 											</td>
 											<td>
-												<p style="margin: 0;font-size: 14px;">£{{$val->price}}</p>
+												<p style="margin: 0;font-size: 14px;">£200.00</p>
 											</td>
 											<td>
-												<p style="margin: 0;font-size: 14px;">{{$val->vat}}</p>
+												<p style="margin: 0;font-size: 14px;">5</p>
 											</td>
 											<td>
-												<p style="margin: 0;font-size: 14px;">£{{$qty}}</p>
+												<p style="margin: 0;font-size: 14px;">£200.00</p>
 											</td>
 										</tr>
-										<?php }?>
+										<tr class="product_details">
+											<td>
+												<p style="margin: 0;font-size: 14px;">02</p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">Product1</p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">This is besic project </p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">2</p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">£200.00</p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">5</p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">£200.00</p>
+											</td>
+										</tr>
+										<tr class="product_details">
+											<td>
+												<p style="margin: 0;font-size: 14px;">03</p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">Product1</p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">This is besic project </p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">2</p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">£200.00</p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">5</p>
+											</td>
+											<td>
+												<p style="margin: 0;font-size: 14px;">£200.00</p>
+											</td>
+										</tr>
+										
+								
 									</tbody>
 								</table>
 								<div style="margin-top:200px;">
 									<table cellpadding="0" cellspacing="0" width="100%" class="table" >
 										<tbody class="table_footer">
 											<tr class="product_details">
-												<th colspan="7"></th>
+												<th></th>
 												<th> <p class="totlePrice" style="margin: 0;font-size: 14px;font-weight: 400;">Sub Total (exc. VAT) </p> </th>
-												<th><p class="totlePrice" style="margin: 0;font-size: 14px;font-weight: 400;">£{{$sub_total_amount}}</p> </th>
+												<th><p class="totlePrice" style="margin: 0;font-size: 14px;font-weight: 400;">£00.00</p> </th>
 											</tr>
 											<tr class="product_details">
-												<th colspan="7"></th>
+												<th></th>
 												<th> <p class="totlePrice" style="margin: 0;font-size: 14px;font-weight: 400;">VAT</p> </th>
-												<th><p class="totlePrice" style="margin: 0;font-size: 14px;font-weight: 400;">£{{$vat_amount}}</p> </th>
+												<th><p class="totlePrice" style="margin: 0;font-size: 14px;font-weight: 400;">£00.00</p> </th>
 											</tr>
 											<tr class="product_details">
-												<th colspan="7"></th>
+												<th></th>
 												<th> <p class="totlePrice" style="margin: 0;font-size: 14px;">Total (inc. VAT)</p> </th>
-												<?php 
-													$total_amount=$sub_total_amount+$vat_amount;
-												?>
-												<th><p class="totlePrice" style="margin: 0;font-size: 14px;">£{{$total_amount}}</p> </th>
+												<th><p class="totlePrice" style="margin: 0;font-size: 14px;">£5500.00</p> </th>
 											</tr>
 											<tr class="product_details">
-												<th  colspan="7"></th>
-												<th colspan="2">
+												<th ></th>
+												<th>
 													<div class="pagination" style="text-align:right;">
 														<span>Page</span>
 														<span> 1 </span>

@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('quotes', function (Blueprint $table) {
-            //
+        Schema::table('purchase_order_emails', function (Blueprint $table) {
+            $table->string('user_id');
         });
     }
 };
