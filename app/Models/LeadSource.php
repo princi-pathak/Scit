@@ -16,7 +16,7 @@ class LeadSource extends Model
         return LeadSource::where('deleted_at', null)->get();
     } 
     public static function getLeadSources(){
-        return LeadSource::where('deleted_at', null)->where('status', 1)->get();
+        return LeadSource::where('deleted_at', null)->where('status', 1)->orderBy('created_at', 'desc')->get();
     }
     public static function deleteLeadSources($id){
         return LeadSource::where('id', $id)->update(['deleted_at' => Carbon::now()]);

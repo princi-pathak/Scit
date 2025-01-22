@@ -25,12 +25,12 @@
                         <form action="" id="searchQuoteForm" class="p-4">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <div class="row form-group mb-2">
+                                    <!-- <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Quote Ref:</label>
                                         <div class="col-md-8">
                                             <input type="text" class="form-control editInput" id="quote_ref" name="quote_ref" placeholder="Quote Ref.">
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <!-- <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Quote Source:</label>

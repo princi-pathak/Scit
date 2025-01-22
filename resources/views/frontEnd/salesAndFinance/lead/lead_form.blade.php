@@ -86,10 +86,8 @@ if (isset($lead)) {
                                             <input type="date" name="prefer_date" class="form-control editInput" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}" id="">
                                         </div>
                                         <div class="col-sm-1 text-center"><label class="col-form-label">To</label></div>
-
                                         <div class="col-sm-3 ps-0">
                                             <input type="time" name="prefer_time" class="form-control editInput" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}" id="">
-
                                         </div>
                                         <div class="col-sm-2 p-0">
                                             <label for="inputContact" class="col-form-label">Next 30 days</label>
@@ -207,12 +205,11 @@ if (isset($lead)) {
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="plusandText">
-                                                        <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#notesModel"><i class="fa-solid fa-square-plus"></i>
-                                                        </a>
+                                                        <a href="#!" class="formicon" data-bs-toggle="modal" data-bs-target="#notesModel"><i class="fa-solid fa-square-plus"></i></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-7 mt-3">
-                                                    <textarea class="form-control textareaInput" name="notes" id="notes" rows="3"></textarea>
+                                                    <textarea class="form-control textareaInput" placeholder="Notes" name="notes" id="notes" rows="3"></textarea>
                                                 </div>
                                                 <div class="col-sm-3 mt-3">
                                                     <div class="jobsection">
@@ -225,7 +222,6 @@ if (isset($lead)) {
                                                         <table class="table" id="containerA">
                                                             <thead class="table-light">
                                                                 <tr>
-
                                                                     <th>Data</th>
                                                                     <th>By</th>
                                                                     <th>Type</th>
@@ -271,20 +267,20 @@ if (isset($lead)) {
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
-                                                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Type</label>
+                                                                    <label for="inputCustomer" class="col-sm-3 col-form-label">Status</label>
                                                                     <div class="col-sm-9">
                                                                         <select class="form-control editInput selectOptions" id="status" name="status">
                                                                             <option value="1">Active</option>
                                                                             <option value="0">Inactive</option>
                                                                         </select>
                                                                     </div>
-                                                                </div><!-- End off Customer -->
+                                                                </div>
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <div class="pageTitleBtn p-0">
                                                                 <button type="button" class="profileDrop" id="addNotesType">Save</button>
-                                                                <button type="button" class="profileDrop">Save & Close</button>
+                                                                <!-- <button type="button" class="profileDrop">Save & Close</button> -->
                                                                 <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
                                                             </div>
                                                         </div>
@@ -309,9 +305,7 @@ if (isset($lead)) {
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-
                                                             <form action="" class="customerForm" id="addTask">
-
                                                                 <div class="mb-3 row">
                                                                     <label for="inputName" class="col-sm-3 col-form-label">Leads Ref.*</label>
                                                                     <div class="col-sm-9">
@@ -332,7 +326,6 @@ if (isset($lead)) {
                                                                 <div class="mb-3 row">
                                                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Tasks Type*</label>
                                                                     <div class="col-sm-9">
-
                                                                         <select class="form-control editInput selectOptions" id="lead_task_type_id" name="lead_task_type_id">
                                                                             @if(isset($leadTask))
                                                                             @foreach($leadTask as $value)
@@ -340,7 +333,6 @@ if (isset($lead)) {
                                                                             @endforeach
                                                                             @endif
                                                                         </select>
-
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
@@ -394,7 +386,6 @@ if (isset($lead)) {
                                                                         <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="mb-3 row">
                                                                     <label for="inputName" class="col-sm-3 col-form-label">Notes</label>
                                                                     <div class="col-sm-9">
@@ -413,7 +404,6 @@ if (isset($lead)) {
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="productDetailTable mt-3">
                                                 <table class="table" id="containerA">
                                                     <thead class="table-light">

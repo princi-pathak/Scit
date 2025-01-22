@@ -271,18 +271,16 @@ tfoot.draftFoot tr th {
                                 <td>{{ $value->customer->name ?? '' }}</td>
                                 <td>{{ $value->customer_address }}</td>
                                 <td>1</td>
-                                <td>&#163;{{ $value->sub_total ?? '0.00' }}</td>
-                                <td>&#163;{{ $value->vat_amount ?? '0.00'}}</td>
-                                <td>&#163;{{ $value->total ?? '0.00'}}</td>
-                                <td>&#163;{{ $value->deposit ??  '0.00'}}</td>
-                                <td>&#163;{{ $value->outstanding ?? '0.00' }}</td>
-                                <td>&#163;{{ $value->profit ?? '0.00' }}</td>
+                                <td>£{{ $value->sub_total ?? '0.00' }}</td>
+                                <td>£{{ $value->vat_amount ?? '0.00'}}</td>
+                                <td>£{{ $value->total ?? '0.00'}}</td>
+                                <td>£{{ $value->deposit ??  '0.00'}}</td>
+                                <td>£{{ $value->outstanding ?? '0.00' }}</td>
+                                <td>£{{ $value->profit ?? '0.00' }}</td>
                                 <td>
                                     <div class="d-inline-flex align-items-center ">
                                         <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">
-                                                Action
-                                            </a>
+                                            <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">Action</a>
                                             <div class="dropdown-menu fade-up m-0">
                                                 <a href="#" class="dropdown-item">Send SMS</a>
                                                 <a href="{{ url('/quote/edit').'/'.$value->id }}" class="dropdown-item">Edit</a>
