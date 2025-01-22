@@ -2439,6 +2439,7 @@ $(document).on('click','.attachment_delete', function() {
     document.getElementById('purchase_payment_due_date').value = formattedDate;
 }
 </script>
+
 <script>
     $(document).on('click','.fecth_data', function(){
         $("#ReminderModal").modal('show');
@@ -2480,4 +2481,5 @@ $(document).on('click','.attachment_delete', function() {
 
     });
 </script>
+
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

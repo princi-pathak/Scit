@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('purchase_order_emails', function (Blueprint $table) {
-            $table->json('to')->change();
-            $table->json('cc')->nullable()->change();
+        Schema::table('quotes', function (Blueprint $table) {
+            $table->integer('user_id')->after('home_id');
         });
     }
 
@@ -23,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('purchase_order_emails', function (Blueprint $table) {
-            $table->string('to')->change();
-            $table->string('cc')->nullable()->change();
+            $table->string('user_id');
         });
     }
 };
