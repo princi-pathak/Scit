@@ -20,6 +20,7 @@ use App\Http\Controllers\frontEnd\salesFinance\item\ProductGroupController;
 use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
 use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
 use App\Http\Controllers\frontEnd\salesFinance\JobController;
+use App\Http\Controllers\frontEnd\salesFinance\CreditNotesController;
 
 
 
@@ -418,7 +419,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/purchaseOrderEmailSave','purchaseOrderEmailSave');
 		Route::get('/preview','preview');
 	});
-	
+	Route::controller(CreditNotesController::class)->group(function(){
+		Route::get('credit_notes','credit_notes');
+	});
 	// Forontend Customer Controller
 	Route::controller(CustomerController::class)->group(function () {
 		Route::prefix('customers')->group(function () {

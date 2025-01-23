@@ -36,6 +36,9 @@ ul#purchase_qoute_refList {
     height: 156px;
     overflow: auto;
 }
+.unclicked{
+    pointer-events: none;
+}
 
 </style>
         <section class="main_section_page px-3">
@@ -473,7 +476,7 @@ ul#purchase_qoute_refList {
                                                                 <td><span class="iconColrGreen">Sent</span></td>
                                                                 <td>
                                                                     
-                                                                    <a href="#!" class=""><i class="material-symbols-outlined">
+                                                                    <a href="javascript:void(0)" data-id="{{$reminderVal->id}}" data-title="{{$reminderVal->title}}" data-user_id="{{$reminderVal->user_id}}" data-reminder_date="{{$reminderVal->reminder_date}}" data-reminder_time="{{$reminderVal->reminder_time}}" data-notification="{{$reminderVal->notification}}" data-sms="{{$reminderVal->sms}}" data-email="{{$reminderVal->email}}" data-notes="{{$reminderVal->notes}}" data-icon="eye" class="fecth_data"><i class="material-symbols-outlined">
                                                                         visibility
                                                                     </i></a>
                                                                     <a href="#!" class="iconColrGreen"><i class="material-symbols-outlined">
@@ -483,7 +486,7 @@ ul#purchase_qoute_refList {
                                                                 @else
                                                                 <td><span class="iconColrRad">Pending</span></td>
                                                                 <td>
-                                                                    <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="{{$reminderVal->id}}" data-title="{{$reminderVal->title}}" data-user_id="{{$reminderVal->user_id}}" data-reminder_date="{{$reminderVal->reminder_date}}" data-reminder_time="{{$reminderVal->reminder_time}}" data-notification="{{$reminderVal->notification}}" data-sms="{{$reminderVal->sms}}" data-email="{{$reminderVal->email}}" data-notes="{{$reminderVal->notes}}" ><i class="material-symbols-outlined">edit</i></a>
+                                                                    <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="{{$reminderVal->id}}" data-title="{{$reminderVal->title}}" data-user_id="{{$reminderVal->user_id}}" data-reminder_date="{{$reminderVal->reminder_date}}" data-reminder_time="{{$reminderVal->reminder_time}}" data-notification="{{$reminderVal->notification}}" data-sms="{{$reminderVal->sms}}" data-email="{{$reminderVal->email}}" data-notes="{{$reminderVal->notes}}" data-icon="edit"><i class="material-symbols-outlined">edit</i></a>
                                                                     <a href="javascript:void(0)" class="iconColrRad"><i class="material-symbols-outlined">close</i></a>
                                                                 </td>
                                                                 @endif
@@ -2404,13 +2407,13 @@ $(document).on('click','.attachment_delete', function() {
             }
         });
     function openReminderModal(po_id){
-        // if(po_id == ''){
+        // if(id != ''){
         //     alert("Please save Purchase Order first!");
-        //     return false;
+        //     // return false;
         // }else{
             
         // }
-        
+        $("#clickyesno").removeClass('unclicked');
         $("#reminder_po_id").val(po_id);
         $("#ReminderModal").modal('show');
     }
@@ -2422,7 +2425,7 @@ $(document).on('click','.attachment_delete', function() {
             <td>`+data.reminder_time+`</td>    
             <td><span class="iconColrRad">Pending</span></td>    
             <td>
-                <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="`+data.id+`" data-title="`+data.title+`" data-user_id="`+data.user_id+`" data-reminder_date="`+data.reminder_date+`" data-reminder_time="`+data.reminder_time+`" data-notification="`+data.notification+`" data-sms="`+data.sms+`" data-email="`+data.email+`" data-notes="`+data.notes+`" ><i class="material-symbols-outlined">edit</i></a>
+                <a href="javascript:void(0)" class="iconColrGreen fecth_data" data-id="`+data.id+`" data-title="`+data.title+`" data-user_id="`+data.user_id+`" data-reminder_date="`+data.reminder_date+`" data-reminder_time="`+data.reminder_time+`" data-notification="`+data.notification+`" data-sms="`+data.sms+`" data-email="`+data.email+`" data-notes="`+data.notes+`" data-icon="edit"><i class="material-symbols-outlined">edit</i></a>
                 <a href="javascript:void(0)" class="iconColrRad"><i class="material-symbols-outlined">close</i></a>
             </td>    
         </tr>`);
@@ -2452,6 +2455,24 @@ $(document).on('click','.attachment_delete', function() {
         var sms = $(this).data('sms');
         var email = $(this).data('email');
         var notes = $(this).data('notes');
+        var icon = $(this).data('icon');
+        if(icon === 'eye'){
+            $("#reminder_date").attr('disabled','disabled');
+            $("#clickyesno").addClass('unclicked');
+            $("#reminder_notification").attr('disabled','disabled');
+            $("#reminder_sms").attr('disabled','disabled');
+            $("#reminder_email").attr('disabled','disabled');
+            $("#reminder_title").attr('disabled','disabled');
+            $("#reminder_notes").attr('disabled','disabled');
+        }else{
+            $("#reminder_date").removeAttr('disabled','disabled');
+            $("#clickyesno").removeClass('unclicked');
+            $("#reminder_notification").removeAttr('disabled','disabled');
+            $("#reminder_sms").removeAttr('disabled','disabled');
+            $("#reminder_email").removeAttr('disabled','disabled');
+            $("#reminder_title").removeAttr('disabled','disabled');
+            $("#reminder_notes").removeAttr('disabled','disabled');
+        }
 
         
         $("#reminder_id").val(id);

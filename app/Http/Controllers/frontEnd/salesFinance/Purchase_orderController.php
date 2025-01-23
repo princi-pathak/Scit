@@ -653,7 +653,7 @@ class Purchase_orderController extends Controller
                                                         <hr class="dropdown-divider">
                                                         <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Preview</a>
                                                         <hr class="dropdown-divider">
-                                                        <a href="#!" class="dropdown-item">Print</a>
+                                                        <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Print</a>
                                                         <hr class="dropdown-divider">
                                                         <a href="#!" class="dropdown-item">Email</a>
                                                         <hr class="dropdown-divider">
@@ -1039,14 +1039,14 @@ class Purchase_orderController extends Controller
             ->first();
             // $site_detail=Customer::find($po_details->customer_id);
 			// echo "<pre>";print_r($site_detail);die;
-            // echo "<pre>";print_r($po_details->purchaseOrderProducts);die;
+            // echo "<pre>";print_r($po_details);die;
             
             $data=[
                 'email'=>Auth::user()->email,
                 'phone_no'=>Auth::user()->phone_no,
                 'job_title'=>Auth::user()->job_title,
                 'current_location'=>Auth::user()->current_location,
-                'company'=>Admin::find(Auth::user()->company_id)->company,
+                'company'=>Admin::find(Auth::user()->company_id)->company ?? "",
                 'po_details'=>$po_details,
             ];
             // echo "<pre>";print_r($data);die;
