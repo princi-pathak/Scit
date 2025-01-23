@@ -436,8 +436,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			// Route::post('/getCustomerSiteData', 'getCustomerSiteData')->name('customer.ajax.getCustomerSiteData');
 			Route::post('/getCustomerSiteDetails', 'getCustomerSiteDetails')->name('customer.ajax.getCustomerSiteDetails');
 			
-			
-			
 		});
 	});
 
@@ -465,12 +463,13 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/lead/lead_task_type/delete/{id}', 'lead_task_type_delete');
 		Route::get('/lead/lead_mark_as_completed/{task}/{lead}', 'lead_mark_as_completed');
 		Route::get('lead/getLeadTaskType', 'getLeadTaskTypeData')->name('lead.ajax.getLeadTaskType');
+		Route::post('lead/getLeadTaskOnLeadId', 'getLeadTaskOnLeadId')->name('lead.ajax.getLeadTaskOnLeadId');
 
 		// Lead Notes Type
 		Route::get('/lead/lead_notes_type', 'lead_notes_type')->name('lead.lead_notes_type');
 		Route::post('/lead/saveLeadNotesType', 'saveLeadNotesType')->name('lead.ajax.saveLeadNoteType');
 		Route::get('/lead/lead_note_type/delete/{id}', 'lead_note_type_delete');
-		// 
+		// Lead Task
 		Route::post('/saveLeadTasks', 'save_lead_tasks')->name('lead.ajax.saveLeadTasks');
 		Route::get('/leads/lead_task/delete/{task}/{lead}', 'lead_task_delete');
 		Route::post('/saveLeadNotes', 'save_lead_notes')->name('lead.ajax.saveLeadNotes');
