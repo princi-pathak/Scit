@@ -158,7 +158,7 @@
 								<tbody>
 									<tr>
 										<?php if($po_details->site_id == 0){
-											$site_detail=App\models\Customer::find($po_details->customer_id);
+											$site_detail=App\Models\Customer::find($po_details->customer_id);
 											// echo "<pre>";print_r($site_detail);die;
 										?>
 										<td style="font-size: 13px;">
@@ -169,7 +169,7 @@
 											<p style="margin: 5px 0;">SW7 1EE</p> -->
 										</td>
 										<?php }else{
-											$site_detail=App\models\Constructor_customer_site::find($po_details->site_id);
+											$site_detail=App\Models\Constructor_customer_site::find($po_details->site_id);
 										?>
 											<td style="font-size: 13px;">
 											<p style="margin: 5px 0;">{{$site_detail->address ?? ""}} </p>
@@ -221,7 +221,8 @@
 											$sub_total_amount=$sub_total_amount+$qty;
 											$vat=$qty*$val->vat/100;
 											$vat_amount=$vat_amount+$vat;
-											$product_details=App\models\Product::find($val->product_id);
+											$product_details=App\Models\Product::find($val->product_id);
+											
 										?>
 										<tr class="product_details">
 											<td>

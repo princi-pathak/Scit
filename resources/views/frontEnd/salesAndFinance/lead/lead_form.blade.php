@@ -514,6 +514,11 @@ if (isset($lead)) {
                                             <h3>Attachments - </h3>
                                             <a href="#" class="profileDrop ms-3 open-modal-attachment" data-bs-toggle="modal" data-bs-target="#attechmentModel"><i class="fa-solid fa-floppy-disk"></i> Attachments</a>
                                         </div>
+                                        <div class="col-md-7">
+                                            <div class="jobsection d-flex">
+                                                <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-12">
 
                                             <!-- Modal -->
@@ -583,6 +588,7 @@ if (isset($lead)) {
                                                 <table class="table" id="containerA">
                                                     <thead class="table-light">
                                                         <tr>
+                                                            <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"></th>
                                                             <th>#</th>
                                                             <th>Type</th>
                                                             <th>Title</th>
@@ -597,6 +603,7 @@ if (isset($lead)) {
                                                         @if(isset($lead_attachment))
                                                         @foreach($lead_attachment as $value)
                                                         <tr>
+                                                            <td><div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$value['id']}}"></div></td>
                                                             <td></td>
                                                             <td>{{ $value['type'] }}</td>
                                                             <td>{{ $value['title'] }}</td>
@@ -649,5 +656,49 @@ if (isset($lead)) {
     var addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
     var saveLeadAttachmentUrl = '{{ route("lead.ajax.saveLeadAttachment") }}';
 </script>
+<script>
+   $("#deleteSelectedRows").on('click', function() {
+    let ids = [];
+    
+    $('.delete_checkbox:checked').each(function() {
+        ids.push($(this).val());
+    });
+    if(ids.length == 0){
+        alert("Please check the checkbox for delete");
+    }else{
+        if(confirm("Are you sure to delete?")){
+            // console.log(ids);
+            var token='<?php echo csrf_token();?>'
+            var model='LeadAttachment';
+            $.ajax({
+                type: "POST",
+                url: "{{url('/bulk_delete')}}",
+                data: {ids:ids,model:model,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if(data){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    }
+    
+});
+$('.delete_checkbox').on('click', function() {
+    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+        $('#selectAll').prop('checked', true);
+    } else {
+        $('#selectAll').prop('checked', false);
+    }
+});
+ </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>

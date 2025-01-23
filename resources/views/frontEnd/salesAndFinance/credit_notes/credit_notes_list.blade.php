@@ -339,7 +339,6 @@ ul#projectList {
                                     $vat_amount=0;
                                     $purchaseProductId=0;
                                     $outstandingAmount=0;
-                                    $vat=0;
                                     foreach($val->purchaseOrderProducts as $product){
                                         $purchaseProductId=$product->id;
                                         $qty=$product->qty*$product->price;
@@ -415,7 +414,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Print</a>
+                                                    <a href="#!" class="dropdown-item">Print</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                     <hr class="dropdown-divider">
