@@ -851,9 +851,9 @@ section.main_section_page {
   position: relative;
 }
 
-form.customerForm {
+/* form.customerForm {
   padding-top: 20px;
-}
+} */
 
 .editInput {
   padding: .3rem .25rem;
@@ -2227,8 +2227,10 @@ div#exampleOne_wrapper::-webkit-scrollbar-thumb {
 .parent-container {
   position: absolute;
   background: #fff;
-  width: 172px;
+  width: 17%;
   box-shadow: 0px 0px 7px #0000001f;
+  left: 194px;
+  top: 44px;
 }
 ul#productList {
   padding: 0 5px;
