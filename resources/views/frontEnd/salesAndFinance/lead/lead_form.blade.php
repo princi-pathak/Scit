@@ -90,8 +90,135 @@ if (isset($lead)) {
                                             <input type="time" name="prefer_time" class="form-control editInput" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}" id="">
                                         </div>
                                         <div class="col-sm-2 p-0">
-                                            <label for="inputContact" class="col-form-label">Next 30 days</label>
+                                            <label for="inputContact" class="col-form-label open-modal-attachment" data-bs-toggle="modal" data-bs-target="#next30daysModel">Next 30 days</label>
                                         </div>
+
+
+                                        <!-- Start of Next 30 days Model -->
+
+                                        <div class="modal fade" id="next30daysModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content add_Customer">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title fs-5" id="staticBackdropLabel">Next 30 days</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="pageTitleBtn p-0">
+                                                            <button type="button" class="profileDrop" id="addNotesType">Print</button>
+                                                        </div>
+                                                        <div class="productDetailTable mt-3">
+                                                            <table class="table mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 192px;"># Name </th>
+                                                                        <th>Company </th>
+                                                                        <th style="width: 260px;">Address </th>
+                                                                        <th>Time </th>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                            <table class="table mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
+                                                                        <th>Appoinments:1</th>
+                                                                        <th colspan="2"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <table class="table mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
+                                                                        <th>Appoinments:1</th>
+                                                                        <th colspan="2"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <table class="table mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
+                                                                        <th>Appoinments:1</th>
+                                                                        <th colspan="2"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <table class="table mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
+                                                                        <th>Appoinments:4</th>
+                                                                        <th colspan="2"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">Poseidon House, 33 Walson Awanue LL297UY</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer customer_Form_Popup">
+                                                            <div class="pageTitleBtn p-0">
+                                                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- End of Next 30 days Model -->
+
                                     </div>
                                 </div>
                             </div>
@@ -179,11 +306,8 @@ if (isset($lead)) {
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                         <button class="nav-link active" id="nav-Notes-tab" data-bs-toggle="tab" data-bs-target="#nav-Notes" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Notes</button>
-
                                         <button class="nav-link" id="nav-Tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-Tasks" type="button" role="tab" aria-controls="nav-Tasks" aria-selected="false">Tasks</button>
-
                                         <button class="nav-link" id="nav-attachments-tab" data-bs-toggle="tab" data-bs-target="#nav-attachments" type="button" role="tab" aria-controls="nav-attachments" aria-selected="false">Attachments</button>
-
                                     </div>
                                 </nav>
                                 <div class="tab-content" id="nav-tabContent">
@@ -222,7 +346,7 @@ if (isset($lead)) {
                                                         <table class="table" id="containerA">
                                                             <thead class="table-light">
                                                                 <tr>
-                                                                    <th>Data</th>
+                                                                    <th>Date</th>
                                                                     <th>By</th>
                                                                     <th>Type</th>
                                                                     <th>Notes</th>
@@ -253,9 +377,9 @@ if (isset($lead)) {
                                             <!-- Modal -->
                                             <div class="modal fade" id="notesModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
-                                                    <div class="modal-content">
+                                                    <div class="modal-content add_Customer">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">History Type - Add</h1>
+                                                            <h5 class="modal-title fs-5" id="staticBackdropLabel">History Type - Add</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -277,7 +401,7 @@ if (isset($lead)) {
                                                                 </div>
                                                             </form>
                                                         </div>
-                                                        <div class="modal-footer">
+                                                        <div class="modal-footer customer_Form_Popup">
                                                             <div class="pageTitleBtn p-0">
                                                                 <button type="button" class="profileDrop" id="addNotesType">Save</button>
                                                                 <!-- <button type="button" class="profileDrop">Save & Close</button> -->
@@ -288,7 +412,8 @@ if (isset($lead)) {
                                                 </div>
                                             </div>
                                             <!-- Modal End -->
-                                        </div><!-- ENd col-9 -->
+                                        </div>
+                                        <!-- ENd col-9 -->
                                     </div>
                                     <div class="tab-pane fade" id="nav-Tasks" role="tabpanel" aria-labelledby="nav-Tasks-tab" tabindex="0">
                                         <div class="tabheadingTitle">
@@ -298,10 +423,10 @@ if (isset($lead)) {
                                         <div class="col-sm-12">
                                             <!-- Modal -->
                                             <div class="modal fade" id="tasksModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg">
-                                                    <div class="modal-content">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content add_Customer">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Task</h1>
+                                                            <h5 class="modal-title fs-5" id="staticBackdropLabel">Add Task</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -340,9 +465,9 @@ if (isset($lead)) {
                                                                     <div class="col-sm-4">
                                                                         <input type="date" class="form-control editInput" id="create_date" name="create_date">
                                                                     </div>
-                                                                    <div class="col-sm-1 text-center">
+                                                                    <!-- <div class="col-sm-1 text-center">
                                                                         <i class="fa fa-calendar-days"></i>
-                                                                    </div>
+                                                                    </div> -->
                                                                     <div class="col-sm-4">
                                                                         <input type="time" class="form-control editInput" id="create_time" name="create_time">
                                                                     </div>
@@ -367,23 +492,28 @@ if (isset($lead)) {
                                                                 </div>
                                                                 <div class="mb-3 row">
                                                                     <label for="inputName" class="col-sm-3 col-form-label">Notify?</label>
-                                                                    <div class="col-sm-2 d-flex">
+                                                                    <div class="col-sm-3 d-flex">
                                                                         <input type="checkbox" class="editInput" id="yeson">
                                                                         <label for="notify" class="col-form-label ps-3">Yes, On</label>
                                                                     </div>
                                                                     <div class="col-sm-3">
                                                                         <input type="date" class="form-control editInput" id="notifyDate" name="notify_date">
                                                                     </div>
-                                                                    <div class="col-sm-1 text-center">
+                                                                    <!-- <div class="col-sm-1 text-center">
                                                                         <i class="fa fa-calendar-days"></i>
-                                                                    </div>
+                                                                    </div> -->
                                                                     <div class="col-sm-3">
                                                                         <input type="time" class="form-control editInput" id="notifyTime" name="notify_time">
                                                                     </div>
-                                                                    <div id="optionsDiv">
-                                                                        <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
-                                                                        <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
-                                                                        <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
+                                                                    <div class="col-sm-12 row">
+                                                                        <div class="col-sm-3"></div>
+                                                                        <div class="col-sm-8">
+                                                                            <div id="optionsDiv">
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
@@ -394,7 +524,7 @@ if (isset($lead)) {
                                                                 </div>
                                                             </form>
                                                         </div>
-                                                        <div class="modal-footer">
+                                                        <div class="modal-footer customer_Form_Popup">
                                                             <div class="pageTitleBtn p-0">
                                                                 <a href="#" class="profileDrop" id="saveAddTask"><i class="fa-solid fa-floppy-disk"></i> Save</a>
                                                                 <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save & Close </a> -->
@@ -422,7 +552,7 @@ if (isset($lead)) {
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td colspan="10"><strong>Open tasks</strong></td>
+                                                            <td colspan="10"><strong>Open Tasks</strong></td>
                                                         </tr>
                                                         @if(isset($lead_task_open))
                                                         @if( !$lead_task_open->isEmpty() )
@@ -450,7 +580,7 @@ if (isset($lead)) {
                                                                         Action
                                                                     </a>
                                                                     <div class="dropdown-menu fade-up m-0">
-                                                                        <a href="{{ url('/lead/task_mark_as_completed', ['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Mark As Completed</a>
+                                                                        <a href="javascript:void(0)" onclick="mark_as_complete_task('{{ $value->id }}', '{{$lead->id}}', '{{$value->lead_ref}}')" class="dropdown-item">Mark As Completed</a>
                                                                         <hr class="dropdown-divider">
                                                                         <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
                                                                         <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
@@ -464,8 +594,9 @@ if (isset($lead)) {
                                                             <td colspan="10" class="text-center"><strong>No task(s) found</strong></td>
                                                         </tr>
                                                         @endif
+
                                                         <tr>
-                                                            <td colspan="10"><strong>Close tasks</strong></td>
+                                                            <td colspan="10"><strong>Close Tasks</strong></td>
                                                         </tr>
                                                         @endif
                                                         @if(isset($lead_task_open))
@@ -525,9 +656,9 @@ if (isset($lead)) {
                                             <!-- Modal -->
                                             <div class="modal fade" id="attechmentModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
-                                                    <div class="modal-content">
+                                                    <div class="modal-content add_Customer">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Attachments</h1>
+                                                            <h5 class="modal-title fs-5" id="staticBackdropLabel">Add Attachments</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -575,7 +706,7 @@ if (isset($lead)) {
                                                                 </div>
                                                             </form>
                                                         </div>
-                                                        <div class="modal-footer">
+                                                        <div class="modal-footer customer_Form_Popup">
                                                             <div class="pageTitleBtn p-0">
                                                                 <a href="#" class="profileDrop" id="saveAttachmentType"><i class="fa-solid fa-floppy-disk"></i> Save</a>
                                                                 <a href="#" class="profileDrop" data-bs-dismiss="modal"> Close</a>
@@ -643,13 +774,25 @@ if (isset($lead)) {
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="pageTitleBtn">
                     <button type="submit" class="profileDrop reDesignBtn" id="submit_main_form"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                    <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
-                    <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a>
+                    <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                    <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a> -->
                 </div>
             </div>
         </div>
         </form>
     </div>
+
+    <?php
+    if (isset($lead)) {
+        $lead_id =  $lead->id;
+        $lead_contact = $lead->contact_name;
+        $lead_telephone = $lead->telephone;
+    } else {
+        $lead_id = '';
+        $lead_contact = '';
+        $lead_telephone = '';
+    }
+    ?>
 </section>
 <script>
     var addNotesTypeURL = '{{ route("lead.ajax.saveLeadNoteType") }}';
@@ -657,6 +800,12 @@ if (isset($lead)) {
     const addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
     var saveLeadAttachmentUrl = '{{ route("lead.ajax.saveLeadAttachment") }}';
     var getLeadTaskDataURL = '{{ route("lead.ajax.getLeadTaskOnLeadId") }}';
+    const markAsComplete = '{{ route("lead.task_mark_as_completed", ["task" => ":task"]) }}';
+    const lead_id = '{{ $lead_id}}';
+    const lead_contact = '{{ $lead_contact }}';
+    const lead_telephone = '{{ $lead_telephone }}';
+    const baseMarkAsCompletedURL = "{{ url('/lead/task_mark_as_completed', ['task' => '__TASK_ID__','lead_id' => $lead_id ]) }}";
+    const baseDeleteURL = "{{ url('/leads/lead_task/delete', ['task' => '__TASK_ID__', 'lead_id' => $lead_id]) }}";
 </script>
 <script>
    $("#deleteSelectedRows").on('click', function() {
@@ -706,100 +855,7 @@ $('.delete_checkbox').on('click', function() {
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>
 
 <script>
-    function setleadTaskTableData(data, tableBody, table) {
-
-        tableBody.innerHTML = '';
-
-        if (data.length === 0) {
-            // Handle the case where there is no data
-            const errorRow = document.createElement('tr');
-            const errorCell = document.createElement('td');
-            errorCell.colSpan = 8; // Adjust this based on the number of columns in your table
-            errorCell.classList.add('red_sorryText');
-            errorCell.textContent = 'Sorry, no records to show ';
-            errorCell.style.textAlign = 'center'; // Optional: Center the text
-            errorRow.appendChild(errorCell);
-            tableBody.appendChild(errorRow);
-            return; // Exit the function
-        }
-
-        let countValue = 1;
-
-        data.forEach(item => {
-
-            // Create a new row
-            const row = document.createElement('tr');
-
-            const count = document.createElement('td');
-            count.textContent = countValue;
-            row.appendChild(count);
-
-            const created_on = document.createElement('td');
-            created_on.textContent = moment(item.created_at).format('DD/MM/YYYY HH:mm');
-            row.appendChild(created_on);
-
-            const name = document.createElement('td');
-            name.innerHTML = item.name;
-            row.appendChild(name);
-
-            const task_type_title = document.createElement('td');
-            task_type_title.innerHTML = item.task_type_title;
-            row.appendChild(task_type_title);
-
-            const title = document.createElement('td');
-            title.textContent = item.title;
-            row.appendChild(title);
-
-            const contact_name = document.createElement('td');
-            contact_name.innerHTML = <?php echo  $lead->contact_name; ?>;
-            row.appendChild(contact_name);
-
-            const telephone = document.createElement('td');
-            telephone.innerHTML = <?php echo $lead->telephone; ?>;
-            row.appendChild(telephone);
-
-            if (item.notification === 1 || item.sms === 1 || item.email === 1) {
-
-                const notifyDate = item.notify_date; // Example: '2025-01-24'
-                const notifyTime = item.notify_time; // Example: '03:40'
-
-                // Combine date and time
-                const dateTime = `${notifyDate} ${notifyTime}`;
-                const formattedDateTime = moment(dateTime, 'YYYY-MM-DD HH:mm').format('DD/MM/YYYY HH:mm');
-
-                const text = document.createElement('td');
-                text.innerHTML = `Yes, On  <br> ${formattedDateTime}`;
-                row.appendChild(text);
-            } else {
-                const text = document.createElement('td');
-                text.innerHTML = "No";
-                row.appendChild(text);
-            }
 
 
-            const notes = document.createElement('td');
-            notes.innerHTML = item.notes;
-            row.appendChild(notes);
 
-            const baseMarkAsCompletedURL = "{{ url('/lead/task_mark_as_completed', ['task' => '__TASK_ID__', 'lead_id' => $lead->id]) }}";
-            const baseDeleteURL = "{{ url('/leads/lead_task/delete', ['task' => '__TASK_ID__', 'lead_id' => $lead->id]) }}";
-
-            const idCell = document.createElement('td');
-            idCell.innerHTML = `<div class="nav-item dropdown tableActionBtn">
-                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">Action</a>
-                    <div class="dropdown-menu fade-up m-0">
-                        <a href="${baseMarkAsCompletedURL.replace('__TASK_ID__', item.id)}" class="dropdown-item">Mark As Completed</a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="${item.id}" data-user_id="${item.user_id}" data-title="${item.title}" data-task_type_id="${item.lead_task_type_id}" data-create_date="${item.create_date}" data-create_time="${item.create_time}" data-notify_date="${item.notify_date}" data-notify_time="${item.notify_time}" data-notes="${item.notes}" data-notification="${item.notification}" data-email_notify="${item.email_notify}" data-sms_notify="${item.sms_notify}">Edit Task</a>
-                        <a href="${baseDeleteURL.replace('__TASK_ID__', item.id)}" class="dropdown-item">Delete Task</a>
-                    </div>
-                </div>`;
-            row.appendChild(idCell);
-
-            // Append the row to the table body
-            tableBody.appendChild(row);
-            countValue++;
-        });
-
-    }
 </script>
