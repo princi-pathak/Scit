@@ -50,14 +50,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Assigned User:</label>
                                         <div class="col-md-8">
                                             <select class="form-control editInput selectOptions" id="inputJobType">
-                                                <option>--All--</option>
-                                                <option>Yes</option>
-                                                <option>No</option>
+                                                @foreach($users as $user)
+                                                    <option value="{{ $user->id}}">{{ $user->name }}</option>
+                                                @endforeach
+                                                
                                             </select>
                                         </div>
                                     </div>
@@ -75,23 +76,25 @@
                                     </div>
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Created From:</label>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3 pe-0">
                                             <input type="date" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
-                                        <span>to</span>
-                                        <div class="col-md-4">
+                                        <div class="col-md-1">
+                                            <span class="editInput">to</span>
+                                        </div>
+                                        <div class="col-md-3 ps-0">
                                             <input type="date" class="form-control editInput" id="inputName" value="John Smith">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Status:</label>
                                         <div class="col-md-8">
                                             <select class="form-control editInput selectOptions" id="inputJobType">
-                                              @foreach($statuses as $status)
+                                                @foreach($statuses as $status)
                                                 <option value="{{ $status->id}}">{{ $status->title }}</option>
-                                              @endforeach
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -113,9 +116,9 @@
                                         <label class="col-md-4 col-form-label text-end">Source:</label>
                                         <div class="col-md-8">
                                             <select class="form-control editInput selectOptions" id="inputJobType">
-                                                <option>--All--</option>
-                                                <option>Yes</option>
-                                                <option>No</option>
+                                                @foreach($sources as $source)
+                                                    <option value="{{ $source->id }}">{{ $source->title }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -138,11 +141,9 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="row form-group mb-2">
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Rejected Type:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="inputName" placeholder="Rejected Type">
-                                            </div>
+                                        <label class="col-md-4 col-form-label pe-0">Rejected Type:</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control editInput" id="inputName" placeholder="Rejected Type">
                                         </div>
                                     </div>
                                     <div class="row form-group mb-2">
