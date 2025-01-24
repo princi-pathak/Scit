@@ -135,12 +135,9 @@ ul#projectList {
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ url('draft_purchase_order') }}" class="profileDrop" <?php if($status['status'] == 1){?>id="active_inactive"<?php }?>>Draft <span>({{$draftCount}})</span></a>
-                        <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}" class="profileDrop" <?php if($status['status'] == 2){?>id="active_inactive"<?php }?>>Awaiting Approval<span>({{$awaitingApprovalCount}})</span></a>
-                        <a href="{{ url('draft_purchase_order?list_mode=Approved') }}" class="profileDrop" <?php if($status['status'] == 3){?>id="active_inactive"<?php }?>>Approved<span>({{$approvedCount}})</span></a>
-                        <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}" class="profileDrop" <?php if($status['status'] == 8){?>id="active_inactive"<?php }?>>Rejected<span>({{$rejectedCount}})</span></a>
-                        <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}" class="profileDrop" <?php if($status['status'] == 4){?>id="active_inactive"<?php }?>>Actioned<span>({{$actionedCount}})</span></a>
-                        <a href="{{ url('draft_purchase_order?list_mode=Paid') }}" class="profileDrop" <?php if($status['status'] == 5){?>id="active_inactive"<?php }?>>Paid<span>({{$paidCount}})</span></a>
+                        <a href="{{ url('credit_notes?list_mode=Approved') }}" class="profileDrop" <?php if($status['status'] == 1){?>id="active_inactive"<?php }?>>Approved <span>({{$approvedtCount}})</span></a>
+                        <a href="{{ url('credit_notes?list_mode=Paid') }}" class="profileDrop" <?php if($status['status'] == 2){?>id="active_inactive"<?php }?>>Paid<span>({{$paidCount}})</span></a>
+                        <a href="{{ url('credit_notes?list_mode=Cancelled') }}" class="profileDrop" <?php if($status['status'] == 0){?>id="active_inactive"<?php }?>>Cancelled<span>({{$cancelledCount}})</span></a>
                         
                     </div>
                 </div>
@@ -306,26 +303,30 @@ ul#projectList {
                         <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"></th>
+                                    <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"></th>
                                     <th>#</th>
-                                    <th>PO Ref</th>
-                                    <th>Date</th>
-                                    <th>Due Date</th>
+                                    <th>Credit Note Ref</th>
                                     <th>Supplier</th>
-                                    <th>Customer</th>
-                                    <th>Delivery</th>
+                                    <th>Date</th>
                                     <th>Sub Total</th>
                                     <th>VAT</th>
                                     <th>Total </th>
-                                    <th>Outstanding </th>
+                                    <th>Balance Credit </th>
                                     <th>Status</th>
-                                    <th>Delivery</th>
+                                    <th>Telephone</th>
+                                    <th>Mobile</th>
                                     <th></th>
                                 </tr>
                             </thead>
                                                
                             <tbody id="search_data">
-                                <?php 
+                                <?php
+                                if (is_array($list)) {
+                                    echo "The data is an array.";die;
+                                } else {
+                                    echo "The data is not an array.";die;
+                                }
+                                // echo "<pre>";print_r($list);die;
                                     $all_subTotalAmount=0;
                                     $all_vatTotalAmount=0;
                                     $all_TotalAmount=0;
@@ -333,13 +334,12 @@ ul#projectList {
                                 ?>
                                 @foreach($list as $val)
                                 <?php 
-                                    $customer=App\Models\Customer::find($val->customer_id);
                                     $sub_total_amount=0;
                                     $total_amount=0;
                                     $vat_amount=0;
                                     $purchaseProductId=0;
                                     $outstandingAmount=0;
-                                    foreach($val->purchaseOrderProducts as $product){
+                                    foreach($val->credit_note_products as $product){
                                         $purchaseProductId=$product->id;
                                         $qty=$product->qty*$product->price;
                                         $sub_total_amount=$sub_total_amount+$qty;
@@ -360,9 +360,7 @@ ul#projectList {
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$val->purchase_order_ref}}</td>
                                     <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
-                                    <td>{{ date('d/m/Y', strtotime($val->payment_due_date)) }}</td>
                                     <td>{{$val->suppliers->name}}</td>
-                                    <td>{{$customer->name ?? ''}}</td>
                                     <td>{{$val->city}}</td>
                                     <td>£{{$sub_total_amount}}</td>
                                     <td>£{{$vat_amount}}</td>
@@ -459,292 +457,6 @@ ul#projectList {
             </di>
         </div>
 </section>
-<!-- Approve Model Start Here -->
-<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content add_Customer">
-            <div class="modal-header">
-                <h5 class="modal-title" id="customerModalLabel">Authorise Purchase Order</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                <div class="text-center mt-3" id="message_approveModal" style="display:none"></div>
-                    <div class="col-md-12 col-lg-12 col-xl-12">
-                        <div class="formDtail">
-                            <form id="approveForm" class="customerForm pt-0">
-                                @csrf
-                                <input type="hidden" name="id" id="id">
-                                <input type="hidden" name="po_id" id="po_id">
-                                <div class="row">
-                                    <label for="inputName" class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-form-label">Would you like to notify anyone that this purchase order '<span id="purchaseOrderRef"></span>' has been approved?</label>
-                                </div>
-                                <div class="mb-2 row">
-                                <label for="inputName" class="col-md-3 col-lg-3 col-xl-3 col-sm-3 col-form-label">Notify?</label>
-                                    <div class="col-sm-9">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="notify_radio" id="radioNo" value="0" checked="">
-                                            <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="notify_radio" value="1" id="radioYes">
-                                            <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mb-2 row notificationHideShow" style="display:none">
-                                    <label for="inputProject"
-                                        class="col-sm-3 col-form-label">Notify Who?</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control editInput selectOptions" id="notifywhoUser" name="notify_user_id">
-                                            <option value=""></option>
-                                            <option value="{{Auth::user()->id}}">Me - {{Auth::user()->email}} / {{Auth::user()->phone_no ?? 'No Mobile'}}</option>
-                                            @foreach($users as $value)
-                                            @if($value->id != Auth::user()->id)
-                                            <option value="{{ $value->id }}">{{ $value->name }} - {{$value->email}} / {{$value->phone_no ?? 'No Mobile'}}</option>
-                                            @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="mb-2 row notificationHideShow" style="display:none">
-                                    <label class="col-sm-3 col-form-label">Send As<span class="radStar ">*</span> </label>
-                                    <div class="col-sm-9">
-                                        <label for="purchase_notify_who1" class="editInput">
-                                            <input type="checkbox" name="notification" id="purchase_notify_who1" value="1" checked=""> Notification (User Only)
-                                        </label>
-                                        <label for="purchase_notify_who2" class="editInput">
-                                            <input type="checkbox" name="sms" id="purchase_notify_who2" value="1"> SMS
-                                        </label>
-                                        <label for="purchase_notify_who3" class="editInput">
-                                            <input type="checkbox" name="email" id="purchase_notify_who3" value="1" checked=""> Email
-                                        </label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div> <!-- End row -->
-            </div>
-            <div class="modal-footer customer_Form_Popup">
-
-                <button type="button" class="profileDrop" id="saveApproveModal" onclick="saveApproveModal()">Save</button>
-                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- End here -->
- <!-- Record Delivery Modal start here -->
- <div class="modal fade" id="recordDeliveryModal" tabindex="-1" aria-labelledby="recordDeliveryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content add_Customer">
-            <div class="modal-header">
-                <h5 class="modal-title" id="crecordDeliveryModalLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                <div class="text-center mt-3" id="message_recordDeliveryModal" style="display:none"></div>
-                    <div class="col-md-12 col-lg-12 col-xl-12">
-                        <div class="formDtail">
-                            <form id="recordDeliveryForm" class="customerForm pt-0">
-                                <input type="hidden" name="po_id" id="recordDelivery_po_id">
-                                @csrf
-                                <div class="col-sm-12">
-                                    <div class="productDetailTable">
-                                        <table class="table" id="recordDelivery_result">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>Code</th>
-                                                    <th>Product</th>
-                                                    <th>Description</th>
-                                                    <th>Price</th>
-                                                    <th>Qty</th>
-                                                    <th>Allredy Delivered</th>
-                                                    <th>Receive More</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                        <div id="pagination-controls-recordDelivery"></div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div> <!-- End row -->
-            </div>
-            <div class="modal-footer customer_Form_Popup">
-
-                <button type="button" class="profileDrop" id="saverecordDeliveryModal" onclick="saverecordDeliveryModal()">Save</button>
-                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
- <!-- end here -->
-  <!-- Record Payment Modal start here -->
- <div class="modal fade" id="recordPaymentModal" tabindex="-1" aria-labelledby="recordPaymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content add_Customer">
-            <div class="modal-header">
-                <h5 class="modal-title" id="recordPaymentModalLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                <div class="text-center mt-3" id="message_recordPaymentModal" style="display:none"></div>
-                    <div class="col-md-12 col-lg-12 col-xl-12">
-                        <div class="formDtail">
-                            <form id="recordPaymentForm" class="customerForm pt-0">
-                                <input type="hidden" name="po_id" id="recordPayment_po_id">
-                                <input type="hidden" name="recordPayment_ppurchaseProduct" id="recordPayment_ppurchaseProduct">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-6 col-lg-6 col-xl-6">
-                                    <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Purchase Order</label>
-                                            <div class="col-sm-9">
-                                                <p id="purchaseOrderRecordDate"></p>
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Supplier</label>
-                                            <div class="col-sm-9">
-                                                <p id="record_supplierName"></p>
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Purchase Order Total</label>
-                                            <div class="col-sm-9">
-                                                <p id="record_TotalAmount"></p>
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Outstanding Amount</label>
-                                            <div class="col-sm-9">
-                                                <p id="record_OutstandingAmount"></p>
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Amount Paid<span class="radStar">*</span></label>
-                                            <div class="col-sm-1">
-                                                <div class="tag_box text-center">
-                                                    <span style="padding:3px">£</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control editInput textareaInput" id="record_AmountPaid" name="record_amount_paid">
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Payment Date<span class="radStar ">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input type="date" id="record_PaymentDate" name="record_payment_date" class="form-control editInput">
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputProject" class="col-sm-3 col-form-label">Payment Type<span class="radStar ">*</span></label>
-                                                <div class="col-sm-7">
-                                                    <select class="form-control editInput selectOptions" id="record_PaymentType" name="record_payment_type">
-                                                        @foreach($paymentTypeList as $type)
-                                                            <option value="{{$type->id}}">{{$type->title}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <a href="javascript:void(0)" class="formicon" onclick="openPaymentTypeModal()"><i class="fa-solid fa-square-plus"></i></a>
-                                                </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-6">
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Reference</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control editInput textareaInput" placeholder="Reference (if any)" id="record_Reference" name="record_reference">
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 row">
-                                            <label for="inputAddress" class="col-sm-3 col-form-label">Description</label>
-                                            <div class="col-sm-9">
-                                                <textarea class="form-control textareaInput CustomercheckError" id="record_Description" name="record_description" rows="10" maxlength="500"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div> <!-- End row -->
-            </div>
-            <div class="modal-footer customer_Form_Popup">
-
-                <button type="button" class="profileDrop" id="saverecordPaymentModal" onclick="saverecordPaymentModal()">Save</button>
-                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
- <!-- end here -->
- <x-payment-type-modal 
-    paymentTypeModalId="paymentTypeModal"
-    modalTitle="New Payment Type - Add"
-    paymentTypeformId="paymenTypeform"
-    paymentTypeId="paymentType_id"
-    inputPaymentType="payment_type_name"
-    radioYes="paymentTypeYes"
-    radioNo="paymentTypeNo"
-    selectStatus="paymentTypeStatus"
-    saveButtonId="paymentTypeSave"
- />
- <x-add-invoice-modal 
-    invoiceModalId="invoiceModal"
-    modalTitle="Invoice_modal_title"
-    invoiceformId="invoiceform"
-    invoiceId="invoice_id"
-    purchaseOrder="purchaseOrder_ref"
-    inputInvoiceSupplierName="invoiceSupplier_name"
-    inputInvoiceRef="invoiuce_ref"
-    invoiceNetAmount="invoiceNetAmount"
-    invoiceVatId="invoiceVatId"
-    invoiceVatAmount="invoiceVatAmount"
-    invoiceGrossAmount="invoiceGrossAmount"
-    invoiceDate="invoiceDate"
-    invoiceDueDate="invoiceDueDate"
-    invoiceNotes="invoiceNotes"
-    invoiceAttachemnt="invoiceAttachemnt"
-    saveButtonId="invoiceSave"
- />
-
- <x-purchase-order-reject
-    rejectModalId="rejectModal"
-    modalTitle="Reject Purchase Order"
-    rejectformId="rejectform"
-    rejectId="reject_id"
-    inputRejectMessage="reject_message"
-    radioYes="reject_radioYes"
-    radioNo="reject_redioNo"
-    rejectNotifyWho="rejectnotify_who"
-    rejectNotification="rejectNotification"
-    rejectSms="rejectSms"
-    rejectEmail="rejectEmail"
-    saveButtonId="rejectSave"
- />
- <x-purchase-order-email
-    emailModalId="emailModal"
-    modalTitle="email_modalTitle"
-    emailformId="emailformId"
-    emailId="emailId"
-    toField="toField"
-    ccField="ccField"
-    subject="emailsubject"
-    selectBoxsubject="selectBoxsubject"
-    body="emailbody"
-    saveButtonId="emailSave"
- />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 <script>

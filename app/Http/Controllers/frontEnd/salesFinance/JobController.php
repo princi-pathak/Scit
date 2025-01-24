@@ -74,20 +74,25 @@ class JobController extends Controller
         // echo $lastSegment;die;
         $home_id = Auth::user()->home_id;
         $job=Job::getAllJob($home_id)->where('user_id',Auth::user()->id)->get();
+        // echo "<pre>";print_r($job);die;
         $data['access_rights']=$this->access_rights();
         $data_arr=array();
         foreach($job as $val){
             $customer_name=Customer::where('id',$val->customer_id)->first();
             $job_type_detail=Job_type::where('id',$val->job_type)->first(); 
-            // $product_details=Product::where('id',$val->product_id)->first();  
-            $site=Constructor_customer_site::where('id',$val->site_id)->first();
+            // $product_details=Product::where('id',$val->product_id)->first(); 
+            if($val->site_id == 'default'){
+                $site=Customer::where('id',$val->customer_id)->first();
+            }else{
+                $site=Constructor_customer_site::where('id',$val->site_id)->first();
+            }
             $customers = Customer::with('sites','additional_contact','customer_project')->where('id', $val->customer_id)->first();
             $data_arr[]=[
                 'id'=>$val->id,
                 'job_ref'=>$val->job_ref,
                 'customer_name'=>$customer_name->name,
                 'job_type'=>$job_type_detail->name,
-                'site'=>$site->site_name,
+                'site'=>$site->site_name ?? $site->address,
                 'short_decinc'=>$val->short_decinc,
                 'complete_by'=>$val->complete_by
             ];
