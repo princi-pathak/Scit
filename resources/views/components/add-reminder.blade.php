@@ -36,7 +36,7 @@
                     </div>
                     <div class="mb-3 row">
                         <label for="{{ $reminderUser }}" class="col-sm-3 col-form-label">Reminder Email <span class="radStar ">*</span></label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-9" id="clickyesno">
                             <select class="form-control editInput selectOptions reminder_email" id="{{ $reminderUser }}" name="user_id[]" multiselect-search="true" multiselect-select-all="true" multiselect-max-items="4" multiple="multiple">
                                 <?php $users=App\User::getHomeUsers(Auth::user()->home_id);?>
                                 @foreach($users as $userVal)

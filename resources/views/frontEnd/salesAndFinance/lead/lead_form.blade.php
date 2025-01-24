@@ -90,8 +90,135 @@ if (isset($lead)) {
                                             <input type="time" name="prefer_time" class="form-control editInput" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}" id="">
                                         </div>
                                         <div class="col-sm-2 p-0">
-                                            <label for="inputContact" class="col-form-label">Next 30 days</label>
+                                            <label for="inputContact" class="col-form-label open-modal-attachment" data-bs-toggle="modal" data-bs-target="#next30daysModel">Next 30 days</label>
                                         </div>
+
+
+                                        <!-- Start of Next 30 days Model -->
+
+                                        <div class="modal fade" id="next30daysModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content add_Customer">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title fs-5" id="staticBackdropLabel">Next 30 days</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="pageTitleBtn p-0">
+                                                            <button type="button" class="profileDrop" id="addNotesType">Print</button>
+                                                        </div>
+                                                        <div class="productDetailTable mt-3">
+                                                            <table class="table mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 192px;"># Name </th>
+                                                                        <th>Company </th>
+                                                                        <th style="width: 260px;">Address </th>
+                                                                        <th>Time </th>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                            <table class="table mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
+                                                                        <th>Appoinments:1</th>
+                                                                        <th colspan="2"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <table class="table mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
+                                                                        <th>Appoinments:1</th>
+                                                                        <th colspan="2"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <table class="table mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
+                                                                        <th>Appoinments:1</th>
+                                                                        <th colspan="2"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <table class="table mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
+                                                                        <th>Appoinments:4</th>
+                                                                        <th colspan="2"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">Poseidon House, 33 Walson Awanue LL297UY</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4 John</td>
+                                                                        <td>Titin</td>
+                                                                        <td style="width: 260px;">UK 0022345</td>
+                                                                        <td>12:14 Pm</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer customer_Form_Popup">
+                                                            <div class="pageTitleBtn p-0">
+                                                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- End of Next 30 days Model -->
+
                                     </div>
                                 </div>
                             </div>
@@ -250,9 +377,9 @@ if (isset($lead)) {
                                             <!-- Modal -->
                                             <div class="modal fade" id="notesModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
-                                                    <div class="modal-content">
+                                                    <div class="modal-content add_Customer">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">History Type - Add</h1>
+                                                            <h5 class="modal-title fs-5" id="staticBackdropLabel">History Type - Add</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -274,7 +401,7 @@ if (isset($lead)) {
                                                                 </div>
                                                             </form>
                                                         </div>
-                                                        <div class="modal-footer">
+                                                        <div class="modal-footer customer_Form_Popup">
                                                             <div class="pageTitleBtn p-0">
                                                                 <button type="button" class="profileDrop" id="addNotesType">Save</button>
                                                                 <!-- <button type="button" class="profileDrop">Save & Close</button> -->
@@ -296,10 +423,10 @@ if (isset($lead)) {
                                         <div class="col-sm-12">
                                             <!-- Modal -->
                                             <div class="modal fade" id="tasksModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg">
-                                                    <div class="modal-content">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content add_Customer">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Task</h1>
+                                                            <h5 class="modal-title fs-5" id="staticBackdropLabel">Add Task</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -338,9 +465,9 @@ if (isset($lead)) {
                                                                     <div class="col-sm-4">
                                                                         <input type="date" class="form-control editInput" id="create_date" name="create_date">
                                                                     </div>
-                                                                    <div class="col-sm-1 text-center">
+                                                                    <!-- <div class="col-sm-1 text-center">
                                                                         <i class="fa fa-calendar-days"></i>
-                                                                    </div>
+                                                                    </div> -->
                                                                     <div class="col-sm-4">
                                                                         <input type="time" class="form-control editInput" id="create_time" name="create_time">
                                                                     </div>
@@ -365,23 +492,28 @@ if (isset($lead)) {
                                                                 </div>
                                                                 <div class="mb-3 row">
                                                                     <label for="inputName" class="col-sm-3 col-form-label">Notify?</label>
-                                                                    <div class="col-sm-2 d-flex">
+                                                                    <div class="col-sm-3 d-flex">
                                                                         <input type="checkbox" class="editInput" id="yeson">
                                                                         <label for="notify" class="col-form-label ps-3">Yes, On</label>
                                                                     </div>
                                                                     <div class="col-sm-3">
                                                                         <input type="date" class="form-control editInput" id="notifyDate" name="notify_date">
                                                                     </div>
-                                                                    <div class="col-sm-1 text-center">
+                                                                    <!-- <div class="col-sm-1 text-center">
                                                                         <i class="fa fa-calendar-days"></i>
-                                                                    </div>
+                                                                    </div> -->
                                                                     <div class="col-sm-3">
                                                                         <input type="time" class="form-control editInput" id="notifyTime" name="notify_time">
                                                                     </div>
-                                                                    <div id="optionsDiv">
-                                                                        <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
-                                                                        <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
-                                                                        <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
+                                                                    <div class="col-sm-12 row">
+                                                                        <div class="col-sm-3"></div>
+                                                                        <div class="col-sm-8">
+                                                                            <div id="optionsDiv">
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="notificationCheckbox" name="notification"> Notification</label>
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="emailCheckbox" name="email_notify"> Email</label>
+                                                                                <label class="editInput"><input type="checkbox" value="1" id="smsCheckbox" name="sms_notify"> SMS</label>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
@@ -392,7 +524,7 @@ if (isset($lead)) {
                                                                 </div>
                                                             </form>
                                                         </div>
-                                                        <div class="modal-footer">
+                                                        <div class="modal-footer customer_Form_Popup">
                                                             <div class="pageTitleBtn p-0">
                                                                 <a href="#" class="profileDrop" id="saveAddTask"><i class="fa-solid fa-floppy-disk"></i> Save</a>
                                                                 <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save & Close </a> -->
@@ -515,13 +647,18 @@ if (isset($lead)) {
                                             <h3>Attachments - </h3>
                                             <a href="#" class="profileDrop ms-3 open-modal-attachment" data-bs-toggle="modal" data-bs-target="#attechmentModel"><i class="fa-solid fa-floppy-disk"></i> Attachments</a>
                                         </div>
+                                        <div class="col-md-7">
+                                            <div class="jobsection d-flex">
+                                                <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-12">
                                             <!-- Modal -->
                                             <div class="modal fade" id="attechmentModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
-                                                    <div class="modal-content">
+                                                    <div class="modal-content add_Customer">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Attachments</h1>
+                                                            <h5 class="modal-title fs-5" id="staticBackdropLabel">Add Attachments</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -569,7 +706,7 @@ if (isset($lead)) {
                                                                 </div>
                                                             </form>
                                                         </div>
-                                                        <div class="modal-footer">
+                                                        <div class="modal-footer customer_Form_Popup">
                                                             <div class="pageTitleBtn p-0">
                                                                 <a href="#" class="profileDrop" id="saveAttachmentType"><i class="fa-solid fa-floppy-disk"></i> Save</a>
                                                                 <a href="#" class="profileDrop" data-bs-dismiss="modal"> Close</a>
@@ -583,6 +720,7 @@ if (isset($lead)) {
                                                 <table class="table" id="containerA">
                                                     <thead class="table-light">
                                                         <tr>
+                                                            <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"></th>
                                                             <th>#</th>
                                                             <th>Type</th>
                                                             <th>Title</th>
@@ -597,6 +735,7 @@ if (isset($lead)) {
                                                         @if(isset($lead_attachment))
                                                         @foreach($lead_attachment as $value)
                                                         <tr>
+                                                            <td><div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$value['id']}}"></div></td>
                                                             <td></td>
                                                             <td>{{ $value['type'] }}</td>
                                                             <td>{{ $value['title'] }}</td>
@@ -668,6 +807,50 @@ if (isset($lead)) {
     const baseMarkAsCompletedURL = "{{ url('/lead/task_mark_as_completed', ['task' => '__TASK_ID__','lead_id' => $lead_id ]) }}";
     const baseDeleteURL = "{{ url('/leads/lead_task/delete', ['task' => '__TASK_ID__', 'lead_id' => $lead_id]) }}";
 </script>
+<script>
+   $("#deleteSelectedRows").on('click', function() {
+    let ids = [];
+    
+    $('.delete_checkbox:checked').each(function() {
+        ids.push($(this).val());
+    });
+    if(ids.length == 0){
+        alert("Please check the checkbox for delete");
+    }else{
+        if(confirm("Are you sure to delete?")){
+            // console.log(ids);
+            var token='<?php echo csrf_token();?>'
+            var model='LeadAttachment';
+            $.ajax({
+                type: "POST",
+                url: "{{url('/bulk_delete')}}",
+                data: {ids:ids,model:model,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if(data){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    }
+    
+});
+$('.delete_checkbox').on('click', function() {
+    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+        $('#selectAll').prop('checked', true);
+    } else {
+        $('#selectAll').prop('checked', false);
+    }
+});
+ </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>
 
