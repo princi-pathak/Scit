@@ -385,40 +385,40 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	});
 
 
-	Route::controller(Purchase_orderController::class)->group(function(){
-		Route::get('/departments','departments');
-		Route::post('/save_department','save_department');
-		Route::get('/purchase_order','purchase_order');
-		Route::post('/purchase_order_save','purchase_order_save');
-		Route::get('/purchase_order_edit','purchase_order');
-		Route::post('/purchase_order_attachment_save','purchase_order_attachment_save');
-		Route::post('/getAllAttachmens','getAllAttachmens');
-		Route::post('/delete_po_attachment','delete_po_attachment');
-		Route::post('/vat_tax_details','vat_tax_details');
-		Route::post('/getPurchaesOrderProductDetail','getPurchaesOrderProductDetail');
-		Route::post('/purchase_productsDelete','purchase_productsDelete');
-		Route::post('/purchase_order_new_task_save','purchase_order_new_task_save');
-		Route::post('/getAllNewTaskList','getAllNewTaskList');
-		Route::get('/draft_purchase_order','draft_purchase_order');
-		Route::post('/searchPurchaseOrders','searchPurchaseOrders');
-		Route::post('/searchDepartment','searchDepartment');
-		Route::post('/searchTag','searchTag');
-		Route::post('/searchSupplier','searchSupplier');
-		Route::post('/searchCreatedBy','searchCreatedBy');
-		Route::post('/searchProject','searchProject');
-		Route::post('/searchPurchase_qoute_ref','searchPurchase_qoute_ref');
-		Route::post('/searchPurchase_job_ref','searchPurchase_job_ref');
-		Route::post('/purchase_order_approve','purchase_order_approve');
-		Route::post('/purchase_order_record_delivered','purchase_order_record_delivered');
-		Route::post('/savePurchaseOrderRecordPayment','savePurchaseOrderRecordPayment');
-		Route::post('/purchaseOrderInviceRecieve','purchaseOrderInviceRecieve');
-		Route::post('/purchaseOrderreject','purchaseOrderreject');
-		Route::post('/save_reminder','save_reminder');
-		Route::post('/purchaseOrderEmailSave','purchaseOrderEmailSave');
-		Route::get('/preview','preview');
+	Route::controller(Purchase_orderController::class)->group(function () {
+		Route::get('/departments', 'departments');
+		Route::post('/save_department', 'save_department');
+		Route::get('/purchase_order', 'purchase_order');
+		Route::post('/purchase_order_save', 'purchase_order_save');
+		Route::get('/purchase_order_edit', 'purchase_order');
+		Route::post('/purchase_order_attachment_save', 'purchase_order_attachment_save');
+		Route::post('/getAllAttachmens', 'getAllAttachmens');
+		Route::post('/delete_po_attachment', 'delete_po_attachment');
+		Route::post('/vat_tax_details', 'vat_tax_details');
+		Route::post('/getPurchaesOrderProductDetail', 'getPurchaesOrderProductDetail');
+		Route::post('/purchase_productsDelete', 'purchase_productsDelete');
+		Route::post('/purchase_order_new_task_save', 'purchase_order_new_task_save');
+		Route::post('/getAllNewTaskList', 'getAllNewTaskList');
+		Route::get('/draft_purchase_order', 'draft_purchase_order');
+		Route::post('/searchPurchaseOrders', 'searchPurchaseOrders');
+		Route::post('/searchDepartment', 'searchDepartment');
+		Route::post('/searchTag', 'searchTag');
+		Route::post('/searchSupplier', 'searchSupplier');
+		Route::post('/searchCreatedBy', 'searchCreatedBy');
+		Route::post('/searchProject', 'searchProject');
+		Route::post('/searchPurchase_qoute_ref', 'searchPurchase_qoute_ref');
+		Route::post('/searchPurchase_job_ref', 'searchPurchase_job_ref');
+		Route::post('/purchase_order_approve', 'purchase_order_approve');
+		Route::post('/purchase_order_record_delivered', 'purchase_order_record_delivered');
+		Route::post('/savePurchaseOrderRecordPayment', 'savePurchaseOrderRecordPayment');
+		Route::post('/purchaseOrderInviceRecieve', 'purchaseOrderInviceRecieve');
+		Route::post('/purchaseOrderreject', 'purchaseOrderreject');
+		Route::post('/save_reminder', 'save_reminder');
+		Route::post('/purchaseOrderEmailSave', 'purchaseOrderEmailSave');
+		Route::get('/preview', 'preview');
 	});
-	Route::controller(CreditNotesController::class)->group(function(){
-		Route::get('credit_notes','credit_notes');
+	Route::controller(CreditNotesController::class)->group(function () {
+		Route::get('credit_notes', 'credit_notes');
 	});
 
 	// Forontend Customer Controller
@@ -437,7 +437,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/getCustomerSiteAddress', 'getCustomerSiteAddress')->name('customer.ajax.getCustomerSiteAddress');
 			// Route::post('/getCustomerSiteData', 'getCustomerSiteData')->name('customer.ajax.getCustomerSiteData');
 			Route::post('/getCustomerSiteDetails', 'getCustomerSiteDetails')->name('customer.ajax.getCustomerSiteDetails');
-
 		});
 	});
 
@@ -591,7 +590,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/quotes/saveInvoiceDeposite', 'saveInvoiceDeposite')->name('quote.ajax.saveInvoiceDeposite');
 		Route::post('/quotes/getQuoteInvoiceDeposit', 'getQuoteInvoiceDeposit')->name('quote.ajax.getQuoteInvoiceDeposit');
 		Route::post('/quotes/searchQuoteData', 'searchQuoteData')->name('quote.ajax.searchQuoteData');
-
 	});
 
 	Route::controller(CataloguesController::class)->group(function () {
