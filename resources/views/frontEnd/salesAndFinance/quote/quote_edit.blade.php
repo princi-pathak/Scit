@@ -2829,12 +2829,66 @@
         document.getElementById('hideDepositSection').style.display = "none";
         getQuoteTaskList(document.querySelector('#quoteTaskList tbody'));
 
-
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $('#getCustomerList').on('click', function() {
+            // getCustomerList();
+            document.getElementById('customerSiteDetails').removeAttribute('disabled');
+            document.getElementById('billingDetailContact').removeAttribute('disabled');
+
+            const billingDetailContact = document.getElementById('billingDetailContact');
+            billingDetailContact.innerHTML = '';
+
+            var getCustomerListValue = document.getElementById('getCustomerList');
+
+            const option = document.createElement('option');
+            option.value = getCustomerListValue.value;
+            option.text = "Default";
+            billingDetailContact.appendChild(option);
+
+
+            $.ajax({
+                url: '{{ route("customer.ajax.getCustomerBillingAddress") }}',
+                method: 'POST',
+                data: {
+                    id: getCustomerListValue.value
+                },
+                success: function(response) {
+                    console.log(response.message);
+
+                    response.data.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.id;
+                        option.text = user.contact_name;
+                        billingDetailContact.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+            getBillingDetailsData(getCustomerListValue.value);
+
+
+            const customerSiteDetails = document.getElementById('customerSiteDetails');
+            const customerSiteDelivery = document.getElementById('customerSiteDelivery');
+
+            customerSiteDetails.innerHTML = '';
+            customerSiteDelivery.innerHTML = '';
+
+            const option3 = document.createElement('option');
+            option3.value = getCustomerListValue.value;
+            option3.text = "Same as customer";
+            const option4 = option3.cloneNode(true);
+            customerSiteDetails.appendChild(option3);
+            customerSiteDelivery.appendChild(option4);
+
+            removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
         });
 
         // start here js for time start and pause
