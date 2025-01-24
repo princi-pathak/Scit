@@ -264,7 +264,7 @@ $access_rights = explode(',', $rights);
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-rotate-right"></i>Recurring Purchase Orders</span></a></li>
                                             <li class="dropend"><a class="dropdown-item" href="credit_notes.html" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-list"></i>Credit Notes</span> <i class="fa-solid fa-angle-right"></i></a>
                                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
-                                                    <li><a class="dropdown-item" href="new_credit_note.html"><span><i class="fa fa-plus"></i> New Credit Note</span></a></li>
+                                                    <li><a class="dropdown-item" href="{{url('new_credit_notes')}}"><span><i class="fa fa-plus"></i> New Credit Note</span></a></li>
                                                     <li><a class="dropdown-item" href="{{url('credit_notes?list_mode=Approved')}}"><span><i class="fa fa-check"></i>Approved Credit Notes</span></a></li>
                                                     <li><a class="dropdown-item" href="{{url('credit_notes?list_mode=Paid')}}"><span><i class="fa fa-thumbs-up"></i>Paid Credit Notes </span></a></li>
                                                     <li><a class="dropdown-item" href="{{url('credit_notes?list_mode=Cancelled')}}"><span><i class="fa fa-times"></i>Cancelled Credit Notes</span></a></li>
