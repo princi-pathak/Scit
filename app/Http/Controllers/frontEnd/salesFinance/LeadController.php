@@ -335,13 +335,15 @@ class LeadController extends Controller
             return redirect()->route('lead.task_list')->with('error', "Record not found");
         }
     }
-    public function task_mark_as_completed($task_id, $leadId)
+    public function task_mark_as_completed($task_id)
     {
-        if (LeadTask::taskMarkAsCompleted($task_id)) {
-            return redirect()->route('lead.edit', ['id' => $leadId])->with('success', 'Task mark as completed');
-        } else {
-            return redirect()->route('lead.edit', ['id' => $leadId])->with('fails', 'Error in task complete');
-        }
+        $data = LeadTask::taskMarkAsCompleted($task_id); 
+
+        return response()->json([
+            'success' => (bool) $data,
+            'data' => $data ? $data : 'No data'
+        ]);
+
     }
 
     public function sentToAuthorization($leadId)
@@ -1034,11 +1036,22 @@ class LeadController extends Controller
 
     public function getLeadTaskOnLeadId(Request $request){
         // dd($request);
-        $data =  LeadTask::getLeadTaskTypeUser($request->lead_ref, 0);
-        if ($data) {
-            return response()->json(['success' => true, 'data' => $data]);
+        $close =  LeadTask::getLeadTaskTypeUser($request->lead_ref, 1);
+        $open =  LeadTask::getLeadTaskTypeUser($request->lead_ref, 0);
+        if ($open) {
+            return response()->json(['success' => true, 'open' => $open, 'close' => $close]);
         } else {
             return response()->json(['success' => false, 'data' => 'No Data']);
         }
     }
+
+    // public function searchUser(Request $request){
+    //     $query = $request->get('query');
+
+    //     // Fetch data from database (replace `YourModel` with your actual model)
+    //     $results = Product::where('product_name', 'LIKE', "%{$query}%")->select('id', 'product_name')->get();
+
+    //     // Return the results as JSON or a rendered view
+    //     return response()->json($results); // For JSON response
+    // }
 }

@@ -456,7 +456,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 		// Lead Task Type
 		Route::get('/leads/tasks', 'task_list')->name('lead.task_list');
-		Route::get('/lead/task_mark_as_completed/{task}/{lead}', 'task_mark_as_completed')->name('lead.task_mark_as_completed');
+		Route::get('/lead/task_mark_as_completed/{task}', 'task_mark_as_completed')->name('lead.task_mark_as_completed');
 		Route::get('/lead/lead_task_delete/{id}', 'lead_task_list_delete');
 		Route::get('/lead/lead_task_type', 'lead_task_type')->name('leads.lead_task_type');
 		Route::post('/lead/saveLeadTaskType', 'saveLeadTaskType')->name('lead.ajax.saveLeadTaskType');
@@ -526,6 +526,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('lead/getCRMTaskDataRecurring', 'getCRMTaskDataRecurring')->name('lead.ajax.getCRMTaskDataRecurring');
 		Route::get('lead/getUserList', 'getUserList')->name('lead.ajax.getUserList');
 		Route::post('lead/getLeadDataWithRecurrence', 'getLeadDataWithRecurrence')->name('lead.ajax.getLeadDataWithRecurrence');
+		Route::get('lead/searchUser', 'searchUser')->name('lead.ajax.searchUser');
 
 		
 	});

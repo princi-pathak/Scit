@@ -179,11 +179,8 @@ if (isset($lead)) {
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                         <button class="nav-link active" id="nav-Notes-tab" data-bs-toggle="tab" data-bs-target="#nav-Notes" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Notes</button>
-
                                         <button class="nav-link" id="nav-Tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-Tasks" type="button" role="tab" aria-controls="nav-Tasks" aria-selected="false">Tasks</button>
-
                                         <button class="nav-link" id="nav-attachments-tab" data-bs-toggle="tab" data-bs-target="#nav-attachments" type="button" role="tab" aria-controls="nav-attachments" aria-selected="false">Attachments</button>
-
                                     </div>
                                 </nav>
                                 <div class="tab-content" id="nav-tabContent">
@@ -222,7 +219,7 @@ if (isset($lead)) {
                                                         <table class="table" id="containerA">
                                                             <thead class="table-light">
                                                                 <tr>
-                                                                    <th>Data</th>
+                                                                    <th>Date</th>
                                                                     <th>By</th>
                                                                     <th>Type</th>
                                                                     <th>Notes</th>
@@ -288,7 +285,8 @@ if (isset($lead)) {
                                                 </div>
                                             </div>
                                             <!-- Modal End -->
-                                        </div><!-- ENd col-9 -->
+                                        </div>
+                                        <!-- ENd col-9 -->
                                     </div>
                                     <div class="tab-pane fade" id="nav-Tasks" role="tabpanel" aria-labelledby="nav-Tasks-tab" tabindex="0">
                                         <div class="tabheadingTitle">
@@ -422,7 +420,7 @@ if (isset($lead)) {
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td colspan="10"><strong>Open tasks</strong></td>
+                                                            <td colspan="10"><strong>Open Tasks</strong></td>
                                                         </tr>
                                                         @if(isset($lead_task_open))
                                                         @if( !$lead_task_open->isEmpty() )
@@ -450,7 +448,7 @@ if (isset($lead)) {
                                                                         Action
                                                                     </a>
                                                                     <div class="dropdown-menu fade-up m-0">
-                                                                        <a href="{{ url('/lead/task_mark_as_completed', ['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Mark As Completed</a>
+                                                                        <a href="javascript:void(0)" onclick="mark_as_complete_task('{{ $value->id }}', '{{$lead->id}}', '{{$value->lead_ref}}')" class="dropdown-item">Mark As Completed</a>
                                                                         <hr class="dropdown-divider">
                                                                         <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
                                                                         <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
@@ -464,8 +462,9 @@ if (isset($lead)) {
                                                             <td colspan="10" class="text-center"><strong>No task(s) found</strong></td>
                                                         </tr>
                                                         @endif
+
                                                         <tr>
-                                                            <td colspan="10"><strong>Close tasks</strong></td>
+                                                            <td colspan="10"><strong>Close Tasks</strong></td>
                                                         </tr>
                                                         @endif
                                                         @if(isset($lead_task_open))
@@ -636,13 +635,25 @@ if (isset($lead)) {
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="pageTitleBtn">
                     <button type="submit" class="profileDrop reDesignBtn" id="submit_main_form"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                    <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
-                    <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a>
+                    <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                    <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a> -->
                 </div>
             </div>
         </div>
         </form>
     </div>
+
+    <?php
+    if (isset($lead)) {
+        $lead_id =  $lead->id;
+        $lead_contact = $lead->contact_name;
+        $lead_telephone = $lead->telephone;
+    } else {
+        $lead_id = '';
+        $lead_contact = '';
+        $lead_telephone = '';
+    }
+    ?>
 </section>
 <script>
     var addNotesTypeURL = '{{ route("lead.ajax.saveLeadNoteType") }}';
@@ -650,105 +661,18 @@ if (isset($lead)) {
     const addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
     var saveLeadAttachmentUrl = '{{ route("lead.ajax.saveLeadAttachment") }}';
     var getLeadTaskDataURL = '{{ route("lead.ajax.getLeadTaskOnLeadId") }}';
+    const markAsComplete = '{{ route("lead.task_mark_as_completed", ["task" => ":task"]) }}';
+    const lead_id = '{{ $lead_id}}';
+    const lead_contact = '{{ $lead_contact }}';
+    const lead_telephone = '{{ $lead_telephone }}';
+    const baseMarkAsCompletedURL = "{{ url('/lead/task_mark_as_completed', ['task' => '__TASK_ID__','lead_id' => $lead_id ]) }}";
+    const baseDeleteURL = "{{ url('/leads/lead_task/delete', ['task' => '__TASK_ID__', 'lead_id' => $lead_id]) }}";
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>
 
 <script>
-    function setleadTaskTableData(data, tableBody, table) {
-
-        tableBody.innerHTML = '';
-
-        if (data.length === 0) {
-            // Handle the case where there is no data
-            const errorRow = document.createElement('tr');
-            const errorCell = document.createElement('td');
-            errorCell.colSpan = 8; // Adjust this based on the number of columns in your table
-            errorCell.classList.add('red_sorryText');
-            errorCell.textContent = 'Sorry, no records to show ';
-            errorCell.style.textAlign = 'center'; // Optional: Center the text
-            errorRow.appendChild(errorCell);
-            tableBody.appendChild(errorRow);
-            return; // Exit the function
-        }
-
-        let countValue = 1;
-
-        data.forEach(item => {
-
-            // Create a new row
-            const row = document.createElement('tr');
-
-            const count = document.createElement('td');
-            count.textContent = countValue;
-            row.appendChild(count);
-
-            const created_on = document.createElement('td');
-            created_on.textContent = moment(item.created_at).format('DD/MM/YYYY HH:mm');
-            row.appendChild(created_on);
-
-            const name = document.createElement('td');
-            name.innerHTML = item.name;
-            row.appendChild(name);
-
-            const task_type_title = document.createElement('td');
-            task_type_title.innerHTML = item.task_type_title;
-            row.appendChild(task_type_title);
-
-            const title = document.createElement('td');
-            title.textContent = item.title;
-            row.appendChild(title);
-
-            const contact_name = document.createElement('td');
-            contact_name.innerHTML = <?php echo  $lead->contact_name; ?>;
-            row.appendChild(contact_name);
-
-            const telephone = document.createElement('td');
-            telephone.innerHTML = <?php echo $lead->telephone; ?>;
-            row.appendChild(telephone);
-
-            if (item.notification === 1 || item.sms === 1 || item.email === 1) {
-
-                const notifyDate = item.notify_date; // Example: '2025-01-24'
-                const notifyTime = item.notify_time; // Example: '03:40'
-
-                // Combine date and time
-                const dateTime = `${notifyDate} ${notifyTime}`;
-                const formattedDateTime = moment(dateTime, 'YYYY-MM-DD HH:mm').format('DD/MM/YYYY HH:mm');
-
-                const text = document.createElement('td');
-                text.innerHTML = `Yes, On  <br> ${formattedDateTime}`;
-                row.appendChild(text);
-            } else {
-                const text = document.createElement('td');
-                text.innerHTML = "No";
-                row.appendChild(text);
-            }
 
 
-            const notes = document.createElement('td');
-            notes.innerHTML = item.notes;
-            row.appendChild(notes);
 
-            const baseMarkAsCompletedURL = "{{ url('/lead/task_mark_as_completed', ['task' => '__TASK_ID__', 'lead_id' => $lead->id]) }}";
-            const baseDeleteURL = "{{ url('/leads/lead_task/delete', ['task' => '__TASK_ID__', 'lead_id' => $lead->id]) }}";
-
-            const idCell = document.createElement('td');
-            idCell.innerHTML = `<div class="nav-item dropdown tableActionBtn">
-                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">Action</a>
-                    <div class="dropdown-menu fade-up m-0">
-                        <a href="${baseMarkAsCompletedURL.replace('__TASK_ID__', item.id)}" class="dropdown-item">Mark As Completed</a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="${item.id}" data-user_id="${item.user_id}" data-title="${item.title}" data-task_type_id="${item.lead_task_type_id}" data-create_date="${item.create_date}" data-create_time="${item.create_time}" data-notify_date="${item.notify_date}" data-notify_time="${item.notify_time}" data-notes="${item.notes}" data-notification="${item.notification}" data-email_notify="${item.email_notify}" data-sms_notify="${item.sms_notify}">Edit Task</a>
-                        <a href="${baseDeleteURL.replace('__TASK_ID__', item.id)}" class="dropdown-item">Delete Task</a>
-                    </div>
-                </div>`;
-            row.appendChild(idCell);
-
-            // Append the row to the table body
-            tableBody.appendChild(row);
-            countValue++;
-        });
-
-    }
 </script>
