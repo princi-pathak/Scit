@@ -227,7 +227,7 @@
                                 <div class="col-md-3">
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Supplier:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="supplier">
                                             <input type="hidden" id="selectedsupplierId" name="selectedsupplierId">
                                             <div class="parent-container supplier-container"></div>
@@ -752,13 +752,16 @@
     emailModalId="emailModal"
     modalTitle="email_modalTitle"
     emailformId="emailformId"
+    foreignId="po_id"
     emailId="emailId"
     toField="toField"
     ccField="ccField"
     subject="emailsubject"
     selectBoxsubject="selectBoxsubject"
     body="emailbody"
-    saveButtonId="emailSave" />
+    saveButtonId="emailSave"
+    saveUrl="{{url('purchaseOrderEmailSave')}}"
+     />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 <script>
@@ -1793,6 +1796,16 @@
         $("#email_modalTitle").text("Email Purchase Order - " + po_ref);
         $("#emailsubject").val("Purchase Order from The Contructor - " + po_ref);
         $("#email_po_id").val(id);
+        $("#defaultOption").text('Default Purchase Order');
+        const editor = CKEDITOR.instances['emailbody'];
+        const message = `
+            Hello,<br>
+            Please find attached purchase order.<br><br><br><br><br>
+            Regards,<br>
+            The Contructor<br><br>
+            Thanks for using SCITS
+        `;
+        editor.setData(message);
         $("#emailModal").modal('show');
     }
 </script>

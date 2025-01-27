@@ -56,7 +56,7 @@ ul#purchase_qoute_refList {
                 <div class="col-md-4 col-lg-4 col-xl-4 px-3">
                     <div class="pageTitleBtn">
                         <a href="javascript:void(0)" onclick="save_all_data()" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                        <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                        <a href="{{url('credit_notes?list_mode=Approved')}}" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
                         <!-- <a href="#" class="profileDrop dropdown-toggle"><i class="fa-solid fa-gear"></i> Actions</a> -->
                     </div>
                 </div>
@@ -70,7 +70,7 @@ ul#purchase_qoute_refList {
                                 <div class="formDtail">
                                     <h4 class="contTitle">Supplier Details</h4>
                                         @csrf
-                                        <input type="hidden" id="credit_id" name="id">
+                                        <input type="hidden" id="credit_id" name="id" value="<?php if(isset($credit_note)){echo $credit_note->id;}?>">
                                         <div class="mb-3 row">
                                             <label for="" class="col-sm-3 col-form-label">Supplier
                                                 <span class="radStar">*</span></label>
@@ -78,7 +78,7 @@ ul#purchase_qoute_refList {
                                                 <select class="form-control editInput selectOptions CreditNotescheckError" id="credit_supplier_id" name="supplier_id" onchange="get_supplier_details()">
                                                     <option selected disabled>Select Supplier</option>
                                                     <?php foreach($suppliers as $suppval){?>
-                                                        <option value="{{$suppval->id}}">{{$suppval->name}}</option>
+                                                        <option value="{{$suppval->id}}" <?php if(isset($credit_note) && $credit_note->supplier_id == $suppval->id){echo 'selected';}?>>{{$suppval->name}}</option>
                                                     <?php }?>
                                                 </select>
                                             </div>
@@ -96,6 +96,9 @@ ul#purchase_qoute_refList {
                                             <div class="col-sm-7">
                                                 <select class="form-control editInput selectOptions" id="credit_contact_id" name="contact_id">
                                                     <option selected disabled>Select Supplier First</option>
+                                                    @foreach($additional_contact as $addContact)
+                                                        <option value="{{$addContact->id}}" <?php if(isset($credit_note) && $credit_note->contact_id == $addContact->id){echo 'selected';}?>>{{$addContact->contact_name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-2">
@@ -107,14 +110,14 @@ ul#purchase_qoute_refList {
                                             <label for="" class="col-sm-3 col-form-label">Name <span
                                                     class="radStar">*</span></label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control editInput CreditNotescheckError" id="credit_name" name="name" value="">
+                                                <input type="text" class="form-control editInput CreditNotescheckError" id="credit_name" name="name" value="<?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->name;}?>">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label for="" class="col-sm-3 col-form-label">Email</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control editInput" id="credit_email"
-                                                    name="email" value="" onchange="credit_check_email()">
+                                                    name="email" value="<?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->email;}?>" onchange="credit_check_email()">
                                                 <span style="color:red" id="creditemailErr"></span>
                                             </div>
                                         </div>
@@ -123,12 +126,12 @@ ul#purchase_qoute_refList {
                                             <div class="col-sm-2">
                                                 <select class="form-control editInput selectOptions" id="credit_tele_code" name="telephone_code">
                                                 @foreach($country as $Codeval)
-                                                    <option value="{{$Codeval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->telephone_code == $Codeval->id){echo 'selcted';}else if($Codeval->id == 230){echo 'selected';}?>>+{{$Codeval->code}} - {{$Codeval->name}}</option>
+                                                    <option value="{{$Codeval->id}}" <?php if(isset($credit_note) && $credit_note->telephone_code == $Codeval->id){echo 'selcted';}else if($Codeval->id == 230){echo 'selected';}?>>+{{$Codeval->code}} - {{$Codeval->name}}</option>
                                                 @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-7">
-                                                <input type="text" class="form-control editInput" id="credit_telephone" name="telephone" placeholder="Telephone" onkeypress="return event.charCode>=48&&event.charCode<=57 && value.length<10">
+                                                <input type="text" class="form-control editInput" id="credit_telephone" name="telephone" placeholder="Telephone" onkeypress="return event.charCode>=48&&event.charCode<=57 && value.length<10" value="<?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->telephone;}?>">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -136,13 +139,13 @@ ul#purchase_qoute_refList {
                                             <div class="col-sm-2">
                                                 <select class="form-control editInput selectOptions" id="credit_mobile_code" name="mobile_code">
                                                 @foreach($country as $Codeval)
-                                                    <option value="{{$Codeval->id}}" <?php if(isset($purchase_orders) && $purchase_orders->telephone_code == $Codeval->id){echo 'selcted';}else if($Codeval->id == 230){echo 'selected';}?>>+{{$Codeval->code}} - {{$Codeval->name}}</option>
+                                                    <option value="{{$Codeval->id}}" <?php if(isset($credit_note) && $credit_note->mobile_code == $Codeval->id){echo 'selcted';}else if($Codeval->id == 230){echo 'selected';}?>>+{{$Codeval->code}} - {{$Codeval->name}}</option>
                                                 @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-7">
                                                 <input type="text" class="form-control editInput" id="credit_mobile"
-                                                    name="mobile" placeholder="Mobile" onkeypress="return event.charCode>=48&&event.charCode<=57 && value.length<10">
+                                                    name="mobile" placeholder="Mobile" onkeypress="return event.charCode>=48&&event.charCode<=57 && value.length<10" value="<?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->mobile;}?>">
                                             </div>
                                         </div>
                                 </div>
@@ -156,20 +159,20 @@ ul#purchase_qoute_refList {
                                                     class="radStar">*</span></label>
                                             <div class="col-sm-9">
                                                 <textarea class="form-control textareaInput CreditNotescheckError" name="address" id="credit_address"
-                                                    rows="3" placeholder=""></textarea>
+                                                    rows="3" placeholder=""><?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->address;}?></textarea>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label for="" class="col-sm-3 col-form-label">City</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control editInput" id="credit_city" name="city">
+                                                <input type="text" class="form-control editInput" id="credit_city" name="city" value="<?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->city;}?>">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label for="" class="col-sm-3 col-form-label">County</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control editInput" id="credit_county"
-                                                    name="county" placeholder="County">
+                                                    name="county" placeholder="County" value="<?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->county;}?>">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -177,7 +180,7 @@ ul#purchase_qoute_refList {
                                             </label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control editInput textareaInput"
-                                                    id="credit_post_code" name="post_code">
+                                                    id="credit_post_code" name="post_code" value="<?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->post_code;}?>">
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="plusandText">
@@ -197,7 +200,7 @@ ul#purchase_qoute_refList {
                                                 Ref</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control-plaintext editInput" id="credit_ref"
-                                                    value="Auto generate" readonly>
+                                                    value="<?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->credit_ref;}else{echo 'Auto generate';}?>" readonly>
                                             </div>
                                         </div>
 
@@ -205,7 +208,7 @@ ul#purchase_qoute_refList {
                                             <label for="" class="col-sm-3 col-form-label">Date
                                                 <span class="radStar">*</span></label>
                                             <div class="col-sm-4">
-                                                <input type="date" class="form-control editInput textareaInput CreditNotescheckError" id="credit_date" name="date">
+                                                <input type="date" class="form-control editInput textareaInput CreditNotescheckError" id="credit_date" name="date" value="<?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->date;}?>">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -213,7 +216,7 @@ ul#purchase_qoute_refList {
                                                 Ref</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control editInput textareaInput"
-                                                    id="credit_supplier_ref" name="supplier_ref" placeholder="">
+                                                    id="credit_supplier_ref" name="supplier_ref" placeholder="" value="<?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->supplier_ref;}?>">
                                             </div>
                                         </div>
 
@@ -221,9 +224,9 @@ ul#purchase_qoute_refList {
                                             <label for="" class="col-sm-3 col-form-label">Status</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control editInput selectOptions" id="credit_status" name="status">
-                                                    <option value="1">Approved</option>
-                                                    <option value="2" disabled>Paid</option>
-                                                    <option value="0" disabled>Cancelled</option>
+                                                    <option value="1" <?php if(isset($credit_note) && $credit_note->status == 1){echo 'selected';}?>>Approved</option>
+                                                    <option value="2" disabled <?php if(isset($credit_note) && $credit_note->status == 2){echo 'selected';}?>>Paid</option>
+                                                    <option value="0" disabled <?php if(isset($credit_note) && $credit_note->status == 0){echo 'selected';}?>>Cancelled</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -330,7 +333,7 @@ ul#purchase_qoute_refList {
                                     <h4 class="contTitle text-start">Supplier Notes <small>(Will be included in
                                             credit note)</small></h4>
                                     <div class="mt-3">
-                                        <textarea cols="40" rows="5" id="supplier_notes" name="supplier_notes"></textarea>
+                                        <textarea cols="40" rows="5" id="supplier_notes" name="supplier_notes"><?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->supplier_notes;}?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -338,7 +341,7 @@ ul#purchase_qoute_refList {
                                 <div class="">
                                     <h4 class="contTitle text-start">Internal Notes</h4>
                                     <div class="mt-3">
-                                        <textarea cols="40" rows="5" id="internal_notes" name="internal_notes"> </textarea>
+                                        <textarea cols="40" rows="5" id="internal_notes" name="internal_notes"><?php if(isset($credit_note) && $credit_note !=''){echo $credit_note->internal_notes;}?> </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +360,7 @@ ul#purchase_qoute_refList {
                 <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                     <div class="pageTitleBtn">
                         <a href="javascript:void(0)" onclick="save_all_data()" class="profileDrop"><i class="fa-solid fa-floppy-disk"></i> Save</a>
-                        <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                        <a href="{{url('credit_notes?list_mode=Approved')}}" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
                         <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Action</a> -->
                     </div>
                 </div>
@@ -1018,22 +1021,24 @@ $('#search-product').on('keyup', function() {
  </script>
  <script>
     $(document).ready(function(){
-        // getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
+        var crediId='<?php if(isset($credit_note)){echo $credit_note->id;}?>'
+        getProductDetail(crediId,'{{ url("getCreditProduct") }}')
     });
    
-    function getProductDetail(id,pageUrl = '{{ url("getPurchaesOrderProductDetail") }}'){
+    function getProductDetail(id,pageUrl = '{{ url("getCreditProduct") }}'){
         var token='<?php echo csrf_token();?>'
         $.ajax({
             url: pageUrl,
             method: 'POST',
             data: {id: id,_token:token},
             success: function(response) {
-                // console.log(response);
+                console.log(response);
+                // return false;
                 var data=response.data[0];
                 const tableBody = document.querySelector(`#result tbody`);
-                var purchase_order_products=data.product_details.purchase_order_products;
-                // console.log(purchase_order_products);return false;
-                if (purchase_order_products.length === 0) {
+                var credit_products=data.product_details.credit_note_products;
+                // console.log(credit_products);return false;
+                if (credit_products.length === 0) {
                     const noDataRow = document.createElement('tr');
                     noDataRow.id='EmptyError'
                     const noDataCell = document.createElement('td');
@@ -1049,7 +1054,7 @@ $('#search-product').on('keyup', function() {
                     if (emptyErrorRow) {
                         emptyErrorRow.remove();
                     }
-                    purchase_order_products.forEach(product => {
+                    credit_products.forEach(product => {
                         const row = document.createElement('tr');
 
                         
@@ -1075,11 +1080,11 @@ $('#search-product').on('keyup', function() {
                         row.appendChild(dropdownJob);
                         // end
                         const nameCell = document.createElement('td');
-                        nameCell.innerHTML = data.purchase_order_products_detail.product_name;
+                        nameCell.innerHTML = data.crediProduct_detail.product_name;
                         row.appendChild(nameCell);
 
                         const codeCell = document.createElement('td');
-                        // codeCell.textContent = data.purchase_order_products_detail.product_code;
+                        // codeCell.textContent = data.crediProduct_detail.product_code;
                         const inputCode = document.createElement('input');
                         inputCode.className = 'product_code';
                         inputCode.name = 'product_code[]';
@@ -1091,14 +1096,14 @@ $('#search-product').on('keyup', function() {
                         hiddenInput.type = 'hidden';
                         hiddenInput.className = 'product_id';
                         hiddenInput.name = 'product_id[]';
-                        hiddenInput.value = data.purchase_order_products_detail.id;
+                        hiddenInput.value = data.crediProduct_detail.id;
                         row.appendChild(hiddenInput);
                         // purchase order product hidden id if not duplicate is null
-                        <?php if((isset($purchase_orders) && $purchase_orders !='') && (isset($duplicate) && $duplicate =='')){?>
+                        <?php if(isset($credit_note) && $credit_note !=''){?>
                         const hiddenID = document.createElement('input');
                         hiddenID.type = 'hidden';
-                        hiddenID.className = 'purchase_product_id';
-                        hiddenID.name = 'purchase_product_id[]';
+                        hiddenID.className = 'creditProduct_id';
+                        hiddenID.name = 'creditProduct_id[]';
                         hiddenID.value = product.id;
                         row.appendChild(hiddenID);
                         <?php }?>

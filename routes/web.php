@@ -422,6 +422,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('credit_notes','credit_notes');
 		Route::get('new_credit_notes','new_credit_notes');
 		Route::post('credit_notes_save','credit_notes_save');
+		Route::get('credit_note_edit','new_credit_notes');
+		Route::post('searchCreditNotes','searchCreditNotes');
+		Route::post('getCreditProduct','getCreditProduct');
+		Route::post('cancelCreditNote','cancelCreditNote');
 	});
 
 	// Forontend Customer Controller

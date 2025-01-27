@@ -6,13 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreditNotes;
 use Auth,Log;
+use App\Models\Job;
 use App\Models\Country;
+use App\Models\Product;
 use App\Models\Currency;
-use App\Models\Job_title;
 use App\Models\Supplier;
-use App\Models\Product_category;
+use App\Models\Job_title;
 use App\Models\CreditNote;
+use App\Models\Product_category;
 use App\Models\CreditNoteProduct;
+use App\Models\Construction_account_code;
+use App\Models\Constructor_additional_contact;
 
 class CreditNotesController extends Controller
 {
@@ -48,13 +52,14 @@ class CreditNotesController extends Controller
         $user_id=Auth::user()->id;
         $data['home_id']=$home_id;
         $key=base64_decode($request->key);
-        // $purchase_orders=CreditNote::find($key);
-        // $data['purchase_orders']=$purchase_orders;
+        $credit_note=CreditNote::find($key);
+        $data['credit_note']=$credit_note;
         $data['country']=Country::all_country_list();
         $data['currency']=Currency::where(['status'=>1,'deleted_at'=>null])->get();
         $data['job_title']=Job_title::where(['home_id'=>$home_id,'status'=>1])->get();
         $data['suppliers']=Supplier::allGetSupplier($home_id,$user_id)->where('status',1)->get();
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
+        $data['additional_contact'] = Constructor_additional_contact::where(['home_id'=> $home_id,'userType'=>2,'customer_id'=>$key,'deleted_at'=>null])->get();
         return view('frontEnd.salesAndFinance.credit_notes.new_credit_notes',$data);
     }
     public function credit_notes_save(CreditNotes $request){
@@ -108,7 +113,7 @@ class CreditNotesController extends Controller
 
             for ($i = 0; $i < count($product_ids); $i++) {
                 $productData = [
-                    'id'=>$data['purchase_product_id'][$i] ?? null,
+                    'id'=>$data['creditProduct_id'][$i] ?? null,
                     'user_id'=>Auth::user()->id,
                     'userType'=>2,
                     'credi_note_id' => $data['credi_note_id'],
@@ -135,5 +140,208 @@ class CreditNotesController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function searchCreditNotes(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $credit_ref=$request->credit_ref;
+        $supplier=$request->supplier;
+        $startDate=$request->startDate;
+        $endDate=$request->endDate;
+        $created_by=$request->created_by;
+        $po_posted=$request->po_posted;
+        $keywords=$request->keywords;
+        $status=$request->status;
+        $list_status=$request->list_status;
+        $selectedsupplierId=$request->selectedsupplierId;
+        $selectedCustomerId=$request->selectedCustomerId;
+        $selectedcreatedById=$request->selectedcreatedById;
+        $home_id=Auth::user()->home_id;
+        $query = CreditNote::with('suppliers','creditNoteProducts')->where(['loginUserId'=>Auth::user()->id,'deleted_at'=>null,'status'=>$status]);
+        // echo "<pre>";print_r($query->get());die;
+        if ($request->filled('credit_ref')) {
+            $query->where('credit_ref', $credit_ref);
+        }
+        if ($request->filled('supplier')) {
+            $query->where('supplier_id', $selectedsupplierId);
+        }
+        if ($request->filled('startDate') && $request->filled('endDate')) {
+            $query->whereBetween('date', [$startDate, $endDate]);
+        }
+        if ($request->filled('created_by')) {
+            $query->where('loginUserId', $selectedcreatedById);
+        }
+        
+        if ($request->filled('keywords')) {
+            $query->where(function ($q) use ($keywords) {
+                $q->where('credit_ref', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('name', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('county', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('supplier_ref', 'LIKE', '%' . $keywords . '%');
+            });
+        }
+        // echo "<pre>";print_r($query->get());die;
+        // echo $query->toSql();
+        // print_r($query->getBindings());
+        // die;
+        $search_data = $query->where('loginUserId',Auth::user()->id)->get();
+        // echo "<pre>";print_r($search_data);die;
+        $array_data='';
+        $all_subTotalAmount=0;
+        $all_vatTotalAmount=0;
+        $all_TotalAmount=0;
+        $outstandingAmountTotal=0;
+        foreach($search_data as $key=>$val){
+            $sub_total_amount=0;
+            $total_amount=0;
+            $vat_amount=0;
+            $creditProductId=0;
+            $outstandingAmount=0;
+            foreach($val->creditNoteProducts as $product){
+                $creditProductId=$product->id;
+                $qty=$product->qty*$product->price;
+                $sub_total_amount=$sub_total_amount+$qty;
+                $vat=$qty*$product->vat/100;
+                $vat_amount=$vat_amount+$vat;
+                $total_amount=$total_amount+$vat+$qty;
+                $outstandingAmount=$total_amount-$product->outstanding_amount;
+                
+            }
+            $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
+            $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
+            $all_TotalAmount=$all_TotalAmount+$total_amount;
+            $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
+            
+            $array_data .= '<tr>
+                        <td><input type="checkbox" class="delete_checkbox" value="' . $val->id . '"></td>
+                        <td>' . ++$key . '</td>
+                        <td>' . $val->credit_ref . '</td>
+                        <td>' . date('d/m/Y',strtotime($val->date)) . '</td>
+                        <td>' . $val->suppliers->name . '</td>
+                        <td>£' . $sub_total_amount . '</td>
+                        <td>£' . $vat_amount . '</td>
+                        <td>£' . $total_amount . '</td>
+                        <td>£' . $outstandingAmount . '</td>
+                        <td>' . $list_status . '</td>
+                        <td>' . $val->telephone . '</td>
+                        <td>' . $val->mobile . '</td>';
+                        if($status == 1){
+                            $array_data.='
+                            <td>
+                                <div class="d-flex justify-content-end">
+                                    <div class="nav-item dropdown">
+                                        <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Action
+                                        </a>
+                                        <div class="dropdown-menu fade-up m-0">
+                                            <a href="'.url('purchase_order_edit?key=').''.base64_encode($val->id).'" class="dropdown-item">Edit</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Preview</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="'.url('purchase_order?duplicate=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Email</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="javascript:void(0)" onclick="openApproveModal('.$val->id.','.$val->credit_ref.')" class="dropdown-item">Allocate</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="javascript:void(0)" onclick="cancelCreditFunction('.$val->id.','.$val->credit_ref.')" class="dropdown-item">Cancel Credit Note</a>
+                                            <hr class="dropdown-divider">
+                                            <a href="#!" class="dropdown-item"CRM / History</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>';
+                        }else{
+                            $array_data.='<td>';
+                            if($val->delivery_status == 1){
+                                $array_data.='<span class="grencheck"><i class="fa-solid fa-check"></i></span>';
+                            }else{
+                                $array_data.='<a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>';
+                            }
+                            $array_data .= '</td>
+                                        <td>
+                                            <div class="d-flex justify-content-end">
+                                                <div class="nav-item dropdown">
+                                                    <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Action
+                                                    </a>
+                                                    <div class="dropdown-menu fade-up m-0">
+                                                        <a href="' . url('purchase_order_edit?key=') . base64_encode($val->id) . '" class="dropdown-item">Edit</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Preview</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Print</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="#!" class="dropdown-item">Email</a>
+                                                        <hr class="dropdown-divider">
+                                                        <a href="#!" class="dropdown-item"CRM / History</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>';
+                        }
+                        
+                    $array_data.='</tr>';
+        }
+
+        return response()->json(['data' => $array_data,'all_subTotalAmount'=>$all_subTotalAmount,'all_vatTotalAmount'=>$all_vatTotalAmount,'all_TotalAmount'=>$all_TotalAmount,'outstandingAmountTotal'=>$outstandingAmountTotal]);
+    }
+    public function getCreditProduct(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $home_id=Auth::user()->home_id;
+        $creditproducts = CreditNote::with(['creditNoteProducts'])
+        ->where(['id' => $request->id, 'deleted_at' => null])
+        ->first();
+        // return $creditproducts;
+        if (!$creditproducts) {
+            return response()->json(['success' => false, 'message' => 'Purchase Order not found.']);
+        }
+        
+        $tax = Product::tax_detail($home_id);
+        $all_job = Job::getAllJob($home_id)->where('status', 1)->get();
+        $accountCode = Construction_account_code::getActiveAccountCode($home_id);
+        
+        if ($creditproducts->creditNoteProducts->isEmpty()) {
+            return response()->json(['success' => false, 'message' => 'No products found for this purchase order.']);
+        }
+        
+        $creditProduct_paginated = $creditproducts->creditNoteProducts()
+            ->paginate(10);
+        
+        $data_array = [];
+        foreach ($creditProduct_paginated as $val) {
+            $crediProduct_detail = Product::product_detail($val->product_id);
+        
+            $data_array[] = [
+                'product_details' => $creditproducts,
+                'tax' => $tax,
+                'all_job' => $all_job,
+                'accountCode' => $accountCode,
+                'crediProduct_detail' => $crediProduct_detail,
+            ];
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => $data_array,
+            'pagination' => [
+                'total' => $creditProduct_paginated->total(),
+                'current_page' => $creditProduct_paginated->currentPage(),
+                'last_page' => $creditProduct_paginated->lastPage(),
+                'per_page' => $creditProduct_paginated->perPage(),
+                'next_page_url' => $creditProduct_paginated->nextPageUrl(),
+                'prev_page_url' => $creditProduct_paginated->previousPageUrl(),
+            ]
+        ]);
+    }
+    public function cancelCreditNote(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $creditNote = CreditNote::find($request->id);
+        try{
+            if ($creditNote) {
+                $creditNote->update(['status' => 0]);
+            }
+            return response()->json(['success'=>true,'message'=>'Credit Note Cancelled']);
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+        
     }
 }
