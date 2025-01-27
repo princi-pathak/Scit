@@ -23,9 +23,9 @@ class QuoteService
         return 'QU-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
     }
 
-    public function saveQuoteData(array $data, string $quoteRefId, int $homeId): Quote
+    public function saveQuoteData(array $data, string $quoteRefId, int $homeId, int $userId): Quote
     {
-        return Quote::updateOrCreate(['id' => $data['quote_id']], array_merge(['home_id' => $homeId, 'quote_ref' => $quoteRefId], $data));
+        return Quote::updateOrCreate(['id' => $data['quote_id']], array_merge(['home_id' => $homeId, 'quote_ref' => $quoteRefId, 'user_id' => $userId], $data));
     }
 
     public static function getQuoteData($lastSegment, $homeId)

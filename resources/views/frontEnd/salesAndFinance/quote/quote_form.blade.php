@@ -21,7 +21,6 @@
     }
 </style>
 
-
 <section class="main_section_page px-3 pt-0">
     <div class="container-fluid">
         <div class="row">
@@ -110,6 +109,11 @@
                                     <div class="mb-3 row">
                                         <label for="billingCustomerCity" class="col-sm-3 col-form-label">City </label>
                                         <div class="col-sm-9">
+                                            <!-- <div class="wrapper">
+                                                <label for="datepicker">
+                                                    <input type="text" id="datepicker" class="form-control editInput" autocomplete="off" placeholder="21/08/2025">
+                                                </label>
+                                            </div> -->
                                             <input type="text" class="form-control editInput textareaInput" id="billingCustomerCity" placeholder="City">
                                         </div>
                                     </div>
@@ -217,7 +221,7 @@
                                     <div class="mb-3 row">
                                         <label for="customerSiteCity" class="col-sm-3 col-form-label">City </label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCity" placeholder="City">
+                                            <!-- <input type="text" class="form-control editInput textareaInput" id="customerSiteCity" placeholder="City"> -->
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -2324,6 +2328,7 @@
 @include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customeQuoteForm.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script>
@@ -2701,8 +2706,8 @@
             });
         });
 
-          // Save Customer Data
-          $('#saveCustomerContactData').on('click', function() {
+        // Save Customer Data
+        $('#saveCustomerContactData').on('click', function() {
             var formData = $('#add_customer_contact_form').serialize();
             $.ajax({
                 url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
@@ -2718,7 +2723,7 @@
             });
         });
 
-        
+
         // Save Customer Data
         $('#SaveCustomerData').on('click', function() {
             var formData = $('#add_customer_form').serialize();
@@ -2769,7 +2774,7 @@
             },
             success: function(response) {
                 console.log("response.data", response.data);
-                quoteProductTable(response.data, 'quoteProducts' , 'add');
+                quoteProductTable(response.data, 'quoteProducts', 'add');
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3727,7 +3732,7 @@
     });
     // **************************End Product Cetagory
 
- 
+
     //**************insrtTitle
     function insrtTitle() {
         const node = document.createElement("tr");
@@ -4276,6 +4281,7 @@
             console.error("Table body with ID 'add_insrtAppoinment' not found.");
         }
     }
+
 </script>
 <script>
     function upload() {

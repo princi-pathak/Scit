@@ -295,7 +295,7 @@ class QuoteController extends Controller
         try {
 
             $qutRef = $request->quote_ref ?? $this->quoteService->generateQuoteRef();
-            $quote = $this->quoteService->saveQuoteData($request->all(), $qutRef, Auth::user()->home_id);
+            $quote = $this->quoteService->saveQuoteData($request->all(), $qutRef, Auth::user()->home_id, Auth::user()->id);
 
             if ($request->has('products')) {
                 $item = $this->itemService->saveItems($request->input('products'), $quote->id);

@@ -1,11 +1,17 @@
 @include('frontEnd.salesAndFinance.jobs.layout.header')
 @section('title',' Add Leads')
 <link rel="stylesheet" href="{{ url('public/css/salesFinance/custom_lead.css') }}" />
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
     .error {
         color: red;
         font-size: 0.9em;
+    }
+
+    .next-30-days {
+        color: #1f88b5;
+        cursor: pointer;
     }
 </style>
 <?php
@@ -23,7 +29,6 @@ if (isset($lead)) {
 
 <section class="main_section_page px-3 pt-0">
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
@@ -58,7 +63,8 @@ if (isset($lead)) {
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div><!-- End off Customer -->
+                                    </div>
+                                    <!-- End off Customer -->
                                     <div class="mb-3 row">
                                         <label for="inputProject" class="col-sm-3 col-form-label">Source</label>
                                         <div class="col-sm-9">
@@ -83,19 +89,17 @@ if (isset($lead)) {
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Preferred date to call</label>
                                         <div class="col-sm-3 pe-0">
-                                            <input type="date" name="prefer_date" class="form-control editInput" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}" id="">
+                                            <input type="date" name="prefer_date" class="form-control editInput dateField" value="{{ (isset($lead->prefer_date)) ? $lead->prefer_date : '' }}" placeholder="dd/MM/yyyy">
                                         </div>
                                         <div class="col-sm-1 text-center"><label class="col-form-label">To</label></div>
                                         <div class="col-sm-3 ps-0">
                                             <input type="time" name="prefer_time" class="form-control editInput" value="{{ (isset($lead->prefer_time)) ? $lead->prefer_time : '' }}" id="">
                                         </div>
                                         <div class="col-sm-2 p-0">
-                                            <label for="inputContact" class="col-form-label open-modal-attachment" data-bs-toggle="modal" data-bs-target="#next30daysModel">Next 30 days</label>
+                                            <label for="inputContact" class="col-form-label next-30-days" id="openNext30days" data-bs-toggle="modal" data-bs-target="#next30daysModel">Next 30 days</label>
                                         </div>
 
-
                                         <!-- Start of Next 30 days Model -->
-
                                         <div class="modal fade" id="next30daysModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content add_Customer">
@@ -118,7 +122,7 @@ if (isset($lead)) {
                                                                     </tr>
                                                                 </thead>
                                                             </table>
-                                                            <table class="table mb-0">
+                                                            <!-- <table class="table mb-0">
                                                                 <thead class="table-light">
                                                                     <tr>
                                                                         <th style="width: 192px;">Saturday, 07/01/2025 </th>
@@ -203,20 +207,17 @@ if (isset($lead)) {
                                                                         <td>12:14 Pm</td>
                                                                     </tr>
                                                                 </tbody>
-                                                            </table>
+                                                            </table> -->
                                                         </div>
                                                     </div>
-
                                                     <div class="modal-footer customer_Form_Popup">
-                                                            <div class="pageTitleBtn p-0">
-                                                                <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
-                                                            </div>
+                                                        <div class="pageTitleBtn p-0">
+                                                            <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
                                                         </div>
-
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <!-- End of Next 30 days Model -->
 
                                     </div>
@@ -306,11 +307,8 @@ if (isset($lead)) {
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                         <button class="nav-link active" id="nav-Notes-tab" data-bs-toggle="tab" data-bs-target="#nav-Notes" type="button" role="tab" aria-controls="nav-Notes" aria-selected="true">Notes</button>
-
                                         <button class="nav-link" id="nav-Tasks-tab" data-bs-toggle="tab" data-bs-target="#nav-Tasks" type="button" role="tab" aria-controls="nav-Tasks" aria-selected="false">Tasks</button>
-
                                         <button class="nav-link" id="nav-attachments-tab" data-bs-toggle="tab" data-bs-target="#nav-attachments" type="button" role="tab" aria-controls="nav-attachments" aria-selected="false">Attachments</button>
-
                                     </div>
                                 </nav>
                                 <div class="tab-content" id="nav-tabContent">
@@ -349,7 +347,7 @@ if (isset($lead)) {
                                                         <table class="table" id="containerA">
                                                             <thead class="table-light">
                                                                 <tr>
-                                                                    <th>Data</th>
+                                                                    <th>Date</th>
                                                                     <th>By</th>
                                                                     <th>Type</th>
                                                                     <th>Notes</th>
@@ -415,7 +413,8 @@ if (isset($lead)) {
                                                 </div>
                                             </div>
                                             <!-- Modal End -->
-                                        </div><!-- ENd col-9 -->
+                                        </div>
+                                        <!-- ENd col-9 -->
                                     </div>
                                     <div class="tab-pane fade" id="nav-Tasks" role="tabpanel" aria-labelledby="nav-Tasks-tab" tabindex="0">
                                         <div class="tabheadingTitle">
@@ -428,7 +427,7 @@ if (isset($lead)) {
                                                 <div class="modal-dialog">
                                                     <div class="modal-content add_Customer">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title fs-5" id="staticBackdropLabel">Add Task</h5>
+                                                            <h5 class="modal-title text fs-5 " id="staticBackdropLabel">Add Task</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
@@ -465,7 +464,7 @@ if (isset($lead)) {
                                                                 <div class="mb-3 row">
                                                                     <label for="inputCustomer" class="col-sm-3 col-form-label">Date*</label>
                                                                     <div class="col-sm-4">
-                                                                        <input type="date" class="form-control editInput" id="create_date" name="create_date">
+                                                                        <input type="date" class="form-control editInput current_date_only" id="create_date" name="create_date">
                                                                     </div>
                                                                     <!-- <div class="col-sm-1 text-center">
                                                                         <i class="fa fa-calendar-days"></i>
@@ -499,13 +498,13 @@ if (isset($lead)) {
                                                                         <label for="notify" class="col-form-label ps-3">Yes, On</label>
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <input type="date" class="form-control editInput" id="notifyDate" name="notify_date">
+                                                                        <input type="date" class="form-control editInput current_date_only" disabled id="notifyDate" name="notify_date">
                                                                     </div>
                                                                     <!-- <div class="col-sm-1 text-center">
                                                                         <i class="fa fa-calendar-days"></i>
                                                                     </div> -->
                                                                     <div class="col-sm-3">
-                                                                        <input type="time" class="form-control editInput" id="notifyTime" name="notify_time">
+                                                                        <input type="time" class="form-control editInput" disabled id="notifyTime" name="notify_time">
                                                                     </div>
                                                                     <div class="col-sm-12 row">
                                                                         <div class="col-sm-3"></div>
@@ -554,7 +553,7 @@ if (isset($lead)) {
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td colspan="10"><strong>Open tasks</strong></td>
+                                                            <td colspan="10"><strong>Open Tasks</strong></td>
                                                         </tr>
                                                         @if(isset($lead_task_open))
                                                         @if( !$lead_task_open->isEmpty() )
@@ -582,7 +581,7 @@ if (isset($lead)) {
                                                                         Action
                                                                     </a>
                                                                     <div class="dropdown-menu fade-up m-0">
-                                                                        <a href="{{ url('/lead/task_mark_as_completed', ['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Mark As Completed</a>
+                                                                        <a href="javascript:void(0)" onclick="mark_as_complete_task('{{ $value->id }}', '{{$lead->id}}', '{{$value->lead_ref}}')" class="dropdown-item">Mark As Completed</a>
                                                                         <hr class="dropdown-divider">
                                                                         <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
                                                                         <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
@@ -596,8 +595,9 @@ if (isset($lead)) {
                                                             <td colspan="10" class="text-center"><strong>No task(s) found</strong></td>
                                                         </tr>
                                                         @endif
+
                                                         <tr>
-                                                            <td colspan="10"><strong>Close tasks</strong></td>
+                                                            <td colspan="10"><strong>Close Tasks</strong></td>
                                                         </tr>
                                                         @endif
                                                         @if(isset($lead_task_open))
@@ -736,7 +736,9 @@ if (isset($lead)) {
                                                         @if(isset($lead_attachment))
                                                         @foreach($lead_attachment as $value)
                                                         <tr>
-                                                            <td><div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$value['id']}}"></div></td>
+                                                            <td>
+                                                                <div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$value['id']}}"></div>
+                                                            </td>
                                                             <td></td>
                                                             <td>{{ $value['type'] }}</td>
                                                             <td>{{ $value['title'] }}</td>
@@ -775,13 +777,25 @@ if (isset($lead)) {
             <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="pageTitleBtn">
                     <button type="submit" class="profileDrop reDesignBtn" id="submit_main_form"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                    <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
-                    <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a>
+                    <!-- <a href="#" class="profileDrop"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                    <a href="#" class="profileDrop"> Action <i class="fa-solid fa-arrow-down"></i></a> -->
                 </div>
             </div>
         </div>
         </form>
     </div>
+
+    <?php
+    if (isset($lead)) {
+        $lead_id =  $lead->id;
+        $lead_contact = $lead->contact_name;
+        $lead_telephone = $lead->telephone;
+    } else {
+        $lead_id = '';
+        $lead_contact = '';
+        $lead_telephone = '';
+    }
+    ?>
 </section>
 <script>
     var addNotesTypeURL = '{{ route("lead.ajax.saveLeadNoteType") }}';
@@ -789,149 +803,61 @@ if (isset($lead)) {
     const addLeadTaskUrl = '{{ route("lead.ajax.saveLeadTasks") }}';
     var saveLeadAttachmentUrl = '{{ route("lead.ajax.saveLeadAttachment") }}';
     var getLeadTaskDataURL = '{{ route("lead.ajax.getLeadTaskOnLeadId") }}';
+    const get30DaysLead = '{{ route("lead.ajax.get30DaysLead") }}';
+    const markAsComplete = '{{ route("lead.task_mark_as_completed", ["task" => ":task"]) }}';
+    const lead_id = '{{ $lead_id}}';
+    const lead_contact = '{{ $lead_contact }}';
+    const lead_telephone = '{{ $lead_telephone }}';
+    const baseMarkAsCompletedURL = "{{ url('/lead/task_mark_as_completed', ['task' => '__TASK_ID__','lead_id' => $lead_id ]) }}";
+    const baseDeleteURL = "{{ url('/leads/lead_task/delete', ['task' => '__TASK_ID__', 'lead_id' => $lead_id]) }}";
 </script>
 <script>
-   $("#deleteSelectedRows").on('click', function() {
-    let ids = [];
-    
-    $('.delete_checkbox:checked').each(function() {
-        ids.push($(this).val());
-    });
-    if(ids.length == 0){
-        alert("Please check the checkbox for delete");
-    }else{
-        if(confirm("Are you sure to delete?")){
-            // console.log(ids);
-            var token='<?php echo csrf_token();?>'
-            var model='LeadAttachment';
-            $.ajax({
-                type: "POST",
-                url: "{{url('/bulk_delete')}}",
-                data: {ids:ids,model:model,_token:token},
-                success: function(data) {
-                    console.log(data);
-                    if(data){
-                        location.reload();
-                    }else{
-                        alert("Something went wrong");
+    $("#deleteSelectedRows").on('click', function() {
+        let ids = [];
+
+        $('.delete_checkbox:checked').each(function() {
+            ids.push($(this).val());
+        });
+        if (ids.length == 0) {
+            alert("Please check the checkbox for delete");
+        } else {
+            if (confirm("Are you sure to delete?")) {
+                // console.log(ids);
+                var token = '<?php echo csrf_token(); ?>'
+                var model = 'LeadAttachment';
+                $.ajax({
+                    type: "POST",
+                    url: "{{url('/bulk_delete')}}",
+                    data: {
+                        ids: ids,
+                        model: model,
+                        _token: token
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data) {
+                            location.reload();
+                        } else {
+                            alert("Something went wrong");
+                        }
+                        // return false;
+                    },
+                    error: function(xhr, status, error) {
+                        var errorMessage = xhr.status + ': ' + xhr.statusText;
+                        alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
                     }
-                    // return false;
-                },
-                error: function(xhr, status, error) {
-                   var errorMessage = xhr.status + ': ' + xhr.statusText;
-                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
-                }
-            });
+                });
+            }
         }
-    }
-    
-});
-$('.delete_checkbox').on('click', function() {
-    if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
-        $('#selectAll').prop('checked', true);
-    } else {
-        $('#selectAll').prop('checked', false);
-    }
-});
- </script>
+
+    });
+    $('.delete_checkbox').on('click', function() {
+        if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+            $('#selectAll').prop('checked', true);
+        } else {
+            $('#selectAll').prop('checked', false);
+        }
+    });
+</script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script type="text/javascript" src="{{ url('public/js/salesFinance/customLeadForm.js') }}"></script>
-
-<script>
-    function setleadTaskTableData(data, tableBody, table) {
-
-        tableBody.innerHTML = '';
-
-        if (data.length === 0) {
-            // Handle the case where there is no data
-            const errorRow = document.createElement('tr');
-            const errorCell = document.createElement('td');
-            errorCell.colSpan = 8; // Adjust this based on the number of columns in your table
-            errorCell.classList.add('red_sorryText');
-            errorCell.textContent = 'Sorry, no records to show ';
-            errorCell.style.textAlign = 'center'; // Optional: Center the text
-            errorRow.appendChild(errorCell);
-            tableBody.appendChild(errorRow);
-            return; // Exit the function
-        }
-
-        let countValue = 1;
-
-        data.forEach(item => {
-
-            // Create a new row
-            const row = document.createElement('tr');
-
-            const count = document.createElement('td');
-            count.textContent = countValue;
-            row.appendChild(count);
-
-            const created_on = document.createElement('td');
-            created_on.textContent = moment(item.created_at).format('DD/MM/YYYY HH:mm');
-            row.appendChild(created_on);
-
-            const name = document.createElement('td');
-            name.innerHTML = item.name;
-            row.appendChild(name);
-
-            const task_type_title = document.createElement('td');
-            task_type_title.innerHTML = item.task_type_title;
-            row.appendChild(task_type_title);
-
-            const title = document.createElement('td');
-            title.textContent = item.title;
-            row.appendChild(title);
-
-            const contact_name = document.createElement('td');
-            contact_name.innerHTML = <?php echo  $lead->contact_name; ?>;
-            row.appendChild(contact_name);
-
-            const telephone = document.createElement('td');
-            telephone.innerHTML = <?php echo $lead->telephone; ?>;
-            row.appendChild(telephone);
-
-            if (item.notification === 1 || item.sms === 1 || item.email === 1) {
-
-                const notifyDate = item.notify_date; // Example: '2025-01-24'
-                const notifyTime = item.notify_time; // Example: '03:40'
-
-                // Combine date and time
-                const dateTime = `${notifyDate} ${notifyTime}`;
-                const formattedDateTime = moment(dateTime, 'YYYY-MM-DD HH:mm').format('DD/MM/YYYY HH:mm');
-
-                const text = document.createElement('td');
-                text.innerHTML = `Yes, On  <br> ${formattedDateTime}`;
-                row.appendChild(text);
-            } else {
-                const text = document.createElement('td');
-                text.innerHTML = "No";
-                row.appendChild(text);
-            }
-
-
-            const notes = document.createElement('td');
-            notes.innerHTML = item.notes;
-            row.appendChild(notes);
-
-            const baseMarkAsCompletedURL = "{{ url('/lead/task_mark_as_completed', ['task' => '__TASK_ID__', 'lead_id' => $lead->id]) }}";
-            const baseDeleteURL = "{{ url('/leads/lead_task/delete', ['task' => '__TASK_ID__', 'lead_id' => $lead->id]) }}";
-
-            const idCell = document.createElement('td');
-            idCell.innerHTML = `<div class="nav-item dropdown tableActionBtn">
-                    <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">Action</a>
-                    <div class="dropdown-menu fade-up m-0">
-                        <a href="${baseMarkAsCompletedURL.replace('__TASK_ID__', item.id)}" class="dropdown-item">Mark As Completed</a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="${item.id}" data-user_id="${item.user_id}" data-title="${item.title}" data-task_type_id="${item.lead_task_type_id}" data-create_date="${item.create_date}" data-create_time="${item.create_time}" data-notify_date="${item.notify_date}" data-notify_time="${item.notify_time}" data-notes="${item.notes}" data-notification="${item.notification}" data-email_notify="${item.email_notify}" data-sms_notify="${item.sms_notify}">Edit Task</a>
-                        <a href="${baseDeleteURL.replace('__TASK_ID__', item.id)}" class="dropdown-item">Delete Task</a>
-                    </div>
-                </div>`;
-            row.appendChild(idCell);
-
-            // Append the row to the table body
-            tableBody.appendChild(row);
-            countValue++;
-        });
-
-    }
-</script>

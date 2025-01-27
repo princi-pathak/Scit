@@ -171,7 +171,7 @@ display: block;
                             <form id="{{ $emailformId }}" class="customerForm">
                                 @csrf
                                 <input type="hidden" name="id" id="{{ $emailId }}">
-                                <input type="hidden" name="po_id" id="email_po_id">
+                                <input type="hidden" name="{{ $emailformId }}" id="email_po_id">
 
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-3 col-form-label">To<span class="radStar ">*</span></label>
@@ -216,14 +216,14 @@ display: block;
                                     <div class="col-sm-2">
                                         
                                         <select class="form-control editInput selectOptions" id="{{ $selectBoxsubject }}" name="defaultSelect">
-                                            <option value="1">Default Purchase Order</option>
+                                            <option value="1" id="defaultOption">Default Purchase Order</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="mb-2 row">
                                     <label for="inputAddress" class="col-sm-3 col-form-label">Body</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control textareaInput CustomercheckError" id="{{ $body }}" name="body" rows="10" maxlength="500">Hello,<br>Please find attached purchase order<br><br><br><br><br>Regards,<br>The Contructor<br><br>Thanks for using SCITS</textarea>
+                                        <textarea class="form-control textareaInput CustomercheckError" id="{{ $body }}" name="body" rows="10" maxlength="500"></textarea>
                                     </div>
                                 </div>
                                 
@@ -268,7 +268,7 @@ CKEDITOR.replace('{{ $body }}', editor_config );
         }
         $.ajax({
             type: "POST",
-            url: "{{url('purchaseOrderEmailSave')}}",
+            url: "{{ $saveUrl }}",
             data: new FormData($("#{{ $emailformId }}")[0]),
             async: false,
             contentType: false,
