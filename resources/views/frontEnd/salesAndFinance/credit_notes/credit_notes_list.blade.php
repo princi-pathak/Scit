@@ -41,11 +41,11 @@
     font-weight: 500;
     text-transform: capitalize;
 }
-.parent-container {
+/* .parent-container {
     position: absolute;
     background: #fff;
     width:190px;
-}
+} */
 #deptList li:hover{
     cursor: pointer;
 }
@@ -106,7 +106,7 @@ ul#projectList {
             <div class="row">
                 <div class="col-md-4 col-lg-4 col-xl-4 ">
                     <div class="pageTitle">
-                        <h3>Draft Purchase Orders</h3>
+                        <h3>Purchase Orders Credit Notes - {{$status['list_status']}}</h3>
                     </div>
                 </div>
                 <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -129,7 +129,7 @@ ul#projectList {
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="{{url('purchase_order')}}" class="dropdown-item">Purchase Order</a>
-                                    <a href="#!" class="dropdown-item">Credit Note</a>
+                                    <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
                                     <!-- <a href="#!" class="dropdown-item">Print</a>
                                     <a href="#!" class="dropdown-item">Email</a> -->
                                 </div>
@@ -160,80 +160,47 @@ ul#projectList {
                         <div class="searchJobForm" id="divTohide">
                             <form id="search_dataForm" class="p-4">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">PO Ref:</label>
+                                            <label class="col-md-4 col-form-label text-end">Credit Note Ref:</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="po_ref">
+                                                <input type="text" class="form-control editInput" id="credit_ref">
                                             </div>
                                         </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Department:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="department">
-                                                <input type="hidden" id="selectedDeptId" name="selectedDeptId">
-                                                <div class="parent-container department-container"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Tag:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="tag">
-                                                <input type="hidden" id="selectedTagtId" name="selectedTagtId">
-                                                <div class="parent-container tag-container"></div>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="row form-group mb-2">
                                             
-                                            <label class="col-md-4 col-form-label text-end ">
-                                            <a href="#!" class="tutor-student-tooltip-col">
-                                                EDD From:
-
-                                                <span class="tutor-student-tooltiptext3">Expedcted Delivery Date</span>
-                                                </a>
-                                            </label>
+                                            <label class="col-md-4 col-form-label text-end">Date From:</label>
                                             
                                             <div class="col-md-4">
-                                                <input type="date" class="form-control editInput" id="edd_startDate">
+                                                <input type="date" class="form-control editInput dateField" id="startDate">
                                             </div>
                                             
                                             <div class="col-md-4">
-                                                <input type="date" class="form-control editInput" id="edd_endDate">
+                                                <input type="date" class="form-control editInput dateField" id="endDate">
                                             </div>
                                         </div>
                                    
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="row form-group mb-2">
                                             <label class="col-md-4 col-form-label text-end">Supplier:</label>
-                                            <div class="col-md-8">
+                                            <div class="col-md-8 position-relative">
                                                 <input type="text" class="form-control editInput" id="supplier">
                                                 <input type="hidden" id="selectedsupplierId" name="selectedsupplierId">
                                                 <div class="parent-container supplier-container"></div>
                                             </div>
                                         </div>
                                         <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">PO Date From:</label>
-                                            <div class="col-md-4">
-                                                <input type="date" class="form-control editInput" id="po_startDate">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input type="date" class="form-control editInput" id="po_endDate" >
+                                            <label class="col-md-4 col-form-label text-end">Keywords:</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control editInput" id="keywords">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Customer:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="customer">
-                                                <input type="hidden" id="selectedCustomerId" name="selectedCustomerId">
-                                                <div class="parent-container customer-container"></div>
-                                            </div>
-                                        </div>
-                                    
+                                    <div class="col-md-4">
                                         <div class="row form-group mb-2">
                                             <label class="col-md-4 col-form-label text-end">Created By:</label>
                                             <div class="col-md-8">
@@ -243,36 +210,13 @@ ul#projectList {
                                             </div>
                                         </div>
                                         <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">PO Posted:</label>
+                                            <label class="col-md-4 col-form-label text-end">Posted:</label>
                                             <div class="col-md-8">
-                                                <select class="form-control editInput selectOptions" id="po_posted">
+                                                <select class="form-control editInput selectOptions" id="credit_posted">
                                                     <option selected disabled>--Any--</option>
                                                     <option value="1">Yes</option>
                                                     <option value="0">No</option>
                                                 </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Project:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="project">
-                                                <input type="hidden" id="selectedProjectId" name="selectedProjectId">
-                                                <div class="parent-container project-container"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Keywords:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="keywords">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group mb-2">
-                                            <label class="col-md-4 col-form-label text-end">Delivery Status:</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control editInput" id="delivery_status">
                                             </div>
                                         </div>
                                     </div>
@@ -321,12 +265,11 @@ ul#projectList {
                                                
                             <tbody id="search_data">
                                 <?php
-                                if (is_array($list)) {
-                                    echo "The data is an array.";die;
-                                } else {
-                                    echo "The data is not an array.";die;
-                                }
-                                // echo "<pre>";print_r($list);die;
+                                // if (is_array($list)) {
+                                //     echo "The data is an array.";die;
+                                // } else {
+                                //     echo "The data is not an array.";die;
+                                // }
                                     $all_subTotalAmount=0;
                                     $all_vatTotalAmount=0;
                                     $all_TotalAmount=0;
@@ -337,10 +280,10 @@ ul#projectList {
                                     $sub_total_amount=0;
                                     $total_amount=0;
                                     $vat_amount=0;
-                                    $purchaseProductId=0;
+                                    $creditProductId=0;
                                     $outstandingAmount=0;
-                                    foreach($val->credit_note_products as $product){
-                                        $purchaseProductId=$product->id;
+                                    foreach($val->creditNoteProducts as $product){
+                                        $creditProductId=$product->id;
                                         $qty=$product->qty*$product->price;
                                         $sub_total_amount=$sub_total_amount+$qty;
                                         $vat=$qty*$product->vat/100;
@@ -358,17 +301,17 @@ ul#projectList {
                                     <td>
                                     <div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></div></td>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$val->purchase_order_ref}}</td>
-                                    <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
+                                    <td>{{$val->credit_ref}}</td>
                                     <td>{{$val->suppliers->name}}</td>
-                                    <td>{{$val->city}}</td>
+                                    <td>{{ date('d/m/Y', strtotime($val->date)) }}</td>
                                     <td>£{{$sub_total_amount}}</td>
                                     <td>£{{$vat_amount}}</td>
                                     <td>£{{$total_amount}}</td>
                                     <td>£{{$outstandingAmount}}</td>
                                     <td>{{$status['list_status']}}</td>
+                                    <td>{{$val->telephone}}</td>
+                                    <td>{{$val->mobile}}</td>
                                     @if($status['status'] == 1)
-                                    <td>-</td>
                                     <td>
                                         <div class="d-flex justify-content-end">
                                             <div class="nav-item dropdown">
@@ -376,57 +319,40 @@ ul#projectList {
                                                     Action
                                                 </a>
                                                 <div class="dropdown-menu fade-up m-0">
-                                                    <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
+                                                    <a href="{{url('credit_note_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
+                                                    <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->credit_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openApproveModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Approve</a>
+                                                    <a href="javascript:void(0)" onclick="openAllocateModal({{$val->id}},'{{$val->credit_ref}}')" class="dropdown-item">Allocate</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="javascript:void(0)" onclick="cancelCreditFunction({{$val->id}},'{{$val->credit_ref}}')" class="dropdown-item">Cancel Credit Note</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">CRM / History</a>
-                                                    <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Start Timer</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     @else
                                     <td>
-                                        @if($val->delivery_status == 1)
-                                        <span class="grencheck"><i class="fa-solid fa-check"></i></span>
-                                        @else
-                                        <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>
-                                        @endif
-                                    </td>
-                                    <td>
                                         <div class="d-flex justify-content-end">
                                             <div class="nav-item dropdown">
                                                 <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Action
                                                 </a>
                                                 <div class="dropdown-menu fade-up m-0">
-                                                    <a href="javascript:void(0)" onclick="openRecordDeliveryModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Record Delivery</a>
-                                                    <hr class="dropdown-divider">
-                                                    <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
+                                                    <a href="{{url('credit_note_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Print</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
-                                                    <hr class="dropdown-divider">
-                                                    <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
-                                                    <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
-                                                    <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$purchaseProductId}},{{$outstandingAmount}})" class="dropdown-item">Record Payment</a>
-                                                    <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$outstandingAmount}})" class="dropdown-item">Invoice Received</a>
+                                                    <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->credit_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                     <!-- <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">CRM / History</a>
+                                                    <a href="#!" class="dropdown-item">Cancel Credit Note</a> -->
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Start Timer</a> -->
+                                                    <a href="#!" class="dropdown-item">CRM / History</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -442,7 +368,7 @@ ul#projectList {
                                 <th colspan="12"></th>
                             </tr>
                             <tr class="calcualtionShowHide">
-                                <td colspan="7"></td>
+                                <td colspan="5"></td>
                                 
                                 <td id="Tablesub_total_amount">£{{$all_subTotalAmount}}</td>
                                 <td id="Tablevat_amount">£{{$all_vatTotalAmount}}</td>
@@ -457,6 +383,19 @@ ul#projectList {
             </di>
         </div>
 </section>
+<x-purchase-order-email
+    emailModalId="emailModal"
+    modalTitle="email_modalTitle"
+    emailformId="emailformId"
+    foreignId="credit_id"
+    emailId="emailId"
+    toField="toField"
+    ccField="ccField"
+    subject="emailsubject"
+    selectBoxsubject="selectBoxsubject"
+    body="emailbody"
+    saveButtonId="emailSave"
+    saveUrl="{{url('crediNoteEmailSave')}}" />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 <script>
@@ -508,17 +447,17 @@ $('.delete_checkbox').on('click', function() {
         $("#search_dataForm")[0].reset();
     }
     function searchBtn(){
-        var po_ref=$("#po_ref").val();
+        var credit_ref=$("#credit_ref").val();
         var department=$("#department").val();
         var tag=$("#tag").val();
-        var edd_startDate=$("#edd_startDate").val();
-        var edd_endDate=$("#edd_endDate").val();
+        var startDate=$("#startDate").val();
+        var endDate=$("#endDate").val();
         var supplier=$("#supplier").val();
         var po_startDate=$("#po_startDate").val();
         var po_endDate=$("#po_endDate").val();
         var customer=$("#customer").val();
         var created_by=$("#created_by").val();
-        var po_posted=$("#po_posted").val();
+        var credit_posted=$("#credit_posted").val();
         var project=$("#project").val();
         var keywords=$("#keywords").val();
         var delivery_status=$("#delivery_status").val();
@@ -545,23 +484,23 @@ $('.delete_checkbox').on('click', function() {
             return false;
         }
         
-        if(edd_startDate != '' && edd_endDate == ''){
+        if(startDate != '' && endDate == ''){
             alert("Please choose both date");
             return false;
         }
-        if(edd_startDate == '' && edd_endDate != ''){
+        if(startDate == '' && endDate != ''){
             alert("Please choose both date");
             return false;
         }
         $.ajax({
-            url: "{{ url('searchPurchaseOrders') }}",
+            url: "{{ url('searchCreditNotes') }}",
             method: 'post',
             data: {
-                po_ref: po_ref,department:department,selectedDeptId:selectedDeptId,tag:tag,selectedTagtId:selectedTagtId,supplier:supplier,selectedsupplierId:selectedsupplierId,edd_startDate:edd_startDate,edd_endDate:edd_endDate,po_startDate:po_startDate,po_endDate:po_endDate,customer:customer,selectedCustomerId:selectedCustomerId,created_by:created_by,selectedcreatedById:selectedcreatedById,po_posted:po_posted,project:project,selectedProjectId:selectedProjectId,keywords:keywords,delivery_status:delivery_status,status:status,list_status:list_status,_token: '{{ csrf_token() }}'
+                credit_ref: credit_ref,department:department,selectedDeptId:selectedDeptId,tag:tag,selectedTagtId:selectedTagtId,supplier:supplier,selectedsupplierId:selectedsupplierId,startDate:startDate,endDate:endDate,po_startDate:po_startDate,po_endDate:po_endDate,customer:customer,selectedCustomerId:selectedCustomerId,created_by:created_by,selectedcreatedById:selectedcreatedById,credit_posted:credit_posted,project:project,selectedProjectId:selectedProjectId,keywords:keywords,delivery_status:delivery_status,status:status,list_status:list_status,_token: '{{ csrf_token() }}'
             },
             success: function(response) {
                 console.log(response);
-                // return false;
+                return false;
                 var table = $('#exampleOne').DataTable();
                 table.destroy();
                 if(response.data.length>0){
@@ -599,22 +538,22 @@ $('.delete_checkbox').on('click', function() {
             }
         }); 
     }
-    $("#edd_endDate").change(function () {
-      var startDate = document.getElementById("edd_startDate").value;
-      var endDate = document.getElementById("edd_endDate").value;
+    $("#endDate").change(function () {
+      var startDate = document.getElementById("startDate").value;
+      var endDate = document.getElementById("endDate").value;
 
       if ((Date.parse(startDate) >= Date.parse(endDate))) {
           alert("End date should be greater than Start date");
-          document.getElementById("edd_endDate").value = "";
+          document.getElementById("endDate").value = "";
       }
   });
-  $("#edd_startDate").change(function () {
-      var startDate = document.getElementById("edd_startDate").value;
-      var endDate = document.getElementById("edd_endDate").value;
+  $("#startDate").change(function () {
+      var startDate = document.getElementById("startDate").value;
+      var endDate = document.getElementById("endDate").value;
 
       if ((Date.parse(endDate) <= Date.parse(startDate))) {
           alert("Start date should be less than End date");
-          document.getElementById("edd_startDate").value = "";
+          document.getElementById("startDate").value = "";
       }
   });
   $("#po_endDate").change(function () {
@@ -1104,8 +1043,8 @@ $('.delete_checkbox').on('click', function() {
     });
 </script>
 <script>
-    function openApproveModal(id,po_ref){
-        $("#purchaseOrderRef").text(po_ref);
+    function openAllocateModal(id,credit_ref){
+        $("#purchaseOrderRef").text(credit_ref);
         $("#po_id").val(id);
         $("#approveModal").modal('show');
     }
@@ -1152,239 +1091,37 @@ $('.delete_checkbox').on('click', function() {
                 }
             });
     }
-    function openRecordDeliveryModal(id,po_ref){
-        $("#crecordDeliveryModalLabel").text('Record Payment - '+po_ref);
-        $("#recordDelivery_po_id").val(id);
-        getProductDetail(id,pageUrl = '{{ url("getPurchaesOrderProductDetail") }}');
-        $("#recordDeliveryModal").modal('show');
+    
+    function openEmailModal(id,credit_ref,email,name){
+        $("#emailformId")[0].reset();
+        $("#dropdownButton").append('<span class="optext">'+email+'&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
+        $("#selectedToEmail").val(email);
+        $("#email_modalTitle").text("Email Credit Note - "+credit_ref);
+        $("#emailsubject").val("Your Credit Note from the Contructor - "+credit_ref);
+        $("#email_po_id").val(id);
+        $("#defaultOption").text('Default Credit Note');
+        const editor = CKEDITOR.instances['emailbody'];
+        const message = `
+            Hello,<br>
+            Please find attached credit note.<br><br><br><br><br>
+            Regards,<br>
+            The Contructor<br><br>
+            Thanks for using SCITS
+        `;
+        editor.setData(message);
+        $("#emailModal").modal('show');
     }
-    function getProductDetail(id,pageUrl = '{{ url("getPurchaesOrderProductDetail") }}'){
-        var token='<?php echo csrf_token();?>'
-        $.ajax({
-            url: pageUrl,
-            method: 'POST',
-            data: {id: id,_token:token},
-            success: function(response) {
-                console.log(response);
-                var data=response.data[0];
-                const tableBody = document.querySelector(`#recordDelivery_result tbody`);
-                tableBody.innerHTML='';
-                var purchase_order_products=data.product_details.purchase_order_products;
-                // console.log(purchase_order_products);return false;
-                if (purchase_order_products.length === 0) {
-                    const noDataRow = document.createElement('tr');
-                    noDataRow.id='EmptyError'
-                    const noDataCell = document.createElement('td');
-
-                    noDataCell.setAttribute('colspan', 4);
-                    noDataCell.textContent = 'No products found';
-                    noDataCell.style.textAlign = 'center'; 
-
-                    noDataRow.appendChild(noDataCell);
-                    tableBody.appendChild(noDataRow);
-                }else{
-                    const emptyErrorRow = document.getElementById('EmptyError');
-                    if (emptyErrorRow) {
-                        emptyErrorRow.remove();
-                    }
-                    purchase_order_products.forEach(product => {
-                        const row = document.createElement('tr');
-
-                        const codeCell = document.createElement('td');
-                        codeCell.textContent = product.code;
-                        const inputCode = document.createElement('input');
-                        inputCode.type = 'hidden';
-                        inputCode.className = 'product_code';
-                        inputCode.name = 'product_code[]';
-                        inputCode.value = product.code;
-                        codeCell.appendChild(inputCode);
-                        row.appendChild(codeCell);
-
-                        const nameCell = document.createElement('td');
-                        nameCell.innerHTML = data.purchase_order_products_detail.product_name;
-                        row.appendChild(nameCell);
-
-                        const hiddenInput = document.createElement('input');
-                        hiddenInput.type = 'hidden';
-                        hiddenInput.className = 'product_id';
-                        hiddenInput.name = 'product_id[]';
-                        hiddenInput.value = data.purchase_order_products_detail.id;
-                        row.appendChild(hiddenInput);
-
-                        // purchase order product hidden id if not duplicate is null
-                        const hiddenID = document.createElement('input');
-                        hiddenID.type = 'hidden';
-                        hiddenID.className = 'purchase_product_id';
-                        hiddenID.name = 'purchase_product_id[]';
-                        hiddenID.value = product.id;
-                        row.appendChild(hiddenID);
-                    // end
-
-                        const descriptionCell = document.createElement('td');
-                        descriptionCell.textContent=product.description;
-                        // const inputDescription = document.createElement('textarea');
-                        // inputDescription.className = 'description';
-                        // inputDescription.name = 'description[]';
-                        // inputDescription.value = product.description;
-                        // descriptionCell.appendChild(inputDescription);
-                        row.appendChild(descriptionCell);
-
-                        const priceCell = document.createElement('td');
-                        priceCell.textContent = product.price;
-                        // const inputPrice = document.createElement('input');
-                        // inputPrice.type = 'text';
-                        // inputPrice.className = 'product_price input50';
-                        // inputPrice.name = 'price[]'; 
-                        // inputPrice.value = product.price;
-                        // priceCell.appendChild(inputPrice);
-                        row.appendChild(priceCell);
-
-                        const qtyCell = document.createElement('td');
-                        qtyCell.textContent = product.qty;
-                        // const inputQty = document.createElement('input');
-                        // inputQty.type = 'text';
-                        // inputQty.className = 'qty input50';
-                        // inputQty.name = 'qty[]';
-                        // inputQty.value = product.qty;
-                        // qtyCell.appendChild(inputQty);
-                        row.appendChild(qtyCell);
-
-                        const alreadyDelivered = document.createElement('td');
-                        const inputDelivered = document.createElement('input');
-                        inputDelivered.type = 'number';
-                        inputDelivered.className = 'already_deliver';
-                        inputDelivered.name = 'already_deliver[]'; 
-                        inputDelivered.value = 0;
-                        alreadyDelivered.appendChild(inputDelivered);
-                        row.appendChild(alreadyDelivered);
-
-                        const receiveMore = document.createElement('td');
-                        const inputReceive = document.createElement('input');
-                        inputReceive.type = 'number';
-                        inputReceive.className = 'receive_more input50';
-                        inputReceive.name = 'receive_more[]'; 
-                        inputReceive.value = 0;
-                        receiveMore.appendChild(inputReceive);
-                        row.appendChild(receiveMore);
-
-                        tableBody.appendChild(row);
-                    });
-                    $("#product_calculation").show();
-                    
-                }
-                
-                var paginationProductDetails = response.pagination;
-
-                var paginationControlsProductDetail = $("#pagination-controls-recordDelivery");
-                paginationControlsProductDetail.empty();
-                if (paginationProductDetails.prev_page_url) {
-                    paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
-                }
-                if (paginationProductDetails.next_page_url) {
-                    paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-                // location.reload();
-            }
-        });
-    }
-    function saverecordDeliveryModal(){
-        if(confirm("Are you sure you want to receive these stock quantities?")){
-            $.ajax({
-            type: "POST",
-            url: "{{url('/purchase_order_record_delivered')}}",
-            data: new FormData($("#recordDeliveryForm")[0]),
-            async: false,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(response) {
-                console.log(response);
-                if(response.vali_error){
-                        alert(response.vali_error);
-                        $(window).scrollTop(0);
-                        return false;
-                    }else if(response.success === true){
-                        $(window).scrollTop(0);
-                        $('#message_recordDeliveryModal').addClass('success-message').text(response.message).show();
-                        setTimeout(function() {
-                            $('#message_recordDeliveryModal').removeClass('success-message').text('').hide();
-                            location.reload();
-                        }, 3000);
-                    }else if(response.success === false){
-                        $('#message_recordDeliveryModal').addClass('error-message').text(response.message).show();
-                        setTimeout(function() {
-                            $('#error-message').text('').fadeOut();
-                        }, 3000);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    var errorMessage = xhr.status + ': ' + xhr.statusText;
-                    alert('Error - ' + errorMessage + "\nMessage: " + error);
-                }
-            });
-        }
-        
-    }
-    function openRecordPaymentModal(id,po_ref,supplier_name,total_amount,date,purchase_productId,outstandingAmount){
-        $("#purchaseOrderRecordDate").text(po_ref+' On '+date);
-        $("#recordPayment_po_id").val(id);
-        $("#recordPayment_ppurchaseProduct").val(purchase_productId);
-        $("#record_supplierName").text(supplier_name);
-        $("#record_TotalAmount").text('£'+total_amount.toFixed(2));
-        $("#record_OutstandingAmount").text('£'+outstandingAmount.toFixed(2));
-        var calculateOutstandingAmount=total_amount-outstandingAmount;
-        $("#record_AmountPaid").val(outstandingAmount.toFixed(2));
-        $("#recordPaymentModalLabel").text("Record Payment - "+po_ref);
-        // $.ajax({
-        //     type: "POST",
-        //     url: "{{url('/record_payment_details')}}",
-        //     data: {id: id,_token:'{{ csrf_token() }}'},
-        //     success: function(response) {
-        //         console.log(response);
-        //     if(response.vali_error){
-        //             alert(response.vali_error);
-        //             $(window).scrollTop(0);
-        //             return false;
-        //         }else if(response.success === true){
-        //             $(window).scrollTop(0);
-        //             $('#message_recordDeliveryModal').addClass('success-message').text(response.message).show();
-        //             setTimeout(function() {
-        //                 $('#message_recordDeliveryModal').removeClass('success-message').text('').hide();
-        //                 location.reload();
-        //             }, 3000);
-        //         }else if(response.success === false){
-        //             $('#message_recordDeliveryModal').addClass('error-message').text(response.message).show();
-        //             setTimeout(function() {
-        //                 $('#error-message').text('').fadeOut();
-        //             }, 3000);
-        //         }
-        //     },
-        //     error: function(xhr, status, error) {
-        //         var errorMessage = xhr.status + ': ' + xhr.statusText;
-        //         alert('Error - ' + errorMessage + "\nMessage: " + error);
-        //     }
-        // });
-        $("#recordPaymentModal").modal('show');
-    }
-    function openPaymentTypeModal(){
-        $("#paymenTypeform")[0].reset();
-        $("#paymentTypeModal").modal('show');
-    }
-    function getAllPaymentType(data){
-        $("#record_PaymentType").append('<option value="'+data.id+'">'+data.title+'</option>');
-    }
-    function saverecordPaymentModal(){
+</script>+
+<script>
+    flatpickr(".dateField", {
+    dateFormat: "d/m/Y",
+}); 
+function cancelCreditFunction(id,credit_ref){
+    if(confirm("Are you sure you want to cancel credit note '"+credit_ref +"'?")){
         $.ajax({
             type: "POST",
-            url: "{{url('/savePurchaseOrderRecordPayment')}}",
-            data: new FormData($("#recordPaymentForm")[0]),
-            async: false,
-            contentType: false,
-            cache: false,
-            processData: false,
+            url: "{{url('/cancelCreditNote')}}",
+            data: {id:id,credit_ref:credit_ref,_token:'{{csrf_token()}}'},
             success: function(response) {
                 // console.log(response);return false;
             if(response.vali_error){
@@ -1392,17 +1129,20 @@ $('.delete_checkbox').on('click', function() {
                     $(window).scrollTop(0);
                     return false;
                 }else if(response.success === true){
-                    $(window).scrollTop(0);
-                    $('#message_recordPaymentModal').addClass('success-message').text(response.message).show();
-                    setTimeout(function() {
-                        $('#message_recordPaymentModal').removeClass('success-message').text('').hide();
-                        location.reload();
-                    }, 3000);
+                    // $(window).scrollTop(0);
+                    // $('#message_recordPaymentModal').addClass('success-message').text(response.message).show();
+                    // setTimeout(function() {
+                    //     $('#message_recordPaymentModal').removeClass('success-message').text('').hide();
+                        
+                    // }, 3000);
+                    location.reload();
                 }else if(response.success === false){
-                    $('#message_recordPaymentModal').addClass('error-message').text(response.message).show();
-                    setTimeout(function() {
-                        $('#error-message').text('').fadeOut();
-                    }, 3000);
+                    // $('#message_recordPaymentModal').addClass('error-message').text(response.message).show();
+                    // setTimeout(function() {
+                    //     $('#error-message').text('').fadeOut();
+                    // }, 3000);
+                    alert("Something went wrong pleae try later!");
+                    return false;
                 }
             },
             error: function(xhr, status, error) {
@@ -1411,37 +1151,6 @@ $('.delete_checkbox').on('click', function() {
             }
         });
     }
-    function openInvoiceRecieveModal(id,po_ref,supplier_name,supplier_id,sub_total_amount,date,vat,outstandingAmount){
-        // alert("supplier_id "+supplier_id);
-        $("#invoice_po_id").val(id);
-        $("#invoice_supplier_id").val(supplier_id);
-        $("#Invoice_modal_title").text("Invoice Recieved - "+po_ref);
-        $("#invoiuce_ref").text(po_ref+" On "+date);
-        $("#invoiceSupplier_name").text(supplier_name);
-        $("#invoiceNetAmount").val(sub_total_amount.toFixed(2));
-        $("#invoiceVatAmount").val(vat.toFixed(2));
-        $("#invoiceGrossAmount").val(sub_total_amount+vat);
-        $("#invoiceModal").modal('show');
-    }
-    function getAllPurchaseInvices(data){
-        // location.reload();
-        $("#emailModal").modal('hide');
-    }
-    function openRejectModal(id,po_ref){
-        // alert("id "+id);
-        // alert("po_ref "+po_ref);
-        $("#reject_po_id").val(id);
-        $("#rejectpurchaseOrderRef").text(po_ref);
-        $("#rejectModal").modal('show');
-    }
-    function openEmailModal(id,po_ref,email,name){
-        $("#emailformId")[0].reset();
-        $("#dropdownButton").append('<span class="optext">'+email+'&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
-        $("#selectedToEmail").val(email);
-        $("#email_modalTitle").text("Email Purchase Order - "+po_ref);
-        $("#emailsubject").val("Purchase Order from The Contructor - "+po_ref);
-        $("#email_po_id").val(id);
-        $("#emailModal").modal('show');
-    }
+}
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
