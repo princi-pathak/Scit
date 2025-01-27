@@ -13,9 +13,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url('public/frontEnd/jobs/css/custom.css')}}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-    <!-- <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css"> -->
-    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script> -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
@@ -26,13 +25,16 @@
         .modal.show .modal-dialog {
             box-shadow: 0px 0px 10px #34343447;
         }
-        .numberHifan{
-            text-align:center;
-            font-size:20px;
+
+        .numberHifan {
+            text-align: center;
+            font-size: 20px;
         }
+
         .table_responsive div#exampleOne_wrapper {
             overflow: auto;
         }
+
         .calendar_icon {
             color: red;
             display: flex;
@@ -47,7 +49,6 @@ $access_rights = explode(',', $rights);
 
 <body>
     <header>
-
         <div class="topbaar">
             <div class="container-fluid bg-light p-0">
                 <div class="row gx-0 d-none d-lg-flex">
@@ -70,7 +71,6 @@ $access_rights = explode(',', $rights);
                         </div>
                         <?php //} else { 
                         ?>
-
                         <!-- <div class="h-100 d-inline-flex align-items-center me-5">
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> group</i></a>
                                 <a class="btn btn-sm-square bg-white text-primary me-1" href="#!"><i class="material-symbols-outlined"> dns</i></a>
@@ -1818,7 +1818,7 @@ $access_rights = explode(',', $rights);
                     response.Data.forEach(user => {
                         const option = document.createElement('option');
                         option.value = user.id;
-                        option.text =  user.name + " " + "(+" + user.code +")";
+                        option.text = user.name + " " + "(+" + user.code + ")";
                         selectElement.appendChild(option);
                     });
                 },
@@ -1827,6 +1827,4 @@ $access_rights = explode(',', $rights);
                 }
             });
         }
-
-
     </script>
