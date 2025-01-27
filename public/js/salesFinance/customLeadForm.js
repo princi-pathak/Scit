@@ -148,12 +148,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var mainCheckbox = document.getElementById('yeson');
     var optionsDiv = document.getElementById('optionsDiv');
+    const notifyDate = document.getElementById('notifyDate');
+    const notifyTime = document.getElementById('notifyTime');
 
     mainCheckbox.addEventListener('change', function () {
         if (mainCheckbox.checked) {
             optionsDiv.style.display = 'block';
+            notifyDate.removeAttribute("disabled");
+            notifyTime.removeAttribute("disabled");
+
         } else {
             optionsDiv.style.display = 'none';
+            notifyDate.disabled = true;
+            notifyTime.disabled = true;
         }
     });
 
@@ -188,7 +195,7 @@ $('.open-modal').on('click', function () {
     $('#notify_date').val('');
     $('#notify_time').val('');
     $('#notes').val('');
-    $('.modal-title').text('');
+    $('.modal-title text').text('');
     $('#saveChanges').text('');
 
     if (itemId) {
@@ -222,12 +229,12 @@ $('.open-modal').on('click', function () {
         $('#notify_date').val(itemNotifyDate);
         $('#notify_time').val(itemNotifyTime);
         $('#notes').val(itemNotes);
-        $('.modal-title').text('Edit Lead Task ');
+        $('.modal-title text').text('Edit Lead Task ');
         $('#saveChanges').text('Save Changes');
     } else {
         // Adding new record (clear form fields if needed)
 
-        $('.modal-title').text('Add Lead Task');
+        $('.modal-title text').text('Add Lead Task');
         $('#saveChanges').text('Add');
     }
 });
@@ -275,12 +282,12 @@ function getLeadTask(lead_ref) {
     $.ajax({
         url: getLeadTaskDataURL,
         method: 'POST',
-        data: { lead_ref: lead_ref},
+        data: { lead_ref: lead_ref },
         success: function (response) {
             console.log(response.data);
             const table = document.getElementById('taskTableData'); // Replace with your table's ID
             const tableBody = table.querySelector('tbody'); // Select the tbody within the table
-           
+
             setleadTaskTableData(response, tableBody, table)
             // setleadTaskTableData(response.close, tableBody, table)
         },
@@ -311,7 +318,7 @@ function setleadTaskTableData(data, tableBody, table) {
     appendDataInTable(data.close, tableBody, "Close Tasks");
 }
 
-function appendDataInTable(data,tableBody, text){
+function appendDataInTable(data, tableBody, text) {
 
     const taskRow = document.createElement('tr');
     const taskCell = document.createElement('td');
@@ -433,5 +440,89 @@ function mark_as_complete_task(task_id, lead_id, lead_ref) {
             alert(error.message);
         });
 }
+
+
+flatpickr(".dateField", {
+    dateFormat: "d/m/Y", // Specify the format as dd/mm/yyyy
+});
+
+flatpickr(".current_date_only", {
+    dateFormat: "d/m/Y", // Specify the format as dd/mm/yyyy
+    minDate: "today",    // Disallow selecting dates before today
+});
+
+$('#openNext30days').on('click', function () {
+    // alert("dfdf30");
+    $.ajax({
+        url: get30DaysLead,
+        success: function (response) {
+            console.log(response.data);
+            var data = response.data;
+            const existingTable = document.querySelector(".table.mb-0");
+            for (const [date, recordData] of Object.entries(data)) {
+                var list = recordData.records;
+                appendThead(recordData.date, recordData.count);
+                console.log(`Date: ${date}`);
+                list.forEach(record => {
+                    console.log(`Record ID: ${record.id}`);
+                    appendTbody(record);
+                });
+            }
+
+
+            function appendThead(date, appointments) {
+                const thead = document.createElement("thead");
+                thead.className = "table-light";
+                thead.innerHTML = `
+                    <tr>
+                        <th style="width: 192px;">${date}</th>
+                        <th>Appointments: ${appointments}</th>
+                        <th colspan="2"></th>
+                    </tr>
+                `;
+                existingTable.appendChild(thead);
+            }
+            
+            function appendTbody(rows) {
+                const tbody = document.createElement("tbody");
+                rows.forEach(row => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${row.index} ${row.name}</td>
+                        <td>${row.company}</td>
+                        <td style="width: 260px;">${row.address}</td>
+                        <td>${row.time}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                existingTable.appendChild(tbody);
+            }
+
+        //     const newTableHTML = `
+        //         <table class="table mb-0">
+        //             <thead class="table-light">
+        //                 <tr>
+        //                     <th style="width: 192px;">Saturday, 07/01/2025</th>
+        //                     <th>Appointments: 1</th>
+        //                     <th colspan="2"></th>
+        //                 </tr>
+        //             </thead>
+        //             <tbody>
+        //                 <tr>
+        //                     <td>1 John</td>
+        //                     <td>Titin</td>
+        //                     <td style="width: 260px;">UK 0022345</td>
+        //                     <td>12:14 PM</td>
+        //                 </tr>
+        //             </tbody>
+        //         </table>
+        // `;
+        //     existingTable.insertAdjacentHTML("afterend", newTableHTML);
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        }
+    });
+});
 
 

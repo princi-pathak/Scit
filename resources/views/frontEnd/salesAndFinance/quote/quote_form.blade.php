@@ -21,99 +21,6 @@
     }
 </style>
 
-<style>
-        .wrapper {
-	padding-top: 0;
-}
-
-.wrapper label input:focus {outline: none;}
-#ui-datepicker-div {
-	display: none;
-	background-color: #fff;
-	box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.1);
-	margin-top: 0.25rem;
-	border-radius: 0.5rem;
-	padding: 0.5rem;
-}
-.wrapper table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-.wrapper .ui-datepicker-calendar thead th {
-	padding: 0.25rem 0;
-	text-align: center;
-	font-size: 0.75rem;
-	font-weight: 400;
-	color: #78909C;
-}
-.ui-datepicker-calendar tbody td {
-	width: 2.5rem;
-	text-align: center;
-	padding: 0;
-}
-.ui-datepicker-calendar tbody td a {
-	display: block;
-	border-radius: 0.25rem;
-	line-height: 2rem;
-	transition: 0.3s all;
-	color: #546E7A;
-	font-size: 0.875rem;
-	text-decoration: none;
-}
-.ui-datepicker-calendar tbody td a:hover {	
-	background-color: #E0F2F1;
-}
-.ui-datepicker-calendar tbody td a.ui-state-active {
-	background-color: #009688;
-	color: white;
-}
-.ui-datepicker-header a.ui-corner-all {
-	cursor: pointer;
-	position: absolute;
-	top: 0;
-	width: 2rem;
-	height: 2rem;
-	margin: 0.5rem;
-	border-radius: 0.25rem;
-	transition: 0.3s all;
-}
-.ui-datepicker-header a.ui-corner-all:hover {
-	background-color: #ECEFF1;
-}
-.ui-datepicker-header a.ui-datepicker-prev {	
-	left: 0;	
-	background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==");
-	background-repeat: no-repeat;
-	background-size: 0.5rem;
-	background-position: 50%;
-	transform: rotate(180deg);
-}
-.ui-datepicker-header a.ui-datepicker-next {
-	right: 0;
-	background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==');
-	background-repeat: no-repeat;
-	background-size: 10px;
-	background-position: 50%;
-}
-.ui-datepicker-header a>span {
-	display: none;
-}
-.ui-datepicker-title {
-	text-align: center;
-	line-height: 2rem;
-	margin-bottom: 0.25rem;
-	font-size: 0.875rem;
-	font-weight: 500;
-	padding-bottom: 0.25rem;
-}
-.ui-datepicker-week-col {
-	color: #78909C;
-	font-weight: 400;
-	font-size: 0.75rem;
-}
-    </style>
-
-
 <section class="main_section_page px-3 pt-0">
     <div class="container-fluid">
         <div class="row">
@@ -202,12 +109,12 @@
                                     <div class="mb-3 row">
                                         <label for="billingCustomerCity" class="col-sm-3 col-form-label">City </label>
                                         <div class="col-sm-9">
-                                        <div class="wrapper">
-                                                        <label for="datepicker">
-                                                            <input type="text" id="datepicker" class="form-control editInput" autocomplete="off" placeholder="21/08/2025">
-                                                        </label>	
-                                                    </div>
-                                            <!-- <input type="text" class="form-control editInput textareaInput" id="billingCustomerCity" placeholder="City"> -->
+                                            <!-- <div class="wrapper">
+                                                <label for="datepicker">
+                                                    <input type="text" id="datepicker" class="form-control editInput" autocomplete="off" placeholder="21/08/2025">
+                                                </label>
+                                            </div> -->
+                                            <input type="text" class="form-control editInput textareaInput" id="billingCustomerCity" placeholder="City">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -2799,8 +2706,8 @@
             });
         });
 
-          // Save Customer Data
-          $('#saveCustomerContactData').on('click', function() {
+        // Save Customer Data
+        $('#saveCustomerContactData').on('click', function() {
             var formData = $('#add_customer_contact_form').serialize();
             $.ajax({
                 url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
@@ -2816,7 +2723,7 @@
             });
         });
 
-        
+
         // Save Customer Data
         $('#SaveCustomerData').on('click', function() {
             var formData = $('#add_customer_form').serialize();
@@ -2867,7 +2774,7 @@
             },
             success: function(response) {
                 console.log("response.data", response.data);
-                quoteProductTable(response.data, 'quoteProducts' , 'add');
+                quoteProductTable(response.data, 'quoteProducts', 'add');
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3825,7 +3732,7 @@
     });
     // **************************End Product Cetagory
 
- 
+
     //**************insrtTitle
     function insrtTitle() {
         const node = document.createElement("tr");
@@ -4375,13 +4282,6 @@
         }
     }
 
-    // INCLUDE JQUERY & JQUERY UI 1.12.1
-    $( function() {
-        $( "#datepicker" ).datepicker({
-            dateFormat: "dd-mm-yy"
-            ,	duration: "fast"
-        });
-    } );
 </script>
 <script>
     function upload() {
