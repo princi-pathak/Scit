@@ -530,6 +530,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('lead/getCRMTaskDataRecurring', 'getCRMTaskDataRecurring')->name('lead.ajax.getCRMTaskDataRecurring');
 		Route::get('lead/getUserList', 'getUserList')->name('lead.ajax.getUserList');
 		Route::post('lead/getLeadDataWithRecurrence', 'getLeadDataWithRecurrence')->name('lead.ajax.getLeadDataWithRecurrence');
+		Route::get('lead/get30DaysLead', 'get30DaysLead')->name('lead.ajax.get30DaysLead');
+
 
 		Route::get('lead/searchUser', 'searchUser')->name('lead.ajax.searchUser');
 
