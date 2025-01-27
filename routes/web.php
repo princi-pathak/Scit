@@ -422,6 +422,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('credit_notes','credit_notes');
 		Route::get('new_credit_notes','new_credit_notes');
 		Route::post('credit_notes_save','credit_notes_save');
+		Route::get('credit_note_edit','new_credit_notes');
+		Route::post('searchCreditNotes','searchCreditNotes');
+		Route::post('getCreditProduct','getCreditProduct');
+		Route::post('cancelCreditNote','cancelCreditNote');
 	});
 
 	// Forontend Customer Controller
@@ -530,6 +534,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('lead/getCRMTaskDataRecurring', 'getCRMTaskDataRecurring')->name('lead.ajax.getCRMTaskDataRecurring');
 		Route::get('lead/getUserList', 'getUserList')->name('lead.ajax.getUserList');
 		Route::post('lead/getLeadDataWithRecurrence', 'getLeadDataWithRecurrence')->name('lead.ajax.getLeadDataWithRecurrence');
+		Route::get('lead/get30DaysLead', 'get30DaysLead')->name('lead.ajax.get30DaysLead');
+
 
 		Route::get('lead/searchUser', 'searchUser')->name('lead.ajax.searchUser');
 
