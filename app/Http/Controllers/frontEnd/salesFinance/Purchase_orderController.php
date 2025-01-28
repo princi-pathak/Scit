@@ -253,6 +253,9 @@ class Purchase_orderController extends Controller
             $success = 0;
 
             for ($i = 0; $i < count($product_ids); $i++) {
+                $sub_total=$data['qty'][$i]*$data['price'][$i];
+                $vatPercentage=$sub_total*$data['vat_ratePercentage'][$i]/100;
+                $outstandignAmount=$sub_total+$vatPercentage;
                 $productData = [
                     'id'=>$data['purchase_product_id'][$i] ?? null,
                     'user_id'=>Auth::user()->id,
@@ -265,7 +268,7 @@ class Purchase_orderController extends Controller
                     'price' => $data['price'][$i] ?? 0,
                     'vat_id' => $data['vat_id'][$i] ?? null,
                     'vat' => $data['vat_ratePercentage'][$i] ?? 0,
-                    'outstanding_amount'=>0
+                    'outstanding_amount'=>$outstandignAmount
                 ];
                 // echo "<pre>";print_r($productData);die;
                 $PurchaseOrderProduct = PurchaseOrderProduct::savePurchaseOrderProduct($productData);
@@ -587,7 +590,7 @@ class Purchase_orderController extends Controller
                 $vat=$qty*$product->vat/100;
                 $vat_amount=$vat_amount+$vat;
                 $total_amount=$total_amount+$vat+$qty;
-                $outstandingAmount=$total_amount-$product->outstanding_amount;
+                $outstandingAmount=$product->outstanding_amount;
             }
             $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
             $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;

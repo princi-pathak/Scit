@@ -265,11 +265,6 @@ ul#projectList {
                                                
                             <tbody id="search_data">
                                 <?php
-                                // if (is_array($list)) {
-                                //     echo "The data is an array.";die;
-                                // } else {
-                                //     echo "The data is not an array.";die;
-                                // }
                                     $all_subTotalAmount=0;
                                     $all_vatTotalAmount=0;
                                     $all_TotalAmount=0;
@@ -289,7 +284,7 @@ ul#projectList {
                                         $vat=$qty*$product->vat/100;
                                         $vat_amount=$vat_amount+$vat;
                                         $total_amount=$total_amount+$vat+$qty;
-                                        $outstandingAmount=$total_amount-$product->outstanding_amount;
+                                        $outstandingAmount=$product->outstanding_amount;
                                         
                                     }
                                     $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
@@ -321,11 +316,11 @@ ul#projectList {
                                                 <div class="dropdown-menu fade-up m-0">
                                                     <a href="{{url('credit_note_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
+                                                    <a href="{{url('credit_preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->credit_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openAllocateModal({{$val->id}},'{{$val->credit_ref}}')" class="dropdown-item">Allocate</a>
+                                                    <a href="javascript:void(0)" onclick="openAllocateModal({{$val->id}},'{{$val->credit_ref}}',{{$val->supplier_id}},'{{$val->suppliers->name}}',{{$outstandingAmount}})" class="dropdown-item">Allocate</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="cancelCreditFunction({{$val->id}},'{{$val->credit_ref}}')" class="dropdown-item">Cancel Credit Note</a>
                                                     <hr class="dropdown-divider">
@@ -344,7 +339,7 @@ ul#projectList {
                                                 <div class="dropdown-menu fade-up m-0">
                                                     <a href="{{url('credit_note_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
+                                                    <a href="{{url('credit_preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="#!" class="dropdown-item">Print</a>
                                                     <hr class="dropdown-divider">
@@ -396,6 +391,17 @@ ul#projectList {
     body="emailbody"
     saveButtonId="emailSave"
     saveUrl="{{url('crediNoteEmailSave')}}" />
+
+<x-credit-note-allocate
+    allocateModalId="allocateModal"
+    modalTitle="allocate_modalTitle"
+    allocateformId="allocateformId"
+    foreignId="credit_id"
+    allocateId="id"
+    modalSubTitle="allocate_sub_title"
+    fieldsetTitle="allocate_fieldset_title"
+    saveButtonId="allocateSave"
+    saveUrl="{{url('crediNoteAllocateSave')}}" />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 <script>
@@ -500,7 +506,7 @@ $('.delete_checkbox').on('click', function() {
             },
             success: function(response) {
                 console.log(response);
-                return false;
+                // return false;
                 var table = $('#exampleOne').DataTable();
                 table.destroy();
                 if(response.data.length>0){
@@ -1043,10 +1049,14 @@ $('.delete_checkbox').on('click', function() {
     });
 </script>
 <script>
-    function openAllocateModal(id,credit_ref){
-        $("#purchaseOrderRef").text(credit_ref);
-        $("#po_id").val(id);
-        $("#approveModal").modal('show');
+    function openAllocateModal(id,credit_ref,supplier_id,supplier_name,outstandingAmount){
+        $("#allocate_modalTitle").text('Credit Note');
+        $("#allocate_sub_title").text('Allocate Credit Note - '+credit_ref);
+        $("#allocate_fieldset_title").text(supplier_name);
+        $("#allocate_credit_id").val(id);
+        $("#allocate_supplier_id").val(supplier_id);
+        getAllSupplierPurchaseOrder(supplier_id,outstandingAmount);
+        $("#allocateModal").modal('show');
     }
     $('input[name="notify_radio"]').on('change',function(){
         if($(this).val() == 1){
@@ -1098,7 +1108,7 @@ $('.delete_checkbox').on('click', function() {
         $("#selectedToEmail").val(email);
         $("#email_modalTitle").text("Email Credit Note - "+credit_ref);
         $("#emailsubject").val("Your Credit Note from the Contructor - "+credit_ref);
-        $("#email_po_id").val(id);
+        $("#email_credit_id").val(id);
         $("#defaultOption").text('Default Credit Note');
         const editor = CKEDITOR.instances['emailbody'];
         const message = `
@@ -1111,7 +1121,11 @@ $('.delete_checkbox').on('click', function() {
         editor.setData(message);
         $("#emailModal").modal('show');
     }
-</script>+
+    function getAllEmails(data) {
+        // location.reload();
+        $("#emailModal").modal('hide');
+    }
+</script>
 <script>
     flatpickr(".dateField", {
     dateFormat: "d/m/Y",

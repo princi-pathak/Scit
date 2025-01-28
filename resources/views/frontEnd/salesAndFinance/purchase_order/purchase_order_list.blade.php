@@ -364,7 +364,7 @@
                                 $vat = $qty * $product->vat / 100;
                                 $vat_amount = $vat_amount + $vat;
                                 $total_amount = $total_amount + $vat + $qty;
-                                $outstandingAmount = $total_amount - $product->outstanding_amount;
+                                $outstandingAmount = $product->outstanding_amount;
                             }
                             $all_subTotalAmount = $all_subTotalAmount + $sub_total_amount;
                             $all_vatTotalAmount = $all_vatTotalAmount + $vat_amount;
@@ -1776,7 +1776,7 @@
         $("#invoiceModal").modal('show');
     }
 
-    function getAllPurchaseInvices(data) {
+    function getAllEmails(data) {
         // location.reload();
         $("#emailModal").modal('hide');
     }
