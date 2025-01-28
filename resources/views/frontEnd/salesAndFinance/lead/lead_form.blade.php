@@ -101,7 +101,7 @@ if (isset($lead)) {
 
                                         <!-- Start of Next 30 days Model -->
                                         <div class="modal fade" id="next30daysModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
+                                            <div class="modal-dialog modal-lg" id="printableDiv">
                                                 <div class="modal-content add_Customer">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title fs-5" id="staticBackdropLabel">Next 30 days</h5>
@@ -109,7 +109,7 @@ if (isset($lead)) {
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="pageTitleBtn p-0">
-                                                            <button type="button" class="profileDrop" id="addNotesType">Print</button>
+                                                            <button type="button" class="profileDrop" id="printButton">Print</button>
                                                         </div>
                                                         <div class="productDetailTable mt-3">
                                                             <table class="table mb-0">
@@ -122,92 +122,6 @@ if (isset($lead)) {
                                                                     </tr>
                                                                 </thead>
                                                             </table>
-                                                            <!-- <table class="table mb-0">
-                                                                <thead class="table-light">
-                                                                    <tr>
-                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
-                                                                        <th>Appoinments:1</th>
-                                                                        <th colspan="2"></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>1 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <table class="table mb-0">
-                                                                <thead class="table-light">
-                                                                    <tr>
-                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
-                                                                        <th>Appoinments:1</th>
-                                                                        <th colspan="2"></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>1 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <table class="table mb-0">
-                                                                <thead class="table-light">
-                                                                    <tr>
-                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
-                                                                        <th>Appoinments:1</th>
-                                                                        <th colspan="2"></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>1 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <table class="table mb-0">
-                                                                <thead class="table-light">
-                                                                    <tr>
-                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
-                                                                        <th>Appoinments:4</th>
-                                                                        <th colspan="2"></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>1 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">Poseidon House, 33 Walson Awanue LL297UY</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>2 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>3 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>4 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table> -->
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer customer_Form_Popup">
@@ -219,7 +133,6 @@ if (isset($lead)) {
                                             </div>
                                         </div>
                                         <!-- End of Next 30 days Model -->
-
                                     </div>
                                 </div>
                             </div>
@@ -227,29 +140,31 @@ if (isset($lead)) {
                                 <div class="formDtail">
                                     <h4 class="contTitle">Data Fields</h4>
                                     <div class="mb-3 row">
-                                        <label for="inputName" class="col-sm-3 col-form-label">Full Name *</label>
+                                        <label for="inputName" class="col-sm-3 col-form-label">Full Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control editInput" name="name" id="inputName" placeholder="Full Name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}" required>
                                             <span id="fullNameError" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputEmail" class="col-sm-3 col-form-label">Company Name</label>
+                                        <label for="inputEmail" class="col-sm-3 col-form-label">Company Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control editInput" name="company_name" id="inputcompany" placeholder="Company Name" value="{{ (isset($lead->name)) ? $lead->name : '' }}">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputMobile" class="col-sm-3 col-form-label">Email Address *</label>
+                                        <label for="inputMobile" class="col-sm-3 col-form-label">Email Address <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" name="email" class="form-control editInput" id="inputEmail" placeholder="Email Address" value="{{ (isset($lead->email)) ? $lead->email : '' }}" required>
-                                            <span id="emailError" class="error"></span>
+                                            @error('email')
+                                            <span class="text-danger editInput">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputEmail" class="col-sm-3 col-form-label">Telephone *</label>
+                                        <label for="inputEmail" class="col-sm-3 col-form-label">Telephone <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="telephone" class="form-control editInput" id="inputTelephone" placeholder="Telephone " value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" required>
+                                            <input type="text" name="telephone" class="form-control editInput" oninput="this.value = this.value.replace(/\s/g, '').replace(/[^0-9]/g, '');"   id="inputTelephone" placeholder="Telephone " value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" required>
                                             <span id="phoneError" class="error"></span>
                                         </div>
                                     </div>

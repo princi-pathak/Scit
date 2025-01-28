@@ -63,18 +63,20 @@ document.getElementById('submit_main_form').addEventListener('click', function (
     if (!emailRegex.test(emailInput.value)) {
         emailError.textContent = 'Please enter a valid email address.';
         valid = false;
-    } else {
-        emailError.textContent = '';
     }
+    // else {
+    //     emailError.textContent = '';
+    // }
 
     // Telephone validation
     const phoneRegex = /^\d{10}$/;
     if (!phoneRegex.test(phoneInput.value)) {
         phoneError.textContent = 'Please enter a valid 10-digit telephone number.';
         valid = false;
-    } else {
-        phoneError.textContent = '';
     }
+    // else {
+    //     phoneError.textContent = '';
+    // }
 
     if (valid == true) {
         // e.preventDefault(); // Prevent form submission if any field is invalid
@@ -451,7 +453,14 @@ flatpickr(".current_date_only", {
     minDate: "today",    // Disallow selecting dates before today
 });
 
+
 $('#openNext30days').on('click', function () {
+
+
+    $(".table.mb-3 thead.dynamic-thead").remove(); // Remove thead added dynamically
+    $(".table.mb-3 tbody.dynamic-tbody").remove(); // Remove tbody added dynamically
+
+
     // alert("dfdf30");
     $.ajax({
         url: get30DaysLead,
@@ -459,20 +468,27 @@ $('#openNext30days').on('click', function () {
             console.log(response.data);
             var data = response.data;
             const existingTable = document.querySelector(".table.mb-0");
+
             for (const [date, recordData] of Object.entries(data)) {
-                var list = recordData.records;
-                appendThead(recordData.date, recordData.count);
-                console.log(`Date: ${date}`);
-                list.forEach(record => {
-                    console.log(`Record ID: ${record.id}`);
-                    appendTbody(record);
-                });
+                const list = recordData.records;
+
+                // Create a new table for each date
+                const newTable = document.createElement("table");
+                newTable.className = "table mb-3"; // Add custom classes
+
+                // Append thead
+                appendThead(newTable, recordData.date, recordData.count);
+
+                // Append tbody
+                appendTbody(newTable, list);
+
+                // Append the new table to the DOM after the existing table
+                existingTable.insertAdjacentElement("afterend", newTable);
             }
 
-
-            function appendThead(date, appointments) {
+            function appendThead(table, date, appointments) {
                 const thead = document.createElement("thead");
-                thead.className = "table-light";
+                thead.className = "table-light dynamic-thead";
                 thead.innerHTML = `
                     <tr>
                         <th style="width: 192px;">${date}</th>
@@ -480,49 +496,109 @@ $('#openNext30days').on('click', function () {
                         <th colspan="2"></th>
                     </tr>
                 `;
-                existingTable.appendChild(thead);
+                table.appendChild(thead);
             }
-            
-            function appendTbody(rows) {
+
+            function appendTbody(table, rows) {
                 const tbody = document.createElement("tbody");
+                tbody.className = "dynamic-tbody";
                 rows.forEach(row => {
+
+                    var formattedTime = row.prefer_time ? moment(row.prefer_time, "HH:mm").format("H:mm") : "00:00";
+                    var address = row.address ? row.address : "";
+
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
-                        <td>${row.index} ${row.name}</td>
-                        <td>${row.company}</td>
-                        <td style="width: 260px;">${row.address}</td>
-                        <td>${row.time}</td>
+                        <td>${row.name}</td>
+                        <td>${row.contact_name}</td>
+                        <td style="width: 260px;">${address}</td>
+                        <td>${formattedTime}</td>
                     `;
                     tbody.appendChild(tr);
                 });
-                existingTable.appendChild(tbody);
+                table.appendChild(tbody);
             }
-
-        //     const newTableHTML = `
-        //         <table class="table mb-0">
-        //             <thead class="table-light">
-        //                 <tr>
-        //                     <th style="width: 192px;">Saturday, 07/01/2025</th>
-        //                     <th>Appointments: 1</th>
-        //                     <th colspan="2"></th>
-        //                 </tr>
-        //             </thead>
-        //             <tbody>
-        //                 <tr>
-        //                     <td>1 John</td>
-        //                     <td>Titin</td>
-        //                     <td style="width: 260px;">UK 0022345</td>
-        //                     <td>12:14 PM</td>
-        //                 </tr>
-        //             </tbody>
-        //         </table>
-        // `;
-        //     existingTable.insertAdjacentHTML("afterend", newTableHTML);
         },
         error: function (xhr, status, error) {
             console.error(error);
         }
     });
 });
+
+document.getElementById("printButton").addEventListener("click", function () {
+    const printContents = document.getElementById("printableDiv").innerHTML; // Get the content of the div
+    const originalContents = document.body.innerHTML; // Store the original page content
+
+    // Replace the page content with the div content
+    document.body.innerHTML = printContents;
+
+    // Trigger the print dialog
+    window.print();
+
+    // Restore the original page content after printing
+    document.body.innerHTML = originalContents;
+    location.reload(); // Reload to restore event listeners and other states
+});
+
+// document.getElementById('exportCsv').addEventListener('click', function () {
+//     const table = document.getElementById('leadDraftData'); // Get the table
+//     let csvContent = '';
+
+//     // Extract headers
+//     const headers = Array.from(table.querySelectorAll('thead th'))
+//         .map(th => th.textContent.trim())
+//         .join(',');
+//     csvContent += headers + '\n';
+
+//     // Extract rows
+//     const rows = Array.from(table.querySelectorAll('tbody tr'));
+//     rows.forEach(row => {
+//         const cells = Array.from(row.querySelectorAll('td'))
+//             .map(td => td.textContent.trim());
+//         csvContent += cells.join(',') + '\n';
+//     });
+
+//     // Create and download CSV file
+//     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+//     const link = document.createElement('a');
+//     link.href = URL.createObjectURL(blob);
+//     link.download = 'data.csv';
+//     link.style.display = 'none';
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+// });
+
+// document.getElementById('exportCsv').addEventListener('click', function () {
+//     const table = document.getElementById('leadDraftData'); // Get the table
+//     const selectedColumns = [0, 2]; // Specify which columns to export (e.g., 0 for Name, 2 for Phone)
+//     let csvContent = '';
+
+//     // Extract headers (only selected columns)
+//     const headers = Array.from(table.querySelectorAll('thead th'))
+//         .filter((_, index) => selectedColumns.includes(index)) // Filter headers by selected columns
+//         .map(th => th.textContent.trim())
+//         .join(',');
+//     csvContent += headers + '\n';
+
+//     // Extract rows (only selected columns)
+//     const rows = Array.from(table.querySelectorAll('tbody tr'));
+//     rows.forEach(row => {
+//         const cells = Array.from(row.querySelectorAll('td'))
+//             .filter((_, index) => selectedColumns.includes(index)) // Filter cells by selected columns
+//             .map(td => td.textContent.trim());
+//         csvContent += cells.join(',') + '\n';
+//     });
+
+//     // Create and download CSV file
+//     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+//     const link = document.createElement('a');
+//     link.href = URL.createObjectURL(blob);
+//     link.download = 'datatable.csv';
+//     link.style.display = 'none';
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+// });
 
 
