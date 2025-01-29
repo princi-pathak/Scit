@@ -176,6 +176,12 @@ $('.open-modal').on('click', function () {
     var itemCreateDate = $(this).data('create_date');
     var itemCreateTime = $(this).data('create_time');
     var itemNotifyDate = $(this).data('notify_date');
+    const hiddenTaskContact = document.getElementById('hiddenTaskContact').value;
+    const hiddenTaskPhone = document.getElementById('hiddenTaskPhone').value;
+    var contact_name = $(this).data('contact_name');
+    var contact_phone = $(this).data('contact_phone');
+
+    
     var itemNotifyTime = $(this).data('notify_time');
     var itemNotes = $(this).data('notes');
     var itemNotification = $(this).data('notification');
@@ -199,8 +205,15 @@ $('.open-modal').on('click', function () {
     $('#notes').val('');
     $('.modal-title text').text('');
     $('#saveChanges').text('');
+    $('#canatact_name').val(hiddenTaskContact);
+    $('#phone_num').val(hiddenTaskPhone);
+    
+
 
     if (itemId) {
+        $('#canatact_name').val(contact_name);
+        $('#phone_num').val(contact_phone);
+
         $('#lead_task_id').val(itemId);
 
         const option = userSelect.querySelector(`option[value="${itemUserId}"]`);
@@ -228,6 +241,8 @@ $('.open-modal').on('click', function () {
         emailCheckbox.checked = itemEmailNotify === 1;
         smsCheckbox.checked = itemSmsNotify === 1;
 
+        
+        
         $('#notify_date').val(itemNotifyDate);
         $('#notify_time').val(itemNotifyTime);
         $('#notes').val(itemNotes);
@@ -272,6 +287,8 @@ document.getElementById('saveAddTask').addEventListener('click', function (event
                 console.log(response);
                 $('#tasksModel').modal('hide');
                 getLeadTask(response.data);
+                $('#addTask')[0].reset();
+                // document.querySelector('form').reset();
             },
             error: function (xhr, status, error) {
                 console.error(error);
@@ -344,8 +361,17 @@ function appendDataInTable(data, tableBody, text) {
         count.textContent = countValue;
         row.appendChild(count);
 
+        // const now = moment(); // Current date and time
+        
+        const create_date = moment(item.create_date); // Convert to Moment.js object
+        const create_time = moment(item.create_time, 'HH:mm'); // Convert to Moment.js object
+        
+        // Format create_date and create_time
+        const create_date_format = create_date.format('DD/MM/YYYY'); // e.g., 29/01/2025
+        const create_time_format = create_time.format('HH:mm'); // e.g., 00:10
+        
         const created_on = document.createElement('td');
-        created_on.textContent = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+        created_on.textContent = create_date_format + " " + create_time_format;
         row.appendChild(created_on);
 
         const name = document.createElement('td');
@@ -361,7 +387,7 @@ function appendDataInTable(data, tableBody, text) {
         row.appendChild(title);
 
         const contact_name = document.createElement('td');
-        contact_name.innerHTML = lead_contact;
+        contact_name.innerHTML = item.contact_name ? item.contact_name : lead_contact;
         row.appendChild(contact_name);
 
         const telephone = document.createElement('td');
@@ -539,66 +565,3 @@ document.getElementById("printButton").addEventListener("click", function () {
     document.body.innerHTML = originalContents;
     location.reload(); // Reload to restore event listeners and other states
 });
-
-// document.getElementById('exportCsv').addEventListener('click', function () {
-//     const table = document.getElementById('leadDraftData'); // Get the table
-//     let csvContent = '';
-
-//     // Extract headers
-//     const headers = Array.from(table.querySelectorAll('thead th'))
-//         .map(th => th.textContent.trim())
-//         .join(',');
-//     csvContent += headers + '\n';
-
-//     // Extract rows
-//     const rows = Array.from(table.querySelectorAll('tbody tr'));
-//     rows.forEach(row => {
-//         const cells = Array.from(row.querySelectorAll('td'))
-//             .map(td => td.textContent.trim());
-//         csvContent += cells.join(',') + '\n';
-//     });
-
-//     // Create and download CSV file
-//     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-//     const link = document.createElement('a');
-//     link.href = URL.createObjectURL(blob);
-//     link.download = 'data.csv';
-//     link.style.display = 'none';
-//     document.body.appendChild(link);
-//     link.click();
-//     document.body.removeChild(link);
-// });
-
-// document.getElementById('exportCsv').addEventListener('click', function () {
-//     const table = document.getElementById('leadDraftData'); // Get the table
-//     const selectedColumns = [0, 2]; // Specify which columns to export (e.g., 0 for Name, 2 for Phone)
-//     let csvContent = '';
-
-//     // Extract headers (only selected columns)
-//     const headers = Array.from(table.querySelectorAll('thead th'))
-//         .filter((_, index) => selectedColumns.includes(index)) // Filter headers by selected columns
-//         .map(th => th.textContent.trim())
-//         .join(',');
-//     csvContent += headers + '\n';
-
-//     // Extract rows (only selected columns)
-//     const rows = Array.from(table.querySelectorAll('tbody tr'));
-//     rows.forEach(row => {
-//         const cells = Array.from(row.querySelectorAll('td'))
-//             .filter((_, index) => selectedColumns.includes(index)) // Filter cells by selected columns
-//             .map(td => td.textContent.trim());
-//         csvContent += cells.join(',') + '\n';
-//     });
-
-//     // Create and download CSV file
-//     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-//     const link = document.createElement('a');
-//     link.href = URL.createObjectURL(blob);
-//     link.download = 'datatable.csv';
-//     link.style.display = 'none';
-//     document.body.appendChild(link);
-//     link.click();
-//     document.body.removeChild(link);
-// });
-
-

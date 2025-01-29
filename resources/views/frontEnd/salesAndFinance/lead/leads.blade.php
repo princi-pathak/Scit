@@ -2,13 +2,7 @@
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
 <script src="https://cdn.ckeditor.com/ckeditor5/ckeditor.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<script type="importmap">
-    {
-        "imports": {
-            "my-module": "/path/to/my-module.js"
-        }
-    }
-    </script>
+
 <style>
     .CRMFullModel .modal-dialog.modal-xl {
         --bs-modal-width: 1600px;
@@ -3258,6 +3252,9 @@
         const selectedColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]; // Specify which columns to export (e.g., 0 for Name, 2 for Phone)
         let csvContent = '';
 
+        const now = new Date();
+        const formattedDateTime = now.toISOString().replace(/[-T:]/g, '_').split('.')[0];
+        const filename = `list_export_${formattedDateTime}.csv`;
         // Extract headers (only selected columns)
         const headers = Array.from(table.querySelectorAll('thead th'))
             .filter((_, index) => selectedColumns.includes(index)) // Filter headers by selected columns
@@ -3280,7 +3277,7 @@
         });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'datatable.csv';
+        link.download = filename;
         link.style.display = 'none';
         document.body.appendChild(link);
         link.click();
