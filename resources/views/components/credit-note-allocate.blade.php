@@ -53,19 +53,19 @@
                                                     <td colspan="2" class="border-0"></td>
                                                     <td></td>
                                                     <td>Balance Credit</td>
-                                                    <td>£120.00</td>
+                                                    <td id="balance_credit">£120.00</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" class="border-0"></td>
                                                     <td></td>
                                                     <td>Credit Used</td>
-                                                    <td>£120.00</td>
+                                                    <td id="credit_used">£0</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" class="border-0"></td>
                                                     <td class="border_top"></td>
                                                     <td class="border_top">Remaining Credit</td>
-                                                    <td class="border_top">£120.00</td>
+                                                    <td class="border_top" id="remaining_credit">£0</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -87,8 +87,8 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <script>
-    function getAllSupplierPurchaseOrder(supplier_id, outstandingAmount) {
-        $("#allocate_supplier_id").val(supplier_id);
+    function getAllSupplierPurchaseOrder(supplier_id, outstandingAmount,) {
+        // alert(outstandingAmount)
         var token = '<?php echo csrf_token(); ?>'
         $.ajax({
             type: "POST",
@@ -100,7 +100,7 @@
                 console.log(data);
                 // return false;
                 const tableBody = document.querySelector(`#purchaseOrder_result tbody`);
-
+                tableBody.innerHTML='';
                 if (data.data.length === 0) {
                     const noDataRow = document.createElement('tr');
                     noDataRow.id = 'EmptyError'
@@ -129,31 +129,56 @@
                         dateCell.textContent = date;
                         row.appendChild(dateCell);
 
+                        const hiddenInput = document.createElement('input');
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.className = 'purchase_order_id';
+                            hiddenInput.name = 'purchase_order_id[]';
+                            hiddenInput.value = po_order.id;
+                            row.appendChild(hiddenInput);
+
                         po_order.purchase_order_products.forEach(product => {
                             const sub_total = product.qty * product.price;
                             const percentage = sub_total * product.vat / 100;
                             const total = sub_total + percentage;
+                            
                             const totalCell = document.createElement('td');
                             totalCell.textContent = '£' + total;
                             row.appendChild(totalCell);
 
                             const outstandingCell = document.createElement('td');
-                            outstandingCell.textContent = '£' + product.outstanding_amount;
+                            outstandingCell.textContent = '£' + po_order.outstanding_amount;
                             row.appendChild(outstandingCell);
-
+                            var outstandingAmountCheck=0;
                             const amountCell = document.createElement('td');
                             // amountCell.textContent = outstandingAmount;
                             const inputPrice = document.createElement('input');
                             inputPrice.className = 'amount form-control ';
                             inputPrice.name = 'amount[]';
-                            inputPrice.value = outstandingAmount.toFixed(2) || 0;
+                            if(po_order.outstanding_amount<outstandingAmount){
+                                if(po_order.purchase_order_products.length<2){
+                                    $("#credit_used").text('-£' +po_order.outstanding_amount);
+                                    const remaining_amount=outstandingAmount-po_order.outstanding_amount;
+                                    $("#remaining_credit").text('£'+remaining_amount);
+                                }
+                                inputPrice.value = po_order.outstanding_amount || 0;
+                                outstandingAmountCheck=po_order.outstanding_amount;
+                            }else{
+                                if(po_order.purchase_order_products.length<2){
+                                    $("#credit_used").text('-£' +outstandingAmount);
+                                }
+                                inputPrice.value = outstandingAmount || 0;
+                                outstandingAmountCheck=outstandingAmount;
+                            }
+                            
                             inputPrice.addEventListener('input', function () {
                                 this.value = this.value.replace(/[^0-9.]/g, '');
                                 if ((this.value.match(/\./g) || []).length > 1) {
                                     this.value = this.value.slice(0, -1);
                                 }
-                                // updateAmount(row);
+                                update_Amount(outstandingAmountCheck,po_order.outstanding_amount);
                             });
+                            $("#balance_credit").text('£' +outstandingAmount);
+                            
                             amountCell.appendChild(inputPrice);
                             row.appendChild(amountCell);
                         });
@@ -163,6 +188,25 @@
                 }
 
             }
+        });
+    }
+    function update_Amount(amount,product_amount){
+        var credit_amount=0;
+        alert(amount)
+        $(".amount").each(function(){
+            if($(this).val()>amount){
+                alert("1The amount exceeds the outstanding amount (£"+amount.toFixed(2)+").");
+                $(this).val('');
+            }else if($(this).val()>product_amount){
+                alert("2The amount exceeds the outstanding amount (£"+product_amount.toFixed(2)+").");
+                $(this).val('');
+            }else{
+                credit_amount=credit_amount+Number($(this).val());
+                $("#credit_used").text('-£'+credit_amount);
+                var remaining_amount=amount-credit_amount;
+                $("#remaining_credit").text('£'+remaining_amount);
+            }
+            
         });
     }
 

@@ -9,7 +9,7 @@ class CreditNote extends Model
 {
     use HasFactory;
     protected $table="credit_notes";
-    protected $fillable=['home_id', 'loginUserId', 'supplier_id', 'credit_ref', 'contact_id', 'name', 'email', 'telephone_code', 'telephone', 'mobile_code', 'mobile', 'address', 'city', 'county', 'post_code', 'date', 'supplier_ref', 'status', 'supplier_notes', 'internal_notes', 'deleted_at'];
+    protected $fillable=['home_id', 'loginUserId', 'supplier_id', 'credit_ref', 'contact_id', 'name', 'email', 'telephone_code', 'telephone', 'mobile_code', 'mobile', 'address', 'city', 'county', 'post_code', 'date', 'supplier_ref', 'status', 'supplier_notes', 'internal_notes', 'balance_credit', 'deleted_at'];
 
     public static function saveCreditNotes($data){
         return self::updateOrCreate(['id'=>$data['id'] ?? null],$data);

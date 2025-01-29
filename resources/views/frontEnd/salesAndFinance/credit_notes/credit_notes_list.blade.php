@@ -276,7 +276,6 @@ ul#projectList {
                                     $total_amount=0;
                                     $vat_amount=0;
                                     $creditProductId=0;
-                                    $outstandingAmount=0;
                                     foreach($val->creditNoteProducts as $product){
                                         $creditProductId=$product->id;
                                         $qty=$product->qty*$product->price;
@@ -284,13 +283,12 @@ ul#projectList {
                                         $vat=$qty*$product->vat/100;
                                         $vat_amount=$vat_amount+$vat;
                                         $total_amount=$total_amount+$vat+$qty;
-                                        $outstandingAmount=$product->outstanding_amount;
                                         
                                     }
                                     $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
                                     $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
                                     $all_TotalAmount=$all_TotalAmount+$total_amount;
-                                    $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
+                                    $outstandingAmountTotal=$outstandingAmountTotal+$val->balance_credit;
                                 ?>
                                 <tr>
                                     <td>
@@ -302,7 +300,7 @@ ul#projectList {
                                     <td>£{{$sub_total_amount}}</td>
                                     <td>£{{$vat_amount}}</td>
                                     <td>£{{$total_amount}}</td>
-                                    <td>£{{$outstandingAmount}}</td>
+                                    <td>£{{$val->balance_credit}}</td>
                                     <td>{{$status['list_status']}}</td>
                                     <td>{{$val->telephone}}</td>
                                     <td>{{$val->mobile}}</td>
@@ -320,7 +318,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->credit_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openAllocateModal({{$val->id}},'{{$val->credit_ref}}',{{$val->supplier_id}},'{{$val->suppliers->name}}',{{$outstandingAmount}})" class="dropdown-item">Allocate</a>
+                                                    <a href="javascript:void(0)" onclick="openAllocateModal({{$val->id}},'{{$val->credit_ref}}',{{$val->supplier_id}},'{{$val->suppliers->name}}',{{$val->balance_credit}})" class="dropdown-item">Allocate</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="cancelCreditFunction({{$val->id}},'{{$val->credit_ref}}')" class="dropdown-item">Cancel Credit Note</a>
                                                     <hr class="dropdown-divider">

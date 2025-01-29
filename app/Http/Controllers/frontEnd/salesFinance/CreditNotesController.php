@@ -19,7 +19,9 @@ use App\Models\PurchaseOrder;
 use App\Models\CreditNoteEmail;
 use App\Models\Product_category;
 use App\Models\CreditNoteProduct;
+use App\Models\CreditNoteAllocate;
 use App\Models\Construction_account_code;
+use App\Models\PurchaseOrderRecordPayment;
 use App\Models\Constructor_additional_contact;
 
 class CreditNotesController extends Controller
@@ -131,9 +133,9 @@ class CreditNotesController extends Controller
                     'price' => $data['price'][$i] ?? 0,
                     'vat_id' => $data['vat_id'][$i] ?? null,
                     'vat' => $data['vat_ratePercentage'][$i] ?? 0,
-                    'outstanding_amount'=>$outstandignAmount
                 ];
                 // echo "<pre>";print_r($productData);die;
+                CreditNote::find($data['credi_note_id'])->update(['balance_credit' => $outstandignAmount]);
                 $credit_notesProduct = CreditNoteProduct::saveCreditProduct($productData);
                 if ($credit_notesProduct) {
                     $success++;
@@ -202,7 +204,6 @@ class CreditNotesController extends Controller
             $total_amount=0;
             $vat_amount=0;
             $creditProductId=0;
-            $outstandingAmount=0;
             foreach($val->creditNoteProducts as $product){
                 $creditProductId=$product->id;
                 $qty=$product->qty*$product->price;
@@ -210,25 +211,24 @@ class CreditNotesController extends Controller
                 $vat=$qty*$product->vat/100;
                 $vat_amount=$vat_amount+$vat;
                 $total_amount=$total_amount+$vat+$qty;
-                $outstandingAmount=$product->outstanding_amount;
                 
             }
             $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
             $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
             $all_TotalAmount=$all_TotalAmount+$total_amount;
-            $outstandingAmountTotal=$outstandingAmountTotal+$outstandingAmount;
+            $outstandingAmountTotal=$outstandingAmountTotal+$val->balance_credit;
             $supplier_name=$val->suppliers->name;
             $supplier_email=$val->suppliers->email;
             $array_data .= '<tr>
                         <td><input type="checkbox" class="delete_checkbox" value="' . $val->id . '"></td>
                         <td>' . ++$key . '</td>
                         <td>' . $val->credit_ref . '</td>
-                        <td>' . date('d/m/Y',strtotime($val->date)) . '</td>
                         <td>' . $val->suppliers->name . '</td>
+                        <td>' . date('d/m/Y',strtotime($val->date)) . '</td>
                         <td>£' . $sub_total_amount . '</td>
                         <td>£' . $vat_amount . '</td>
                         <td>£' . $total_amount . '</td>
-                        <td>£' . $outstandingAmount . '</td>
+                        <td>£' . $val->balance_credit . '</td>
                         <td>' . $list_status . '</td>
                         <td>' . $val->telephone . '</td>
                         <td>' . $val->mobile . '</td>';
@@ -248,7 +248,7 @@ class CreditNotesController extends Controller
                                             <hr class="dropdown-divider">
                                             <a href="javascript:void(0)" onclick="openEmailModal('.$val->id.','."'$val->credit_ref'".','."'$supplier_email'".','."'$supplier_name'".')" class="dropdown-item">Email</a>
                                             <hr class="dropdown-divider">
-                                            <a href="javascript:void(0)" onclick="openAllocateModal('.$val->id.','."'$val->credit_ref'".','.$val->supplier_id.','."'$supplier_name'".','.$outstandingAmount.')" class="dropdown-item">Allocate</a>
+                                            <a href="javascript:void(0)" onclick="openAllocateModal('.$val->id.','."'$val->credit_ref'".','.$val->supplier_id.','."'$supplier_name'".','.$val->balance_credit.')" class="dropdown-item">Allocate</a>
                                             <hr class="dropdown-divider">
                                             <a href="javascript:void(0)" onclick="cancelCreditFunction('.$val->id.','."'$val->credit_ref'".')" class="dropdown-item">Cancel Credit Note</a>
                                             <hr class="dropdown-divider">
@@ -402,5 +402,35 @@ class CreditNotesController extends Controller
         $supplier_id=$request->supplier_id;
         $purchaseOrderList=PurchaseOrder::with('purchaseOrderProducts')->where('supplier_id',$supplier_id)->get();
         return response()->json(['success'=>true,'message'=>'Purchase Order List with Supplier','data'=>$purchaseOrderList]);
+    }
+    public function crediNoteAllocateSave(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $purchase_order_id=$request->purchase_order_id;
+        $credit_id=$request->credit_id;
+        // CreditNoteAllocate
+        // PurchaseOrderRecordPayment
+        // saveCreditAllocate
+        $amount=$request->amount;
+        if(count($amount)>0){
+            $total_amount=0;
+            for($i=0;$i<count($amount);$i++){
+                $total_amount=$total_amount+$amount[$i];
+            }
+            // echo $total_amount;die;
+            $this->update_outstandingAmount($total_amount,$purchase_order_id,$credit_id);
+        }
+    }
+    private function update_outstandingAmount($total_amount,$purchase_order_id,$credit_id){
+        $tableCreditNote=CreditNote::find($credit_id);
+        $creditAmount=$tableCreditNote->balance_credit;
+        $tableCreditNote->balance_credit=$creditAmount-$total_amount;
+        $tableCreditNote->save();
+        for($i=0;$i<count($purchase_order_id);$i++){
+            $tablePurchaseOrder=PurchaseOrder::find($purchase_order_id[$i]);
+            $orderAmount=$tablePurchaseOrder->outstanding_amount;
+            $tablePurchaseOrder->outstanding_amount=$orderAmount-$total_amount;
+            $tablePurchaseOrder->status=5;
+            $tablePurchaseOrder->save();
+        }
     }
 }
