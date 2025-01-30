@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\frontEnd\salesFinance;
 
+
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
@@ -65,6 +67,18 @@ class LeadController extends Controller
     public function store(Request $request)
     {
         // dd($request);
+        $validator = Validator::make($request->all(), [
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('customers', 'email')->ignore($request->customer_id),
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         try {
 
             $website = $request->input('website');
@@ -335,9 +349,16 @@ class LeadController extends Controller
 
     public function task_list()
     {
-        $page = "Leads";
-        $lead_tasks = LeadTask::getLeadTasks(0);
-        return view('frontEnd.salesAndFinance.lead.lead_task', compact('page', 'lead_tasks'));
+        $data['page'] = "Leads";
+        $data['lead_tasks'] = LeadTask::getLeadTasks(0);
+        $data['allLead'] = Lead::getAllLeadCount(Auth::user()->home_id);
+        $data['myLeads'] = Lead::getLeadByUser(Auth::user()->id, Auth::user()->home_id);
+        $data['unAssignLead'] = Lead::getUnassignedCount(Auth::user()->home_id);
+        $data['actionedLead'] =   Lead::getActionedLead(Auth::user()->home_id);
+        $data['rejectLead'] = Lead::getRejectedCount(Auth::user()->home_id);
+        $data['authorizedLead'] = Lead::getAuthorizationCount(Auth::user()->home_id);
+        $data['convertedLead'] = Customer::getConvertedCustomersCount(Auth::user()->home_id);
+        return view('frontEnd.salesAndFinance.lead.lead_task', $data);
     }
 
     public function lead_task_list_delete($id)
