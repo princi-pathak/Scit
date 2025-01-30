@@ -2,6 +2,7 @@
 
 
 
+
 <style>
     .maimTable.draftTable .dataTables_wrapper .dataTables_length, .maimTable.draftTable .dataTables_info, .maimTable.draftTable .paging_simple_numbers {
     display: none;
@@ -34,8 +35,8 @@ tfoot.draftFoot tr th {
                 <div class="maimTable draftTable">
                     <div class="printExpt">
                         <div class="prntExpbtn">
-                            <a href="#!">Print</a>
-                            <a href="#!">Export</a>
+                            <a href="#!" >Print</a>
+                            <a href="#!" >Export</a>
                         </div>
                         <div class="searchFilter">
                             <a href="#!" onclick="hideShowDiv()" class="hidebtn">Show Search Filter</a>
@@ -217,7 +218,7 @@ tfoot.draftFoot tr th {
                         </div>
                     </div> -->
                     <div class="productDetailTable pt-3">
-                        <table id="containerA" class="table mb-0" cellspacing="0" width="100%">
+                        <table id="" class="table mb-0" cellspacing="0" width="100%">
                             <thead class="table-light">
                                 <tr>
                                     <td></td>

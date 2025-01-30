@@ -568,15 +568,15 @@ CKEDITOR.replace('internal_notes', editor_config );
             CKEDITOR.instances[instance].updateElement();
         }
         var emailErr=$("#creditemailErr").text();
-        // $('.CreditNotescheckError').each(function() {
-        //     if ($(this).val() === '' || $(this).val() == null) {
-        //         $(this).css('border','1px solid red');
-        //         $(this).focus();
-        //         return false;
-        //     } else {
-        //         $(this).css('border','');
-        //     }
-        // });
+        $('.CreditNotescheckError').each(function() {
+            if ($(this).val() === '' || $(this).val() == null) {
+                $(this).css('border','1px solid red');
+                $(this).focus();
+                return false;
+            } else {
+                $(this).css('border','');
+            }
+        });
         // var data=new FormData($("#credit_form")[0]);
         // console.log(data);return false;
         if(emailErr.length >0){

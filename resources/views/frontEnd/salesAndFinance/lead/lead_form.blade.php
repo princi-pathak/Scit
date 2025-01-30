@@ -101,7 +101,7 @@ if (isset($lead)) {
 
                                         <!-- Start of Next 30 days Model -->
                                         <div class="modal fade" id="next30daysModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
+                                            <div class="modal-dialog modal-lg" id="printableDiv">
                                                 <div class="modal-content add_Customer">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title fs-5" id="staticBackdropLabel">Next 30 days</h5>
@@ -109,7 +109,7 @@ if (isset($lead)) {
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="pageTitleBtn p-0">
-                                                            <button type="button" class="profileDrop" id="addNotesType">Print</button>
+                                                            <button type="button" class="profileDrop" id="printButton">Print</button>
                                                         </div>
                                                         <div class="productDetailTable mt-3">
                                                             <table class="table mb-0">
@@ -122,92 +122,6 @@ if (isset($lead)) {
                                                                     </tr>
                                                                 </thead>
                                                             </table>
-                                                            <!-- <table class="table mb-0">
-                                                                <thead class="table-light">
-                                                                    <tr>
-                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
-                                                                        <th>Appoinments:1</th>
-                                                                        <th colspan="2"></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>1 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <table class="table mb-0">
-                                                                <thead class="table-light">
-                                                                    <tr>
-                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
-                                                                        <th>Appoinments:1</th>
-                                                                        <th colspan="2"></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>1 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <table class="table mb-0">
-                                                                <thead class="table-light">
-                                                                    <tr>
-                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
-                                                                        <th>Appoinments:1</th>
-                                                                        <th colspan="2"></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>1 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <table class="table mb-0">
-                                                                <thead class="table-light">
-                                                                    <tr>
-                                                                        <th style="width: 192px;">Saturday, 07/01/2025 </th>
-                                                                        <th>Appoinments:4</th>
-                                                                        <th colspan="2"></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>1 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">Poseidon House, 33 Walson Awanue LL297UY</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>2 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>3 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>4 John</td>
-                                                                        <td>Titin</td>
-                                                                        <td style="width: 260px;">UK 0022345</td>
-                                                                        <td>12:14 Pm</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table> -->
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer customer_Form_Popup">
@@ -219,7 +133,6 @@ if (isset($lead)) {
                                             </div>
                                         </div>
                                         <!-- End of Next 30 days Model -->
-
                                     </div>
                                 </div>
                             </div>
@@ -227,29 +140,31 @@ if (isset($lead)) {
                                 <div class="formDtail">
                                     <h4 class="contTitle">Data Fields</h4>
                                     <div class="mb-3 row">
-                                        <label for="inputName" class="col-sm-3 col-form-label">Full Name *</label>
+                                        <label for="inputName" class="col-sm-3 col-form-label">Full Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control editInput" name="name" id="inputName" placeholder="Full Name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}" required>
                                             <span id="fullNameError" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputEmail" class="col-sm-3 col-form-label">Company Name</label>
+                                        <label for="inputEmail" class="col-sm-3 col-form-label">Company Name <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control editInput" name="company_name" id="inputcompany" placeholder="Company Name" value="{{ (isset($lead->name)) ? $lead->name : '' }}">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputMobile" class="col-sm-3 col-form-label">Email Address *</label>
+                                        <label for="inputMobile" class="col-sm-3 col-form-label">Email Address <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" name="email" class="form-control editInput" id="inputEmail" placeholder="Email Address" value="{{ (isset($lead->email)) ? $lead->email : '' }}" required>
-                                            <span id="emailError" class="error"></span>
+                                            @error('email')
+                                            <span class="text-danger editInput">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label for="inputEmail" class="col-sm-3 col-form-label">Telephone *</label>
+                                        <label for="inputEmail" class="col-sm-3 col-form-label">Telephone <span class="radStar">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="telephone" class="form-control editInput" id="inputTelephone" placeholder="Telephone " value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" required>
+                                            <input type="text" name="telephone" class="form-control editInput" oninput="this.value = this.value.replace(/\s/g, '').replace(/[^0-9]/g, '');"   id="inputTelephone" placeholder="Telephone " value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" required>
                                             <span id="phoneError" class="error"></span>
                                         </div>
                                     </div>
@@ -482,13 +397,15 @@ if (isset($lead)) {
                                                                 <div class="mb-3 row">
                                                                     <label for="inputName" class="col-sm-3 col-form-label">Contact Name</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="canatact_name" name="canatact_name" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}" placeholder="Enter name">
+                                                                        <input type="hidden" id="hiddenTaskContact" value="{{ (isset($lead->contact_name)) ? $lead->contact_name : '' }}">
+                                                                        <input type="text" class="form-control editInput" id="canatact_name" name="contact_name" placeholder="Enter name">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
                                                                     <label for="inputName" class="col-sm-3 col-form-label">Contact Phone</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="phone_num" name="phone_num" value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}" placeholder="Enter email">
+                                                                        <input type="hidden" id="hiddenTaskPhone" value="{{ (isset($lead->telephone)) ? $lead->telephone : '' }}">
+                                                                        <input type="text" class="form-control editInput" id="phone_num" name="contact_phone"  placeholder="Enter email">
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
@@ -558,14 +475,18 @@ if (isset($lead)) {
                                                         @if(isset($lead_task_open))
                                                         @if( !$lead_task_open->isEmpty() )
                                                         @foreach($lead_task_open as $value)
-
+                                                        @php
+                                                                $create_date = \Carbon\Carbon::parse($value->create_date)->format('d/m/Y');
+                                                                $create_time = \Carbon\Carbon::parse($value->create_time)->format('H:i');
+                                                                $combinedDateTime = \Carbon\Carbon::createFromFormat('d/m/Y H:i', "$create_date $create_time");
+                                                            @endphp
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y m:i')}}</td>
+                                                            <td>{{ $combinedDateTime->format('d/m/Y H:i')  }}</td>
                                                             <td>{{ $value->name }}</td>
                                                             <td>{{ $value->task_type_title}}</td>
                                                             <td>{{ $value->title}}</td>
-                                                            <td>{{$lead->contact_name}}</td>
+                                                            <td>{{ $value->contact_name ?  $value->contact_name : $lead->contact_name }}</td>
                                                             <td>{{$lead->telephone}}</td>
                                                             <td> @if( $value->notification === 1 || $value->email_notify === 1 || $value->sms_notify === 1)
                                                                 Yes, on<br>
@@ -583,7 +504,7 @@ if (isset($lead)) {
                                                                     <div class="dropdown-menu fade-up m-0">
                                                                         <a href="javascript:void(0)" onclick="mark_as_complete_task('{{ $value->id }}', '{{$lead->id}}', '{{$value->lead_ref}}')" class="dropdown-item">Mark As Completed</a>
                                                                         <hr class="dropdown-divider">
-                                                                        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
+                                                                        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-contact_name="{{ $value->contact_name ? $value->contact_name : $lead->contact_name }}" data-contact_phone="{{ $value->contact_phone ? $value->contact_phone : $lead->telephone }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
                                                                         <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
                                                                     </div>
                                                                 </div>
@@ -603,13 +524,18 @@ if (isset($lead)) {
                                                         @if(isset($lead_task_open))
                                                         @if( !$lead_task_close->isEmpty())
                                                         @foreach($lead_task_close as $value)
+                                                        @php
+                                                                $create_date = \Carbon\Carbon::parse($value->create_date)->format('d/m/Y');
+                                                                $create_time = \Carbon\Carbon::parse($value->create_time)->format('H:i');
+                                                                $combinedDateTime = \Carbon\Carbon::createFromFormat('d/m/Y H:i', "$create_date $create_time");
+                                                            @endphp
                                                         <tr>
                                                             <td>{{ $loop->iteration}}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y m:i')}}</td>
+                                                            <td>{{$combinedDateTime->format('d/m/Y H:i') }}</td>
                                                             <td>{{ $value->name }}</td>
                                                             <td>{{ $value->task_type_title}}</td>
                                                             <td>{{ $value->title}}</td>
-                                                            <td>{{$lead->contact_name}}</td>
+                                                            <td>{{ $value->contact_name ?  $value->contact_name : $lead->contact_name }}</td>
                                                             <td>{{$lead->telephone}}</td>
                                                             <td> @if( $value->notification === 1 || $value->email_notify === 1 || $value->sms_notify === 1)
                                                                 Yes, on<br>
@@ -623,7 +549,7 @@ if (isset($lead)) {
                                                                         Action
                                                                     </a>
                                                                     <div class="dropdown-menu fade-up m-0">
-                                                                        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
+                                                                        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#tasksModel" data-id="{{ $value->id }}" data-user_id="{{ $value->user_id }}" data-title="{{ $value->title }}" data-contact_name="{{ $value->contact_name ? $value->contact_name : $lead->contact_name }}" data-contact_phone="{{ $value->contact_phone ? $value->contact_phone : $lead->telephone }}" data-task_type_id="{{ $value->lead_task_type_id }}" data-create_date="{{ $value->create_date }}" data-create_time="{{ $value->create_time}}" data-notify_date="{{ $value->notify_date }}" data-notify_time="{{ $value->notify_time }}" data-notes="{{ $value->notes }}" data-notification="{{ $value->notification }}" data-email_notify="{{ $value->email_notify }}" data-sms_notify="{{ $value->sms_notify }}">Edit Task</a>
                                                                         <a href="{{ url('/leads/lead_task/delete',['task' => $value->id, 'lead_id' => $lead->id]) }}" class="dropdown-item">Delete Task</a>
                                                                     </div>
                                                                 </div>

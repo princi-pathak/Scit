@@ -16,7 +16,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <script type="importmap">
+    {
+        "imports": {
+            "my-module": "/path/to/my-module.js"
+        }
+    }
+    </script>
     <style>
         table.dataTable td.select-checkbox:before {
             display: none;
