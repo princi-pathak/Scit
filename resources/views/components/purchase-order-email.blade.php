@@ -171,7 +171,7 @@ display: block;
                             <form id="{{ $emailformId }}" class="customerForm">
                                 @csrf
                                 <input type="hidden" name="id" id="{{ $emailId }}">
-                                <input type="hidden" name="{{ $emailformId }}" id="email_po_id">
+                                <input type="hidden" name="{{ $foreignId }}" id="email_{{ $foreignId }}">
 
                                 <div class="mb-2 row">
                                     <label for="inputProject" class="col-sm-3 col-form-label">To<span class="radStar ">*</span></label>
@@ -286,7 +286,7 @@ CKEDITOR.replace('{{ $body }}', editor_config );
                         $('#message_emailModal').addClass('success-message').text(response.message).show();
                         setTimeout(function() {
                             $('#message_emailModal').removeClass('success-message').text('').hide();
-                            getAllPurchaseInvices(response.data);
+                            getAllEmails(response.data);
                         }, 3000);
                     }else{
                         // alert("Something went wrong");
