@@ -415,7 +415,7 @@ ul#projectList {
         if(confirm("Are you sure to delete?")){
             // console.log(ids);
             var token='<?php echo csrf_token();?>'
-            var model='PurchaseOrder';
+            var model='CreditNote';
             $.ajax({
                 type: "POST",
                 url: "{{url('/bulk_delete')}}",
@@ -1163,6 +1163,9 @@ function cancelCreditFunction(id,credit_ref){
             }
         });
     }
+}
+function getAllAllocates(data){
+    location.reload();
 }
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
