@@ -416,6 +416,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/save_reminder', 'save_reminder');
 		Route::post('/purchaseOrderEmailSave', 'purchaseOrderEmailSave');
 		Route::get('/preview', 'preview');
+		Route::get('/purchase-orders-search','purchase_orders_search');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function(){

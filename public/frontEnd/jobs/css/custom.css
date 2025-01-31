@@ -1705,7 +1705,7 @@ form .page .btns button.next {
 
 #divTohide {
   transition:  0.5s ease-in-out;
-  overflow: hidden; 
+  /* overflow: hidden;  */
 }
 #divTohide {
   height: 250px;

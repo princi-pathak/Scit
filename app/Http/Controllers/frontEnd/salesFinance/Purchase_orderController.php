@@ -162,6 +162,7 @@ class Purchase_orderController extends Controller
             }
             $requestData['home_id'] = $home_id;
             $requestData['user_id'] = $user_id;
+            $requestData['delivery_status'] = 0;
             
             // echo "<pre>";print_r($requestData);die;
             $purchaseOrder=PurchaseOrder::savePurchaseOrder($requestData);
@@ -525,7 +526,19 @@ class Purchase_orderController extends Controller
         $selectedcreatedById=$request->selectedcreatedById;
         $selectedProjectId=$request->selectedProjectId;
         $home_id=Auth::user()->home_id;
-        $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null,'status'=>$status]);
+        $purchaseSearchstatus=$request->purchaseSearchstatus;
+        $fields = $request->except('_token');
+        $hasValue = collect($fields)->some(fn($value) => !empty($value));
+        if(!$hasValue){
+            return response()->json(['success'=>false,'message'=>'Please fill in at least one field before searching.','data'=>array()]);
+        }
+        if($status == '' && $purchaseSearchstatus==''){
+            $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null]);
+        }else if(!empty($request->purchaseSearchstatus)){
+            $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->whereIn('status',$request->purchaseSearchstatus)->whereNull('deleted_at');
+        }else{
+            $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->where(['deleted_at'=>null,'status'=>$status]);
+        }
         // echo "<pre>";print_r($query->get());die;
         if ($request->filled('po_ref')) {
             $query->where('purchase_order_ref', $po_ref);
@@ -555,6 +568,9 @@ class Purchase_orderController extends Controller
         }
         if ($request->filled('project')) {
             $query->where('project_id', $selectedProjectId);
+        }
+        if ($request->filled('delivery_status')) {
+            $query->where('delivery_status', $delivery_status);
         }
         if ($request->filled('keywords')) {
             $query->where(function ($q) use ($keywords) {
@@ -595,7 +611,39 @@ class Purchase_orderController extends Controller
             $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
             $all_TotalAmount=$all_TotalAmount+$total_amount;
             $outstandingAmountTotal=$outstandingAmountTotal+$val->outstanding_amount;
-            
+
+            if($list_status == ''){
+                $status = $val->status;
+                switch ($status) {
+                case 1:
+                    $list_status= "Draft";
+                    break;
+                case 2:
+                    $list_status= "Awaiting Approval Purchase Oreders";
+                    break;
+                case 3:
+                    $list_status= "Approved";
+                    break;
+                case 4:
+                    $list_status= "Actioned";
+                    break;
+                case 5:
+                    $list_status= "Paid";
+                    break;
+                case 6:
+                    $list_status= "Cancelled";
+                    break;
+                case 7:
+                    $list_status= "Invoice Received";
+                    break;
+                case 8:
+                    $list_status= "Rejected";
+                    break;
+
+                default:
+                $list_status= "";
+                }
+            }
             $array_data .= '<tr>
                         <td><input type="checkbox" class="delete_checkbox" value="' . $val->id . '"></td>
                         <td>' . ++$key . '</td>
@@ -673,6 +721,7 @@ class Purchase_orderController extends Controller
                         }
                         
                     $array_data.='</tr>';
+                    $list_status='';
         }
 
         return response()->json(['data' => $array_data,'all_subTotalAmount'=>$all_subTotalAmount,'all_vatTotalAmount'=>$all_vatTotalAmount,'all_TotalAmount'=>$all_TotalAmount,'outstandingAmountTotal'=>$outstandingAmountTotal]);
@@ -1058,5 +1107,20 @@ class Purchase_orderController extends Controller
         }catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function purchase_orders_search(Request $request){
+        $home_id=Auth::user()->home_id;
+        $data['list']=array();
+        $data['draftCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>1])->count();
+        $data['awaitingApprovalCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>2])->count();
+        $data['approvedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null])->whereIn('status',[3,9])->count();
+        $data['rejectedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>8])->count();
+        $data['actionedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>4])->count();
+        $data['paidCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>5])->count();
+        $data['customer_data'] = Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
+        $data['users'] = User::where('home_id', $home_id)->select('id', 'name','email','phone_no')->where('is_deleted', 0)->get();
+        $data['paymentTypeList']=Payment_type::getActivePaymentType($home_id);
+        // echo "<pre>";print_r($data['list']);die;
+        return view('frontEnd.salesAndFinance.purchase_order.search_purchaseOrder',$data);
     }
 }
