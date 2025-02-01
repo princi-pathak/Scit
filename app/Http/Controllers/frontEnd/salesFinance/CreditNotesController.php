@@ -204,8 +204,10 @@ class CreditNotesController extends Controller
             $total_amount=0;
             $vat_amount=0;
             $creditProductId=0;
+            $product_id=0;
             foreach($val->creditNoteProducts as $product){
                 $creditProductId=$product->id;
+                $product_id=$product->product_id;
                 $qty=$product->qty*$product->price;
                 $sub_total_amount=$sub_total_amount+$qty;
                 $vat=$qty*$product->vat/100;
@@ -248,7 +250,7 @@ class CreditNotesController extends Controller
                                             <hr class="dropdown-divider">
                                             <a href="javascript:void(0)" onclick="openEmailModal('.$val->id.','."'$val->credit_ref'".','."'$supplier_email'".','."'$supplier_name'".')" class="dropdown-item">Email</a>
                                             <hr class="dropdown-divider">
-                                            <a href="javascript:void(0)" onclick="openAllocateModal('.$val->id.','."'$val->credit_ref'".','.$val->supplier_id.','."'$supplier_name'".','.$val->balance_credit.')" class="dropdown-item">Allocate</a>
+                                            <a href="javascript:void(0)" onclick="openAllocateModal('.$val->id.','."'$val->credit_ref'".','.$val->supplier_id.','."'$supplier_name'".','.$val->balance_credit.','.$product_id.')" class="dropdown-item">Allocate</a>
                                             <hr class="dropdown-divider">
                                             <a href="javascript:void(0)" onclick="cancelCreditFunction('.$val->id.','."'$val->credit_ref'".')" class="dropdown-item">Cancel Credit Note</a>
                                             <hr class="dropdown-divider">
@@ -419,10 +421,11 @@ class CreditNotesController extends Controller
                     'po_id'=>$purchase_order_id[$i],
                     'credit_id'=>$credit_id,
                     'amount_paid'=>$amount[$i],
+                    'product_id'=>$request->product_id,
                 ];
                 try{
                     $saveData=CreditNoteAllocate::saveCreditAllocate($data);
-                    $this->update_outstandingAmount($total_amount,$purchase_order_id,$credit_id);
+                    // $this->update_outstandingAmount($total_amount,$purchase_order_id,$credit_id);
                 }catch (\Exception $e) {
                     return response()->json(['error' => $e->getMessage()], 500);
                 }

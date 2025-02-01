@@ -55,35 +55,35 @@
   ),
   'spatie/laravel-ignition' => 
   array (
-    'aliases' => 
-    array (
-      'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
-    ),
     'providers' => 
     array (
       0 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
     ),
+    'aliases' => 
+    array (
+      'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
+    ),
   ),
   'stevebauman/location' => 
   array (
-    'aliases' => 
-    array (
-      'Location' => 'Stevebauman\\Location\\Facades\\Location',
-    ),
     'providers' => 
     array (
       0 => 'Stevebauman\\Location\\LocationServiceProvider',
     ),
+    'aliases' => 
+    array (
+      'Location' => 'Stevebauman\\Location\\Facades\\Location',
+    ),
   ),
   'torann/geoip' => 
   array (
-    'aliases' => 
-    array (
-      'GeoIP' => 'Torann\\GeoIP\\Facades\\GeoIP',
-    ),
     'providers' => 
     array (
       0 => 'Torann\\GeoIP\\GeoIPServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'GeoIP' => 'Torann\\GeoIP\\Facades\\GeoIP',
     ),
   ),
 );

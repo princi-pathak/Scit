@@ -276,8 +276,10 @@ ul#projectList {
                                     $total_amount=0;
                                     $vat_amount=0;
                                     $creditProductId=0;
+                                    $product_id=0;
                                     foreach($val->creditNoteProducts as $product){
                                         $creditProductId=$product->id;
+                                        $product_id=$product->product_id;
                                         $qty=$product->qty*$product->price;
                                         $sub_total_amount=$sub_total_amount+$qty;
                                         $vat=$qty*$product->vat/100;
@@ -318,7 +320,7 @@ ul#projectList {
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->credit_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="javascript:void(0)" onclick="openAllocateModal({{$val->id}},'{{$val->credit_ref}}',{{$val->supplier_id}},'{{$val->suppliers->name}}',{{$val->balance_credit}})" class="dropdown-item">Allocate</a>
+                                                    <a href="javascript:void(0)" onclick="openAllocateModal({{$val->id}},'{{$val->credit_ref}}',{{$val->supplier_id}},'{{$val->suppliers->name}}',{{$val->balance_credit}},{{$product_id}})" class="dropdown-item">Allocate</a>
                                                     <hr class="dropdown-divider">
                                                     <a href="javascript:void(0)" onclick="cancelCreditFunction({{$val->id}},'{{$val->credit_ref}}')" class="dropdown-item">Cancel Credit Note</a>
                                                     <hr class="dropdown-divider">
@@ -1047,12 +1049,13 @@ $('.delete_checkbox').on('click', function() {
     });
 </script>
 <script>
-    function openAllocateModal(id,credit_ref,supplier_id,supplier_name,outstandingAmount){
+    function openAllocateModal(id,credit_ref,supplier_id,supplier_name,outstandingAmount,product_id){
         $("#allocate_modalTitle").text('Credit Note');
         $("#allocate_sub_title").text('Allocate Credit Note - '+credit_ref);
         $("#allocate_fieldset_title").text(supplier_name);
         $("#allocate_credit_id").val(id);
         $("#allocate_supplier_id").val(supplier_id);
+        $("#allocate_product_id").val(product_id);
         getAllSupplierPurchaseOrder(supplier_id,outstandingAmount);
         $("#allocateModal").modal('show');
     }
@@ -1125,9 +1128,9 @@ $('.delete_checkbox').on('click', function() {
     }
 </script>
 <script>
-    flatpickr(".dateField", {
-    dateFormat: "d/m/Y",
-}); 
+//     flatpickr(".dateField", {
+//     dateFormat: "d/m/Y",
+// }); 
 function cancelCreditFunction(id,credit_ref){
     if(confirm("Are you sure you want to cancel credit note '"+credit_ref +"'?")){
         $.ajax({

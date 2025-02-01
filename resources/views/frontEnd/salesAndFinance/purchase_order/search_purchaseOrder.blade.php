@@ -126,7 +126,7 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>Draft Purchase Orders</h3>
+                    <h3>Search Purchase Orders</h3>
                 </div>
             </div>
             <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -368,12 +368,11 @@
                         <tbody id="search_data">
                             
                         </tbody>
-                        @if(count($list)>0)
-                        <tr class="calcualtionShowHide">
+                        <tr class="calcualtionShowHide" style="display:none">
                             <th colspan="2"> <label class="col-form-label p-0">Page Sub Total:</label></th>
                             <th colspan="12"></th>
                         </tr>
-                        <tr class="calcualtionShowHide">
+                        <tr class="calcualtionShowHide" style="display:none">
                             <td colspan="8"></td>
 
                             <td id="Tablesub_total_amount">£0</td>
@@ -381,7 +380,6 @@
                             <td id="Tabletotal_amount">£0</td>
                             <td id="Tableoutstanding_amount" colspan="8">£0</td>
                         </tr>
-                        @endif
                     </table>
 
                 </div> <!-- End off main Table -->

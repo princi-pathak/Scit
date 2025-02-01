@@ -355,9 +355,11 @@
                             $total_amount = 0;
                             $vat_amount = 0;
                             $purchaseProductId = 0;
+                            $product_id=0;
                             $vat = 0;
                             foreach ($val->purchaseOrderProducts as $product) {
                                 $purchaseProductId = $product->id;
+                                $product_id = $product->product_id;
                                 $qty = $product->qty * $product->price;
                                 $sub_total_amount = $sub_total_amount + $qty;
                                 $vat = $qty * $product->vat / 100;
@@ -438,7 +440,7 @@
                                                 <hr class="dropdown-divider">
                                                 <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
                                                 <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$purchaseProductId}},{{$val->outstanding_amount}})" class="dropdown-item">Record Payment</a>
+                                                <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$product_id}},{{$val->outstanding_amount}})" class="dropdown-item">Record Payment</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$val->outstanding_amount}})" class="dropdown-item">Invoice Received</a>
                                                 <!-- <hr class="dropdown-divider">
@@ -617,7 +619,7 @@
                         <div class="formDtail">
                             <form id="recordPaymentForm" class="customerForm pt-0">
                                 <input type="hidden" name="po_id" id="recordPayment_po_id">
-                                <input type="hidden" name="recordPayment_ppurchaseProduct" id="recordPayment_ppurchaseProduct">
+                                <input type="hidden" name="product_id" id="recordPayment_ppurchaseProduct_id">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -1674,10 +1676,10 @@
 
     }
 
-    function openRecordPaymentModal(id, po_ref, supplier_name, total_amount, date, purchase_productId, outstandingAmount) {
+    function openRecordPaymentModal(id, po_ref, supplier_name, total_amount, date, product_id, outstandingAmount) {
         $("#purchaseOrderRecordDate").text(po_ref + ' On ' + date);
         $("#recordPayment_po_id").val(id);
-        $("#recordPayment_ppurchaseProduct").val(purchase_productId);
+        $("#recordPayment_ppurchaseProduct_id").val(product_id);
         $("#record_supplierName").text(supplier_name);
         $("#record_TotalAmount").text('£' + total_amount.toFixed(2));
         $("#record_OutstandingAmount").text('£' + outstandingAmount.toFixed(2));
@@ -1735,7 +1737,8 @@
             cache: false,
             processData: false,
             success: function(response) {
-                // console.log(response);return false;
+                console.log(response);
+                // return false;
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);

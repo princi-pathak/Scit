@@ -33,6 +33,7 @@
                                 <input type="hidden" name="{{ $foreignId }}" id="allocate_{{ $foreignId }}">
                                 <input type="hidden" name="{{ $allocateId }}" id="allocate_{{ $allocateId }}">
                                 <input type="hidden" name="supplier_id" id="allocate_supplier_id">
+                                <input type="hidden" name="product_id" id="allocate_product_id">
                                 @csrf
                                 <div class="col-sm-12">
                                     <div class="productDetailTable newJobForm mt-4">
@@ -222,7 +223,8 @@
             cache: false,
             processData: false,
             success: function (response) {
-                // console.log(response); return false;
+                console.log(response); 
+                return false;
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $("#email").css('border', '1px solid red');

@@ -605,7 +605,6 @@ class Purchase_orderController extends Controller
                 $vat=$qty*$product->vat/100;
                 $vat_amount=$vat_amount+$vat;
                 $total_amount=$total_amount+$vat+$qty;
-                $outstandingAmount=$product->outstanding_amount;
             }
             $all_subTotalAmount=$all_subTotalAmount+$sub_total_amount;
             $all_vatTotalAmount=$all_vatTotalAmount+$vat_amount;
@@ -909,10 +908,10 @@ class Purchase_orderController extends Controller
         $data['home_id']=Auth::user()->home_id;
         $data['loginUserId']=Auth::user()->id;
         $data['loginUserName']=Auth::user()->name;
-        $recordPayment_ppurchaseProduct=$request->recordPayment_ppurchaseProduct;
         try{
             $orderRecord=PurchaseOrderRecordPayment::savePurchaseOrderRecordPayment($data);
-            $itt=PurchaseOrderProduct::find($recordPayment_ppurchaseProduct)->update(['outstanding_amount' => $request->record_amount_paid]);
+            PurchaseOrder::find($request->po_id)->update(['outstanding_amount' => $request->record_amount_paid]);
+            // $itt=PurchaseOrderProduct::find($recordPayment_ppurchaseProduct)->update(['outstanding_amount' => $request->record_amount_paid]);
             return response()->json(['success'=>true,'message'=>'The Record Payment has been saved successfully.','data'=>$orderRecord]);
         }catch (\Exception $e) {
             Log::error('Error: ' . $e->getMessage());
@@ -1122,5 +1121,78 @@ class Purchase_orderController extends Controller
         $data['paymentTypeList']=Payment_type::getActivePaymentType($home_id);
         // echo "<pre>";print_r($data['list']);die;
         return view('frontEnd.salesAndFinance.purchase_order.search_purchaseOrder',$data);
+    }
+    public function purchase_order_statements(Request $request){
+        $home_id=Auth::user()->home_id;
+        $data['list']=array();
+        $data['draftCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>1])->count();
+        $data['awaitingApprovalCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>2])->count();
+        $data['approvedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null])->whereIn('status',[3,9])->count();
+        $data['rejectedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>8])->count();
+        $data['actionedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>4])->count();
+        $data['paidCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>5])->count();
+        // echo "<pre>";print_r($data['list']);die;
+        return view('frontEnd.salesAndFinance.purchase_order.purchaseOrderStatement',$data);
+    }
+    public function searchPurchaseOrdersStatements(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $selectedsupplierId=$request->selectedsupplierId;
+        $po_startDate = date('Y-m-d', strtotime(str_replace('/', '-', $request->po_startDate)));
+        $po_endDate=date('Y-m-d', strtotime(str_replace('/', '-', $request->po_endDate)));
+        $query = PurchaseOrder::with('suppliers','purchaseOrderProducts')->whereNull('deleted_at');
+        if ($request->filled('supplier')) {
+            $query->where('supplier_id', $selectedsupplierId);
+        }
+        if ($request->filled('po_startDate') && $request->filled('po_endDate')) {
+            $query->whereBetween('purchase_date', [$po_startDate, $po_endDate]);
+        }
+        $search_data = $query->where('user_id',Auth::user()->id)->get();
+        // echo "<pre>";print_r($search_data);die;
+        return $search_data;
+        $data_array='';
+        $grandNetAmount=0;
+        $grandvat=0;
+        $grandTotal=0;
+        $grandPaidAmount=0;
+        $grandGrossAmount=0;
+        foreach($search_data as $key=>$val){
+            $net_amount=0;
+            $vat_amount=0;
+            $total=0;
+            $paid=0;
+            $gross=0;
+            foreach($val->purchaseOrderProducts as $product){
+                $qty=$product->qty*$product->price;
+                $net_amount=$net_amount+$qty;
+                $vat=$qty*$product->vat/100;
+                $vat_amount=$vat_amount+$vat;
+                $total=$total+$vat+$qty;
+                $paid=$paid+$val->outstanding_amount;
+                $gross=$total-$paid;
+            }
+            $grandNetAmount=$grandNetAmount+$net_amount;
+            $grandvat=$grandvat+$vat_amount;
+            $grandTotal=$grandTotal+$total;
+            $grandPaidAmount=$grandPaidAmount+$paid;
+            $grandGrossAmount=$grandGrossAmount+$gross;
+            $paid_amount=$paid ?? 0;
+            if($request->type == 2 && $paid_amount ==0){
+
+            }else{
+                $data_array.='<tr>
+                        <td>'. date('m/d/Y',strtotime($val->purchase_date)).'</td>
+                        <td>'.$val->reference.'</td>
+                        <td></td>
+                        <td>'.$val->user_address.'</td>
+                        <td>£'.$net_amount.'</td>
+                        <td>£'.$vat_amount.'</td>
+                        <td>£'.$total.'</td>
+                        <td>£'.$paid_amount.'</td>
+                        <td>£'.$gross.'</td>
+                        </tr>';
+            }
+            
+        }
+        return response()->json(['data' => $data_array,'grandNetAmount'=>$grandNetAmount,'all_vatTotalAmount'=>$grandvat,'all_TotalAmount'=>$grandTotal,'outstandingAmountTotal'=>$grandPaidAmount,'grandGrossAmount'=>$grandGrossAmount]);
     }
 }
