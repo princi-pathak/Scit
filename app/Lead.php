@@ -23,6 +23,12 @@ class Lead extends Model
         'status',
         'prefer_date',
         'prefer_time',
+        'converted_to',
+        'notity',
+        'notifiy_user_id',
+        'notifocation',
+        'sms',
+        'email',
     ];
 
     public static function getAllLeadCount($home_id){

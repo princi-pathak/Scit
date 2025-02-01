@@ -1628,39 +1628,62 @@
 
 <div class="modal fade" id="sentToQuoteModal" tabindex="1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel2"> Notify Leads </h1>
+                <h5 class="modal-title fs-5" id="exampleModalLabel2"> Notify Leads </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="lead_reject_type_form_edit">
+                <form id="notify_lead_quote_form">
                     @csrf
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">
-                            <h5>Would you like to notify anyone that this lead <span id="sentQuote"></span> has been converted?</h5>
+                            <h6><strong>Would you like to notify anyone that this lead <span id="sentQuote"></span> has been converted?</strong></h6>
                         </label>
                     </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Notify </label>
-                        <input type="radio" class="form-control editInput" name="title" id="recipient-name">
-                        <input type="radio" class="form-control editInput" name="title" id="recipient-name">
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label"> <strong>Notify</strong></label>
+                        <div class="col-sm-10">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="notity" id="inlineRadio1" value="1" checked="">
+                                <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="notity" id="inlineRadio2" value="0">
+                                <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Notify Who ?</label>
-                        <input type="text" class="form-control editInput" name="title" id="recipient-name">
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label"> <strong>Notify Who ?</strong></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control editInput" name="notifiy_user_id" id="recipient-name">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Status:</label>
-                        <input type="radio" class="form-control editInput" name="Notification" id="recipient-name">
-                        <input type="radio" class="form-control editInput" name="sms" id="recipient-name">
-                        <input type="radio" class="form-control editInput" name="Email" id="recipient-name">
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label"> <strong>Send As <span class="radStar">*</span></strong></label>
+                        <div class="col-sm-10">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="notifocation" id="checkalrt1" value="1">
+                                <label class="form-check-label checkboxtext" for="checkalrt1">Notification</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="sms" id="checkalrt2" value="1">
+                                <label class="form-check-label checkboxtext" for="checkalrt2">SMS</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="email" id="checkalrt3" value="1">
+                                <label class="form-check-label checkboxtext" for="checkalrt3">Email</label>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="lead_reject" class="profileDrop">Save</button>
+                <button type="button" id="save_lead_convert_quote" class="profileDrop">Save</button>
             </div>
         </div>
     </div>
@@ -3245,6 +3268,9 @@
             $('#selectAll').prop('checked', false);
         }
     });
+
+    const saveLeadConvertQuote =  '{{ route("lead.ajax.saveLeadConvertQuote") }}';
+
 </script>
 <script type="module">
     document.getElementById('exportCsv').addEventListener('click', function() {
@@ -3286,3 +3312,4 @@
 </script>
 <!-- end here -->
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
+<script type="text/javascript" src="{{ url('public/js/salesFinance/leads/customLeads.js') }}"></script>

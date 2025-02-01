@@ -90,6 +90,8 @@ class Customer extends Model
         ->orderBy('leads.created_at', 'desc')
         ->where('leads.home_id', $home_id)
         ->whereNull('leads.deleted_at');
+
+        // dd($query->get());
    
         if ($lastSegment ===  "leads") {
             return $query->whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->get();
@@ -108,7 +110,7 @@ class Customer extends Model
                 ->join('leads', 'leads.customer_id', '=','customers.id')
                 ->join('lead_tasks', 'lead_tasks.lead_ref', '=', 'leads.lead_ref')
                 ->join('lead_statuses', 'lead_statuses.id', 'leads.status')
-                ->select('leads.lead_ref', 'customers.contact_name', 'customers.name', 'customers.email', 'customers.telephone', 'customers.mobile', 'leads.assign_to', 'lead_statuses.title as status', 'lead_statuses.id as status_id','customers.website','customers.address', 'customers.city', 'customers.country', 'customers.postal_code', 'leads.id as id', 'Customers.id as customer_id', 'leads.authorization_status')
+                ->select('leads.lead_ref', 'customers.contact_name', 'customers.name', 'customers.email as emails', 'customers.telephone', 'customers.mobile', 'leads.assign_to', 'lead_statuses.title as status', 'lead_statuses.id as status_id','customers.website','customers.address', 'customers.city', 'customers.country', 'customers.postal_code', 'leads.id as id', 'Customers.id as customer_id', 'leads.authorization_status')
                 ->orderBy('leads.created_at', 'desc')
                 ->where('leads.home_id', $home_id)
                 ->distinct()
@@ -123,7 +125,7 @@ class Customer extends Model
         ->where('leads.id', $id)
         ->first();
     }
-    public static function get_customer_list_Attribute($home_id,$list_mode){
+    public static function get_customer_list_Attribute($home_id, $list_mode){
         $status = ($list_mode == 'ACTIVE') ? 1 : 0;
         return Customer::where(['is_converted' => '1', 'status' => $status,'home_id'=>$home_id,'deleted_at'=>null])->get();
     }

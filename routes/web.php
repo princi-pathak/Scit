@@ -539,9 +539,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('lead/getUserList', 'getUserList')->name('lead.ajax.getUserList');
 		Route::post('lead/getLeadDataWithRecurrence', 'getLeadDataWithRecurrence')->name('lead.ajax.getLeadDataWithRecurrence');
 		Route::get('lead/get30DaysLead', 'get30DaysLead')->name('lead.ajax.get30DaysLead');
+		Route::post('lead/saveLeadConvertQuote', 'saveLeadConvertQuote')->name('lead.ajax.saveLeadConvertQuote');
 
 
 		Route::get('lead/searchUser', 'searchUser')->name('lead.ajax.searchUser');
+
+		
 
 	});
 

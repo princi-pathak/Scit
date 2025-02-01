@@ -45,6 +45,7 @@ class LeadController extends Controller
         $data['users'] = User::getHomeUsers(Auth::user()->home_id);
         $data['leadTask'] = LeadTaskType::getLeadTaskType();
         $data['customers'] = Customer::getCustomerWithLeads(end($segments), Auth::user()->home_id);
+        dd($data['customers']);
         $data['leadRejectTypes'] = LeadRejectType::getLeadRejectType();
         $data['weeks'] = Week::getWeeklist();
         $data['allLead'] = Lead::getAllLeadCount(Auth::user()->home_id);
@@ -119,6 +120,7 @@ class LeadController extends Controller
                 // Create the lead using the customer ID
                 $lead = Lead::updateOrCreate(['id' => $request->lead_id], [
                     'home_id' => Auth::user()->home_id,
+                    'user_id' => Auth::user()->id,
                     'lead_ref' => $lead_refid,
                     'customer_id' => $customer_id,
                     'assign_to' => $request->input('assign_to'),
@@ -126,6 +128,7 @@ class LeadController extends Controller
                     'status' => $request->input('status'),
                     'prefer_date' => $prefer_date,
                     'prefer_time' => $request->input('prefer_time'),
+                            
                 ]);
 
                 if ($lead->wasRecentlyCreated) {
@@ -161,6 +164,7 @@ class LeadController extends Controller
         $lead_task_close =  LeadTask::getLeadTaskTypeUser($lead->lead_ref, 1);
         // dd($lead_task_open);
         $lead_attachment = LeadAttachment::getLeadAttachments($id);
+        // dd($lead);
         return view('frontEnd.salesAndFinance.lead.lead_form', compact('lead', 'users', 'page', 'sources', 'status', 'notes_type', 'lead_notes_data', 'leadTask', 'lead_task_open', 'lead_task_close', 'attachment_type', 'lead_attachment'));
     }
 
@@ -1113,6 +1117,15 @@ class LeadController extends Controller
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data'
         ]);
+    }
+
+    public function saveLeadConvertQuote(Request $request){
+        $data = Lead::saveLeadConvertQuote($request->all(), Auth::user()->home_id);
+        if ($data) {
+            return response()->json(['success' => true, 'data' => $data]);
+        } else {
+            return response()->json(['success' => false, 'data' => 'No Data']);
+        }
     }
 }
 
