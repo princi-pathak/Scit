@@ -6,11 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\LeadNote;
-
+use App\Models\Quote;
+use App\Services\Quotes\QuoteService;
 
 class Lead extends Model
 {
+
+    // protected $quoteService;
     use HasFactory;
+
+    // public function __construct(QuoteService $quoteService)
+    // {
+    //     $this->quoteService = $quoteService;
+    // }
 
     protected $table = 'leads';
 
@@ -23,26 +31,37 @@ class Lead extends Model
         'status',
         'prefer_date',
         'prefer_time',
+        'converted_to',
+        'notity',
+        'notifiy_user_id',
+        'notifocation',
+        'sms',
+        'email',
     ];
 
+
     public static function getAllLeadCount($home_id){
-        return Lead::whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->where('home_id', $home_id)->count();
+        return Lead::whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->where('home_id', $home_id)->whereNull('deleted_at')->count();
     }
 
     public static function getUnassignedCount($home_id){
-        return Lead::where('assign_to', 0)->where('home_id', $home_id)->count();
+        return Lead::where('assign_to', 0)->where('home_id', $home_id)->whereNull('deleted_at')->count();
     }
     
-    public static function getRejectedCount(){
-        return Lead::where('status', '6')->count();
+    public static function getRejectedCount($home_id){
+        return Lead::where('status', '6')->where('home_id', $home_id)->whereNull('deleted_at')->count();
     }
 
     public function notes(){
         return $this->hasMany(LeadNote::class);
     }
 
+    public static function getConvertedCustomersCount($home_id){
+        return Lead::where('home_id', $home_id)->whereIn('converted_to', ['quote','customer'])->whereNull('deleted_at')->count();
+    }
+
     public static function getLeadByUser($user_id, $home_id){
-        return Lead::where('assign_to', $user_id)->where('home_id', $home_id)->whereNotIn('status', [7])->count();
+        return Lead::where('assign_to', $user_id)->where('home_id', $home_id)->whereNotIn('status', [7])->whereNull('deleted_at')->count();
     } 
 
     public static function getAuthorizationCount($home_id){
@@ -67,5 +86,34 @@ class Lead extends Model
         })
         ->distinct()
         ->count();
+    }
+
+    public static function saveLeadConvertQuote($data, $home_id){
+        // dd($data);
+        $result = self::where('id', $data['lead_id'])
+            ->update([ 
+                "converted_to" => 'quote',
+                'notify' => $data['notify'], 
+                'notifiy_user_id' => $data['notifiy_user_id'], 
+                'notifocation' => $data['notifocation'] ?? null, 
+                'sms' => $data['sms'] ?? null,
+                'email' => $data['email'] ?? null
+            ]);
+
+        if($result == true){
+            $lead = Lead::where('id', $data['lead_id'])->first();
+        }
+
+        // dd($lead);
+        $service = new  QuoteService;
+        $quote = $service->generateQuoteRef();
+            return Quote::create([
+                'home_id' => $home_id,
+                'user_id' => $lead->assign_to,
+                'quote_ref' => $quote,
+                'customer_id' => $lead->customer_id,
+                'quota_date' => $lead->prefer_date,
+                'status' => "Draft"
+            ]);
     }
 }
