@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('purchase_order_record_payments', function (Blueprint $table) {
             $table->string('product_id')->after('po_id')->nullable();
+            $table->string('supplier_id')->after('po_id')->nullable();
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('purchase_order_record_payments', function (Blueprint $table) {
             $table->dropColumn('product_id');
+            $table->dropColumn('supplier_id');
         });
     }
 };

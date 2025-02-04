@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::table('credit_note_allocates', function (Blueprint $table) {
             $table->string('product_id')->after('po_id')->nullable();
+            $table->string('supplier_id')->after('po_id')->nullable();
+            $table->string('date')->after('amount_paid')->nullable();
         });
     }
 
@@ -23,6 +25,8 @@ return new class extends Migration
     {
         Schema::table('credit_note_allocates', function (Blueprint $table) {
             $table->dropColumn('product_id');
+            $table->dropColumn('supplier_id');
+            $table->dropColumn('date');
         });
     }
 };

@@ -34,6 +34,7 @@
                                 <input type="hidden" name="{{ $allocateId }}" id="allocate_{{ $allocateId }}">
                                 <input type="hidden" name="supplier_id" id="allocate_supplier_id">
                                 <input type="hidden" name="product_id" id="allocate_product_id">
+                                <input type="hidden" name="date" id="allocate_date">
                                 @csrf
                                 <div class="col-sm-12">
                                     <div class="productDetailTable newJobForm mt-4">
@@ -224,7 +225,7 @@
             processData: false,
             success: function (response) {
                 console.log(response); 
-                return false;
+                // return false;
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $("#email").css('border', '1px solid red');

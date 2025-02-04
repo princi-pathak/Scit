@@ -422,10 +422,12 @@ class CreditNotesController extends Controller
                     'credit_id'=>$credit_id,
                     'amount_paid'=>$amount[$i],
                     'product_id'=>$request->product_id,
+                    'supplier_id'=>$request->supplier_id,
+                    'date'=>$request->date,
                 ];
                 try{
                     $saveData=CreditNoteAllocate::saveCreditAllocate($data);
-                    // $this->update_outstandingAmount($total_amount,$purchase_order_id,$credit_id);
+                    $this->update_outstandingAmount($total_amount,$purchase_order_id,$credit_id);
                 }catch (\Exception $e) {
                     return response()->json(['error' => $e->getMessage()], 500);
                 }
