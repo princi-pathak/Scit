@@ -518,10 +518,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		// Lead CRM 
 		Route::post('lead/saveCRMLeadData', 'saveCRMLeadData')->name('lead.ajax.saveCRMLeadData');
 		Route::post('lead/getCRMCallsData', 'getCRMCallsData')->name('lead.ajax.getCRMCallsData');
-
 		Route::post('lead/saveCRMLeadEmails', 'saveCRMLeadEmails')->name('lead.ajax.saveCRMLeadEmails');
 		Route::post('lead/getCRMEmailsData', 'getCRMEmailsData')->name('lead.ajax.getCRMEmailsData');
-
 		Route::post('lead/saveCRMLeadNotes', 'saveCRMLeadNotes')->name('lead.ajax.saveCRMLeadNotes');
 		Route::post('lead/getCRMNotesData', 'getCRMNotesData')->name('lead.ajax.getCRMNotesData');
 

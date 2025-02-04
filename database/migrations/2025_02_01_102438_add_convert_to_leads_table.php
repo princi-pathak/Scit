@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('leads', function (Blueprint $table) {
             $table->enum('converted_to', ['quote', 'job', 'customer'])->nullable()->after('prefer_time');
             $table->boolean('notity')->after('converted_to')->nullable();
-            $table->integer('notifiy_user_id')->after('notity')->nullable();
+            $table->integer('notifiy_user_id')->after('notify')->nullable();
             $table->boolean('notifocation')->after('notifiy_user_id')->nullable();
             $table->boolean('sms')->after('notifocation')->nullable();
             $table->boolean('email')->after('sms')->nullable();

@@ -45,7 +45,7 @@ class LeadController extends Controller
         $data['users'] = User::getHomeUsers(Auth::user()->home_id);
         $data['leadTask'] = LeadTaskType::getLeadTaskType();
         $data['customers'] = Customer::getCustomerWithLeads(end($segments), Auth::user()->home_id);
-        dd($data['customers']);
+        // dd($data['customers']);
         $data['leadRejectTypes'] = LeadRejectType::getLeadRejectType();
         $data['weeks'] = Week::getWeeklist();
         $data['allLead'] = Lead::getAllLeadCount(Auth::user()->home_id);
@@ -54,7 +54,7 @@ class LeadController extends Controller
         $data['actionedLead'] =   Lead::getActionedLead(Auth::user()->home_id);
         $data['rejectLead'] = Lead::getRejectedCount(Auth::user()->home_id);
         $data['authorizedLead']     = Lead::getAuthorizationCount(Auth::user()->home_id);
-        $data['convertedLead'] = Customer::getConvertedCustomersCount(Auth::user()->home_id);
+        $data['convertedLead'] = Lead::getConvertedCustomersCount(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.lead.leads', $data);
     }
     public function create()
@@ -111,7 +111,7 @@ class LeadController extends Controller
                     $lead_refid = $request->lead_ref;
                 }
 
-                if($request->input('prefer_date')  !== null){
+                if ($request->input('prefer_date')  !== null) {
                     $prefer_date = Carbon::createFromFormat('d/m/Y', $request->input('prefer_date'))->format('Y-m-d');
                 } else {
                     $prefer_date = $request->input('prefer_date');
@@ -128,7 +128,7 @@ class LeadController extends Controller
                     'status' => $request->input('status'),
                     'prefer_date' => $prefer_date,
                     'prefer_time' => $request->input('prefer_time'),
-                            
+                    'converted_to' => 'quote'
                 ]);
 
                 if ($lead->wasRecentlyCreated) {
@@ -203,7 +203,7 @@ class LeadController extends Controller
                 'is_completed' => $value->is_completed,
                 'created_at' => $value->created_at,
             ];
-                if ($value->is_recurring == 1) {
+            if ($value->is_recurring == 1) {
                 $recurrence = CRMLeadTaskReccurence::getRecurrenceDataFromTaskType($value->id);
                 //    print_r($recurrence); 
                 //    die;
@@ -293,14 +293,14 @@ class LeadController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        
+
         $create_date = Carbon::createFromFormat('d/m/Y', $request->create_date)->format('Y-m-d');
-        if(isset($request->notify_date)){
+        if (isset($request->notify_date)) {
             $notify_date = Carbon::createFromFormat('d/m/Y', $request->notify_date)->format('Y-m-d');
-        } else { 
+        } else {
             $notify_date = $request->notify_date;
         }
-        
+
         $lead = LeadTask::updateOrCreate(['id' => $request->lead_task_id], array_merge($request->all(), ['create_date' => $create_date, 'notify_date' => $notify_date]));
 
         if (isset($request->lead_task_id)) {
@@ -375,13 +375,12 @@ class LeadController extends Controller
     }
     public function task_mark_as_completed($task_id)
     {
-        $data = LeadTask::taskMarkAsCompleted($task_id); 
+        $data = LeadTask::taskMarkAsCompleted($task_id);
 
         return response()->json([
             'success' => (bool) $data,
             'data' => $data ? $data : 'No data'
         ]);
-
     }
 
     public function sentToAuthorization($leadId)
@@ -579,18 +578,17 @@ class LeadController extends Controller
 
     public function crm_section_type_delete($id)
     {
-        $url= str_replace(url('/'), '', url()->previous());
+        $url = str_replace(url('/'), '', url()->previous());
         $data = CRMSectionType::deleteCRMSectionType($id);
-        if($url == '/complaint_type' && $data){
+        if ($url == '/complaint_type' && $data) {
             return redirect('/complaint_type')->with('success', "Record deleted successfully");
-        }else{
+        } else {
             if ($data) {
                 return redirect()->route('lead.crm_section')->with('success', "Record deleted successfully");
             } else {
                 return redirect()->route('lead.crm_section')->with('error', "Record not found");
             }
         }
-        
     }
 
     public function get_CRM_section_types()
@@ -929,7 +927,6 @@ class LeadController extends Controller
                 'title_timer' => 'required',
                 'user_id_timer' => 'required'
             ]);
-
         }
 
         if ($validator->fails()) {
@@ -1056,8 +1053,9 @@ class LeadController extends Controller
         }
     }
 
-    public function searchLead(){
-       
+    public function searchLead()
+    {
+
         $data['page'] = "leads";
         $data['allLead'] = Lead::getAllLeadCount(Auth::user()->home_id);
         $data['myLeads'] = Lead::getLeadByUser(Auth::user()->id, Auth::user()->home_id);
@@ -1072,7 +1070,8 @@ class LeadController extends Controller
         return view('frontEnd.salesAndFinance.lead.search_leads', $data);
     }
 
-    public function getLeadTaskOnLeadId(Request $request){
+    public function getLeadTaskOnLeadId(Request $request)
+    {
         // dd($request);
         $close =  LeadTask::getLeadTaskTypeUser($request->lead_ref, 1);
         $open =  LeadTask::getLeadTaskTypeUser($request->lead_ref, 0);
@@ -1094,14 +1093,15 @@ class LeadController extends Controller
     // }
 
 
-    public function get30DaysLead(){
-        $result = Lead::join('customers', 'customers.id','=', 'leads.customer_id')
-                ->where('leads.created_at', '>=', Carbon::now()->subDays(30))->where('leads.home_id', Auth::user()->home_id)
-                // ->select('customers.name', 'customers.contact_name', 'customers.address')
-                ->get()
-                ->groupBy(function ($item) {
-                    return $item->created_at->format('Y-m-d'); // Group by the date only
-                });
+    public function get30DaysLead()
+    {
+        $result = Lead::join('customers', 'customers.id', '=', 'leads.customer_id')
+            ->where('leads.created_at', '>=', Carbon::now()->subDays(30))->where('leads.home_id', Auth::user()->home_id)
+            // ->select('customers.name', 'customers.contact_name', 'customers.address')
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->created_at->format('Y-m-d'); // Group by the date only
+            });
 
         // dd($data);
 
@@ -1119,14 +1119,30 @@ class LeadController extends Controller
         ]);
     }
 
-    public function saveLeadConvertQuote(Request $request){
-        $data = Lead::saveLeadConvertQuote($request->all(), Auth::user()->home_id);
-        if ($data) {
-            return response()->json(['success' => true, 'data' => $data]);
-        } else {
-            return response()->json(['success' => false, 'data' => 'No Data']);
+    public function saveLeadConvertQuote(Request $request)
+    {
+        if ($request->type == "quote") {
+            $data = Lead::saveLeadConvertQuote($request->all(), Auth::user()->home_id);
+
+            return response()->json([
+                'success' => (bool) $data,
+                'data' => $data ? "lead converted to quote successfully" : 'Failed to convert lead to quote'
+            ]);
+        } elseif ($request->type == "customer") {
+            $leadUpdated = Lead::where('id', $request->lead_id)->update(['converted_to' => "customer"]);
+            $customerUpdated = Customer::where('id', $request->customer_id)->update(["is_converted" => 1]);
+
+            if ($leadUpdated && $customerUpdated) {
+                return response()->json([
+                    'success' => true,
+                    'data' => "Lead converted to customer successfully."
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'data' => "Failed to convert lead to customer."
+                ], 400);
+            }
         }
     }
 }
-
-

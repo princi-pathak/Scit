@@ -189,9 +189,9 @@
                                                 <a href="#" class="dropdown-item set_value_on_CRM_model" data-user-id="{{ $customer->id }}" data-ref="{{ $customer->lead_ref }}" data-contact-name="{{ $customer->contact_name }}" data-email="{{ $customer->email }}" data-name="{{ $customer->name }}" data-status="{{ $customer->status }}" data-telephone="{{ $customer->telephone }}" class="dropdown-item">CRM History</a>
                                                 <a href="#" class="dropdown-item open-modal" data-lead_ref="{{ $customer->lead_ref }}" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
                                                 <a href="{{ url('/leads/authorization').'/'.$customer->id }}" class="dropdown-item">Send for Authorization</a>
-                                                <a href="javaScript:void(0)" onclick="openSentQuoteModal('{{ $customer->lead_ref }}')" class="dropdown-item">Send to Quote</a>
+                                                <a href="javaScript:void(0)" onclick="openSentQuoteModal('{{ $customer->lead_ref }}', '{{ $customer->id}}', '{{ $customer->customer_id }}' ,'quote')" class="dropdown-item">Send to Quote</a>
                                                 <a href="#" class="dropdown-item">Send to Job</a>
-                                                <a href="#" class="dropdown-item">Convert to Customer Only</a>
+                                                <a href="#" class="dropdown-item" onclick="openSentQuoteModal('{{ $customer->lead_ref }}', '{{ $customer->id}}', '{{ $customer->customer_id }}' ,'customer')">Convert to Customer Only</a>
                                             </div>
                                         </div>
                                     </div>
@@ -1642,40 +1642,46 @@
                         </label>
                     </div>
                     <div class="mb-3 row">
+                        <input type="hidden" name="lead_id" id="notify_lead_id">
+                        <input type="hidden" name="type" id="notification_type">
+                        <input type="hidden" name="customer_id" id="converted_customer">
                         <label class="col-sm-2 col-form-label"> <strong>Notify</strong></label>
                         <div class="col-sm-10">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="notity" id="inlineRadio1" value="1" checked="">
+                                <input class="form-check-input" type="radio" name="notify" id="inlineRadio1" onclick="toggleDiv(true)" value="1">
                                 <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="notity" id="inlineRadio2" value="0">
+                                <input class="form-check-input" type="radio" name="notity" id="inlineRadio2" onclick="toggleDiv(false)" value="0" checked="">
                                 <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
                             </div>
                         </div>
                     </div>
+                    <div id="toggleDiv">
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label"> <strong>Notify Who ?</strong></label>
+                            <div class="col-sm-10">
+                                <select class="form-control editInput" name="notifiy_user_id" id="notifiy_user">
 
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label"> <strong>Notify Who ?</strong></label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control editInput" name="notifiy_user_id" id="recipient-name">
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label"> <strong>Send As <span class="radStar">*</span></strong></label>
-                        <div class="col-sm-10">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="notifocation" id="checkalrt1" value="1">
-                                <label class="form-check-label checkboxtext" for="checkalrt1">Notification</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="sms" id="checkalrt2" value="1">
-                                <label class="form-check-label checkboxtext" for="checkalrt2">SMS</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="email" id="checkalrt3" value="1">
-                                <label class="form-check-label checkboxtext" for="checkalrt3">Email</label>
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label"> <strong>Send As <span class="radStar">*</span></strong></label>
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="notifocation" id="checkalrt1" value="1">
+                                    <label class="form-check-label checkboxtext" for="checkalrt1">Notification</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sms" id="checkalrt2" value="1">
+                                    <label class="form-check-label checkboxtext" for="checkalrt2">SMS</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="email" id="checkalrt3" value="1">
+                                    <label class="form-check-label checkboxtext" for="checkalrt3">Email</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -3252,15 +3258,15 @@
 
     });
 
-    function openSentQuoteModal(lead_ref) {
+    function openSentQuoteModal(lead_ref, lead_id, customer_id,type) {
         document.getElementById('sentQuote').textContent = lead_ref;
+        document.getElementById('notify_lead_id').value = lead_id;
+        document.getElementById('notification_type').value = type;
+        document.getElementById('converted_customer').value = customer_id;
         $('#sentToQuoteModal').modal('show');
     }
 
-    // $('#openSentQuoteModal').on('click', function(){
-    //     document.getElementById('sentQuote').value = ;
-    //     $('#sentToQuoteModal').modal('show');
-    // });
+
     $('.delete_checkbox').on('click', function() {
         if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
             $('#selectAll').prop('checked', true);
@@ -3269,8 +3275,8 @@
         }
     });
 
-    const saveLeadConvertQuote =  '{{ route("lead.ajax.saveLeadConvertQuote") }}';
-
+    const getUserListNotify = "{{ route('lead.ajax.getUserList') }}";
+    const saveLeadConvertQuote = '{{ route("lead.ajax.saveLeadConvertQuote") }}';
 </script>
 <script type="module">
     document.getElementById('exportCsv').addEventListener('click', function() {
