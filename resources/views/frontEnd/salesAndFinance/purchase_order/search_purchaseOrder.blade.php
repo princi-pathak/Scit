@@ -117,13 +117,16 @@
         display: grid;
         border: 1px solid #dee2e6;
     }
+    .multiselect-dropdown{
+        height:auto;
+    }
 </style>
 <section class="main_section_page px-3">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>Draft Purchase Orders</h3>
+                    <h3>Search Purchase Orders</h3>
                 </div>
             </div>
             <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -152,12 +155,12 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ url('draft_purchase_order') }}" class="profileDrop" <?php if ($status['status'] == 1) { ?>id="active_inactive" <?php } ?>>Draft <span>({{$draftCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}" class="profileDrop" <?php if ($status['status'] == 2) { ?>id="active_inactive" <?php } ?>>Awaiting Approval<span>({{$awaitingApprovalCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order?list_mode=Approved') }}" class="profileDrop" <?php if ($status['status'] == 3) { ?>id="active_inactive" <?php } ?>>Approved<span>({{$approvedCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}" class="profileDrop" <?php if ($status['status'] == 8) { ?>id="active_inactive" <?php } ?>>Rejected<span>({{$rejectedCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}" class="profileDrop" <?php if ($status['status'] == 4) { ?>id="active_inactive" <?php } ?>>Actioned<span>({{$actionedCount}})</span></a>
-                    <a href="{{ url('draft_purchase_order?list_mode=Paid') }}" class="profileDrop" <?php if ($status['status'] == 5) { ?>id="active_inactive" <?php } ?>>Paid<span>({{$paidCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order') }}" class="profileDrop">Draft <span>({{$draftCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}" class="profileDrop">Awaiting Approval<span>({{$awaitingApprovalCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order?list_mode=Approved') }}" class="profileDrop">Approved<span>({{$approvedCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}" class="profileDrop">Rejected<span>({{$rejectedCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}" class="profileDrop">Actioned<span>({{$actionedCount}})</span></a>
+                    <a href="{{ url('draft_purchase_order?list_mode=Paid') }}" class="profileDrop">Paid<span>({{$paidCount}})</span></a>
 
                 </div>
             </div>
@@ -242,6 +245,21 @@
                                             <input type="date" class="form-control editInput" id="po_endDate">
                                         </div>
                                     </div>
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-4 col-form-label text-end">Status:</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control editInput selectOptions" id="purchaseSearchstatus" name="purchaseSearchstatus" multiselect-search="true" multiselect-select-all="true" multiselect-max-items="4" multiple="multiple" style="height:auto;">
+                                                <option value="1">Draft</option>
+                                                <option value="2">Awaiting Approval</option>
+                                                <option value="3">Approved</option>
+                                                <option value="4">Actioned</option>
+                                                <option value="5">Paid</option>
+                                                <option value="6">Cancelled</option>
+                                                <option value="7">Invoice Received</option>
+                                                <option value="8">Reject</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-3">
@@ -292,7 +310,13 @@
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Delivery Status:</label>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control editInput" id="delivery_status">
+                                            <!-- <input type="text" class="form-control editInput" id="delivery_status"> -->
+                                            <select class="form-control editInput selectOptions" id="delivery_status">
+                                                <option selected disabled>--All--</option>
+                                                <option value="0">Not Deliverd</option>
+                                                <option value="2">Partially Delivered</option>
+                                                <option value="1">Delivered</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -342,134 +366,20 @@
                         </thead>
 
                         <tbody id="search_data">
-                            <?php
-                            $all_subTotalAmount = 0;
-                            $all_vatTotalAmount = 0;
-                            $all_TotalAmount = 0;
-                            $outstandingAmountTotal = 0;
-                            ?>
-                            @foreach($list as $val)
-                            <?php
-                            $customer = App\Models\Customer::find($val->customer_id);
-                            $sub_total_amount = 0;
-                            $total_amount = 0;
-                            $vat_amount = 0;
-                            $purchaseProductId = 0;
-                            $product_id=0;
-                            $vat = 0;
-                            foreach ($val->purchaseOrderProducts as $product) {
-                                $purchaseProductId = $product->id;
-                                $product_id = $product->product_id;
-                                $qty = $product->qty * $product->price;
-                                $sub_total_amount = $sub_total_amount + $qty;
-                                $vat = $qty * $product->vat / 100;
-                                $vat_amount = $vat_amount + $vat;
-                                $total_amount = $total_amount + $vat + $qty;
-                            }
-                            $all_subTotalAmount = $all_subTotalAmount + $sub_total_amount;
-                            $all_vatTotalAmount = $all_vatTotalAmount + $vat_amount;
-                            $all_TotalAmount = $all_TotalAmount + $total_amount;
-                            $outstandingAmountTotal = $outstandingAmountTotal + $val->outstanding_amount;
-                            ?>
-                            <tr>
-                                <td>
-                                    <div class="text-center"><input type="checkbox" id="" class="delete_checkbox" value="{{$val->id}}"></div>
-                                </td>
-                                <td>{{$loop->iteration}}</td>
-                                <td>{{$val->purchase_order_ref}}</td>
-                                <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
-                                <td>{{ date('d/m/Y', strtotime($val->payment_due_date)) }}</td>
-                                <td>{{$val->suppliers->name}}</td>
-                                <td>{{$customer->name ?? ''}}</td>
-                                <td>{{$val->city}}</td>
-                                <td>£{{$sub_total_amount}}</td>
-                                <td>£{{$vat_amount}}</td>
-                                <td>£{{$total_amount}}</td>
-                                <td>£{{$val->outstanding_amount}}</td>
-                                <td>{{$status['list_status']}}</td>
-                                @if($status['status'] == 1)
-                                <td>-</td>
-                                <td>
-                                    <div class="d-flex justify-content-end">
-                                        <div class="nav-item dropdown">
-                                            <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Action
-                                            </a>
-                                            <div class="dropdown-menu fade-up m-0">
-                                                <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openApproveModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Approve</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="#!" class="dropdown-item">CRM / History</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="#!" class="dropdown-item">Start Timer</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                @else
-                                <td>
-                                    @if($val->delivery_status == 1)
-                                    <span class="grencheck"><i class="fa-solid fa-check"></i></span>
-                                    @else
-                                    <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-end">
-                                        <div class="nav-item dropdown">
-                                            <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Action
-                                            </a>
-                                            <div class="dropdown-menu fade-up m-0">
-                                                <a href="javascript:void(0)" onclick="openRecordDeliveryModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Record Delivery</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Print</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$product_id}},{{$val->outstanding_amount}},{{$val->supplier_id}})" class="dropdown-item">Record Payment</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$val->outstanding_amount}})" class="dropdown-item">Invoice Received</a>
-                                                <!-- <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">CRM / History</a>
-                                                    <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Start Timer</a> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                @endif
-
-                            </tr>
-                            @endforeach
+                            
                         </tbody>
-                        @if(count($list)>0)
-                        <tr class="calcualtionShowHide">
+                        <tr class="calcualtionShowHide" style="display:none">
                             <th colspan="2"> <label class="col-form-label p-0">Page Sub Total:</label></th>
                             <th colspan="12"></th>
                         </tr>
-                        <tr class="calcualtionShowHide">
+                        <tr class="calcualtionShowHide" style="display:none">
                             <td colspan="8"></td>
 
-                            <td id="Tablesub_total_amount">£{{$all_subTotalAmount}}</td>
-                            <td id="Tablevat_amount">£{{$all_vatTotalAmount}}</td>
-                            <td id="Tabletotal_amount">£{{$all_TotalAmount}}</td>
-                            <td id="Tableoutstanding_amount" colspan="8">£{{$outstandingAmountTotal}}</td>
+                            <td id="Tablesub_total_amount">£0</td>
+                            <td id="Tablevat_amount">£0</td>
+                            <td id="Tabletotal_amount">£0</td>
+                            <td id="Tableoutstanding_amount" colspan="8">£0</td>
                         </tr>
-                        @endif
                     </table>
 
                 </div> <!-- End off main Table -->
@@ -619,8 +529,7 @@
                         <div class="formDtail">
                             <form id="recordPaymentForm" class="customerForm pt-0">
                                 <input type="hidden" name="po_id" id="recordPayment_po_id">
-                                <input type="hidden" name="product_id" id="recordPayment_ppurchaseProduct_id">
-                                <input type="hidden" name="supplier_id" id="recordPayment_ppurchaseSupplier_id">
+                                <input type="hidden" name="recordPayment_ppurchaseProduct" id="recordPayment_ppurchaseProduct">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -764,6 +673,7 @@
     saveUrl="{{url('purchaseOrderEmailSave')}}"
      />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+<script src="{{url('public/backEnd/js/multiselect.js')}}"></script>
 
 <script>
     $("#deleteSelectedRows").on('click', function() {
@@ -814,7 +724,15 @@
     });
 </script>
 <script>
+    var selectedValues=[];
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("purchaseSearchstatus").addEventListener("change", function() {
+            selectedValues = Array.from(this.selectedOptions).map(option => option.value);
+            console.log(selectedValues); // This will log the selected values as an array
+        });
+    });
     function clearBtn() {
+        selectedValues='';
         $("#search_dataForm")[0].reset();
     }
 
@@ -833,28 +751,25 @@
         var project = $("#project").val();
         var keywords = $("#keywords").val();
         var delivery_status = $("#delivery_status").val();
-        var status = '<?php echo $status['status']; ?>'
-        var list_status = '<?php echo $status['list_status']; ?>'
         var selectedDeptId = $("#selectedDeptId").val();
         var selectedTagtId = $("#selectedTagtId").val();
         var selectedsupplierId = $("#selectedsupplierId").val();
         var selectedCustomerId = $("#selectedCustomerId").val();
         var selectedcreatedById = $("#selectedcreatedById").val();
         var selectedProjectId = $("#selectedProjectId").val();
-        const Httpurl = new URL(window.location.href);
-        const params = new URLSearchParams(Httpurl.search);
-        const key = params.get('list_mode');
-        let isEmpty = true;
-        $("#search_dataForm").find("input, select").each(function() {
-            if ($(this).val() && $(this).val().trim() !== "") {
-                isEmpty = false;
-                return false;
-            }
-        });
-        if (isEmpty) {
-            alert("Please fill in at least one field before searching.");
-            return false;
-        }
+        var status = '';
+        var purchaseSearchstatus = selectedValues;
+        // let isEmpty = true;
+        // $("#search_dataForm").find("input, select").each(function() {
+        //     if ($(this).val() && $(this).val() !== "") {
+        //         isEmpty = false;
+        //         return false;
+        //     }
+        // });
+        // if (isEmpty) {
+        //     alert("Please fill in at least one field before searching.");
+        //     return false;
+        // }
 
         if (edd_startDate != '' && edd_endDate == '') {
             alert("Please choose both date");
@@ -889,7 +804,7 @@
                 keywords: keywords,
                 delivery_status: delivery_status,
                 status: status,
-                list_status: list_status,
+                purchaseSearchstatus:purchaseSearchstatus,
                 _token: '{{ csrf_token() }}'
             },
             success: function(response) {
@@ -905,6 +820,10 @@
                     $("#Tableoutstanding_amount").text("£" + response.outstandingAmountTotal);
                     $(".calcualtionShowHide").show();
                 } else {
+                    if(response.success===false){
+                        alert(response.message);
+                        // return false;
+                    }
                     $("#search_data").html(response.data);
                     $(".calcualtionShowHide").hide();
                 }
@@ -1677,46 +1596,16 @@
 
     }
 
-    function openRecordPaymentModal(id, po_ref, supplier_name, total_amount, date, product_id, outstandingAmount,supplier_id) {
+    function openRecordPaymentModal(id, po_ref, supplier_name, total_amount, date, purchase_productId, outstandingAmount) {
         $("#purchaseOrderRecordDate").text(po_ref + ' On ' + date);
         $("#recordPayment_po_id").val(id);
-        $("#recordPayment_ppurchaseProduct_id").val(product_id);
-        $("#recordPayment_ppurchaseSupplier_id").val(supplier_id);
+        $("#recordPayment_ppurchaseProduct").val(purchase_productId);
         $("#record_supplierName").text(supplier_name);
         $("#record_TotalAmount").text('£' + total_amount.toFixed(2));
         $("#record_OutstandingAmount").text('£' + outstandingAmount.toFixed(2));
         var calculateOutstandingAmount = total_amount - outstandingAmount;
         $("#record_AmountPaid").val(outstandingAmount.toFixed(2));
         $("#recordPaymentModalLabel").text("Record Payment - " + po_ref);
-        // $.ajax({
-        //     type: "POST",
-        //     url: "{{url('/record_payment_details')}}",
-        //     data: {id: id,_token:'{{ csrf_token() }}'},
-        //     success: function(response) {
-        //         console.log(response);
-        //     if(response.vali_error){
-        //             alert(response.vali_error);
-        //             $(window).scrollTop(0);
-        //             return false;
-        //         }else if(response.success === true){
-        //             $(window).scrollTop(0);
-        //             $('#message_recordDeliveryModal').addClass('success-message').text(response.message).show();
-        //             setTimeout(function() {
-        //                 $('#message_recordDeliveryModal').removeClass('success-message').text('').hide();
-        //                 location.reload();
-        //             }, 3000);
-        //         }else if(response.success === false){
-        //             $('#message_recordDeliveryModal').addClass('error-message').text(response.message).show();
-        //             setTimeout(function() {
-        //                 $('#error-message').text('').fadeOut();
-        //             }, 3000);
-        //         }
-        //     },
-        //     error: function(xhr, status, error) {
-        //         var errorMessage = xhr.status + ': ' + xhr.statusText;
-        //         alert('Error - ' + errorMessage + "\nMessage: " + error);
-        //     }
-        // });
         $("#recordPaymentModal").modal('show');
     }
 
@@ -1739,8 +1628,7 @@
             cache: false,
             processData: false,
             success: function(response) {
-                console.log(response);
-                // return false;
+                // console.log(response);return false;
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $(window).scrollTop(0);

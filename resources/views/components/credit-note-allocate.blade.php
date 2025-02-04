@@ -24,7 +24,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="text-center mt-3" id="message_recordDeliveryModal" style="display:none"></div>
+                    <div class="text-center mt-3" id="message_creditallocateModal" style="display:none"></div>
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="formDtail">
                             <label for="inputProject" class="col-sm-12 h5"
@@ -33,6 +33,8 @@
                                 <input type="hidden" name="{{ $foreignId }}" id="allocate_{{ $foreignId }}">
                                 <input type="hidden" name="{{ $allocateId }}" id="allocate_{{ $allocateId }}">
                                 <input type="hidden" name="supplier_id" id="allocate_supplier_id">
+                                <input type="hidden" name="product_id" id="allocate_product_id">
+                                <input type="hidden" name="date" id="allocate_date">
                                 @csrf
                                 <div class="col-sm-12">
                                     <div class="productDetailTable newJobForm mt-4">
@@ -48,24 +50,24 @@
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>
-                                            <tbody>
+                                            <tbody id="hiedeShowCalculation" style="display:none">
                                                 <tr>
                                                     <td colspan="2" class="border-0"></td>
                                                     <td></td>
                                                     <td>Balance Credit</td>
-                                                    <td id="balance_credit">£120.00</td>
+                                                    <td id="balance_credit"></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" class="border-0"></td>
                                                     <td></td>
                                                     <td>Credit Used</td>
-                                                    <td id="credit_used">£0</td>
+                                                    <td id="credit_used"></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" class="border-0"></td>
                                                     <td class="border_top"></td>
                                                     <td class="border_top">Remaining Credit</td>
-                                                    <td class="border_top" id="remaining_credit">£0</td>
+                                                    <td class="border_top" id="remaining_credit"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -106,13 +108,14 @@
                     noDataRow.id = 'EmptyError'
                     const noDataCell = document.createElement('td');
 
-                    noDataCell.setAttribute('colspan', 4);
+                    noDataCell.setAttribute('colspan', 5);
                     noDataCell.textContent = 'No products found';
                     noDataCell.style.textAlign = 'center';
 
                     noDataRow.appendChild(noDataCell);
                     tableBody.appendChild(noDataRow);
                 } else {
+                    $("#hiedeShowCalculation").show();
                     const emptyErrorRow = document.getElementById('EmptyError');
                     if (emptyErrorRow) {
                         emptyErrorRow.remove();
@@ -221,7 +224,8 @@
             cache: false,
             processData: false,
             success: function (response) {
-                console.log(response); return false;
+                console.log(response); 
+                // return false;
                 if (response.vali_error) {
                     alert(response.vali_error);
                     $("#email").css('border', '1px solid red');
@@ -229,17 +233,17 @@
                     return false;
                 } else if (response.success === true) {
                     $(window).scrollTop(0);
-                    $('#message_emailModal').addClass('success-message').text(response.message).show();
+                    $('#message_creditallocateModal').addClass('success-message').text(response.message).show();
                     setTimeout(function () {
-                        $('#message_emailModal').removeClass('success-message').text('').hide();
+                        $('#message_creditallocateModal').removeClass('success-message').text('').hide();
                         getAllAllocates(response.data);
                     }, 3000);
                 } else {
                     // alert("Something went wrong");
-                    $('#message_emailModal').addClass('error-message').text(response.message).show();
+                    $('#message_creditallocateModal').addClass('error-message').text(response.message).show();
                     setTimeout(function () {
                         // $('#error-message').text('').fadeOut();
-                        $('#message_emailModal').removeClass('error-message').text('').hide();
+                        $('#message_creditallocateModal').removeClass('error-message').text('').hide();
                     }, 3000);
                     return false;
                 }
