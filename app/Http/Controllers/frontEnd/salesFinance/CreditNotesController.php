@@ -204,8 +204,10 @@ class CreditNotesController extends Controller
             $total_amount=0;
             $vat_amount=0;
             $creditProductId=0;
+            $product_id=0;
             foreach($val->creditNoteProducts as $product){
                 $creditProductId=$product->id;
+                $product_id=$product->product_id;
                 $qty=$product->qty*$product->price;
                 $sub_total_amount=$sub_total_amount+$qty;
                 $vat=$qty*$product->vat/100;
@@ -248,7 +250,7 @@ class CreditNotesController extends Controller
                                             <hr class="dropdown-divider">
                                             <a href="javascript:void(0)" onclick="openEmailModal('.$val->id.','."'$val->credit_ref'".','."'$supplier_email'".','."'$supplier_name'".')" class="dropdown-item">Email</a>
                                             <hr class="dropdown-divider">
-                                            <a href="javascript:void(0)" onclick="openAllocateModal('.$val->id.','."'$val->credit_ref'".','.$val->supplier_id.','."'$supplier_name'".','.$val->balance_credit.')" class="dropdown-item">Allocate</a>
+                                            <a href="javascript:void(0)" onclick="openAllocateModal('.$val->id.','."'$val->credit_ref'".','.$val->supplier_id.','."'$supplier_name'".','.$val->balance_credit.','.$product_id.')" class="dropdown-item">Allocate</a>
                                             <hr class="dropdown-divider">
                                             <a href="javascript:void(0)" onclick="cancelCreditFunction('.$val->id.','."'$val->credit_ref'".')" class="dropdown-item">Cancel Credit Note</a>
                                             <hr class="dropdown-divider">
@@ -400,36 +402,56 @@ class CreditNotesController extends Controller
     public function getAllSupplierPurchaseOrder(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $supplier_id=$request->supplier_id;
-        $purchaseOrderList=PurchaseOrder::with('purchaseOrderProducts')->where('supplier_id',$supplier_id)->get();
+        $purchaseOrderList=PurchaseOrder::with('purchaseOrderProducts')->where('supplier_id',$supplier_id)->where('status','!=',5)->get();
         return response()->json(['success'=>true,'message'=>'Purchase Order List with Supplier','data'=>$purchaseOrderList]);
     }
     public function crediNoteAllocateSave(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $purchase_order_id=$request->purchase_order_id;
         $credit_id=$request->credit_id;
-        // CreditNoteAllocate
-        // PurchaseOrderRecordPayment
-        // saveCreditAllocate
         $amount=$request->amount;
         if(count($amount)>0){
             $total_amount=0;
             for($i=0;$i<count($amount);$i++){
                 $total_amount=$total_amount+$amount[$i];
+                $data=[
+                    'home_id'=>Auth::user()->home_id,
+                    'loginUserId'=>Auth::user()->id,
+                    'loginUserName'=>Auth::user()->name,
+                    'po_id'=>$purchase_order_id[$i],
+                    'credit_id'=>$credit_id,
+                    'amount_paid'=>$amount[$i],
+                    'product_id'=>$request->product_id,
+                    'supplier_id'=>$request->supplier_id,
+                    'date'=>$request->date,
+                ];
+                try{
+                    $saveData=CreditNoteAllocate::saveCreditAllocate($data);
+                    $this->update_outstandingAmount($total_amount,$purchase_order_id,$credit_id);
+                }catch (\Exception $e) {
+                    return response()->json(['error' => $e->getMessage()], 500);
+                }
             }
-            // echo $total_amount;die;
-            $this->update_outstandingAmount($total_amount,$purchase_order_id,$credit_id);
+            return response()->json(['success'=>true,'message'=>'Credit note has been successfully allocated to selected purchase order']); 
         }
     }
     private function update_outstandingAmount($total_amount,$purchase_order_id,$credit_id){
         $tableCreditNote=CreditNote::find($credit_id);
         $creditAmount=$tableCreditNote->balance_credit;
-        $tableCreditNote->balance_credit=$creditAmount-$total_amount;
+        $final_amountCredit=$creditAmount-$total_amount;
+        $tableCreditNote->balance_credit=$final_amountCredit;
+        if($final_amountCredit == 0){
+            $tableCreditNote->status=2;
+        }
         $tableCreditNote->save();
         for($i=0;$i<count($purchase_order_id);$i++){
             $tablePurchaseOrder=PurchaseOrder::find($purchase_order_id[$i]);
             $orderAmount=$tablePurchaseOrder->outstanding_amount;
-            $tablePurchaseOrder->outstanding_amount=$orderAmount-$total_amount;
-            $tablePurchaseOrder->status=5;
+            $final_amountOrder=$orderAmount-$total_amount;
+            $tablePurchaseOrder->outstanding_amount=$final_amountOrder;
+            if($final_amountOrder == 0){
+                $tablePurchaseOrder->status=5;
+            }
             $tablePurchaseOrder->save();
         }
     }
