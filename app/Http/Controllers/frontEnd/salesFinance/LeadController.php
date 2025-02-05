@@ -128,7 +128,6 @@ class LeadController extends Controller
                     'status' => $request->input('status'),
                     'prefer_date' => $prefer_date,
                     'prefer_time' => $request->input('prefer_time'),
-                    'converted_to' => 'quote'
                 ]);
 
                 if ($lead->wasRecentlyCreated) {
@@ -153,6 +152,7 @@ class LeadController extends Controller
 
         $page = 'leads';
         $lead = Customer::getCustomerLeads($id);
+        // dd($lead);
         $users = User::getHomeUsers(Auth::user()->home_id);
         $status = LeadStatus::getLeadStatus();
         $sources = LeadSource::getLeadSources();
@@ -361,7 +361,7 @@ class LeadController extends Controller
         $data['actionedLead'] =   Lead::getActionedLead(Auth::user()->home_id);
         $data['rejectLead'] = Lead::getRejectedCount(Auth::user()->home_id);
         $data['authorizedLead'] = Lead::getAuthorizationCount(Auth::user()->home_id);
-        $data['convertedLead'] = Customer::getConvertedCustomersCount(Auth::user()->home_id);
+        $data['convertedLead'] = Lead::getConvertedCustomersCount(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.lead.lead_task', $data);
     }
 
@@ -1146,3 +1146,11 @@ class LeadController extends Controller
         }
     }
 }
+
+// converted does not show the correct data
+// after converting page reload
+// ater convert the thata data remove
+
+
+
+

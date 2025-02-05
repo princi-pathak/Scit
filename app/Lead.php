@@ -41,15 +41,15 @@ class Lead extends Model
 
 
     public static function getAllLeadCount($home_id){
-        return Lead::whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->where('home_id', $home_id)->whereNull('deleted_at')->count();
+        return Lead::whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->where('home_id', $home_id)->whereNull('deleted_at')->whereNull('converted_to')->count();
     }
 
     public static function getUnassignedCount($home_id){
-        return Lead::where('assign_to', 0)->where('home_id', $home_id)->whereNull('deleted_at')->count();
+        return Lead::where('assign_to', 0)->where('home_id', $home_id)->whereNull('deleted_at')->whereNull('converted_to')->count();
     }
     
     public static function getRejectedCount($home_id){
-        return Lead::where('status', '6')->where('home_id', $home_id)->whereNull('deleted_at')->count();
+        return Lead::where('status', '6')->where('home_id', $home_id)->whereNull('deleted_at')->whereNull('converted_to')->count();
     }
 
     public function notes(){
@@ -61,7 +61,7 @@ class Lead extends Model
     }
 
     public static function getLeadByUser($user_id, $home_id){
-        return Lead::where('assign_to', $user_id)->where('home_id', $home_id)->whereNotIn('status', [7])->whereNull('deleted_at')->count();
+        return Lead::where('assign_to', $user_id)->where('home_id', $home_id)->whereNotIn('status', [7])->whereNull('deleted_at')->whereNull('converted_to')->count();
     } 
 
     public static function getAuthorizationCount($home_id){
@@ -79,6 +79,7 @@ class Lead extends Model
     public static function getActionedLead($home_id){
         return DB::table('leads')
         ->where('leads.home_id', $home_id)
+        ->whereNull('leads.converted_to')
         ->whereExists(function($query) {
             $query->select(DB::raw(1))
                 ->from('lead_tasks')
@@ -112,7 +113,7 @@ class Lead extends Model
                 'user_id' => $lead->assign_to,
                 'quote_ref' => $quote,
                 'customer_id' => $lead->customer_id,
-                'quota_date' => $lead->prefer_date,
+                'quota_date' => date('Y-m-d'),
                 'status' => "Draft"
             ]);
     }

@@ -292,6 +292,7 @@ class QuoteController extends Controller
 
     public function store(QuoteRequest $request)
     {
+        // dd($request);
         try {
 
             $qutRef = $request->quote_ref ?? $this->quoteService->generateQuoteRef();
@@ -334,6 +335,7 @@ class QuoteController extends Controller
         $data['users'] = User::getHomeUsers(Auth::user()->home_id);
         $data['loginCustomer'] = Auth::user()->id;
         // dd($data['attachment_type']);
+        $data['type'] = 1;
         $data['taskType'] = Task_type::getAllAciveTask_type(Auth::user()->home_id);
         return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
@@ -478,9 +480,11 @@ class QuoteController extends Controller
         $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);
         $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
         $data['paymentType'] = Payment_type::getActivePaymentType(Auth::user()->home_id);
-        // $data['type'] = 2;
+        $data['type'] = 2;
+        $data['users'] = User::getHomeUsers(Auth::user()->home_id);
+        $data['loginCustomer'] = Auth::user()->id;
         // dd($data['quoteData']);
-        return view('frontEnd.salesAndFinance.quote.quote_edit_details', $data);
+        return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
 
     public function getQuoteProductList(Request $request)

@@ -53,8 +53,8 @@
                 @endforeach
                 <form action="{{ url('/quote/saveQuoteData') }}" method="post" class="customerForm mt-3">
                     @csrf
+                    <input type="hidden" value="{{ $type}}" id="page_type">
                     <div class="newJobForm card">
-
                         <div class="row" id="hideCustomerDetails">
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="formDtail">
@@ -541,7 +541,8 @@
                         </div>
                     </div>
 
-                    <!-- End  off newJobForm -->
+
+                    <!--   off newJobForm -->
                     <div class="newJobForm mt-4" id="yourQuoteSection">
                         <label class="upperlineTitle">Your Quotes</label>
                         <div class="row">
@@ -671,8 +672,9 @@
                     <!-- End  off Your Quotes -->
 
                     <!-- End off col-md-12 -->
-                    <div id="hideQuoteDiv">
-                        <div class="newJobForm mt-4">
+                    <div id=""> <!-- hideQuoteDiv -->
+
+                        <div class="newJobForm mt-4" id="hideItemDetails">
                             <label class="upperlineTitle">Items Details</label>
                             <div class="row">
                                 <div class="col-sm-9">
@@ -936,7 +938,7 @@
                         <!-- End  off newJobForm -->
 
                         <!-- End off View Product -->
-                        <div class="newJobForm mt-4">
+                        <div class="newJobForm mt-4" id="hideExtraInformation">
                             <label class="upperlineTitle">Extra Information</label>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -976,317 +978,317 @@
                     </div>
                     <!-- End  off newJobForm -->
 
-                    <!--  -->
-                    <div id="hideDepositSection">
-                        <!-- ***************************************Start deposit Details****************************************** -->
-                        <div class="newJobForm mt-4">
-                            <label class="upperlineTitle">Deposit Details</label>
-                            <div class="row">
-                                <div class="col-sm-3 mb-3 mt-2">
-                                    <div class=" p-0">
-                                        <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Creadit Deposit</a>
-                                        <span class="col-form-label">
-                                            or
-                                        </span>
-                                        <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Creadit Deposit Invoice</a>
-                                    </div>
-                                </div>
 
-                                <!-- ************************* -->
-                                <div class="modal fade" id="creaditDepositModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositModalLabel" style="display: none;" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content add_Customer">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title fs-5" id="creaditDepositModalLabel">Creadit Deposit</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body ">
-                                                <div class="contantbodypopup p-0">
-                                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                                        <li class="nav-item me-2" role="presentation">
-                                                            <button class="profileDrop" id="paymentDetails-tab" data-bs-toggle="pill" data-bs-target="#paymentDetails" type="button" role="tab" aria-controls="paymentDetails" aria-selected="false" tabindex="-1">Payment Details</button>
-                                                        </li>
-                                                        <li class="nav-item me-2" role="presentation">
-                                                            <button class="profileDrop" id="billingDetails-tab" data-bs-toggle="pill" data-bs-target="#billingDetails" type="button" role="tab" aria-controls="billingDetails" aria-selected="false" tabindex="-1">Billing Details</button>
-                                                        </li>
-                                                        <li class="nav-item me-2" role="presentation">
-                                                            <button class="profileDrop active activetb" id="paymentType-tab" data-bs-toggle="pill" data-bs-target="#paymentType" type="button" role="tab" aria-controls="paymentType" aria-selected="true">Payment Type</button>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="tab-content" id="pills-tabContent">
-                                                        <div class="tab-pane fade" id="paymentDetails" role="tabpanel" aria-labelledby="paymentDetails-tab" tabindex="0">
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="QU-0021 - Quote Date 24/10/2024" readonly="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="Prathima" readonly="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Totle (inc. VAT)</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control-plaintext editInput" id="inputName" value="$12,000.00" readonly="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
-                                                                        <span class="radStar">*</span></label>
-                                                                    <div class="col-sm-5">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" value="100">
-                                                                    </div>
-                                                                    <div class="col-sm-1 ps-0">
-                                                                        <input class="form-control editInput text-center" value="%" disabled="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-1 pe-0">
-                                                                        <input class="form-control editInput text-center" value="$" disabled="">
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" value="$ 0.00">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCounty" class="col-sm-3 col-form-label pt-0">Take Card Payment Now?</label>
-                                                                    <div class="col-sm-8">
-                                                                        <span class="oNOfswich">
-                                                                            <input type="checkbox">
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tab-pane fade" id="billingDetails" role="tabpanel" aria-labelledby="billingDetails-tab" tabindex="0">
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">First Name<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Arjun">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Last Name<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="Kumar">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Email Address<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="info@gmail.com">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Telephone<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Address Line1<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="USA">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Address Line2</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">City<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">County</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Country</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" placeholder="United Stat Kingdom">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Postcode<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control editInput" id="inputCity">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--  -->
-                                                        <div class="tab-pane fade active show" id="paymentType" role="tabpanel" aria-labelledby="paymentType-tab" tabindex="0">
+
+                    <!-- ***************************************Start deposit Details****************************************** -->
+                    <div class="newJobForm mt-4" id="hideDepositSection">
+                        <label class="upperlineTitle">Deposit Details</label>
+                        <div class="row">
+                            <div class="col-sm-3 mb-3 mt-2">
+                                <div class=" p-0">
+                                    <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositModal">Creadit Deposit</a>
+                                    <span class="col-form-label">
+                                        or
+                                    </span>
+                                    <a href="#!" class="profileDrop" data-bs-toggle="modal" data-bs-target="#creaditDepositInvoiceModal">Creadit Deposit Invoice</a>
+                                </div>
+                            </div>
+
+                            <!-- ************************* -->
+                            <div class="modal fade" id="creaditDepositModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content add_Customer">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title fs-5" id="creaditDepositModalLabel">Creadit Deposit</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body ">
+                                            <div class="contantbodypopup p-0">
+                                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                    <li class="nav-item me-2" role="presentation">
+                                                        <button class="profileDrop" id="paymentDetails-tab" data-bs-toggle="pill" data-bs-target="#paymentDetails" type="button" role="tab" aria-controls="paymentDetails" aria-selected="false" tabindex="-1">Payment Details</button>
+                                                    </li>
+                                                    <li class="nav-item me-2" role="presentation">
+                                                        <button class="profileDrop" id="billingDetails-tab" data-bs-toggle="pill" data-bs-target="#billingDetails" type="button" role="tab" aria-controls="billingDetails" aria-selected="false" tabindex="-1">Billing Details</button>
+                                                    </li>
+                                                    <li class="nav-item me-2" role="presentation">
+                                                        <button class="profileDrop active activetb" id="paymentType-tab" data-bs-toggle="pill" data-bs-target="#paymentType" type="button" role="tab" aria-controls="paymentType" aria-selected="true">Payment Type</button>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content" id="pills-tabContent">
+                                                    <div class="tab-pane fade" id="paymentDetails" role="tabpanel" aria-labelledby="paymentDetails-tab" tabindex="0">
+                                                        <div class="newJobForm card">
                                                             <div class="mb-2 row">
-                                                                <div class="col-sm-12">
-                                                                    <div class="text-end">
-                                                                        <h5>Paying Now: $12000.00</h5>
-                                                                    </div>
+                                                                <label for="inputName" class="col-sm-3 col-form-label">Invoice</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control-plaintext editInput" id="inputName" value="QU-0021 - Quote Date 24/10/2024" readonly="">
                                                                 </div>
                                                             </div>
-                                                            <div class="newJobForm card">
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
-                                                                    <div class="col-sm-9">
-                                                                        <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                            <option>Cash</option>
-                                                                            <option>paypal</option>
-                                                                            <option>Card</option>
-                                                                            <option>Bank</option>
-                                                                        </select>
-                                                                    </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputName" class="col-sm-3 col-form-label">Customer</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control-plaintext editInput" id="inputName" value="Prathima" readonly="">
                                                                 </div>
-                                                                <div class="mb-2 row">
-                                                                    <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
-                                                                        <span class="radStar">*</span></label>
-                                                                    <div class="col-sm-5">
-                                                                        <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
-                                                                    </div>
-                                                                    <div class="col-sm-1 ps-0">
-                                                                        <span class="material-symbols-outlined">
-                                                                            calendar_month
-                                                                        </span>
-                                                                    </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputName" class="col-sm-3 col-form-label">Totle (inc. VAT)</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
                                                                 </div>
-
                                                             </div>
-                                                        </div>
-                                                        <!--  -->
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end modal body -->
-                                            <div class="modal-footer customer_Form_Popup">
-                                                <button type="button" class="btn profileDrop">Next</button>
-                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- ************************ -->
-
-                                <!-- *********************** -->
-                                <div class="modal fade" id="creaditDepositInvoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositInvoiceModalModalLabel" style="display: none;" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content add_Customer">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title fs-5" id="creaditDepositInvoiceModalModalLabel">Creadit Deposit Invoice</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body ">
-                                                <div class="contantbodypopup p-0">
-                                                    <div class="newJobForm card">
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
-                                                            <div class="col-sm-5">
-                                                                <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                            <div class="mb-2 row">
+                                                                <label for="inputName" class="col-sm-3 col-form-label">Outstanding Amount</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control-plaintext editInput" id="inputName" value="$12,000.00" readonly="">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-sm-1 ps-0">
-                                                                <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
+                                                                    <span class="radStar">*</span></label>
+                                                                <div class="col-sm-5">
+                                                                    <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                                </div>
+                                                                <div class="col-sm-1 ps-0">
+                                                                    <input class="form-control editInput text-center" value="%" disabled="">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Due Date<span class="radStar">*</span></label>
-                                                            <div class="col-sm-5">
-                                                                <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Deposit Amount (inc. VAT)<span class="radStar">*</span></label>
+                                                                <div class="col-sm-1 pe-0">
+                                                                    <input class="form-control editInput text-center" value="$" disabled="">
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <input type="text" class="form-control editInput" id="inputCity" value="$ 0.00">
+                                                                </div>
                                                             </div>
-                                                            <div class="col-sm-1 ps-0">
-                                                                <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Reference<span class="radStar">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="Reference">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Line Item</label>
-                                                            <div class="col-sm-9">
-                                                                <input type="text" class="form-control editInput" id="inputName" placeholder="Line Item">
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Description<span class="radStar">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
-                                                            <div class="col-sm-9">
-                                                                <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
-                                                                <span class="radStar">*</span></label>
-                                                            <div class="col-sm-5">
-                                                                <input type="text" class="form-control editInput" id="inputCity" value="100">
-                                                            </div>
-                                                            <div class="col-sm-2 ps-0">
-                                                                <input class="form-control editInput text-center" value="% of $.00" disabled="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">Sub Totle <span class="radStar">*</span></label>
-                                                            <div class="col-sm-1 pe-0">
-                                                                <input class="form-control editInput text-center" value="$" disabled="">
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <input type="text" class="form-control editInput" id="inputCity" value="0.00">
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-2 row">
-                                                            <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
-                                                            <div class="col-sm-9">
-                                                                <select class="form-control editInput selectOptions" id="inputCustomer">
-                                                                    <option>-Please Select-</option>
-                                                                    <option>Customer-2</option>
-                                                                    <option>Customer-3</option>
-                                                                    <option>Customer-4</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="mb-2 row">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Totel (inc. VAT)</label>
-                                                            <div class="col-sm-9">
-                                                                <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCounty" class="col-sm-3 col-form-label pt-0">Take Card Payment Now?</label>
+                                                                <div class="col-sm-8">
+                                                                    <span class="oNOfswich">
+                                                                        <input type="checkbox">
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="tab-pane fade" id="billingDetails" role="tabpanel" aria-labelledby="billingDetails-tab" tabindex="0">
+                                                        <div class="newJobForm card">
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">First Name<span class="radStar">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="Arjun">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Last Name<span class="radStar">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="Kumar">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Email Address<span class="radStar">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="info@gmail.com">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Telephone<span class="radStar">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Address Line1<span class="radStar">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="USA">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Address Line2</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">City<span class="radStar">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">County</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Country</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity" placeholder="United Stat Kingdom">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Postcode<span class="radStar">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control editInput" id="inputCity">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--  -->
+                                                    <div class="tab-pane fade active show" id="paymentType" role="tabpanel" aria-labelledby="paymentType-tab" tabindex="0">
+                                                        <div class="mb-2 row">
+                                                            <div class="col-sm-12">
+                                                                <div class="text-end">
+                                                                    <h5>Paying Now: $12000.00</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="newJobForm card">
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Payment Type<span class="radStar">*</span></label>
+                                                                <div class="col-sm-9">
+                                                                    <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                        <option>Cash</option>
+                                                                        <option>paypal</option>
+                                                                        <option>Card</option>
+                                                                        <option>Bank</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-2 row">
+                                                                <label for="inputCity" class="col-sm-3 col-form-label">Deposit Date
+                                                                    <span class="radStar">*</span></label>
+                                                                <div class="col-sm-5">
+                                                                    <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                                </div>
+                                                                <div class="col-sm-1 ps-0">
+                                                                    <span class="material-symbols-outlined">
+                                                                        calendar_month
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <!--  -->
                                                 </div>
-                                            </div> <!-- end modal body -->
-                                            <div class="modal-footer customer_Form_Popup">
-                                                <button type="button" class="btn profileDrop">Save</button>
-                                                <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
                                             </div>
+                                        </div> <!-- end modal body -->
+                                        <div class="modal-footer customer_Form_Popup">
+                                            <button type="button" class="btn profileDrop">Next</button>
+                                            <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+
                                         </div>
                                     </div>
                                 </div>
-                                <!-- *********************** -->
+                            </div>
+                            <!-- ************************ -->
+
+                            <!-- *********************** -->
+                            <div class="modal fade" id="creaditDepositInvoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="creaditDepositInvoiceModalModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content add_Customer">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title fs-5" id="creaditDepositInvoiceModalModalLabel">Creadit Deposit Invoice</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body ">
+                                            <div class="contantbodypopup p-0">
+                                                <div class="newJobForm card">
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                        </div>
+                                                        <div class="col-sm-1 ps-0">
+                                                            <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Due Date<span class="radStar">*</span></label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control editInput" id="inputCity" value="24/10/2024">
+                                                        </div>
+                                                        <div class="col-sm-1 ps-0">
+                                                            <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Line Item</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control editInput" id="inputName" placeholder="Line Item">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Line Description<span class="radStar">*</span></label>
+                                                        <div class="col-sm-9">
+                                                            <textarea class="form-control textareaInput rounded-1" name="address" id="description" rows="3" placeholder="Description"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Deposit Persontage
+                                                            <span class="radStar">*</span></label>
+                                                        <div class="col-sm-5">
+                                                            <input type="text" class="form-control editInput" id="inputCity" value="100">
+                                                        </div>
+                                                        <div class="col-sm-2 ps-0">
+                                                            <input class="form-control editInput text-center" value="% of $.00" disabled="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">Sub Totle <span class="radStar">*</span></label>
+                                                        <div class="col-sm-1 pe-0">
+                                                            <input class="form-control editInput text-center" value="$" disabled="">
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" class="form-control editInput" id="inputCity" value="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-2 row">
+                                                        <label for="inputCity" class="col-sm-3 col-form-label">VAT (%)<span class="radStar">*</span></label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control editInput selectOptions" id="inputCustomer">
+                                                                <option>-Please Select-</option>
+                                                                <option>Customer-2</option>
+                                                                <option>Customer-3</option>
+                                                                <option>Customer-4</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-2 row">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Totel (inc. VAT)</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="$0.00" readonly="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- end modal body -->
+                                        <div class="modal-footer customer_Form_Popup">
+                                            <button type="button" class="btn profileDrop">Save</button>
+                                            <button type="button" class="btn profileDrop" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- *********************** -->
 
 
-                                <!-- <div class="col-sm-3 mb-3 mt-2">
+                            <!-- <div class="col-sm-3 mb-3 mt-2">
                                     <div class=" p-0">
                                         <a href="#" class="profileDrop">Creadit Deposit</a>
                                         <span class="col-form-label">
@@ -1296,60 +1298,60 @@
                                     </div>
                                 </div> -->
 
-                                <div class="col-sm-12">
-                                    <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
-                                    <div class="productDetailTable">
-                                        <table class="table" id="containerA">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>Deposit Date </th>
-                                                    <th>Mode of Payment </th>
-                                                    <th>Reference</th>
-                                                    <th>Description </th>
-                                                    <th>Created On </th>
-                                                    <th>Deposit Amount </th>
-                                                    <th>Refunded</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="7">
-                                                        <label class="red_sorryText">Sorry, no records to show</label>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                            <div class="col-sm-12">
+                                <h4 class="contTitle text-start mb-2 mt-2">Deposits</h4>
+                                <div class="productDetailTable">
+                                    <table class="table" id="containerA">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Deposit Date </th>
+                                                <th>Mode of Payment </th>
+                                                <th>Reference</th>
+                                                <th>Description </th>
+                                                <th>Created On </th>
+                                                <th>Deposit Amount </th>
+                                                <th>Refunded</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="7">
+                                                    <label class="red_sorryText">Sorry, no records to show</label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </div>
 
-                                <div class="col-sm-12">
-                                    <h4 class="contTitle text-start mb-2 mt-2 ">Deposit Invoices</h4>
-                                    <div class="productDetailTable">
-                                        <table class="table" id="containerA">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>Invoice Ref </th>
-                                                    <th>Invoice </th>
-                                                    <th>Due Date</th>
-                                                    <th>Sub Total </th>
-                                                    <th>VAT </th>
-                                                    <th>Total </th>
-                                                    <th>Outstanding Created On</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="8"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                            <div class="col-sm-12">
+                                <h4 class="contTitle text-start mb-2 mt-2 ">Deposit Invoices</h4>
+                                <div class="productDetailTable">
+                                    <table class="table" id="containerA">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Invoice Ref </th>
+                                                <th>Invoice </th>
+                                                <th>Due Date</th>
+                                                <th>Sub Total </th>
+                                                <th>VAT </th>
+                                                <th>Total </th>
+                                                <th>Outstanding Created On</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="8"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <!-- **************************************End of deposit Details****************************************** -->
                     </div>
+                    <!-- **************************************End of deposit Details****************************************** -->
+
                     <!--  -->
                     <div id="hideAttachmentTask">
 
@@ -1394,7 +1396,7 @@
                         <!-- ************************************* End Of Attechment ******************************** -->
 
                         <!-- ******************************* Start Task ***************************** -->
-                        <div class="newJobForm mt-4">
+                        <div class="newJobForm mt-4" id="hidequoteTasks">
                             <label class="upperlineTitle">Tasks</label>
                             <div class="row">
                                 <div class="col-sm-12">
@@ -2771,69 +2773,21 @@
 
 @include('frontEnd.salesAndFinance.item.common.addproductmodal')
 @include('frontEnd.salesAndFinance.item.common.productcategoryaddmodal')
-<script type="text/javascript" src="{{ url('public/js/salesFinance/customeQuoteForm.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js"></script>
 
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
 <script>
-    //Text Editer
-    var editor_config = {
-        toolbar: [{
-                name: 'basicstyles',
-                items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat']
-            },
-            {
-                name: 'format',
-                items: ['Format']
-            },
-            {
-                name: 'paragraph',
-                items: ['Indent', 'Outdent', '-', 'BulletedList', 'NumberedList']
-            },
-            {
-                name: 'link',
-                items: ['Link', 'Unlink']
-            },
-            {
-                name: 'undo',
-                items: ['Undo', 'Redo']
-            }
-        ],
-    };
-
-    CKEDITOR.replace('textarea8', editor_config);
-    CKEDITOR.replace('textarea9', editor_config);
-    CKEDITOR.replace('textarea10', editor_config);
-    CKEDITOR.replace('textarea11', editor_config);
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const yesOnCheckbox = document.getElementById('yesOn');
-        const optionsDiv = document.getElementById('optionsDiv');
-        optionsDiv.style.display = 'none';
-        // Add an event listener to the "Yes, ON" checkbox
-        yesOnCheckbox.addEventListener('change', function() {
-            if (this.checked) {
-                optionsDiv.style.display = 'block'; // Show optionsDiv
-            } else {
-                optionsDiv.style.display = 'none'; // Hide optionsDiv
-            }
-        });
-    });
-
+       const getAttachmentDataOnQuoteId = '{{ route("quote.ajax.getAttachmentDataOnQuoteId") }}';
+       const getCustomerBillingAddressData = '{{ route("customer.ajax.getCustomerBillingAddressData") }}';
     $(document).ready(function() {
 
-        document.getElementById('hideQuoteDetails').style.display = "none";
-        document.getElementById('hideQuoteDiv').style.display = "none";
-        document.getElementById('hideDepositSection').style.display = "none";
-        getQuoteTaskList(document.querySelector('#quoteTaskList tbody'));
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        const getQuoteTaskList = '{{ route("quote.ajax.getQuoteTaskList") }}';
+      
+     
+      
+  
 
         $('#getCustomerList').on('click', function() {
             // getCustomerList();
@@ -2890,41 +2844,6 @@
 
             removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
         });
-
-        // start here js for time start and pause
-        let timerInterval;
-        let elapsedSeconds = 0;
-        let isRunning = false;
-
-        function toggleTimer() {
-            if (isRunning) {
-                // Pause the timer
-                clearInterval(timerInterval);
-                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-play"></i> Start';
-            } else {
-                // Start the timer
-                timerInterval = setInterval(function() {
-                    elapsedSeconds++;
-                    document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
-                    document.getElementById('start_time_timer').value = formatTime(elapsedSeconds);
-                }, 1000);
-                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
-            }
-            isRunning = !isRunning; // Toggle the running state
-        }
-
-        function formatTime(seconds) {
-            const hrs = Math.floor(seconds / 3600);
-            const mins = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
-            return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
-        }
-
-        function pad(number) {
-            return number < 10 ? '0' + number : number;
-        }
-
-        document.getElementById('toggleTimerBtn').addEventListener('click', toggleTimer);
 
         getQuoteAttachmentsOnPageLoad();
         $('#search-product').on('keyup', function() {
@@ -2990,29 +2909,7 @@
         });
         const setCustomerId = document.getElementById('setCustomerId').value;
 
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerList") }}',
-            success: function(response) {
-                console.log(response.data);
-                var get_customer_type = document.getElementById('getCustomerList');
-                // get_customer_type.innerHTML = '';
-
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.name;
-                    if (user.id == setCustomerId) {
-                        option.selected = true; // Mark as selected
-                        document.getElementById('setCustomerNameInTask').value = user.name;
-                        document.getElementById('setCustomerNameInTimer').value = user.name;
-                    }
-                    get_customer_type.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
+   
 
         getTaskType(document.getElementById("setTaskTypeData"));
         getTaskType(document.getElementById("setTaskTypeOnTimer"));
@@ -3053,15 +2950,15 @@
         }
 
 
-        $('#billingDetailContact').on('change', function() {
-            var selected = document.getElementById('getCustomerList').value;
-            console.log(selected);
-            if ($(this).val() === selected) {
-                getBillingDetailsData($(this).val());
-            } else {
-                setCustomerBillingData($(this).val());
-            }
-        });
+        // $('#billingDetailContact').on('change', function() {
+        //     var selected = document.getElementById('getCustomerList').value;
+        //     console.log(selected);
+        //     if ($(this).val() === selected) {
+        //         getBillingDetailsData($(this).val());
+        //     } else {
+        //         setCustomerBillingData($(this).val());
+        //     }
+        // });
 
         const edit_site_id = document.getElementById('edit_customer_billing_id').value;
         if (setCustomerId === edit_customer_billing_id) {
@@ -3096,256 +2993,116 @@
         }
 
 
-        $('#AddQuoteButton').on('click', function() {
-            var customer = document.getElementById('getCustomerList').value;
-            if (customer === "") {
-                alert('Please select the customer');
-            } else {
-                // getTags(document.getElementById('quoteTag'))
-                // getRegions(document.getElementById('siteDeliveryRegions'));
-                const selectCustomer = document.getElementById('getCustomerList');
-                const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
-                document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
-                document.getElementById('yourQuoteSection').style.display = "none";
-                document.getElementById('hideQuoteDiv').style.display = "block";
-                document.getElementById('hideCustomerDetails').style.display = "none";
-                document.getElementById('hideQuoteDetails').style.display = "block";
-            }
-        });
+        // $('#AddQuoteButton').on('click', function() {
+        //     var customer = document.getElementById('getCustomerList').value;
+        //     if (customer === "") {
+        //         alert('Please select the customer');
+        //     } else {
+        //         // getTags(document.getElementById('quoteTag'))
+        //         // getRegions(document.getElementById('siteDeliveryRegions'));
+        //         const selectCustomer = document.getElementById('getCustomerList');
+        //         const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
+        //         document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
+        //         // document.getElementById('yourQuoteSection').style.display = "none";
+        //         document.getElementById('hideQuoteDiv').style.display = "block";
+        //         // document.getElementById('hideCustomerDetails').style.display = "none";
+        //         // document.getElementById('hideQuoteDetails').style.display = "block";
+        //     }
+        // });
 
-        $('#saveCustomerContactData').on('click', function() {
-            var formData = $('#add_customer_contact_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    console.log(response);
-                    alert(response.message);
-                    setCustomerBillingData(response.lastid);
-                    $('#add_customer_contact_modal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
+        // $('#saveCustomerContactData').on('click', function() {
+        //     var formData = $('#add_customer_contact_form').serialize();
+        //     $.ajax({
+        //         url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
+        //         method: 'POST',
+        //         data: formData,
+        //         success: function(response) {
+        //             console.log(response);
+        //             alert(response.message);
+        //             setCustomerBillingData(response.lastid);
+        //             $('#add_customer_contact_modal').modal('hide');
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error(error);
+        //         }
+        //     });
+        // });
 
-        // Ajax Call for saving Customer Type
-        $('#saveCustomerSiteDetails').on('click', function() {
-            var formData = $('#add_customer_site_details_form').serialize();
-            $.ajax({
-                url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    alert(response.message);
-                    console.log(response.id);
-                    setSiteAddressDetails(response.id);
-                    // removeAddCustomerSiteAddress(document.getElementById('customerSiteDetails'),document.getElementById('customerSiteDelivery'), response.id);
-                    $('#add_site_address_modal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
+        // // Ajax Call for saving Customer Type
+        // $('#saveCustomerSiteDetails').on('click', function() {
+        //     var formData = $('#add_customer_site_details_form').serialize();
+        //     $.ajax({
+        //         url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
+        //         method: 'POST',
+        //         data: formData,
+        //         success: function(response) {
+        //             alert(response.message);
+        //             console.log(response.id);
+        //             setSiteAddressDetails(response.id);
+        //             // removeAddCustomerSiteAddress(document.getElementById('customerSiteDetails'),document.getElementById('customerSiteDelivery'), response.id);
+        //             $('#add_site_address_modal').modal('hide');
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error(error);
+        //         }
+        //     });
+        // });
 
-        $('#OpenAddCustomerContact').on('click', function() {
-            getCustomerJobTitle(document.getElementById('customer_job_titile_id'));
-            $('#add_customer_contact_modal').modal('show');
-        });
+        // $('#OpenAddCustomerContact').on('click', function() {
+        //     getCustomerJobTitle(document.getElementById('customer_job_titile_id'));
+        //     $('#add_customer_contact_modal').modal('show');
+        // });
 
-        $('#openCustomerSiteAddress').on('click', function() {
-            var customer = document.getElementById('getCustomerList').value;
-            if (customer === "") {
-                alert('Please select the customer');
-            } else {
-                getRegions(document.getElementById('getSiteAddressRegion'));
-                getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
-                getCustomerJobTitle(document.getElementById('siteJobTitle'));
-                getCountriesList(document.getElementById('siteAddressMobileCode'));
-                getCountriesList(document.getElementById('siteAddressTelephoneCode'));
-                $('#add_site_address_modal').modal('show');
-            }
+        // $('#openCustomerSiteAddress').on('click', function() {
+        //     var customer = document.getElementById('getCustomerList').value;
+        //     if (customer === "") {
+        //         alert('Please select the customer');
+        //     } else {
+        //         getRegions(document.getElementById('getSiteAddressRegion'));
+        //         getCountriesListWithNameCode(document.getElementById('siteAddressCountry'));
+        //         getCustomerJobTitle(document.getElementById('siteJobTitle'));
+        //         getCountriesList(document.getElementById('siteAddressMobileCode'));
+        //         getCountriesList(document.getElementById('siteAddressTelephoneCode'));
+        //         $('#add_site_address_modal').modal('show');
+        //     }
+        // });
 
+        // $('#new_Attachment_open_model').on('click', function() {
+        //     $('#new_Attachment_model').modal('show');
+        // });
 
+        // $('#saveAttachmentType').on('click', function(e) {
+        //     let formData = new FormData($('#attachmentTypeForm')[0]);
+        //     console.log(formData);
 
-        });
-
-        $('#new_Attachment_open_model').on('click', function() {
-            $('#new_Attachment_model').modal('show');
-        });
-
-        $('#saveAttachmentType').on('click', function(e) {
-
-            let formData = new FormData($('#attachmentTypeForm')[0]);
-            console.log(formData);
-
-            $.ajax({
-                url: '{{ route("quote.ajax.saveAttachmentData") }}', // Replace with your Laravel route URL
-                type: 'POST',
-                data: formData,
-                contentType: false, // Required for FormData
-                processData: false, // Required for FormData
-                success: function(response) {
-                    // Handle success
-                    alert(response.data);
-                    console.log(response.id);
-                    $('#new_Attachment_model').modal('hide'); // Hide the modal
-                    getQuoteAttachments(response.id);
-                },
-                error: function(xhr) {
-                    // Handle error
-                    const errors = xhr.responseJSON.errors || {
-                        message: xhr.responseJSON.message
-                    };
-                    let errorMessage = 'Error saving the attachment:\n';
-                    for (let key in errors) {
-                        errorMessage += `${errors[key]}\n`;
-                    }
-                    alert(errorMessage);
-                }
-            });
-        });
+        //     $.ajax({
+        //         url: '{{ route("quote.ajax.saveAttachmentData") }}', // Replace with your Laravel route URL
+        //         type: 'POST',
+        //         data: formData,
+        //         contentType: false, // Required for FormData
+        //         processData: false, // Required for FormData
+        //         success: function(response) {
+        //             // Handle success
+        //             alert(response.data);
+        //             console.log(response.id);
+        //             $('#new_Attachment_model').modal('hide'); // Hide the modal
+        //             getQuoteAttachments(response.id);
+        //         },
+        //         error: function(xhr) {
+        //             // Handle error
+        //             const errors = xhr.responseJSON.errors || {
+        //                 message: xhr.responseJSON.message
+        //             };
+        //             let errorMessage = 'Error saving the attachment:\n';
+        //             for (let key in errors) {
+        //                 errorMessage += `${errors[key]}\n`;
+        //             }
+        //             alert(errorMessage);
+        //         }
+        //     });
+        // });
 
     });
-
-    // function openTaskModal() {
-    //     $('#quote_task_modal').modal('show');
-    // }
-
-    function getQuoteAttachmentsOnPageLoad() {
-        const quote_id = document.getElementById('quote_id').value;
-        console.log("quote_id", quote_id);
-        $.ajax({
-            url: '{{ route("quote.ajax.getAttachmentDataOnQuoteId") }}', // Replace with your Laravel route URL
-            type: 'POST',
-            data: {
-                quote_id: quote_id
-            },
-            success: function(response) {
-                // Handle success
-                console.log(response);
-
-                const tableBody = $('#attachmentTable tbody');
-                console.log(tableBody);
-                tableBody.empty(); // Clear existing rows
-                if (response.data == "No data") {
-                    console.log(response.data);
-                } else {
-                    // Assuming `response` contains an array of attachments
-                    const attachments = Array.isArray(response.data) ? response.data : [response.data];
-
-                    attachments.forEach(attachment => {
-                        console.log(attachment);
-                        // const attachmentTypeTitle = attachment.attachment_type ? attachment.attachment_type.title : '';
-                        const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
-                        const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
-
-                        const id = attachment.id;
-                        const row = `
-                        <tr data-id="${id}">
-                            <td><input type="checkbox" class="selectRow"></td>
-                            <td>${attachment.attachmentType}</td>
-                            <td>${attachment.title}</td>
-                            <td>${attachment.description}</td>
-                            <td>Quote</td>
-                            <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
-                            <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
-                            <td>${attachment.original_name}</td>
-                            <td>${attachment.mime_type} / ${attachment.size} KB</td>
-                            <td>${new Date(attachment.created_at).toLocaleString()}</td>
-                            <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="downloadAttachmentFile('${attachment.timestamp_name}');"> <i class="fas fa-download"></i></a> | <a href="javascript:void(0)" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a> </td>
-                        </tr>
-                    `;
-                        // console.log(row);
-                        tableBody.append(row);
-                    });
-                }
-
-
-            },
-            error: function(xhr) {
-                // Handle error
-                const errors = xhr.responseJSON.errors || {
-                    message: xhr.responseJSON.message
-                };
-                let errorMessage = 'Error on getting the attachment:\n';
-                for (let key in errors) {
-                    errorMessage += `${errors[key]}\n`;
-                }
-                alert(errorMessage);
-            }
-        });
-
-    }
-
-    function downloadAttachmentFile(fileName) {
-        const fileUrl = fileName; // Construct the file URL dynamically
-        const anchor = document.createElement('a');
-        anchor.href = fileUrl;
-        anchor.download = fileName; // Optional: Rename the file for the user
-        anchor.click();
-    }
-
-    function getQuoteAttachments(attachment_id) {
-        $.ajax({
-            url: '{{ route("quote.ajax.getAttachmentData") }}', // Replace with your Laravel route URL
-            type: 'POST',
-            data: {
-                attachment_id: attachment_id
-            },
-            success: function(response) {
-                // Handle success
-                const tableBody = $('#attachmentTable tbody');
-                console.log(tableBody);
-
-                if (response.data == "No data") {
-
-                } else {
-                    const attachments = Array.isArray(response.data) ? response.data : [response.data];
-
-                    attachments.forEach(attachment => {
-                        console.log(attachment);
-                        const customer_visible = attachment.customer_visible = 1 ? "grayCheck" : "grencheck";
-                        const mobile_user_visible = attachment.mobile_user_visible = 1 ? "grayCheck" : "grencheck";
-
-                        const id = attachment.id;
-                        const row = `
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>${attachment.attachmentType}</td>
-                                    <td>${attachment.title}</td>
-                                    <td>${attachment.description}</td>
-                                    <td>Quote</td>
-                                    <td> <span class="${customer_visible}"><i class="fa-solid fa-circle-check"></i></span> </td>
-                                    <td> <span class="${mobile_user_visible}"><i class="fa-solid fa-circle-check"></i></span></td>
-                                    <td>${attachment.original_name}</td>
-                                    <td>${attachment.mime_type} / ${attachment.size} KB</td>
-                                    <td>${new Date(attachment.created_at).toLocaleString()}</td>
-                                    <td><a href="${attachment.timestamp_name}" target="_blank"> <i class="fas fa-eye"></i></a> | <i class="fa fa-times"></i> | <a href="#!" onclick="deleteAttachmentFile('${attachment.id}');"> <i class="fas fa-trash-alt"></i></a></td>
-                                </tr>
-                            `;
-                        console.log(row);
-                        tableBody.append(row);
-                    });
-                }
-                // Assuming `response` contains an array of attachments
-            },
-            error: function(xhr) {
-                // Handle error
-                const errors = xhr.responseJSON.errors || {
-                    message: xhr.responseJSON.message
-                };
-                let errorMessage = 'Error on getting the attachment:\n';
-                for (let key in errors) {
-                    errorMessage += `${errors[key]}\n`;
-                }
-                alert(errorMessage);
-            }
-        });
-    }
 
     function saveQuoteTaskFormData() {
 
@@ -3423,7 +3180,6 @@
         });
     }
 
-
     // Function to populate the table
     function populateTable(data, tableBody) {
         data.forEach(item => {
@@ -3472,600 +3228,7 @@
         });
     }
 
-    function getQuoteTaskList(tableBody) {
-        const quote_id = document.getElementById('quote_id').value;
-        $.ajax({
-            url: '{{ route("quote.ajax.getQuoteTaskList") }}',
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            data: {
-                quote_id: quote_id
-            },
-            success: function(response) {
-                console.log(response.data);
-                tableBody.innerHTML = '';
+  
 
-                // Call the function to populate the table with the data array
-                populateTable(response.data, tableBody);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function deleteAttachmentFile(id) {
-        alert(id);
-
-        // Confirm deletion
-        if (confirm("Are you sure you want to delete this row?")) {
-            // Make AJAX call to delete the row on the server
-            $.ajax({
-                url: '{{ route("quote.ajax.deleteAttachment") }}', // Replace with your server URL
-                method: 'POST', // Replace with appropriate HTTP method
-                data: {
-                    id: id
-                },
-                success: function(response) {
-                    if (response.success) {
-                        // Remove the row from the table
-                        row.remove();
-                    } else {
-                        alert("Failed to delete the row.");
-                    }
-                },
-                error: function() {
-                    alert("An error occurred while trying to delete the row.");
-                }
-            });
-        }
-    }
-
-    function setSiteAddressDetails(id) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerSiteDetails") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log(response.data);
-
-                let selectElement = document.getElementById('customerSiteDetails'); // or document.querySelector('[name="mySelectName"]');
-                let customerSiteDelivery = document.getElementById('customerSiteDelivery'); // or document.querySelector('[name="mySelectName"]');
-
-                let newOption = document.createElement('option');
-                newOption.value = response.data[0].id;
-                newOption.text = response.data[0].site_name;
-                const option1 = newOption.cloneNode(true);
-                newOption.selected = true;
-                selectElement.appendChild(newOption);
-                customerSiteDelivery.appendChild(option1);
-
-                // document.getElementById('customerSiteDetails');
-                document.getElementById('siteCustomerId').value = response.data[0].id;
-                document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                document.getElementById('customerSiteAddress').value = response.data[0].address;
-                document.getElementById('customerSiteCity').value = response.data[0].city;
-                document.getElementById('customerSiteCounty').value = response.data[0].country;
-                document.getElementById('customerSitePostCode').value = response.data[0].post_code;
-                document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                document.getElementById('customerSiteMobile').value = response.data[0].mobile;
-                document.getElementById('setSiteAddress').textContent = response.data[0].name;
-                document.getElementById('customerSiteCompany').value = response.data[0].company_name;
-                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_id);
-                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function setCustomerBillingData(id) {
-        // alert(id)
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log(response.data);
-
-                let selectElement = document.getElementById('billingDetailContact'); // Get the select element
-
-                // Create and append a new option
-                let newOption = document.createElement('option');
-                newOption.value = response.data[0].id;
-                newOption.text = response.data[0].contact_name;
-                selectElement.appendChild(newOption);
-
-                // Set the new option as selected
-                newOption.selected = true;
-                setFieldValues(['billing_add_id', 'siteCustomerId', 'site_delivery_add_id'], response.data[0].id);
-
-                // billing details data set
-                document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
-                document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
-                document.getElementById('billingDetailsEmail').value = response.data[0].email;
-                document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
-                document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
-                document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
-                document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
-                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
-                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
-
-                // Customer Site Address Data Set
-                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function getBillingDetailsData(id) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerDetails") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log("getCustomerDetails", response.data);
-                var contactData = response.data[0];
-                // billing details data set
-                // setFieldValues([], contactData.id);
-
-                setFieldValues(['billing_add_id', 'site_delivery_add_id', 'siteCustomerId', 'customer_id_site_delivery'], contactData.id);
-                setFieldValues(['billingDetailsName', 'customerSiteName', 'customerSiteDeliveryName'], contactData.contact_name);
-                setTextContent(['setCustomerName', 'setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany', 'setSiteDeliveryAddress'], contactData.name);
-                setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
-                setFieldValues(['billingDetailsEmail', 'customerSiteDeliveryEmail'], contactData.email);
-                setFieldValues(['billingCustomerCity', 'customerSiteCity'], contactData.city);
-                setFieldValues(['billingCustomerCounty', 'customerSiteCounty'], contactData.country);
-                setFieldValues(['billingCustomerPostcode', 'customerSitePostCode', 'customerSiteDeliveryPostCode'], contactData.postal_code);
-                setFieldValues(['billingCustomerTelephone', 'customerSiteTelephone', 'customerSiteDeliveryTelephone'], contactData.telephone);
-                setFieldValues(['billingCustomerMobile', 'customerSiteMobile', 'customerSiteDeliveryMobile'], contactData.mobile);
-                // customer_contact_id
-
-                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
-                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
-
-                // Customer Site Address Data Set
-                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-
-                // Customer Site Delivery Address Data Set
-                selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
-                selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-    function setCustomerBillingData(id) {
-        // alert(id)
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log(response.data);
-
-                let selectElement = document.getElementById('billingDetailContact'); // Get the select element
-
-                // Create and append a new option
-                let newOption = document.createElement('option');
-                newOption.value = response.data[0].id;
-                newOption.text = response.data[0].contact_name;
-                selectElement.appendChild(newOption);
-
-                // Set the new option as selected
-                newOption.selected = true;
-                setFieldValues(['billing_add_id', 'siteCustomerId', 'site_delivery_add_id'], response.data[0].id);
-
-                // billing details data set
-                document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
-                document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
-                document.getElementById('billingDetailsEmail').value = response.data[0].email;
-                document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
-                document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
-                document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
-                document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
-                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
-                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
-
-                // Customer Site Address Data Set
-                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-
-    function setCustomerBillingData(id) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerBillingAddressData") }}',
-            method: 'POST',
-            data: {
-                id: id
-            },
-            success: function(response) {
-                console.log(response.data);
-
-                let selectElement = document.getElementById('billingDetailContact'); // Get the select element
-
-                // Create and append a new option
-                let newOption = document.createElement('option');
-                newOption.value = response.data[0].id;
-                newOption.text = response.data[0].contact_name;
-                selectElement.appendChild(newOption);
-
-                // Set the new option as selected
-                newOption.selected = true;
-                setFieldValues(['billing_add_id', 'siteCustomerId', 'site_delivery_add_id'], response.data[0].id);
-
-                // billing details data set
-                document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
-                document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
-                document.getElementById('billingDetailsEmail').value = response.data[0].email;
-                document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
-                document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
-                document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
-                document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
-                selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
-                selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
-
-                // Customer Site Address Data Set
-                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
-
-    function selectPrevious(Select, previouslySelected) {
-        // Loop through the options in the select field
-        const options = Select.options;
-
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].value === previouslySelected) {
-                options[i].selected = true; // Set the previously selected country
-                break;
-            }
-        }
-    }
-
-    function setFieldValues(fields, value) {
-        fields.forEach(fieldId => {
-            document.getElementById(fieldId).value = value;
-        });
-    }
-
-    function setTextContent(fields, value) {
-        fields.forEach(fieldId => {
-            document.getElementById(fieldId).textContent = value;
-        });
-    }
-
-    function upload() {
-        var imgcanvas = document.getElementById("canv1");
-        var fileinput = document.getElementById("finput");
-        var image = new SimpleImage(fileinput);
-        image.drawTo(imgcanvas);
-    }
-
-    $(document).ready(function() {
-
-        // Enable/disable "Delete Selected" button based on checkbox selection
-        $(document).on("change", ".selectRow, #selectAll", function() {
-            const anySelected = $(".selectRow:checked").length > 0;
-            $("#deleteSelected").prop("disabled", !anySelected);
-
-            if (this.id === "selectAll") {
-                $(".selectRow").prop("checked", $(this).prop("checked"));
-            }
-        });
-
-        // Handle delete selected rows
-        $("#deleteSelected").click(function() {
-            if (confirm("Are you sure you want to delete the selected rows?")) {
-                // Collect all selected row IDs
-                const ids = $(".selectRow:checked")
-                    .map(function() {
-                        return $(this).closest("tr").data("id");
-                    })
-                    .get();
-
-                if (ids.length > 0) {
-                    // Send AJAX request to delete rows
-                    $.ajax({
-                        url: '{{ route("quote.ajax.deleteAttachment") }}', // Your server endpoint
-                        method: 'POST', // HTTP method
-                        data: {
-                            ids: ids,
-                            _token: '{{ csrf_token() }}' // CSRF token for Laravel
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                // Remove rows from the table
-                                $(".selectRow:checked").each(function() {
-                                    $(this).closest("tr").remove();
-                                });
-                                alert("Selected rows deleted successfully.");
-                                $("#deleteSelected").prop("disabled", true);
-                                $("#selectAll").prop("checked", false);
-                            } else {
-                                alert("Failed to delete the selected rows.");
-                            }
-                        },
-                        error: function() {
-                            alert("An error occurred while deleting the rows.");
-                        }
-                    });
-                }
-            }
-        });
-
-        // Handle "Download Selected" button
-        $("#downloadSelected").click(function() {
-            const selectedFiles = [];
-
-            // Collect selected files
-            $(".selectRow:checked").each(function() {
-                const row = $(this).closest("tr");
-                const fileUrl = row.find("a[target='_blank']").attr("href");
-                selectedFiles.push(fileUrl);
-            });
-
-            if (selectedFiles.length > 0) {
-                downloadMultipleFiles(selectedFiles);
-            }
-        });
-
-        // Function to trigger download for each file
-        function downloadMultipleFiles(files) {
-            files.forEach((fileUrl) => {
-                const a = document.createElement("a");
-                a.href = fileUrl;
-                a.download = ""; // Optional: Set custom filename
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            });
-        }
-
-    });
-    // ****************************************************************
-
-
-    //**************insrtTitle
-    function insrtAppoinment() {
-        const node = document.createElement("tr");
-        node.classList.add("add_insrtAppoinment");
-        node.innerHTML = `<td>
-                    <div class="d-flex">
-                        <p class="leftNum">1</p>
-                        <select class="form-control editInput selectOptions setUserData" id="">
-                            <option>Select user</option>
-                        </select>
-                        <a href="#!" class="callIcon"><i class="fa-solid fa-square-phone"></i></a>
-                    </div>
-                    <div class="alertBy">
-                        <label><strong>Alert By :</strong></label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                            <label class="form-check-label" for="inlineCheckbox1">SMS</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                            <label class="form-check-label" for="inlineCheckbox2">Email</label>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="addDateAndTime">
-                        <div class="startDate">
-                            <input type="date" name="date" class=" editInput">
-                            <input type="time" name="time" class=" editInput">
-                        </div>
-                    </div>
-                    <div class="pt-3">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="floatingAppointment" value="option2">
-                            <label class="form-check-label" for="floatingAppointment">Floating Appointment</label>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="addDateAndTime">
-                        <div class="endDate">
-                            <input type="date" name="date" class=" editInput">
-                            <input type="time" name="time" class=" editInput">
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="addTextarea">
-                        <textarea cols="40" rows="5" placeholder="Type Notes...">Type Notes... </textarea>
-                    </div>
-                </td>
-                <td class="col-2">
-                    <div class="appoinment_type">
-                        <select class="form-control editInput selectOptions setAppointmentType">
-                        </select>
-                    </div>
-                    <div class="Priority">
-                        <label>Priority :</label>
-                        <select class="form-control editInput selectOptions" id="inputJobType">
-                            <option value="1">Low</option>
-                            <option value="2" selected>Medium</option>
-                            <option value="3">High</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="statuswating">
-                        <label class="form-check-label" for="floatingAppointment">Awaiting </label>
-                        <a href="#!" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                    <div class="tabheadingTitle">
-                        <a href="#" class="profileDrop me-3"> Notify</a>
-                    </div>
-                </td>  
-            `;
-
-        appointmentType();
-        getUsersData();
-
-        const tableBody = document.querySelector(".add_insrtAppoinment");
-        if (tableBody) {
-            tableBody.appendChild(node);
-
-            // Add event listener to the close button
-            const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
-                node.remove(); // Remove the row when close button is clicked
-            });
-        } else {
-            console.error("Table body with ID 'add_insrtAppoinment' not found.");
-        }
-        salesAppointment(tableBody);
-    }
-
-    function salesAppointment(table) {
-
-        let existingTfoot = table.querySelector('tfoot');
-        if (existingTfoot) {
-            // Remove the existing footer
-            existingTfoot.remove();
-        }
-
-        const tfoot = document.createElement('tfoot');
-
-        const footerRow = document.createElement('tr');
-        const footerCell = document.createElement('td');
-
-        // Set the cell to span all columns (adjust colspan to your table structure)
-        footerCell.colSpan = 8; // Change 8 to the number of columns in your table
-        footerCell.innerHTML = `<a href="#!" class="profileDrop ms-3">Save Appointment(s)</a>`;
-
-        // Append the cell to the row
-        footerRow.appendChild(footerCell);
-
-        // Append the row to the footer
-        tfoot.appendChild(footerRow);
-
-        // Append the footer to the table
-        table.appendChild(tfoot);
-
-    }
-
-    function getUsersData() {
-        $.ajax({
-            url: '{{ route("quote.ajax.getUsersData") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("response.userData", response.data);
-
-                const data = response.data;
-                const users = document.querySelectorAll('.setUserData');
-                console.log("Users:", users);
-
-                if (users.length === 0) {
-                    console.error("No elements found with class 'setUserData'");
-                    return;
-                }
-
-                users.forEach(user => {
-
-                    // Clear existing options if needed
-                    user.innerHTML = ''; // Optional, uncomment if required
-                    const defaultOption = document.createElement('option');
-                    defaultOption.value = ''; // Use an empty value for the "Please Select" option
-                    defaultOption.textContent = 'Please Select';
-                    defaultOption.disabled = true; // Make it unselectable (optional)
-                    defaultOption.selected = true; // Pre-select it by default
-                    user.appendChild(defaultOption);
-
-                    data.forEach(item => {
-                        const option = document.createElement('option');
-                        option.value = item.id;
-                        option.textContent = item.name;
-                        user.appendChild(option);
-                    });
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("AJAX Error:", error);
-            }
-        });
-    }
-
-    function appointmentType() {
-        $.ajax({
-            url: '{{ route("job.ajax.jobAppointment") }}',
-            method: 'GET',
-            success: function(response) {
-                console.log("response.jobAppointment", response.data);
-
-                const data = response.data;
-                const appointments = document.querySelectorAll('.setAppointmentType');
-                console.log("Appointments:", appointments);
-
-                if (appointments.length === 0) {
-                    console.error("No elements found with class 'setAppointmentType'");
-                    return;
-                }
-
-                appointments.forEach(appointment => {
-                    // Clear existing options if needed
-                    appointment.innerHTML = ''; // Optional, uncomment if required
-
-                    data.forEach(item => {
-                        console.log("Item:", item);
-
-                        const option = document.createElement('option');
-                        option.value = item.id;
-                        option.textContent = item.name;
-                        appointment.appendChild(option);
-                    });
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("AJAX Error:", error);
-            }
-        });
-    }
 </script>
+<script type="text/javascript" src="{{ url('public/js/salesFinance/quotes/customQuoteForm.js') }}"></script>

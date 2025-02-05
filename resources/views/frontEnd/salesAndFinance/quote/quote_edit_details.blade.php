@@ -703,7 +703,7 @@
                     </div>
                     <!-- End  off Your Quotes -->
 
-                    <!-- End off col-md-12 -->
+                    <!-- off col-md-12 -->
                     <div id="hideQuoteDiv">
                         <div class="newJobForm mt-4">
                             <label class="upperlineTitle">Items Details</label>
@@ -4279,8 +4279,6 @@
                 }
             });
         });
-
-
 
         function navigateTab(offset) {
             const $tabs = $("#modalTabs .nav-link");
