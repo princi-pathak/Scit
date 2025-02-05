@@ -947,6 +947,7 @@ class Purchase_orderController extends Controller
         }
         $requestData['loginUserId']=Auth::user()->id;
         $requestData['home_id']=Auth::user()->home_id;
+        $requestData['oustanding_amount']=$request->gross_amount;
         // echo "<pre>";print_r($requestData);die;
         try {
             $invoice=PurchaseOrderInvoiceReceives::purchaseOrderInvoiceReceives_save($requestData);
@@ -1215,5 +1216,60 @@ class Purchase_orderController extends Controller
         // return $vat_amount;
         // die;
         return response()->json(['data' => $data_array,'grandNetAmount'=>$grandNetAmount,'all_vatTotalAmount'=>$grandvat,'all_TotalAmount'=>$grandTotal,'outstandingAmountTotal'=>$grandPaidAmount,'grandGrossAmount'=>$gross_amount]);
+    }
+    public function purchase_order_invoices(Request $request){
+        $home_id=Auth::user()->home_id;
+        $data['list']=PurchaseOrderInvoiceReceives::with('suppliers','purchaseOrders')->where(['deleted_at'=>null])->get();
+        $data['draftCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>1])->count();
+        $data['awaitingApprovalCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>2])->count();
+        $data['approvedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null])->whereIn('status',[3,9])->count();
+        $data['rejectedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>8])->count();
+        $data['actionedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>4])->count();
+        $data['paidCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>5])->count();
+        // echo "<pre>";print_r($data['list']);die;
+        return view('frontEnd.salesAndFinance.purchase_order.purchase_order_invoicelist',$data);
+    }
+    public function searchPurchaseOrdersInvoice(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $query = PurchaseOrderInvoiceReceives::with('suppliers','purchaseOrders')->where(['deleted_at'=>null]);
+    
+        // echo "<pre>";print_r($query->get());die;
+        $selectedsupplierId=$request->selectedsupplierId;
+        if ($request->filled('po_ref')) {
+            $query->where('purchase_order_ref', $po_ref);
+        }
+        if ($request->filled('supplier')) {
+            $query->where('supplier_id', $selectedsupplierId);
+        }
+        if ($request->filled('id_startDate') && $request->filled('id_endDate')) {
+            $query->whereBetween('expected_deleveryDate', [$edd_startDate, $edd_endDate]);
+        }
+        if ($request->filled('created_startDate') && $request->filled('created_endDate')) {
+            $query->whereBetween('purchase_date', [$po_startDate, $po_endDate]);
+        }
+        
+        if ($request->filled('paid_status')) {
+            $query->where('delivery_status', $delivery_status);
+        }
+        $search_data = $query->where('loginUserId',Auth::user()->id)->get();
+        return $search_data;
+    }
+    public function getAllPurchaseInvoices(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $po_id=$request->po_id;
+        $data = PurchaseOrderInvoiceReceives::with('suppliers','purchaseOrders')->where(['po_id'=>$po_id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
+        // $purchase_orders = PoAttachment::with(['attachmentType'])->where(['po_id'=> $request->id,'deleted_at'=>null]);
+
+        return response()->json([
+            'success' => true, 'list_data' => $data, 
+            'pagination' => [
+                    'total' => $data->total(),
+                    'current_page' => $data->currentPage(),
+                    'last_page' => $data->lastPage(),
+                    'per_page' => $data->perPage(),
+                    'next_page_url' => $data->nextPageUrl(),
+                    'prev_page_url' => $data->previousPageUrl(),
+                ]
+        ]);
     }
 }

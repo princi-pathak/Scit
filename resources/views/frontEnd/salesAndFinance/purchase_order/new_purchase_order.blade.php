@@ -635,6 +635,71 @@ ul#purchase_qoute_refList {
                                 </div>
                             </div>
                         </div> -->
+                        </div>
+                        <div class="newJobForm mt-4">
+                            <label class="upperlineTitle">Supplier Invoices</label>
+                            <div class="row">
+                                @if((isset($key) && $key !='') && (isset($duplicate) && $duplicate ==''))
+                                <div class="col-sm-12">
+                                    <div class="productDetailTable">
+                                        <table class="table" id="supplier_invoice_table">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Recorded Date</th>
+                                                    <th>Recorded By</th>
+                                                    <th>Invoice Ref</th>
+                                                    <th>Invoice Date</th>
+                                                    <th>Due Date</th>
+                                                    <th>Description</th>
+                                                    <th>Attachment</th>
+                                                    <th>Paid</th>
+                                                    <th>Net Amount</th>
+                                                    <th>VAT Amount</th>
+                                                    <th>Amount</th>
+                                                    <th>Paid</th>
+                                                    <th>Outstanding</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="supplierInvoices_result"></tbody>
+                                        </table>
+                                        <div id="pagination-controls-Invoices"></div>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="newJobForm mt-4">
+                                <label class="upperlineTitle">Payments Paid</label>
+                                <div class="row">
+                                    @if((isset($key) && $key !='') && (isset($duplicate) && $duplicate ==''))
+                                    <div class="col-sm-12">
+                                        <div class="productDetailTable">
+                                            <table class="table">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Recorded Date</th>
+                                                        <th>Recorded By</th>
+                                                        <th>Payment Date</th>
+                                                        <th>Payment Type</th>
+                                                        <th>Invoice</th>
+                                                        <th>Reference</th>
+                                                        <th>Description</th>
+                                                        <th>Type</th>
+                                                        <th>Amount</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="payment_paid_result"></tbody>
+                                            </table>
+                                            <div id="pagination-controls-Payment_paid"></div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="newJobForm mt-4">
                                 <label class="upperlineTitle">Attachments</label>
                                 <div class="row">
@@ -1768,6 +1833,7 @@ $('#search-product').on('keyup', function() {
             getAttachment(purchaseOrderId,'{{ url("getAllAttachmens") }}');
             getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
             getAllNewTaskList(purchaseOrderId,'{{ url("getAllNewTaskList") }}');
+            getAllPurchaseInvoices(purchaseOrderId,'{{url("getAllPurchaseInvoices")}}');
         }else{
             var purchaseOrderId='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>'
             getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
@@ -2501,6 +2567,135 @@ $(document).on('click','.attachment_delete', function() {
         MultiselectDropdown();
 
     });
+    function getAllPurchaseInvoices(po_id,pageUrl = '{{ url("getAllPurchaseInvoices") }}'){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {po_id: po_id,_token:token},
+            success: function(response) {
+                console.log(response.list_data.data);
+                // return false;
+                var data=response.list_data.data;
+                const tableBody = document.querySelector(`#supplier_invoice_table tbody`);
+                if (data.length === 0) {
+                    const noDataRow = document.createElement('tr');
+                    noDataRow.id='EmptyError'
+                    const noDataCell = document.createElement('td');
+
+                    noDataCell.setAttribute('colspan', 4);
+                    noDataCell.textContent = 'No products found';
+                    noDataCell.style.textAlign = 'center'; 
+
+                    noDataRow.appendChild(noDataCell);
+                    tableBody.appendChild(noDataRow);
+                }else{
+                    const emptyErrorRow = document.getElementById('EmptyError');
+                    if (emptyErrorRow) {
+                        emptyErrorRow.remove();
+                    }
+                    data.forEach(invoice => {
+                        const row = document.createElement('tr');
+                        var createinv_date = moment(invoice.created_at).format('DD/MM/YYYY');
+                        var invoice_date = moment(invoice.invoice_date).format('DD/MM/YYYY');
+                        var due_date = moment(invoice.due_date).format('DD/MM/YYYY');
+
+                        const invcreated_at = document.createElement('td');
+                        invcreated_at.innerHTML = createinv_date;
+                        row.appendChild(invcreated_at);
+
+                        const invrecorderBy = document.createElement('td');
+                        invrecorderBy.innerHTML = "{{Auth::user()->name}}";
+                        row.appendChild(invrecorderBy);
+
+                        const inv_ref = document.createElement('td');
+                        inv_ref.innerHTML = invoice.inv_ref;
+                        row.appendChild(inv_ref);
+
+                        const inv_date = document.createElement('td');
+                        inv_date.innerHTML = invoice_date;
+                        row.appendChild(inv_date);
+
+                        const inv_duedate = document.createElement('td');
+                        inv_duedate.innerHTML = due_date;
+                        row.appendChild(inv_duedate);
+
+                        const invdescription = document.createElement('td');
+                        invdescription.innerHTML = invoice.notes || "";
+                        row.appendChild(invdescription);
+
+                        const invattachment = document.createElement('td');
+                        invattachment.innerHTML = invoice.original_file_name || "";
+                        row.appendChild(invattachment);
+
+                        const invpaid_status = document.createElement('td');
+                        invpaid_status.innerHTML = (invoice.oustanding_amount == 0) ? "Yes" : "No";
+                        row.appendChild(invpaid_status);
+
+                        const invnet_amount = document.createElement('td');
+                        invnet_amount.innerHTML = invoice.net_amount;
+                        row.appendChild(invnet_amount);
+
+                        const invvat_amount = document.createElement('td');
+                        invvat_amount.innerHTML = invoice.vat_amount;
+                        row.appendChild(invvat_amount);
+
+                        const invvat_grossamount = document.createElement('td');
+                        invvat_grossamount.innerHTML = invoice.gross_amount;
+                        row.appendChild(invvat_grossamount);
+
+                        const invvat_paid = document.createElement('td');
+                        invvat_paid.innerHTML = '0.00';
+                        row.appendChild(invvat_paid);
+
+                        const invvat_outstanding = document.createElement('td');
+                        invvat_outstanding.innerHTML = invoice.oustanding_amount;
+                        row.appendChild(invvat_outstanding);
+
+                        const invActionHtml=`<div class="d-flex justify-content-end">
+                                        <div class="nav-item dropdown">
+                                            <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Action
+                                            </a>
+                                            <div class="dropdown-menu fade-up m-0">
+                                                <a href="javascript:void(0)" onclick="openRecordPaymentModal123123()" class="dropdown-item">Edit Invoice</a>
+                                                <hr class="dropdown-divider">
+                                                <a href="javascript:void(0)" onclick="openRecordPaymentModal(`+invoice.po_id+`,'`+invoice.inv_ref+`',`+invoice.supplier_id+`,'`+invoice.gross_amount+`','`+invoice_date+`',`+invoice.oustanding_amount+`)" class="dropdown-item">Record Payment</a>
+                                                <hr class="dropdown-divider">
+                                                <a href="javascript:void(0)" onclick="openInvoiceRecieveModal()" class="dropdown-item">Delete Invoice</a>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>`;
+
+                        const invvat_actionList = document.createElement('td');
+                        invvat_actionList.innerHTML = invActionHtml;
+                        row.appendChild(invvat_actionList);
+
+                        tableBody.appendChild(row);
+                        updateAmount(row)
+                    });
+                    // $("#product_calculation").show();
+                    
+                }
+                
+                // var paginationProductDetails = response.pagination;
+
+                // var paginationControlsProductDetail = $("#pagination-controls-Produc-details");
+                // paginationControlsProductDetail.empty();
+                // if (paginationProductDetails.prev_page_url) {
+                //     paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.prev_page_url + '\')">Previous</button>');
+                // }
+                // if (paginationProductDetails.next_page_url) {
+                //     paginationControlsProductDetail.append('<button type="button" class="profileDrop" onclick="getProductDetail(' + id + ', \'' + paginationContact.next_page_url + '\')">Next</button>');
+                // }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                // location.reload();
+            }
+        });
+    }
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

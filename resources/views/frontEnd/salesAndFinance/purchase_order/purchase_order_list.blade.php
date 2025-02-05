@@ -1811,5 +1811,8 @@
         editor.setData(message);
         $("#emailModal").modal('show');
     }
+    function getAllPurchaseInvices(data){
+        location.reload();
+    }
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

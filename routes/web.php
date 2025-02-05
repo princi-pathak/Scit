@@ -419,6 +419,9 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/purchase-orders-search','purchase_orders_search');
 		Route::get('/purchase-order-statements','purchase_order_statements');
 		Route::post('/searchPurchaseOrdersStatements','searchPurchaseOrdersStatements');
+		Route::get('/purchase-order-invoices','purchase_order_invoices');
+		Route::post('/searchPurchaseOrdersInvoice','searchPurchaseOrdersInvoice');
+		Route::post('/getAllPurchaseInvoices','getAllPurchaseInvoices');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function(){
