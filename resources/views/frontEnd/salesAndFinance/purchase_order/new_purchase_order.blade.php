@@ -832,6 +832,111 @@ ul#purchase_qoute_refList {
             </div>
         </section>
 <!-- Models Start Here -->
+ <!-- Record Payment Modal start here -->
+<div class="modal fade" id="recordPaymentModal" tabindex="-1" aria-labelledby="recordPaymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content add_Customer">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recordPaymentModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="text-center mt-3" id="message_recordPaymentModal" style="display:none"></div>
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="formDtail">
+                            <form id="recordPaymentForm" class="customerForm pt-0">
+                                <input type="hidden" name="po_id" id="recordPayment_po_id">
+                                <!-- <input type="hidden" name="product_id" id="recordPayment_ppurchaseProduct_id"> -->
+                                <input type="hidden" name="supplier_id" id="recordPayment_ppurchaseSupplier_id">
+                                <input type="hidden" name="record_type" value="1">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Purchase Order</label>
+                                            <div class="col-sm-9">
+                                                <p id="purchaseOrderRecordDate"></p>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Supplier</label>
+                                            <div class="col-sm-9">
+                                                <p id="record_supplierName"></p>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Purchase Order Total</label>
+                                            <div class="col-sm-9">
+                                                <p id="record_TotalAmount"></p>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Outstanding Amount</label>
+                                            <div class="col-sm-9">
+                                                <p id="record_OutstandingAmount"></p>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Amount Paid<span class="radStar">*</span></label>
+                                            <div class="col-sm-1">
+                                                <div class="tag_box text-center">
+                                                    <span style="padding:3px">£</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control editInput textareaInput" id="record_AmountPaid" name="record_amount_paid">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Payment Date<span class="radStar ">*</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="date" id="record_PaymentDate" name="record_payment_date" class="form-control editInput">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputProject" class="col-sm-3 col-form-label">Payment Type<span class="radStar ">*</span></label>
+                                            <div class="col-sm-7">
+                                                <select class="form-control editInput selectOptions" id="record_PaymentType" name="record_payment_type">
+                                                    @foreach($paymentTypeList as $type)
+                                                    <option value="{{$type->id}}">{{$type->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <a href="javascript:void(0)" class="formicon" onclick="openPaymentTypeModal()"><i class="fa-solid fa-square-plus"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Reference</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control editInput textareaInput" placeholder="Reference (if any)" id="record_Reference" name="record_reference">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Description</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control textareaInput CustomercheckError" id="record_Description" name="record_description" rows="10" maxlength="500"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> <!-- End row -->
+            </div>
+            <div class="modal-footer customer_Form_Popup">
+
+                <button type="button" class="profileDrop" id="saverecordPaymentModal" onclick="saverecordPaymentModal()">Save</button>
+                <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end here -->
 
 @include('components.add-supplier-modal')
 @include('components.add-customer-modal')
@@ -2658,7 +2763,7 @@ $(document).on('click','.attachment_delete', function() {
                                                 Action
                                             </a>
                                             <div class="dropdown-menu fade-up m-0">
-                                                <a href="javascript:void(0)" onclick="openRecordPaymentModal123123()" class="dropdown-item">Edit Invoice</a>
+                                                <a href="javascript:void(0)" class="dropdown-item">Edit Invoice</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="javascript:void(0)" onclick="openRecordPaymentModal(`+invoice.po_id+`,'`+invoice.inv_ref+`',`+invoice.supplier_id+`,'`+invoice.gross_amount+`','`+invoice_date+`',`+invoice.oustanding_amount+`)" class="dropdown-item">Record Payment</a>
                                                 <hr class="dropdown-divider">
@@ -2693,6 +2798,60 @@ $(document).on('click','.attachment_delete', function() {
             error: function(xhr, status, error) {
                 console.error(error);
                 // location.reload();
+            }
+        });
+    }
+    function openRecordPaymentModal(po_id,ref,supplier_id,total_amount, date,oustanding_amount){
+        // return false;
+        // alert(typeof(total_amount));
+        var total_amount=Number(total_amount);
+        $("#recordPaymentModal").modal('show');
+        $("#purchaseOrderRecordDate").text(ref + ' On ' + date);
+        $("#recordPayment_po_id").val(id);
+        $("#recordPaymentModalLabel").text("Record Payment - " + ref);
+        $("#recordPayment_ppurchaseSupplier_id").val(supplier_id);
+        // $("#recordPayment_ppurchaseProduct_id").val(product_id);
+        $("#record_TotalAmount").text('£' + total_amount.toFixed(2));
+        $("#record_OutstandingAmount").text('£' + oustanding_amount.toFixed(2));
+        var calculateOutstandingAmount = total_amount - oustanding_amount;
+        $("#record_AmountPaid").val(oustanding_amount.toFixed(2));
+        return false;
+        $("#record_supplierName").text(supplier_name);
+        
+    }
+    function saverecordPaymentModal() {
+        $.ajax({
+            type: "POST",
+            url: "{{url('/savePurchaseOrderRecordPayment')}}",
+            data: new FormData($("#recordPaymentForm")[0]),
+            async: false,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if (response.vali_error) {
+                    alert(response.vali_error);
+                    $(window).scrollTop(0);
+                    return false;
+                } else if (response.success === true) {
+                    $(window).scrollTop(0);
+                    $('#message_recordPaymentModal').addClass('success-message').text(response.message).show();
+                    setTimeout(function() {
+                        $('#message_recordPaymentModal').removeClass('success-message').text('').hide();
+                        location.reload();
+                    }, 3000);
+                } else if (response.success === false) {
+                    $('#message_recordPaymentModal').addClass('error-message').text(response.message).show();
+                    setTimeout(function() {
+                        $('#error-message').text('').fadeOut();
+                    }, 3000);
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
             }
         });
     }

@@ -116,6 +116,7 @@ class Purchase_orderController extends Controller
         $data['contact_name']=$contact_name;
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
         $data['reminder_data']=$reminder_data;
+        $data['paymentTypeList']=Payment_type::getActivePaymentType($home_id);
         // echo "<pre>";print_r($data['country']);die;
         return view('frontEnd.salesAndFinance.purchase_order.new_purchase_order',$data);
     }

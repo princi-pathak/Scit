@@ -619,8 +619,9 @@
                         <div class="formDtail">
                             <form id="recordPaymentForm" class="customerForm pt-0">
                                 <input type="hidden" name="po_id" id="recordPayment_po_id">
-                                <input type="hidden" name="product_id" id="recordPayment_ppurchaseProduct_id">
+                                <!-- <input type="hidden" name="product_id" id="recordPayment_ppurchaseProduct_id"> -->
                                 <input type="hidden" name="supplier_id" id="recordPayment_ppurchaseSupplier_id">
+                                <input type="hidden" name="record_type" value="1">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 col-xl-6">
