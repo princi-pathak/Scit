@@ -74,6 +74,10 @@
 		ul.pagination li {
 			padding: 0 10px;
 		}
+
+		.supplier-note p{
+			display:inline;
+		}
 	</style>
 </head>
 
@@ -255,6 +259,18 @@
 										<?php } ?>
 									</tbody>
 								</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+					<td colspan="8">
+							<div style="margin: 20px 0 10px;" class="supplier-note">
+								<h4 style="display:inline;">Supplier Notes: </h4>
+								<?php if(isset($po_details->supplier_notes) && $po_details->supplier_notes !=''){?> <?php echo $po_details->supplier_notes;}?>
+							</div>
+							<div style="margin: 0 0 20px 0;"  class="supplier-note">
+								<h4 style="display:inline;">Delivery Notes: </h4>
+								<?php if(isset($po_details->supplier_notes) && $po_details->delivery_notes !=''){?> <?php echo $po_details->delivery_notes;}?>
 							</div>
 						</td>
 					</tr>

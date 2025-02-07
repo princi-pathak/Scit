@@ -484,22 +484,22 @@ class Purchase_orderController extends Controller
         $data['customer_data'] = Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
         $data['users'] = User::where('home_id', $home_id)->select('id', 'name','email','phone_no')->where('is_deleted', 0)->get();
         $data['paymentTypeList']=Payment_type::getActivePaymentType($home_id);
-        // echo "<pre>";print_r($data['list']);die;
+        // echo "<pre>";print_r($data['status']);die;
         return view('frontEnd.salesAndFinance.purchase_order.purchase_order_list',$data);
     }
     private function check_segment_purchaseOrder($lastSegment=null){
         if($lastSegment === 'AwaitingApprivalPurchaseOrders'){
-            return ['status'=>2,'list_status'=>'Awaiting Approval Purchase Oreders'];
+            return ['status'=>2,'list_status'=>'Awaiting Approval','page_heading'=>'Awaiting Authorisation Purchase Orders'];
         }else if($lastSegment === 'Approved'){
-            return ['status'=>3,'list_status'=>'Approved'];
+            return ['status'=>3,'list_status'=>'Approved','page_heading'=>'Authorised Purchase Orders'];
         }else if($lastSegment === 'Rejected'){
-            return ['status'=>8,'list_status'=>'Rejected'];
+            return ['status'=>8,'list_status'=>'Rejected','page_heading'=>'Rejected Purchase Orders'];
         }else if($lastSegment === 'Actioned'){
-            return ['status'=>4,'list_status'=>'Actioned'];
+            return ['status'=>4,'list_status'=>'Actioned','page_heading'=>'Actioned Purchase Orders'];
         }else if($lastSegment === 'Paid'){
-            return ['status'=>5,'list_status'=>'Paid'];
+            return ['status'=>5,'list_status'=>'Paid','page_heading'=>'Paid Purchase Orders'];
         }else{
-            return ['status'=>1,'list_status'=>'Draft'];
+            return ['status'=>1,'list_status'=>'Draft','page_heading'=>'Draft Purchase Orders'];
         }
     }
     public function searchPurchaseOrders(Request $request){
@@ -621,7 +621,7 @@ class Purchase_orderController extends Controller
                     $list_status= "Draft";
                     break;
                 case 2:
-                    $list_status= "Awaiting Approval Purchase Oreders";
+                    $list_status= "Awaiting Approval";
                     break;
                 case 3:
                     $list_status= "Approved";

@@ -23,19 +23,15 @@
     line-height: 22px;
 }
 
-.totlepayment {
+/* .totlepayment {
     width: 300px;
     margin-left: 46%;
     text-align: end;
-}
+} */
 .image_style {
     cursor: pointer;
 }
-ul#purchase_qoute_refList {
-    padding: 0 5px;
-    height: 156px;
-    overflow: auto;
-}
+
 .unclicked{
     pointer-events: none;
 }
@@ -368,18 +364,18 @@ ul#purchase_qoute_refList {
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Ref</label>
-                                                <div class="col-sm-9">
+                                                <div class="col-sm-9 position-relative">
                                                     <input type="text" class="form-control editInput textareaInput" id="purchase_qoute_ref" name="purchase_qoute_ref" placeholder="Quote, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->qoute_ref != ''){echo $purchase_orders->qoute_ref;}?>">
                                                     <input type="hidden" id="selectedPurchaseQuotRefId" name="qoute_ref">
-                                                    <div class="parent-container purchase_qoute_ref-container"></div>
+                                                    <div class="search-container purchase_qoute_ref-container"></div>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPurchase" class="col-sm-3 col-form-label">Job Ref</label>
-                                                <div class="col-sm-9">
+                                                <div class="col-sm-9 position-relative">
                                                     <input type="text" class="form-control editInput textareaInput" id="purchase_job_ref" name="purchase_job_ref" placeholder="Job Ref, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->job_ref != ''){echo $purchase_orders->job_ref;}?>">
                                                     <input type="hidden" id="selectedPurchaseJobRefId" name="job_ref">
-                                                    <div class="parent-container purchase_job_ref-container"></div>
+                                                    <div class="search-container purchase_job_ref-container"></div>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -508,7 +504,7 @@ ul#purchase_qoute_refList {
                                 <div class="col-sm-9">
                                     <div class="mb-3 row">
                                         <label for="inputCountry" class="col-sm-2 col-form-label">Select product</label>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3 position-relative">
                                             <input type="text" class="form-control editInput textareaInput" id="search-product" placeholder="Type to add product">
                                             <div class="parent-container"></div>
                                         </div>
@@ -546,7 +542,7 @@ ul#purchase_qoute_refList {
                                                     <th>Price</th>
                                                     <th>Price VAT(%) <a href="javascript:void(0)" class="formicon" onclick="get_modal(9)"><i class="fa-solid fa-square-plus"></i>
                                                     </a></th>
-                                                    <th>VAT </th>
+                                                    <th class="text-end">VAT </th>
                                                     <th>Amount</th>
                                                     <th>Delivered QTY</th>
                                                     <th>Quantity Available</th>
@@ -555,38 +551,40 @@ ul#purchase_qoute_refList {
                                             <tbody id="product_result">
                                                  
                                             </tbody>
-
-                                            
-                                        </table>
-                                        <table class="table totlepayment" id="product_calculation" style="display:none">
-                                            <tfoot class="insrt_product_and_detail">
-                                               
+                                            <tfoot class="insrt_product_and_detail product_Det" id="product_calculation" style="display:none">
                                                 <tr>
-                                                    <td>Sub Total (exc. VAT)</td>
+                                                    <td class="border_tran" colspan="5"></td>
+                                                    <td colspan="3" >Sub Total (exc. VAT)</td>
                                                     <td id="exact_vat"></td>
+                                                    <td class="border_tran" colspan="3" ></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        VAT
-                                                    </td>
+                                                <tr> 
+                                                    <td class="border_tran" colspan="5"></td>
+                                                    <td colspan="3" >VAT</td>
                                                     <td id="vat"></td>
+                                                    <td class="border_tran" colspan="3" ></td>
                                                 </tr>
-                                                
                                                 <tr>
-                                                    <td><strong>Total(inc.VAT)</strong></td>
+                                                    <td class="border_tran" colspan="5"></td>
+                                                    <td colspan="3" ><strong>Total(inc.VAT)</strong></td>
                                                     <td><strong id="total_vat"></strong></td>
+                                                    <td class="border_tran" colspan="3" ></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Paid</td>
-                                                    <td>-£0.00</td>
+                                                    <td class="border_tran" colspan="5"></td>
+                                                    <td colspan="3" ><strong>Paid</strong></td>
+                                                    <td><strong>-£0.00</strong></td>
+                                                    <td class="border_tran" colspan="3" ></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><strong>Outstanding (inc.VAT)</strong></td>
+                                                    <td class="border_tran" colspan="5"></td>
+                                                    <td colspan="3" ><strong>Outstanding (inc.VAT)</strong></td>
                                                     <td><strong id="outstanding_vat"></strong></td>
+                                                    <td class="border_tran" colspan="3" ></td>
                                                 </tr>
                                             </tfoot>
-                                            </table>
-                                            <div id="pagination-controls-Produc-details"></div>
+                                        </table>
+                                        <div id="pagination-controls-Produc-details"></div>
                                     </div>
                                 </div>
                             </div>
@@ -636,7 +634,7 @@ ul#purchase_qoute_refList {
                             </div>
                         </div> -->
                         </div>
-                        <div class="newJobForm mt-4">
+                        <div class="newJobForm mt-4" id="SupplierInvoiceList" style="display:none">
                             <label class="upperlineTitle">Supplier Invoices</label>
                             <div class="row">
                                 @if((isset($key) && $key !='') && (isset($duplicate) && $duplicate ==''))
@@ -669,7 +667,7 @@ ul#purchase_qoute_refList {
                                 @endif
                             </div>
                         </div>
-                        <div class="newJobForm mt-4">
+                        <div class="newJobForm mt-4" id="PaymentsPaid" style="display:none">
                                 <label class="upperlineTitle">Payments Paid</label>
                                 <div class="row">
                                     @if((isset($key) && $key !='') && (isset($duplicate) && $duplicate ==''))
@@ -707,7 +705,7 @@ ul#purchase_qoute_refList {
                                         <div class="jobsection">
                                             <a href="javascript:void(0)" class="profileDrop" onclick="get_modal(10)">New Attachment</a>
                                             @if((isset($key) && $key !='') && (isset($duplicate) && $duplicate ==''))
-                                            <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete Attachment(s)</a>
+                                            <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop" style="display:none">Delete Attachment(s)</a>
                                             @endif
                                         </div>
                                     </div>
@@ -1899,6 +1897,9 @@ $('#search-product').on('keyup', function() {
                     li.id = item.id;
                     li.className = "editInput";
                     ul.appendChild(li); // Append the li to the ul
+                    const hr = document.createElement('hr');
+                    // hr.className='dropdown-divider';
+                    ul.appendChild(hr);
                 });
 
                 // Step 4: Append the ul to the div
@@ -1967,6 +1968,7 @@ $('#search-product').on('keyup', function() {
                 const tbody = $('#attachments_result');
                 tbody.empty();
                 attachments.forEach(attachment => {
+                    $("#deleteSelectedRows").show();
                     const attachmentType = attachment.attachment_type?.title || ''; 
                     const title = attachment.title || ''; 
                     const description = attachment.description || '';
@@ -2695,6 +2697,7 @@ $(document).on('click','.attachment_delete', function() {
                     noDataRow.appendChild(noDataCell);
                     tableBody.appendChild(noDataRow);
                 }else{
+                    $("#SupplierInvoiceList").show();
                     const emptyErrorRow = document.getElementById('EmptyError');
                     if (emptyErrorRow) {
                         emptyErrorRow.remove();
