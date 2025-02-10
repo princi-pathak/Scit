@@ -460,13 +460,17 @@
                                                 <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
                                                 @endif
                                                 <hr class="dropdown-divider">
+                                                @if($status['status'] != 5)
                                                 <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$product_id}},{{$val->outstanding_amount}},{{$val->supplier_id}})" class="dropdown-item">Record Payment</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$val->outstanding_amount}})" class="dropdown-item">Invoice Received</a>
                                                 <hr class="dropdown-divider">
+                                                @endif
                                                 @if($status['status'] == 8 || $status['status'] == 4 || $status['status'] == 5)
-                                                <a href="#!" class="dropdown-item">Cancel Purchase Order</a>
-                                                <hr class="dropdown-divider">
+                                                    @if($val->delivery_status !=1)
+                                                    <a href="#!" class="dropdown-item">Cancel Purchase Order</a>
+                                                    <hr class="dropdown-divider">
+                                                    @endif
                                                 @endif
                                                 <a href="#!" class="dropdown-item">CRM / History</a>
                                                 <hr class="dropdown-divider">
@@ -646,6 +650,7 @@
                                 <!-- <input type="hidden" name="product_id" id="recordPayment_ppurchaseProduct_id"> -->
                                 <input type="hidden" name="supplier_id" id="recordPayment_ppurchaseSupplier_id">
                                 <input type="hidden" name="record_type" value="1">
+                                <input type="hidden" name="total_amount" id="recordPayment_total_amount" value="">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -1712,6 +1717,7 @@
     }
 
     function openRecordPaymentModal(id, po_ref, supplier_name, total_amount, date, product_id, outstandingAmount,supplier_id) {
+        // alert(outstandingAmount)
         $("#purchaseOrderRecordDate").text(po_ref + ' On ' + date);
         $("#recordPayment_po_id").val(id);
         $("#recordPayment_ppurchaseProduct_id").val(product_id);
@@ -1719,7 +1725,7 @@
         $("#record_supplierName").text(supplier_name);
         $("#record_TotalAmount").text('£' + total_amount.toFixed(2));
         $("#record_OutstandingAmount").text('£' + outstandingAmount.toFixed(2));
-        var calculateOutstandingAmount = total_amount - outstandingAmount;
+        $("#recordPayment_total_amount").val(total_amount);
         $("#record_AmountPaid").val(outstandingAmount.toFixed(2));
         $("#recordPaymentModalLabel").text("Record Payment - " + po_ref);
         // $.ajax({

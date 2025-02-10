@@ -91,7 +91,7 @@
 						<!-- <td style="width: 100%;float: left; text-align: center;">
 							<h4 style="margin-top: 0;margin-bottom: 0;font-size: 22px;">Order Invoice</h4>
 						</td> -->
-						<td style="width: 60%; float: left;">
+						<td style="width: 60%; height:170px; float: left; vertical-align: baseline;">
 							<table cellpadding="0" cellspacing="0"
 								style="text-align: left; float: left; margin-bottom: 10px;">
 								<tr>
@@ -111,17 +111,17 @@
 								</tr>
 							</table>
 						</td>
-						<td style="width: 40%; float: left;">
+						<td style="width: 40%; height:170px; float: left; vertical-align: baseline;">
 							<table cellpadding="0" cellspacing="0"
 								style="padding: 10px 0; width: 100%; text-align: right; margin-bottom: 10px;">
 								<tr>
 									<td style="font-size: 18px; font-weight: 600; color: #000; padding-top: 15px; margin-bottom: 0">
-										{{$company}}
+										<?php if(!empty($company)){echo $company;}else{ echo " ";}?>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<p style="margin: 2px 0; font-size: 14px;"><?php echo $current_location; ?></p>
+										<p style="margin: 2px 0; font-size: 14px;"><?php echo $current_location ?? " "; ?></p>
 										<p style="margin: 2px 0; font-size: 14px;"><strong>Tel:
 											</strong> +44{{$phone_no}}</p>
 										<p style="margin: 2px 0; font-size: 14px;"><strong>Email:
@@ -132,7 +132,7 @@
 						</td>
 					</tr>
 					<tr style="border-top: 1px solid #000; border-bottom: 1px solid #000;">
-						<td style="width: 60%; float: left; padding-top: 10px; padding-bottom: 10px;">
+						<td style="width: 60%; float: left; padding-top: 10px; padding-bottom: 10px; vertical-align: baseline;">
 							<table cellpadding="0" cellspacing="0" width="100%"
 								style="text-align: left; width: 100%;">
 								<thead>
@@ -143,7 +143,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
+									<tr >
 										<td style="font-size: 13px;">
 											<p style="margin: 5px 0;">{{$po_details->suppliers->contact_name}} </p>
 											<p style="margin: 5px 0;">{{$po_details->suppliers->address}} </p>
@@ -154,7 +154,7 @@
 								</tbody>
 							</table>
 						</td>
-						<td style="width: 40%; float: left; padding-top: 10px; padding-bottom: 10px;">
+						<td style="width: 40%; float: left; padding-top: 10px; padding-bottom: 10px; vertical-align: baseline;">
 							<table cellpadding="0" cellspacing="0" width="100%"
 								style="text-align: left;">
 								<thead>
@@ -264,14 +264,17 @@
 					</tr>
 					<tr>
 					<td colspan="8">
+						<?php if(isset($po_details->supplier_notes) && $po_details->supplier_notes !=''){?>
 							<div style="margin: 20px 0 10px;" class="supplier-note">
 								<h4 style="display:inline;">Supplier Notes: </h4>
-								<?php if(isset($po_details->supplier_notes) && $po_details->supplier_notes !=''){?> <?php echo $po_details->supplier_notes;}?>
+								<?php echo $po_details->supplier_notes;?>
 							</div>
+						<?php }if(isset($po_details->supplier_notes) && $po_details->delivery_notes !=''){?>
 							<div style="margin: 0 0 20px 0;"  class="supplier-note">
 								<h4 style="display:inline;">Delivery Notes: </h4>
-								<?php if(isset($po_details->supplier_notes) && $po_details->delivery_notes !=''){?> <?php echo $po_details->delivery_notes;}?>
+								<?php echo $po_details->delivery_notes;?>
 							</div>
+						<?php }?>
 						</td>
 					</tr>
 					<tr>

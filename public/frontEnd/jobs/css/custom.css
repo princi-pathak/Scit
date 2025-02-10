@@ -2324,3 +2324,18 @@ ul#productList {
   background: #fff;
   border: 1px solid #ddd;
 }
+
+.input_style table tbody .form_control,
+.input_style table tbody .form-control{
+  padding: 5px 10px;
+  border-radius: 0px;
+  font-size: 13px;
+  border: 1px solid #ddd;
+  display: block;
+  line-height: 1.5;
+  min-width: 70px;
+}
+
+.input_style table tbody textarea {
+  resize: none;
+}

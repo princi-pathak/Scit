@@ -913,7 +913,14 @@ class Purchase_orderController extends Controller
         $data['loginUserName']=Auth::user()->name;
         try{
             $orderRecord=PurchaseOrderRecordPayment::savePurchaseOrderRecordPayment($data);
-            PurchaseOrder::find($request->po_id)->update(['outstanding_amount' => $request->record_amount_paid]);
+            $calculation_amount=$request->total_amount-$request->record_amount_paid;
+            $tablePurchaseOrder=PurchaseOrder::find($request->po_id);
+            $tablePurchaseOrder->outstanding_amount=$calculation_amount;
+            if($calculation_amount == 0){
+                $tablePurchaseOrder->status=5;
+            }
+            $tablePurchaseOrder->save();
+            // PurchaseOrder::find($request->po_id)->update(['outstanding_amount' => $request->outstanding_amount]);
             // $itt=PurchaseOrderProduct::find($recordPayment_ppurchaseProduct)->update(['outstanding_amount' => $request->record_amount_paid]);
             return response()->json(['success'=>true,'message'=>'The Record Payment has been saved successfully.','data'=>$orderRecord]);
         }catch (\Exception $e) {
@@ -1258,19 +1265,96 @@ class Purchase_orderController extends Controller
     public function getAllPurchaseInvoices(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $po_id=$request->po_id;
-        $data = PurchaseOrderInvoiceReceives::with('suppliers','purchaseOrders')->where(['po_id'=>$po_id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
-        // $purchase_orders = PoAttachment::with(['attachmentType'])->where(['po_id'=> $request->id,'deleted_at'=>null]);
+        // $data = PurchaseOrderInvoiceReceives::with('suppliers','purchaseOrders')->where(['po_id'=>$po_id,'deleted_at'=>null])->orderBy('id', 'desc')->paginate(10);
+        $data = PurchaseOrderInvoiceReceives::with('suppliers','purchaseOrders')->where(['po_id'=>$po_id,'deleted_at'=>null])->orderBy('id', 'desc')->get();
 
         return response()->json([
             'success' => true, 'list_data' => $data, 
-            'pagination' => [
-                    'total' => $data->total(),
-                    'current_page' => $data->currentPage(),
-                    'last_page' => $data->lastPage(),
-                    'per_page' => $data->perPage(),
-                    'next_page_url' => $data->nextPageUrl(),
-                    'prev_page_url' => $data->previousPageUrl(),
-                ]
+            // 'pagination' => [
+            //         'total' => $data->total(),
+            //         'current_page' => $data->currentPage(),
+            //         'last_page' => $data->lastPage(),
+            //         'per_page' => $data->perPage(),
+            //         'next_page_url' => $data->nextPageUrl(),
+            //         'prev_page_url' => $data->previousPageUrl(),
+            //     ]
         ]);
+    }
+    public function getAllPaymentPaids(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        // $data=PurchaseOrderRecordPayment::where('po_id',$request->po_id)->get();
+        $purchaseOrderquery = DB::table('purchase_order_record_payments')->select(DB::raw('id,home_id,po_id,supplier_id,product_id,record_amount_paid,record_payment_date as date,record_payment_type,created_at,loginUserName,record_type'))->where(['po_id'=>$request->po_id,'deleted_at'=>null]);
+        
+        $purchase_order=$purchaseOrderquery->get();
+        // return $purchase_order;
+        $creditquery = DB::table('credit_note_allocates')->where(['po_id'=>$request->po_id,'deleted_at'=>null]);
+        
+        $credit_allocate=$creditquery->get();
+        $mergedData = $purchase_order->merge($credit_allocate);
+        $sortedData = $mergedData->sortBy('date');
+
+        $sortedArray = $sortedData->values()->all();
+        // return $sortedArray;
+        $html_data='';
+        foreach($sortedArray as $val){
+            if(isset($val->credit_id) && $val->credit_id !=''){
+                $type='Cash';
+                // $ref=CreditNote::find($val->credit_id)->value('credit_ref');
+                $ref='';
+                $reference='';
+                $description='';
+                $amount=$val->amount_paid;
+                $delete_from='credit_allocate';
+            }else{
+                $type=Payment_type::find($val->record_payment_type)->value('title');
+                if($val->record_type==1){
+                    // $ref=PurchaseOrder::find($val->po_id)->value('purchase_order_ref');
+                    $ref='';
+                }else{
+                    $ref=PurchaseOrderInvoiceReceives::find($val->po_id)->value('inv_ref');
+                }
+                $amount=$val->record_amount_paid;
+                $reference='';
+                $description='';
+                $delete_from='record_payements';
+            }
+            $html_data.='<tr>
+                        <td>'.date('m/d/Y',strtotime($val->created_at)).'</td>
+                        <td>'.$val->loginUserName.'</td>
+                        <td>'.$val->date.'</td>
+                        <td>'.$type.'</td>
+                        <td>'.$ref.'</td>
+                        <td>'.$reference.'</td>
+                        <td>'.$description.'</td>
+                        <td>PAYMENT</td>
+                        <td>'.$amount.'</td>
+                        <td><img src="'.url("public/frontEnd/jobs/images/delete.png").'" alt="" class="image_delete_payment_paid" data-delete="'.$val->id.'" data-delete_from="'.$delete_from.'"></td>
+                        </tr>';
+        }
+        return response()->json(['success'=>true,'data'=>$html_data,'len'=>count($sortedArray)]);
+
+    }
+    public function paymentPaidDelete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        if($request->delete_from === 'record_payements'){
+            try{
+                // PurchaseOrderRecordPayment::find($request->id)->update(['deleted_at' => now()]);
+                $data=PurchaseOrderRecordPayment::find($request->id);
+                $data->update(['deleted_at'=>now()]);
+                $purchaseOrder=PurchaseOrder::find($data->po_id);
+                $calculated_amount=$purchaseOrder->outstanding_amount+$data->record_amount_paid;
+                $purchaseOrder->update(['outstanding_amount'=>$calculated_amount]);
+                return response()->json(['success'=>true,'message'=>'Deleted Successfully Done']);
+            }catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+        }else{
+            try{
+                CreditNoteAllocate::find($request->id)->update(['deleted_at' => now()]);
+                return response()->json(['success'=>true,'message'=>'Deleted Successfully Done']);
+            }catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+        }
     }
 }

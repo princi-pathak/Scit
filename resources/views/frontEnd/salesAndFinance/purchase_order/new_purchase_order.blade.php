@@ -36,6 +36,13 @@
     pointer-events: none;
 }
 
+.productDetailTable table thead tr{
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.image_delete_payment_paid {
+    cursor: pointer;
+}
 </style>
         <section class="main_section_page px-3">
             <div class="container-fluid">
@@ -350,7 +357,7 @@
                                             <div class="mb-3 row">
                                                 <label for="inputTelephone" class="col-sm-6 col-form-label">Purchase Date<span class="radStar">*</span></label>
                                                 <div class="col-sm-4">
-                                                    <input type="date" class="form-control editInput PurchaseOrdercheckError" id="purchase_purchase_date" name="purchase_date" value="<?php if(isset($purchase_orders) && $purchase_orders->purchase_date != ''){echo $purchase_orders->purchase_date;}?>">
+                                                    <input type="date" class="form-control editInput PurchaseOrdercheckError" id="purchase_purchase_date" name="purchase_date" value="">
                                                 </div>
                                                 <div class="col-sm-2 calendar_icon">
                                                     <i class="fa fa-calendar-alt"></i>
@@ -404,7 +411,7 @@
                                             <div class="mb-3 row">
                                                 <label for="inputTelephone" class="col-sm-6 col-form-label">Payment Due Date</label>
                                                 <div class="col-sm-4">
-                                                    <input type="date" class="form-control editInput" id="purchase_payment_due_date" name="payment_due_date" value="<?php if(isset($purchase_orders) && $purchase_orders->payment_due_date != ''){echo $purchase_orders->payment_due_date;}?>">
+                                                    <input type="date" class="form-control editInput" id="purchase_payment_due_date" name="payment_due_date" value="">
                                                 </div>
                                                 <div class="col-sm-2 calendar_icon">
                                                     <i class="fa fa-calendar-alt"></i>
@@ -528,7 +535,7 @@
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <div class="productDetailTable">
+                                    <div class="productDetailTable table-responsive input_style">
                                         <table class="table" id="result">
                                             <thead class="table-light">
                                                 <tr>
@@ -542,7 +549,7 @@
                                                     <th>Price</th>
                                                     <th>Price VAT(%) <a href="javascript:void(0)" class="formicon" onclick="get_modal(9)"><i class="fa-solid fa-square-plus"></i>
                                                     </a></th>
-                                                    <th class="text-end">VAT </th>
+                                                    <th>VAT </th>
                                                     <th>Amount</th>
                                                     <th>Delivered QTY</th>
                                                     <th>Quantity Available</th>
@@ -1702,6 +1709,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const inputVat = document.createElement('input');
                         inputVat.type = 'text';
                         inputVat.className = 'vat';
+                        inputVat.style = "max-width:70px;";
                         inputVat.setAttribute('disabled','disabled');
                         inputVat.addEventListener('input', function() {
                             updateAmount(row);
@@ -1940,9 +1948,12 @@ $('#search-product').on('keyup', function() {
             getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
             getAllNewTaskList(purchaseOrderId,'{{ url("getAllNewTaskList") }}');
             getAllPurchaseInvoices(purchaseOrderId,'{{url("getAllPurchaseInvoices")}}');
+            getAllPaymentPaids(purchaseOrderId,'{{url("getAllPaymentPaids")}}');
+            defualt_date(0);
         }else{
             var purchaseOrderId='<?php if(isset($purchase_orders) && $purchase_orders !=''){echo $purchase_orders->id;}?>'
-            getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}')
+            getProductDetail(purchaseOrderId,'{{ url("getPurchaesOrderProductDetail") }}');
+            defualt_date(1);
         }
         var reminderCount='<?php echo count($reminder_data);?>'
         if(reminderCount>0){
@@ -2045,10 +2056,12 @@ $('#search-product').on('keyup', function() {
 
                         const selectDropdownJob = document.createElement('select');
                         selectDropdownJob.name = 'job_id[]';
+                        selectDropdownJob.className="form_control";
 
                         const defaultOptionJob = document.createElement('option');
                         defaultOptionJob.value = '';
                         defaultOptionJob.text = '-Not Selected-';
+                       
                         selectDropdownJob.appendChild(defaultOptionJob);
 
                         const optionsJob = data.all_job;
@@ -2068,7 +2081,7 @@ $('#search-product').on('keyup', function() {
                         const codeCell = document.createElement('td');
                         // codeCell.textContent = data.purchase_order_products_detail.product_code;
                         const inputCode = document.createElement('input');
-                        inputCode.className = 'product_code';
+                        inputCode.className = 'product_code form-control';
                         inputCode.name = 'product_code[]';
                         inputCode.value = product.code;
                         codeCell.appendChild(inputCode);
@@ -2093,7 +2106,8 @@ $('#search-product').on('keyup', function() {
 
                         const descriptionCell = document.createElement('td');
                         const inputDescription = document.createElement('textarea');
-                        inputDescription.className = 'description';
+                        inputDescription.className = 'description form-control';
+                        inputDescription.setAttribute('rows','1');
                         inputDescription.name = 'description[]';
                         inputDescription.value = product.description;
                         descriptionCell.appendChild(inputDescription);
@@ -2101,7 +2115,7 @@ $('#search-product').on('keyup', function() {
 
                         const dropdownAccountCode = document.createElement('td');
                         const selectDropdownAccountCode = document.createElement('select');
-                        selectDropdownAccountCode.className='accountCode_id';
+                        selectDropdownAccountCode.className='accountCode_id form_control';
                         selectDropdownAccountCode.name = 'accountCode_id[]';
                         // selectDropdownAccountCode.addEventListener('click', function() {
                         //     var elements = document.getElementsByClassName('accountCode_id');
@@ -2127,7 +2141,7 @@ $('#search-product').on('keyup', function() {
                         const qtyCell = document.createElement('td');
                         const inputQty = document.createElement('input');
                         inputQty.type = 'text';
-                        inputQty.className = 'qty input50';
+                        inputQty.className = 'qty input50 form-control';
                         inputQty.addEventListener('input', function() {
                             this.value = this.value.replace(/[^0-9.]/g, '');
                             if ((this.value.match(/\./g) || []).length > 1) {
@@ -2143,7 +2157,7 @@ $('#search-product').on('keyup', function() {
                         const priceCell = document.createElement('td');
                         const inputPrice = document.createElement('input');
                         inputPrice.type = 'text';
-                        inputPrice.className = 'product_price input50';
+                        inputPrice.className = 'product_price input50 form-control';
                         inputPrice.addEventListener('input', function() {
                             this.value = this.value.replace(/[^0-9.]/g, '');
                             if ((this.value.match(/\./g) || []).length > 1) {
@@ -2163,7 +2177,7 @@ $('#search-product').on('keyup', function() {
                             getIdVat($(this).val(),row);
                         });
                         selectDropdownVat.name = 'vat_id[]';
-                        selectDropdownVat.className='vat_id';
+                        selectDropdownVat.className='vat_id form_control';
                         const optionsVat =data.tax;
                         var tax_rate='00';
                         optionsVat.forEach(optionVat => {
@@ -2189,6 +2203,7 @@ $('#search-product').on('keyup', function() {
                         const inputVat = document.createElement('input');
                         inputVat.type = 'text';
                         inputVat.className = 'vat';
+                        inputVat.style = "max-width:70px;";
                         inputVat.setAttribute('disabled','disabled');
                         inputVat.addEventListener('input', function() {
                             updateAmount(row);
@@ -2681,9 +2696,10 @@ $(document).on('click','.attachment_delete', function() {
             method: 'POST',
             data: {po_id: po_id,_token:token},
             success: function(response) {
-                console.log(response.list_data.data);
-                // return false;
-                var data=response.list_data.data;
+                console.log(response);
+                //return false;
+                // var data=response.list_data.data;
+                var data=response.list_data;
                 const tableBody = document.querySelector(`#supplier_invoice_table tbody`);
                 if (data.length === 0) {
                     const noDataRow = document.createElement('tr');
@@ -2703,6 +2719,7 @@ $(document).on('click','.attachment_delete', function() {
                         emptyErrorRow.remove();
                     }
                     data.forEach(invoice => {
+                        var supplier_name=invoice.suppliers.name;
                         const row = document.createElement('tr');
                         var createinv_date = moment(invoice.created_at).format('DD/MM/YYYY');
                         var invoice_date = moment(invoice.invoice_date).format('DD/MM/YYYY');
@@ -2768,7 +2785,7 @@ $(document).on('click','.attachment_delete', function() {
                                             <div class="dropdown-menu fade-up m-0">
                                                 <a href="javascript:void(0)" class="dropdown-item">Edit Invoice</a>
                                                 <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openRecordPaymentModal(`+invoice.po_id+`,'`+invoice.inv_ref+`',`+invoice.supplier_id+`,'`+invoice.gross_amount+`','`+invoice_date+`',`+invoice.oustanding_amount+`)" class="dropdown-item">Record Payment</a>
+                                                <a href="javascript:void(0)" onclick="openRecordPaymentModal(`+invoice.po_id+`,'`+invoice.inv_ref+`',`+invoice.supplier_id+`,'`+invoice.gross_amount+`','`+invoice_date+`',`+invoice.oustanding_amount+`,'`+supplier_name+`')" class="dropdown-item">Record Payment</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="javascript:void(0)" onclick="openInvoiceRecieveModal()" class="dropdown-item">Delete Invoice</a>
                                                 
@@ -2781,7 +2798,7 @@ $(document).on('click','.attachment_delete', function() {
                         row.appendChild(invvat_actionList);
 
                         tableBody.appendChild(row);
-                        updateAmount(row)
+                        // updateAmount(row)
                     });
                     // $("#product_calculation").show();
                     
@@ -2804,21 +2821,66 @@ $(document).on('click','.attachment_delete', function() {
             }
         });
     }
-    function openRecordPaymentModal(po_id,ref,supplier_id,total_amount, date,oustanding_amount){
-        // return false;
-        // alert(typeof(total_amount));
+    function getAllPaymentPaids(po_id,pageUrl = '{{ url("getAllPaymentPaids") }}'){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            url: pageUrl,
+            method: 'POST',
+            data: {po_id: po_id,_token:token},
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if(response.len>0){
+                    $("#PaymentsPaid").show();
+                    $("#payment_paid_result").html(response.data);
+                }else{
+                    $("#PaymentsPaid").hide();
+                }
+               
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                location.reload();
+            }
+        });
+    }
+    
+    $(document).on('click','.image_delete_payment_paid',function(){
+        var id=$(this).data('delete');
+        var delete_from=$(this).data('delete_from');
+        if(confirm("Are you sure to delete?")){
+            var token='<?php echo csrf_token();?>'
+            $.ajax({
+                type: "POST",
+                url: "{{url('paymentPaidDelete')}}",
+                data: {id:id,delete_from:delete_from,_token:token},
+                success: function(data) {
+                    console.log(data);
+                    if(data.success === true){
+                        location.reload();
+                    }else{
+                        alert("Something went wrong");
+                    }
+                    // return false;
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+                }
+            });
+        }
+    });
+    function openRecordPaymentModal(po_id,ref,supplier_id,total_amount, date,oustanding_amount,supplier_name){
         var total_amount=Number(total_amount);
         $("#recordPaymentModal").modal('show');
         $("#purchaseOrderRecordDate").text(ref + ' On ' + date);
-        $("#recordPayment_po_id").val(id);
+        $("#recordPayment_po_id").val(po_id);
         $("#recordPaymentModalLabel").text("Record Payment - " + ref);
         $("#recordPayment_ppurchaseSupplier_id").val(supplier_id);
         // $("#recordPayment_ppurchaseProduct_id").val(product_id);
         $("#record_TotalAmount").text('£' + total_amount.toFixed(2));
         $("#record_OutstandingAmount").text('£' + oustanding_amount.toFixed(2));
-        var calculateOutstandingAmount = total_amount - oustanding_amount;
         $("#record_AmountPaid").val(oustanding_amount.toFixed(2));
-        return false;
         $("#record_supplierName").text(supplier_name);
         
     }
@@ -2861,3 +2923,29 @@ $(document).on('click','.attachment_delete', function() {
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
+<script>
+    function defualt_date(type){
+        if(type == 1){
+            flatpickr("#purchase_purchase_date", {
+                dateFormat: "d/m/Y",
+                defaultDate: new Date()
+            });
+            flatpickr("#purchase_payment_due_date", {
+                dateFormat: "d/m/Y",
+                defaultDate: new Date()
+            });
+            
+        }else{
+            flatpickr("#purchase_purchase_date", {
+                dateFormat: "d/m/Y",
+                defaultDate: "<?php if(isset($purchase_orders->purchase_date) && $purchase_orders->purchase_date!=''){echo \Carbon\Carbon::parse($purchase_orders->purchase_date)->format('d/m/Y');}?>"
+            });
+            flatpickr("#purchase_payment_due_date", {
+                dateFormat: "d/m/Y",
+                defaultDate: "<?php if(isset($purchase_orders->payment_due_date) && $purchase_orders->payment_due_date!=''){echo \Carbon\Carbon::parse($purchase_orders->payment_due_date)->format('d/m/Y');}?>"
+            });
+        }
+        
+    }
+
+</script>

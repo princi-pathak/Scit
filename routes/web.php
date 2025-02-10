@@ -422,6 +422,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/purchase-order-invoices','purchase_order_invoices');
 		Route::post('/searchPurchaseOrdersInvoice','searchPurchaseOrdersInvoice');
 		Route::post('/getAllPurchaseInvoices','getAllPurchaseInvoices');
+		Route::post('/getAllPaymentPaids','getAllPaymentPaids');
+		Route::post('/paymentPaidDelete','paymentPaidDelete');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function(){
