@@ -123,7 +123,7 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>Draft Purchase Orders</h3>
+                    <h3>{{$status['page_heading']}}</h3>
                 </div>
             </div>
             <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -177,7 +177,7 @@
 
                     </div>
 
-                    <div class="searchJobForm" id="divTohide">
+                    <div class="searchJobForm" id="divTohide" style="display:none">
                         <form id="search_dataForm" class="p-4">
                             <div class="row">
                                 <div class="col-md-3">
@@ -310,6 +310,24 @@
                             <div class="col-md-7">
                                 <div class="jobsection d-flex">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                    <a href="javascript:void(0)" id="" class="profileDrop">Preview Purchase Order</a>
+                                    @if($status['status'] == 3 || $status['status'] == 4 || $status['status'] == 5)
+                                    <div class="nav-item dropdown">
+                                            <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Email Purchase Order
+                                            </a>
+                                            <div class="dropdown-menu fade-up m-0">
+                                                <a href="javascript:void(0)" class="dropdown-item">Send As Single Email</a>
+                                                <hr class="dropdown-divider emialSend" style="display:none">
+                                                <a href="javascript:void(0)" class="dropdown-item emialSend" style="display:none">Send As Multiple Emails</a>
+                                            </div>
+                                        </div>
+                                    <a href="javascript:void(0)" id="" class="profileDrop">Invoice Received</a>
+                                    @if($status['status'] != 5)
+                                    <a href="javascript:void(0)" id="" class="profileDrop">Record Payment</a>
+                                    @endif
+                                    @endif
+                                    <a href="javascript:void(0)" id="" class="profileDrop">Approve</a>
                                 </div>
                             </div>
                             <!-- <div class="col-md-5">
@@ -387,7 +405,7 @@
                                 <td>£{{$total_amount}}</td>
                                 <td>£{{$val->outstanding_amount}}</td>
                                 <td>{{$status['list_status']}}</td>
-                                @if($status['status'] == 1)
+                                @if($status['status'] == 1 || $status['status'] == 2)
                                 <td>-</td>
                                 <td>
                                     <div class="d-flex justify-content-end">
@@ -437,16 +455,26 @@
                                                 <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
+                                                @if($status['status'] != 8)
                                                 <hr class="dropdown-divider">
                                                 <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
+                                                @endif
                                                 <hr class="dropdown-divider">
+                                                @if($status['status'] != 5)
                                                 <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$product_id}},{{$val->outstanding_amount}},{{$val->supplier_id}})" class="dropdown-item">Record Payment</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$val->outstanding_amount}})" class="dropdown-item">Invoice Received</a>
-                                                <!-- <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">CRM / History</a>
+                                                <hr class="dropdown-divider">
+                                                @endif
+                                                @if($status['status'] == 8 || $status['status'] == 4 || $status['status'] == 5)
+                                                    @if($val->delivery_status !=1)
+                                                    <a href="#!" class="dropdown-item">Cancel Purchase Order</a>
                                                     <hr class="dropdown-divider">
-                                                    <a href="#!" class="dropdown-item">Start Timer</a> -->
+                                                    @endif
+                                                @endif
+                                                <a href="#!" class="dropdown-item">CRM / History</a>
+                                                <hr class="dropdown-divider">
+                                                <a href="#!" class="dropdown-item">Start Timer</a>
                                             </div>
                                         </div>
                                     </div>
@@ -619,8 +647,10 @@
                         <div class="formDtail">
                             <form id="recordPaymentForm" class="customerForm pt-0">
                                 <input type="hidden" name="po_id" id="recordPayment_po_id">
-                                <input type="hidden" name="product_id" id="recordPayment_ppurchaseProduct_id">
+                                <!-- <input type="hidden" name="product_id" id="recordPayment_ppurchaseProduct_id"> -->
                                 <input type="hidden" name="supplier_id" id="recordPayment_ppurchaseSupplier_id">
+                                <input type="hidden" name="record_type" value="1">
+                                <input type="hidden" name="total_amount" id="recordPayment_total_amount" value="">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -805,11 +835,20 @@
         }
 
     });
+    var countCheckBox=0;
     $('.delete_checkbox').on('click', function() {
         if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
+            countCheckBox++;
+            if(countCheckBox>1){
+                $('.emialSend').show();
+            }else{
+                $('.emialSend').hide();
+            }
             $('#selectAll').prop('checked', true);
         } else {
             $('#selectAll').prop('checked', false);
+            countCheckBox--;
+            $('.emialSend').hide();
         }
     });
 </script>
@@ -1678,6 +1717,7 @@
     }
 
     function openRecordPaymentModal(id, po_ref, supplier_name, total_amount, date, product_id, outstandingAmount,supplier_id) {
+        // alert(outstandingAmount)
         $("#purchaseOrderRecordDate").text(po_ref + ' On ' + date);
         $("#recordPayment_po_id").val(id);
         $("#recordPayment_ppurchaseProduct_id").val(product_id);
@@ -1685,7 +1725,7 @@
         $("#record_supplierName").text(supplier_name);
         $("#record_TotalAmount").text('£' + total_amount.toFixed(2));
         $("#record_OutstandingAmount").text('£' + outstandingAmount.toFixed(2));
-        var calculateOutstandingAmount = total_amount - outstandingAmount;
+        $("#recordPayment_total_amount").val(total_amount);
         $("#record_AmountPaid").val(outstandingAmount.toFixed(2));
         $("#recordPaymentModalLabel").text("Record Payment - " + po_ref);
         // $.ajax({
@@ -1810,6 +1850,9 @@
         `;
         editor.setData(message);
         $("#emailModal").modal('show');
+    }
+    function getAllPurchaseInvices(data){
+        location.reload();
     }
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
