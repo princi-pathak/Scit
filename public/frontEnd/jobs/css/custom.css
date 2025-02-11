@@ -1767,11 +1767,11 @@ form .page .btns button.next {
 .minusnmberGreen{
   color: rgb(0, 128, 0);
 }
-.totlepayment{
+/* .totlepayment{
   width: 300px;
   margin-left: auto;
   text-align: end;
-}
+} */
 .discountInput{
   display: flex;
   justify-content: end;
@@ -2224,6 +2224,12 @@ div#exampleOne_wrapper::-webkit-scrollbar-thumb {
 .error-message{
   display: none;
 }
+.search-container{
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0px 0px 7px #0000001f;
+}
 .parent-container {
   position: absolute;
   background: #fff;
@@ -2232,11 +2238,11 @@ div#exampleOne_wrapper::-webkit-scrollbar-thumb {
   /* left: 194px; */
   /* top: 44px; */
 }
-ul#productList {
+/* ul#productList {
   padding: 0 5px;
   height: 156px;
   overflow: auto;
-}
+} */
 .page-btn-selected{
   background-color: #474747;
 }
@@ -2291,3 +2297,45 @@ ul#productList {
 }
 
 /* end */
+
+.border_tran{
+  border: 3px solid transparent !important;
+}
+
+.product_Det tr td{
+  text-align: end;
+}
+
+.product_Det tr:nth-child(3),
+.product_Det tr:nth-child(5){
+  border: transparent;
+  border-top: 3px solid #000;
+}
+
+ul#purchase_qoute_refList,
+ul#purchase_job_refList,
+ul#productList {
+  padding: 0 5px;
+  height: 156px;
+  overflow: auto;
+  z-index: 999;
+  position: absolute;
+  width: 93%;
+  background: #fff;
+  border: 1px solid #ddd;
+}
+
+.input_style table tbody .form_control,
+.input_style table tbody .form-control{
+  padding: 5px 10px;
+  border-radius: 0px;
+  font-size: 13px;
+  border: 1px solid #ddd;
+  display: block;
+  line-height: 1.5;
+  min-width: 70px;
+}
+
+.input_style table tbody textarea {
+  resize: none;
+}
