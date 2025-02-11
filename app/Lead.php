@@ -78,16 +78,24 @@ class Lead extends Model
 
     public static function getActionedLead($home_id){
         return DB::table('leads')
-        ->where('leads.home_id', $home_id)
-        ->whereNull('leads.converted_to')
-        ->whereExists(function($query) {
-            $query->select(DB::raw(1))
-                ->from('lead_tasks')
-                ->whereColumn('lead_tasks.lead_ref', 'leads.lead_ref');
-        })
-        ->distinct()
-        ->count();
+            ->where('leads.home_id', $home_id)
+            ->whereNull('leads.converted_to')
+            ->where(function ($query) {
+                $query->whereExists(function ($subQuery) {
+                    $subQuery->select(DB::raw(1))
+                        ->from('lead_tasks')
+                        ->whereColumn('lead_tasks.lead_ref', 'leads.lead_ref');
+                })
+                ->orWhereExists(function ($subQuery) {
+                    $subQuery->select(DB::raw(1))
+                        ->from('lead_notes')
+                        ->whereColumn('lead_notes.lead_id', 'leads.id');
+                });
+            })
+            ->distinct()
+            ->count();
     }
+
 
     public static function saveLeadConvertQuote($data, $home_id){
         // dd($data);

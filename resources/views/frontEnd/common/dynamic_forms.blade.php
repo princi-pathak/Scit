@@ -300,7 +300,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                 <div class="col-md-6 col-sm-10 col-xs-12">
                                     <div class="select-bi" style="width:100%;float:left;">
                                         <select name="s_user_id" class="select-field form-control" required id="records_list" style="width:100%;">
-                                            <option value="0"> Select Child </option>
+                                            <!-- <option value="0"> Select Child </option> -->
                                             @foreach($service_users as $value)
                                             <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
                                             @endforeach
@@ -820,6 +820,8 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                 type: 'get',
                 url: "{{ url('/service/dynamic-form/delete') }}" + '/' + dyn_form_id,
                 success: function(resp) {
+                console.log(resp);
+                return false;
                     if (isAuthenticated(resp) == false) {
                         return false;
                     }

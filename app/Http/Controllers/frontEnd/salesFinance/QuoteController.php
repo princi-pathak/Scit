@@ -483,7 +483,6 @@ class QuoteController extends Controller
         $data['type'] = 2;
         $data['users'] = User::getHomeUsers(Auth::user()->home_id);
         $data['loginCustomer'] = Auth::user()->id;
-        // dd($data['quoteData']);
         return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
 

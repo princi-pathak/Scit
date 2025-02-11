@@ -102,18 +102,26 @@ class Customer extends Model
             return $query->where('leads.assign_to', Auth::user()->id)->whereNotIn('leads.status', [7])->where('leads.converted_to', null)->get();
         } else if ($lastSegment === "authorization"){
             return $query->where('leads.status', 7)->where('leads.converted_to', null)->get();
+
         } else if ($lastSegment === "actioned") {
             return DB::table('customers')
                 ->join('leads', 'leads.customer_id', '=','customers.id')
-                ->join('lead_tasks', 'lead_tasks.lead_ref', '=', 'leads.lead_ref')
+                ->leftJoin('lead_tasks', 'lead_tasks.lead_ref', '=', 'leads.lead_ref')
+                ->leftJoin('lead_notes', 'lead_notes.lead_id', '=', 'leads.id')
                 ->join('lead_statuses', 'lead_statuses.id', 'leads.status')
                 ->select('leads.lead_ref', 'customers.contact_name', 'customers.name', 'customers.email', 'customers.telephone', 'customers.mobile', 'leads.assign_to', 'lead_statuses.title as status', 'lead_statuses.id as status_id','customers.website','customers.address', 'customers.city', 'customers.country', 'customers.postal_code', 'leads.id as id', 'customers.id as customer_id', 'leads.authorization_status')
                 ->orderBy('leads.created_at', 'desc')
                 ->where('leads.converted_to', null)
+                  ->where(function ($query) {
+                    $query->whereNotNull('lead_tasks.id') // Leads with at least one task
+                          ->orWhereNotNull('lead_notes.id'); // OR leads with at least one note
+                })
                 ->where('leads.home_id', $home_id)
                 ->distinct()
-                ->get();    
+                ->get();
+            // dd($response);    
         }
+
     }
 
     public static function getCustomerLeads($id){
