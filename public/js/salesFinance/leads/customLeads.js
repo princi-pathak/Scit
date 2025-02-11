@@ -39,6 +39,7 @@ $(document).ready(function() {
             success: function(response) {
                 alert(response.data);
                 $('#sentToQuoteModal').modal('hide');
+                location.reload();
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -46,8 +47,6 @@ $(document).ready(function() {
         });
     
     });
-
- 
 });
 
 function toggleDiv(show) {

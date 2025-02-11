@@ -91,36 +91,46 @@ class Customer extends Model
         // dd($query->get());
    
         if ($lastSegment ===  "leads") {
-            return $query->whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->get();
+            return $query->whereNotIn('assign_to', [0])->whereNotIn('leads.status', ['6','7'])->where('leads.converted_to', null)->get();
         } else if ($lastSegment === "unassigned"){
-            return $query->where('assign_to', 0)->get();
+            return $query->where('assign_to', 0)->where('leads.converted_to', null)->get();
         } else if ($lastSegment === "rejected"){
-            return $query->where('leads.status', '6')->get();
+            return $query->where('leads.status', '6')->where('leads.converted_to', null)->get();
         } else if ($lastSegment === "converted"){
             return $query->whereIn('leads.converted_to', ['quote', 'customer'])->where('customers.status', 1)->get();
         } else if ($lastSegment === "myLeads"){
-            return $query->where('leads.assign_to', Auth::user()->id)->whereNotIn('leads.status', [7])->get();
+            return $query->where('leads.assign_to', Auth::user()->id)->whereNotIn('leads.status', [7])->where('leads.converted_to', null)->get();
         } else if ($lastSegment === "authorization"){
-            return $query->where('leads.status', 7)->get();
+            return $query->where('leads.status', 7)->where('leads.converted_to', null)->get();
+
         } else if ($lastSegment === "actioned") {
             return DB::table('customers')
                 ->join('leads', 'leads.customer_id', '=','customers.id')
-                ->join('lead_tasks', 'lead_tasks.lead_ref', '=', 'leads.lead_ref')
+                ->leftJoin('lead_tasks', 'lead_tasks.lead_ref', '=', 'leads.lead_ref')
+                ->leftJoin('lead_notes', 'lead_notes.lead_id', '=', 'leads.id')
                 ->join('lead_statuses', 'lead_statuses.id', 'leads.status')
                 ->select('leads.lead_ref', 'customers.contact_name', 'customers.name', 'customers.email', 'customers.telephone', 'customers.mobile', 'leads.assign_to', 'lead_statuses.title as status', 'lead_statuses.id as status_id','customers.website','customers.address', 'customers.city', 'customers.country', 'customers.postal_code', 'leads.id as id', 'customers.id as customer_id', 'leads.authorization_status')
                 ->orderBy('leads.created_at', 'desc')
+                ->where('leads.converted_to', null)
+                  ->where(function ($query) {
+                    $query->whereNotNull('lead_tasks.id') // Leads with at least one task
+                          ->orWhereNotNull('lead_notes.id'); // OR leads with at least one note
+                })
                 ->where('leads.home_id', $home_id)
                 ->distinct()
-                ->get();    
+                ->get();
+            // dd($response);    
         }
+
     }
 
     public static function getCustomerLeads($id){
-        return DB::table('customers')
-        ->join('leads', 'customers.id', '=', 'leads.customer_id')
-        ->select('customers.*', 'leads.*')
+        return   DB::table('customers')
+        ->join('leads', 'leads.customer_id', '=',   'customers.id')
+        ->select('customers.*', 'leads.*', 'customers.email as email')
         ->where('leads.id', $id)
         ->first();
+        // dd($return);
     }
     public static function get_customer_list_Attribute($home_id, $list_mode){
         $status = ($list_mode == 'ACTIVE') ? 1 : 0;
@@ -168,6 +178,8 @@ class Customer extends Model
     //     return self::where('id', $id)->get();
     // }
 
-
+    public static function getConvertedCustomersCount($home_id){
+        return self::where('is_converted', 1)->where('status', 1)->where('deleted_at', null)->where('home_id', $home_id)->count();
+    }
   
 }
