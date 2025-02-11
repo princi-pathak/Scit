@@ -230,10 +230,11 @@ class Purchase_orderController extends Controller
                 'purchase_order_products_detail' => $purchase_order_products_detail,
             ];
         }
-        
+        $paid_all_amount=$this->getAllPaymentPaid($request->id);
         return response()->json([
             'success' => true,
             'data' => $data_array,
+            'paid_amount'=>$paid_all_amount,
             'pagination' => [
                 'total' => $purchase_order_products_paginated->total(),
                 'current_page' => $purchase_order_products_paginated->currentPage(),
@@ -243,6 +244,18 @@ class Purchase_orderController extends Controller
                 'prev_page_url' => $purchase_order_products_paginated->previousPageUrl(),
             ]
         ]);
+    }
+    private function getAllPaymentPaid($po_id){
+        $purchase_order = DB::table('purchase_order_record_payments')->where(['po_id'=>$po_id,'deleted_at'=>null])->sum('record_amount_paid');
+        
+        // return $purchase_order;
+        $credit_allocate = DB::table('credit_note_allocates')->where(['po_id'=>$po_id,'deleted_at'=>null])->sum('amount_paid');
+        
+        // $mergedData = $purchase_order->merge($credit_allocate);
+        // $sortedData = $mergedData->sortBy('date');
+
+        // $sortedArray = $sortedData->values()->all();
+        return $purchase_order+$credit_allocate;
     }
     public function vat_tax_details(Request $request){
         // echo "<pre>";print_r($request->all());
@@ -1227,7 +1240,7 @@ class Purchase_orderController extends Controller
     }
     public function purchase_order_invoices(Request $request){
         $home_id=Auth::user()->home_id;
-        $data['list']=PurchaseOrderInvoiceReceives::with('suppliers','purchaseOrders')->where(['deleted_at'=>null])->get();
+        $data['list']=PurchaseOrderInvoiceReceives::with('suppliers','purchaseOrders')->where(['loginUserId'=>Auth::user()->id,'deleted_at'=>null])->get();
         $data['draftCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>1])->count();
         $data['awaitingApprovalCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null,'status'=>2])->count();
         $data['approvedCount']=PurchaseOrder::where(['user_id'=>Auth::user()->id,'deleted_at'=>null])->whereIn('status',[3,9])->count();
@@ -1298,9 +1311,9 @@ class Purchase_orderController extends Controller
         $html_data='';
         foreach($sortedArray as $val){
             if(isset($val->credit_id) && $val->credit_id !=''){
-                $type='Cash';
-                // $ref=CreditNote::find($val->credit_id)->value('credit_ref');
-                $ref='';
+                $type='Credit Note';
+                $ref=CreditNote::find($val->credit_id)->value('credit_ref');
+                // $ref='';
                 $reference='';
                 $description='';
                 $amount=$val->amount_paid;

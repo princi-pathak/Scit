@@ -308,10 +308,11 @@
                     <div class="markendDelete">
                         <div class="row">
                             <div class="col-md-7">
-                                <div class="jobsection d-flex">
+                                <div class="jobsection">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                     <a href="javascript:void(0)" id="" class="profileDrop">Preview Purchase Order</a>
                                     @if($status['status'] == 3 || $status['status'] == 4 || $status['status'] == 5)
+                                    <div class=" d-inline-flex align-items-center">
                                     <div class="nav-item dropdown">
                                             <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Email Purchase Order
@@ -322,6 +323,7 @@
                                                 <a href="javascript:void(0)" class="dropdown-item emialSend" style="display:none">Send As Multiple Emails</a>
                                             </div>
                                         </div>
+                                    </div>
                                     <a href="javascript:void(0)" id="" class="profileDrop">Invoice Received</a>
                                     @if($status['status'] != 5)
                                     <a href="javascript:void(0)" id="" class="profileDrop">Record Payment</a>
@@ -341,7 +343,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"></th>
+                                <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAllCheckBoxes"></th>
                                 <th>#</th>
                                 <th>PO Ref</th>
                                 <th>Date</th>
@@ -413,7 +415,7 @@
                                             <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Action
                                             </a>
-                                            <div class="dropdown-menu fade-up m-0">
+                                            <div class="dropdown-menu fade-up m-0" style="z-index:9999">
                                                 <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
@@ -443,7 +445,7 @@
                                             <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Action
                                             </a>
-                                            <div class="dropdown-menu fade-up m-0">
+                                            <div class="dropdown-menu fade-up m-0" style="z-index:9999">
                                                 <a href="javascript:void(0)" onclick="openRecordDeliveryModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Record Delivery</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
@@ -600,17 +602,17 @@
                                 <input type="hidden" name="po_id" id="recordDelivery_po_id">
                                 @csrf
                                 <div class="col-sm-12">
-                                    <div class="productDetailTable">
+                                    <div class="productDetailTable input_style">
                                         <table class="table" id="recordDelivery_result">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>Code</th>
-                                                    <th>Product</th>
-                                                    <th>Description</th>
-                                                    <th>Price</th>
-                                                    <th>Qty</th>
-                                                    <th>Allredy Delivered</th>
-                                                    <th>Receive More</th>
+                                                    <th class="col-1">Code</th>
+                                                    <th class="col-2">Product</th>
+                                                    <th class="col-2">Description</th>
+                                                    <th class="col-2">Price</th>
+                                                    <th class="col-1">Qty</th>
+                                                    <th class="col-2">Allredy Delivered</th>
+                                                    <th class="col-2">Receive More</th>
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>
@@ -835,26 +837,30 @@
         }
 
     });
-    var countCheckBox=0;
     $('.delete_checkbox').on('click', function() {
         if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
-            countCheckBox++;
-            if(countCheckBox>1){
-                $('.emialSend').show();
-            }else{
-                $('.emialSend').hide();
-            }
-            $('#selectAll').prop('checked', true);
+            $('#selectAllCheckBoxes').prop('checked', true);
         } else {
-            $('#selectAll').prop('checked', false);
-            countCheckBox--;
-            $('.emialSend').hide();
+            $('#selectAllCheckBoxes').prop('checked', false);
         }
+        shoeHideEmailSend();
     });
+    $('#selectAllCheckBoxes').on('click', function () {
+        $('.delete_checkbox').prop('checked', $(this).prop('checked'));
+        shoeHideEmailSend(); 
+  });
+  function shoeHideEmailSend(){
+    if($('.delete_checkbox:checked').length>1){
+        $('.emialSend').show();
+    }else{
+        $('.emialSend').hide();
+    }
+  }
 </script>
 <script>
     function clearBtn() {
         $("#search_dataForm")[0].reset();
+        location.reload();
     }
 
     function searchBtn() {
@@ -1638,7 +1644,7 @@
                         const alreadyDelivered = document.createElement('td');
                         const inputDelivered = document.createElement('input');
                         inputDelivered.type = 'number';
-                        inputDelivered.className = 'already_deliver';
+                        inputDelivered.className = 'already_deliver form-control';
                         inputDelivered.name = 'already_deliver[]';
                         inputDelivered.value = 0;
                         alreadyDelivered.appendChild(inputDelivered);
@@ -1647,7 +1653,7 @@
                         const receiveMore = document.createElement('td');
                         const inputReceive = document.createElement('input');
                         inputReceive.type = 'number';
-                        inputReceive.className = 'receive_more input50';
+                        inputReceive.className = 'receive_more input50 form-control';
                         inputReceive.name = 'receive_more[]';
                         inputReceive.value = 0;
                         receiveMore.appendChild(inputReceive);

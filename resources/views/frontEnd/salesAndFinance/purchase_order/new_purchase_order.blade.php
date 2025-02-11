@@ -75,7 +75,7 @@
                             <div class="row">
                                 <div class="col-md-4 col-lg-4 col-xl-4">
                                     <div class="formDtail">
-                                        <h4 class="contTitle">Supplier Details</h4>
+                                        <h4 class="contTitle mb-3">Supplier Details</h4>
                                        @csrf
                                         <input type="hidden" id="id" name="id" value="<?php if((isset($purchase_orders) && $purchase_orders !='') && (isset($duplicate) && $duplicate =='')){echo $purchase_orders->id; }?>">
                                             <div class="mb-3 row">
@@ -188,7 +188,7 @@
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-4">
                                     <div class="formDtail">
-                                        <h4 class="contTitle">Customer / Delivery Details</h4>
+                                        <h4 class="contTitle mb-3">Customer / Delivery Details</h4>
                                         <!-- <form class="customerForm"> -->
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Customer</label>
@@ -311,10 +311,10 @@
                                                 <span style="color:red;display:none" id="CheckpurchaseUserMobileErr">Please enter 10 digit number</span>
                                             </div>
                                         </div>
-                                        <div class="mb-3 row">
+                                        <div class="mb-3 row align-items-center">
                                             <label for="inputAddress"
-                                                class="col-sm-6 col-form-label">Expected Delivery On</label>
-                                            <div class="col-sm-4">
+                                                class="col-sm-3 pe-0 col-form-label">Expected Delivery On</label>
+                                            <div class="col-sm-7">
                                             <?php
                                                 $expectedDeliveryDate = isset($purchase_orders) && !empty($purchase_orders->expected_deleveryDate)
                                                     ? $purchase_orders->expected_deleveryDate
@@ -331,7 +331,7 @@
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-4">
                                     <div class="formDtail">
-                                        <h4 class="contTitle">Purchase Order Details</h4>
+                                        <h4 class="contTitle mb-3">Purchase Order Details</h4>
                                         <!-- <form class="customerForm"> -->
                                             <div class="mb-3 row">
                                                 <label for="inputJobRef" class="col-sm-4 col-form-label">Purchase Order Ref.</label>
@@ -355,8 +355,8 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label for="inputTelephone" class="col-sm-6 col-form-label">Purchase Date<span class="radStar">*</span></label>
-                                                <div class="col-sm-4">
+                                                <label for="inputTelephone" class="col-sm-3 pe-0 col-form-label">Purchase Date<span class="radStar">*</span></label>
+                                                <div class="col-sm-7">
                                                     <input type="date" class="form-control editInput PurchaseOrdercheckError" id="purchase_purchase_date" name="purchase_date" value="">
                                                 </div>
                                                 <div class="col-sm-2 calendar_icon">
@@ -408,9 +408,9 @@
                                                     </div>
 
                                             </div>
-                                            <div class="mb-3 row">
-                                                <label for="inputTelephone" class="col-sm-6 col-form-label">Payment Due Date</label>
-                                                <div class="col-sm-4">
+                                            <div class="mb-3 row align-items-center">
+                                                <label for="inputTelephone" class="col-sm-3 pe-0 col-form-label">Payment Due Date</label>
+                                                <div class="col-sm-7">
                                                     <input type="date" class="form-control editInput" id="purchase_payment_due_date" name="payment_due_date" value="">
                                                 </div>
                                                 <div class="col-sm-2 calendar_icon">
@@ -580,7 +580,7 @@
                                                 <tr>
                                                     <td class="border_tran" colspan="5"></td>
                                                     <td colspan="3" ><strong>Paid</strong></td>
-                                                    <td><strong>-£0.00</strong></td>
+                                                    <td><strong id="paid_amount">-£0.00</strong></td>
                                                     <td class="border_tran" colspan="3" ></td>
                                                 </tr>
                                                 <tr>
@@ -718,14 +718,13 @@
                                     </div>
                                     @if((isset($key) && $key !='') && (isset($duplicate) && $duplicate ==''))
                                     <div class="col-sm-12">
-                                        <div class="productDetailTable">
+                                        <div class="productDetailTable input_style">
                                             <table class="table">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th style=" width:30px;"><input type="checkbox" id="selectAll"> <label for="selectAll"></label></th>
-                                                      
                                                         <th>Type</th>
-                                                        <th>Title</th>
+                                                        <th class="col-2">Title</th>
                                                         <th>Description</th>
                                                         <th>Section</th>
                                                         <th>File Name</th>
@@ -1572,6 +1571,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
 
                         const selectDropdownJob = document.createElement('select');
                         selectDropdownJob.name = 'job_id[]';
+                        selectDropdownJob.className = 'form_control';
 
                         const defaultOptionJob = document.createElement('option');
                         defaultOptionJob.value = '';
@@ -1597,7 +1597,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const codeCell = document.createElement('td');
                         // codeCell.textContent = data.product_detail.product_code;
                         const inputCode = document.createElement('input');
-                        inputCode.className = 'product_code';
+                        inputCode.className = 'product_code form_control';
                         inputCode.name = 'product_code[]';
                         inputCode.value = '';
                         codeCell.appendChild(inputCode);
@@ -1612,7 +1612,8 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
 
                         const descriptionCell = document.createElement('td');
                         const inputDescription = document.createElement('textarea');
-                        inputDescription.className = 'description';
+                        inputDescription.className = 'description form_control';
+                        inputDescription.setAttribute('rows','1');
                         inputDescription.name = 'description[]';
                         // inputDescription.value = data.product_detail.description;
                         inputDescription.value = '';
@@ -1621,7 +1622,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
 
                         const dropdownAccountCode = document.createElement('td');
                         const selectDropdownAccountCode = document.createElement('select');
-                        selectDropdownAccountCode.className='accountCode_id';
+                        selectDropdownAccountCode.className='accountCode_id form_control';
                         selectDropdownAccountCode.name = 'accountCode_id[]';
 
                         const optionsAccountCode = data.accountCode;
@@ -1643,7 +1644,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const qtyCell = document.createElement('td');
                         const inputQty = document.createElement('input');
                         inputQty.type = 'text';
-                        inputQty.className = 'qty input50';
+                        inputQty.className = 'qty input50 form_control';
                         inputQty.addEventListener('input', function() {
                             this.value = this.value.replace(/[^0-9.]/g, '');
                             if ((this.value.match(/\./g) || []).length > 1) {
@@ -1659,7 +1660,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const priceCell = document.createElement('td');
                         const inputPrice = document.createElement('input');
                         inputPrice.type = 'text';
-                        inputPrice.className = 'product_price input50';
+                        inputPrice.className = 'product_price input50 form_control';
                         // inputPrice.addEventListener('input', function() {
                         //     updateAmount(row);
                         // });
@@ -1683,7 +1684,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                             getIdVat($(this).val(),row);
                         });
                         selectDropdownVat.name = 'vat_id[]';
-                        selectDropdownVat.className='vat_id';
+                        selectDropdownVat.className='vat_id form_control';
                         const optionsVat =data.tax;
                         var tax_rate='00';
                         optionsVat.forEach(optionVat => {
@@ -1798,10 +1799,15 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
         //     });
         //     $("#total_amount").text('£' + totalAmountAssign);
     });
-
-    function updateAmount(row) {
+    var check_paid_amount=0;
+    function updateAmount(row,paid_amount=0) {
         // console.log(row)
         // const priceInput = row.querySelector('.price');
+        // alert(typeof(paid_amount))
+        
+        if(paid_amount !=0){
+            check_paid_amount=paid_amount;
+        }
         const priceInput = row.querySelector('.product_price');
         const qtyInput = row.querySelector('.qty');
         const amountCell = row.querySelector('td:nth-last-child(3)');
@@ -1835,9 +1841,10 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
         $("#vat").text('£'+vat_amount.toFixed(2));
         var total_vat=totalAmount+vat_amount;
         $("#total_vat").text('£'+total_vat.toFixed(2));
-        $("#outstanding_vat").text('£'+total_vat.toFixed(2));
+        var outstanding_amount=total_vat-check_paid_amount;
+        $("#outstanding_vat").text('£'+outstanding_amount.toFixed(2));
     }
-    function getIdVat(vat_id,row){
+    function getIdVat(vat_id,row,paid_amount=0){
         var token='<?php echo csrf_token();?>'
         $.ajax({
             type: "POST",
@@ -1852,7 +1859,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                     // var input = td.querySelector('.vat');
                     // // console.log(typeof(vat_value));
                     // input.value = vat_value.toFixed(2) || 0;
-                    updateAmount(row);
+                    updateAmount(row,paid_amount);
                 }else{
                     alert("Something went wrong");
                 }
@@ -1994,7 +2001,7 @@ $('#search-product').on('keyup', function() {
                         <tr>
                             <td><input type="checkbox" id="" class="delete_checkbox" value="`+attachment.id+`"></td>
                             <td>${attachmentType}</td>
-                            <td><input type="hidden" name="purchaseattachment_id[]" value="${attachment.id}"><input type="text" name="purchaseattachment_title[]" value="${title}"></td>
+                            <td><input type="hidden" name="purchaseattachment_id[]" value="${attachment.id}"><input type="text" class="form-control" name="purchaseattachment_title[]" value="${title}"></td>
                             <td>${description}</td>
                             <td>${section}</td>
                             <td>${fileName}</td>
@@ -2015,7 +2022,7 @@ $('#search-product').on('keyup', function() {
             },
             error: function(xhr, status, error) {
                 console.error(error);
-                location.reload();
+                // location.reload();
             }
         });
     }
@@ -2026,7 +2033,7 @@ $('#search-product').on('keyup', function() {
             method: 'POST',
             data: {id: id,_token:token},
             success: function(response) {
-                // console.log(response);
+                console.log(response);
                 var data=response.data[0];
                 const tableBody = document.querySelector(`#result tbody`);
                 var purchase_order_products=data.product_details.purchase_order_products;
@@ -2047,6 +2054,8 @@ $('#search-product').on('keyup', function() {
                     if (emptyErrorRow) {
                         emptyErrorRow.remove();
                     }
+                    var paid_amount=response.paid_amount;
+                    $("#paid_amount").text("-£"+parseFloat(paid_amount).toFixed(2));
                     purchase_order_products.forEach(product => {
                         const row = document.createElement('tr');
 
@@ -2147,7 +2156,7 @@ $('#search-product').on('keyup', function() {
                             if ((this.value.match(/\./g) || []).length > 1) {
                                 this.value = this.value.slice(0, -1);
                             }
-                            updateAmount(row);
+                            updateAmount(row,paid_amount);
                         });
                         inputQty.name = 'qty[]';
                         inputQty.value = product.qty;
@@ -2163,7 +2172,7 @@ $('#search-product').on('keyup', function() {
                             if ((this.value.match(/\./g) || []).length > 1) {
                                 this.value = this.value.slice(0, -1);
                             }
-                            updateAmount(row);
+                            updateAmount(row,paid_amount);
                         });
                         inputPrice.name = 'price[]'; 
                         inputPrice.value = product.price;
@@ -2174,7 +2183,7 @@ $('#search-product').on('keyup', function() {
                         const dropdownVat = document.createElement('td');
                         const selectDropdownVat = document.createElement('select');
                         selectDropdownVat.addEventListener('change', function() {
-                            getIdVat($(this).val(),row);
+                            getIdVat($(this).val(),row,paid_amount);
                         });
                         selectDropdownVat.name = 'vat_id[]';
                         selectDropdownVat.className='vat_id form_control';
@@ -2206,7 +2215,7 @@ $('#search-product').on('keyup', function() {
                         inputVat.style = "max-width:70px;";
                         inputVat.setAttribute('disabled','disabled');
                         inputVat.addEventListener('input', function() {
-                            updateAmount(row);
+                            updateAmount(row,paid_amount);
                         });
                         inputVat.name = 'vat[]'; 
                         inputVat.value = parseFloat(tax_rate).toFixed(2);
@@ -2232,7 +2241,7 @@ $('#search-product').on('keyup', function() {
                         row.appendChild(deleteCell);
 
                         tableBody.appendChild(row);
-                        updateAmount(row)
+                        updateAmount(row,paid_amount)
                     });
                     $("#product_calculation").show();
                     
@@ -2300,7 +2309,7 @@ $('#search-product').on('keyup', function() {
             },
             error: function(xhr, status, error) {
                 console.error(error);
-                location.reload();
+                // location.reload();
             }
         });
     }
@@ -2840,7 +2849,7 @@ $(document).on('click','.attachment_delete', function() {
             },
             error: function(xhr, status, error) {
                 console.error(error);
-                location.reload();
+                // location.reload();
             }
         });
     }
@@ -2920,6 +2929,12 @@ $(document).on('click','.attachment_delete', function() {
             }
         });
     }
+    $(document).on('input', '.product_code', function () {
+        let input = $(this).val();
+        if (input.length > 50) {
+            $(this).val(input.substring(0, 50));
+        }
+    });
 </script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
