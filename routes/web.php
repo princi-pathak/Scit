@@ -416,6 +416,14 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/save_reminder', 'save_reminder');
 		Route::post('/purchaseOrderEmailSave', 'purchaseOrderEmailSave');
 		Route::get('/preview', 'preview');
+		Route::get('/purchase-orders-search','purchase_orders_search');
+		Route::get('/purchase-order-statements','purchase_order_statements');
+		Route::post('/searchPurchaseOrdersStatements','searchPurchaseOrdersStatements');
+		Route::get('/purchase-order-invoices','purchase_order_invoices');
+		Route::post('/searchPurchaseOrdersInvoice','searchPurchaseOrdersInvoice');
+		Route::post('/getAllPurchaseInvoices','getAllPurchaseInvoices');
+		Route::post('/getAllPaymentPaids','getAllPaymentPaids');
+		Route::post('/paymentPaidDelete','paymentPaidDelete');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function(){
@@ -518,10 +526,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		// Lead CRM 
 		Route::post('lead/saveCRMLeadData', 'saveCRMLeadData')->name('lead.ajax.saveCRMLeadData');
 		Route::post('lead/getCRMCallsData', 'getCRMCallsData')->name('lead.ajax.getCRMCallsData');
-
 		Route::post('lead/saveCRMLeadEmails', 'saveCRMLeadEmails')->name('lead.ajax.saveCRMLeadEmails');
 		Route::post('lead/getCRMEmailsData', 'getCRMEmailsData')->name('lead.ajax.getCRMEmailsData');
-
 		Route::post('lead/saveCRMLeadNotes', 'saveCRMLeadNotes')->name('lead.ajax.saveCRMLeadNotes');
 		Route::post('lead/getCRMNotesData', 'getCRMNotesData')->name('lead.ajax.getCRMNotesData');
 
@@ -539,9 +545,12 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('lead/getUserList', 'getUserList')->name('lead.ajax.getUserList');
 		Route::post('lead/getLeadDataWithRecurrence', 'getLeadDataWithRecurrence')->name('lead.ajax.getLeadDataWithRecurrence');
 		Route::get('lead/get30DaysLead', 'get30DaysLead')->name('lead.ajax.get30DaysLead');
+		Route::post('lead/saveLeadConvertQuote', 'saveLeadConvertQuote')->name('lead.ajax.saveLeadConvertQuote');
 
 
 		Route::get('lead/searchUser', 'searchUser')->name('lead.ajax.searchUser');
+
+		
 
 	});
 

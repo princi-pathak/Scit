@@ -189,9 +189,9 @@
                                                 <a href="#" class="dropdown-item set_value_on_CRM_model" data-user-id="{{ $customer->id }}" data-ref="{{ $customer->lead_ref }}" data-contact-name="{{ $customer->contact_name }}" data-email="{{ $customer->email }}" data-name="{{ $customer->name }}" data-status="{{ $customer->status }}" data-telephone="{{ $customer->telephone }}" class="dropdown-item">CRM History</a>
                                                 <a href="#" class="dropdown-item open-modal" data-lead_ref="{{ $customer->lead_ref }}" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</a>
                                                 <a href="{{ url('/leads/authorization').'/'.$customer->id }}" class="dropdown-item">Send for Authorization</a>
-                                                <a href="javaScript:void(0)" onclick="openSentQuoteModal('{{ $customer->lead_ref }}')" class="dropdown-item">Send to Quote</a>
+                                                <a href="javaScript:void(0)" onclick="openSentQuoteModal('{{ $customer->lead_ref }}', '{{ $customer->id}}', '{{ $customer->customer_id }}' ,'quote')" class="dropdown-item">Send to Quote</a>
                                                 <a href="#" class="dropdown-item">Send to Job</a>
-                                                <a href="#" class="dropdown-item">Convert to Customer Only</a>
+                                                <a href="#" class="dropdown-item" onclick="openSentQuoteModal('{{ $customer->lead_ref }}', '{{ $customer->id}}', '{{ $customer->customer_id }}' ,'customer')">Convert to Customer Only</a>
                                             </div>
                                         </div>
                                     </div>
@@ -1628,39 +1628,68 @@
 
 <div class="modal fade" id="sentToQuoteModal" tabindex="1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel2"> Notify Leads </h1>
+                <h5 class="modal-title fs-5" id="exampleModalLabel2"> Notify Leads </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="lead_reject_type_form_edit">
+                <form id="notify_lead_quote_form">
                     @csrf
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">
-                            <h5>Would you like to notify anyone that this lead <span id="sentQuote"></span> has been converted?</h5>
+                            <h6><strong>Would you like to notify anyone that this lead <span id="sentQuote"></span> has been converted?</strong></h6>
                         </label>
                     </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Notify </label>
-                        <input type="radio" class="form-control editInput" name="title" id="recipient-name">
-                        <input type="radio" class="form-control editInput" name="title" id="recipient-name">
+                    <div class="mb-3 row">
+                        <input type="hidden" name="lead_id" id="notify_lead_id">
+                        <input type="hidden" name="type" id="notification_type">
+                        <input type="hidden" name="customer_id" id="converted_customer">
+                        <label class="col-sm-2 col-form-label"> <strong>Notify</strong></label>
+                        <div class="col-sm-10">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="notify" id="inlineRadio1" onclick="toggleDiv(true)" value="1">
+                                <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="notify" id="inlineRadio2" onclick="toggleDiv(false)" value="0" checked="">
+                                <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Notify Who ?</label>
-                        <input type="text" class="form-control editInput" name="title" id="recipient-name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Status:</label>
-                        <input type="radio" class="form-control editInput" name="Notification" id="recipient-name">
-                        <input type="radio" class="form-control editInput" name="sms" id="recipient-name">
-                        <input type="radio" class="form-control editInput" name="Email" id="recipient-name">
+                    <div id="toggleDiv">
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label"> <strong>Notify Who ?</strong></label>
+                            <div class="col-sm-10">
+                                <select class="form-control editInput" name="notifiy_user_id" id="notifiy_user">
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label"> <strong>Send As <span class="radStar">*</span></strong></label>
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="notifocation" id="checkalrt1" value="1">
+                                    <label class="form-check-label checkboxtext" for="checkalrt1">Notification</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="sms" id="checkalrt2" value="1">
+                                    <label class="form-check-label checkboxtext" for="checkalrt2">SMS</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="email" id="checkalrt3" value="1">
+                                    <label class="form-check-label checkboxtext" for="checkalrt3">Email</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer customer_Form_Popup">
                 <button type="button" class="profileDrop" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="lead_reject" class="profileDrop">Save</button>
+                <button type="button" id="save_lead_convert_quote" class="profileDrop">Save</button>
             </div>
         </div>
     </div>
@@ -3229,15 +3258,15 @@
 
     });
 
-    function openSentQuoteModal(lead_ref) {
+    function openSentQuoteModal(lead_ref, lead_id, customer_id,type) {
         document.getElementById('sentQuote').textContent = lead_ref;
+        document.getElementById('notify_lead_id').value = lead_id;
+        document.getElementById('notification_type').value = type;
+        document.getElementById('converted_customer').value = customer_id;
         $('#sentToQuoteModal').modal('show');
     }
 
-    // $('#openSentQuoteModal').on('click', function(){
-    //     document.getElementById('sentQuote').value = ;
-    //     $('#sentToQuoteModal').modal('show');
-    // });
+
     $('.delete_checkbox').on('click', function() {
         if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
             $('#selectAll').prop('checked', true);
@@ -3245,6 +3274,9 @@
             $('#selectAll').prop('checked', false);
         }
     });
+
+    const getUserListNotify = "{{ route('lead.ajax.getUserList') }}";
+    const saveLeadConvertQuote = '{{ route("lead.ajax.saveLeadConvertQuote") }}';
 </script>
 <script type="module">
     document.getElementById('exportCsv').addEventListener('click', function() {
@@ -3286,3 +3318,4 @@
 </script>
 <!-- end here -->
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
+<script type="text/javascript" src="{{ url('public/js/salesFinance/leads/customLeads.js') }}"></script>

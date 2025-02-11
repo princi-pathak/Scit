@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('lead_tasks', function (Blueprint $table) {
-            $table->string('contact_phone')->after('contact_name');
+        Schema::table('purchase_order_invoice_receives', function (Blueprint $table) {
+            $table->string('oustanding_amount')->after('gross_amount')->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('lead_tasks', function (Blueprint $table) {
-            //
+        Schema::table('purchase_order_invoice_receives', function (Blueprint $table) {
+            $table->dropColumn('oustanding_amount');
         });
     }
 };

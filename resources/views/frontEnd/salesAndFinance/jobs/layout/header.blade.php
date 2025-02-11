@@ -264,9 +264,9 @@ $access_rights = explode(',', $rights);
                                             <li><a class="dropdown-item" href="{{ url('draft_purchase_order?list_mode=Rejected') }}"><span><i class="fa fa-check"></i>Rejected Purchase Orders </span></a></li>
                                             <li><a class="dropdown-item" href="{{ url('draft_purchase_order?list_mode=Actioned') }}"><span><i class="fa fa-check"></i>Actioned Purchase Orders</span></a></li>
                                             <li><a class="dropdown-item" href="{{ url('draft_purchase_order?list_mode=Paid') }}"><span><i class="fa fa-thumbs-up"></i>Paid Purchase Orders</span></a></li>
-                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-search"></i>Search Purchase Orders</span></a></li>
-                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-file"></i>Invoices Received</span></a></li>
-                                            <li><a class="dropdown-item" href="#"><span><i class="fa fa-file"></i>Purchase Orders Statements</span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('purchase-orders-search')}}"><span><i class="fa fa-search"></i>Search Purchase Orders</span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('purchase-order-invoices')}}"><span><i class="fa fa-file"></i>Invoices Received</span></a></li>
+                                            <li><a class="dropdown-item" href="{{url('purchase-order-statements')}}"><span><i class="fa fa-file"></i>Purchase Orders Statements</span></a></li>
                                             <li><a class="dropdown-item" href="#"><span><i class="fa fa-rotate-right"></i>Recurring Purchase Orders</span></a></li>
                                             <li class="dropend"><a class="dropdown-item" href="credit_notes.html" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fa fa-list"></i>Credit Notes</span> <i class="fa-solid fa-angle-right"></i></a>
                                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
