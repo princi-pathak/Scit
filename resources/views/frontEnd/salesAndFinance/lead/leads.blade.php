@@ -1652,7 +1652,7 @@
                                 <label class="form-check-label checkboxtext" for="inlineRadio1">Yes</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="notity" id="inlineRadio2" onclick="toggleDiv(false)" value="0" checked="">
+                                <input class="form-check-input" type="radio" name="notify" id="inlineRadio2" onclick="toggleDiv(false)" value="0" checked="">
                                 <label class="form-check-label checkboxtext" for="inlineRadio2">No</label>
                             </div>
                         </div>
