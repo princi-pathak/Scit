@@ -27,243 +27,316 @@ CKEDITOR.replace('textarea9', editor_config);
 CKEDITOR.replace('textarea10', editor_config);
 CKEDITOR.replace('textarea11', editor_config);
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
+    const page_type = parseInt(document.getElementById('page_type').value, 10);
+    console.log("page_type", page_type);
     
-
-    // $.ajax({
-    //     url: '{{ route("customer.ajax.getCustomerList") }}',
-    //     success: function(response) {
-    //         console.log(response.data);
-    //         var get_customer_type = document.getElementById('getCustomerList');
-    //         // get_customer_type.innerHTML = '';
-
-    //         response.data.forEach(user => {
-    //             const option = document.createElement('option');
-    //             option.value = user.id;
-    //             option.text = user.name;
-    //             if (user.id == setCustomerId) {
-    //                 option.selected = true; // Mark as selected
-    //                 document.getElementById('setCustomerNameInTask').value = user.name;
-    //                 document.getElementById('setCustomerNameInTimer').value = user.name;
-    //             }
-    //             get_customer_type.appendChild(option);
-    //         });
-    //     },
-    //     error: function(xhr, status, error) {
-    //         console.error(error);
-    //     }
-    // });
-    
-        // start here js for time start and pause
-        let timerInterval;
-        let elapsedSeconds = 0;
-        let isRunning = false;
-
-        function toggleTimer() {
-            if (isRunning) {
-                // Pause the timer
-                clearInterval(timerInterval);
-                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-play"></i> Start';
-            } else {
-                // Start the timer
-                timerInterval = setInterval(function() {
-                    elapsedSeconds++;
-                    document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
-                    document.getElementById('start_time_timer').value = formatTime(elapsedSeconds);
-                }, 1000);
-                document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
-            }
-            isRunning = !isRunning; // Toggle the running state
-        }
-
-        function formatTime(seconds) {
-            const hrs = Math.floor(seconds / 3600);
-            const mins = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
-            return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
-        }
-
-        function pad(number) {
-            return number < 10 ? '0' + number : number;
-        }
-
-        document.getElementById('toggleTimerBtn').addEventListener('click', toggleTimer);
-
-
-    getQuoteTaskList(document.querySelector('#quoteTaskList tbody'));
-    document.getElementById('hideQuoteDiv').style.display = "none";
-    document.getElementById('hideDepositSection').style.display = "none";
-
-
-      // Enable/disable "Delete Selected" button based on checkbox selection
-      $(document).on("change", ".selectRow, #selectAll", function() {
-        const anySelected = $(".selectRow:checked").length > 0;
-        $("#deleteSelected").prop("disabled", !anySelected);
-
-        if (this.id === "selectAll") {
-            $(".selectRow").prop("checked", $(this).prop("checked"));
-        }
-    });
-
-    // Handle delete selected rows
-    $("#deleteSelected").click(function() {
-        if (confirm("Are you sure you want to delete the selected rows?")) {
-            // Collect all selected row IDs
-            const ids = $(".selectRow:checked")
-                .map(function() {
-                    return $(this).closest("tr").data("id");
-                })
-                .get();
-
-            if (ids.length > 0) {
-                // Send AJAX request to delete rows
-                $.ajax({
-                    url: '{{ route("quote.ajax.deleteAttachment") }}', // Your server endpoint
-                    method: 'POST', // HTTP method
-                    data: {
-                        ids: ids,
-                        _token: '{{ csrf_token() }}' // CSRF token for Laravel
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            // Remove rows from the table
-                            $(".selectRow:checked").each(function() {
-                                $(this).closest("tr").remove();
-                            });
-                            alert("Selected rows deleted successfully.");
-                            $("#deleteSelected").prop("disabled", true);
-                            $("#selectAll").prop("checked", false);
-                        } else {
-                            alert("Failed to delete the selected rows.");
-                        }
-                    },
-                    error: function() {
-                        alert("An error occurred while deleting the rows.");
-                    }
-                });
-            }
-        }
-    });
-
-    // Handle "Download Selected" button
-    $("#downloadSelected").click(function() {
-        const selectedFiles = [];
-
-        // Collect selected files
-        $(".selectRow:checked").each(function() {
-            const row = $(this).closest("tr");
-            const fileUrl = row.find("a[target='_blank']").attr("href");
-            selectedFiles.push(fileUrl);
-        });
-
-        if (selectedFiles.length > 0) {
-            downloadMultipleFiles(selectedFiles);
-        }
-    });
-
-    // Function to trigger download for each file
-    function downloadMultipleFiles(files) {
-        files.forEach((fileUrl) => {
-            const a = document.createElement("a");
-            a.href = fileUrl;
-            a.download = ""; // Optional: Set custom filename
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        });
-    }
-
-      // Enable/disable "Delete Selected" button based on checkbox selection
-      $(document).on("change", ".selectRow, #selectAll", function() {
-        const anySelected = $(".selectRow:checked").length > 0;
-        $("#deleteSelected").prop("disabled", !anySelected);
-
-        if (this.id === "selectAll") {
-            $(".selectRow").prop("checked", $(this).prop("checked"));
-        }
-    });
-
-    // Handle delete selected rows
-    $("#deleteSelected").click(function() {
-        if (confirm("Are you sure you want to delete the selected rows?")) {
-            // Collect all selected row IDs
-            const ids = $(".selectRow:checked")
-                .map(function() {
-                    return $(this).closest("tr").data("id");
-                })
-                .get();
-
-            if (ids.length > 0) {
-                // Send AJAX request to delete rows
-                $.ajax({
-                    url: '{{ route("quote.ajax.deleteAttachment") }}', // Your server endpoint
-                    method: 'POST', // HTTP method
-                    data: {
-                        ids: ids,
-                        _token: '{{ csrf_token() }}' // CSRF token for Laravel
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            // Remove rows from the table
-                            $(".selectRow:checked").each(function() {
-                                $(this).closest("tr").remove();
-                            });
-                            alert("Selected rows deleted successfully.");
-                            $("#deleteSelected").prop("disabled", true);
-                            $("#selectAll").prop("checked", false);
-                        } else {
-                            alert("Failed to delete the selected rows.");
-                        }
-                    },
-                    error: function() {
-                        alert("An error occurred while deleting the rows.");
-                    }
-                });
-            }
-        }
-    });
-
-    // Handle "Download Selected" button
-    $("#downloadSelected").click(function() {
-        const selectedFiles = [];
-
-        // Collect selected files
-        $(".selectRow:checked").each(function() {
-            const row = $(this).closest("tr");
-            const fileUrl = row.find("a[target='_blank']").attr("href");
-            selectedFiles.push(fileUrl);
-        });
-
-        if (selectedFiles.length > 0) {
-            downloadMultipleFiles(selectedFiles);
-        }
-    });
-
-    // Function to trigger download for each file
-    function downloadMultipleFiles(files) {
-        files.forEach((fileUrl) => {
-            const a = document.createElement("a");
-            a.href = fileUrl;
-            a.download = ""; // Optional: Set custom filename
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        });
-    }
-
-
-    const page_type = document.getElementById('page_type').value;
-
-    if(page_type == 1){
+    if (page_type === 1) {
         document.getElementById("hideQuoteDetails").style.display = "none";
         document.getElementById("hideItemDetails").style.display = "none";
         document.getElementById("hideExtraInformation").style.display = "none";
         document.getElementById("hideDepositSection").style.display = "none";
-    } else if (page_type == 2 ){
+    } else if (page_type === 2) {
+
+        // getQuoteType(document.getElementById('quoteType').value);
+        getQuoteType(document.getElementById('quoteType'));
         document.getElementById('hideCustomerDetails').style.display = "none";
         document.getElementById('yourQuoteSection').style.display = "none";
         document.getElementById('hidequoteTasks').style.display = "none";
+    }
+  
+    const setCustomerId = document.getElementById('setCustomerId').value;
+
+    $.ajax({
+        url: getCustomerData,
+        success: function(response) {
+            console.log(response.data);
+            var get_customer_type = document.getElementById('getCustomerListedit');
+            // get_customer_type.innerHTML = '';
+
+            response.data.forEach(user => {
+                const option = document.createElement('option');
+                option.value = user.id;
+                option.text = user.name;
+                if (user.id == setCustomerId) {
+                    option.selected = true; // Mark as selected
+                    document.getElementById('setCustomerNameInCustomerdetails').value = user.name;
+                }
+                get_customer_type.appendChild(option);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+    
+    
+    const edit_customer_billing_id = document.getElementById('edit_customer_billing_id').value;
+    if (setCustomerId === edit_customer_billing_id) {
+        $.ajax({
+            url: getCustomerBillingAddress,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: setCustomerId
+            },
+            success: function (response) {
+                console.log(response.data);
+                var billingDetailContact = document.getElementById('billingDetailContact');
+                billingDetailContact.innerHTML = '';
+
+                const optionDefault = document.createElement('option');
+                optionDefault.value = setCustomerId;
+                optionDefault.text = "Default";
+                billingDetailContact.appendChild(optionDefault);
+
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.contact_name;
+                    billingDetailContact.appendChild(option);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    } else {
+        setCustomerBillingData(edit_customer_billing_id);
+    }
+
+    const edit_site_id = document.getElementById('edit_customer_billing_id').value;
+    if (setCustomerId === edit_customer_billing_id) {
+        $.ajax({
+            url: getCustomerSiteAddressURL,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: setCustomerId
+            },
+            success: function (response) {
+                console.log(response.data);
+
+                const optionDefault = document.createElement('option');
+                optionDefault.value = setCustomerId;
+                optionDefault.text = "Same As Default";
+                billingDetailContact.appendChild(optionDefault);
+
+                response.data.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.text = user.site_name;
+                    const option1 = option.cloneNode(true);
+                    customerSiteDetails.appendChild(option);
+                    customerSiteDelivery.appendChild(option1);
+                });
+
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
+    // start here js for time start and pause
+    let timerInterval;
+    let elapsedSeconds = 0;
+    let isRunning = false;
+
+    function toggleTimer() {
+        if (isRunning) {
+            // Pause the timer
+            clearInterval(timerInterval);
+            document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-play"></i> Start';
+        } else {
+            // Start the timer
+            timerInterval = setInterval(function () {
+                elapsedSeconds++;
+                document.getElementById('timerDisplay').textContent = formatTime(elapsedSeconds);
+                document.getElementById('start_time_timer').value = formatTime(elapsedSeconds);
+            }, 1000);
+            document.getElementById('toggleTimerBtn').innerHTML = '<i class="fa fa-stop"></i> Pause';
+        }
+        isRunning = !isRunning; // Toggle the running state
+    }
+
+    function formatTime(seconds) {
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+    }
+
+    function pad(number) {
+        return number < 10 ? '0' + number : number;
+    }
+
+    document.getElementById('toggleTimerBtn').addEventListener('click', toggleTimer);
+
+    getQuoteTaskList(document.querySelector('#quoteTaskList tbody'));
+    // document.getElementById('hideQuoteDiv').style.display = "none";
+    // document.getElementById('hideDepositSection').style.display = "none";
+
+    // Enable/disable "Delete Selected" button based on checkbox selection
+    $(document).on("change", ".selectRow, #selectAll", function () {
+        const anySelected = $(".selectRow:checked").length > 0;
+        $("#deleteSelected").prop("disabled", !anySelected);
+
+        if (this.id === "selectAll") {
+            $(".selectRow").prop("checked", $(this).prop("checked"));
+        }
+    });
+
+    // Handle delete selected rows
+    $("#deleteSelected").click(function () {
+        if (confirm("Are you sure you want to delete the selected rows?")) {
+            // Collect all selected row IDs
+            const ids = $(".selectRow:checked")
+                .map(function () {
+                    return $(this).closest("tr").data("id");
+                })
+                .get();
+
+            if (ids.length > 0) {
+                // Send AJAX request to delete rows
+                $.ajax({
+                    url: '{{ route("quote.ajax.deleteAttachment") }}', // Your server endpoint
+                    method: 'POST', // HTTP method
+                    data: {
+                        ids: ids,
+                        _token: '{{ csrf_token() }}' // CSRF token for Laravel
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Remove rows from the table
+                            $(".selectRow:checked").each(function () {
+                                $(this).closest("tr").remove();
+                            });
+                            alert("Selected rows deleted successfully.");
+                            $("#deleteSelected").prop("disabled", true);
+                            $("#selectAll").prop("checked", false);
+                        } else {
+                            alert("Failed to delete the selected rows.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while deleting the rows.");
+                    }
+                });
+            }
+        }
+    });
+
+    // Handle "Download Selected" button
+    $("#downloadSelected").click(function () {
+        const selectedFiles = [];
+
+        // Collect selected files
+        $(".selectRow:checked").each(function () {
+            const row = $(this).closest("tr");
+            const fileUrl = row.find("a[target='_blank']").attr("href");
+            selectedFiles.push(fileUrl);
+        });
+
+        if (selectedFiles.length > 0) {
+            downloadMultipleFiles(selectedFiles);
+        }
+    });
+
+    // Function to trigger download for each file
+    function downloadMultipleFiles(files) {
+        files.forEach((fileUrl) => {
+            const a = document.createElement("a");
+            a.href = fileUrl;
+            a.download = ""; // Optional: Set custom filename
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+    }
+
+    // Enable/disable "Delete Selected" button based on checkbox selection
+    $(document).on("change", ".selectRow, #selectAll", function () {
+        const anySelected = $(".selectRow:checked").length > 0;
+        $("#deleteSelected").prop("disabled", !anySelected);
+
+        if (this.id === "selectAll") {
+            $(".selectRow").prop("checked", $(this).prop("checked"));
+        }
+    });
+
+    // Handle delete selected rows
+    $("#deleteSelected").click(function () {
+        if (confirm("Are you sure you want to delete the selected rows?")) {
+            // Collect all selected row IDs
+            const ids = $(".selectRow:checked")
+                .map(function () {
+                    return $(this).closest("tr").data("id");
+                })
+                .get();
+
+            if (ids.length > 0) {
+                // Send AJAX request to delete rows
+                $.ajax({
+                    url: '{{ route("quote.ajax.deleteAttachment") }}', // Your server endpoint
+                    method: 'POST', // HTTP method
+                    data: {
+                        ids: ids,
+                        _token: '{{ csrf_token() }}' // CSRF token for Laravel
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Remove rows from the table
+                            $(".selectRow:checked").each(function () {
+                                $(this).closest("tr").remove();
+                            });
+                            alert("Selected rows deleted successfully.");
+                            $("#deleteSelected").prop("disabled", true);
+                            $("#selectAll").prop("checked", false);
+                        } else {
+                            alert("Failed to delete the selected rows.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while deleting the rows.");
+                    }
+                });
+            }
+        }
+    });
+
+    // Handle "Download Selected" button
+    $("#downloadSelected").click(function () {
+        const selectedFiles = [];
+
+        // Collect selected files
+        $(".selectRow:checked").each(function () {
+            const row = $(this).closest("tr");
+            const fileUrl = row.find("a[target='_blank']").attr("href");
+            selectedFiles.push(fileUrl);
+        });
+
+        if (selectedFiles.length > 0) {
+            downloadMultipleFiles(selectedFiles);
+        }
+    });
+
+    // Function to trigger download for each file
+    function downloadMultipleFiles(files) {
+        files.forEach((fileUrl) => {
+            const a = document.createElement("a");
+            a.href = fileUrl;
+            a.download = ""; // Optional: Set custom filename
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
     }
 
     const $prevButton = $("#prevTab");
@@ -276,15 +349,15 @@ document.addEventListener("DOMContentLoaded", function() {
     updateButtons();
 
     // Event listeners for navigation
-    $prevButton.click(function() {
+    $prevButton.click(function () {
         navigateTab(-1);
     });
 
-    $nextButton.click(function() {
+    $nextButton.click(function () {
         navigateTab(1);
     });
 
-    $saveButton.click(function() {
+    $saveButton.click(function () {
         const quote_id = document.getElementById('quote_id').value;
         var data = {
             quote_id: quote_id,
@@ -305,12 +378,12 @@ document.addEventListener("DOMContentLoaded", function() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
+            success: function (response) {
                 // alert(response.data);
                 $("#creaditDepositModal").modal("hide"); // Close the modal
                 getDepositData(quote_id);
             },
-            error: function() {
+            error: function () {
                 alert("An error occurred while deleting the rows.");
             }
         });
@@ -353,14 +426,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Update buttons on tab change
-    $("#modalTabs .nav-link").on("shown.bs.tab", function() {
+    $("#modalTabs .nav-link").on("shown.bs.tab", function () {
         updateButtons();
     });
 
 
     getDepositData(document.getElementById('quote_id').value);
     // Enable/disable "Delete Selected" button based on checkbox selection
-    $(document).on("change", ".selectRow, #selectAll", function() {
+    $(document).on("change", ".selectRow, #selectAll", function () {
         const anySelected = $(".selectRow:checked").length > 0;
         $("#deleteSelected").prop("disabled", !anySelected);
 
@@ -370,11 +443,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Handle delete selected rows
-    $("#deleteSelected").click(function() {
+    $("#deleteSelected").click(function () {
         if (confirm("Are you sure you want to delete the selected rows?")) {
             // Collect all selected row IDs
             const ids = $(".selectRow:checked")
-                .map(function() {
+                .map(function () {
                     return $(this).closest("tr").data("id");
                 })
                 .get();
@@ -388,10 +461,10 @@ document.addEventListener("DOMContentLoaded", function() {
                         ids: ids,
                         _token: '{{ csrf_token() }}' // CSRF token for Laravel
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             // Remove rows from the table
-                            $(".selectRow:checked").each(function() {
+                            $(".selectRow:checked").each(function () {
                                 $(this).closest("tr").remove();
                             });
                             alert("Selected rows deleted successfully.");
@@ -401,7 +474,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             alert("Failed to delete the selected rows.");
                         }
                     },
-                    error: function() {
+                    error: function () {
                         alert("An error occurred while deleting the rows.");
                     }
                 });
@@ -410,11 +483,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Handle "Download Selected" button
-    $("#downloadSelected").click(function() {
+    $("#downloadSelected").click(function () {
         const selectedFiles = [];
 
         // Collect selected files
-        $(".selectRow:checked").each(function() {
+        $(".selectRow:checked").each(function () {
             const row = $(this).closest("tr");
             const fileUrl = row.find("a[target='_blank']").attr("href");
             selectedFiles.push(fileUrl);
@@ -444,11 +517,11 @@ document.addEventListener("DOMContentLoaded", function() {
     updateButtons();
 
     // Event listeners for navigation
-    $prevButton.click(function() {
+    $prevButton.click(function () {
         navigateTab(-1);
     });
 
-    $nextButton.click(function() {
+    $nextButton.click(function () {
         navigateTab(1);
     });
 
@@ -487,16 +560,16 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Update buttons on tab change
-    $("#modalTabs .nav-link").on("shown.bs.tab", function() {
+    $("#modalTabs .nav-link").on("shown.bs.tab", function () {
         updateButtons();
     });
 
 
-    $('#getTaxtInvoiceRateValue').on('click', function() {
+    $('#getTaxtInvoiceRateValue').on('click', function () {
         $.ajax({
-            url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
+            url: getActiveTaxRateURL,
             method: 'GET',
-            success: function(response) {
+            success: function (response) {
                 console.log("response.data", response.data);
                 if (Array.isArray(response.data)) {
                     // Iterate over all Account Code dropdowns and populate them
@@ -519,22 +592,22 @@ document.addEventListener("DOMContentLoaded", function() {
                     console.error("Invalid response format");
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
     });
 
-    document.getElementById('hideCustomerDetails').style.display = "none";
-    document.getElementById('hideTaskData').style.display = "none";
-    document.getElementById('yourQuoteSection').style.display = "none";
+    // document.getElementById('hideCustomerDetails').style.display = "none";
+    // document.getElementById('hideTaskData').style.display = "none";
+    // document.getElementById('yourQuoteSection').style.display = "none";
     getTags(document.getElementById('quoteTag'))
 
-    $('#OpenQuoteTypeModel').on('click', function() {
+    $('#OpenQuoteTypeModel').on('click', function () {
         $('#quoteTypeModal').modal('show');
     });
 
-    $('#OpenAddQuoteSourceModal').on('click', function() {
+    $('#OpenAddQuoteSourceModal').on('click', function () {
         $('#quoteSourceModal').modal('show');
     });
 
@@ -545,9 +618,10 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     getInvoiceDeposit(document.getElementById('quote_id').value);
-    getQuoteType(document.getElementById('quote_id').value);
+    // getQuoteType(document.getElementById('quoteType').value);
     getQuoteAttachmentsOnPageLoad();
-    $('#search-product').on('keyup', function() {
+
+    $('#search-product').on('keyup', function () {
         let query = $(this).val();
         const divList = document.querySelector('.parent-container');
 
@@ -563,7 +637,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 data: {
                     query: query
                 },
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     // $('#results').html(response);
                     divList.innerHTML = "";
@@ -588,7 +662,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Step 5: Append the div to the parent container in the HTML
                     divList.appendChild(div);
 
-                    ul.addEventListener('click', function(event) {
+                    ul.addEventListener('click', function (event) {
                         divList.innerHTML = '';
                         document.getElementById('search-product').value = '';
                         // Check if the clicked element is an <li> (to avoid triggering on other child elements)
@@ -599,7 +673,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                     });
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     console.error(xhr.responseText);
                 }
             });
@@ -607,85 +681,31 @@ document.addEventListener("DOMContentLoaded", function() {
             $('#results').empty(); // Clear results if the input is empty
         }
     });
-    const setCustomerId = document.getElementById('setCustomerId').value;
 
-    $.ajax({
-        url: '{{ route("customer.ajax.getCustomerList") }}',
-        success: function(response) {
-            console.log(response.message);
-            var get_customer_type = document.getElementById('getCustomerList');
-            // get_customer_type.innerHTML = '';
-
-            response.data.forEach(user => {
-                const option = document.createElement('option');
-                option.value = user.id;
-                option.text = user.name;
-                if (user.id == setCustomerId) {
-                    option.selected = true; // Mark as selected
-                }
-                get_customer_type.appendChild(option);
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
 
     // get all product from quote_id
     const quote_id = document.getElementById('quote_id').value;
     $.ajax({
-        url: '{{ route("quote.ajax.getQuoteProductList") }}',
+        url: getQuoteProductListURL,
         method: 'POST',
         data: {
             id: quote_id
         },
-        success: function(response) {
-            console.log(response.message);
+        success: function (response) {
+            console.log(response.data);
 
             // response.data.forEach(data => {
             quoteProductTable(response.data, 'quoteProducts', 'edit');
             // });
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
 
 
-    const edit_customer_billing_id = document.getElementById('edit_customer_billing_id').value;
-    if (setCustomerId === edit_customer_billing_id) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerBillingAddress") }}',
-            method: 'POST',
-            data: {
-                id: setCustomerId
-            },
-            success: function(response) {
-                console.log(response.message);
-                var billingDetailContact = document.getElementById('billingDetailContact');
-                billingDetailContact.innerHTML = '';
 
-                const optionDefault = document.createElement('option');
-                optionDefault.value = setCustomerId;
-                optionDefault.text = "Default";
-                billingDetailContact.appendChild(optionDefault);
-
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.contact_name;
-                    billingDetailContact.appendChild(option);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    } else {
-        setCustomerBillingData(edit_customer_billing_id);
-    }
-
-    $('#saveQuoteTag').on('click', function() {
+    $('#saveQuoteTag').on('click', function () {
         var quoteTag = document.getElementById('quoteTag');
         saveFormData(
             'add_quote_tag_form', // formId
@@ -696,28 +716,29 @@ document.addEventListener("DOMContentLoaded", function() {
         );
     });
 
-    $('#saveQuoteTypeQuote').on('click', function() {
+    $('#saveQuoteTypeQuote').on('click', function () {
         var formData = $('#add_quote_type_form').serialize();
         $.ajax({
             url: '{{ route("quote.ajax.saveQuoteType") }}',
             method: 'POST',
             data: formData,
-            success: function(response) {
+            success: function (response) {
                 // alert(response.message);
                 console.log(response.id);
                 setSiteAddressDetails(response.id);
                 $('#quoteTypeModal').modal('hide');
-                getQuoteType(document.getElementById('quoteType'));
+                // getQuoteType(document.getElementById('quoteType'));
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
     });
 
-    $('#billingDetailContact').on('change', function() {
+    $('#billingDetailContact').on('change', function () {
         var selected = document.getElementById('getCustomerList').value;
         console.log(selected);
+        console.log("$(this).val()", $(this).val());
         if ($(this).val() === selected) {
             getBillingDetailsData($(this).val());
         } else {
@@ -725,49 +746,18 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    const edit_site_id = document.getElementById('edit_customer_billing_id').value;
-    if (setCustomerId === edit_customer_billing_id) {
-        $.ajax({
-            url: '{{ route("customer.ajax.getCustomerSiteAddress") }}',
-            method: 'POST',
-            data: {
-                id: setCustomerId
-            },
-            success: function(response) {
-                console.log(response.data);
-
-                const optionDefault = document.createElement('option');
-                optionDefault.value = setCustomerId;
-                optionDefault.text = "Same As Default";
-                billingDetailContact.appendChild(optionDefault);
-
-                response.data.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.text = user.site_name;
-                    const option1 = option.cloneNode(true);
-                    customerSiteDetails.appendChild(option);
-                    customerSiteDelivery.appendChild(option1);
-                });
-
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
 
 
-    $('#AddQuoteButton').on('click', function() {
-        var customer = document.getElementById('getCustomerList').value;
+    $('#AddQuoteButton').on('click', function () {
+        var customer = document.getElementById('getCustomerListedit').value;
         if (customer === "") {
             alert('Please select the customer');
         } else {
             getTags(document.getElementById('quoteTag'))
             // getRegions(document.getElementById('siteDeliveryRegions'));
-            const selectCustomer = document.getElementById('getCustomerList');
-            const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
-            document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
+            const selectCustomer = document.getElementById('getCustomerListedit');
+            // const selectedText = selectCustomer.options[selectCustomer.selectedIndex].text;
+            // document.getElementById('setCustomerNameInCustomerdetails').value = selectedText;
             // document.getElementById('yourQuoteSection').style.display = "none";
             // document.getElementById('hideQuoteDiv').style.display = "block";
             // document.getElementById('hideCustomerDetails').style.display = "none";
@@ -775,45 +765,45 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    $('#saveCustomerContactData').on('click', function() {
+    $('#saveCustomerContactData').on('click', function () {
         var formData = $('#add_customer_contact_form').serialize();
         $.ajax({
             url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
             method: 'POST',
             data: formData,
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 alert(response.message);
                 setCustomerBillingData(response.lastid);
                 $('#add_customer_contact_modal').modal('hide');
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
     });
 
     // Ajax Call for saving Customer Type
-    $('#saveCustomerSiteDetails').on('click', function() {
+    $('#saveCustomerSiteDetails').on('click', function () {
         var formData = $('#add_customer_site_details_form').serialize();
         $.ajax({
             url: '{{ route("customer.ajax.saveCustomerSiteAddress") }}',
             method: 'POST',
             data: formData,
-            success: function(response) {
+            success: function (response) {
                 alert(response.message);
                 console.log(response.id);
                 setSiteAddressDetails(response.id);
                 // removeAddCustomerSiteAddress(document.getElementById('customerSiteDetails'),document.getElementById('customerSiteDelivery'), response.id);
                 $('#add_site_address_modal').modal('hide');
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
     });
 
-    $('#deposit_percantage').on('input', function() {
+    $('#deposit_percantage').on('input', function () {
         let percentage = parseInt($(this).val(), 10);
 
         if (percentage > 100) {
@@ -833,7 +823,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('deposit_amount').value = deposit_amount.toFixed(2);
     });
 
-    $('#deposit_percentage_invoice').on('input', function() {
+    $('#deposit_percentage_invoice').on('input', function () {
         let percentage = parseInt($(this).val(), 10);
 
         if (percentage > 100) {
@@ -857,7 +847,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
-    $('#getTaxRateValue').on('change', function() {
+    $('#getTaxRateValue').on('change', function () {
 
         var id = $(this).val();
         const selectedOption = $(this).find(':selected');
@@ -873,17 +863,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
-    $('#OpenAddCustomerContact').on('click', function() {
+    $('#OpenAddCustomerContact').on('click', function () {
         getCustomerJobTitle(document.getElementById('customer_job_titile_id'));
         $('#add_customer_contact_modal').modal('show');
     });
 
-    $('#OpenAddQuoteTag').on('click', function() {
+    $('#OpenAddQuoteTag').on('click', function () {
         $('#quoteTagModal').modal('show');
     });
 
-    $('#openCustomerSiteAddress').on('click', function() {
-        var customer = document.getElementById('getCustomerList').value;
+    $('#openCustomerSiteAddress').on('click', function () {
+        var customer = document.getElementById('getCustomerListedit').value;
         if (customer === "") {
             alert('Please select the customer');
         } else {
@@ -897,7 +887,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    $('#saveInvoiceDepositAmount').on('click', function() {
+    $('#saveInvoiceDepositAmount').on('click', function () {
 
         const subTotal = document.getElementById('sub_total_invoice').value;
         const varPer = document.getElementById('getTaxtRateHidden').value
@@ -928,13 +918,13 @@ document.addEventListener("DOMContentLoaded", function() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 // alert(response.data);
                 $("#creaditDepositInvoiceModal").modal("hide"); // Close the modal
                 getInvoiceDeposit(quote_id);
             },
-            error: function() {
+            error: function () {
                 alert("An error occurred while deleting the rows.");
             }
         });
@@ -942,11 +932,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
-    $('#new_Attachment_open_model').on('click', function() {
+    $('#new_Attachment_open_model').on('click', function () {
         $('#new_Attachment_model').modal('show');
     });
 
-    $('#saveAttachmentType').on('click', function(e) {
+    $('#saveAttachmentType').on('click', function (e) {
 
         let formData = new FormData($('#attachmentTypeForm')[0]);
         console.log(formData);
@@ -957,13 +947,13 @@ document.addEventListener("DOMContentLoaded", function() {
             data: formData,
             contentType: false, // Required for FormData
             processData: false, // Required for FormData
-            success: function(response) {
+            success: function (response) {
                 // Handle success
                 console.log(response.id);
                 $('#new_Attachment_model').modal('hide'); // Hide the modal
                 getQuoteAttachments(response.id);
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 // Handle error
                 const errors = xhr.responseJSON.errors || {
                     message: xhr.responseJSON.message
@@ -976,12 +966,12 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
-    
+
 });
 
 function getInvoiceDeposit(id) {
     $.ajax({
-        url: '{{ route("quote.ajax.getQuoteInvoiceDeposit") }}',
+        url: getQuoteInvoiceDeposit,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -989,12 +979,17 @@ function getInvoiceDeposit(id) {
         data: {
             quote_id: id
         },
-        success: function(response) {
-            const table = document.getElementById('invoiceDeposit'); 
-            const tableBody = table.querySelector('tbody');  
+        success: function (response) {
+            const table = document.getElementById('invoiceDeposit');
+            const tableBody = table.querySelector('tbody');
+
+            if (!response.data) {
+                response.data = []; // Set an empty array if data is null/undefined
+            }
+
             setDataOnInvoiceDeposit(response.data, tableBody, table)
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
@@ -1167,14 +1162,14 @@ function saveFormData(formId, saveUrl, modalId, callback, callBackValue = null) 
         url: saveUrl,
         method: 'POST',
         data: formData,
-        success: function(response) {
+        success: function (response) {
             alert(response.message);
             $('#' + modalId).modal('hide');
             if (callback && typeof callback === 'function') {
                 callback(callBackValue);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
@@ -1189,28 +1184,28 @@ function attachRowEventListeners(row, table) {
     row.querySelector('.vat')?.addEventListener('change', () => calculateRowsValue(table));
 }
 
-function getTaxRateOnTaxId(taxID) {
-    $.ajax({
-        url: '{{ route("invoice.ajax.getTaxRateOnTaxId") }}',
-        method: 'Post',
-        data: {
-            id: 2
-        },
-        success: function(response) {
-            console.log("response.data", response.data);
-            document.querySelector('.selectedTaxID').value = response.data;
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
-}
+// function getTaxRateOnTaxId(taxID) {
+//     $.ajax({
+//         url: '{{ route("invoice.ajax.getTaxRateOnTaxId") }}',
+//         method: 'Post',
+//         data: {
+//             id: 2
+//         },
+//         success: function (response) {
+//             console.log("response.data", response.data);
+//             document.querySelector('.selectedTaxID').value = response.data;
+//         },
+//         error: function (xhr, status, error) {
+//             console.error(error);
+//         }
+//     });
+// }
 
 function getTags(tags) {
     $.ajax({
-        url: '{{ route("General.ajax.getTags") }}',
+        url: getTagsURL,
         method: 'GET',
-        success: function(response) {
+        success: function (response) {
             console.log("jxcnjfjnfnk", response.data);
             tags.innerHTML = '';
             response.data.forEach(user => {
@@ -1220,7 +1215,7 @@ function getTags(tags) {
                 tags.appendChild(option);
             });
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
@@ -1233,11 +1228,11 @@ function getProductData(selectedId) {
         data: {
             id: selectedId
         },
-        success: function(response) {
+        success: function (response) {
             console.log("response.data", response.data);
             quoteProductTable(response.data, 'quoteProducts', 'add');
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
@@ -1316,7 +1311,7 @@ function tableFootForProduct(tableName) {
         }
 
         // Attach the event listener
-        discountInput.addEventListener('input', function() {
+        discountInput.addEventListener('input', function () {
             const discountValue = parseFloat(this.value) || 0;
 
             // Update all elements with the class "discount"
@@ -1344,6 +1339,8 @@ function calculateRowsValue(table) {
 
     const rows = table.querySelectorAll('tbody tr');
     const subtotal_amount = document.getElementById('subtotal_amount').value;
+    console.log("subtotal_amount", subtotal_amount);
+
     const total_amount = document.getElementById('total_amount').value;
     console.log("subtotal_amount", subtotal_amount);
 
@@ -1376,7 +1373,11 @@ function calculateRowsValue(table) {
 
     rows.forEach(row => {
 
-        getTaxRateOnTaxId();
+        const taxDropdown = row.querySelector('.getTaxRate'); // Find the select element in the row
+        const selectedOption = taxDropdown.options[taxDropdown.selectedIndex]; // Get selected option
+        const vat = parseFloat(selectedOption.getAttribute('data-rate')) || 0; // Get tax rate from attribute
+        console.log(vat);
+        
 
         // Get input values from the row
         totalQuantity = parseInt(row.querySelector('.quantity').value) || 0;
@@ -1460,9 +1461,9 @@ function calculateRowsValue(table) {
 
 function taxRate() {
     $.ajax({
-        url: '{{ route("invoice.ajax.getActiveTaxRate") }}',
+        url: getActiveTaxRateURL,
         method: 'GET',
-        success: function(response) {
+        success: function (response) {
             console.log("response.data", response.data);
             if (Array.isArray(response.data)) {
                 // Iterate over all Account Code dropdowns and populate them
@@ -1478,6 +1479,7 @@ function taxRate() {
                         const option = document.createElement('option');
                         option.value = code.id; // Use appropriate key from your response
                         option.textContent = code.name; // Use appropriate key from your response
+                        option.setAttribute('data-rate', code.tax_rate);
                         if (code.id === 2) {
                             option.selected = true; // Select the option where id = 2
                         }
@@ -1488,7 +1490,7 @@ function taxRate() {
                 console.error("Invalid response format");
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
@@ -1534,7 +1536,7 @@ function quoteProductTable(data, tableId, type) {
                 </div>
             </td>
             <td>
-                <div class=""><input type="text" class="form-control editInput input50 quantity" name="products[${rowIndex}][quantity]" value="1"></div>
+                <div class=""><input type="text" class="form-control editInput input50 quantity" name="products[${rowIndex}][quantity]"  value="1"></div>
             </td>
             <td>
                 <div class=""><input type="text" class="form-control editInput input50 costPrice" name="products[${rowIndex}][cost_price]" value="${parseFloat(item.cost_price || 0).toFixed(2)}"></div>
@@ -1599,7 +1601,7 @@ function quoteProductTable(data, tableId, type) {
 
             attachRowEventListeners(node, table)
             const closeButton = node.querySelector('.closeappend');
-            closeButton.addEventListener('click', function() {
+            closeButton.addEventListener('click', function () {
                 node.remove(); // Remove the row when close button is clicked 
                 clearFooter(table);
                 calculateRowsValue(table);
@@ -1613,10 +1615,11 @@ function quoteProductTable(data, tableId, type) {
 }
 
 function getQuoteType(quoteType) {
+    console.log("getQuoteType", quoteType);
     $.ajax({
-        url: '{{ route("quote.ajax.getQuoteTypes") }}',
-        success: function(response) {
-            console.log(response.message);
+        url: getQuoteTypesURL,
+        success: function (response) {
+            console.log("getQuoteType", response.data);
             quoteType.innerHTML = '';
             response.data.forEach(user => {
                 const option = document.createElement('option');
@@ -1625,7 +1628,7 @@ function getQuoteType(quoteType) {
                 quoteType.appendChild(option);
             });
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
@@ -1639,9 +1642,9 @@ function getQuoteAttachmentsOnPageLoad() {
         type: 'POST',
         data: { quote_id: quote_id },
         headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-        success: function(response) {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
             // Handle success
             console.log(response);
             const tableBody = $('#attachmentTable tbody');
@@ -1680,7 +1683,7 @@ function getQuoteAttachmentsOnPageLoad() {
                 });
             }
         },
-        error: function(xhr) {
+        error: function (xhr) {
             // Handle error
             const errors = xhr.responseJSON.errors || {
                 message: xhr.responseJSON.message
@@ -1710,7 +1713,7 @@ function getQuoteAttachments(attachment_id) {
         data: {
             attachment_id: attachment_id
         },
-        success: function(response) {
+        success: function (response) {
             // Handle success
             const tableBody = $('#attachmentTable tbody');
             console.log(tableBody);
@@ -1747,7 +1750,7 @@ function getQuoteAttachments(attachment_id) {
             }
 
         },
-        error: function(xhr) {
+        error: function (xhr) {
             // Handle error
             const errors = xhr.responseJSON.errors || {
                 message: xhr.responseJSON.message
@@ -1770,7 +1773,7 @@ function deleteAttachmentFile(id) {
             url: '{{ route("quote.ajax.deleteAttachment") }}', // Replace with your server URL
             method: 'POST', // Replace with appropriate HTTP method
             data: { id: id },
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     // Remove the row from the table
                     row.remove();
@@ -1778,7 +1781,7 @@ function deleteAttachmentFile(id) {
                     alert("Failed to delete the row.");
                 }
             },
-            error: function() {
+            error: function () {
                 alert("An error occurred while trying to delete the row.");
             }
         });
@@ -1792,7 +1795,7 @@ function setSiteAddressDetails(id) {
         data: {
             id: id
         },
-        success: function(response) {
+        success: function (response) {
             console.log(response.data);
 
             let selectElement = document.getElementById('customerSiteDetails'); // or document.querySelector('[name="mySelectName"]');
@@ -1822,14 +1825,13 @@ function setSiteAddressDetails(id) {
             selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
             selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
 }
 
 function setCustomerBillingData(id) {
-    alert(id);
     $.ajax({
         url: getCustomerBillingAddressData,
         method: 'POST',
@@ -1837,9 +1839,9 @@ function setCustomerBillingData(id) {
             id: id
         },
         headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-        success: function(response) {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
             console.log(response.data);
 
             let selectElement = document.getElementById('billingDetailContact'); // Get the select element
@@ -1873,7 +1875,7 @@ function setCustomerBillingData(id) {
             selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
             selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
@@ -1881,12 +1883,12 @@ function setCustomerBillingData(id) {
 
 function getBillingDetailsData(id) {
     $.ajax({
-        url: '{{ route("customer.ajax.getCustomerDetails") }}',
+        url: getCustomerDetailsURL,
         method: 'POST',
         data: {
             id: id
         },
-        success: function(response) {
+        success: function (response) {
             console.log("getCustomerDetails", response.data);
             var contactData = response.data[0];
             // billing details data set
@@ -1918,12 +1920,11 @@ function getBillingDetailsData(id) {
             selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
             selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
 }
-
 
 function selectPrevious(Select, previouslySelected) {
     // Loop through the options in the select field
@@ -1958,7 +1959,7 @@ function upload() {
 
 function getDepositData(quote_id) {
     $.ajax({
-        url: '{{ route("quote.ajax.getDepositeData") }}',
+        url: getDepositeData,
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1966,13 +1967,13 @@ function getDepositData(quote_id) {
         data: {
             quote_id: quote_id
         },
-        success: function(response) {
+        success: function (response) {
             console.log(response);
             const table = document.getElementById('depositData'); // Replace with your table's ID
             const tableBody = table.querySelector('tbody'); // Select the tbody within the table
             setDepositTableData(response.data, tableBody, table)
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
@@ -2083,13 +2084,13 @@ function depositeFoot(amount, table) {
     table.appendChild(tfoot);
 }
 
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+  
     const yesOnCheckbox = document.getElementById('yesOn');
     const optionsDiv = document.getElementById('optionsDiv');
     optionsDiv.style.display = 'none';
     // Add an event listener to the "Yes, ON" checkbox
-    yesOnCheckbox.addEventListener('change', function() {
+    yesOnCheckbox.addEventListener('change', function () {
         if (this.checked) {
             optionsDiv.style.display = 'block'; // Show optionsDiv
         } else {
@@ -2102,7 +2103,7 @@ function appointmentType() {
     $.ajax({
         url: '{{ route("job.ajax.jobAppointment") }}',
         method: 'GET',
-        success: function(response) {
+        success: function (response) {
             console.log("response.jobAppointment", response.data);
 
             const data = response.data;
@@ -2128,7 +2129,7 @@ function appointmentType() {
                 });
             });
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("AJAX Error:", error);
         }
     });
@@ -2138,7 +2139,7 @@ function getUsersData() {
     $.ajax({
         url: '{{ route("quote.ajax.getUsersData") }}',
         method: 'GET',
-        success: function(response) {
+        success: function (response) {
             console.log("response.userData", response.data);
 
             const data = response.data;
@@ -2169,7 +2170,7 @@ function getUsersData() {
                 });
             });
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("AJAX Error:", error);
         }
     });
@@ -2203,8 +2204,8 @@ function salesAppointment(table) {
 
 }
 
-   //**************insrtTitle
-   function insrtAppoinment() {
+//**************insrtTitle
+function insrtAppoinment() {
     const node = document.createElement("tr");
     node.classList.add("add_insrtAppoinment");
     node.innerHTML = `<td>
@@ -2288,7 +2289,7 @@ function salesAppointment(table) {
 
         // Add event listener to the close button
         const closeButton = node.querySelector('.closeappend');
-        closeButton.addEventListener('click', function() {
+        closeButton.addEventListener('click', function () {
             node.remove(); // Remove the row when close button is clicked
         });
     } else {
@@ -2300,7 +2301,7 @@ function salesAppointment(table) {
 function getQuoteTaskList(tableBody) {
     const quote_id = document.getElementById('quote_id').value;
     $.ajax({
-        url: getQuoteTaskList,
+        url: getQuoteTaskListURL,
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -2308,15 +2309,454 @@ function getQuoteTaskList(tableBody) {
         data: {
             quote_id: quote_id
         },
-        success: function(response) {
+        success: function (response) {
             console.log(response.data);
             tableBody.innerHTML = '';
-
+            if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+                populateTable(response.data, tableBody);
+            } else {
+                console.log("No data available"); // Optional: Log if data is empty
+                tableBody.innerHTML = "<tr><td colspan='5'>No data found</td></tr>"; // Display message in table
+            }
             // Call the function to populate the table with the data array
-            populateTable(response.data, tableBody);
+            // populateTable(response.data, tableBody);
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function saveQuoteTaskFormData() {
+
+    const activeTab = document.querySelector('.taskTimer .nav-link.active');
+    console.log(activeTab);
+    let data;
+    // Check the active tab by its ID
+    if (activeTab.id === 'newTasks-tab') {
+        // Task tab is active, set task fields
+        console.log('Task fields set');
+        data = {
+            type: 'task',
+            quote_id: document.getElementById('quote_id').value,
+            edit_quote_task_id: document.getElementById('edit_quote_task_id').value,
+            user_id: document.getElementById('quoteTaskUser').value,
+            title: document.getElementById('title').value,
+            task_type_id: document.getElementById('setTaskTypeData').value,
+            start_date: document.getElementById('start_date').value,
+            start_time: document.getElementById('start_time').value,
+            end_date: document.getElementById('end_date').value,
+            end_time: document.getElementById('end_time').value,
+            is_recurring: document.getElementById('is_recurring').checked ? 1 : 0,
+            yesOn: document.getElementById('yesOn').checked ? 1 : 0,
+            notify_date: document.getElementById('notify_date').value,
+            notify_time: document.getElementById('notify_time').value,
+            notification: document.getElementById('notification').checked ? 1 : 0,
+            email: document.getElementById('email').checked ? 1 : 0,
+            sms: document.getElementById('sms').checked ? 1 : 0,
+            notes: document.getElementById('notes').value,
+        };
+        console.log("data", data);
+    } else if (activeTab.id === 'newTaskTimer-tab') {
+        // Timer tab is active, set timer fields
+        console.log('Timer fields set');
+        data = {
+            type: 'timer',
+            quote_id: document.getElementById('quote_id').value,
+            edit_quote_task_id: document.getElementById('edit_quote_task_id').value,
+            user_id: document.getElementById('quoteTimerUser').value,
+            title: document.getElementById('timerTitle').value,
+            start_date: moment().format('YYYY-MM-DD'),
+            start_time: document.getElementById('start_time_timer').value,
+            task_type_id: document.getElementById('setTaskTypeOnTimer').value,
+            notes: document.getElementById('timerNotes').value,
+        };
+    }
+
+
+
+    $.ajax({
+        url: '{{ route("quote.ajax.saveQuoteTask") }}',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        },
+        success: function (response) {
+            alert(response.data);
+            console.log(response.id);
+            $('#newTaskModal').modal('hide');
+            getQuoteTaskList(document.querySelector('#quoteTaskList tbody'));
+        },
+        error: function (xhr) {
+            // Handle error
+            const errors = xhr.responseJSON.errors || {
+                message: xhr.responseJSON.message
+            };
+            let errorMessage = 'Error saving the task:\n';
+            for (let key in errors) {
+                errorMessage += `${errors[key]}\n`;
+            }
+            alert(errorMessage);
+        }
+    });
+}
+
+function populateTable(data, tableBody) {
+    console.log("populateTable Data", data);
+    data.forEach(item => {  
+        // Create a new row
+        const row = document.createElement('tr');
+
+        const created_at = moment(item.created_at).format('DD/MM/YYYY HH:mm');
+        const date = moment(item.start_date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+        const time = moment(item.start_time, 'HH:mm:ss').format('HH:mm');
+
+        // Create cells and append them to the row
+        const dateCell = document.createElement('td');
+        dateCell.textContent = date + " " + time;
+        row.appendChild(dateCell);
+
+        const related = document.createElement('td');
+        related.innerHTML = item.quote_ref;
+        row.appendChild(related);
+
+        const nameCell = document.createElement('td');
+        nameCell.innerHTML = item.userName;
+        row.appendChild(nameCell);
+
+        const quote_task_title = document.createElement('td');
+        quote_task_title.textContent = item.task_type_id;
+        row.appendChild(quote_task_title);
+
+        const typeCell = document.createElement('td');
+        typeCell.textContent = item.title;
+        row.appendChild(typeCell);
+
+        const notesCell = document.createElement('td');
+        notesCell.innerHTML = item.notes;
+        row.appendChild(notesCell);
+
+        const create_time = document.createElement('td');
+        create_time.innerHTML = created_at;
+        row.appendChild(create_time);
+
+        const idCell = document.createElement('td');
+        idCell.innerHTML = `<a href="#" class="openAddNewTaskModel" data-id="${item.id}" data-type="edit"><i class="fa fa-edit"></i></a> <i class="fa fa-times"></i>`;
+        row.appendChild(idCell);
+
+        // Append the row to the table body
+        tableBody.appendChild(row);
+    });
+}
+
+$(document).ready(function () {
+  
+    getQuoteAttachmentsOnPageLoad();
+    $('#search-product').on('keyup', function () {
+        let query = $(this).val();
+        const divList = document.querySelector('.parent-container');
+
+        if (query === '') {
+            divList.innerHTML = '';
+        }
+
+        // Make an AJAX call only if query length > 2
+        if (query.length > 2) {
+            $.ajax({
+                url: "{{ route('item.ajax.searchProduct') }}", // Laravel route
+                method: 'GET',
+                data: {
+                    query: query
+                },
+                success: function (response) {
+                    console.log(response);
+                    // $('#results').html(response);
+                    divList.innerHTML = "";
+                    const div = document.createElement('div');
+                    div.className = 'container'; // Optional: Add a class to the div for styling
+
+                    // Step 2: Create a ul (unordered list)
+                    const ul = document.createElement('ul');
+                    ul.id = "productList";
+                    // Step 3: Loop through the data and create li (list item) for each entry
+                    response.forEach(item => {
+                        const li = document.createElement('li'); // Create a new li element
+                        li.textContent = item.product_name; // Set the text of the li item
+                        li.id = item.id;
+                        li.className = "editInput";
+                        ul.appendChild(li); // Append the li to the ul
+                    });
+
+                    // Step 4: Append the ul to the div
+                    div.appendChild(ul);
+
+                    // Step 5: Append the div to the parent container in the HTML
+                    divList.appendChild(div);
+
+                    ul.addEventListener('click', function (event) {
+                        divList.innerHTML = '';
+                        document.getElementById('search-product').value = '';
+                        // Check if the clicked element is an <li> (to avoid triggering on other child elements)
+                        if (event.target.tagName.toLowerCase() === 'li') {
+                            const selectedId = event.target.id; // Get the ID of the clicked <li>
+                            console.log('Selected Product ID:', selectedId); // Print the ID of the selected product
+                            getProductData(selectedId);
+                        }
+                    });
+
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                }
+            });
+        } else {
+            $('#results').empty(); // Clear results if the input is empty
+        }
+    });
+ 
+
+    getTaskType(document.getElementById("setTaskTypeData"));
+    getTaskType(document.getElementById("setTaskTypeOnTimer"));
+
+});
+
+
+// function depositeInvoiceFoot(amount, table) {
+
+//     const tfoot = document.createElement('tfoot');
+
+//     // Create the footer row
+//     const footerRow = document.createElement('tr');
+
+//     // Create the "Sub Total" cell
+//     const subtotalLabelCell = document.createElement('th');
+//     subtotalLabelCell.colSpan = 5; // Adjust colspan based on your table structure
+//     subtotalLabelCell.textContent = 'Sub Total';
+//     footerRow.appendChild(subtotalLabelCell);
+
+//     // Create the "total" cell
+//     const subtotalAmountCell = document.createElement('th');
+//     // subtotalAmountCell.colSpan = 3; // Adjust colspan based on your table structure
+//     subtotalAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
+
+//     const hiddenInput = document.createElement('input');
+//     hiddenInput.type = 'hidden';
+//     hiddenInput.id = 'total_amount';
+//     // hiddenInput.name = 'subtotal_amount'; // Set the name for the hidden input
+//     hiddenInput.value = amount.toFixed(2);
+//     subtotalAmountCell.appendChild(hiddenInput);
+
+//     const outstandingAmountCell = document.createElement('th');
+//     outstandingAmountCell.colSpan = 3; // Adjust colspan based on your table structure
+//     outstandingAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
+
+//     const hiddenInputOutstanding = document.createElement('input');
+//     hiddenInputOutstanding.type = 'hidden';
+//     hiddenInputOutstanding.id = 'outstanding_amount';
+//     hiddenInputOutstanding.value = amount.toFixed(2);
+//     outstandingAmountCell.appendChild(hiddenInputOutstanding);
+
+//     footerRow.appendChild(subtotalAmountCell);
+//     footerRow.appendChild(outstandingAmountCell);
+
+//     // Append the row to the <tfoot> element
+//     tfoot.appendChild(footerRow);
+
+//     // Append the <tfoot> to the table
+//     table.appendChild(tfoot);
+// }
+
+// function calculateRowsValue(table) {
+
+//     const rows = table.querySelectorAll('tbody tr');
+//   const subtotalInput = document.getElementById('subtotal_amount');
+// const subtotal_amount = subtotalInput.value.trim() === '' ? 0 : parseFloat(subtotalInput.value) || 0;
+
+//     console.log("subtotal_amount", subtotal_amount);
+
+//     const subtotalAmount = parseFloat(subtotal_amount) || 0;
+//     const totalAmount = parseFloat(total_amount) || 0;
+
+//     // Calculate the sum
+//     const sum = subtotalAmount + totalAmount;
+
+//     const markupOnPriceOrCostPrice = document.getElementById('markupOnPriceOrCostPrice').value;
+//     console.log(markupOnPriceOrCostPrice);
+//     let totalQuantity = 0;
+//     let totalCostPrice = 0;
+//     let totalPrice = 0;
+//     let totalMarkup = 0;
+
+//     let totalVAT = 0;
+//     const vat = 20;
+
+//     let totalProfit = 0;
+//     let totalDiscount = 0;
+
+//     let profitElement;
+//     let profitValue;
+//     let numericProfit;
+//     let totalMargin = 0;
+//     let price = 0;
+
+//     const doller = `£`;
+
+//     rows.forEach(row => {
+
+//         getTaxRateOnTaxId();
+
+//         // Get input values from the row
+//         totalQuantity = parseInt(row.querySelector('.quantity').value) || 0;
+//         totalPrice = parseFloat(row.querySelector('.price').value) || 0;
+//         discount = parseInt(row.querySelector('.discount').value) || 0;
+//         totalCostPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
+//         totalMarkup = parseInt(row.querySelector('.priceMarkup').value) || 0;
+
+//         // Calculate selling price (Cost Price + Markup - Discount)
+
+//         markupAmount = (totalPrice * totalMarkup) / 100; // Percentage markup
+//         console.log(markupAmount);
+//         discountAmount = (totalPrice * discount) / 100; // Discount as a percentage
+//         console.log(discountAmount);
+//         totalDiscount += discountAmount;
+//         sellingPrice = totalPrice + markupAmount - discountAmount;
+//         console.log("sellingPrice", sellingPrice);
+
+//         // Calculate Amount (Quantity × Selling Price)
+//         amount = totalQuantity * sellingPrice;
+//         console.log(amount);
+//         price += amount;
+
+//         // Calculate VAT amount
+//         vatAmount = (amount * vat) / 100;
+//         console.log(vatAmount);
+//         totalVAT += vatAmount;
+//         // Calculate Profit ((Selling Price - Cost Price) × Quantity)
+//         profit = (sellingPrice - totalCostPrice) * totalQuantity;
+//         console.log(sellingPrice);
+//         totalProfit += profit;
+
+//         // Calculate margin
+//         margin = parseFloat((profit / sellingPrice) * 100);
+//         totalMargin += margin;
+//         console.log(margin);
+
+//         row.querySelector('.amount').textContent = doller + amount.toFixed(2);
+
+//         // Update row output fields
+//         row.querySelector('.profit').textContent = doller + profit.toFixed(2);
+
+//         if (margin >= 0) {
+//             row.querySelector('.footRowMargin').classList.add('minusnmberGreen');
+//         } else {
+//             row.querySelector('.footRowMargin').classList.add('minusnmberRed');
+//         }
+//         row.querySelector('.footRowMargin').textContent = '(' + margin.toFixed(2) + '%' + ')';
+
+//     });
+//     console.log("Total Quantity: ", totalQuantity);
+//     console.log("Total Cost Price: ", totalCostPrice);
+//     console.log("Total Price: ", price);
+//     console.log("Total Markup: ", totalMarkup);
+//     console.log("Total VAT: ", totalVAT);
+//     console.log("Total Discount: ", totalDiscount);
+//     console.log("Total Profit: ", totalProfit);
+//     console.log("Total totalMargin: ", totalMargin);
+
+//     document.getElementById('footAmount').textContent = doller + price.toFixed(2);
+//     document.getElementById('setDepositAmount').value = "% of  " + doller + price.toFixed(2);
+//     document.getElementById('setDepositAmountHidden').value = price.toFixed(2);
+//     document.getElementById('InputFootAmount').value = price.toFixed(2);
+//     document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
+//     document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
+//     document.getElementById('InputFootVatAmount').value = totalVAT.toFixed(2);
+//     document.getElementById('footTotalDiscountVat').textContent = doller + (price + totalVAT).toFixed(2);
+//     document.getElementById('setTotalCreditAmount').value = doller + (price + totalVAT).toFixed(2);
+//     document.getElementById('inputFootTotalDiscountVat').value = (price + totalVAT).toFixed(2);
+//     document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
+//     document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
+//     document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
+//     document.getElementById('footOutstandingAmount').textContent = doller + ((price + totalVAT) - sum).toFixed(2);
+//     document.getElementById('setOustandingCreditAmount').value = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
+//     document.getElementById('deposit_amount').value = ((price + totalVAT) - subtotal_amount).toFixed(2);
+//     document.getElementById('footDeposit').textContent = '-' + doller + sum.toFixed(2);
+//     document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
+//     document.getElementById('payingNow').textContent = doller + (price + totalVAT).toFixed(2);
+
+// }
+
+$('#getCustomerListedit').on('click', function() {
+
+    const billingDetailContact = document.getElementById('billingDetailContact');
+    billingDetailContact.innerHTML = '';
+
+    const getCustomerListValue = document.getElementById('getCustomerListedit');
+
+    const option = document.createElement('option');
+    option.value = getCustomerListValue.value;
+    option.text = "Default";
+    billingDetailContact.appendChild(option);
+
+    getBillingDetailsData(getCustomerListValue.value);
+
+    const customerSiteDetails = document.getElementById('customerSiteDetails');
+    const customerSiteDelivery = document.getElementById('customerSiteDelivery');
+
+    customerSiteDetails.innerHTML = '';
+    customerSiteDelivery.innerHTML = '';
+
+    const option3 = document.createElement('option');
+    option3.value = getCustomerListValue.value;
+    option3.text = "Same as customer";
+    const option4 = option3.cloneNode(true);
+    customerSiteDetails.appendChild(option3);
+    customerSiteDelivery.appendChild(option4);
+
+    removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
+});
+
+
+function getAccountCode() {
+    $.ajax({
+        url: getActiveAccountCodeURL,
+        method: 'GET',
+        success: function(response) {
+            console.log("response.getActiveAccountCode", response.data);
+            // Ensure response.data contains the account codes
+            if (Array.isArray(response.data)) {
+                // Iterate over all Account Code dropdowns and populate them
+                document.querySelectorAll('#accoutCodeList').forEach(dropdown => {
+                    // dropdown.innerHTML = ''; // Clear existing options
+
+                    const optionInitial = document.createElement('option');
+                    optionInitial.textContent = "-No Department-"; // Use appropriate key from your response
+                    optionInitial.value = "";
+                    dropdown.appendChild(optionInitial);
+                    // Append new options
+                    response.data.forEach(code => {
+                        const option = document.createElement('option');
+                        option.value = code.id;
+                        option.textContent = code.departmental_code + "-" + code.name; // Use appropriate key from your response
+                        dropdown.appendChild(option);
+                    });
+                });
+            } else {
+                console.error("Invalid response format");
+            }
         },
         error: function(xhr, status, error) {
             console.error(error);
         }
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".quantity").forEach(function (input) {
+        input.addEventListener("input", function () {
+            this.value = this.value.replace(/\s/g, "").replace(/[^0-9]/g, "");
+        });
+    });
+});
+

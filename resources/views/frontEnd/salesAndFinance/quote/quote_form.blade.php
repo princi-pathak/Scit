@@ -72,7 +72,7 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
+                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="Draft" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -2715,6 +2715,9 @@
                 data: formData,
                 success: function(response) {
                     alert(response.message);
+                    setCustomerBillingData(response.lastid);
+                    // $('#add_customer_contact_modal')[0].reset();
+                    $('#add_customer_contact_modal').find('form')[0].reset();
                     $('#add_customer_contact_modal').modal('hide');
                 },
                 error: function(xhr, status, error) {
@@ -2792,7 +2795,7 @@
                 if (Array.isArray(response.data)) {
                     // Iterate over all Account Code dropdowns and populate them
                     document.querySelectorAll('#accoutCodeList').forEach(dropdown => {
-                        dropdown.innerHTML = ''; // Clear existing options
+                        // dropdown.innerHTML = ''; // Clear existing options
 
                         const optionInitial = document.createElement('option');
                         optionInitial.textContent = "-No Department-"; // Use appropriate key from your response
