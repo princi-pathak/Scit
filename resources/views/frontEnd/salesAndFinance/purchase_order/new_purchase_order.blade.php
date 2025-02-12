@@ -43,6 +43,15 @@
 .image_delete_payment_paid {
     cursor: pointer;
 }
+.input_style table tbody textarea{
+    resize: none;
+    overflow: hidden;
+    min-height: 50px;
+  }
+
+  #product_result tr td{
+    vertical-align:baseline;
+  }
 </style>
         <section class="main_section_page px-3">
             <div class="container-fluid">
@@ -371,24 +380,39 @@
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputCustomer" class="col-sm-3 col-form-label">Quote Ref</label>
-                                                <div class="col-sm-9 position-relative">
+                                                <div class="col-sm-7 position-relative">
                                                     <input type="text" class="form-control editInput textareaInput" id="purchase_qoute_ref" name="purchase_qoute_ref" placeholder="Quote, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->qoute_ref != ''){echo $purchase_orders->qoute_ref;}?>">
                                                     <input type="hidden" id="selectedPurchaseQuotRefId" name="qoute_ref">
                                                     <div class="search-container purchase_qoute_ref-container"></div>
                                                 </div>
+                                                <div class="col-sm-2">
+                                                    <div class="formicon" onclick="show_searchModal(1)">
+                                                        <i class="fas fa-magnifying-glass"></i>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPurchase" class="col-sm-3 col-form-label">Job Ref</label>
-                                                <div class="col-sm-9 position-relative">
+                                                <div class="col-sm-7 position-relative">
                                                     <input type="text" class="form-control editInput textareaInput" id="purchase_job_ref" name="purchase_job_ref" placeholder="Job Ref, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->job_ref != ''){echo $purchase_orders->job_ref;}?>">
                                                     <input type="hidden" id="selectedPurchaseJobRefId" name="job_ref">
                                                     <div class="search-container purchase_job_ref-container"></div>
                                                 </div>
+                                                <div class="col-sm-2">
+                                                    <div class="formicon" onclick="show_searchModal(2)">
+                                                        <i class="fas fa-magnifying-glass"></i>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label for="inputPurchase" class="col-sm-3 col-form-label">Invoice Ref</label>
-                                                <div class="col-sm-9">
+                                                <div class="col-sm-7">
                                                     <input type="text" class="form-control editInput textareaInput" id="purchase_invoice_ref" name="invoice_ref" placeholder="Invoice Ref, if any" value="<?php if(isset($purchase_orders) && $purchase_orders->invoice_ref != ''){echo $purchase_orders->invoice_ref;}?>">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="formicon" onclick="show_searchModal(3)">
+                                                        <i class="fas fa-magnifying-glass"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -542,7 +566,7 @@
                                                     <th>Job </th>
                                                     <th>Product </th>
                                                     <th>Code</th>
-                                                    <th>Description </th>
+                                                    <th class="col-2">Description </th>
                                                     <th>Account Code <a href="javascript:void(0)" class="formicon" onclick="openAccountCodeModal(null)"><i class="fa-solid fa-square-plus"></i>
                                                     </a> </th>
                                                     <th>QTY</th>
@@ -1026,6 +1050,12 @@
     reminderTitle="reminder_title"
     reminderNotes="reminder_notes"
     saveButtonId="saveReminder"
+/>
+<x-purchase-search-modal 
+    searchModalId="refrence_purchase_seacrh_modal"
+    modalTitle="refrence_purchase_seacrh_modalTitle"
+    searchformId="refrence_purchase_seacrh_modalId"
+
 />
 
 <!-- End here -->
@@ -1617,6 +1647,9 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         inputDescription.name = 'description[]';
                         // inputDescription.value = data.product_detail.description;
                         inputDescription.value = '';
+                        inputDescription.addEventListener('input', function() {
+                            auto_grow(this);
+                        });
                         descriptionCell.appendChild(inputDescription);
                         row.appendChild(descriptionCell);
 
@@ -1709,7 +1742,7 @@ CKEDITOR.replace('purchase_internal_notes', editor_config );
                         const vatCell = document.createElement('td');
                         const inputVat = document.createElement('input');
                         inputVat.type = 'text';
-                        inputVat.className = 'vat';
+                        inputVat.className = 'vat form_control';
                         inputVat.style = "max-width:70px;";
                         inputVat.setAttribute('disabled','disabled');
                         inputVat.addEventListener('input', function() {
@@ -2119,6 +2152,9 @@ $('#search-product').on('keyup', function() {
                         inputDescription.setAttribute('rows','1');
                         inputDescription.name = 'description[]';
                         inputDescription.value = product.description;
+                        inputDescription.addEventListener('input', function() {
+                            auto_grow(this);
+                        });
                         descriptionCell.appendChild(inputDescription);
                         row.appendChild(descriptionCell);
 
@@ -2211,7 +2247,7 @@ $('#search-product').on('keyup', function() {
                         const vatCell = document.createElement('td');
                         const inputVat = document.createElement('input');
                         inputVat.type = 'text';
-                        inputVat.className = 'vat';
+                        inputVat.className = 'vat form-control';
                         inputVat.style = "max-width:70px;";
                         inputVat.setAttribute('disabled','disabled');
                         inputVat.addEventListener('input', function() {
@@ -2263,6 +2299,11 @@ $('#search-product').on('keyup', function() {
                 // location.reload();
             }
         });
+    }
+    function auto_grow(element) {
+        console.log("Here")
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight) + "px";
     }
     function getAllNewTaskList(id,pageUrl = '{{ url("getAllNewTaskList") }}'){
         var token='<?php echo csrf_token();?>'
@@ -2962,5 +3003,7 @@ $(document).on('click','.attachment_delete', function() {
         }
         
     }
-
+function show_searchModal(seaceh_type){
+    $("#refrence_purchase_seacrh_modal").modal('show');
+}
 </script>

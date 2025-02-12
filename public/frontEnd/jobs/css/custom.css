@@ -2337,8 +2337,9 @@ ul#productList {
   font-size: 13px;
   border: 1px solid #ddd;
   display: block;
-  line-height: 1.5;
+  line-height: 18px;
   min-width: 70px;
+  min-height: 30px;
 }
 
 .input_style table tbody textarea {
@@ -2358,4 +2359,10 @@ ul#productList {
 
 .notes_input textarea{
   border-radius: 0;
+}
+.input_style .table-warning {
+  --bs-table-bg: #ffcc00;
+}
+.formicon:hover{
+  cursor: pointer;
 }

@@ -46,11 +46,11 @@
         text-transform: capitalize;
     }
 
-    .parent-container {
+    /* .parent-container {
         position: absolute;
         background: #fff;
         width: 190px;
-    }
+    } */
 
     #deptList li:hover {
         cursor: pointer;
@@ -189,7 +189,7 @@
                                     </div>
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Department:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="department">
                                             <input type="hidden" id="selectedDeptId" name="selectedDeptId">
                                             <div class="parent-container department-container"></div>
@@ -197,7 +197,7 @@
                                     </div>
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Tag:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="tag">
                                             <input type="hidden" id="selectedTagtId" name="selectedTagtId">
                                             <div class="parent-container tag-container"></div>
@@ -247,7 +247,7 @@
                                 <div class="col-md-3">
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Customer:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="customer">
                                             <input type="hidden" id="selectedCustomerId" name="selectedCustomerId">
                                             <div class="parent-container customer-container"></div>
@@ -256,7 +256,7 @@
 
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Created By:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="created_by">
                                             <input type="hidden" id="selectedcreatedById" name="selectedcreatedById">
                                             <div class="parent-container createdBy-container"></div>
@@ -277,7 +277,7 @@
                                 <div class="col-md-3">
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Project:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="project">
                                             <input type="hidden" id="selectedProjectId" name="selectedProjectId">
                                             <div class="parent-container project-container"></div>
@@ -285,7 +285,7 @@
                                     </div>
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Keywords:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="keywords">
                                         </div>
                                     </div>
