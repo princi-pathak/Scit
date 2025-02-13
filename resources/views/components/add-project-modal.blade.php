@@ -60,8 +60,10 @@
                         </div>
                         <div class="mb-3 row">
                             <label for="inputJobRef" class="col-sm-3 col-form-label">Project Value </label>
-                            <div class="col-sm-1" style="background:#e3e3e1;display:flex">
-                                <span style="padding:3px">£</span>
+                            <div class="col-sm-1 pe-0">
+                                <div style="background:#e3e3e1;" class="px-2 py-1 text-center">
+                                    <span >£</span>
+                                </div>
                             </div>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control editInput textareaInput" id="project_value" name="project_value" value="0">
