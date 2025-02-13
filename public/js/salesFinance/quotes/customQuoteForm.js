@@ -1854,26 +1854,38 @@ function setCustomerBillingData(id) {
 
             // Set the new option as selected
             newOption.selected = true;
-            setFieldValues(['billing_add_id', 'siteCustomerId', 'site_delivery_add_id'], response.data[0].id);
+            setFieldValues(['billing_add_id', 'siteCustomerId'], response.data[0].id);
 
             // billing details data set
-            document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
-            document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
-            document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
+            document.getElementById('billingDetailsName').value =  response.data[0].contact_name;
+            document.getElementById('customer_contact_id').value  = response.data[0].id;
+            document.getElementById('billingDetailsAddress').value = response.data[0].address;
             document.getElementById('billingDetailsEmail').value = response.data[0].email;
-            document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
-            document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
-            document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
-            document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-            document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+            document.getElementById('billingCustomerCity').value =  response.data[0].city;
+            document.getElementById('billingCustomerCounty').value = response.data[0].county;
+            document.getElementById('billingCustomerPostcode').value =  response.data[0].pincode;
+            document.getElementById('billingCustomerTelephone').value =  response.data[0].telephone;
+            document.getElementById('billingCustomerMobile').value =  response.data[0].mobile;
             selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
             selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
             selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
 
-            // Customer Site Address Data Set
-            selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-            selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-            selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+            
+            if(response.default_billing === 1 ){
+                document.getElementById('site_delivery_add_id').value =  response.data[0].id;
+                document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                document.getElementById('siteCustomerId').value = response.data[0].id;
+                document.getElementById('customerSiteAddress').value = response.data[0].address;
+                document.getElementById('customerSiteCity').value = response.data[0].city;
+                document.getElementById('customerSiteCounty').value = response.data[0].county;
+                document.getElementById('customerSitePostCode').value = response.data[0].pincode;
+                document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                // Customer Site Address Data Set
+                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+            }
         },
         error: function (xhr, status, error) {
             console.error(error);

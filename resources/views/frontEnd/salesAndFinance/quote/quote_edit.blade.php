@@ -1101,9 +1101,9 @@
                                                                         <div class="col-sm-5">
                                                                             <input type="date" class="form-control editInput" id="deposit_date" name="deposit_date" value="{{ now()->format('Y-m-d') }}">
                                                                         </div>
-                                                                        <div class="col-sm-1 ps-0">
+                                                                        <!-- <div class="col-sm-1 ps-0">
                                                                             <span class="material-symbols-outlined">calendar_month</span>
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
