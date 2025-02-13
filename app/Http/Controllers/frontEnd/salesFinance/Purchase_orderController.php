@@ -672,70 +672,70 @@ class Purchase_orderController extends Controller
                         <td>£' . $vat_amount . '</td>
                         <td>£' . $total_amount . '</td>
                         <td>£' . $val->outstanding_amount . '</td>
-                        <td>' . $list_status . '</td>';
-                        if($status == 1){
-                            $array_data.='<td>-</td>
-                            <td>
-                                <div class="d-flex justify-content-end">
-                                    <div class="nav-item dropdown">
-                                        <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Action
-                                        </a>
-                                        <div class="dropdown-menu fade-up m-0">
-                                            <a href="'.url('purchase_order_edit?key=').''.base64_encode($val->id).'" class="dropdown-item">Edit</a>
-                                            <hr class="dropdown-divider">
-                                            <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Preview</a>
-                                            <hr class="dropdown-divider">
-                                            <a href="'.url('purchase_order?duplicate=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Duplicate</a>
-                                            <hr class="dropdown-divider">
-                                            <a href="javascript:void(0)" onclick="openApproveModal('.$val->id.','.$val->purchase_order_ref.')" class="dropdown-item">Approve</a>
-                                            <hr class="dropdown-divider">
-                                            <a href="#!" class="dropdown-item">CRM / History</a>
-                                            <hr class="dropdown-divider">
-                                            <a href="#!" class="dropdown-item">Start Timer</a>
+                        <td>' . $list_status . '</td>
+                        <td>';
+                            if($status == 1){
+                                $array_data .= '-';
+                            }else{
+                                if($val->delivery_status == 1){
+                                    $array_data.='<span class="grencheck"><i class="fa-solid fa-check"></i></span>';
+                                }else if($val->delivery_status == 2){
+                                    $array_data.='<a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red"><span class="" style="color:#FFCC66"><i class="fa-solid fa-check"></i></span><span class="tutor-student-tooltiptext3">Part Delivered</span></a>';
+                                }else{
+                                    $array_data.='<a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>';
+                                }
+                            }
+                        $array_data .= '</td><td>
+                                    <div class="d-flex justify-content-end">
+                                        <div class="nav-item dropdown">
+                                            <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Action
+                                            </a>
+                                            <div class="dropdown-menu fade-up m-0" style="z-index:9999">';
+                                                if( $status != 1 && $status != 2){
+                                                    $array_data .= '<a href="javascript:void(0)" onclick="openRecordDeliveryModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\')" class="dropdown-item">Record Delivery</a>
+                                                    <hr class="dropdown-divider">';
+                                                }
+                                                $array_data .= '<a href="' . url('purchase_order_edit?key=') . base64_encode($val->id) . '" class="dropdown-item">Edit</a>
+                                                <hr class="dropdown-divider">
+                                                <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Preview</a>
+                                                <hr class="dropdown-divider">';
+                                                if( $status != 1 && $status != 2){
+                                                    $array_data .= '<a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Print</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="javascript:void(0)" onclick="openEmailModal('.$val->id.',\'' . $val->purchase_order_ref . '\',\'' . $val->suppliers->email . '\',\'' . $val->suppliers->name . '\')" class="dropdown-item">Email</a>
+                                                    <hr class="dropdown-divider">';
+                                                }
+                                                $array_data .= '<a href="' . url('purchase_order?duplicate=') . base64_encode($val->id) . '" target="_blank" class="dropdown-item">Duplicate</a>
+                                                <hr class="dropdown-divider">';
+                                                if($status != 8 && $status != 1 ){
+                                                    $array_data .= '<a href="javascript:void(0)" onclick="openRejectModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\')" class="dropdown-item">Reject</a>
+                                                    <hr class="dropdown-divider">';
+                                                }
+                                                if($status == 1 || $status == 2){
+                                                    $array_data .= '<a href="javascript:void(0)" onclick="openApproveModal('.$val->id.',\'' . $val->purchase_order_ref . '\')" class="dropdown-item">Approve</a>
+                                                    <hr class="dropdown-divider">';
+                                                }
+                                                if($status != 5 && $status != 1 && $status != 2){
+                                                    $array_data .= '<a href="javascript:void(0)" onclick="openRecordPaymentModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\',\'' . $val->suppliers->name . '\',' . $total_amount . ',\'' . date('d/m/Y', strtotime($val->purchase_date)) . '\',' . $purchaseProductId . ',' . $val->outstanding_amount . ')" class="dropdown-item">Record Payment</a>
+                                                    <hr class="dropdown-divider">
+                                                    <a href="javascript:void(0)" onclick="openInvoiceRecieveModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\',\'' . $val->suppliers->name . '\',' . $val->suppliers->id . ',' . $sub_total_amount . ',\'' . date('d/m/Y', strtotime($val->purchase_date)) . '\',' . $vat . ',' . $val->outstanding_amount . ')" class="dropdown-item">Invoice Received</a>
+                                                    <hr class="dropdown-divider">';
+                                                }
+                                                if($status == 8 || $status == 4 || $status == 5 || $status == 3){
+                                                    if($val->delivery_status !=1){
+                                                        $array_data .= '<a href="#!" class="dropdown-item">Cancel Purchase Order</a>
+                                                        <hr class="dropdown-divider">';
+                                                    }
+                                                }
+                                                $array_data .= '<a href="#!" class="dropdown-item">CRM / History</a>
+                                                <hr class="dropdown-divider">
+                                                <a href="#!" class="dropdown-item">Start Timer</a>
+                                                
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>';
-                        }else{
-                            $array_data.='<td>';
-                            if($val->delivery_status == 1){
-                                $array_data.='<span class="grencheck"><i class="fa-solid fa-check"></i></span>';
-                            }else{
-                                $array_data.='<a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>';
-                            }
-                            $array_data .= '</td>
-                                        <td>
-                                            <div class="d-flex justify-content-end">
-                                                <div class="nav-item dropdown">
-                                                    <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Action
-                                                    </a>
-                                                    <div class="dropdown-menu fade-up m-0">
-                                                        <a href="javascript:void(0)" onclick="openRecordDeliveryModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\')" class="dropdown-item">Record Delivery</a>
-                                                        <hr class="dropdown-divider">
-                                                        <a href="' . url('purchase_order_edit?key=') . base64_encode($val->id) . '" class="dropdown-item">Edit</a>
-                                                        <hr class="dropdown-divider">
-                                                        <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Preview</a>
-                                                        <hr class="dropdown-divider">
-                                                        <a href="'.url('preview?key=').''.base64_encode($val->id).'" target="_blank" class="dropdown-item">Print</a>
-                                                        <hr class="dropdown-divider">
-                                                        <a href="#!" class="dropdown-item">Email</a>
-                                                        <hr class="dropdown-divider">
-                                                        <a href="' . url('purchase_order?duplicate=') . base64_encode($val->id) . '" target="_blank" class="dropdown-item">Duplicate</a>
-                                                        <hr class="dropdown-divider">
-                                                        <a href="javascript:void(0)" onclick="openRejectModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\')" class="dropdown-item">Reject</a>
-                                                        <hr class="dropdown-divider">
-                                                        <a href="javascript:void(0)" onclick="openRecordPaymentModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\',\'' . $val->suppliers->name . '\',' . $total_amount . ',\'' . date('d/m/Y', strtotime($val->purchase_date)) . '\',' . $purchaseProductId . ',' . $val->outstanding_amount . ')" class="dropdown-item">Record Payment</a>
-                                                        <hr class="dropdown-divider">
-                                                        <a href="javascript:void(0)" onclick="openInvoiceRecieveModal(' . $val->id . ',\'' . $val->purchase_order_ref . '\',\'' . $val->suppliers->name . '\',' . $val->suppliers->id . ',' . $sub_total_amount . ',\'' . date('d/m/Y', strtotime($val->purchase_date)) . '\',' . $vat . ',' . $val->outstanding_amount . ')" class="dropdown-item">Invoice Received</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>';
-                        }
-                        
-                    $array_data.='</tr>';
+                    </tr>';
                     $list_status='';
         }
 
@@ -887,14 +887,23 @@ class Purchase_orderController extends Controller
                 // echo "<pre>";print_r($data);die;
                 try{
                     PurchaseOrderProduct::savePurchaseOrderProduct($data);
-                    PurchaseOrder::find($po_id)->update(['delivery_status' => 1]);
-                    return response()->json(['success'=>true,'message'=>'The Purchase Order Delivered has been saved successfully.']);
+                    $checkAlreadyDelivered=$this->checkAlreadyDelivered($purchase_product_id[$i],$request->qty[$i],$po_id);
                 }catch (\Exception $e) {
                     Log::error('Error: ' . $e->getMessage());
                     return response()->json(['error' => $e->getMessage()], 500);
                 }
                 
             }
+            return response()->json(['success'=>true,'message'=>'The Purchase Order Delivered has been saved successfully.']);
+        }
+    }
+    private function checkAlreadyDelivered($id,$qty,$po_id){
+        // return $qty;
+        $check=PurchaseOrderProduct::find($id);
+        if($check->deliverd_qty == $qty){
+            PurchaseOrder::find($po_id)->update(['delivery_status' => 1]);
+        }else{
+            PurchaseOrder::find($po_id)->update(['delivery_status' => 2]);
         }
     }
     // public function record_payment_details(Request $request){

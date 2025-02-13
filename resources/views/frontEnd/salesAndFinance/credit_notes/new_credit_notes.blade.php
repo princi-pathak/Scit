@@ -39,6 +39,11 @@ ul#purchase_qoute_refList {
 .unclicked{
     pointer-events: none;
 }
+.input_style table tbody textarea{
+    resize: none;
+    overflow: hidden;
+    min-height: 50px;
+  }
 
 </style>
 <div class="main_wrapper">
@@ -265,7 +270,7 @@ ul#purchase_qoute_refList {
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <div class="productDetailTable">
+                                    <div class="productDetailTable table-responsive input_style">
                                         <table class="table" id="result">
                                             <thead class="table-light">
                                                 <tr>
@@ -671,6 +676,7 @@ CKEDITOR.replace('internal_notes', editor_config );
 
                         const selectDropdownJob = document.createElement('select');
                         selectDropdownJob.name = 'job_id[]';
+                        selectDropdownJob.className="form_control";
 
                         const defaultOptionJob = document.createElement('option');
                         defaultOptionJob.value = '';
@@ -696,7 +702,7 @@ CKEDITOR.replace('internal_notes', editor_config );
                         const codeCell = document.createElement('td');
                         // codeCell.textContent = data.product_detail.product_code;
                         const inputCode = document.createElement('input');
-                        inputCode.className = 'product_code';
+                        inputCode.className = 'product_code form-control';
                         inputCode.name = 'product_code[]';
                         inputCode.value = '';
                         codeCell.appendChild(inputCode);
@@ -711,16 +717,20 @@ CKEDITOR.replace('internal_notes', editor_config );
 
                         const descriptionCell = document.createElement('td');
                         const inputDescription = document.createElement('textarea');
-                        inputDescription.className = 'description';
+                        inputDescription.setAttribute('rows','1');
+                        inputDescription.className = 'description form-control';
                         inputDescription.name = 'description[]';
                         // inputDescription.value = data.product_detail.description;
                         inputDescription.value = '';
+                        inputDescription.addEventListener('input', function() {
+                            auto_grow(this);
+                        });
                         descriptionCell.appendChild(inputDescription);
                         row.appendChild(descriptionCell);
 
                         const dropdownAccountCode = document.createElement('td');
                         const selectDropdownAccountCode = document.createElement('select');
-                        selectDropdownAccountCode.className='accountCode_id';
+                        selectDropdownAccountCode.className='accountCode_id form-control';
                         selectDropdownAccountCode.name = 'accountCode_id[]';
 
                         const optionsAccountCode = data.accountCode;
@@ -742,7 +752,7 @@ CKEDITOR.replace('internal_notes', editor_config );
                         const qtyCell = document.createElement('td');
                         const inputQty = document.createElement('input');
                         inputQty.type = 'text';
-                        inputQty.className = 'qty input50';
+                        inputQty.className = 'qty input50 form-control';
                         inputQty.addEventListener('input', function() {
                             this.value = this.value.replace(/[^0-9.]/g, '');
                             if ((this.value.match(/\./g) || []).length > 1) {
@@ -758,7 +768,7 @@ CKEDITOR.replace('internal_notes', editor_config );
                         const priceCell = document.createElement('td');
                         const inputPrice = document.createElement('input');
                         inputPrice.type = 'text';
-                        inputPrice.className = 'product_price input50';
+                        inputPrice.className = 'product_price input50 form-control';
                         // inputPrice.addEventListener('input', function() {
                         //     updateAmount(row);
                         // });
@@ -782,7 +792,7 @@ CKEDITOR.replace('internal_notes', editor_config );
                             getIdVat($(this).val(),row);
                         });
                         selectDropdownVat.name = 'vat_id[]';
-                        selectDropdownVat.className='vat_id';
+                        selectDropdownVat.className='vat_id form-control';
                         const optionsVat =data.tax;
                         var tax_rate='00';
                         optionsVat.forEach(optionVat => {
@@ -807,7 +817,7 @@ CKEDITOR.replace('internal_notes', editor_config );
                         const vatCell = document.createElement('td');
                         const inputVat = document.createElement('input');
                         inputVat.type = 'text';
-                        inputVat.className = 'vat';
+                        inputVat.className = 'vat form-control';
                         inputVat.setAttribute('disabled','disabled');
                         inputVat.addEventListener('input', function() {
                             updateAmount(row);
@@ -1063,6 +1073,7 @@ $('#search-product').on('keyup', function() {
 
                         const selectDropdownJob = document.createElement('select');
                         selectDropdownJob.name = 'job_id[]';
+                        selectDropdownJob.className="form_control";
 
                         const defaultOptionJob = document.createElement('option');
                         defaultOptionJob.value = '';
@@ -1086,7 +1097,7 @@ $('#search-product').on('keyup', function() {
                         const codeCell = document.createElement('td');
                         // codeCell.textContent = data.crediProduct_detail.product_code;
                         const inputCode = document.createElement('input');
-                        inputCode.className = 'product_code';
+                        inputCode.className = 'product_code form-control';
                         inputCode.name = 'product_code[]';
                         inputCode.value = product.code;
                         codeCell.appendChild(inputCode);
@@ -1102,7 +1113,7 @@ $('#search-product').on('keyup', function() {
                         <?php if(isset($credit_note) && $credit_note !=''){?>
                         const hiddenID = document.createElement('input');
                         hiddenID.type = 'hidden';
-                        hiddenID.className = 'creditProduct_id';
+                        hiddenID.className = 'creditProduct_id form-control';
                         hiddenID.name = 'creditProduct_id[]';
                         hiddenID.value = product.id;
                         row.appendChild(hiddenID);
@@ -1111,15 +1122,19 @@ $('#search-product').on('keyup', function() {
 
                         const descriptionCell = document.createElement('td');
                         const inputDescription = document.createElement('textarea');
-                        inputDescription.className = 'description';
+                        inputDescription.setAttribute('rows','1');
+                        inputDescription.className = 'description form-control';
                         inputDescription.name = 'description[]';
                         inputDescription.value = product.description;
+                        inputDescription.addEventListener('input', function() {
+                            auto_grow(this);
+                        });
                         descriptionCell.appendChild(inputDescription);
                         row.appendChild(descriptionCell);
 
                         const dropdownAccountCode = document.createElement('td');
                         const selectDropdownAccountCode = document.createElement('select');
-                        selectDropdownAccountCode.className='accountCode_id';
+                        selectDropdownAccountCode.className='accountCode_id form-control';
                         selectDropdownAccountCode.name = 'accountCode_id[]';
                         // selectDropdownAccountCode.addEventListener('click', function() {
                         //     var elements = document.getElementsByClassName('accountCode_id');
@@ -1145,7 +1160,7 @@ $('#search-product').on('keyup', function() {
                         const qtyCell = document.createElement('td');
                         const inputQty = document.createElement('input');
                         inputQty.type = 'text';
-                        inputQty.className = 'qty input50';
+                        inputQty.className = 'qty input50 form-control';
                         inputQty.addEventListener('input', function() {
                             this.value = this.value.replace(/[^0-9.]/g, '');
                             if ((this.value.match(/\./g) || []).length > 1) {
@@ -1161,7 +1176,7 @@ $('#search-product').on('keyup', function() {
                         const priceCell = document.createElement('td');
                         const inputPrice = document.createElement('input');
                         inputPrice.type = 'text';
-                        inputPrice.className = 'product_price input50';
+                        inputPrice.className = 'product_price input50 form-control';
                         inputPrice.addEventListener('input', function() {
                             this.value = this.value.replace(/[^0-9.]/g, '');
                             if ((this.value.match(/\./g) || []).length > 1) {
@@ -1181,7 +1196,7 @@ $('#search-product').on('keyup', function() {
                             getIdVat($(this).val(),row);
                         });
                         selectDropdownVat.name = 'vat_id[]';
-                        selectDropdownVat.className='vat_id';
+                        selectDropdownVat.className='vat_id form-control';
                         const optionsVat =data.tax;
                         var tax_rate='00';
                         optionsVat.forEach(optionVat => {
@@ -1196,7 +1211,7 @@ $('#search-product').on('keyup', function() {
                         });
                         const inputVatRate = document.createElement('input');
                         inputVatRate.type = 'hidden';
-                        inputVatRate.className = 'vat_ratePercentage';
+                        inputVatRate.className = 'vat_ratePercentage form-control';
                         inputVatRate.name = 'vat_ratePercentage[]'; 
                         inputVatRate.value = tax_rate;
                         dropdownVat.appendChild(inputVatRate);
@@ -1206,7 +1221,7 @@ $('#search-product').on('keyup', function() {
                         const vatCell = document.createElement('td');
                         const inputVat = document.createElement('input');
                         inputVat.type = 'text';
-                        inputVat.className = 'vat';
+                        inputVat.className = 'vat form-control';
                         inputVat.setAttribute('disabled','disabled');
                         inputVat.addEventListener('input', function() {
                             updateAmount(row);
@@ -1258,6 +1273,17 @@ $('#search-product').on('keyup', function() {
             }
         });
     }
+    function auto_grow(element) {
+        console.log("Here")
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight) + "px";
+    }
+    $(document).on('input', '.product_code', function () {
+        let input = $(this).val();
+        if (input.length > 50) {
+            $(this).val(input.substring(0, 50));
+        }
+    });
     
  </script>
  <script>
