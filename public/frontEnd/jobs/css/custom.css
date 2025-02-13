@@ -196,6 +196,7 @@ h6 {
   text-decoration: none;
   transition: .6s;
   display: inline-block;
+  line-height: 18px;
 }
 
 .profileDrop:hover {
@@ -284,6 +285,7 @@ a.overdueJobsFolder i {
   background-color: #525252;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .printExpt a {
@@ -360,11 +362,12 @@ a.overdueJobsFolder img {
 .topbaarBtn a.profileDrop {
   display: flex;
   margin-left: 12px;
+  align-items: center;
+  gap: 7px;
 }
 
 .topbaarBtn a.profileDrop i {
   font-size: 20px;
-  margin-right: 3px;
 }
 
 .notifiNumberRadColor {
@@ -883,6 +886,7 @@ section.main_section_page {
 }
 .textareaInput{
   font-size: 13px;
+  padding: 5px 10px;
 }
 .textareaInput::placeholder{
   font-size: 13px;
@@ -916,6 +920,7 @@ section.main_section_page {
 .productDetailTable table.table thead tr th, .productDetailTable table.table tbody tr td, .productDetailTable table.table tfoot tr th{
   font-size: 12px;
   line-height: 22px;
+  vertical-align: middle;
 }
 /* .preInstall {
   padding: 0 60px;
@@ -2332,10 +2337,32 @@ ul#productList {
   font-size: 13px;
   border: 1px solid #ddd;
   display: block;
-  line-height: 1.5;
+  line-height: 18px;
   min-width: 70px;
+  min-height: 30px;
 }
 
 .input_style table tbody textarea {
   resize: none;
+}
+
+.notes_input {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: left;
+}
+.notes_input label{
+  max-width: 131px;
+  width: 100%;
+}
+
+.notes_input textarea{
+  border-radius: 0;
+}
+.input_style .table-warning {
+  --bs-table-bg: #ffcc00;
+}
+.formicon:hover{
+  cursor: pointer;
 }
