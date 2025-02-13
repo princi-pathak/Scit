@@ -58,7 +58,6 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                                             <option value="0"> Select Form </option>
 
                                             <?php
-
                                             $this_location_id = App\DynamicFormLocation::getLocationIdByTag('top_profile_btn');
                                             foreach ($dynamic_forms as $value) {
 
