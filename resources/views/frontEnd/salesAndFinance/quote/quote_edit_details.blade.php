@@ -3951,7 +3951,6 @@
         });
     }
 
-
     function setDepositTableData(data, tableBody, table) {
 
         tableBody.innerHTML = '';
@@ -4226,8 +4225,6 @@
             });
         });
     });
-
-
 
     $(document).ready(function() {
         const $prevButton = $("#prevTab");
