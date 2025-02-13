@@ -73,4 +73,9 @@ class Purchase_orderControllerAdmin extends Controller
         }
         return view('backEnd.salesFinance.purchase_order.purchase_order',$data);
     }
+    public function purchase_order_add(){
+        $data['task']="Add";
+        $data['page']="Purchase Order";
+        return view('backEnd.salesFinance.purchase_order.purchase_order_form',$data);
+    }
 }

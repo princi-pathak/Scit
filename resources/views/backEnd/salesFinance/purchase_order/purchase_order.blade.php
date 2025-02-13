@@ -24,51 +24,75 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
             <div class="col-sm-12">
                 <section class="panel">
                     <div class="panel-body">
-                        <div class="adv-table editable-table ">
+                        <div class="adv-table editable-table">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="">
+                                    <div class="top_button">
                                         <div class="btn-group mr-3">
                                             <a href="javascript:void(0)" onclick="modal_show()">
                                                 <!-- {{ url('admin/sales-finance/expense_add') }} -->
                                                 <button id="editable-sample_new" class="btn btn-primary">
-                                                    new <i class="fa fa-plus"></i>
+                                                    Search Purchase Orders
                                                 </button>
                                             </a>
                                         </div>
                                         <div class="btn-group mr-3">
                                             <a href="{{ url('admin/sales-finance/expense?key=authorised&value=0') }}">
                                                 <button id="bgcolor1" class="btn btn-primary bgcolor">
-                                                    Unauthorised (0)
-                                                </button>
+                                                    Invoice Received</button>
                                             </a>
                                         </div>
                                         <div class="btn-group mr-3">
                                             <a href="{{ url('admin/sales-finance/expense?key=authorised&value=1') }}">
                                                 <button id="bgcolor2" class="btn btn-primary bgcolor">
-                                                    Authorised (0)
-                                                </button>
+                                                    Statements <i class="fa fa-sort-down"></i></button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="">
+                                        <div class="btn-group mr-3">
+                                            <a href="javascript:void(0)">
+                                                <div class="dropdown">
+                                                <a href="javascript:;" class="dropdown-toggle btn btn-primary bgcolor" data-toggle="dropdown">New <b class="caret"></b></a>
+                                                    
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="{{ url('admin/sales-finance/purchase-order/purchase_order_add') }}">Purchase Order</a></li>
+                                                        <li><a href="#">Credit Note</a></li>
+                                                    </ul>
+                                                </div>
+
+                                            </a>
+                                        </div>
+                                        <div class="btn-group mr-3">
+                                            <a href="{{ url('admin/sales-finance/expense?key=authorised&value=0') }}">
+                                                <button id="bgcolor1" class="btn btn-primary bgcolor">Draft (5)</button>
+                                            </a>
+                                        </div>
+                                        <div class="btn-group mr-3">
+                                            <a href="{{ url('admin/sales-finance/expense?key=authorised&value=1') }}">
+                                                <button id="bgcolor2" class="btn btn-primary bgcolor"> Awaiting Approval (8)</button>
                                             </a>
                                         </div>
                                         <div class="btn-group mr-3">
                                             <a href="{{ url('admin/sales-finance/expense?key=reject&value=1') }}">
-                                                <button id="bgcolor3" class="btn btn-primary bgcolor">
-                                                    Rejected (0)
-                                                </button>
+                                                <button id="bgcolor3" class="btn btn-primary bgcolor"> Approved (15)</button>
                                             </a>
                                         </div>
                                         <div class="btn-group mr-3">
                                             <a href="{{ url('admin/sales-finance/expense?key=paid&value=1') }}">
-                                                <button id="bgcolor4" class="btn btn-primary bgcolor">
-                                                    Paid (0)
-                                                </button>
+                                                <button id="bgcolor4" class="btn btn-primary bgcolor"> Rejected (76)</button>
                                             </a>
                                         </div>
                                         <div class="btn-group mr-3">
                                             <a href="{{ url('admin/sales-finance/expense') }}">
-                                                <button id="bgcolor5" class="btn btn-primary bgcolor">
-                                                    All (0)
-                                                </button>
+                                                <button id="bgcolor5" class="btn btn-primary bgcolor"> Actioned (32) </button>
+                                            </a>
+                                        </div>
+                                        <div class="btn-group mr-3">
+                                            <a href="{{ url('admin/sales-finance/expense') }}">
+                                                <button id="bgcolor6" class="btn btn-primary bgcolor"> Paid (2) </button>
                                             </a>
                                         </div>
                                         @include('backEnd.common.alert_messages')
@@ -111,20 +135,93 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
                                 </div>
                             </div>
 
-                            <div class="table-responsive">
+                            <div class="table-responsive foraction_btn">
                                 <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                     <thead>
                                         <tr>
-                                            <th>Expense By</th>
-                                            <th>Expense Name</th>
-                                            <th>Reference</th>
-                                            <th>Attachments</th>
-                                            <th>Reject</th>
-                                            <th>Actions</th>
+                                            <th><input type="checkbox" name="" id=""></th>
+                                            <th>#</th>
+                                            <th>PO Ref</th>
+                                            <th>Date</th>
+                                            <th>Supplier</th>
+                                            <th>Customer</th>
+                                            <th>Delivery</th>
+                                            <th>Sub Total</th>
+                                            <th>VAT</th>
+                                            <th>Total</th>
+                                            <th>Outstanding</th>
+                                            <th>Status</th>
+                                            <th>Delivery</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
+                                        <tr>
+                                            <td><input type="checkbox" name="" id=""></td>
+                                            <td>1</td>
+                                            <td>PO-0004</td>
+                                            <td>12/12/2024</td>
+                                            <td>Supplier Test</td>
+                                            <td>Abhishek</td>
+                                            <td>UK</td>
+                                            <td>$100.00</td>
+                                            <td>$120.00</td>
+                                            <td>$120.00</td>
+                                            <td>$120.00</td>
+                                            <td>Draft</td>
+                                            <td>
+                                                <div data-toggle="tooltip" title="Delivered">
+                                                    <i class="fa fa-check text-success"></i>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a href="javascript:;" class="dropdown-toggle btn btn-primary bgcolor" data-toggle="dropdown">Action <b class="caret"></b></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#">Edit</a></li>
+                                                        <li><a href="#">Preview</a></li>
+                                                        <li><a href="#">Duplicate</a></li>
+                                                        <li><a href="#" onclick="modal_show2()">Approve</a></li>
+                                                        <li><a href="#">CRM / History</a></li>
+                                                        <li><a href="#">Start Timer</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="" id=""></td>
+                                            <td>1</td>
+                                            <td>PO-0004</td>
+                                            <td>12/12/2024</td>
+                                            <td>Supplier Test</td>
+                                            <td>Abhishek</td>
+                                            <td>UK</td>
+                                            <td>$100.00</td>
+                                            <td>$120.00</td>
+                                            <td>$120.00</td>
+                                            <td>$120.00</td>
+                                            <td>Draft</td>
+                                            <td>
+                                                <div data-toggle="tooltip" title="Not Delivered">
+                                                <i class="fa fa-times text-danger"></i>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a href="javascript:;" class="dropdown-toggle btn btn-primary bgcolor " data-toggle="dropdown">Action <b class="caret"></b></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#">Edit</a></li>
+                                                        <li><a href="#">Preview</a></li>
+                                                        <li><a href="#">Duplicate</a></li>
+                                                        <li><a href="#">Approve</a></li>
+                                                        <li><a href="#">CRM / History</a></li>
+                                                        <li><a href="#">Start Timer</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <!-- <tbody>
                                         <?php
                                         if (count($expense) == 0) { ?>
                                             <?php
@@ -137,7 +234,6 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
                                             foreach ($expense as $key => $value) {
                                                 $user = App\User::find($value->user_id)->name;
                                             ?>
-
                                                 <tr>
                                                     <td class="user_name">{{$user}}</td>
                                                     <td class="transform-none" style="text-transform: none;">{{ $value->title }}</td>
@@ -157,19 +253,94 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
                                                         @endif
                                                     </td>
                                                     <td class="action-icn">
-                                                        <!-- {{ url('admin/sales-finance/expense_add?key=') }}{{base64_encode($value->id)}} -->
+                                                       //comment  {{ url('admin/sales-finance/expense_add?key=') }}{{base64_encode($value->id)}} 
                                                         <a href="javascript:void(0)" class="edit fetch_data" data-bs-toggle="modal" data-bs-target="#customerPop" data-id="{{$value->id}}" data-title="{{$value->title}}" data-amount="{{$value->amount}}" data-vat="{{$value->vat}}" data-vat_amount="{{$value->vat_amount}}" data-gross_amount="{{$value->gross_amount}}" data-expense_date="{{$value->expense_date}}" data-user_id="{{$value->user_id}}" data-reference="{{$value->reference}}" data-customer_id="{{$value->customer_id}}" data-job="{{$value->job}}" data-project_id="{{$value->project_id}}" data-job_appointment_id="{{$value->job_appointment_id}}" data-authorised="{{$value->authorised}}" data-billable="{{$value->billable}}" data-paid="{{$value->paid}}" data-notes="{{$value->notes}}" data-attachments="{{$value->attachments}}"><span style="font-size: 13px; color: #000;"><span style="color: #000"><i data-toggle="tooltip" title="Edit" class="fa fa-edit fa-lg"></i></span></a> &nbsp &nbsp &nbsp
 
                                                         <a href="javascript:void(0)" onclick="delete_job('{{base64_encode($value->id)}}')" class="text-danger"><i data-toggle="tooltip" title="Delete" class="fa fa-trash-o fa-lg"></i></a>
-
                                                     </td>
-
                                                 </tr>
                                         <?php }
                                         } ?>
-
-                                    </tbody>
+                                    </tbody> -->
                                 </table>
+                                <!-- Modal start here -->
+                                <div class="modal fade popupcloseBtn in" id="AuthorisePurchaseOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header terques-bg">
+                                                <h5 class="modal-title pupTitle" id="exampleModalLabel">Authorise Purchase Order</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Would you like to notify anyone that this purchase order 'PO-001' has been approved?</p>
+                                                <form action="">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <p>Notify?</p>
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <div class="inputs_st">
+                                                                    <div>
+                                                                        <input type="radio" name="Notify" id="no">
+                                                                        <label for="no">No</label>
+                                                                    </div>
+                                                                    <div>
+                                                                        <input type="radio" name="Notify" id="Yes">
+                                                                        <label for="Yes">Yes</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <p>Notify Who?</p>
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <div>
+                                                                    <select name="" id="" class="form-control">
+                                                                        <option value="">mobappssolution123@gmail.com</option>
+                                                                        <option value="">mobappssolution123@gmail.com</option>
+                                                                        <option value="">mobappssolution123@gmail.com</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <p>Send As <span class="text-danger">*</span></p>
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <div class="inputs_st">
+                                                                    <div>
+                                                                        <input type="checkbox" name="Notification" id="Notification">
+                                                                        <label for="Notification">Notification (User Only)</label>
+                                                                    </div>
+                                                                    <div>
+                                                                        <input type="checkbox" name="SMS" id="SMS">
+                                                                        <label for="SMS">SMS</label>
+                                                                    </div>
+                                                                    <div>
+                                                                        <input type="checkbox" name="Email" id="Email">
+                                                                        <label for="Email">Email</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" id="save_data" class="btn btn-primary">Save</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end here -->
+
                             </div>
 
                             <!-- <div class="row"><div class="col-lg-6"><div class="dataTables_info" id="editable-sample_info">Showing 1 to 28 of 28 entries</div></div><div class="col-lg-6"><div class="dataTables_paginate paging_bootstrap pagination"><ul><li class="prev disabled"><a href="#">← Prev</a></li><li class="next"><a href="#">Next → </a></li></ul></div></div></div> -->
@@ -177,7 +348,6 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
                         </div>
                     </div>
                     <!-- Modal start here -->
-
 
                     <div class="modal fade popupcloseBtn in" id="customerPop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
@@ -778,10 +948,12 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
             $("#bgcolor2").css("background-color", "#494949");
         } else if (key === 'reject' && value == 1) {
             $("#bgcolor3").css("background-color", "#494949");
-        } else if (key === 'paid' && value == 1) {
+        } else if (key === 'Actioned' && value == 1) {
             $("#bgcolor4").css("background-color", "#494949");
-        } else {
+        } else if (key === 'paid' && value == 1) {
             $("#bgcolor5").css("background-color", "#494949");
+        } else {
+            $("#bgcolor6").css("background-color", "#494949");
         }
 
     })
@@ -789,6 +961,7 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
 <script>
     $(".fetch_data").on('click', function() {
         $("#customerPop").modal('show');
+        $("#AuthorisePurchaseOrder").modal('show');
         $('#save_data').text("Update");
         var id = $(this).data('id');
         var title = $(this).data('title');
@@ -850,6 +1023,10 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
         $('#save_data').text("Add");
         $("#form_data")[0].reset();
         $("#customerPop").modal('show');
+    }
+
+    function modal_show2() {
+        $("#AuthorisePurchaseOrder").modal('show');
     }
     $(document).on('click', '.image_delete', function() {
         var id = $(this).data('delete');

@@ -1981,6 +1981,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 	Route::controller(Purchase_orderControllerAdmin::class)->group(function(){
 		Route::prefix('sales-finance/purchase-order')->group(function(){
 			Route::get('purchase_orders','purchase_orders');
+			Route::get('purchase_order_add','purchase_order_add');
 		});
 	});
 });
