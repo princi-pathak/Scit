@@ -46,11 +46,11 @@
         text-transform: capitalize;
     }
 
-    .parent-container {
+    /* .parent-container {
         position: absolute;
         background: #fff;
         width: 190px;
-    }
+    } */
 
     #deptList li:hover {
         cursor: pointer;
@@ -189,7 +189,7 @@
                                     </div>
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Department:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="department">
                                             <input type="hidden" id="selectedDeptId" name="selectedDeptId">
                                             <div class="parent-container department-container"></div>
@@ -197,7 +197,7 @@
                                     </div>
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Tag:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="tag">
                                             <input type="hidden" id="selectedTagtId" name="selectedTagtId">
                                             <div class="parent-container tag-container"></div>
@@ -247,7 +247,7 @@
                                 <div class="col-md-3">
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Customer:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="customer">
                                             <input type="hidden" id="selectedCustomerId" name="selectedCustomerId">
                                             <div class="parent-container customer-container"></div>
@@ -256,7 +256,7 @@
 
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Created By:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="created_by">
                                             <input type="hidden" id="selectedcreatedById" name="selectedcreatedById">
                                             <div class="parent-container createdBy-container"></div>
@@ -277,7 +277,7 @@
                                 <div class="col-md-3">
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Project:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="project">
                                             <input type="hidden" id="selectedProjectId" name="selectedProjectId">
                                             <div class="parent-container project-container"></div>
@@ -285,7 +285,7 @@
                                     </div>
                                     <div class="row form-group mb-2">
                                         <label class="col-md-4 col-form-label text-end">Keywords:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 position-relative">
                                             <input type="text" class="form-control editInput" id="keywords">
                                         </div>
                                     </div>
@@ -308,10 +308,11 @@
                     <div class="markendDelete">
                         <div class="row">
                             <div class="col-md-7">
-                                <div class="jobsection d-flex">
+                                <div class="jobsection">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                     <a href="javascript:void(0)" id="" class="profileDrop">Preview Purchase Order</a>
                                     @if($status['status'] == 3 || $status['status'] == 4 || $status['status'] == 5)
+                                    <div class=" d-inline-flex align-items-center">
                                     <div class="nav-item dropdown">
                                             <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Email Purchase Order
@@ -322,6 +323,7 @@
                                                 <a href="javascript:void(0)" class="dropdown-item emialSend" style="display:none">Send As Multiple Emails</a>
                                             </div>
                                         </div>
+                                    </div>
                                     <a href="javascript:void(0)" id="" class="profileDrop">Invoice Received</a>
                                     @if($status['status'] != 5)
                                     <a href="javascript:void(0)" id="" class="profileDrop">Record Payment</a>
@@ -341,7 +343,7 @@
                     <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"></th>
+                                <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAllCheckBoxes"></th>
                                 <th>#</th>
                                 <th>PO Ref</th>
                                 <th>Date</th>
@@ -405,37 +407,18 @@
                                 <td>£{{$total_amount}}</td>
                                 <td>£{{$val->outstanding_amount}}</td>
                                 <td>{{$status['list_status']}}</td>
-                                @if($status['status'] == 1 || $status['status'] == 2)
-                                <td>-</td>
                                 <td>
-                                    <div class="d-flex justify-content-end">
-                                        <div class="nav-item dropdown">
-                                            <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Action
-                                            </a>
-                                            <div class="dropdown-menu fade-up m-0">
-                                                <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openApproveModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Approve</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="#!" class="dropdown-item">CRM / History</a>
-                                                <hr class="dropdown-divider">
-                                                <a href="#!" class="dropdown-item">Start Timer</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                @else
-                                <td>
+                                @if( $status['status'] != 1)
                                     @if($val->delivery_status == 1)
                                     <span class="grencheck"><i class="fa-solid fa-check"></i></span>
+                                    @elseif($val->delivery_status == 2)
+                                    <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red"><span class="" style="color:#FFCC66"><i class="fa-solid fa-check"></i></span><span class="tutor-student-tooltiptext3">Part Delivered</span></a>
                                     @else
                                     <a href="javascript:void(0)" class="tutor-student-tooltip-col" style="color:red">X<span class="tutor-student-tooltiptext3">Not Delivered</span></a>
                                     @endif
+                                @else
+                                -
+                                @endif
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-end">
@@ -443,30 +426,38 @@
                                             <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Action
                                             </a>
-                                            <div class="dropdown-menu fade-up m-0">
+                                            <div class="dropdown-menu fade-up m-0" style="z-index:9999">
+                                                @if( $status['status'] != 1 && $status['status'] != 2)
                                                 <a href="javascript:void(0)" onclick="openRecordDeliveryModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Record Delivery</a>
                                                 <hr class="dropdown-divider">
+                                                @endif
                                                 <a href="{{url('purchase_order_edit?key=')}}{{base64_encode($val->id)}}" class="dropdown-item">Edit</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Preview</a>
                                                 <hr class="dropdown-divider">
+                                                @if( $status['status'] != 1 && $status['status'] != 2)
                                                 <a href="{{url('preview?key=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Print</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="javascript:void(0)" onclick="openEmailModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->email}}','{{$val->suppliers->name}}')" class="dropdown-item">Email</a>
                                                 <hr class="dropdown-divider">
-                                                <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
-                                                @if($status['status'] != 8)
-                                                <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
                                                 @endif
+                                                <a href="{{url('purchase_order?duplicate=')}}{{base64_encode($val->id)}}" target="_blank" class="dropdown-item">Duplicate</a>
                                                 <hr class="dropdown-divider">
-                                                @if($status['status'] != 5)
+                                                @if($status['status'] != 8 && $status['status'] != 1 )
+                                                <a href="javascript:void(0)" onclick="openRejectModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Reject</a>
+                                                <hr class="dropdown-divider">
+                                                @endif
+                                                @if($status['status'] == 1 || $status['status'] == 2)
+                                                <a href="javascript:void(0)" onclick="openApproveModal({{$val->id}},'{{$val->purchase_order_ref}}')" class="dropdown-item">Approve</a>
+                                                <hr class="dropdown-divider">
+                                                @endif
+                                                @if($status['status'] != 5 && $status['status'] != 1 && $status['status'] != 2)
                                                 <a href="javascript:void(0)" onclick="openRecordPaymentModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$product_id}},{{$val->outstanding_amount}},{{$val->supplier_id}})" class="dropdown-item">Record Payment</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="javascript:void(0)" onclick="openInvoiceRecieveModal({{$val->id}},'{{$val->purchase_order_ref}}','{{$val->suppliers->name}}',{{$val->suppliers->id}},{{$sub_total_amount}},'{{ date('d/m/Y', strtotime($val->purchase_date)) }}',{{$vat}},{{$val->outstanding_amount}})" class="dropdown-item">Invoice Received</a>
                                                 <hr class="dropdown-divider">
                                                 @endif
-                                                @if($status['status'] == 8 || $status['status'] == 4 || $status['status'] == 5)
+                                                @if($status['status'] == 8 || $status['status'] == 4 || $status['status'] == 5 || $status['status'] == 3)
                                                     @if($val->delivery_status !=1)
                                                     <a href="#!" class="dropdown-item">Cancel Purchase Order</a>
                                                     <hr class="dropdown-divider">
@@ -475,12 +466,11 @@
                                                 <a href="#!" class="dropdown-item">CRM / History</a>
                                                 <hr class="dropdown-divider">
                                                 <a href="#!" class="dropdown-item">Start Timer</a>
+                                                
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                @endif
-
                             </tr>
                             @endforeach
                         </tbody>
@@ -600,17 +590,17 @@
                                 <input type="hidden" name="po_id" id="recordDelivery_po_id">
                                 @csrf
                                 <div class="col-sm-12">
-                                    <div class="productDetailTable">
+                                    <div class="productDetailTable input_style">
                                         <table class="table" id="recordDelivery_result">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>Code</th>
-                                                    <th>Product</th>
-                                                    <th>Description</th>
-                                                    <th>Price</th>
-                                                    <th>Qty</th>
-                                                    <th>Allredy Delivered</th>
-                                                    <th>Receive More</th>
+                                                    <th class="col-1">Code</th>
+                                                    <th class="col-2">Product</th>
+                                                    <th class="col-2">Description</th>
+                                                    <th class="col-2">Price</th>
+                                                    <th class="col-1">Qty</th>
+                                                    <th class="col-2">Allredy Delivered</th>
+                                                    <th class="col-2">Receive More</th>
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>
@@ -835,26 +825,30 @@
         }
 
     });
-    var countCheckBox=0;
     $('.delete_checkbox').on('click', function() {
         if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
-            countCheckBox++;
-            if(countCheckBox>1){
-                $('.emialSend').show();
-            }else{
-                $('.emialSend').hide();
-            }
-            $('#selectAll').prop('checked', true);
+            $('#selectAllCheckBoxes').prop('checked', true);
         } else {
-            $('#selectAll').prop('checked', false);
-            countCheckBox--;
-            $('.emialSend').hide();
+            $('#selectAllCheckBoxes').prop('checked', false);
         }
+        shoeHideEmailSend();
     });
+    $('#selectAllCheckBoxes').on('click', function () {
+        $('.delete_checkbox').prop('checked', $(this).prop('checked'));
+        shoeHideEmailSend(); 
+  });
+  function shoeHideEmailSend(){
+    if($('.delete_checkbox:checked').length>1){
+        $('.emialSend').show();
+    }else{
+        $('.emialSend').hide();
+    }
+  }
 </script>
 <script>
     function clearBtn() {
         $("#search_dataForm")[0].reset();
+        location.reload();
     }
 
     function searchBtn() {
@@ -1552,6 +1546,7 @@
             },
             success: function(response) {
                 console.log(response);
+                // return false;
                 var data = response.data[0];
                 const tableBody = document.querySelector(`#recordDelivery_result tbody`);
                 tableBody.innerHTML = '';
@@ -1627,29 +1622,29 @@
 
                         const qtyCell = document.createElement('td');
                         qtyCell.textContent = product.qty;
-                        // const inputQty = document.createElement('input');
-                        // inputQty.type = 'text';
-                        // inputQty.className = 'qty input50';
-                        // inputQty.name = 'qty[]';
-                        // inputQty.value = product.qty;
-                        // qtyCell.appendChild(inputQty);
+                        const inputQty = document.createElement('input');
+                        inputQty.type = 'hidden';
+                        inputQty.className = 'qty input50';
+                        inputQty.name = 'qty[]';
+                        inputQty.value = product.qty;
+                        qtyCell.appendChild(inputQty);
                         row.appendChild(qtyCell);
 
                         const alreadyDelivered = document.createElement('td');
                         const inputDelivered = document.createElement('input');
                         inputDelivered.type = 'number';
-                        inputDelivered.className = 'already_deliver';
+                        inputDelivered.className = 'already_deliver form-control';
                         inputDelivered.name = 'already_deliver[]';
-                        inputDelivered.value = 0;
+                        inputDelivered.value = product.deliverd_qty || 0;
                         alreadyDelivered.appendChild(inputDelivered);
                         row.appendChild(alreadyDelivered);
 
                         const receiveMore = document.createElement('td');
                         const inputReceive = document.createElement('input');
                         inputReceive.type = 'number';
-                        inputReceive.className = 'receive_more input50';
+                        inputReceive.className = 'receive_more input50 form-control';
                         inputReceive.name = 'receive_more[]';
-                        inputReceive.value = 0;
+                        inputReceive.value = product.receive_more || 0;
                         receiveMore.appendChild(inputReceive);
                         row.appendChild(receiveMore);
 
@@ -1676,6 +1671,23 @@
             }
         });
     }
+    document.addEventListener('input', function (event) {
+        if (event.target.classList.contains('already_deliver') || event.target.classList.contains('receive_more')) {
+            const row = event.target.closest('tr');
+            const qty = parseInt(row.querySelector('.qty').value, 10);
+            const inputDelivered = row.querySelector('.already_deliver');
+            const inputReceive = row.querySelector('.receive_more');
+
+            let deliveredQty = parseInt(inputDelivered.value, 10) || 0;
+            let receivedQty = parseInt(inputReceive.value, 10) || 0;
+
+            if (deliveredQty < 0) inputDelivered.value = 0;
+            if (receivedQty < 0) inputReceive.value = 0;
+
+            if (deliveredQty > qty) inputDelivered.value = qty;
+            if (receivedQty > qty) inputReceive.value = qty;
+        }
+    });
 
     function saverecordDeliveryModal() {
         if (confirm("Are you sure you want to receive these stock quantities?")) {

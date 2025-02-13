@@ -1,10 +1,5 @@
 <style>
-    .parent-container {
-    position: absolute;
-    background: #fff;
-    width:71%;
-    z-index:999;
-}
+
 #toList li:hover{
     cursor: pointer;
 }

@@ -334,6 +334,7 @@ class QuoteController extends Controller
         $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
         $data['users'] = User::getHomeUsers(Auth::user()->home_id);
         $data['loginCustomer'] = Auth::user()->id;
+        $data['paymentType'] = Payment_type::getActivePaymentType(Auth::user()->home_id);
         // dd($data['attachment_type']);
         $data['type'] = 1;
         $data['taskType'] = Task_type::getAllAciveTask_type(Auth::user()->home_id);
@@ -483,6 +484,7 @@ class QuoteController extends Controller
         $data['type'] = 2;
         $data['users'] = User::getHomeUsers(Auth::user()->home_id);
         $data['loginCustomer'] = Auth::user()->id;
+        // dd($data);
         return view('frontEnd.salesAndFinance.quote.quote_edit', $data);
     }
 

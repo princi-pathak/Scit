@@ -329,62 +329,64 @@
                             </div>
                         </form>
                     </div>
-                    <div class="markendDelete">
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="jobsection d-flex">
-                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-5">
-                                    <div class="pageTitleBtn p-0">
-                                        <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a>        
+                    <div style="display:none" id="showHideTable">
+                        <div class="markendDelete">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="jobsection d-flex">
+                                        <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                     </div>
-                                </div> -->
+                                </div>
+                                <!-- <div class="col-md-5">
+                                        <div class="pageTitleBtn p-0">
+                                            <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a>        
+                                        </div>
+                                    </div> -->
+                            </div>
                         </div>
-                    </div>
 
-                    <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"></th>
-                                <th>#</th>
-                                <th>PO Ref</th>
-                                <th>Date</th>
-                                <th>Due Date</th>
-                                <th>Supplier</th>
-                                <th>Customer</th>
-                                <th>Delivery</th>
-                                <th>Sub Total</th>
-                                <th>VAT</th>
-                                <th>Total </th>
-                                <th>Outstanding </th>
-                                <th>Status</th>
-                                <th>Delivery</th>
-                                <th></th>
+                        <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAll"></th>
+                                    <th>#</th>
+                                    <th>PO Ref</th>
+                                    <th>Date</th>
+                                    <th>Due Date</th>
+                                    <th>Supplier</th>
+                                    <th>Customer</th>
+                                    <th>Delivery</th>
+                                    <th>Sub Total</th>
+                                    <th>VAT</th>
+                                    <th>Total </th>
+                                    <th>Outstanding </th>
+                                    <th>Status</th>
+                                    <th>Delivery</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="search_data">
+                                
+                            </tbody>
+                            <tr class="calcualtionShowHide" style="display:none">
+                                <th colspan="2"> <label class="col-form-label p-0">Page Sub Total:</label></th>
+                                <th colspan="12"></th>
                             </tr>
-                        </thead>
+                            <tr class="calcualtionShowHide" style="display:none">
+                                <td colspan="8"></td>
 
-                        <tbody id="search_data">
-                            
-                        </tbody>
-                        <tr class="calcualtionShowHide" style="display:none">
-                            <th colspan="2"> <label class="col-form-label p-0">Page Sub Total:</label></th>
-                            <th colspan="12"></th>
-                        </tr>
-                        <tr class="calcualtionShowHide" style="display:none">
-                            <td colspan="8"></td>
-
-                            <td id="Tablesub_total_amount">£0</td>
-                            <td id="Tablevat_amount">£0</td>
-                            <td id="Tabletotal_amount">£0</td>
-                            <td id="Tableoutstanding_amount" colspan="8">£0</td>
-                        </tr>
-                    </table>
+                                <td id="Tablesub_total_amount">£0</td>
+                                <td id="Tablevat_amount">£0</td>
+                                <td id="Tabletotal_amount">£0</td>
+                                <td id="Tableoutstanding_amount" colspan="8">£0</td>
+                            </tr>
+                        </table>
+                    </div>
 
                 </div> <!-- End off main Table -->
             </div>
-        </di>
+        </div>
     </div>
 </section>
 <!-- Approve Model Start Here -->
@@ -810,6 +812,7 @@
             success: function(response) {
                 console.log(response);
                 // return false;
+                $("#showHideTable").show();
                 var table = $('#exampleOne').DataTable();
                 table.destroy();
                 if (response.data.length > 0) {

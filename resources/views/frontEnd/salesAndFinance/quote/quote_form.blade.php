@@ -72,7 +72,7 @@
                                     <div class="mb-3 row">
                                         <label for="inputName" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="Auto generate" readonly>
+                                            <input type="text" class="form-control-plaintext editInput" id="inputName" value="Draft" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -221,7 +221,7 @@
                                     <div class="mb-3 row">
                                         <label for="customerSiteCity" class="col-sm-3 col-form-label">City </label>
                                         <div class="col-sm-9">
-                                            <!-- <input type="text" class="form-control editInput textareaInput" id="customerSiteCity" placeholder="City"> -->
+                                            <input type="text" class="form-control editInput textareaInput" id="customerSiteCity" placeholder="City">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -716,9 +716,9 @@
                                                         </div>
                                                     </th>
                                                     <th>Qty </th>
-                                                    <th>Cost Price($) </th>
+                                                    <th>Cost Price(£) </th>
                                                     <th>Cost Calc</th>
-                                                    <th>Price($) </th>
+                                                    <th>Price(£) </th>
                                                     <th>Markup(%)</th>
                                                     <th>VAT(%) </th>
                                                     <th>Discount </th>
@@ -752,10 +752,10 @@
                                                                         <th>Product </th>
                                                                         <th>Description</th>
                                                                         <th>Qty</th>
-                                                                        <th>Cost Price($)</th>
-                                                                        <th>Price($)</th>
-                                                                        <th>Amount($) </th>
-                                                                        <th>Profit($)</th>
+                                                                        <th>Cost Price(£)</th>
+                                                                        <th>Price(£)</th>
+                                                                        <th>Amount(£) </th>
+                                                                        <th>Profit(£)</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -2471,7 +2471,7 @@
                     id: getCustomerListValue.value
                 },
                 success: function(response) {
-                    console.log(response.message);
+                    console.log(response.data);
 
                     response.data.forEach(user => {
                         const option = document.createElement('option');
@@ -2709,12 +2709,17 @@
         // Save Customer Data
         $('#saveCustomerContactData').on('click', function() {
             var formData = $('#add_customer_contact_form').serialize();
+            var formDataArray = $('#add_customer_contact_form').serializeArray();
+
             $.ajax({
                 url: '{{ route("customer.ajax.SaveCustomerContactData") }}',
                 method: 'POST',
                 data: formData,
                 success: function(response) {
                     alert(response.message);
+                    setCustomerBillingData(response.lastid);
+                    // $('#add_customer_contact_modal')[0].reset();
+                    $('#add_customer_contact_modal').find('form')[0].reset();
                     $('#add_customer_contact_modal').modal('hide');
                 },
                 error: function(xhr, status, error) {
@@ -2815,6 +2820,44 @@
             }
         });
     }
+
+    // function getAccountCode() {
+    //     $.ajax({
+    //         url: '{{ route("Invoice.ajax.getActiveAccountCode") }}',
+    //         method: 'GET',
+    //         success: function(response) {
+    //             console.log("response.getActiveAccountCode", response.data);
+
+    //             // Ensure response.data contains the account codes
+    //             if (Array.isArray(response.data)) {
+    //                 // Iterate over all dropdowns with class `accountCodeList` and populate them
+    //                 document.querySelectorAll('#accountCodeList').forEach(dropdown => {
+    //                     dropdown.innerHTML = ''; // Clear existing options
+
+    //                     // Add initial option
+    //                     const optionInitial = document.createElement('option');
+    //                     optionInitial.textContent = "-No Department-";
+    //                     optionInitial.value = "";
+    //                     dropdown.appendChild(optionInitial);
+
+    //                     // Append new options
+    //                     response.data.forEach(code => {
+    //                         const option = document.createElement('option');
+    //                         option.value = code.id;
+    //                         option.textContent = code.departmental_code + "-" + code.name;
+    //                         dropdown.appendChild(option);
+    //                     });
+    //                 });
+    //             } else {
+    //                 console.error("Invalid response format");
+    //             }
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error(error);
+    //         }
+    //     });
+    // }
+
 
     function taxRate() {
         $.ajax({
@@ -3059,7 +3102,7 @@
         document.getElementById('inputFootTotalDiscountVat').value = (price + totalVAT).toFixed(2);
         document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
         document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
-        document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
+        document.getElementById('footMargin').textContent =  totalMargin.toFixed(2) + "%";
         document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
 
@@ -3077,6 +3120,7 @@
             const tableBody = document.querySelector(`#${tableId} tbody`);
             const node = document.createElement("tr");
             taxRate();
+            getAccountCode();
             node.classList.add("add_table_insrt");
             node.innerHTML = `<td>
                     <div class="CSPlus">
@@ -3100,7 +3144,7 @@
                 </td>
                 <td>
                     <div class="">
-                        <select class="form-control editInput selectOptions" onclick="getAccountCode();" name="products[${rowIndex}][account_code]" id="accoutCodeList">
+                        <select class="form-control editInput selectOptions accoutCodeList" name="products[${rowIndex}][account_code]" id="accoutCodeList">
                             <option>-No Department-</option> 
                         </select>
                     </div>
@@ -3141,7 +3185,8 @@
                         <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="0">
                         <select class="form-control editInput selectOptions input50" name="" id="">
                             <option>Please Select</option>
-                            <option>%</option>
+                            <option value="%">%</option>
+                            <option value="£">£</option>
                         </select>
                     </div>
                 </td>
@@ -3207,7 +3252,7 @@
         $.ajax({
             url: '{{ route("quote.ajax.getQuoteTypes") }}',
             success: function(response) {
-                console.log(response.message);
+                console.log(response.data);
                 quoteType.innerHTML = '';
                 response.data.forEach(user => {
                     const option = document.createElement('option');
@@ -3227,7 +3272,7 @@
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerList") }}',
             success: function(response) {
-                console.log(response.message);
+                console.log(response.data);
                 var get_customer_type = document.getElementById('getCustomerList');
                 // get_customer_type.innerHTML = '';
 
@@ -3352,6 +3397,7 @@
     }
 
     function getBillingDetailsData(id) {
+        console.log("billingID", id);
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerDetails") }}',
             method: 'POST',
@@ -3364,31 +3410,47 @@
                 // billing details data set
                 // setFieldValues([], contactData.id);
 
-                setFieldValues(['billing_add_id', 'site_delivery_add_id', 'siteCustomerId', 'customer_id_site_delivery'], contactData.id);
-                setFieldValues(['billingDetailsName', 'customerSiteName', 'customerSiteDeliveryName'], contactData.contact_name);
-                setTextContent(['setCustomerName', 'setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany', 'setSiteDeliveryAddress'], contactData.name);
-                setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
-                setFieldValues(['billingDetailsEmail', 'customerSiteDeliveryEmail'], contactData.email);
-                setFieldValues(['billingCustomerCity', 'customerSiteCity'], contactData.city);
-                setFieldValues(['billingCustomerCounty', 'customerSiteCounty'], contactData.country);
-                setFieldValues(['billingCustomerPostcode', 'customerSitePostCode', 'customerSiteDeliveryPostCode'], contactData.postal_code);
-                setFieldValues(['billingCustomerTelephone', 'customerSiteTelephone', 'customerSiteDeliveryTelephone'], contactData.telephone);
-                setFieldValues(['billingCustomerMobile', 'customerSiteMobile', 'customerSiteDeliveryMobile'], contactData.mobile);
+                setFieldValues(['billing_add_id'], contactData.id);
+                setFieldValues(['billingDetailsName'], contactData.contact_name);
+                setTextContent(['setCustomerName'], contactData.name);
+                setFieldValues(['billingDetailsAddress'], contactData.address);
+                setFieldValues(['billingDetailsEmail'], contactData.email);
+                setFieldValues(['billingCustomerCity'], contactData.city);
+                setFieldValues(['billingCustomerCounty'], contactData.country);
+                setFieldValues(['billingCustomerPostcode'], contactData.postal_code);
+                setFieldValues(['billingCustomerTelephone'], contactData.telephone);
+                setFieldValues(['customerSiteMobile', 'customerSiteDeliveryMobile'], contactData.mobile);
                 // customer_contact_id
 
                 selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
                 selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
                 selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
 
-                // Customer Site Address Data Set
-                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
 
-                // Customer Site Delivery Address Data Set
-                selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
-                selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
+
+                if (contactData.default_billing === 1) {
+
+                    setTextContent(['customer_id_site_delivery', 'siteCustomerId', 'site_delivery_add_id'], contactData.id);
+                    setTextContent(['customerSiteDeliveryName', 'customerSiteName', 'site_delivery_add_id'], contactData.contact_name);
+                    setTextContent(['setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany', 'setSiteDeliveryAddress'], contactData.name);
+                    setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
+                    document.getElementById('customerSiteDeliveryEmail').value = contactData.email;
+                    document.getElementById('customerSiteCity').value = contactData.city;
+                    document.getElementById('customerSiteCounty').value = contactData.country;
+                    setFieldValues(['customerSitePostCode', 'customerSiteDeliveryPostCode'], contactData.postal_code);
+                    setFieldValues(['customerSiteTelephone', 'customerSiteDeliveryTelephone'], contactData.telephone);
+                    setFieldValues(['customerSiteMobile', 'customerSiteDeliveryMobile'], contactData.mobile);
+
+                    // Customer Site Address Data Set
+                    selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                    selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                    selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+
+                    // Customer Site Delivery Address Data Set
+                    selectPrevious(document.getElementById('customerSiteDeliveryCountry'), response.data[0].country_code);
+                    selectPrevious(document.getElementById("customerSiteDeliveryTelephoneCode"), response.data[0].telephone_country_code);
+                    selectPrevious(document.getElementById("customerSiteDeliveryMobileCode"), response.data[0].mobile_country_code);
+                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3504,7 +3566,7 @@
                 id: id
             },
             success: function(response) {
-                console.log(response.data);
+                console.log("getCustomerBillingAddressData", response.data);
 
                 let selectElement = document.getElementById('billingDetailContact'); // Get the select element
 
@@ -3516,26 +3578,38 @@
 
                 // Set the new option as selected
                 newOption.selected = true;
-                setFieldValues(['billing_add_id', 'siteCustomerId', 'site_delivery_add_id'], response.data[0].id);
+                setFieldValues(['billing_add_id', 'siteCustomerId'], response.data[0].id);
 
                 // billing details data set
-                document.getElementById('billingDetailsName').value = document.getElementById('customerSiteName').value = response.data[0].contact_name;
-                document.getElementById('customer_contact_id').value = document.getElementById('siteCustomerId').value = response.data[0].id;
-                document.getElementById('billingDetailsAddress').value = document.getElementById('customerSiteAddress').value = response.data[0].address;
+                document.getElementById('billingDetailsName').value = response.data[0].contact_name;
+                document.getElementById('customer_contact_id').value = response.data[0].id;
+                document.getElementById('billingDetailsAddress').value = response.data[0].address;
                 document.getElementById('billingDetailsEmail').value = response.data[0].email;
-                document.getElementById('billingCustomerCity').value = document.getElementById('customerSiteCity').value = response.data[0].city;
-                document.getElementById('billingCustomerCounty').value = document.getElementById('customerSiteCounty').value = response.data[0].county;
-                document.getElementById('billingCustomerPostcode').value = document.getElementById('customerSitePostCode').value = response.data[0].pincode;
-                document.getElementById('billingCustomerTelephone').value = document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
-                document.getElementById('billingCustomerMobile').value = document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                document.getElementById('billingCustomerCity').value = response.data[0].city;
+                document.getElementById('billingCustomerCounty').value = response.data[0].county;
+                document.getElementById('billingCustomerPostcode').value = response.data[0].pincode;
+                document.getElementById('billingCustomerTelephone').value = response.data[0].telephone;
+                document.getElementById('billingCustomerMobile').value = response.data[0].mobile;
                 selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
                 selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
                 selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
 
-                // Customer Site Address Data Set
-                selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
-                selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
-                selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+
+                if ((response.default_billing) === 1) {
+                    document.getElementById('site_delivery_add_id').value = response.data[0].id;
+                    document.getElementById('customerSiteName').value = response.data[0].contact_name;
+                    document.getElementById('siteCustomerId').value = response.data[0].id;
+                    document.getElementById('customerSiteAddress').value = response.data[0].address;
+                    document.getElementById('customerSiteCity').value = response.data[0].city;
+                    document.getElementById('customerSiteCounty').value = response.data[0].county;
+                    document.getElementById('customerSitePostCode').value = response.data[0].pincode;
+                    document.getElementById('customerSiteTelephone').value = response.data[0].telephone;
+                    document.getElementById('customerSiteMobile').value = response.data[0].mobile;
+                    // Customer Site Address Data Set
+                    selectPrevious(document.getElementById('customerSiteDetailsCountry'), response.data[0].country_code);
+                    selectPrevious(document.getElementById("customerSiteTelephoneCode"), response.data[0].telephone_country_code);
+                    selectPrevious(document.getElementById("customerSiteMobileCode"), response.data[0].mobile_country_code);
+                }
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -3917,9 +3991,9 @@
                                         </div>
                                     </th>
                                     <th>Qty </th>
-                                    <th>Cost Price($) </th>
+                                    <th>Cost Price(£) </th>
                                     <th>Cost Calc</th>
-                                    <th>Price($) </th>
+                                    <th>Price(£) </th>
                                     <th>Markup(%)</th>
                                     <th>VAT(%) </th>
                                     <th>Discount </th>
@@ -4281,7 +4355,6 @@
             console.error("Table body with ID 'add_insrtAppoinment' not found.");
         }
     }
-
 </script>
 <script>
     function upload() {
@@ -4290,4 +4363,26 @@
         var image = new SimpleImage(fileinput);
         image.drawTo(imgcanvas);
     }
+
+
+
+    $(document).on("input", ".quantity", function() {
+        $(this).val($(this).val().replace(/\D/g, "")); // Remove non-numeric characters
+    });
+
+    $(document).on("input", ".costPrice, .price, .priceMarkup", function() {
+        // Regular expression for validating float numbers
+        const floatRegex = /^\d+(\.\d{0,2})?$/;
+
+        // Check if the value is valid
+        if (!floatRegex.test($(this).val())) {
+            // Remove the last character if it's invalid
+            $(this).val($(this).val().slice(0, -1));
+        }
+    });
+
+    $(document).on("input", ".costPrice", function() {
+        // Remove any alphabetic characters from the input field
+        $(this).val($(this).val().replace(/[a-zA-Z]/g, ''));
+    });
 </script>

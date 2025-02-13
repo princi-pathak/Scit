@@ -21,6 +21,7 @@ use App\Http\Controllers\frontEnd\salesFinance\ExpenseController;
 use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
 use App\Http\Controllers\frontEnd\salesFinance\JobController;
 use App\Http\Controllers\frontEnd\salesFinance\CreditNotesController;
+use App\Http\Controllers\backEnd\salesfinance\Purchase_orderControllerAdmin;
 
 
 
@@ -416,28 +417,28 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/save_reminder', 'save_reminder');
 		Route::post('/purchaseOrderEmailSave', 'purchaseOrderEmailSave');
 		Route::get('/preview', 'preview');
-		Route::get('/purchase-orders-search','purchase_orders_search');
-		Route::get('/purchase-order-statements','purchase_order_statements');
-		Route::post('/searchPurchaseOrdersStatements','searchPurchaseOrdersStatements');
-		Route::get('/purchase-order-invoices','purchase_order_invoices');
-		Route::post('/searchPurchaseOrdersInvoice','searchPurchaseOrdersInvoice');
-		Route::post('/getAllPurchaseInvoices','getAllPurchaseInvoices');
-		Route::post('/getAllPaymentPaids','getAllPaymentPaids');
-		Route::post('/paymentPaidDelete','paymentPaidDelete');
+		Route::get('/purchase-orders-search', 'purchase_orders_search');
+		Route::get('/purchase-order-statements', 'purchase_order_statements');
+		Route::post('/searchPurchaseOrdersStatements', 'searchPurchaseOrdersStatements');
+		Route::get('/purchase-order-invoices', 'purchase_order_invoices');
+		Route::post('/searchPurchaseOrdersInvoice', 'searchPurchaseOrdersInvoice');
+		Route::post('/getAllPurchaseInvoices', 'getAllPurchaseInvoices');
+		Route::post('/getAllPaymentPaids', 'getAllPaymentPaids');
+		Route::post('/paymentPaidDelete', 'paymentPaidDelete');
 	});
 
-	Route::controller(CreditNotesController::class)->group(function(){
-		Route::get('credit_notes','credit_notes');
-		Route::get('new_credit_notes','new_credit_notes');
-		Route::post('credit_notes_save','credit_notes_save');
-		Route::get('credit_note_edit','new_credit_notes');
-		Route::post('searchCreditNotes','searchCreditNotes');
-		Route::post('getCreditProduct','getCreditProduct');
-		Route::post('cancelCreditNote','cancelCreditNote');
-		Route::post('crediNoteEmailSave','crediNoteEmailSave');
-		Route::get('credit_preview','credit_preview');
-		Route::post('getAllSupplierPurchaseOrder','getAllSupplierPurchaseOrder');
-		Route::post('crediNoteAllocateSave','crediNoteAllocateSave');
+	Route::controller(CreditNotesController::class)->group(function () {
+		Route::get('credit_notes', 'credit_notes');
+		Route::get('new_credit_notes', 'new_credit_notes');
+		Route::post('credit_notes_save', 'credit_notes_save');
+		Route::get('credit_note_edit', 'new_credit_notes');
+		Route::post('searchCreditNotes', 'searchCreditNotes');
+		Route::post('getCreditProduct', 'getCreditProduct');
+		Route::post('cancelCreditNote', 'cancelCreditNote');
+		Route::post('crediNoteEmailSave', 'crediNoteEmailSave');
+		Route::get('credit_preview', 'credit_preview');
+		Route::post('getAllSupplierPurchaseOrder', 'getAllSupplierPurchaseOrder');
+		Route::post('crediNoteAllocateSave', 'crediNoteAllocateSave');
 	});
 
 	// Forontend Customer Controller
@@ -549,9 +550,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 
 		Route::get('lead/searchUser', 'searchUser')->name('lead.ajax.searchUser');
-
-		
-
 	});
 
 	Route::controller(FrontendQuoteController::class)->group(function () {
@@ -1979,6 +1977,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 		});
 	});
 	// Route::match(['get', 'post'], '/job_recurring_list', 'App\Http\Controllers\backEnd\JobsController@job_recurring_list');
+	// Backend Purchase Order Controller
+	Route::controller(Purchase_orderControllerAdmin::class)->group(function(){
+		Route::prefix('sales-finance/purchase-order')->group(function(){
+			Route::get('purchase_orders','purchase_orders');
+			Route::get('purchase_order_add','purchase_order_add');
+		});
+	});
 });
 
 //super admin path
