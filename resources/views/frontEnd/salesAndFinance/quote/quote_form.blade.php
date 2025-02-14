@@ -2879,6 +2879,7 @@
                             const option = document.createElement('option');
                             option.value = code.id; // Use appropriate key from your response
                             option.textContent = code.name; // Use appropriate key from your response
+                            option.setAttribute('data-rate', code.tax_rate);
                             if (code.id === 2) {
                                 option.selected = true; // Select the option where id = 2
                             }
@@ -2900,22 +2901,35 @@
         document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
     }
 
-    function getTaxRateOnTaxId(taxID) {
-        $.ajax({
-            url: '{{ route("invoice.ajax.getTaxRateOnTaxId") }}',
-            method: 'Post',
-            data: {
-                id: 2
-            },
-            success: function(response) {
-                console.log("response.data", response.data);
-                document.querySelector('.selectedTaxID').value = response.data;
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
+    // function getTaxRateOnTaxId(taxID) {
+    //     $.ajax({
+    //         url: '{{ route("invoice.ajax.getTaxRateOnTaxId") }}',
+    //         method: 'Post',
+    //         data: {
+    //             id: 2
+    //         },
+    //         success: function(response) {
+    //             console.log("response.data", response.data);
+    //             document.querySelector('.selectedTaxID').value = response.data;
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error(error);
+    //         }
+    //     });
+    // }
+
+    $(document).on("change", ".vat", function() {
+
+        let selectedRate = $(this).find("option:selected").data("rate");
+        $(this).closest("tr").find(".selectedTaxID").val(selectedRate);
+        console.log(selectedRate); // Output the selected VAT rate
+        // document.querySelector('.selectedTaxID').value = selectedRate;
+
+        const table = document.querySelector(`#quoteProducts`);   
+        calculateRowsValue(table); // Call function with selected rate
+        
+    });
+
 
     function tableFootForProduct(tableName) {
         const table = document.querySelector(`#${tableName}`);
@@ -2939,9 +2953,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="10" class="borderNone"></td>
-                                        <td>
-                                            <span id="markUpLinkRemove"><a href="javascript:void(0)" onclick="applyMarkup();"> Apply overall markup</a> </span>
-                                        </td>
+                                        <td><span id="markUpLinkRemove"><a href="javascript:void(0)" onclick="applyMarkup();"> Apply overall markup</a> </span></td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -2950,32 +2962,27 @@
                                         <td class="tableAmountRight" id="footVatAmount">£00.00</td>
                                     </tr>
                                     <tr>
-                                    <td colspan="10" class="borderNone"></td>
+                                        <td colspan="10" class="borderNone"></td>
                                         <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)<input type="hidden" name="total" id="inputFootTotalDiscountVat"></strong></td>
                                         <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">£00.00</td>
                                     </tr>
                                     <tr>
-                                    <td colspan="10" class="borderNone"></td>
+                                        <td colspan="10" class="borderNone"></td>
                                         <td>Profit<input type="hidden" name="profit" id="inputFootProfit"></td>
                                         <td class="tableAmountRight" id="footProfit">£00.00</td>
                                     </tr>
                                     <tr>
-                                    <td colspan="10" class="borderNone"></td>
+                                        <td colspan="10" class="borderNone"></td>
                                         <td>Margin</td>
                                         <td class="tableAmountRight" id="footMargin">00.00%</td>
                                     </tr>
                                     <tr>
-                                    <td colspan="10" class="borderNone"></td>
+                                        <td colspan="10" class="borderNone"></td>
                                         <td>Deposit</td>
                                         <td class="tableAmountRight" id="footDeposit">£00.00</td>
                                     </tr>
                                     <tr>
-                                    <td colspan="10" class="borderNone"></td>
-                                        <td>Refund</td>
-                                        <td class="tableAmountRight" id="footRefund">£00.00</td>
-                                    </tr>
-                                    <tr>
-                                    <td colspan="10" class="borderNone"></td>
+                                        <td colspan="10" class="borderNone"></td>
                                         <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)<input type="hidden" name="outstanding" id="inputFootOutstandingAmount"></strong></td>
                                         <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">£00.00</td>
                                     </tr>`;
@@ -3008,6 +3015,7 @@
         }
     }
 
+  
     function calculateRowsValue(table) {
         const rows = table.querySelectorAll('tbody tr');
 
@@ -3017,7 +3025,7 @@
         let totalMarkup = 0;
 
         let totalVAT = 0;
-        const vat = 20;
+        let vat = 20;
 
         let totalProfit = 0;
         let totalDiscount = 0;
@@ -3033,7 +3041,7 @@
 
         rows.forEach(row => {
 
-            getTaxRateOnTaxId();
+            // getTaxRateOnTaxId();
 
             // Get input values from the row
             totalQuantity = parseInt(row.querySelector('.quantity').value) || 0;
@@ -3041,6 +3049,8 @@
             discount = parseInt(row.querySelector('.discount').value) || 0;
             totalCostPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
             totalMarkup = parseInt(row.querySelector('.priceMarkup').value) || 0;
+            vat = parseInt(row.querySelector('.selectedTaxID').value) || 0;
+            
 
             // Calculate selling price (Cost Price + Markup - Discount)
 
@@ -3102,7 +3112,7 @@
         document.getElementById('inputFootTotalDiscountVat').value = (price + totalVAT).toFixed(2);
         document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
         document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
-        document.getElementById('footMargin').textContent =  totalMargin.toFixed(2) + "%";
+        document.getElementById('footMargin').textContent = totalMargin.toFixed(2) + "%";
         document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
 
@@ -3113,7 +3123,7 @@
     let rowIndex = 0;
 
     function quoteProductTable(data, tableId, type) {
-        const table = document.querySelector(`#${tableId}`);
+        const table = document.querySelector(`#${tableId}`);  
         // Populate rows as usual if data is not empty
         data.forEach(item => {
             console.log("1", rowIndex);
@@ -3169,12 +3179,12 @@
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${parseFloat(item.margin || 0).toFixed(2)}">
+                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="0">
                     </div>
                 </td>
                 <td>
                     <div class="">
-                        <input type="hidden" class="selectedTaxID">
+                        <input type="hidden" class="selectedTaxID" value="20">
                         <select class="form-control editInput selectOptions vat" name="products[${rowIndex}][VAT]" id="getTaxRate">
                             <option>Please Select</option>
                         </select>
@@ -4370,16 +4380,30 @@
         $(this).val($(this).val().replace(/\D/g, "")); // Remove non-numeric characters
     });
 
-    $(document).on("input", ".costPrice, .price, .priceMarkup", function() {
-        // Regular expression for validating float numbers
-        const floatRegex = /^\d+(\.\d{0,2})?$/;
+    $(document).on("input", ".costPrice, .price, .priceMarkup, .discount", function() {
+        let value = $(this).val();
 
-        // Check if the value is valid
-        if (!floatRegex.test($(this).val())) {
-            // Remove the last character if it's invalid
-            $(this).val($(this).val().slice(0, -1));
+        // Allow only numbers and up to two decimal places
+        let validValue = value.replace(/[^0-9.]/g, ""); // Remove non-numeric characters except '.'
+
+        // Ensure only one decimal point is allowed
+        let decimalCount = (validValue.match(/\./g) || []).length;
+        if (decimalCount > 1) {
+            validValue = validValue.slice(0, -1);
         }
+
+        // Ensure correct decimal formatting (only up to two decimal places)
+        if (validValue.includes(".")) {
+            let parts = validValue.split(".");
+            if (parts[1].length > 2) {
+                validValue = parts[0] + "." + parts[1].slice(0, 2);
+            }
+        }
+
+        // Update input value with the cleaned valid value
+        $(this).val(validValue);
     });
+
 
     $(document).on("input", ".costPrice", function() {
         // Remove any alphabetic characters from the input field
