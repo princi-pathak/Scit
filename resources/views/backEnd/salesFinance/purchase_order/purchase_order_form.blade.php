@@ -47,7 +47,7 @@
 </style>
 
 <section id="main-content">
-    <section class="wrapper">
+    <div class="wrapper">
 
         <!-- page start-->
         <section class="panel">
@@ -413,8 +413,8 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="d-flex align-items-center gap-3">
-                                            <a class="icon_blue"><i class="fa fa-plus-circle"></i></a>
-                                            <span class="afterPlusText"> (Type to view product or <a class="javascript:void(0)" onclick="get_modal(8)">Click here</a> to view all assets)</span>
+                                            <a class="icon_blue" onclick="get_modal(8)"><i class="fa fa-plus-circle"></i></a>
+                                            <span class="afterPlusText"> (Type to view product or <a class="javascript:void(0)">Click here</a> to view all assets)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -431,14 +431,14 @@
                                         <th>Description</th>
                                         <th>
                                             <div class="d-flex align-items-center gap-2">
-                                                Account Code <a  onclick="get_modal(9)" class="icon_blue"><i class="fa fa-plus-circle"></i></a>
+                                                Account Code <a onclick="get_modal(9)" class="icon_blue"><i class="fa fa-plus-circle"></i></a>
                                             </div>
                                         </th>
                                         <th>Qty</th>
                                         <th>Price</th>
                                         <th>
                                             <div class="d-flex align-items-center gap-2">
-                                                Price VAT% <a  onclick="get_modal(10)" class="icon_blue"><i class="fa fa-plus-circle"></i></a>
+                                                Price VAT% <a onclick="get_modal(10)" class="icon_blue"><i class="fa fa-plus-circle"></i></a>
                                             </div>
                                         </th>
                                         <th>VAT</th>
@@ -530,14 +530,17 @@
                     </div>
                 </div>
             </div>
+
             <div class="pddtp d-flex justify-content-end gap-3 padd0">
-                <button type="button" class="btn btn-primary" onclick="get_data()" id="submit_btnMain"><i class="fa fa-floppy-o"></i> Save</button>
+                <button type="button" class="btn btn-primary" onclick="get_data()" id="submit_btnMain">
+                    <i class="fa fa-floppy-o"></i> Save</button>
                 <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</button>
                 <button type="button" class="btn btn-primary"><i class="fa fa-chevron-down"></i> Action </button>
             </div>
+
             <!-- </form> -->
             <!-- page end-->
-            </div>
+
         </section>
         <!-- page end-->
 
@@ -767,7 +770,6 @@
                                         <div class="col-sm-2 pe-0">
                                             <select class="form-control editInput selectOptions" id="contact_telephone_country_code" name="contact_telephone_country_code">
                                                 <option selected disabled>Please Select</option>
-
                                             </select>
                                         </div>
                                         <div class="col-lg-7">
@@ -779,7 +781,6 @@
                                         <div class="col-sm-2 pe-0">
                                             <select class="form-control editInput selectOptions" id="contact_mobile_country_code" name="contact_mobile_country_code">
                                                 <option selected disabled>Please Select</option>
-
                                             </select>
                                         </div>
                                         <div class="col-lg-7">
@@ -1330,7 +1331,7 @@
                 <div class="modal-content">
                     <div class="modal-header terques-bg">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title pupTitle"> Add Product </h4>
+                        <h4 class="modal-title pupTitle">Add Product</h4>
                     </div>
                     <div class="modal-body pdbotm">
                         <form id="Product_form">
@@ -1338,10 +1339,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row form-group">
-                                        <label class="col-lg-3 control-label">Tag</label>
+                                        <label class="col-lg-3 control-label">Add Product</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="Tag_input" name="Tag_input" placeholder="Enter Tag" value="">
-                                            <b class="text-danger">Note: Comma not allowed in the tag. The previous name will not be populated by the rename tag.</b>
+                                            <input type="text" class="form-control" id="product_input" name="product_input" placeholder="Enter Tag" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -1438,11 +1438,13 @@
         </div>
         <!-- end here -->
 
-    </section>
+    </div>
 </section>
+
 <script src="{{url('public/backEnd/js/multiselect.js')}}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
 <script>
     //Text Editer
 
@@ -1476,6 +1478,7 @@
     //Text Editer
 </script>
 <!-- for modal start -->
+
 <script>
     function get_modal(id) {
         var key = $("#id").val();
@@ -1521,6 +1524,7 @@
     }
 </script>
 <!-- modal end -->
+
 <script>
     function getemail(id) {
         var email;
@@ -1543,4 +1547,5 @@
         }
     }
 </script>
+
 @endsection
