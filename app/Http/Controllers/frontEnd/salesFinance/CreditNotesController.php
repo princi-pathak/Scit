@@ -116,7 +116,7 @@ class CreditNotesController extends Controller
         try {
             $product_ids = $data['product_id'];
             $success = 0;
-
+            $outstandignAmount=0;
             for ($i = 0; $i < count($product_ids); $i++) {
                 $sub_total=$data['qty'][$i]*$data['price'][$i];
                 $vatPercentage=$sub_total*$data['vat_ratePercentage'][$i]/100;
@@ -135,12 +135,17 @@ class CreditNotesController extends Controller
                     'vat' => $data['vat_ratePercentage'][$i] ?? 0,
                 ];
                 // echo "<pre>";print_r($productData);die;
-                CreditNote::find($data['credi_note_id'])->update(['balance_credit' => $outstandignAmount]);
+                
                 $credit_notesProduct = CreditNoteProduct::saveCreditProduct($productData);
                 if ($credit_notesProduct) {
                     $success++;
                 }
             }
+            $check=CreditNote::find($data['credi_note_id']);
+            if($check->balance_credit !=''){
+                $outstandignAmount=$check->balance_credit+$outstandignAmount;
+            }
+            $check->update(['balance_credit' => $outstandignAmount]);
             if ($success === count($product_ids)) {
                 return response()->json(['success' => true, 'message' => 'All products saved successfully.']);
             } else {
@@ -402,7 +407,8 @@ class CreditNotesController extends Controller
     public function getAllSupplierPurchaseOrder(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $supplier_id=$request->supplier_id;
-        $purchaseOrderList=PurchaseOrder::with('purchaseOrderProducts')->where('supplier_id',$supplier_id)->where('status','!=',5)->get();
+        // $purchaseOrderList=PurchaseOrder::with('purchaseOrderProducts')->where('supplier_id',$supplier_id)->where('status','!=',5)->get();
+        $purchaseOrderList=PurchaseOrder::with('purchaseOrderProducts')->where('supplier_id',$supplier_id)->whereNotIn('status', [1,5])->get();
         return response()->json(['success'=>true,'message'=>'Purchase Order List with Supplier','data'=>$purchaseOrderList]);
     }
     public function crediNoteAllocateSave(Request $request){

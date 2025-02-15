@@ -1143,21 +1143,21 @@
                                                             <input type="hidden" id="edit_customer_deposit_invoice">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Invoice Date<span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
-                                                                <input type="text" class="form-control editInput" id="invoice_date" value="{{ now()->format('d/m/Y') }}">
+                                                                <input type="date" class="form-control editInput" id="invoice_date" value="{{ now()->format('d/m/Y') }}">
                                                             </div>
-                                                            <div class="col-sm-1 ps-0">
+                                                            <!-- <div class="col-sm-1 ps-0">
                                                                 <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
 
                                                         <div class="mb-2 row">
                                                             <label for="inputCity" class="col-sm-3 col-form-label">Due Date <span class="radStar">*</span></label>
                                                             <div class="col-sm-5">
-                                                                <input type="text" class="form-control editInput" id="due_date" value="{{ $dateAfter21Days->format('d/m/Y') }}">
+                                                                <input type="date" class="form-control editInput" id="due_date" value="{{ $dateAfter21Days->format('d/m/Y') }}">
                                                             </div>
-                                                            <div class="col-sm-1 ps-0">
+                                                            <!-- <div class="col-sm-1 ps-0">
                                                                 <a href="#!"><span class="material-symbols-outlined">calendar_month</span></a>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
                                                         <div class="mb-2 row">
                                                             <label for="inputName" class="col-sm-3 col-form-label">Line Item <span class="radStar">*</span></label>
