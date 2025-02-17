@@ -126,12 +126,12 @@
 								style="padding: 10px 0; width: 100%; text-align: right; margin-bottom: 10px;">
 								<tr>
 									<td style="font-size: 18px; font-weight: 600; color: #000; padding-top: 15px; margin-bottom: 0">
-										{{$company}}
+										<?php if(!empty($company)){echo $company;}else{echo "SCITS";}?>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<p style="margin: 2px 0; font-size: 14px;"><?php echo $current_location; ?></p>
+										<p style="margin: 2px 0; font-size: 14px;"><?php if(!empty($current_location)){echo $current_location;}else{echo " ";} ?></p>
 										<p style="margin: 2px 0; font-size: 14px;"><strong>Tel:
 											</strong> +44{{$phone_no}}</p>
 										<p style="margin: 2px 0; font-size: 14px;"><strong>Email:
