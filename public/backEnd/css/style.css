@@ -7445,9 +7445,9 @@ canvas#canv1 {
     font-size: 18px !important;
 }
 
-.table-responsive .table tbody>tr>td a {
+/* .table-responsive .table tbody>tr>td a {
     margin: 0 6px;
-}
+} */
 
 .extra_Information {
     padding: 15px;
@@ -7759,4 +7759,74 @@ table tbody tr td {
 
 .notes_input textarea {
     border-radius: 0;
+}
+
+.dropdown-menu>li>a {
+    padding: 8px 20px;
+    border-bottom: 1px solid #ddd;
+    font-size: 13px;
+}
+
+.dropdown-menu>li>a:hover {
+    background-color: #f8f9fa;
+    color: #000;
+}
+
+.border-0 {
+    border: 0px solid #000 !important;
+}
+
+
+.togglebtn {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.togglebtn .toggle-switch {
+    display: inline-block;
+    background: #777;
+    box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    width: 56px;
+    height: 30px;
+    position: relative;
+    vertical-align: middle;
+    transition: background 0.25s;
+}
+
+.togglebtn .toggle-switch:before,
+.togglebtn .toggle-switch:after {
+    content: "";
+}
+
+.togglebtn .toggle-switch:before {
+    display: block;
+    background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+    width: 21px;
+    height: 21px;
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    transition: left 0.25s;
+    border: 0;
+}
+
+.togglebtn .toggle:hover .toggle-switch:before {
+    background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.togglebtn .toggle-checkbox:checked+.toggle-switch {
+    background: #1fb5ad;
+}
+
+.togglebtn .toggle-checkbox:checked+.toggle-switch:before {
+    left: 30px;
+}
+
+.togglebtn .toggle-checkbox {
+    position: absolute;
+    visibility: hidden;
 }
