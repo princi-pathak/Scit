@@ -268,11 +268,11 @@ class Purchase_orderController extends Controller
         try {
             $product_ids = $data['product_id'];
             $success = 0;
-
+            $outstandignAmount=0;
             for ($i = 0; $i < count($product_ids); $i++) {
                 $sub_total=$data['qty'][$i]*$data['price'][$i];
                 $vatPercentage=$sub_total*$data['vat_ratePercentage'][$i]/100;
-                $outstandignAmount=$sub_total+$vatPercentage;
+                $outstandignAmount=$outstandignAmount+$sub_total+$vatPercentage;
                 $productData = [
                     'id'=>$data['purchase_product_id'][$i] ?? null,
                     'user_id'=>Auth::user()->id,
@@ -1171,13 +1171,13 @@ class Purchase_orderController extends Controller
         // echo "<pre>";print_r($request->all());die;
         $po_startDate = date('Y-m-d', strtotime(str_replace('/', '-', $request->po_startDate)));
         $po_endDate=date('Y-m-d', strtotime(str_replace('/', '-', $request->po_endDate)));
-        $purchaseOrderquery = DB::table('purchase_order_record_payments')->select(DB::raw('id,home_id,po_id,supplier_id,product_id,record_amount_paid,record_payment_date as date'))->where('supplier_id',$request->selectedsupplierId);
+        $purchaseOrderquery = DB::table('purchase_order_record_payments')->select(DB::raw('id,home_id,po_id,supplier_id,product_id,record_amount_paid,record_payment_date as date'))->where('supplier_id',$request->selectedsupplierId)->whereNull('deleted_at');
         if ($request->filled('po_startDate') && $request->filled('po_endDate')) {
             $purchaseOrderquery->whereBetween('record_payment_date', [$po_startDate, $po_endDate]);
         }
         $purchase_order=$purchaseOrderquery->get();
         // return $purchase_order;
-        $creditquery = DB::table('credit_note_allocates')->where('supplier_id',$request->selectedsupplierId);
+        $creditquery = DB::table('credit_note_allocates')->where('supplier_id',$request->selectedsupplierId)->whereNull('deleted_at');
         if ($request->filled('po_startDate') && $request->filled('po_endDate')) {
             $creditquery->whereBetween('date', [$po_startDate, $po_endDate]);
         }

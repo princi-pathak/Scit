@@ -111,6 +111,7 @@
                     noDataCell.setAttribute('colspan', 5);
                     noDataCell.textContent = 'No products found';
                     noDataCell.style.textAlign = 'center';
+                    noDataCell.style.color = 'red';
 
                     noDataRow.appendChild(noDataCell);
                     tableBody.appendChild(noDataRow);
@@ -157,28 +158,41 @@
                             const inputPrice = document.createElement('input');
                             inputPrice.className = 'amount form-control ';
                             inputPrice.name = 'amount[]';
-                            if(po_order.outstanding_amount<outstandingAmount){
-                                if(po_order.purchase_order_products.length<2){
+                            // console.log("len "+data.data.length)
+                            if(po_order.outstanding_amount<=outstandingAmount){
+                                // here I add = sign 17/02/25 in above condition
+                                // if(po_order.purchase_order_products.length == 1){
+                                if(data.data.length == 1){
+                                    console.log('1');
                                     $("#credit_used").text('-£' +po_order.outstanding_amount);
                                     const remaining_amount=outstandingAmount-po_order.outstanding_amount;
                                     $("#remaining_credit").text('£'+remaining_amount);
+                                    inputPrice.value = po_order.outstanding_amount || 0;
+                                }else{
+                                    console.log('2');
+                                    // $("#credit_used").text('-£' +po_order.outstanding_amount);
+                                    $("#credit_used").text('-£0');
+                                    // const remaining_amount=outstandingAmount-po_order.outstanding_amount;
+                                    const remaining_amount=0;
+                                    $("#remaining_credit").text('£'+remaining_amount);
+                                    inputPrice.value = '';
                                 }
-                                inputPrice.value = po_order.outstanding_amount || 0;
                                 outstandingAmountCheck=po_order.outstanding_amount;
                             }else{
-                                if(po_order.purchase_order_products.length<2){
+                                console.log('2');
+                                // if(po_order.purchase_order_products.length<2){
+                                if(data.data.length<2){
                                     $("#credit_used").text('-£' +outstandingAmount);
                                 }
                                 inputPrice.value = outstandingAmount || 0;
                                 outstandingAmountCheck=outstandingAmount;
                             }
-                            
                             inputPrice.addEventListener('input', function () {
                                 this.value = this.value.replace(/[^0-9.]/g, '');
                                 if ((this.value.match(/\./g) || []).length > 1) {
                                     this.value = this.value.slice(0, -1);
                                 }
-                                update_Amount(outstandingAmountCheck,po_order.outstanding_amount);
+                                update_Amount(outstandingAmountCheck,po_order.outstanding_amount,outstandingAmount);
                             });
                             $("#balance_credit").text('£' +outstandingAmount);
                             
@@ -193,24 +207,35 @@
             }
         });
     }
-    function update_Amount(amount,product_amount){
+    function update_Amount(amount,product_amount,outstandingAmount){
         var credit_amount=0;
-        alert(amount)
+
+        var amount=parseFloat(amount);
+        var product_amount=parseFloat(product_amount);
         $(".amount").each(function(){
-            if($(this).val()>amount){
-                alert("1The amount exceeds the outstanding amount (£"+amount.toFixed(2)+").");
+            if($(this).val()>product_amount){
+                alert("The amount exceeds the outstanding amount (£"+product_amount.toFixed(2)+").");
                 $(this).val('');
-            }else if($(this).val()>product_amount){
-                alert("2The amount exceeds the outstanding amount (£"+product_amount.toFixed(2)+").");
+                $("#credit_used").text('-£'+credit_amount);
+                $("#remaining_credit").text('£'+outstandingAmount);
+                update_Amount(amount,product_amount,outstandingAmount);
+            }else if($(this).val()>amount){
+                alert("The amount exceeds the outstanding amount (£"+amount.toFixed(2)+").");
                 $(this).val('');
-            }else{
+                $("#credit_used").text('-£'+credit_amount);
+                $("#remaining_credit").text('£'+outstandingAmount);
+                update_Amount(amount,product_amount,outstandingAmount);
+            } else{
+                // console.log('calculate')
                 credit_amount=credit_amount+Number($(this).val());
                 $("#credit_used").text('-£'+credit_amount);
-                var remaining_amount=amount-credit_amount;
+                // var remaining_amount=amount-credit_amount;
+                var remaining_amount=outstandingAmount-credit_amount;
                 $("#remaining_credit").text('£'+remaining_amount);
             }
             
         });
+        console.log(credit_amount)
     }
 
     $("#{{ $saveButtonId }}").on('click', function () {

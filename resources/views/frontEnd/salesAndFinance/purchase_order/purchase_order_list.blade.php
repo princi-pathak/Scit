@@ -128,9 +128,9 @@
             </div>
             <div class="col-md-8 col-lg-8 col-xl-8 px-3">
                 <div class="pageTitleBtn">
-                    <a href="#!" class="profileDrop"> Search Purchase Orders</a>
-                    <a href="#!" class="profileDrop"> Invoice Received</a>
-                    <a href="#!" class="profileDrop dropdown-toggle"> Statements</a>
+                    <a href="{{url('purchase-orders-search')}}" class="profileDrop"> Search Purchase Orders</a>
+                    <a href="{{url('purchase-order-invoices')}}" class="profileDrop"> Invoice Received</a>
+                    <a href="{{url('purchase-order-statements')}}" class="profileDrop"> Statements</a>
                 </div>
             </div>
         </div>

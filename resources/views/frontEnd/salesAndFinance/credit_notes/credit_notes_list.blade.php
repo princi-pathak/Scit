@@ -124,15 +124,13 @@ ul#projectList {
                     <div class="jobsection">
                         <div class="d-inline-flex align-items-center ">
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href="{{url('new_credit_notes')}}" class="profileDrop">
                                     New
                                 </a>
-                                <div class="dropdown-menu fade-up m-0">
+                                <!-- <div class="dropdown-menu fade-up m-0">
                                     <a href="{{url('purchase_order')}}" class="dropdown-item">Purchase Order</a>
                                     <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
-                                    <!-- <a href="#!" class="dropdown-item">Print</a>
-                                    <a href="#!" class="dropdown-item">Email</a> -->
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <a href="{{ url('credit_notes?list_mode=Approved') }}" class="profileDrop" <?php if($status['status'] == 1){?>id="active_inactive"<?php }?>>Approved <span>({{$approvedtCount}})</span></a>
@@ -157,7 +155,7 @@ ul#projectList {
 
                         </div>
 
-                        <div class="searchJobForm" id="divTohide">
+                        <div class="searchJobForm" id="divTohide" style="display:none">
                             <form id="search_dataForm" class="p-4">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -451,6 +449,7 @@ $('.delete_checkbox').on('click', function() {
 <script>
     function clearBtn(){
         $("#search_dataForm")[0].reset();
+        location.reload();
     }
     function searchBtn(){
         var credit_ref=$("#credit_ref").val();
@@ -583,161 +582,6 @@ $('.delete_checkbox').on('click', function() {
 </script>
 <script>
     $(document).ready(function() {
-        $('#department').on('keyup', function() {
-            let search_deptquery = $(this).val();
-            const deptdivList = document.querySelector('.department-container');
-
-            if (search_deptquery === '') {
-                deptdivList.innerHTML = '';
-            }
-            if (search_deptquery.length > 2) {
-                $.ajax({
-                    url: "{{ url('searchDepartment') }}",
-                    method: 'post',
-                    data: {
-                        search_deptquery: search_deptquery,_token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        // return false;
-                        deptdivList.innerHTML = "";
-                        const div = document.createElement('div');
-                        div.className = 'dept_container';
-
-                      
-                        const ul = document.createElement('ul');
-                        ul.id = "deptList";
-                        if(response.data.length >0){
-                            response.data.forEach(item => {
-                                const li = document.createElement('li'); 
-                                li.textContent = item.title; 
-                                li.id = item.id;
-                                li.name = item.title;
-                                li.className = "editInput";
-                                ul.appendChild(li); 
-                                const hr = document.createElement('hr');
-                                // hr.className='dropdown-divider';
-                                ul.appendChild(hr);
-                            });
-
-                            div.appendChild(ul);
-
-                            deptdivList.appendChild(div);
-
-                            ul.addEventListener('click', function(event) {
-                                deptdivList.innerHTML = '';
-                                document.getElementById('department').value = '';
-                                if (event.target.tagName.toLowerCase() === 'li') {
-                                    const selectedDeptId = event.target.id;
-                                    const selectedDeptName = event.target.name;
-                                    console.log('Selected Customer ID:', selectedDeptId);
-                                    console.log('Selected Customer Name:', selectedDeptName);
-                                    $("#department").val(selectedDeptName);
-                                    $("#selectedDeptId").val(selectedDeptId);
-                                    // getCustomerData(selectedId,selectedDeptName);
-                                }
-                            });
-                        }else{
-                            const Errorli = document.createElement('li'); 
-                            Errorli.textContent = 'Sorry Data Not found'; 
-                            Errorli.id = 'searchError';
-                            Errorli.className = "editInput";
-                            ul.appendChild(Errorli); 
-                            div.appendChild(ul);
-                            deptdivList.appendChild(div);
-                            setTimeout(function() {
-                                deptdivList.innerHTML = '';
-                            }, 1000);
-                        }
-
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            } else {
-                deptdivList.innerHTML = '';
-                $('#results').empty();
-            }
-        });
-
-        $('#tag').on('keyup', function() {
-            let search_tagquery = $(this).val();
-            const tagdivList = document.querySelector('.tag-container');
-
-            if (search_tagquery === '') {
-                tagdivList.innerHTML = '';
-            }
-            if (search_tagquery.length > 2) {
-                $.ajax({
-                    url: "{{ url('searchTag') }}",
-                    method: 'post',
-                    data: {
-                        search_tagquery: search_tagquery,_token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        // return false;
-                        tagdivList.innerHTML = "";
-                        const div = document.createElement('div');
-                        div.className = 'tag_container';
-
-                      
-                        const ul = document.createElement('ul');
-                        ul.id = "tagList";
-                        if(response.data.length >0){
-                            response.data.forEach(item => {
-                                const li = document.createElement('li'); 
-                                li.textContent = item.title; 
-                                li.id = item.id;
-                                li.name = item.title;
-                                li.className = "editInput";
-                                ul.appendChild(li); 
-                                const hr = document.createElement('hr');
-                                // hr.className='dropdown-divider';
-                                ul.appendChild(hr);
-                            });
-
-                            div.appendChild(ul);
-
-                            tagdivList.appendChild(div);
-
-                            ul.addEventListener('click', function(event) {
-                                tagdivList.innerHTML = '';
-                                document.getElementById('tag').value = '';
-                                if (event.target.tagName.toLowerCase() === 'li') {
-                                    const selectedTagtId = event.target.id;
-                                    const selectedTagName = event.target.name;
-                                    console.log('Selected Customer ID:', selectedTagtId);
-                                    console.log('Selected Customer Name:', selectedTagName);
-                                    $("#tag").val(selectedTagName);
-                                    $("#selectedTagtId").val(selectedTagtId);
-                                }
-                            });
-                        }else{
-                            const Errorli = document.createElement('li'); 
-                            Errorli.textContent = 'Sorry Data Not found'; 
-                            Errorli.id = 'searchError';
-                            Errorli.className = "editInput";
-                            ul.appendChild(Errorli); 
-                            div.appendChild(ul);
-                            tagdivList.appendChild(div);
-                            setTimeout(function() {
-                                tagdivList.innerHTML = '';
-                            }, 1000);
-                        }
-
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            } else {
-                tagdivList.innerHTML = '';
-                $('#results').empty();
-            }
-        });
-
         $('#supplier').on('keyup', function() {
             let search_supplierquery = $(this).val();
             const supplierdivList = document.querySelector('.supplier-container');
@@ -811,83 +655,6 @@ $('.delete_checkbox').on('click', function() {
                 });
             } else {
                 supplierdivList.innerHTML = '';
-                $('#results').empty();
-            }
-        });
-
-        $('#customer').on('keyup', function() {
-            let search_query = $(this).val();
-            const customerdivList = document.querySelector('.customer-container');
-
-            if (search_query === '') {
-                customerdivList.innerHTML = '';
-            }
-            if (search_query.length > 2) {
-                $.ajax({
-                    url: "{{ url('searchCustomerName') }}",
-                    method: 'post',
-                    data: {
-                        search_query: search_query,_token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        // return false;
-                        customerdivList.innerHTML = "";
-                        const div = document.createElement('div');
-                        div.className = 'customer_container';
-
-                      
-                        const ul = document.createElement('ul');
-                        ul.id = "customerList";
-                        if(response.data.length >0){
-                            response.data.forEach(item => {
-                                const li = document.createElement('li'); 
-                                li.textContent = item.name; 
-                                li.id = item.id;
-                                li.name = item.name;
-                                li.className = "editInput";
-                                ul.appendChild(li); 
-                                const hr = document.createElement('hr');
-                                // hr.className='dropdown-divider';
-                                ul.appendChild(hr);
-                            });
-
-                            div.appendChild(ul);
-
-                            customerdivList.appendChild(div);
-
-                            ul.addEventListener('click', function(event) {
-                                customerdivList.innerHTML = '';
-                                document.getElementById('customer').value = '';
-                                if (event.target.tagName.toLowerCase() === 'li') {
-                                    const selectedCustomerId = event.target.id;
-                                    const selectedCustomerName = event.target.name;
-                                    console.log('Selected Customer ID:', selectedCustomerId);
-                                    console.log('Selected Customer Name:', selectedCustomerName);
-                                    $("#customer").val(selectedCustomerName);
-                                    $("#selectedCustomerId").val(selectedCustomerId);
-                                }
-                            });
-                        }else{
-                            const Errorli = document.createElement('li'); 
-                            Errorli.textContent = 'Sorry Data Not found'; 
-                            Errorli.id = 'searchError';
-                            Errorli.className = "editInput";
-                            ul.appendChild(Errorli); 
-                            div.appendChild(ul);
-                            customerdivList.appendChild(div);
-                            setTimeout(function() {
-                                customerdivList.innerHTML = '';
-                            }, 1000);
-                        }
-
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            } else {
-                customerdivList.innerHTML = '';
                 $('#results').empty();
             }
         });
@@ -968,84 +735,6 @@ $('.delete_checkbox').on('click', function() {
                 $('#results').empty();
             }
         });
-
-        $('#project').on('keyup', function() {
-            let search_projectquery = $(this).val();
-            const projectdivList = document.querySelector('.project-container');
-
-            if (search_projectquery === '') {
-                projectdivList.innerHTML = '';
-            }
-            if (search_projectquery.length > 2) {
-                $.ajax({
-                    url: "{{ url('searchProject') }}",
-                    method: 'post',
-                    data: {
-                        search_projectquery: search_projectquery,_token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        // return false;
-                        projectdivList.innerHTML = "";
-                        const div = document.createElement('div');
-                        div.className = 'project_container';
-
-                      
-                        const ul = document.createElement('ul');
-                        ul.id = "projectList";
-                        if(response.data.length >0){
-                            response.data.forEach(item => {
-                                const li = document.createElement('li'); 
-                                li.textContent = item.project_name; 
-                                li.id = item.id;
-                                li.name = item.project_name;
-                                li.className = "editInput";
-                                ul.appendChild(li); 
-                                const hr = document.createElement('hr');
-                                // hr.className='dropdown-divider';
-                                ul.appendChild(hr);
-                            });
-
-                            div.appendChild(ul);
-
-                            projectdivList.appendChild(div);
-
-                            ul.addEventListener('click', function(event) {
-                                projectdivList.innerHTML = '';
-                                document.getElementById('project').value = '';
-                                if (event.target.tagName.toLowerCase() === 'li') {
-                                    const selectedProjectId = event.target.id;
-                                    const selectedProjectName = event.target.name;
-                                    console.log('Selected Customer ID:', selectedProjectId);
-                                    console.log('Selected Customer Name:', selectedProjectName);
-                                    $("#project").val(selectedProjectName);
-                                    $("#selectedProjectId").val(selectedProjectId);
-                                }
-                            });
-                        }else{
-                            const Errorli = document.createElement('li'); 
-                            Errorli.textContent = 'Sorry Data Not found'; 
-                            Errorli.id = 'searchError';
-                            Errorli.className = "editInput";
-                            ul.appendChild(Errorli); 
-                            div.appendChild(ul);
-                            projectdivList.appendChild(div);
-                            setTimeout(function() {
-                                projectdivList.innerHTML = '';
-                            }, 1000);
-                        }
-
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            } else {
-                projectdivList.innerHTML = '';
-                $('#results').empty();
-            }
-        });
-
     });
 </script>
 <script>
