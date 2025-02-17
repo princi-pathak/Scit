@@ -159,7 +159,8 @@
                             inputPrice.className = 'amount form-control ';
                             inputPrice.name = 'amount[]';
                             // console.log("len "+data.data.length)
-                            if(po_order.outstanding_amount<outstandingAmount){
+                            if(po_order.outstanding_amount<=outstandingAmount){
+                                // here I add = sign 17/02/25 in above condition
                                 // if(po_order.purchase_order_products.length == 1){
                                 if(data.data.length == 1){
                                     console.log('1');
