@@ -52,7 +52,11 @@ ul#purchase_qoute_refList {
             <div class="row">
                 <div class="col-md-4 col-lg-4 col-xl-4 ">
                     <div class="pageTitle">
+                    <?php if(isset($credit_note->credit_ref) && $credit_note->credit_ref!=''){?>
+                        <h3>{{$credit_note->credit_ref}}</h3>
+                    <?php }else{?>
                         <h3>New Credit Note</h3>
+                    <?php }?>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4">
@@ -274,57 +278,56 @@ ul#purchase_qoute_refList {
                                         <table class="table" id="result">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>Job </th>
-                                                    <th>Product </th>
+                                                    <!-- <th>Job </th> -->
                                                     <th>Code</th>
+                                                    <th>Item </th>
                                                     <th>Description </th>
                                                     <th>Account Code <a href="javascript:void(0)" class="formicon" onclick="openAccountCodeModal(null)"><i class="fa-solid fa-square-plus"></i>
                                                     </a> </th>
                                                     <th>QTY</th>
                                                     <th>Price</th>
-                                                    <th>Price VAT(%) <a href="javascript:void(0)" class="formicon" onclick="get_model(9)"><i class="fa-solid fa-square-plus"></i>
+                                                    <th>VAT(%) <a href="javascript:void(0)" class="formicon" onclick="get_model(9)"><i class="fa-solid fa-square-plus"></i>
                                                     </a></th>
-                                                    <th>VAT </th>
+                                                    <th style="width:120px">VAT </th>
                                                     <th>Amount</th>
-                                                    <th>Delivered QTY</th>
-                                                    <th>Quantity Available</th>
+                                                    <!-- <th>Delivered QTY</th> -->
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody id="product_result">
                                                  
                                             </tbody>
-
-                                            
-                                        </table>
-                                        <table class="table totlepayment" id="product_calculation" style="display:none">
-                                            <tfoot class="">
-                                               
+                                        <!-- </table> -->
+                                        <!-- <table class="table totlepayment" > -->
+                                            <tfoot class="item_table" id="product_calculation" style="display:none">
                                                 <tr>
-                                                    <td>Sub Total (exc. VAT)</td>
+                                                    <td colspan="5"></td>
+                                                    <td colspan="3">Sub Total (exc. VAT)</td>
                                                     <td id="exact_vat"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
-                                                        VAT
-                                                    </td>
+                                                    <td colspan="5"></td>
+                                                    <td colspan="3">VAT</td>
                                                     <td id="vat"></td>
                                                 </tr>
-                                                
                                                 <tr>
-                                                    <td><strong>Total(inc.VAT)</strong></td>
+                                                    <td colspan="5"></td>
+                                                    <td colspan="3"><strong>Total(inc.VAT)</strong></td>
                                                     <td><strong id="total_vat"></strong></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Paid</td>
+                                                <!-- <tr>
+                                                    <td colspan="5"></td>
+                                                    <td colspan="3">Paid</td>
                                                     <td>-£0.00</td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
-                                                    <td><strong>Outstanding (inc.VAT)</strong></td>
-                                                    <td><strong id="outstanding_vat"></strong></td>
+                                                    <td colspan="5"></td>
+                                                    <td colspan="3" class="item_row"><strong>Remaining Credit</strong></td>
+                                                    <td class="item_row"><strong id="outstanding_vat"></strong></td>
                                                 </tr>
                                             </tfoot>
-                                            </table>
-                                            <div id="pagination-controls-Produc-details"></div>
+                                        </table>
+                                        <div id="pagination-controls-Produc-details"></div>
                                     </div>
                                 </div>
                             </div>
@@ -582,16 +585,19 @@ CKEDITOR.replace('internal_notes', editor_config );
                 $(this).css('border','');
             }
         });
-        // var data=new FormData($("#credit_form")[0]);
-        // console.log(data);return false;
         if(emailErr.length >0){
             
             return false;
         }else{
+            var credit_date = $("#credit_date").val();
+            var formattedDate = moment(credit_date, "DD/MM/YYYY").format("YYYY-MM-DD");
+
+            var formData = new FormData($("#credit_form")[0]);
+            formData.append('date', formattedDate);
             $.ajax({
                 type: "POST",
                 url: "{{url('/credit_notes_save')}}",
-                data: new FormData($("#credit_form")[0]),
+                data: formData,
                 async: false,
                 contentType: false,
                 cache: false,
@@ -672,32 +678,29 @@ CKEDITOR.replace('internal_notes', editor_config );
                     }
                         const row = document.createElement('tr');
                         // job dropdown
-                        const dropdownJob = document.createElement('td');
+                        // const dropdownJob = document.createElement('td');
 
-                        const selectDropdownJob = document.createElement('select');
-                        selectDropdownJob.name = 'job_id[]';
-                        selectDropdownJob.className="form_control";
+                        // const selectDropdownJob = document.createElement('select');
+                        // selectDropdownJob.name = 'job_id[]';
+                        // selectDropdownJob.className="form_control";
 
-                        const defaultOptionJob = document.createElement('option');
-                        defaultOptionJob.value = '';
-                        defaultOptionJob.text = '-Not Selected-';
-                        selectDropdownJob.appendChild(defaultOptionJob);
+                        // const defaultOptionJob = document.createElement('option');
+                        // defaultOptionJob.value = '';
+                        // defaultOptionJob.text = '-Not Selected-';
+                        // selectDropdownJob.appendChild(defaultOptionJob);
 
-                        const optionsJob = data.job;
-                        optionsJob.forEach(optionJob => {
-                            const optJob = document.createElement('option');
-                            optJob.value = optionJob.id;
-                            optJob.textContent = optionJob.name;
-                            selectDropdownJob.appendChild(optJob);
-                        });
+                        // const optionsJob = data.job;
+                        // optionsJob.forEach(optionJob => {
+                        //     const optJob = document.createElement('option');
+                        //     optJob.value = optionJob.id;
+                        //     optJob.textContent = optionJob.name;
+                        //     selectDropdownJob.appendChild(optJob);
+                        // });
 
-                        dropdownJob.appendChild(selectDropdownJob);
+                        // dropdownJob.appendChild(selectDropdownJob);
 
-                        row.appendChild(dropdownJob);
+                        // row.appendChild(dropdownJob);
                         // end
-                        const nameCell = document.createElement('td');
-                        nameCell.innerHTML = data.product_detail.product_name;
-                        row.appendChild(nameCell);
 
                         const codeCell = document.createElement('td');
                         // codeCell.textContent = data.product_detail.product_code;
@@ -707,6 +710,10 @@ CKEDITOR.replace('internal_notes', editor_config );
                         inputCode.value = '';
                         codeCell.appendChild(inputCode);
                         row.appendChild(codeCell);
+
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = data.product_detail.product_name;
+                        row.appendChild(nameCell);
 
                         const hiddenInput = document.createElement('input');
                         hiddenInput.type = 'hidden';
@@ -833,10 +840,10 @@ CKEDITOR.replace('internal_notes', editor_config );
                         row.appendChild(amountCell);
                         totalAmount=totalAmount+Number(data.product_detail.price);
 
-                        const delveriQTYCell = document.createElement('td');
-                        delveriQTYCell.innerHTML='-';
-                        delveriQTYCell.className ='text-center';
-                        row.appendChild(delveriQTYCell);
+                        // const delveriQTYCell = document.createElement('td');
+                        // delveriQTYCell.innerHTML='-';
+                        // delveriQTYCell.className ='text-center';
+                        // row.appendChild(delveriQTYCell);
 
                         const deleteCell = document.createElement('td');
                         deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
@@ -897,9 +904,10 @@ CKEDITOR.replace('internal_notes', editor_config );
         // const priceInput = row.querySelector('.price');
         const priceInput = row.querySelector('.product_price');
         const qtyInput = row.querySelector('.qty');
-        const amountCell = row.querySelector('td:nth-last-child(3)');
+        const amountCell = row.querySelector('td:nth-last-child(2)');
         const price = parseFloat(priceInput.value) || 0;
-        const qty = parseInt(qtyInput.value) || 1;
+        const qty = parseInt(qtyInput.value) || 0;
+        // alert(qty)
         const amount = price * qty;
         amountCell.textContent = '£'+amount.toFixed(2);
         const vat_ratePercentage = row.querySelector('.vat_ratePercentage').value;
@@ -1069,31 +1077,27 @@ $('#search-product').on('keyup', function() {
 
                         
                          // job dropdown
-                        const dropdownJob = document.createElement('td');
+                        // const dropdownJob = document.createElement('td');
 
-                        const selectDropdownJob = document.createElement('select');
-                        selectDropdownJob.name = 'job_id[]';
-                        selectDropdownJob.className="form_control";
+                        // const selectDropdownJob = document.createElement('select');
+                        // selectDropdownJob.name = 'job_id[]';
+                        // selectDropdownJob.className="form_control";
 
-                        const defaultOptionJob = document.createElement('option');
-                        defaultOptionJob.value = '';
-                        defaultOptionJob.text = '-Not Selected-';
-                        selectDropdownJob.appendChild(defaultOptionJob);
+                        // const defaultOptionJob = document.createElement('option');
+                        // defaultOptionJob.value = '';
+                        // defaultOptionJob.text = '-Not Selected-';
+                        // selectDropdownJob.appendChild(defaultOptionJob);
 
-                        const optionsJob = data.all_job;
-                        optionsJob.forEach(optionJob => {
-                            const optJob = document.createElement('option');
-                            optJob.value = optionJob.id;
-                            optJob.textContent = optionJob.name;
-                            selectDropdownJob.appendChild(optJob);
-                        });
-                        dropdownJob.appendChild(selectDropdownJob);
-                        row.appendChild(dropdownJob);
+                        // const optionsJob = data.all_job;
+                        // optionsJob.forEach(optionJob => {
+                        //     const optJob = document.createElement('option');
+                        //     optJob.value = optionJob.id;
+                        //     optJob.textContent = optionJob.name;
+                        //     selectDropdownJob.appendChild(optJob);
+                        // });
+                        // dropdownJob.appendChild(selectDropdownJob);
+                        // row.appendChild(dropdownJob);
                         // end
-                        const nameCell = document.createElement('td');
-                        nameCell.innerHTML = data.crediProduct_detail.product_name;
-                        row.appendChild(nameCell);
-
                         const codeCell = document.createElement('td');
                         // codeCell.textContent = data.crediProduct_detail.product_code;
                         const inputCode = document.createElement('input');
@@ -1102,6 +1106,10 @@ $('#search-product').on('keyup', function() {
                         inputCode.value = product.code;
                         codeCell.appendChild(inputCode);
                         row.appendChild(codeCell);
+
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = data.crediProduct_detail.product_name;
+                        row.appendChild(nameCell);
 
                         const hiddenInput = document.createElement('input');
                         hiddenInput.type = 'hidden';
@@ -1237,10 +1245,10 @@ $('#search-product').on('keyup', function() {
                         row.appendChild(amountCell);
                         totalAmount=totalAmount+Number(product.price);
 
-                        const delveriQTYCell = document.createElement('td');
-                        delveriQTYCell.innerHTML='-';
-                        delveriQTYCell.className ='text-center';
-                        row.appendChild(delveriQTYCell);
+                        // const delveriQTYCell = document.createElement('td');
+                        // delveriQTYCell.innerHTML='-';
+                        // delveriQTYCell.className ='text-center';
+                        // row.appendChild(delveriQTYCell);
 
                         const deleteCell = document.createElement('td');
                         deleteCell.innerHTML = '<i class="fas fa-times fa-2x deleteRow" style="color: red;"></i>';
@@ -1348,3 +1356,16 @@ $(document).on('click', '.delete_checkbox', function() {
     
  </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
+<script>
+<?php if(isset($credit_note->date) && $credit_note->date!=''){?>
+    flatpickr("#credit_date", {
+        dateFormat: "d/m/Y",
+        defaultDate: "<?php echo \Carbon\Carbon::parse($credit_note->date)->format('d/m/Y');?>"
+    });
+<?php }else{?>
+    flatpickr("#credit_date", {
+        dateFormat: "d/m/Y",
+        defaultDate: new Date()
+    });
+<?php } ?>
+</script>
