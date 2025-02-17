@@ -55,11 +55,11 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
                                         <div class="btn-group mr-3">
                                             <a href="javascript:void(0)">
                                                 <div class="dropdown">
-                                                <a href="javascript:;" class="dropdown-toggle btn btn-primary bgcolor" data-toggle="dropdown">New <b class="caret"></b></a>
-                                                    
+                                                    <a href="javascript:;" class="dropdown-toggle btn btn-primary bgcolor" data-toggle="dropdown">New <b class="caret"></b></a>
+
                                                     <ul class="dropdown-menu">
                                                         <li><a href="{{ url('admin/sales-finance/purchase-order/purchase_order_add') }}">Purchase Order</a></li>
-                                                        <li><a href="#">Credit Note</a></li>
+                                                        <li><a href="#" class="border-0">Credit Note</a></li>
                                                     </ul>
                                                 </div>
 
@@ -183,7 +183,7 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
                                                         <li><a href="#">Duplicate</a></li>
                                                         <li><a href="#" onclick="modal_show2()">Approve</a></li>
                                                         <li><a href="#">CRM / History</a></li>
-                                                        <li><a href="#">Start Timer</a></li>
+                                                        <li><a href="#" class="border-0">Start Timer</a></li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -203,7 +203,7 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
                                             <td>Draft</td>
                                             <td>
                                                 <div data-toggle="tooltip" title="Not Delivered">
-                                                <i class="fa fa-times text-danger"></i>
+                                                    <i class="fa fa-times text-danger"></i>
                                                 </div>
                                             </td>
                                             <td>
@@ -215,7 +215,7 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
                                                         <li><a href="#">Duplicate</a></li>
                                                         <li><a href="#">Approve</a></li>
                                                         <li><a href="#">CRM / History</a></li>
-                                                        <li><a href="#">Start Timer</a></li>
+                                                        <li><a href="#" class="border-0">Start Timer</a></li>
                                                     </ul>
                                                 </div>
                                             </td>

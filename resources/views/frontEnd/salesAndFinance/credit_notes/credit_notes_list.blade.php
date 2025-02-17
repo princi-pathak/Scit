@@ -124,15 +124,13 @@ ul#projectList {
                     <div class="jobsection">
                         <div class="d-inline-flex align-items-center ">
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href="{{url('new_credit_notes')}}" class="profileDrop">
                                     New
                                 </a>
-                                <div class="dropdown-menu fade-up m-0">
+                                <!-- <div class="dropdown-menu fade-up m-0">
                                     <a href="{{url('purchase_order')}}" class="dropdown-item">Purchase Order</a>
                                     <a href="{{url('new_credit_notes')}}" class="dropdown-item">Credit Note</a>
-                                    <!-- <a href="#!" class="dropdown-item">Print</a>
-                                    <a href="#!" class="dropdown-item">Email</a> -->
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <a href="{{ url('credit_notes?list_mode=Approved') }}" class="profileDrop" <?php if($status['status'] == 1){?>id="active_inactive"<?php }?>>Approved <span>({{$approvedtCount}})</span></a>
@@ -157,7 +155,7 @@ ul#projectList {
 
                         </div>
 
-                        <div class="searchJobForm" id="divTohide">
+                        <div class="searchJobForm" id="divTohide" style="display:none">
                             <form id="search_dataForm" class="p-4">
                                 <div class="row">
                                     <div class="col-md-4">
