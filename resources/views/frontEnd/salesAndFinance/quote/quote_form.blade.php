@@ -2925,9 +2925,36 @@
         console.log(selectedRate); // Output the selected VAT rate
         // document.querySelector('.selectedTaxID').value = selectedRate;
 
-        const table = document.querySelector(`#quoteProducts`);   
+        const table = document.querySelector(`#quoteProducts`);
         calculateRowsValue(table); // Call function with selected rate
-        
+
+    });
+
+    $(document).on("change", ".discount_type_value", function() {
+        const table = document.querySelector(`#quoteProducts`);
+        calculateRowsValue(table); // Call function with selected rate
+    });
+
+
+    $(document).on("change", ".discount, .priceMarkup ", function() {
+        const table = document.querySelector(`#quoteProducts`);
+        calculateRowsValue(table); // Call function with selected rate
+    });
+
+    $(document).on("input", "#discountInput", function() {
+
+        let discountValue = parseInt(this.value);
+
+        document.querySelectorAll(".discount").forEach(element => {
+            element.textContent = discountValue; // Set discount with %
+        });
+
+        document.querySelectorAll(".discount_type_value").forEach(select => {
+            select.value = "%";
+        });
+
+        const table = document.querySelector(`#quoteProducts`);
+        calculateRowsValue(table); // Call function with selected rate
     });
 
 
@@ -3015,7 +3042,23 @@
         }
     }
 
-  
+    function calculateDiscount(originalPrice, discountValue, discountType) {
+        let finalPrice;
+
+        if (discountType === "%") {
+            // Percentage discount
+            finalPrice = originalPrice * (discountValue / 100);
+            console.log("finalPrice", finalPrice);
+        } else if (discountType === "£") {
+            // Fixed amount discount
+            finalPrice = discountValue;
+            console.log("finalPrice", finalPrice);
+        }
+
+        return finalPrice > 0 ? finalPrice : 0; // Ensure price doesn't go negative
+    }
+
+
     function calculateRowsValue(table) {
         const rows = table.querySelectorAll('tbody tr');
 
@@ -3041,26 +3084,28 @@
 
         rows.forEach(row => {
 
-            // getTaxRateOnTaxId();
-
             // Get input values from the row
             totalQuantity = parseInt(row.querySelector('.quantity').value) || 0;
             totalPrice = parseFloat(row.querySelector('.price').value) || 0;
             discount = parseInt(row.querySelector('.discount').value) || 0;
+            console.log("discount input", discount);
+            discount_type_value = row.querySelector('.discount_type_value').value;
+            console.log("discount_type_value", discount_type_value);
+            discountAmount = calculateDiscount(totalPrice, discount, discount_type_value);
             totalCostPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
             totalMarkup = parseInt(row.querySelector('.priceMarkup').value) || 0;
             vat = parseInt(row.querySelector('.selectedTaxID').value) || 0;
-            
+
+
+            priceWithDiscount = totalPrice - discountAmount;
+
+            markupAmount = (priceWithDiscount * totalMarkup) / 100; // Percentage markup
+            console.log("markupAmount", markupAmount);
 
             // Calculate selling price (Cost Price + Markup - Discount)
-
-            markupAmount = (totalPrice * totalMarkup) / 100; // Percentage markup
-            console.log(markupAmount);
-            discountAmount = (totalPrice * discount) / 100; // Discount as a percentage
-            console.log(discountAmount);
-            totalDiscount += discountAmount;
-            sellingPrice = totalPrice + markupAmount - discountAmount;
+            sellingPrice = priceWithDiscount  + markupAmount;
             console.log("sellingPrice", sellingPrice);
+            totalDiscount += discountAmount;
 
             // Calculate Amount (Quantity × Selling Price)
             amount = totalQuantity * sellingPrice;
@@ -3123,7 +3168,7 @@
     let rowIndex = 0;
 
     function quoteProductTable(data, tableId, type) {
-        const table = document.querySelector(`#${tableId}`);  
+        const table = document.querySelector(`#${tableId}`);
         // Populate rows as usual if data is not empty
         data.forEach(item => {
             console.log("1", rowIndex);
@@ -3193,10 +3238,9 @@
                 <td>
                     <div class="d-flex">
                         <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="0">
-                        <select class="form-control editInput selectOptions input50" name="" id="">
-                            <option>Please Select</option>
-                            <option value="%">%</option>
+                        <select class="form-control editInput selectOptions input50 discount_type_value">
                             <option value="£">£</option>
+                            <option value="%">%</option>
                         </select>
                     </div>
                 </td>
@@ -3579,15 +3623,21 @@
                 console.log("getCustomerBillingAddressData", response.data);
 
                 let selectElement = document.getElementById('billingDetailContact'); // Get the select element
+                let newId = response.data[0].id; // Get the ID to be added
 
-                // Create and append a new option
-                let newOption = document.createElement('option');
-                newOption.value = response.data[0].id;
-                newOption.text = response.data[0].contact_name;
-                selectElement.appendChild(newOption);
+                // Check if the ID already exists in the select options
+                let exists = Array.from(selectElement.options).some(option => option.value == newId);
+
+                if (!exists) {
+                    // Create and append a new option
+                    let newOption = document.createElement('option');
+                    newOption.value = newId;
+                    newOption.text = response.data[0].contact_name;
+                    selectElement.appendChild(newOption);
+                    newOption.selected = true;
+                }
 
                 // Set the new option as selected
-                newOption.selected = true;
                 setFieldValues(['billing_add_id', 'siteCustomerId'], response.data[0].id);
 
                 // billing details data set
