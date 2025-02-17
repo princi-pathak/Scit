@@ -214,7 +214,6 @@
                                             <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="">
                                         </div>
                                     </div>
-
                                     <div class="row form-group">
                                         <label for="Company" class="col-lg-4 col-sm-4 control-label">Company</label>
                                         <div class="col-lg-8">
@@ -278,9 +277,7 @@
                                         <div class="col-lg-6">
                                             <input type="date" class="form-control" id="Expected" name="Expected" placeholder="" value="">
                                         </div>
-                                        <div class="col-lg-1 icon_blue">
-                                            <i class="fa fa-calendar text-danger"></i>
-                                        </div>
+                                        <div class="col-lg-1 icon_blue"><i class="fa fa-calendar text-danger"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -310,9 +307,7 @@
                                         <div class="col-lg-6">
                                             <input type="date" class="form-control" id="Purchase-date" name="Purchase-date" placeholder="" value="">
                                         </div>
-                                        <div class="col-lg-1 icon_blue">
-                                            <i class="fa fa-calendar text-danger"></i>
-                                        </div>
+                                        <div class="col-lg-1 icon_blue"><i class="fa fa-calendar text-danger"></i></div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="Reference" class="col-lg-4 col-sm-4 control-label">Reference</label>
@@ -325,27 +320,21 @@
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="Quote_ref" name="Quote_ref" placeholder="Quote Ref (if any)" value="">
                                         </div>
-                                        <div class="col-lg-1 icon_blue">
-                                            <i class="fa fa-search"></i>
-                                        </div>
+                                        <div class="col-lg-1 icon_blue"><i class="fa fa-search"></i></div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="Job_reg" class="col-lg-4 col-sm-4 control-label">Job Reg</label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="Job_reg" name="Job_reg" placeholder="Job Reg (if any)" value="">
                                         </div>
-                                        <div class="col-lg-1 icon_blue">
-                                            <i class="fa fa-search"></i>
-                                        </div>
+                                        <div class="col-lg-1 icon_blue"><i class="fa fa-search"></i></div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="vat_tax_no" class="col-lg-4 col-sm-4 control-label">Invoice Ref</label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="vat_tax_no" name="vat_tax_no" placeholder="Invoide ref(if any)" value="">
                                         </div>
-                                        <div class="col-lg-1 icon_blue">
-                                            <i class="fa fa-search"></i>
-                                        </div>
+                                        <div class="col-lg-1 icon_blue"><i class="fa fa-search"></i></div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="payment_terms" class="col-lg-4 col-sm-4 control-label">Payment Terms</label>
@@ -357,9 +346,7 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-2">
-                                            <span class="afterInputText">
-                                                Days
-                                            </span>
+                                            <span class="afterInputText">Days</span>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -393,7 +380,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <button type="button" class="btn btn-primary"><i class="fa fa-clock-o"></i> Set Reminder</button>
+                                        <button type="button" class="btn btn-primary" onclick="get_modal(15)"><i class="fa fa-clock-o"></i> Set Reminder</button>
                                     </div>
                                 </div>
                             </div>
@@ -536,7 +523,7 @@
                     <i class="fa fa-floppy-o"></i> Save</button>
                 <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</button>
                 <button type="button" class="btn btn-primary"><i class="fa fa-chevron-down"></i> Action </button>
-            </div>
+            </div><!-- add action dropdown  -->
 
             <!-- </form> -->
             <!-- page end-->
@@ -750,7 +737,7 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(1)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal(11)"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -792,8 +779,8 @@
                                     <div class="row form-group">
                                         <label for="address_input" class="col-lg-4 col-sm-4 control-label">Address Details</label>
                                         <div class="col-lg-8">
-                                            <span>same as default</span>
-                                            <input type="checkbox">
+                                            <label for="defaltbtn"> same as default</label>
+                                            <input type="checkbox" id="defaltbtn" name="defaltbtn">
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -854,133 +841,248 @@
                         <h4 class="modal-title pupTitle"> Add Customer </h4>
                     </div>
                     <div class="modal-body pdbotm">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="from_outside_border">
-                                    <div class="custom-legend"><strong>Add Region</strong></div>
-                                    <form id="Add_Customer_form">
-                                        @csrf
+                        <form id="Add_Customer_form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row form-group">
+                                        <label for="Customer_Name" class="col-lg-4 col-sm-4 control-label">Customer Name</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="Customer_Name" name="Customer Name" placeholder="Enter Customer Name" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="Customer_Type" class="col-lg-4 col-sm-4 control-label">Customer Type</label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" id="Customer_Type" name="Customer_Type" placeholder="Enter Customer Type" value="">
+                                        </div>
+                                        <div class="col-lg-1" id="inputPlusCircle">
+                                            <a class="javascript:void(0)" onclick="get_modal(16)"><i class="fa  fa-plus-circle"></i> </a>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="ContactName_input" class="col-lg-4 col-sm-4 control-label">Contact Name</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="ContactName_input" name="ContactName_input" placeholder="Enter Contact Name" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Job Title (Position)</label>
+                                        <div class="col-lg-8">
+                                            <select name="" class="form-control" id="">
+                                                <option disabled selected>Please Select</option>
+                                                <option value="">Python Developer</option>
+                                                <option value="">Python Developer</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="email_input" class="col-lg-4 col-sm-4 control-label">Email</label>
+                                        <div class="col-lg-8">
+                                            <input type="email" class="form-control" id="email_input" name="email_input" placeholder="Enter Supplier email" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Telephone</label>
+                                        <div class="col-sm-2 pe-0">
+                                            <select class="form-control editInput selectOptions" id="contact_telephone_country_code" name="contact_telephone_country_code">
+                                                <option selected disabled>Please Select</option>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Customer</label>
-                                                    <div class="col-lg-9">
-                                                        <p></p>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Default Billing</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="radio" name="r" id="yes" class="billing"> Yes
-                                                        <input type="radio" name="r" id="no" class="billing" checked> No
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Contact Name<span class="radStar ">*</span></label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" name="customer_name" id="customer_name" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Job Title(Position)</label>
-                                                    <div class="col-lg-9">
-                                                        <select class="form-control who_noti" name="customer_job_titleid" id="customer_job_titleid">
-                                                            <option selected disabled>Select Job Title</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <input type="text" id="customer_telephone" name="customer_telephone" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Mobile</label>
+                                        <div class="col-sm-2 pe-0">
+                                            <select class="form-control editInput selectOptions" id="contact_mobile_country_code" name="contact_mobile_country_code">
+                                                <option selected disabled>Please Select</option>
 
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Email</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="email" name="customer_email" id="customer_email" class="form-control" onblur="getemail(2)">
-                                                        <span id="emailErr2" style="color: red;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Telephone</label>
-                                                    <div class="col-sm-2">
-                                                        <select class="form-control editInput selectOptions" id="contact_telephone_country_code" name="contact_telephone_country_code">
-                                                            <option selected disabled>Please Select</option>
-
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-1 numberHifan">
-                                                        -
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" id="customer_telephone" name="customer_telephone" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Mobile</label>
-                                                    <div class="col-sm-2">
-                                                        <select class="form-control editInput selectOptions" id="contact_mobile_country_code" name="contact_mobile_country_code">
-                                                            <option selected disabled>Please Select</option>
-
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-1 numberHifan">
-                                                        -
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" id="customer_mobile" name="customer_mobile" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Fax</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" id="customer_fax" name="customer_fax" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Address Details</label>
-                                                    <div class="col-lg-9">Same as Default
-                                                        <input type="checkbox" name="defaultaddcheck" id="defaultaddcheck">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Address<span class="radStar ">*</span></label>
-                                                    <div class="col-lg-9">
-                                                        <textarea name="customer_address" class="form-control" id="customer_address" rows="3" cols="6"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">City</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" id="customer_city" name="customer_city" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Country</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" id="customer_country" name="customer_country" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Post Code</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" id="customer_post_code" name="customer_post_code" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Country</label>
-                                                    <div class="col-lg-9">
-                                                        <select id="customer_country_id" name="customer_country_id" class="form-control">
-                                                            <option selected disabled>Select Country</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <input type="text" id="customer_mobile" name="customer_mobile" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="fax_input" class="col-lg-4 col-sm-4 control-label">Fax</label>
+                                        <div class="col-lg-8">
+                                            <input type="email" class="form-control" id="fax_input" name="fax_input" placeholder="Enter Supplier Fax" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="supplier_website" class="col-sm-3 col-form-label">Website</label>
+                                        <div class="col-sm-2 pe-0">
+                                            <div class="tag_box text-center">
+                                                <span style="padding:7px">http://</span>
                                             </div>
                                         </div>
-                                    </form>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Website" id="supplier_website" name="website">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="payment_terms" class="col-lg-4 col-sm-4 control-label">Payment Terms</label>
+                                        <div class="col-lg-5">
+                                            <select class="form-control editInput selectOptions" id="payment_terms" name="payment_terms">
+                                                <option value="">0</option>
+                                                <option value="">1</option>
+                                                <option value="">2</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <span class="afterInputText">Days</span>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="supplier_currency_id" class="col-sm-3 col-form-label">Currency</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control editInput selectOptions" id="supplier_currency_id" name="currency_id">
+                                                <option value="" selected>British Pound</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="supplier_creadit_limit" class="col-sm-3 col-form-label">Credit Limit</label>
+                                        <div class="col-sm-2 pe-0">
+                                            <div class="tag_box text-center">
+                                                <span style="padding:7px">£</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Credit Limit" name="creadit_limit" id="supplier_creadit_limit" value="" maxlength="8">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="Discount_input" class="col-lg-4 col-sm-4 control-label">Discount</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="Discount_input" name="Discount_input" placeholder="Enter Discount" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="DiscountType_status" class="col-sm-3 col-form-label">Discount Type</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control editInput selectOptions" id="DiscountType_status" name="status">
+                                                <option value='1'>Please Select</option>
+                                                <option value='0'>Percentage</option>
+                                                <option value='0'>Flat</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="VAT_input" class="col-lg-4 col-sm-4 control-label">VAT / Tax No</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="VAT_input" name="VAT_input" placeholder="Enter VAT/TAX No." value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="Default_Catalogue" class="col-sm-3 col-form-label">Default Catalogue</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control editInput selectOptions" id="Default_Catalogue" name="status">
+                                                <option value='1'>None</option>
+                                                <option value='0'>ABCD</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="supplier_status" class="col-sm-3 col-form-label">Status</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control editInput selectOptions" id="supplier_status" name="status">
+                                                <option value='1'>Active</option>
+                                                <option value='0'>Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row form-group">
+                                        <label for="Region_input" class="col-lg-4 col-sm-4 control-label">Region</label>
+                                        <div class="col-lg-7">
+                                            <select name="" id="">
+                                                <option value="" selected disabled>None</option>
+                                                <option value="">USA</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-1" id="inputPlusCircle">
+                                            <a class="javascript:void(0)" onclick="get_modal(17)"><i class="fa  fa-plus-circle"></i> </a>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="address_input" class="col-lg-4 col-sm-4 control-label">Address</label>
+                                        <div class="col-lg-8">
+                                            <textarea name="address_input" id="address_input" class="form-control" placeholder="Enter Supplier Address"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="city_input" class="col-lg-4 col-sm-4 control-label">City</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="city_input" name="city_input" placeholder="Enter Supplier City" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="County_input" class="col-lg-4 col-sm-4 control-label">County</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="County_input" name="County_input" placeholder="Enter Supplier County" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="Postcode_input" class="col-lg-4 col-sm-4 control-label">Postcode</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="Postcode_input" name="Postcode_input" placeholder="Enter Supplier Postcode" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="supplier_country_id"
+                                            class="col-sm-3 col-form-label">Country</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control editInput selectOptions" id="supplier_country_id" name="country_id">
+                                                <option selected disabled>Select Country</option>
+                                                <option value="">India</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="supplier_account_ref" class="col-sm-3 col-form-label">Account Ref.</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Account Ref." id="supplier_account_ref" name="account_ref">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="supplier_currency_id" class="col-sm-3 col-form-label">Currency</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control editInput selectOptions" id="supplier_currency_id" name="currency_id">
+                                                <option value="" selected>British Pound</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="supplier_creadit_limit" class="col-sm-3 col-form-label">Credit Limit</label>
+                                        <div class="col-sm-2 pe-0">
+                                            <div class="tag_box text-center">
+                                                <span style="padding:7px">£</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Credit Limit" name="creadit_limit" id="supplier_creadit_limit" value="" maxlength="8">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="mb-2 notes_input">
+                                        <label for="supplier_note" class="col-form-label">Notes</label>
+                                        <textarea class="form-control textareaInput" placeholder="Enter Supplier Notes" rows="3" id="supplier_note" name="notes"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 pddtp">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="save_customer_type()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -1327,31 +1429,193 @@
 
         <!-- Add Product Modal start here -->
         <div class="modal fade in" id="Product_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header terques-bg">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title pupTitle">Add Product</h4>
+                        <h4 class="modal-title pupTitle">Product</h4>
                     </div>
                     <div class="modal-body pdbotm">
                         <form id="Product_form">
                             @csrf
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="row form-group">
-                                        <label class="col-lg-3 control-label">Add Product</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="product_input" name="product_input" placeholder="Enter Tag" value="">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Customer</label>
+                                        <div class="col-lg-8">
+                                            <select name="" class="form-control" id="">
+                                                <option value="" selected disabled>- All -</option>
+                                                <option value="">Riya</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
-                                        <div class="col-lg-9">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Product Category</label>
+                                        <div class="col-lg-7">
+                                            <select name="" class="form-control" id="">
+                                                <option value="" disabled selected>- Any Categores -</option>
+                                                <option value="">Green</option>
+                                                <option value="">yellow</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-1" id="inputPlusCircle">
+                                            <a class="javascript:void(0)" onclick="get_modal(12)"><i class="fa  fa-plus-circle"></i> </a>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-4 control-label"> Product Name</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="product_name_input" name="product_name_input" placeholder="Enter Product Name" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Product Type</label>
+                                        <div class="col-lg-8">
+                                            <select name="" class="form-control" id="">
+                                                <option value="">Product</option>
+                                                <option value="">Green</option>
+                                                <option value="">yellow</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Product Code</label>
+                                        <div class="col-lg-5">
+                                            <input type="text" class="form-control" id="Product_code" name="Product_code" placeholder="Enter Product Code" value="">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <button type="button" class="btn btn-primary">Generate</button>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-4 control-label">Cost Price</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="cost_price" name="cost_price" placeholder="Enter Cost Price" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-4 control-label">Markup</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="Markup" name="Markup" placeholder="Enter Markup" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-4 control-label">Price</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="Price" name="Price" placeholder="Enter Price" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-4 control-label">Description</label>
+                                        <div class="col-lg-8">
+                                            <textarea name="Description" id="Description" placeholder="Description" class="form-control" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-4 control-label">Show on Template</label>
+                                        <div class="col-lg-7">
+                                            <label class="togglebtn">
+                                                <input class="toggle-checkbox" type="checkbox">
+                                                <div class="toggle-switch"></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row form-group">
+                                        <label class="col-lg-4 control-label">Bar Code</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="Bar_Code" name="Bar_Code" placeholder="Enter Bar Code" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Sales Tax Rate</label>
+                                        <div class="col-lg-7">
+                                            <select name="" class="form-control" id="">
+                                                <option value="" disabled selected>- Please Select -</option>
+                                                <option value="">VAT 5</option>
+                                                <option value="">VAT 20</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-1" id="inputPlusCircle">
+                                            <a class="javascript:void(0)" onclick="get_modal(13)"><i class="fa  fa-plus-circle"></i> </a>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Purchase Tax Rate</label>
+                                        <div class="col-lg-7">
+                                            <select name="" class="form-control" id="">
+                                                <option value="" disabled selected>- Please Select -</option>
+                                                <option value="">Green</option>
+                                                <option value="">yellow</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-1" id="inputPlusCircle">
+                                            <a class="javascript:void(0)" onclick="get_modal(14)"><i class="fa  fa-plus-circle"></i> </a>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-4 control-label">Nominal Code</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="Nominal_Code" name="Nominal_Code" placeholder="Enter Nominal Code" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Sales A/c Code</label>
+                                        <div class="col-lg-8">
+                                            <select name="" class="form-control" id="">
+                                                <option value="" disabled selected>- Please Select -</option>
+                                                <option value="">test 1</option>
+                                                <option value="">test 1 </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Purchase A/c Code</label>
+                                        <div class="col-lg-8">
+                                            <select name="" class="form-control" id="">
+                                                <option value="" disabled selected>- Please Select -</option>
+                                                <option value="">test 1</option>
+                                                <option value="">test 1 </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Expense A/c Code</label>
+                                        <div class="col-lg-8">
+                                            <select name="" class="form-control" id="">
+                                                <option value="" disabled selected>- Please Select -</option>
+                                                <option value="">test 1</option>
+                                                <option value="">test 1 </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-4 control-label">Location</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="Location" name="Location" placeholder="Enter Location" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-4 col-sm-4 control-label">Status</label>
+                                        <div class="col-lg-8">
                                             <select name="" class="form-control" id="">
                                                 <option value="">Active</option>
                                                 <option value="">Inactive</option>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="Attachment" class="col-lg-4 col-sm-4 control-label">Attachment</label>
+                                        <div class="col-lg-8">
+                                            <input type="file" id="Attachment" name="Attachment" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 pddtp">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="save_customer_type()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
                                     </div>
                                 </div>
                             </div>
@@ -1368,7 +1632,7 @@
                 <div class="modal-content">
                     <div class="modal-header terques-bg">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title pupTitle"> Add Departmental Code </h4>
+                        <h4 class="modal-title pupTitle"> Departmental Code - Add </h4>
                     </div>
                     <div class="modal-body pdbotm">
                         <form id="Departmental_Code_Add_form">
@@ -1376,10 +1640,15 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row form-group">
-                                        <label class="col-lg-3 control-label">Tag</label>
+                                        <label class="col-lg-3 control-label">Name</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="Tag_input" name="Tag_input" placeholder="Enter Tag" value="">
-                                            <b class="text-danger">Note: Comma not allowed in the tag. The previous name will not be populated by the rename tag.</b>
+                                            <input type="text" class="form-control" id="Name" name="Name" placeholder="" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Departmental Code</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="Departmental_Code" name="Departmental_Code" placeholder="" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -1392,6 +1661,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12 pddtp">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="save_customer_type()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -1401,7 +1676,8 @@
         <!-- end here -->
 
         <!-- Add Tax Rate start here -->
-        <div class="modal fade in" id="Add_Tax_Rate_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+        <div class="modal fade in" id="Add_Tax_Rate_modal" tabindex="-1"
+            role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header terques-bg">
@@ -1414,11 +1690,18 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row form-group">
-                                        <label class="col-lg-3 control-label">Tag</label>
+                                        <label class="col-lg-3 control-label">Tax Rate Name</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="Tag_input" name="Tag_input" placeholder="Enter Tag" value="">
-                                            <b class="text-danger">Note: Comma not allowed in the tag. The previous name will not be populated by the rename tag.</b>
+                                            <input type="text" class="form-control" id="Tag_input" name="Tag_input" placeholder="Tax Rate Name" value="">
                                         </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Tax Rate</label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" id="TagRate_input" name="TagRate_input" placeholder="Tax Rate" value="">
+                                        </div>
+                                        <div class="col-lg-2"></div>
+
                                     </div>
                                     <div class="row form-group">
                                         <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
@@ -1428,6 +1711,25 @@
                                                 <option value="">Inactive</option>
                                             </select>
                                         </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">External Tax Code</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="External_tax-input" name="External_tax-input" placeholder="External Tax Rate" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Expiry Date</label>
+                                        <div class="col-lg-9">
+                                            <input type="date" class="form-control" id="Expiry_input" name="Tag_input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 pddtp">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="save_customer_type()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
                                     </div>
                                 </div>
                             </div>
