@@ -2546,3 +2546,8 @@ ul#productList {
   border-top: 2px solid #000;
   border-bottom: 1px solid transparent ;
 }
+
+.table.totlepayment.add_table_insrt33  tr td{
+  text-align: end;
+}
+
