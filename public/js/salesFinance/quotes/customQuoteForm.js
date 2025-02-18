@@ -1,24 +1,24 @@
 var editor_config = {
     toolbar: [{
-            name: 'basicstyles',
-            items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat']
-        },
-        {
-            name: 'format',
-            items: ['Format']
-        },
-        {
-            name: 'paragraph',
-            items: ['Indent', 'Outdent', '-', 'BulletedList', 'NumberedList']
-        },
-        {
-            name: 'link',
-            items: ['Link', 'Unlink']
-        },
-        {
-            name: 'undo',
-            items: ['Undo', 'Redo']
-        }
+        name: 'basicstyles',
+        items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat']
+    },
+    {
+        name: 'format',
+        items: ['Format']
+    },
+    {
+        name: 'paragraph',
+        items: ['Indent', 'Outdent', '-', 'BulletedList', 'NumberedList']
+    },
+    {
+        name: 'link',
+        items: ['Link', 'Unlink']
+    },
+    {
+        name: 'undo',
+        items: ['Undo', 'Redo']
+    }
     ],
 };
 
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const page_type = parseInt(document.getElementById('page_type').value, 10);
     console.log("page_type", page_type);
-    
+
     if (page_type === 1) {
         document.getElementById("hideQuoteDetails").style.display = "none";
         document.getElementById("hideItemDetails").style.display = "none";
@@ -45,12 +45,12 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('yourQuoteSection').style.display = "none";
         document.getElementById('hidequoteTasks').style.display = "none";
     }
-  
+
     const setCustomerId = document.getElementById('setCustomerId').value;
 
     $.ajax({
         url: getCustomerData,
-        success: function(response) {
+        success: function (response) {
             console.log(response.data);
             var get_customer_type = document.getElementById('getCustomerListedit');
             // get_customer_type.innerHTML = '';
@@ -66,12 +66,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 get_customer_type.appendChild(option);
             });
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
-    
-    
+
+
     const edit_customer_billing_id = document.getElementById('edit_customer_billing_id').value;
     if (setCustomerId === edit_customer_billing_id) {
         $.ajax({
@@ -1330,35 +1330,84 @@ function tableFootForProduct(tableName) {
     }
 }
 
+
 function applyMarkup() {
     document.getElementById('markUpLinkRemove').innerHTML = '';
-    document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
+    document.getElementById('markUpLinkRemove').innerHTML = '<span>Markup</span> <input type="text" class="input50 form-control editInput footMarkup" name="mark" id="footMarkup"><span>%</span>';
+}
+
+$(document).on("change", ".vat", function () {
+    let selectedRate = $(this).find("option:selected").data("rate");
+    $(this).closest("tr").find(".selectedTaxID").val(selectedRate);
+    console.log(selectedRate); // Output the selected VAT rate
+
+    const table = document.querySelector(`#quoteProducts`);
+    calculateRowsValue(table); // Call function with selected rate
+
+});
+
+$(document).on("change", ".discount_type_value", function () {
+    const table = document.querySelector(`#quoteProducts`);
+    calculateRowsValue(table); // Call function with selected rate
+});
+
+$(document).on("change", ".discount, .priceMarkup ", function () {
+    const table = document.querySelector(`#quoteProducts`);
+    calculateRowsValue(table); // Call function with selected rate
+});
+
+$(document).on("input", "#discountInput", function () {
+    let discountValue = parseInt(this.value);
+    document.querySelectorAll(".discount").forEach(element => {
+        element.value = discountValue; // Set discount with %
+    });
+
+    document.querySelectorAll(".discount_type_value").forEach(select => {
+        select.value = "%";
+    });
+
+    const table = document.querySelector(`#quoteProducts`);
+    calculateRowsValue(table);
+});
+
+$(document).on("input", "#footMarkup", function () {
+    console.log(this.value);
+    let markValue = parseInt(this.value);
+
+    document.querySelectorAll(".priceMarkup").forEach(element => {
+        element.value = markValue;
+    });
+
+    const table = document.querySelector(`#quoteProducts`);
+    calculateRowsValue(table);
+});
+
+function calculateDiscount(originalPrice, discountValue, discountType) {
+    let finalPrice;
+
+    if (discountType === "%") {
+        // Percentage discount
+        finalPrice = originalPrice * (discountValue / 100);
+        console.log("finalPrice", finalPrice);
+    } else if (discountType === "£") {
+        // Fixed amount discount
+        finalPrice = discountValue;
+        console.log("finalPrice", finalPrice);
+    }
+
+    return finalPrice > 0 ? finalPrice : 0; // Ensure price doesn't go negative
 }
 
 function calculateRowsValue(table) {
-
     const rows = table.querySelectorAll('tbody tr');
-    const subtotal_amount = document.getElementById('subtotal_amount').value;
-    console.log("subtotal_amount", subtotal_amount);
 
-    const total_amount = document.getElementById('total_amount').value;
-    console.log("subtotal_amount", subtotal_amount);
-
-    const subtotalAmount = parseFloat(subtotal_amount) || 0;
-    const totalAmount = parseFloat(total_amount) || 0;
-
-    // Calculate the sum
-    const sum = subtotalAmount + totalAmount;
-
-    const markupOnPriceOrCostPrice = document.getElementById('markupOnPriceOrCostPrice').value;
-    console.log(markupOnPriceOrCostPrice);
     let totalQuantity = 0;
     let totalCostPrice = 0;
     let totalPrice = 0;
     let totalMarkup = 0;
 
     let totalVAT = 0;
-    const vat = 20;
+    let vat = 20;
 
     let totalProfit = 0;
     let totalDiscount = 0;
@@ -1367,34 +1416,34 @@ function calculateRowsValue(table) {
     let profitValue;
     let numericProfit;
     let totalMargin = 0;
+
     let price = 0;
 
     const doller = `£`;
 
     rows.forEach(row => {
 
-        const taxDropdown = row.querySelector('.getTaxRate'); // Find the select element in the row
-        const selectedOption = taxDropdown.options[taxDropdown.selectedIndex]; // Get selected option
-        const vat = parseFloat(selectedOption.getAttribute('data-rate')) || 0; // Get tax rate from attribute
-        console.log(vat);
-        
-
         // Get input values from the row
         totalQuantity = parseInt(row.querySelector('.quantity').value) || 0;
         totalPrice = parseFloat(row.querySelector('.price').value) || 0;
         discount = parseInt(row.querySelector('.discount').value) || 0;
+        console.log("discount input", discount);
+        discount_type_value = row.querySelector('.discount_type_value').value;
+        console.log("discount_type_value", discount_type_value);
+        discountAmount = calculateDiscount(totalPrice, discount, discount_type_value);
         totalCostPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
         totalMarkup = parseInt(row.querySelector('.priceMarkup').value) || 0;
+        vat = parseInt(row.querySelector('.selectedTaxID').value) || 0;
+
+        priceWithDiscount = totalPrice - discountAmount;
+
+        markupAmount = (priceWithDiscount * totalMarkup) / 100; // Percentage markup
+        console.log("markupAmount", markupAmount);
 
         // Calculate selling price (Cost Price + Markup - Discount)
-
-        markupAmount = (totalPrice * totalMarkup) / 100; // Percentage markup
-        console.log(markupAmount);
-        discountAmount = (totalPrice * discount) / 100; // Discount as a percentage
-        console.log(discountAmount);
-        totalDiscount += discountAmount;
-        sellingPrice = totalPrice + markupAmount - discountAmount;
+        sellingPrice = priceWithDiscount + markupAmount;
         console.log("sellingPrice", sellingPrice);
+        totalDiscount += discountAmount;
 
         // Calculate Amount (Quantity × Selling Price)
         amount = totalQuantity * sellingPrice;
@@ -1438,24 +1487,17 @@ function calculateRowsValue(table) {
     console.log("Total totalMargin: ", totalMargin);
 
     document.getElementById('footAmount').textContent = doller + price.toFixed(2);
-    document.getElementById('setDepositAmount').value = "% of  " + doller + price.toFixed(2);
-    document.getElementById('setDepositAmountHidden').value = price.toFixed(2);
     document.getElementById('InputFootAmount').value = price.toFixed(2);
     document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
     document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
     document.getElementById('InputFootVatAmount').value = totalVAT.toFixed(2);
     document.getElementById('footTotalDiscountVat').textContent = doller + (price + totalVAT).toFixed(2);
-    document.getElementById('setTotalCreditAmount').value = doller + (price + totalVAT).toFixed(2);
     document.getElementById('inputFootTotalDiscountVat').value = (price + totalVAT).toFixed(2);
     document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
     document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
-    document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
-    document.getElementById('footOutstandingAmount').textContent = doller + ((price + totalVAT) - sum).toFixed(2);
-    document.getElementById('setOustandingCreditAmount').value = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
-    document.getElementById('deposit_amount').value = ((price + totalVAT) - subtotal_amount).toFixed(2);
-    document.getElementById('footDeposit').textContent = '-' + doller + sum.toFixed(2);
+    document.getElementById('footMargin').textContent = totalMargin.toFixed(2) + "%";
+    document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
     document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
-    document.getElementById('payingNow').textContent = doller + (price + totalVAT).toFixed(2);
 
 }
 
@@ -1503,6 +1545,7 @@ function quoteProductTable(data, tableId, type) {
     const table = document.querySelector(`#${tableId}`);
     // Populate rows as usual if data is not empty
     data.forEach(item => {
+        console.log("item", item);
         console.log("1", rowIndex);
         const tableBody = document.querySelector(`#${tableId} tbody`);
         const node = document.createElement("tr");
@@ -1857,22 +1900,22 @@ function setCustomerBillingData(id) {
             setFieldValues(['billing_add_id', 'siteCustomerId'], response.data[0].id);
 
             // billing details data set
-            document.getElementById('billingDetailsName').value =  response.data[0].contact_name;
-            document.getElementById('customer_contact_id').value  = response.data[0].id;
+            document.getElementById('billingDetailsName').value = response.data[0].contact_name;
+            document.getElementById('customer_contact_id').value = response.data[0].id;
             document.getElementById('billingDetailsAddress').value = response.data[0].address;
             document.getElementById('billingDetailsEmail').value = response.data[0].email;
-            document.getElementById('billingCustomerCity').value =  response.data[0].city;
+            document.getElementById('billingCustomerCity').value = response.data[0].city;
             document.getElementById('billingCustomerCounty').value = response.data[0].county;
-            document.getElementById('billingCustomerPostcode').value =  response.data[0].pincode;
-            document.getElementById('billingCustomerTelephone').value =  response.data[0].telephone;
-            document.getElementById('billingCustomerMobile').value =  response.data[0].mobile;
+            document.getElementById('billingCustomerPostcode').value = response.data[0].pincode;
+            document.getElementById('billingCustomerTelephone').value = response.data[0].telephone;
+            document.getElementById('billingCustomerMobile').value = response.data[0].mobile;
             selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
             selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
             selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
 
-            
-            if(response.default_billing === 1 ){
-                document.getElementById('site_delivery_add_id').value =  response.data[0].id;
+
+            if (response.default_billing === 1) {
+                document.getElementById('site_delivery_add_id').value = response.data[0].id;
                 document.getElementById('customerSiteName').value = response.data[0].contact_name;
                 document.getElementById('siteCustomerId').value = response.data[0].id;
                 document.getElementById('customerSiteAddress').value = response.data[0].address;
@@ -2097,7 +2140,7 @@ function depositeFoot(amount, table) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  
+
     const yesOnCheckbox = document.getElementById('yesOn');
     const optionsDiv = document.getElementById('optionsDiv');
     optionsDiv.style.display = 'none';
@@ -2417,7 +2460,7 @@ function saveQuoteTaskFormData() {
 
 function populateTable(data, tableBody) {
     console.log("populateTable Data", data);
-    data.forEach(item => {  
+    data.forEach(item => {
         // Create a new row
         const row = document.createElement('tr');
 
@@ -2464,7 +2507,7 @@ function populateTable(data, tableBody) {
 }
 
 $(document).ready(function () {
-  
+
     getQuoteAttachmentsOnPageLoad();
     $('#search-product').on('keyup', function () {
         let query = $(this).val();
@@ -2527,7 +2570,7 @@ $(document).ready(function () {
             $('#results').empty(); // Clear results if the input is empty
         }
     });
- 
+
 
     getTaskType(document.getElementById("setTaskTypeData"));
     getTaskType(document.getElementById("setTaskTypeOnTimer"));
@@ -2699,7 +2742,7 @@ $(document).ready(function () {
 
 // }
 
-$('#getCustomerListedit').on('click', function() {
+$('#getCustomerListedit').on('click', function () {
 
     const billingDetailContact = document.getElementById('billingDetailContact');
     billingDetailContact.innerHTML = '';
@@ -2734,7 +2777,7 @@ function getAccountCode() {
     $.ajax({
         url: getActiveAccountCodeURL,
         method: 'GET',
-        success: function(response) {
+        success: function (response) {
             console.log("response.getActiveAccountCode", response.data);
             // Ensure response.data contains the account codes
             if (Array.isArray(response.data)) {
@@ -2758,7 +2801,7 @@ function getAccountCode() {
                 console.error("Invalid response format");
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
         }
     });
