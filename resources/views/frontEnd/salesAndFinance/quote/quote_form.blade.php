@@ -2898,7 +2898,7 @@
 
     function applyMarkup() {
         document.getElementById('markUpLinkRemove').innerHTML = '';
-        document.getElementById('markUpLinkRemove').innerHTML = 'Markup <input type="text" class="input50" name="mark" id="mark">%';
+        document.getElementById('markUpLinkRemove').innerHTML = '<span>Markup</span> <input type="text" class="input50 form-control editInput footMarkup" name="mark" id="footMarkup"><span>%</span>';
     }
 
     // function getTaxRateOnTaxId(taxID) {
@@ -2919,11 +2919,9 @@
     // }
 
     $(document).on("change", ".vat", function() {
-
         let selectedRate = $(this).find("option:selected").data("rate");
         $(this).closest("tr").find(".selectedTaxID").val(selectedRate);
         console.log(selectedRate); // Output the selected VAT rate
-        // document.querySelector('.selectedTaxID').value = selectedRate;
 
         const table = document.querySelector(`#quoteProducts`);
         calculateRowsValue(table); // Call function with selected rate
@@ -2935,18 +2933,15 @@
         calculateRowsValue(table); // Call function with selected rate
     });
 
-
     $(document).on("change", ".discount, .priceMarkup ", function() {
         const table = document.querySelector(`#quoteProducts`);
         calculateRowsValue(table); // Call function with selected rate
     });
 
     $(document).on("input", "#discountInput", function() {
-
         let discountValue = parseInt(this.value);
-
         document.querySelectorAll(".discount").forEach(element => {
-            element.textContent = discountValue; // Set discount with %
+            element.value = discountValue; // Set discount with %
         });
 
         document.querySelectorAll(".discount_type_value").forEach(select => {
@@ -2954,7 +2949,19 @@
         });
 
         const table = document.querySelector(`#quoteProducts`);
-        calculateRowsValue(table); // Call function with selected rate
+        calculateRowsValue(table);
+    });
+
+    $(document).on("input", "#footMarkup", function() {
+        console.log(this.value);
+        let markValue = parseInt(this.value);
+
+        document.querySelectorAll(".priceMarkup").forEach(element => {
+            element.value = markValue; 
+        });
+
+        const table = document.querySelector(`#quoteProducts`);
+        calculateRowsValue(table);
     });
 
 
@@ -2964,54 +2971,67 @@
         if (!isFooterAppended) {
             const tableFoot = table.querySelector('.add_table_insrt33');
             tableFoot.innerHTML += `<tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td>Sub Total (exc. VAT) <input type="hidden" name="sub_total" id="InputFootAmount"></td>
+                                        <td colspan="9" class="borderNone"></td>
+                                        <td colspan="2">Sub Total (exc. VAT) <input type="hidden" name="sub_total" id="InputFootAmount"></td>
                                         <td class="tableAmountRight" id="footAmount">£00.00</td>
+                                        <td colspan="2" class="borderNone"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td>
+                                        <td colspan="9" class="borderNone"></td>   
+                                        <td colspan="2">
                                             <div class="discountInput">
-                                                <span>Discount</span><input type="text" class="form-control editInput input50 discountInputField" id="discountInput" value="0" data-table="${tableName}">
+                                              <span>Discount</span><input type="text" class="form-control editInput input50 discountInputField" id="discountInput" value="0" data-table="${tableName}">
                                                 <span>%</span>
                                             </div>
                                         </td>
                                         <td class="tableAmountRight" id="footDiscount">£00.00</td>
+                                        <td colspan="2" class="borderNone"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td><span id="markUpLinkRemove"><a href="javascript:void(0)" onclick="applyMarkup();"> Apply overall markup</a> </span></td>
+                                        <td colspan="9" class="borderNone"></td>
+                                        <td colspan="2">
+                                            <div class="discountInput" id="markUpLinkRemove">
+                                                <a href="javascript:void(0)" onclick="applyMarkup();"> Apply overall markup</a>
+                                            </div>
+                                        </td>
                                         <td></td>
+                                        <td colspan="2" class="borderNone"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td>VAT<input type="hidden" name="vat_amount" id="InputFootVatAmount"></td>
+                                        <td colspan="9" class="borderNone"></td>
+                                        <td colspan="2">VAT<input type="hidden" name="vat_amount" id="InputFootVatAmount"></td>
                                         <td class="tableAmountRight" id="footVatAmount">£00.00</td>
+                                        <td colspan="2" class="borderNone"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)<input type="hidden" name="total" id="inputFootTotalDiscountVat"></strong></td>
+                                        <td colspan="9" class="borderNone"></td>
+                                        <td colspan="2" style="border-bottom: 1px solid #000;"><strong>Total(inc.VAT)<input type="hidden" name="total" id="inputFootTotalDiscountVat"></strong></td>
                                         <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footTotalDiscountVat">£00.00</td>
+                                        <td colspan="2" class="borderNone"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td>Profit<input type="hidden" name="profit" id="inputFootProfit"></td>
+                                        <td colspan="9" class="borderNone"></td>
+                                        <td colspan="2">Profit<input type="hidden" name="profit" id="inputFootProfit"></td>
                                         <td class="tableAmountRight" id="footProfit">£00.00</td>
+                                        <td colspan="2" class="borderNone"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td>Margin</td>
+                                        <td colspan="9" class="borderNone"></td>
+                                        <td colspan="2">Margin</td>
                                         <td class="tableAmountRight" id="footMargin">00.00%</td>
+                                        <td colspan="2" class="borderNone"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td>Deposit</td>
+                                        <td colspan="9" class="borderNone"></td>
+                                        <td colspan="2">Deposit</td>
                                         <td class="tableAmountRight" id="footDeposit">£00.00</td>
+                                        <td colspan="2" class="borderNone"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="10" class="borderNone"></td>
-                                        <td style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)<input type="hidden" name="outstanding" id="inputFootOutstandingAmount"></strong></td>
+                                        <td colspan="9" class="borderNone"></td>
+                                        <td colspan="2" style="border-bottom: 1px solid #000;"><strong>Outstanding (inc.VAT)<input type="hidden" name="outstanding" id="inputFootOutstandingAmount"></strong></td>
                                         <td style="border-bottom: 1px solid #000;" class="tableAmountRight totleBold" id="footOutstandingAmount">£00.00</td>
+                                        <td colspan="2" class="borderNone"></td>
                                     </tr>`;
             isFooterAppended = true;
 
@@ -3096,14 +3116,13 @@
             totalMarkup = parseInt(row.querySelector('.priceMarkup').value) || 0;
             vat = parseInt(row.querySelector('.selectedTaxID').value) || 0;
 
-
             priceWithDiscount = totalPrice - discountAmount;
 
             markupAmount = (priceWithDiscount * totalMarkup) / 100; // Percentage markup
             console.log("markupAmount", markupAmount);
 
             // Calculate selling price (Cost Price + Markup - Discount)
-            sellingPrice = priceWithDiscount  + markupAmount;
+            sellingPrice = priceWithDiscount + markupAmount;
             console.log("sellingPrice", sellingPrice);
             totalDiscount += discountAmount;
 
@@ -3160,7 +3179,6 @@
         document.getElementById('footMargin').textContent = totalMargin.toFixed(2) + "%";
         document.getElementById('footOutstandingAmount').textContent = doller + (price + totalVAT).toFixed(2);
         document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
-
 
     }
 
@@ -4064,120 +4082,120 @@
                             </thead>
                             <tbody class="add_sectionTitle">
                                  <tr>
-                            <td>
-                    <div class="CSPlus">
-                        <span class="plusandText">
-                            <a href="javascript:void(0)" class="formicon pt-0 me-2" onclick="insrtProduct()"> <i
-                                    class="fa-solid fa-square-plus"></i> </a>
-                            <input type="text"
-                                class="form-control editInput input80"
-                                value="CS-0001">
-                        </span>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput"
-                            value="CS-0001">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <textarea class="form-control textareaInput" name="address"
-                            id="inputAddress" rows="2"
-                            placeholder="Address"></textarea>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <select class="form-control editInput selectOptions"
-                            id="inputCustomer">
-                            <option>No account</option>
-                            <option>Default</option>
-                            <option>Default</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="1">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="100.00">
-                    </div>
-                </td>
-                <td>
-                    <div class="calculatorIcon">
-                        <span class="plusandText">
-                            <a href="javascript:void(0)" class="formicon pt-0"
-                                data-bs-toggle="modal"
-                                data-bs-target="#calculatePop"> <span
-                                    class="material-symbols-outlined">
-                                    calculate
-                                </span> </a>
-                        </span>
-                    </div>
+                                    <td>
+                                        <div class="CSPlus">
+                                            <span class="plusandText">
+                                                <a href="javascript:void(0)" class="formicon pt-0 me-2" onclick="insrtProduct()"> <i
+                                                        class="fa-solid fa-square-plus"></i> </a>
+                                                <input type="text"
+                                                    class="form-control editInput input80"
+                                                    value="CS-0001">
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            <input type="text" class="form-control editInput"
+                                                value="CS-0001">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            <textarea class="form-control textareaInput" name="address"
+                                                id="inputAddress" rows="2"
+                                                placeholder="Address"></textarea>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            <select class="form-control editInput selectOptions"
+                                                id="inputCustomer">
+                                                <option>No account</option>
+                                                <option>Default</option>
+                                                <option>Default</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            <input type="text" class="form-control editInput input50"
+                                                value="1">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            <input type="text" class="form-control editInput input50"
+                                                value="100.00">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="calculatorIcon">
+                                            <span class="plusandText">
+                                                <a href="javascript:void(0)" class="formicon pt-0"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#calculatePop"> <span
+                                                        class="material-symbols-outlined">
+                                                        calculate
+                                                    </span> </a>
+                                            </span>
+                                        </div>
 
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="90.00">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <input type="text" class="form-control editInput input50"
-                            value="0">
-                    </div>
-                </td>
-                <td>
-                    <div class="">
-                        <select class="form-control editInput selectOptions"
-                            id="inputCustomer">
-                            <option>Please Select</option>
-                            <option>Default</option>
-                            <option>Default</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="d-flex">
-                        <input type="text"
-                            class="form-control editInput input50 me-2" value="0">
-                        <select class="form-control editInput selectOptions input50"
-                            id="inputCustomer">
-                            <option>Please Select</option>
-                            <option>Default</option>
-                            <option>Default</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <span>$90.00</span>
-                </td>
-                <td>
-                    <span>$-10.00</span>
-                    <div class="minusnmber pt-1">(-11.11%)</div>
-                </td>
-                <td>
-                    <div class="statuswating">
-                        <span class="oNOfswich">
-                            <input type="checkbox">
-                        </span>
-                        <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
-                    </div>
-                </td>    
-                        </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </td>                    
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            <input type="text" class="form-control editInput input50"
+                                                value="90.00">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            <input type="text" class="form-control editInput input50"
+                                                value="0">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            <select class="form-control editInput selectOptions"
+                                                id="inputCustomer">
+                                                <option>Please Select</option>
+                                                <option>Default</option>
+                                                <option>Default</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <input type="text"
+                                                class="form-control editInput input50 me-2" value="0">
+                                            <select class="form-control editInput selectOptions input50"
+                                                id="inputCustomer">
+                                                <option>Please Select</option>
+                                                <option>Default</option>
+                                                <option>Default</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span>$90.00</span>
+                                    </td>
+                                    <td>
+                                        <span>$-10.00</span>
+                                        <div class="minusnmber pt-1">(-11.11%)</div>
+                                    </td>
+                                    <td>
+                                        <div class="statuswating">
+                                            <span class="oNOfswich">
+                                                <input type="checkbox">
+                                            </span>
+                                            <a href="javascript:void(0)" class="closeappend"><i class="fa-solid fa-circle-xmark"></i></a>
+                                        </div>
+                                    </td>    
+                                </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>                    
             `;
         // Get table body element 
         const tableBody = document.querySelector(".add_table_insrt");

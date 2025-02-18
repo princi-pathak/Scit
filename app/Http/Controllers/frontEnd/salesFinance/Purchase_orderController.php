@@ -1379,4 +1379,40 @@ class Purchase_orderController extends Controller
             }
         }
     }
+    public function preview_multiple_purchaseOrders(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            $po_id = explode(',', $request->key);
+            $po_details=PurchaseOrder::with('suppliers','purchaseOrderProducts')->whereIn('id', $po_id)->where('deleted_at', null)
+            ->get();
+            // echo "<pre>";print_r(count($po_details));die;
+            
+            $data=[
+                'email'=>Auth::user()->email,
+                'phone_no'=>Auth::user()->phone_no,
+                'job_title'=>Auth::user()->job_title,
+                'current_location'=>Auth::user()->current_location,
+                'company'=>Admin::find(Auth::user()->company_id)->company ?? "",
+                'po_details'=>$po_details,
+            ];
+            // echo "<pre>";print_r($data);die;
+            $pdf = PDF::loadView('frontEnd.salesAndFinance.purchase_order.multiplepurchaseOrderPDF',$data);
+            return $pdf->stream('frontEnd.salesAndFinance.purchase_order.multiplepurchaseOrderPDF');
+            // return $pdf->download('purchaseOrderPDF.pdf');
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function purchase_order_approveMultiple(Request $request){
+        // return response()->json(['sueccess'=>true,'data'=>$request->all()]);
+        $po_id=$request->approveids;
+        // return response()->json(['sueccess'=>true,'data'=>$po_id]);
+        try{
+            PurchaseOrder::whereIn('id', $po_id)->update(['status' => 3]);
+            return response()->json(['success'=>true,'message'=>'Purchase Order Apporoved']);
+        }catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }
