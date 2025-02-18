@@ -310,7 +310,7 @@
                             <div class="col-md-7">
                                 <div class="jobsection">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
-                                    <a href="javascript:void(0)" id="" class="profileDrop">Preview Purchase Order</a>
+                                    <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="profileDrop">Preview Purchase Order</a>
                                     @if($status['status'] == 3 || $status['status'] == 4 || $status['status'] == 5)
                                     <div class=" d-inline-flex align-items-center">
                                     <div class="nav-item dropdown">
@@ -318,9 +318,9 @@
                                                 Email Purchase Order
                                             </a>
                                             <div class="dropdown-menu fade-up m-0">
-                                                <a href="javascript:void(0)" class="dropdown-item">Send As Single Email</a>
+                                                <a href="javascript:void(0)" class="dropdown-item email_sendCheck">Send As Single Email</a>
                                                 <hr class="dropdown-divider emialSend" style="display:none">
-                                                <a href="javascript:void(0)" class="dropdown-item emialSend" style="display:none">Send As Multiple Emails</a>
+                                                <a href="javascript:void(0)" class="dropdown-item emialSend email_sendCheck" style="display:none">Send As Multiple Emails</a>
                                             </div>
                                         </div>
                                     </div>
@@ -329,7 +329,7 @@
                                     <a href="javascript:void(0)" id="" class="profileDrop">Record Payment</a>
                                     @endif
                                     @endif
-                                    <a href="javascript:void(0)" id="" class="profileDrop">Approve</a>
+                                    <a href="javascript:void(0)" id="approveBtn" class="profileDrop">Approve</a>
                                 </div>
                             </div>
                             <!-- <div class="col-md-5">
@@ -844,6 +844,120 @@
         $('.emialSend').hide();
     }
   }
+  $("#preview_purchase_orderBoxes").on('click', function(){
+    let previewids = [];
+    var name='';
+    let error=0;
+    $('.delete_checkbox:checked').each(function() {
+        const row = $(this).closest('tr');
+        const supplierName = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
+        if(name == ''){
+            name=supplierName;
+        }
+        if(name !== supplierName){
+            error=1;
+            return false;
+        }
+        previewids.push($(this).val());
+    });
+    if(error){
+        alert("Sorry, you cannot preview purchase orders for multiple customers.");
+        return false;
+    }
+    if (previewids.length == 0) {
+        alert("Please select at least one purchase order for preview.");
+        return false;
+    }else{
+        // location.href="<?php echo url('preview-purchase-orders?key=');?>"+previewids;
+        window.open("<?php echo url('preview-purchase-orders?key=');?>" + previewids, "_blank");
+    }
+  });
+  $("#approveBtn").on('click',function(){
+    let approveids = [];
+
+    $('.delete_checkbox:checked').each(function() {
+        approveids.push($(this).val());
+    });
+    if (approveids.length == 0) {
+        alert("Please select at least one purchase order for approval.");
+    }else{
+        var token='<?php echo csrf_token();?>';
+        // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
+        var url=`{{ url('purchase_order_approveMultiple') }}`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify({ approveids: approveids })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // return false;
+            if(data.success === true){
+                location.reload();
+            }else{
+                alert("Something went wrong");
+                return false;
+            }
+            
+        })
+        .catch(error => {
+            // $('.catsuccessdanger').text('There was an error submitting the form.');
+            console.error("Error: ",error);
+        });
+    }
+  });
+  $(".email_sendCheck").on('click',function(){
+        let emailids = [];
+        var name='';
+        var ref='';
+        let error=0;
+        $('.delete_checkbox:checked').each(function() {
+            const row = $(this).closest('tr');
+            var supplierNameEmail = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
+            ref = row.get(0).querySelector('td:nth-child(3)').textContent.trim();
+            
+            if(name == ''){
+                name=supplierNameEmail;
+            }
+            if(name !== supplierNameEmail){
+                error=1;
+                return false;
+            }
+            emailids.push($(this).val());
+        });
+        if(error){
+            alert("Sorry, you cannot email purchase orders for multiple suppliers.");
+            return false;
+        }
+        if (emailids.length == 0) {
+            alert("Please select at least one purchase order for Email.");
+            return false;
+        }else{
+            // window.open("<?php echo url('preview-purchase-orders?key=');?>" + emailids, "_blank");
+            // openEmailModal(name,null,ref);
+            $("#emailformId")[0].reset();
+            // $("#dropdownButton").append('<span class="optext">' + email + '&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
+            // $("#selectedToEmail").val(email);
+            $("#email_modalTitle").text("Email Purchase Order");
+            $("#emailsubject").val("Purchase Order from The Contructor - " + ref);
+            // $("#email_po_id").val(id);
+            $("#defaultOption").text('Default Purchase Order');
+            const editor = CKEDITOR.instances['emailbody'];
+            const message = `
+                Hello,<br>
+                Please find attached purchase order.<br><br><br><br><br>
+                Regards,<br>
+                The Contructor<br><br>
+                Thanks for using SCITS
+            `;
+            editor.setData(message);
+            $("#emailModal").modal('show');
+            }
+  })
 </script>
 <script>
     function clearBtn() {
