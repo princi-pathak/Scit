@@ -479,6 +479,8 @@ class QuoteController extends Controller
         $data['countries'] = Country::getCountriesNameCode();
         $data['product_categories'] = Product_category::activeProductCategory(Auth::user()->home_id);
         $data['quoteData'] = $this->quoteService->getQuoteDataOnId($id);
+        // dd($data['quoteData']);
+        
         $data['attachment_type'] = AttachmentType::getActiveAttachmentType(Auth::user()->home_id);
         $data['paymentType'] = Payment_type::getActivePaymentType(Auth::user()->home_id);
         $data['type'] = 2;
