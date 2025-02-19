@@ -460,8 +460,6 @@
                                         <div class="mb-3 row">
                                             <label for="inputJobRef" class="col-sm-3 col-form-label">Quote Ref</label>
                                             <div class="col-sm-9">
-
-                                                <!-- <input type="hidden" name="quote_ref"> -->
                                                 <input type="text" class="form-control-plaintext editInput" id="inputName" value="{{ $quoteData['quote_ref'] }}" readonly>
                                             </div>
                                         </div>
@@ -3929,28 +3927,6 @@
         image.drawTo(imgcanvas);
     }
 
-    function getDepositData(quote_id) {
-        $.ajax({
-            url: '{{ route("quote.ajax.getDepositeData") }}',
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                quote_id: quote_id
-            },
-            success: function(response) {
-                console.log(response);
-                const table = document.getElementById('depositData'); // Replace with your table's ID
-                const tableBody = table.querySelector('tbody'); // Select the tbody within the table
-                setDepositTableData(response.data, tableBody, table)
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
     function setDepositTableData(data, tableBody, table) {
 
         tableBody.innerHTML = '';
@@ -4277,41 +4253,7 @@
             });
         });
 
-        function navigateTab(offset) {
-            const $tabs = $("#modalTabs .nav-link");
-            const $activeTab = $tabs.filter(".active");
-            let currentIndex = $tabs.index($activeTab);
-            let newIndex = currentIndex + offset;
-
-            // Ensure the new index is within bounds
-            if (newIndex >= 0 && newIndex < $tabs.length) {
-                $tabs.eq(newIndex).tab("show"); // Bootstrap's tab method
-                updateButtons();
-            }
-        }
-
-        function updateButtons() {
-            const $tabs = $("#modalTabs .nav-link");
-            const $activeTab = $tabs.filter(".active");
-            const currentIndex = $tabs.index($activeTab);
-
-            // First Tab: Show Next and Close
-            if (currentIndex === 0) {
-                $prevButton.hide();
-                $nextButton.show();
-                $saveButton.hide();
-                $closeButton.show();
-            }
-
-            // Second Tab: Show Previous, Save, and Cancel
-            else if (currentIndex === 1) {
-                $prevButton.show();
-                $nextButton.hide();
-                $saveButton.show();
-                $cancelButton.show();
-                $closeButton.hide();
-            }
-        }
+       
 
         // Update buttons on tab change
         $("#modalTabs .nav-link").on("shown.bs.tab", function() {
