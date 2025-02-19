@@ -199,7 +199,7 @@ class Purchase_orderController extends Controller
     public function getPurchaesOrderProductDetail(Request $request){
         // echo "<pre>";print_r($request->all());die;
         $home_id=Auth::user()->home_id;
-        $purchase_order_products = PurchaseOrder::with(['purchaseOrderProducts'])
+        $purchase_order_products = PurchaseOrder::with(['purchaseOrderProducts','suppliers'])
         ->where(['id' => $request->id, 'deleted_at' => null])
         ->first();
         // return $purchase_order_products;
@@ -1100,13 +1100,23 @@ class Purchase_orderController extends Controller
             return response()->json(['vali_error' => $validator->errors()->first()]);
         }
         try{
+            $po_id=explode(',',$request->po_id);
+            // echo"<pre>"; print_r($po_id);die;
             $data=$request->all();
             $data['home_id']=Auth::user()->home_id;
             $data['loginUserId']=Auth::user()->home_id;
             $data['to'] = json_encode(explode(',', $request->selectedToEmail));
             $data['cc'] = $request->selectedToEmail1 ? json_encode(explode(',', $request->selectedToEmail1)) : json_encode([]);
+            if(count($po_id)>1){
+                for($i=0;$i<count($po_id);$i++){
+                    $data['po_id']=$po_id[$i];
+                    $email=PurchaseOrderEmail::saveEmail($data);
+                }
+            }else{
+                $email=PurchaseOrderEmail::saveEmail($data);
+            }
             // echo "<pre>";print_r($data);die;
-            $email=PurchaseOrderEmail::saveEmail($data);
+            
             return response()->json(['success'=>true,'message'=>'The Email has been saved successfully.','data'=>$email]);
         }catch (\Exception $e) {
             Log::error('Error: ' . $e->getMessage());
@@ -1415,4 +1425,18 @@ class Purchase_orderController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function searchPurchase_ref(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        $query = $request->input('purchase_ref');  
+        $home_id = Auth::user()->home_id;
+
+        $QuoteSearchData = PurchaseOrder::with('suppliers')->where('purchase_order_ref', 'LIKE', "%$query%")
+            ->where('home_id', $home_id)
+            // ->where('status', 1)
+            ->whereNull('deleted_at')
+            ->take(10)
+            ->get();
+        return response()->json(['data' => $QuoteSearchData]);
+    }
+    
 }

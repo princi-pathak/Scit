@@ -318,13 +318,13 @@
                                                 Email Purchase Order
                                             </a>
                                             <div class="dropdown-menu fade-up m-0">
-                                                <a href="javascript:void(0)" class="dropdown-item email_sendCheck">Send As Single Email</a>
+                                                <a href="javascript:void(0)" class="dropdown-item email_sendCheck" onclick="email_sendCheck(1)">Send As Single Email</a>
                                                 <hr class="dropdown-divider emialSend" style="display:none">
-                                                <a href="javascript:void(0)" class="dropdown-item emialSend email_sendCheck" style="display:none">Send As Multiple Emails</a>
+                                                <a href="javascript:void(0)" class="dropdown-item emialSend email_sendCheck" onclick="email_sendCheck(2)" style="display:none">Send As Multiple Emails</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="javascript:void(0)" id="" class="profileDrop">Invoice Received</a>
+                                    <a href="javascript:void(0)" id="bulkInvoiceReceived" class="profileDrop">Invoice Received</a>
                                     @if($status['status'] != 5)
                                     <a href="javascript:void(0)" id="" class="profileDrop">Record Payment</a>
                                     @endif
@@ -399,7 +399,7 @@
                                 <td>{{$val->purchase_order_ref}}</td>
                                 <td>{{ date('d/m/Y', strtotime($val->purchase_date)) }}</td>
                                 <td>{{ date('d/m/Y', strtotime($val->payment_due_date)) }}</td>
-                                <td>{{$val->suppliers->name}}</td>
+                                <td>{{$val->suppliers->name}} <input type="hidden" value="{{$val->suppliers->email}}" class="supplierEmail" id="supplierEmail{{$val->id}}"> </td>
                                 <td>{{$customer->name ?? ''}}</td>
                                 <td>{{$val->city}}</td>
                                 <td>£{{$sub_total_amount}}</td>
@@ -783,6 +783,13 @@
     saveButtonId="emailSave"
     saveUrl="{{url('purchaseOrderEmailSave')}}"
      />
+<x-bulk-invoice-received 
+    bulInvoiceModalId="bulkInvoiceReceivedModal"
+    modalTitle="bulkInvoiceReceivedModalLabel"
+    bulInvoiceformId="bulkInvoiceReceivedForm"
+    bulInvoiceId="bulkInvoiceReceivedId"
+    saveButtonId="bulkInvoiceReceivedsave"
+/>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 <script>
@@ -910,15 +917,17 @@
         });
     }
   });
-  $(".email_sendCheck").on('click',function(){
+  function email_sendCheck(type){
         let emailids = [];
         var name='';
         var ref='';
         let error=0;
+        var SupplierEmail='';
         $('.delete_checkbox:checked').each(function() {
             const row = $(this).closest('tr');
             var supplierNameEmail = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
             ref = row.get(0).querySelector('td:nth-child(3)').textContent.trim();
+            SupplierEmail = $('#supplierEmail'+$(this).val()).val();
             
             if(name == ''){
                 name=supplierNameEmail;
@@ -938,13 +947,16 @@
             return false;
         }else{
             // window.open("<?php echo url('preview-purchase-orders?key=');?>" + emailids, "_blank");
-            // openEmailModal(name,null,ref);
             $("#emailformId")[0].reset();
-            // $("#dropdownButton").append('<span class="optext">' + email + '&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
-            // $("#selectedToEmail").val(email);
+            $("#dropdownButton").html('');
+            $("#dropdownButton").append('<span class="optext">' + SupplierEmail + '&emsp;<b class="removeSpan" onclick="removeSpan(this)">X</b></span>');
+            $("#selectedToEmail").val(SupplierEmail);
             $("#email_modalTitle").text("Email Purchase Order");
-            $("#emailsubject").val("Purchase Order from The Contructor - " + ref);
-            // $("#email_po_id").val(id);
+            $("#emailsubject").val("Purchase Order from The Contructor - {PO_REF}");
+            if(type == 1){
+                $("#emailsubject").val("Purchase Order from The Contructor - " + ref);
+            }
+            $("#email_po_id").val(emailids);
             $("#defaultOption").text('Default Purchase Order');
             const editor = CKEDITOR.instances['emailbody'];
             const message = `
@@ -957,7 +969,7 @@
             editor.setData(message);
             $("#emailModal").modal('show');
             }
-  })
+  }
 </script>
 <script>
     function clearBtn() {
@@ -1946,7 +1958,7 @@
     }
 
     function getAllEmails(data) {
-        // location.reload();
+        location.reload();
         $("#emailModal").modal('hide');
     }
 
@@ -1980,5 +1992,8 @@
     function getAllPurchaseInvices(data){
         location.reload();
     }
+$('#bulkInvoiceReceived').on('click', function(){
+    $("#bulkInvoiceReceivedModal").modal('show');
+});
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
