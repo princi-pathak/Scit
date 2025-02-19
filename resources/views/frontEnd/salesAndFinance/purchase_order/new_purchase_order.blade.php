@@ -1945,9 +1945,9 @@ $('#search-product').on('keyup', function() {
                     li.id = item.id;
                     li.className = "editInput";
                     ul.appendChild(li); // Append the li to the ul
-                    const hr = document.createElement('hr');
+                    // const hr = document.createElement('hr');
                     // hr.className='dropdown-divider';
-                    ul.appendChild(hr);
+                    // ul.appendChild(hr);
                 });
 
                 // Step 4: Append the ul to the div
@@ -2522,9 +2522,9 @@ $(document).on('click','.attachment_delete', function() {
                                 li.name = item.quote_ref;
                                 li.className = "editInput";
                                 ul.appendChild(li); 
-                                const hr = document.createElement('hr');
+                                // const hr = document.createElement('hr');
                                 // hr.className='dropdown-divider';
-                                ul.appendChild(hr);
+                                // ul.appendChild(hr);
                             });
 
                             div.appendChild(ul);
@@ -2600,9 +2600,9 @@ $(document).on('click','.attachment_delete', function() {
                                 li.name = item.job_ref;
                                 li.className = "editInput";
                                 ul.appendChild(li); 
-                                const hr = document.createElement('hr');
+                                // const hr = document.createElement('hr');
                                 // hr.className='dropdown-divider';
-                                ul.appendChild(hr);
+                                // ul.appendChild(hr);
                             });
 
                             div.appendChild(ul);

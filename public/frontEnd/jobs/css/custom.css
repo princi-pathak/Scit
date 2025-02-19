@@ -2538,16 +2538,71 @@ ul#productList {
   border: 1px solid transparent !important;
 }
 
-.item_table tr:nth-child(3) td{
+.item_table tr:nth-child(3) td {
   border-top: 2px solid #000;
 }
 
-.item_table tr .item_row{
+.item_table tr .item_row {
   border-top: 2px solid #000;
-  border-bottom: 1px solid transparent ;
+  border-bottom: 1px solid transparent;
 }
 
-.table.totlepayment.add_table_insrt33  tr td{
+.table.totlepayment.add_table_insrt33 tr td {
   text-align: end;
 }
 
+.tag_box_main {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.productDetailTable table.table tfoot tr td {
+  font-size: 12px;
+  line-height: 22px;
+  vertical-align: middle;
+}
+
+.modal_search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.modal_search .form-control {
+  padding: 5px 10px;
+  border-radius: 0px;
+  font-size: 13px;
+  border: 1px solid #ddd;
+  display: block;
+  line-height: 18px;
+  min-width: 70px;
+  min-height: 30px;
+}
+
+.modal_search #purchase_job_refList {
+  width: 220px;
+}
+
+.search-container div ul,
+.parent-container div ul {
+  height: auto !important;
+  max-height: 192px;
+  box-shadow: 0 5px 15px 0 rgb(0 0 0 / 33%);
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+.search-container div ul li,
+.parent-container div ul li {
+  padding: 5px 10px;
+}
+
+.search-container div ul li:hover,
+.parent-container div ul li:hover {
+  background-color: #0081c2;
+  color: #fff;
+  cursor: pointer;
+}
