@@ -193,7 +193,8 @@ class QuoteService
                     'price' => $product->price,
                     'markup' => $product->markup,
                     'VAT' => $product->VAT,
-                    'discount' => $product->discount
+                    'discount' => $product->discount,
+                    'discount_type' => $product->discount_type
                 ];
             })->toArray(),
             'total' => $quote->total_amount,

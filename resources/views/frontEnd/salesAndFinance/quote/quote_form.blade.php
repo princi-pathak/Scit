@@ -507,7 +507,7 @@
                                         <div class="col-sm-9">
                                             <select class="form-control editInput" name="status" id="">
                                                 <option value="Draft">Draft</option>
-                                                <option value="Processed2">Processed</option>
+                                                <option value="Processed">Processed</option>
                                                 <option value="Call back">Call back</option>
                                                 <option value="Accepted">Accepted</option>
                                                 <option value="Rejected">Rejected</option>
@@ -3242,7 +3242,7 @@
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="0">
+                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${item.markup}">
                     </div>
                 </td>
                 <td>
@@ -3255,7 +3255,7 @@
                 </td>
                 <td>
                     <div class="d-flex">
-                        <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="0">
+                        <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="${item.discount}">
                         <select class="form-control editInput selectOptions input50 discount_type_value">
                             <option value="£">£</option>
                             <option value="%">%</option>
