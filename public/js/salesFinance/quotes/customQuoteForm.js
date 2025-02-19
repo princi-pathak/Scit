@@ -1223,13 +1223,13 @@ function getTags(tags) {
 
 function getProductData(selectedId) {
     $.ajax({
-        url: '{{ route("item.ajax.getProductFromId") }}',
+        url: getProductFromIdURL,
         method: 'Post',
         data: {
             id: selectedId
         },
         success: function (response) {
-            console.log("response.data", response.data);
+            console.log("response.data.product", response.data);
             quoteProductTable(response.data, 'quoteProducts', 'add');
         },
         error: function (xhr, status, error) {
@@ -1568,11 +1568,12 @@ function quoteProductTable(data, tableId, type) {
             </td>
             <td>
                 <div class="">
-                    <textarea class="form-control textareaInput" id="inputAddress" name="products[${rowIndex}][description]" rows="2" placeholder="Description"></textarea>
+                    <textarea class="form-control textareaInput" id="inputAddress" name="products[${rowIndex}][description]" rows="2" placeholder="Description">${item.description}</textarea>
                 </div>
             </td>
             <td>
                 <div class="">
+                <input type="hidden" value="${item.account_code}" class="selectedAccountCode">
                     <select class="form-control editInput selectOptions" onclick="getAccountCode();" name="products[${rowIndex}][account_code]" id="accoutCodeList">
                         <option>-No Department-</option> 
                     </select>
@@ -1598,23 +1599,24 @@ function quoteProductTable(data, tableId, type) {
             </td>
             <td>
                 <div class="">
-                    <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${parseFloat(item.margin || 0).toFixed(2)}">
+                    <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${parseFloat(item.markup || 0)}">
                 </div>
             </td>
             <td>
                 <div class="">
-                    <input type="hidden" class="selectedTaxID">
+                    <input type="hidden" class="selectedTaxID" value="${item.VAT}">
                     <select class="form-control editInput selectOptions vat getTaxRate" name="products[${rowIndex}][VAT]" id="getTaxRate">
                         <option>Please Select</option>
                     </select>
                 </div>
             </td>
             <td>
-                <div class="d-flex">
-                    <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="0">
-                    <select class="form-control editInput selectOptions input50" name="" id="">
-                        <option>£</option>
-                        <option>%</option>
+                <div class="d-flex discount-container">
+                    <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="${parseInt(item.discount) || 0}">
+                    <input type="hidden" class="selectedDiscountType" value="${item.discount_type || 0 }">
+                    <select class="form-control editInput selectOptions input50 discount_type_value" name="products[${rowIndex}][discount_type]" >
+                        <option value="£">£</option>
+                        <option value="%">%</option>
                     </select>
                 </div>
             </td>
@@ -1656,6 +1658,8 @@ function quoteProductTable(data, tableId, type) {
     });
     calculateRowsValue(table);
 }
+
+
 
 function getQuoteType(quoteType) {
     console.log("getQuoteType", quoteType);
@@ -2368,7 +2372,7 @@ function getQuoteTaskList(tableBody) {
             console.log(response.data);
             tableBody.innerHTML = '';
             if (response.data && Array.isArray(response.data) && response.data.length > 0) {
-                populateTable(response.data, tableBody);
+                populateTableData(response.data, tableBody);
             } else {
                 console.log("No data available"); // Optional: Log if data is empty
                 tableBody.innerHTML = "<tr><td colspan='5'>No data found</td></tr>"; // Display message in table
@@ -2458,7 +2462,8 @@ function saveQuoteTaskFormData() {
     });
 }
 
-function populateTable(data, tableBody) {
+function populateTableData(data, tableBody) {
+    // console.log("data", data);
     console.log("populateTable Data", data);
     data.forEach(item => {
         // Create a new row
@@ -2509,6 +2514,7 @@ function populateTable(data, tableBody) {
 $(document).ready(function () {
 
     getQuoteAttachmentsOnPageLoad();
+
     $('#search-product').on('keyup', function () {
         let query = $(this).val();
         const divList = document.querySelector('.parent-container');
@@ -2571,176 +2577,10 @@ $(document).ready(function () {
         }
     });
 
-
     getTaskType(document.getElementById("setTaskTypeData"));
     getTaskType(document.getElementById("setTaskTypeOnTimer"));
 
 });
-
-
-// function depositeInvoiceFoot(amount, table) {
-
-//     const tfoot = document.createElement('tfoot');
-
-//     // Create the footer row
-//     const footerRow = document.createElement('tr');
-
-//     // Create the "Sub Total" cell
-//     const subtotalLabelCell = document.createElement('th');
-//     subtotalLabelCell.colSpan = 5; // Adjust colspan based on your table structure
-//     subtotalLabelCell.textContent = 'Sub Total';
-//     footerRow.appendChild(subtotalLabelCell);
-
-//     // Create the "total" cell
-//     const subtotalAmountCell = document.createElement('th');
-//     // subtotalAmountCell.colSpan = 3; // Adjust colspan based on your table structure
-//     subtotalAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
-
-//     const hiddenInput = document.createElement('input');
-//     hiddenInput.type = 'hidden';
-//     hiddenInput.id = 'total_amount';
-//     // hiddenInput.name = 'subtotal_amount'; // Set the name for the hidden input
-//     hiddenInput.value = amount.toFixed(2);
-//     subtotalAmountCell.appendChild(hiddenInput);
-
-//     const outstandingAmountCell = document.createElement('th');
-//     outstandingAmountCell.colSpan = 3; // Adjust colspan based on your table structure
-//     outstandingAmountCell.textContent = `£${amount.toFixed(2)}`; // Use your calculated amount here
-
-//     const hiddenInputOutstanding = document.createElement('input');
-//     hiddenInputOutstanding.type = 'hidden';
-//     hiddenInputOutstanding.id = 'outstanding_amount';
-//     hiddenInputOutstanding.value = amount.toFixed(2);
-//     outstandingAmountCell.appendChild(hiddenInputOutstanding);
-
-//     footerRow.appendChild(subtotalAmountCell);
-//     footerRow.appendChild(outstandingAmountCell);
-
-//     // Append the row to the <tfoot> element
-//     tfoot.appendChild(footerRow);
-
-//     // Append the <tfoot> to the table
-//     table.appendChild(tfoot);
-// }
-
-// function calculateRowsValue(table) {
-
-//     const rows = table.querySelectorAll('tbody tr');
-//   const subtotalInput = document.getElementById('subtotal_amount');
-// const subtotal_amount = subtotalInput.value.trim() === '' ? 0 : parseFloat(subtotalInput.value) || 0;
-
-//     console.log("subtotal_amount", subtotal_amount);
-
-//     const subtotalAmount = parseFloat(subtotal_amount) || 0;
-//     const totalAmount = parseFloat(total_amount) || 0;
-
-//     // Calculate the sum
-//     const sum = subtotalAmount + totalAmount;
-
-//     const markupOnPriceOrCostPrice = document.getElementById('markupOnPriceOrCostPrice').value;
-//     console.log(markupOnPriceOrCostPrice);
-//     let totalQuantity = 0;
-//     let totalCostPrice = 0;
-//     let totalPrice = 0;
-//     let totalMarkup = 0;
-
-//     let totalVAT = 0;
-//     const vat = 20;
-
-//     let totalProfit = 0;
-//     let totalDiscount = 0;
-
-//     let profitElement;
-//     let profitValue;
-//     let numericProfit;
-//     let totalMargin = 0;
-//     let price = 0;
-
-//     const doller = `£`;
-
-//     rows.forEach(row => {
-
-//         getTaxRateOnTaxId();
-
-//         // Get input values from the row
-//         totalQuantity = parseInt(row.querySelector('.quantity').value) || 0;
-//         totalPrice = parseFloat(row.querySelector('.price').value) || 0;
-//         discount = parseInt(row.querySelector('.discount').value) || 0;
-//         totalCostPrice = parseFloat(row.querySelector('.costPrice').value) || 0;
-//         totalMarkup = parseInt(row.querySelector('.priceMarkup').value) || 0;
-
-//         // Calculate selling price (Cost Price + Markup - Discount)
-
-//         markupAmount = (totalPrice * totalMarkup) / 100; // Percentage markup
-//         console.log(markupAmount);
-//         discountAmount = (totalPrice * discount) / 100; // Discount as a percentage
-//         console.log(discountAmount);
-//         totalDiscount += discountAmount;
-//         sellingPrice = totalPrice + markupAmount - discountAmount;
-//         console.log("sellingPrice", sellingPrice);
-
-//         // Calculate Amount (Quantity × Selling Price)
-//         amount = totalQuantity * sellingPrice;
-//         console.log(amount);
-//         price += amount;
-
-//         // Calculate VAT amount
-//         vatAmount = (amount * vat) / 100;
-//         console.log(vatAmount);
-//         totalVAT += vatAmount;
-//         // Calculate Profit ((Selling Price - Cost Price) × Quantity)
-//         profit = (sellingPrice - totalCostPrice) * totalQuantity;
-//         console.log(sellingPrice);
-//         totalProfit += profit;
-
-//         // Calculate margin
-//         margin = parseFloat((profit / sellingPrice) * 100);
-//         totalMargin += margin;
-//         console.log(margin);
-
-//         row.querySelector('.amount').textContent = doller + amount.toFixed(2);
-
-//         // Update row output fields
-//         row.querySelector('.profit').textContent = doller + profit.toFixed(2);
-
-//         if (margin >= 0) {
-//             row.querySelector('.footRowMargin').classList.add('minusnmberGreen');
-//         } else {
-//             row.querySelector('.footRowMargin').classList.add('minusnmberRed');
-//         }
-//         row.querySelector('.footRowMargin').textContent = '(' + margin.toFixed(2) + '%' + ')';
-
-//     });
-//     console.log("Total Quantity: ", totalQuantity);
-//     console.log("Total Cost Price: ", totalCostPrice);
-//     console.log("Total Price: ", price);
-//     console.log("Total Markup: ", totalMarkup);
-//     console.log("Total VAT: ", totalVAT);
-//     console.log("Total Discount: ", totalDiscount);
-//     console.log("Total Profit: ", totalProfit);
-//     console.log("Total totalMargin: ", totalMargin);
-
-//     document.getElementById('footAmount').textContent = doller + price.toFixed(2);
-//     document.getElementById('setDepositAmount').value = "% of  " + doller + price.toFixed(2);
-//     document.getElementById('setDepositAmountHidden').value = price.toFixed(2);
-//     document.getElementById('InputFootAmount').value = price.toFixed(2);
-//     document.getElementById('footDiscount').textContent = doller + totalDiscount.toFixed(2);
-//     document.getElementById('footVatAmount').textContent = doller + totalVAT.toFixed(2);
-//     document.getElementById('InputFootVatAmount').value = totalVAT.toFixed(2);
-//     document.getElementById('footTotalDiscountVat').textContent = doller + (price + totalVAT).toFixed(2);
-//     document.getElementById('setTotalCreditAmount').value = doller + (price + totalVAT).toFixed(2);
-//     document.getElementById('inputFootTotalDiscountVat').value = (price + totalVAT).toFixed(2);
-//     document.getElementById('footProfit').textContent = doller + totalProfit.toFixed(2);
-//     document.getElementById('inputFootProfit').value = totalProfit.toFixed(2);
-//     document.getElementById('footMargin').textContent = doller + totalMargin.toFixed(2) + "%";
-//     document.getElementById('footOutstandingAmount').textContent = doller + ((price + totalVAT) - sum).toFixed(2);
-//     document.getElementById('setOustandingCreditAmount').value = doller + ((price + totalVAT) - subtotal_amount).toFixed(2);
-//     document.getElementById('deposit_amount').value = ((price + totalVAT) - subtotal_amount).toFixed(2);
-//     document.getElementById('footDeposit').textContent = '-' + doller + sum.toFixed(2);
-//     document.getElementById('inputFootOutstandingAmount').value = (price + totalVAT).toFixed(2);
-//     document.getElementById('payingNow').textContent = doller + (price + totalVAT).toFixed(2);
-
-// }
 
 $('#getCustomerListedit').on('click', function () {
 
@@ -2771,7 +2611,6 @@ $('#getCustomerListedit').on('click', function () {
 
     removeAddCustomerSiteAddress(customerSiteDetails, customerSiteDelivery, getCustomerListValue.value);
 });
-
 
 function getAccountCode() {
     $.ajax({
@@ -2812,6 +2651,27 @@ document.addEventListener("DOMContentLoaded", function () {
         input.addEventListener("input", function () {
             this.value = this.value.replace(/\s/g, "").replace(/[^0-9]/g, "");
         });
+    });
+});
+
+document.getElementById("submitBtn").addEventListener("click", function() {
+    // alert("form clicked");
+    document.getElementById("myForm").submit();
+});
+
+$(document).ready(function () {
+    $(".discount-container").each(function () {
+        console.log("select container");
+
+        let discountType = $(this).find(".selectedDiscountType").val(); // Get hidden input value
+        console.log("discountType", discountType);
+
+        let selectElement = $(this).find(".discount_type_value"); // Get corresponding select
+        console.log("selectElement", selectElement);
+
+        if (selectElement.length && discountType) {
+            selectElement.val(discountType).trigger("change"); // Set selected value & trigger change event
+        }
     });
 });
 
