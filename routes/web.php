@@ -427,6 +427,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/paymentPaidDelete', 'paymentPaidDelete');
 		Route::get('/preview-purchase-orders', 'preview_multiple_purchaseOrders');
 		Route::post('/purchase_order_approveMultiple', 'purchase_order_approveMultiple');
+		Route::post('/searchPurchase_ref', 'searchPurchase_ref');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {
