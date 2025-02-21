@@ -1,5 +1,5 @@
 @extends('frontEnd.layouts.master')
-@section('title','Daily Logs')
+@section('title','Monthly Logs')
 @section('content')
 <style type="text/css">
 /*09 Aug 2018*/
@@ -611,7 +611,7 @@ $('#select_category').on('change', function() {
 
     $.ajax({
         type: 'get',
-        url: "{{ url('/service/daily-logs') }}",
+        url: "{{ url('/service/monthly-logs') }}",
         data: data,
         success: function(resp) {
             console.log(resp)
@@ -957,7 +957,7 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
 
     $.ajax({
         type: 'get',
-        url: "{{ url('/service/daily-logs') }}",
+        url: "{{ url('/service/monthly-logs') }}",
         data: data,
         success: function(resp) {
             if (isAuthenticated(resp) == false) {
@@ -1304,7 +1304,7 @@ $('#service_user').change(function() {
 
     $.ajax({
         type: 'post',
-        url: "{{ url('/service/daily-logs') }}",
+        url: "{{ url('/service/monthly-logs') }}",
         data: data,
         success: function(resp) {
             console.log(resp)
@@ -1641,7 +1641,7 @@ $('#staff_member').change(function() {
 
     $.ajax({
         type: 'post',
-        url: "{{ url('/service/daily-logs') }}",
+        url: "{{ url('/service/monthly-logs') }}",
         data: data,
         success: function(resp) {
             console.log(resp)
@@ -1981,7 +1981,7 @@ function myFunctionkey() {
 
     $.ajax({
         type: 'post',
-        url: "{{ url('/service/daily-logs') }}",
+        url: "{{ url('/service/monthly-logs') }}",
         data: data,
         success: function(resp) {
             console.log(resp)
