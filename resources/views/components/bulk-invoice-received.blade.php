@@ -39,9 +39,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td colspan="9" class="text text-danger text-center">Sorry, no records to show</td>
-                                                </tr>
+                                                </tr> -->
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -99,7 +99,7 @@
                         purchase_ref: purchase_ref,_token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
                         // return false;
                         purchase_job_refdivList.innerHTML = "";
                         const div = document.createElement('div');
@@ -132,8 +132,8 @@
                                     const selectedBulkInvoicePORefId = event.target.id;
                                     getAllDetailPurchaseOrder(selectedBulkInvoicePORefId);
                                     const selectedPurchaseJobName = event.target.name;
-                                    console.log('Selected Customer ID:', selectedBulkInvoicePORefId);
-                                    console.log('Selected Customer Name:', selectedPurchaseJobName);
+                                    // console.log('Selected Customer ID:', selectedBulkInvoicePORefId);
+                                    // console.log('Selected Customer Name:', selectedPurchaseJobName);
                                     // $("#bulkInvoicePoSearch").val(selectedPurchaseJobName);
                                     // $("#selectedBulkInvoicePORefId").val(selectedBulkInvoicePORefId);
                                 }
@@ -179,6 +179,193 @@
             // return false;
             if(data.success === true){
                 var po_list=data.data[0];
+                // console.log(po_list.tax);return false;
+                const tableBody = document.querySelector(`#bulkInvoiceReceived_result tbody`);
+                var purchase_order_products=po_list.product_details.purchase_order_products;
+                var norecorderror=$("#norecorderror").text();
+                if(norecorderror.length>1){
+                    tableBody.innerHTML='';
+                }
+                var net_amount=0;
+                purchase_order_products.forEach(product => {
+                    const row = document.createElement('tr');
+
+                    const po_refCell = document.createElement('td');
+                    po_refCell.innerHTML = po_list.product_details.purchase_order_ref;
+                    row.appendChild(po_refCell);
+
+                    const supplierNameCell = document.createElement('td');
+                    supplierNameCell.textContent = po_list.product_details.suppliers.name;
+                    row.appendChild(supplierNameCell);
+
+                    const dateCell = document.createElement('td');
+                    // dateCell.textContent = po_list.product_details.suppliers.name;
+                    const inputDate = document.createElement('input');
+                    inputDate.type='date';
+                    inputDate.className = 'bulkinvoice_date form-control';
+                    inputDate.name = 'invoice_date[]';
+                    inputDate.value = '';
+                    dateCell.appendChild(inputDate);
+                    row.appendChild(dateCell);
+                    date_convertInFromat();
+
+                    const invoiceRefCell = document.createElement('td');
+                    const inputRef = document.createElement('input');
+                    inputRef.type='text';
+                    inputRef.className = ' form-control';
+                    inputRef.name = 'inv_ref[]';
+                    // inputDate.value = product.code;
+                    invoiceRefCell.appendChild(inputRef);
+                    row.appendChild(invoiceRefCell)
+
+                    const netAmountCell = document.createElement('td');
+                    const divElementNetAmount = document.createElement('div');
+                    divElementNetAmount.className = 'tag_box_main';
+                    const divElementNetAmountChildDiv = document.createElement('div');
+                    divElementNetAmountChildDiv.className = 'tag_box text-center';
+                    const divElementNetAmountChildDivSpan=document.createElement('span');
+                    divElementNetAmountChildDivSpan.style='padding:3px';
+                    divElementNetAmountChildDivSpan.textContent='£';
+                    divElementNetAmountChildDiv.appendChild(divElementNetAmountChildDivSpan);
+                    divElementNetAmount.appendChild(divElementNetAmountChildDiv);
+                    const netAmountInputCell=document.createElement('input');
+                    netAmountInputCell.type='text';
+                    netAmountInputCell.className='form-control net_amount';
+                    netAmountInputCell.name='net_amount[]';
+                    var calculate=product.price*product.qty;
+                    netAmountInputCell.value=net_amount=net_amount+calculate;
+                    netAmountInputCell.addEventListener('input', function() {
+                        this.value = this.value.replace(/[^0-9.]/g, '');
+                        if ((this.value.match(/\./g) || []).length > 1) {
+                            this.value = this.value.slice(0, -1);
+                        }
+                        updateAmount(row);
+                    });
+                    divElementNetAmount.appendChild(netAmountInputCell);
+                    netAmountCell.appendChild(divElementNetAmount);
+                    row.appendChild(netAmountCell)
+
+                    const dropdownVat = document.createElement('td');
+                    const selectDropdownVat = document.createElement('select');
+                    selectDropdownVat.addEventListener('change', function() {
+                        getIdVat($(this).val(),row);
+                    });
+                    selectDropdownVat.name = 'vat_id[]';
+                    selectDropdownVat.className='vat_id form_control form-control';
+                    const optionsVat =po_list.tax;
+                    var tax_rate=0;
+                    
+                    optionsVat.forEach(optionVat => {
+                    const optVat = document.createElement('option');
+                    optVat.value = optionVat.id;
+                    // if(optionVat.id == product.vat_id){
+                    //     tax_rate=optionVat.tax_rate;
+                    //     optVat.setAttribute("selected", "selected");
+                    // }
+                    if(tax_rate == 0){
+                        tax_rate=optionVat.tax_rate;
+                    }
+                    optVat.textContent = optionVat.name;
+                    selectDropdownVat.appendChild(optVat);
+                    });
+                    var amountCalculation=net_amount*tax_rate/100;
+                    var total_amount=net_amount+amountCalculation;
+                    const inputVatRate = document.createElement('input');
+                    inputVatRate.type = 'hidden';
+                    inputVatRate.className = 'vat_ratePercentage';
+                    inputVatRate.name = 'vat_ratePercentage[]'; 
+                    inputVatRate.value = tax_rate;
+                    dropdownVat.appendChild(inputVatRate);
+                    dropdownVat.appendChild(selectDropdownVat);
+                    row.appendChild(dropdownVat);
+
+                    const inputQty = document.createElement('input');
+                    inputQty.type = 'hidden';
+                    inputQty.className = 'qty input50 form-control';
+                    inputQty.name = 'qty[]';
+                    inputQty.value = product.qty;
+                    row.appendChild(inputQty);
+
+                    const inputPo_id = document.createElement('input');
+                    inputPo_id.type = 'hidden';
+                    inputPo_id.className = 'form-control';
+                    inputPo_id.name = 'po_id[]';
+                    inputPo_id.value = product.id;
+                    row.appendChild(inputPo_id);
+
+                    const inputSupplier_id = document.createElement('input');
+                    inputSupplier_id.type = 'hidden';
+                    inputSupplier_id.className = 'form-control';
+                    inputSupplier_id.name = 'supplier_id[]';
+                    inputSupplier_id.value = po_list.product_details.suppliers.id;
+                    row.appendChild(inputSupplier_id);
+
+                    const VatCell = document.createElement('td');
+                    const divElementVat = document.createElement('div');
+                    divElementVat.className = 'tag_box_main';
+                    const divElementVatChildDiv = document.createElement('div');
+                    divElementVatChildDiv.className = 'tag_box text-center';
+                    const divElementVatChildDivSpan=document.createElement('span');
+                    divElementVatChildDivSpan.style='padding:3px';
+                    divElementVatChildDivSpan.textContent='£';
+                    divElementVatChildDiv.appendChild(divElementVatChildDivSpan);
+                    divElementVat.appendChild(divElementVatChildDiv);
+                    const VatInputCell=document.createElement('input');
+                    VatInputCell.type='text';
+                    VatInputCell.className='form-control vat_amount';
+                    VatInputCell.name='vat_amount[]';
+                    VatInputCell.value=amountCalculation;
+                    VatInputCell.addEventListener('input', function() {
+                        this.value = this.value.replace(/[^0-9.]/g, '');
+                        if ((this.value.match(/\./g) || []).length > 1) {
+                            this.value = this.value.slice(0, -1);
+                        }
+                    });
+                    divElementVat.appendChild(VatInputCell);
+                    VatCell.appendChild(divElementVat);
+                    row.appendChild(VatCell)
+
+                    const AmountCell = document.createElement('td');
+                    const divElementAmount = document.createElement('div');
+                    divElementAmount.className = 'tag_box_main';
+                    const divElementAmountChildDiv = document.createElement('div');
+                    divElementAmountChildDiv.className = 'tag_box text-center';
+                    const divElementAmountChildDivSpan=document.createElement('span');
+                    divElementAmountChildDivSpan.style='padding:3px';
+                    divElementAmountChildDivSpan.textContent='£';
+                    divElementAmountChildDiv.appendChild(divElementAmountChildDivSpan);
+                    divElementAmount.appendChild(divElementAmountChildDiv);
+                    const AmountInputCell=document.createElement('input');
+                    AmountInputCell.type='text';
+                    AmountInputCell.style='pointer-events: none;cursor: default;';
+                    AmountInputCell.className='form-control gross_amount';
+                    AmountInputCell.name='gross_amount[]';
+                    AmountInputCell.value=total_amount;
+                    AmountInputCell.addEventListener('input', function() {
+                        this.value = this.value.replace(/[^0-9.]/g, '');
+                        if ((this.value.match(/\./g) || []).length > 1) {
+                            this.value = this.value.slice(0, -1);
+                        }
+                    });
+                    divElementAmount.appendChild(AmountInputCell);
+                    AmountCell.appendChild(divElementAmount);
+                    row.appendChild(AmountCell)
+                    
+                    const deleteCell = document.createElement('td');
+                    const imageElement = document.createElement('img');
+                    imageElement.style="cursor:pointer"
+                    imageElement.src="{{url('public/frontEnd/jobs/images/delete.png')}}";
+                    imageElement.className = 'bulkInvoice_delete';
+                    deleteCell.appendChild(imageElement);
+                    deleteCell.addEventListener('click', function() {
+                        removeRow(this);
+                    });
+                    row.appendChild(deleteCell);
+
+                    tableBody.appendChild(row);
+                    updateAmount(row)
+                    date_convertInFromat()
+                });
                 
             }else{
                 alert("Something went wrong");
@@ -186,9 +373,105 @@
             }
             
         })
-        .catch(error => {
-            // $('.catsuccessdanger').text('There was an error submitting the form.');
-            console.error("Error: ",error);
+        // .catch(error => {
+        //     alert("Something went wrong Please try later");
+        // });
+    }
+    function getIdVat(vat_id,row){
+        var token='<?php echo csrf_token();?>'
+        $.ajax({
+            type: "POST",
+            url: "{{url('/vat_tax_details')}}",
+            data: {vat_id:vat_id,_token:token},
+            success: function(response) {
+                // console.log(response);
+                if(response){
+                    const vat_value=Number(response.data);
+                    const vat_ratePercentage = row.querySelector('.vat_ratePercentage').value=vat_value;
+                    updateAmount(row);
+                }else{
+                    alert("Something went wrong");
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + xhr.responseJSON.message);
+            }
+        });
+    }
+    function updateAmount(row,) {
+        // console.log(row);
+        // return false;
+        const net_amount = row.querySelector('.net_amount');
+        const qtyInput = row.querySelector('.qty');
+        const amountCell = row.querySelector('.gross_amount');
+        const price = parseFloat(net_amount.value) || 0;
+        const qty = parseInt(qtyInput.value);
+        const vat_ratePercentage = row.querySelector('.vat_ratePercentage').value;
+        const vat = row.querySelector('.vat_amount');
+        const amount = price * qty;
+        const percentage=amount*vat_ratePercentage/100;
+        vat.value=percentage.toFixed(2);
+        const finalAmount=percentage+amount;
+        amountCell.value = finalAmount.toFixed(2);
+        // alert(percentage)
+        var subTotal=0;
+        $(".net_amount").each(function(){
+            const net_amount = $(this).val();
+            const numeric_net_amount = parseFloat(net_amount.replace(/[^\d.]/g, ''));
+            // console.log(typeof(net_amount));
+            subTotal=subTotal+numeric_net_amount;
+        });
+        
+        var vatTotal=0;
+        $(".vat_amount").each(function(){
+            const vat_amount = $(this).val();
+            const numeric_vatTotal = parseFloat(vat_amount.replace(/[^\d.]/g, ''));
+            // console.log(typeof(numeric_vatTotal));
+            vatTotal=vatTotal+numeric_vatTotal;
+        });
+        
+        var gross_amountTotal=0;
+        $(".gross_amount").each(function(){
+            const gross_amount = $(this).val();
+            const numeric_gross_amount = parseFloat(gross_amount.replace(/[^\d.]/g, ''));
+            // console.log(typeof(numeric_gross_amount));
+            gross_amountTotal=gross_amountTotal+numeric_gross_amount;
+        });
+        $("#bulkInvoiceSubTotal").text('£'+subTotal.toFixed(2));
+        $("#bulkInvoiceVat").text('£'+vatTotal.toFixed(2));
+        $("#bulkInvoiceTotal").text('£'+gross_amountTotal.toFixed(2));
+    }
+    function removeRow(button){
+        const table = document.getElementById("bulkInvoiceReceived_result");
+        const tbody = table.querySelector("tbody");
+        var row = button.parentNode;
+        row.parentNode.removeChild(row);
+        updateAmount(row);
+    }
+    function saveBulkInvoiceModal(){
+        var formData = new FormData(document.getElementById("{{ $bulInvoiceformId }}"));
+        $.ajax({
+            url: "{{url('saveBulkInvoiceModal')}}",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log(response);
+                if(response.success === false){
+                    alert(response.message);
+                    return false;
+                }else{
+                    alert(response.message);
+                    location.reload();
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Something went wrong.');
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                console.log('Error - ' + errorMessage + "\nMessage: " + error);
+            }
         });
     }
 </script>
