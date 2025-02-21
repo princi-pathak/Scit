@@ -1993,6 +1993,9 @@
         location.reload();
     }
 $('#bulkInvoiceReceived').on('click', function(){
+    const tableBody = document.querySelector(`#bulkInvoiceReceived_result tbody`);
+    tableBody.innerHTML='';
+    tableBody.innerHTML='<tr><td colspan="9" class="text text-danger text-center" id="norecorderror">Sorry, no records to show</td> </tr>';
     $("#bulkInvoiceReceivedModal").modal('show');
 });
 </script>

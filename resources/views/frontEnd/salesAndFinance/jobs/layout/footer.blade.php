@@ -41,6 +41,13 @@
             }
         });
     }
+function date_convertInFromat(){
+    // alert('here')
+    flatpickr(".bulkinvoice_date", {
+        dateFormat: "d/m/Y",
+        defaultDate: new Date()
+    });
+}
 </script>
 
 </body>

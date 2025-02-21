@@ -46,6 +46,7 @@ use App\Models\CreditNoteAllocate;
 use App\Models\CreditNote;
 use App\User;
 use PDF;
+use Carbon\Carbon;
 
 class Purchase_orderController extends Controller
 {
@@ -1437,6 +1438,41 @@ class Purchase_orderController extends Controller
             ->take(10)
             ->get();
         return response()->json(['data' => $QuoteSearchData]);
+    }
+    public function saveBulkInvoiceModal(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try {
+            for($i=0;$i<count($request->inv_ref);$i++){
+                if($request->inv_ref[$i] == ''){
+                    return response()->json(['success'=>false,'message'=>'Invoice Ref field is required.','invoice'=>array()]);
+                }
+                $data=[
+                    'home_id'=>Auth::user()->home_id,
+                    'loginUserId'=>Auth::user()->home_id,
+                    'po_id'=>$request->po_id[$i],
+                    'supplier_id'=>$request->supplier_id[$i],
+                    'inv_ref'=>$request->inv_ref[$i],
+                    'net_amount'=>$request->net_amount[$i],
+                    'vat_id'=>$request->vat_id[$i],
+                    'vat_amount'=>$request->vat_amount[$i],
+                    'gross_amount'=>$request->gross_amount[$i],
+                    'oustanding_amount'=>$request->gross_amount[$i],
+                    'invoice_date'=>Carbon::createFromFormat('d/m/Y', $request->invoice_date[$i])->format('Y-m-d'),
+                ];
+                $invoice=PurchaseOrderInvoiceReceives::purchaseOrderInvoiceReceives_save($data);
+            }
+            // return $data;die;
+            
+            if($request->id == ''){
+                return response()->json(['success' => true,'message'=>'Invoice has been saved', 'invoice' => $invoice]);
+            }else{
+                return response()->json(['success' => true,'message'=>'Invoice has been updated', 'invoice' => $invoice]);
+            }
+            
+        } catch (\Exception $e) {
+            Log::error('Error saving Bulk Invoices purchase order: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
     
 }

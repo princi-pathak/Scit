@@ -1,5 +1,5 @@
 @extends('frontEnd.layouts.master')
-@section('title','Daily Logs')
+@section('title','Weekly Logs')
 @section('content')
 <style type="text/css">
 /*09 Aug 2018*/
@@ -333,12 +333,9 @@ return $string ? implode(', ', $string) . ' ago' : 'just now';
                                         <div class="panel-body">
                                             <span class="arrow-alt"></span>
                                             @if($key['is_late'] == '1')
-                                            <span class="badge badge-pill red-bg"
-                                                style="position:absolute;right:30px;">Late</span>
+                                            <span class="badge badge-pill red-bg" style="position:absolute;right:30px;">Late</span>
                                             @endif
-                                            <span style="background:{{$key['category_color'] or null}};"
-                                                data-toggle="tooltip" data-placement="right"
-                                                title="{{ $key['category_name'] }}" class="timeline-icon">
+                                            <span style="background:{{$key['category_color'] or null}};" data-toggle="tooltip" data-placement="right" title="{{ $key['category_name'] }}" class="timeline-icon">
                                                 <i class="{{ $key['category_icon']}}"></i>
                                                 <!-- <i class="fa fa-check"></i> -->
                                             </span>
@@ -611,7 +608,7 @@ $('#select_category').on('change', function() {
 
     $.ajax({
         type: 'get',
-        url: "{{ url('/service/daily-logs') }}",
+        url: "{{ url('/service/weekly-logs') }}",
         data: data,
         success: function(resp) {
             console.log(resp)
@@ -957,7 +954,7 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
 
     $.ajax({
         type: 'get',
-        url: "{{ url('/service/daily-logs') }}",
+        url: "{{ url('/service/weekly-logs') }}",
         data: data,
         success: function(resp) {
             if (isAuthenticated(resp) == false) {
@@ -1304,7 +1301,7 @@ $('#service_user').change(function() {
 
     $.ajax({
         type: 'post',
-        url: "{{ url('/service/daily-logs') }}",
+        url: "{{ url('/service/weekly-logs') }}",
         data: data,
         success: function(resp) {
             console.log(resp)
@@ -1641,7 +1638,7 @@ $('#staff_member').change(function() {
 
     $.ajax({
         type: 'post',
-        url: "{{ url('/service/daily-logs') }}",
+        url: "{{ url('/service/weekly-logs') }}",
         data: data,
         success: function(resp) {
             console.log(resp)
@@ -1981,7 +1978,7 @@ function myFunctionkey() {
 
     $.ajax({
         type: 'post',
-        url: "{{ url('/service/daily-logs') }}",
+        url: "{{ url('/service/weekly-logs') }}",
         data: data,
         success: function(resp) {
             console.log(resp)

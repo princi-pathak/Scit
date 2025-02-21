@@ -3242,8 +3242,8 @@
                 </td>
                 <td>
                     <div class="">
-                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${item.markup}">
-                    </div>
+                        <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${parseFloat(item.markup || 0 ).toFixed(2)}">
+                    </div>  
                 </td>
                 <td>
                     <div class="">
@@ -3255,7 +3255,7 @@
                 </td>
                 <td>
                     <div class="d-flex">
-                        <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="${item.discount}">
+                        <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="${parseInt(item.discount || 0)}">
                         <select class="form-control editInput selectOptions input50 discount_type_value">
                             <option value="£">£</option>
                             <option value="%">%</option>
