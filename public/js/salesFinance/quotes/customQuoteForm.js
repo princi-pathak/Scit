@@ -1599,7 +1599,7 @@ function quoteProductTable(data, tableId, type) {
             </td>
             <td>
                 <div class="">
-                    <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${parseFloat(item.markup || 0)}">
+                    <input type="text" class="form-control editInput input50 priceMarkup" name="products[${rowIndex}][markup]" value="${parseFloat(item.markup || 0).toFixed(2)}">
                 </div>
             </td>
             <td>
