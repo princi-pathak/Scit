@@ -791,6 +791,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	//Daily Logs in ServiceUserManagement
 	Route::match(['get', 'post'], '/service/daily-logs', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DailyLogsController@index');
+	Route::match(['get','post'], '/service/weekly-logs', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DailyLogsController@weekly_log');
+	Route::match(['get','post'], '/service/monthly-logs', 'App\Http\Controllers\frontEnd\ServiceUserManagement\DailyLogsController@monthly_log');
 
 	//Backend Logs Download
 	Route::get('/service/logbook/download', 'App\Http\Controllers\frontEnd\ServiceUserManagement\PDFLogsController@download');
