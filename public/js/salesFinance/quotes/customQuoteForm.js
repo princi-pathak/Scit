@@ -1604,7 +1604,7 @@ function quoteProductTable(data, tableId, type) {
             </td>
             <td>
                 <div class="">
-                    <input type="hidden" class="selectedTaxID" value="${item.VAT}">
+                    <input type="hidden" class="selectedTaxID" value="${parseInt(item.VAT) || 0}">
                     <select class="form-control editInput selectOptions vat getTaxRate" name="products[${rowIndex}][VAT]" id="getTaxRate">
                         <option>Please Select</option>
                     </select>
@@ -2655,23 +2655,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.getElementById("submitBtn").addEventListener("click", function() {
-    // alert("form clicked");
     document.getElementById("myForm").submit();
 });
 
-$(document).ready(function () {
-    $(".discount-container").each(function () {
-        console.log("select container");
-
-        let discountType = $(this).find(".selectedDiscountType").val(); // Get hidden input value
-        console.log("discountType", discountType);
-
-        let selectElement = $(this).find(".discount_type_value"); // Get corresponding select
-        console.log("selectElement", selectElement);
-
-        if (selectElement.length && discountType) {
-            selectElement.val(discountType).trigger("change"); // Set selected value & trigger change event
-        }
+$(document).ready(function() {
+    $('.discount-container').each(function() {
+        let discountType = $(this).find('.selectedDiscountType').val();
+        $(this).find('.discount_type_value').val(discountType);
     });
 });
 
