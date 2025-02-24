@@ -11,7 +11,8 @@ use App\Models\Supplier;
 use App\Models\Job_title;
 use App\Models\SupplierAttachment;
 use App\Models\Constructor_additional_contact;
-use App\Customer;
+// use App\Customer;
+use App\Models\Customer;
 
 class SupplierController extends Controller
 {
