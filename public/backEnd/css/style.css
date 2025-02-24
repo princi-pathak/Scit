@@ -7322,7 +7322,7 @@ div.tagsinput span.tag {
     margin-left: 10px;
 }
 
-.extra_informationTabs {}
+/* .extra_informationTabs {} */
 
 .extra_informationTabs .nav>li>a:hover,
 .extra_informationTabs .nav>li>a:focus {
@@ -7442,7 +7442,9 @@ canvas#canv1 {
 
 .table-responsive .table tbody>tr>td a span i,
 .table-responsive .table tbody>tr>td a i {
-    font-size: 18px !important;
+    font-size: 16px !important;
+    line-height: 20px;
+    vertical-align: bottom;
 }
 
 /* .table-responsive .table tbody>tr>td a {
@@ -7829,4 +7831,20 @@ table tbody tr td {
 .togglebtn .toggle-checkbox {
     position: absolute;
     visibility: hidden;
+}
+
+td.action-icn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.action-icn a i {
+    color: #1fb5ad;
+}
+
+.action-icn a.delete i {
+    color: #dc3545 !important;
+    width: 20px;
+    margin-left: auto;
 }

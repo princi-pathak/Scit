@@ -302,6 +302,7 @@ a.overdueJobsFolder i {
 table.tablechange thead th {
   font-size: 12px;
   white-space: nowrap;
+  padding: 8px 10px;
 }
 
 table.tablechange tbody td {
