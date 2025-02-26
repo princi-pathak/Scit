@@ -2485,7 +2485,7 @@
                 }
             });
 
-            getBillingDetailsData(getCustomerListValue.value);
+            getBillingDetailsData(getCustomerListValue.value, '1');
 
 
             const customerSiteDetails = document.getElementById('customerSiteDetails');
@@ -2536,7 +2536,7 @@
             var selected = document.getElementById('getCustomerList').value;
             console.log(selected);
             if ($(this).val() === selected) {
-                getBillingDetailsData($(this).val());
+                getBillingDetailsData($(this).val(), "2");
             } else {
                 setCustomerBillingData($(this).val());
             }
@@ -3256,7 +3256,7 @@
                 <td>
                     <div class="d-flex">
                         <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="${parseInt(item.discount || 0)}">
-                        <select class="form-control editInput selectOptions input50 discount_type_value">
+                        <select class="form-control editInput selectOptions input50 discount_type_value" name="products[${rowIndex}][discount_type]">
                             <option value="£">£</option>
                             <option value="%">%</option>
                         </select>
@@ -3264,7 +3264,7 @@
                 </td>
                 <td>
                     <span class="amount">£00.00</span>
-                </td>
+                </td>   
                 <td>
                     <span class="profit">£00.00</span>
                     <div class="pt-1 footRowMargin">(00.00%)</div>
@@ -3468,8 +3468,10 @@
         });
     }
 
-    function getBillingDetailsData(id) {
+    function getBillingDetailsData(id, type) {
+
         console.log("billingID", id);
+        console.log("type", type);
         $.ajax({
             url: '{{ route("customer.ajax.getCustomerDetails") }}',
             method: 'POST',
@@ -3491,21 +3493,19 @@
                 setFieldValues(['billingCustomerCounty'], contactData.country);
                 setFieldValues(['billingCustomerPostcode'], contactData.postal_code);
                 setFieldValues(['billingCustomerTelephone'], contactData.telephone);
-                setFieldValues(['customerSiteMobile', 'customerSiteDeliveryMobile'], contactData.mobile);
+                setFieldValues(['customerSiteMobile'], contactData.mobile);
                 // customer_contact_id
 
                 selectPrevious(document.getElementById('billingCustomerTelephoneCode'), response.data[0].telephone_country_code);
                 selectPrevious(document.getElementById('billingCustomerMobileCode'), response.data[0].mobile_country_code);
                 selectPrevious(document.getElementById("billingCustomerCountry"), response.data[0].country_code);
 
-
-
-                if (contactData.default_billing === 1) {
+                if (contactData.default_billing === 1 && id === contactData.id) {
 
                     setTextContent(['customer_id_site_delivery', 'siteCustomerId', 'site_delivery_add_id'], contactData.id);
                     setTextContent(['customerSiteDeliveryName', 'customerSiteName', 'site_delivery_add_id'], contactData.contact_name);
                     setTextContent(['setSiteAddress', 'customerSiteCompany', 'customerSiteDeliveryCompany', 'setSiteDeliveryAddress'], contactData.name);
-                    setFieldValues(['billingDetailsAddress', 'customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
+                    setFieldValues(['customerSiteAddress', 'customerSiteDeliveryAdd'], contactData.address);
                     document.getElementById('customerSiteDeliveryEmail').value = contactData.email;
                     document.getElementById('customerSiteCity').value = contactData.city;
                     document.getElementById('customerSiteCounty').value = contactData.country;
@@ -3527,7 +3527,7 @@
             error: function(xhr, status, error) {
                 console.error(error);
             }
-        });
+        }); 
     }
 
     function setSiteAddressDetails(id) {
@@ -3540,8 +3540,8 @@
             success: function(response) {
                 console.log(response.data);
 
-                let selectElement = document.getElementById('customerSiteDetails'); // or document.querySelector('[name="mySelectName"]');
-                let customerSiteDelivery = document.getElementById('customerSiteDelivery'); // or document.querySelector('[name="mySelectName"]');
+                let selectElement = document.getElementById('customerSiteDetails'); 
+                let customerSiteDelivery = document.getElementById('customerSiteDelivery'); 
 
                 let newOption = document.createElement('option');
                 newOption.value = response.data[0].id;
