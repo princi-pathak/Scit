@@ -7747,6 +7747,14 @@ table tbody tr td {
     margin-left: 0;
 }
 
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.pb-0 {
+    padding-bottom: 0;
+}
+
 .notes_input {
     display: flex;
     gap: 10px;
