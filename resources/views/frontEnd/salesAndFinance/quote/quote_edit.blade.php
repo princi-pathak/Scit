@@ -764,7 +764,14 @@
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Code </th>
-                                                    <th>Product <i class="fa fa-info-circle"></i></th>
+                                                    <th>Product
+                                                        <a href="" class="wrapper">
+                                                            <i class="fa  fa-info-circle"></i>
+                                                            <div class="custom-tooltip">If Inventory or one of our
+                                                                Accounting integrations are active then the Product Name field will
+                                                                be locked</div>
+                                                        </a>
+                                                    </th>
                                                     <th>Description</th>
                                                     <th>
                                                         <div class="tableplusBTN">
@@ -782,7 +789,12 @@
                                                     <th>VAT(%) </th>
                                                     <th>Discount </th>
                                                     <th class="tableAmountRight">Amount </th>
-                                                    <th>Profit </th>
+                                                    <th>Profit
+                                                        <a href="" class="wrapper">
+                                                            <i class="fa  fa-info-circle"></i>
+                                                            <div class="custom-tooltip">Gross profit margin is a measure of profitability that shows the percentage of revenue that exceeds the cost of goods sold (COGS)</div>
+                                                        </a>
+                                                    </th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
