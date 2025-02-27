@@ -82,10 +82,8 @@
                     </form>
                 </div>
                 <div class="text-end mt-4">
-                    <button ></button>
-                    <input type="submit" class="profileDrop" value="Submit" >
-
-                    <!-- <a href="#" class="profileDrop"> Submit</a> -->
+                    <button type="submit" class="profileDrop reDesignBtn" ><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                    <!-- <input type="submit" class="profileDrop" value="Submit"> -->
                 </div>
             </div>
             </di>
