@@ -8,6 +8,7 @@ use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteC
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
 use App\Http\Controllers\frontEnd\salesFinance\CrmSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\SupplierController;
+use App\Http\Controllers\frontEnd\salesFinance\SalesController;
 use App\Http\Controllers\frontEnd\salesFinance\GeneralSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 use App\Http\Controllers\frontEnd\salesFinance\InvoiceController;
@@ -464,6 +465,16 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('/getCustomerSiteDetails', 'getCustomerSiteDetails')->name('customer.ajax.getCustomerSiteDetails');
 		});
 	});
+
+
+	Route::controller(SalesController::class)->group(function () {
+		Route::prefix('sales')->group(function () {
+			Route::get('/sales-day-book', 'index');
+			Route::post('/save-sales-day-book', 'store');
+			Route::get('/sales-day-book/add', 'create');
+		});
+	});
+	
 
 	Route::controller(FrontendLeadController::class)->group(function () {
 		//Leads 

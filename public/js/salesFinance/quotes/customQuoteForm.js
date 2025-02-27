@@ -1283,7 +1283,11 @@ function tableFootForProduct(tableName) {
                                 </tr>
                                 <tr>
                                 <td colspan="10" class="borderNone"></td>
-                                    <td>Margin</td>
+                                    <td>Margin <a href="" class="wrapper">
+                                        <i class="fa  fa-info-circle"></i>
+                                        <div class="custom-tooltip">Gross profit margin is a measure of profitability that shows the percentage of revenue that exceeds the cost of goods sold (COGS)</div>
+                                        </a>
+                                    </td>
                                     <td class="tableAmountRight" id="footMargin">00.00%</td>
                                 </tr>
                                 <tr>
@@ -1613,7 +1617,7 @@ function quoteProductTable(data, tableId, type) {
             <td>
                 <div class="d-flex discount-container">
                     <input type="text" class="form-control editInput input50 me-2 discount" name="products[${rowIndex}][discount]" value="${parseInt(item.discount) || 0}">
-                    <input type="hidden" class="selectedDiscountType" value="${item.discount_type || 0 }">
+                    <input type="hidden" class="selectedDiscountType" value="${item.discount_type || 0}">
                     <select class="form-control editInput selectOptions input50 discount_type_value" name="products[${rowIndex}][discount_type]" >
                         <option value="£">£</option>
                         <option value="%">%</option>
@@ -2654,14 +2658,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-document.getElementById("submitBtn").addEventListener("click", function() {
+document.getElementById("submitBtn").addEventListener("click", function () {
     document.getElementById("myForm").submit();
 });
 
+
 $(document).ready(function() {
+    // $('.discount-container').each(function() {
+    //     let discountType = $(this).find('.selectedDiscountType').val();
+    //     $(this).find('.discount_type_value').val(discountType);
+    // });
+
     $('.discount-container').each(function() {
         let discountType = $(this).find('.selectedDiscountType').val();
-        $(this).find('.discount_type_value').val(discountType);
+        let discountSelect = $(this).find('.discount_type_value');
+    
+        // Set the selected value and trigger change event
+        discountSelect.val(discountType).trigger('change');
     });
+    
 });
+
 

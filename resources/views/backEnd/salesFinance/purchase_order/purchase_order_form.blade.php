@@ -332,7 +332,7 @@
                                     <div class="row form-group">
                                         <label for="vat_tax_no" class="col-lg-4 col-sm-4 control-label">Invoice Ref</label>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="vat_tax_no" name="vat_tax_no" placeholder="Invoide ref(if any)" value="">
+                                            <input type="text" class="form-control" id="vat_tax_no" name="vat_tax_no" placeholder="Invoice Ref (if any)" value="">
                                         </div>
                                         <div class="col-lg-1 icon_blue"><i class="fa fa-search"></i></div>
                                     </div>
@@ -545,7 +545,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row form-group">
-                                        <label for="Supplier_input" class="col-lg-4 col-sm-4 control-label">Supplier Supplier</label>
+                                        <label for="Supplier_input" class="col-lg-4 col-sm-4 control-label">Supplier Name</label>
                                         <div class="col-lg-8">
                                             <input type="text" class="form-control" id="Supplier_input" name="Supplier_input" placeholder="Enter Supplier Name" value="">
                                         </div>
@@ -846,14 +846,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row form-group">
-                                        <label for="Customer_Name" class="col-lg-4 col-sm-4 control-label">Customer Name</label>
-                                        <div class="col-lg-8">
+                                        <label for="Customer_Name" class="col-lg-3 col-sm-3 control-label">Customer Name</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="Customer_Name" name="Customer Name" placeholder="Enter Customer Name" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="Customer_Type" class="col-lg-4 col-sm-4 control-label">Customer Type</label>
-                                        <div class="col-lg-7">
+                                        <label for="Customer_Type" class="col-lg-3 col-sm-3 control-label">Customer Type</label>
+                                        <div class="col-lg-8">
                                             <input type="text" class="form-control" id="Customer_Type" name="Customer_Type" placeholder="Enter Customer Type" value="">
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
@@ -861,14 +861,14 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="ContactName_input" class="col-lg-4 col-sm-4 control-label">Contact Name</label>
-                                        <div class="col-lg-8">
+                                        <label for="ContactName_input" class="col-lg-3 col-sm-3 control-label">Contact Name</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="ContactName_input" name="ContactName_input" placeholder="Enter Contact Name" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="" class="col-lg-4 col-sm-4 control-label">Job Title (Position)</label>
-                                        <div class="col-lg-8">
+                                        <label for="" class="col-lg-3 col-sm-3 control-label">Job Title (Position)</label>
+                                        <div class="col-lg-9">
                                             <select name="" class="form-control" id="">
                                                 <option disabled selected>Please Select</option>
                                                 <option value="">Python Developer</option>
@@ -877,9 +877,15 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="email_input" class="col-lg-4 col-sm-4 control-label">Email</label>
-                                        <div class="col-lg-8">
+                                        <label for="email_input" class="col-lg-3 col-sm-3 control-label">Email</label>
+                                        <div class="col-lg-9">
                                             <input type="email" class="form-control" id="email_input" name="email_input" placeholder="Enter Supplier email" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="fax_input" class="col-lg-3 col-sm-3 control-label">Fax</label>
+                                        <div class="col-lg-9">
+                                            <input type="email" class="form-control" id="fax_input" name="fax_input" placeholder="Enter Supplier Fax" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -906,12 +912,7 @@
                                             <input type="text" id="customer_mobile" name="customer_mobile" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                         </div>
                                     </div>
-                                    <div class="row form-group">
-                                        <label for="fax_input" class="col-lg-4 col-sm-4 control-label">Fax</label>
-                                        <div class="col-lg-8">
-                                            <input type="email" class="form-control" id="fax_input" name="fax_input" placeholder="Enter Supplier Fax" value="">
-                                        </div>
-                                    </div>
+
                                     <div class="row form-group">
                                         <label for="supplier_website" class="col-sm-3 col-form-label">Website</label>
                                         <div class="col-sm-2 pe-0">
@@ -924,8 +925,8 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="payment_terms" class="col-lg-4 col-sm-4 control-label">Payment Terms</label>
-                                        <div class="col-lg-5">
+                                        <label for="payment_terms" class="col-lg-3 col-sm-3 control-label">Payment Terms</label>
+                                        <div class="col-lg-6">
                                             <select class="form-control editInput selectOptions" id="payment_terms" name="payment_terms">
                                                 <option value="">0</option>
                                                 <option value="">1</option>
@@ -956,8 +957,8 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="Discount_input" class="col-lg-4 col-sm-4 control-label">Discount</label>
-                                        <div class="col-lg-8">
+                                        <label for="Discount_input" class="col-lg-3 col-sm-3 control-label">Discount</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="Discount_input" name="Discount_input" placeholder="Enter Discount" value="">
                                         </div>
                                     </div>
@@ -972,8 +973,8 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="VAT_input" class="col-lg-4 col-sm-4 control-label">VAT / Tax No</label>
-                                        <div class="col-lg-8">
+                                        <label for="VAT_input" class="col-lg-3 col-sm-3 control-label">VAT / Tax No</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="VAT_input" name="VAT_input" placeholder="Enter VAT/TAX No." value="">
                                         </div>
                                     </div>
@@ -998,9 +999,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row form-group">
-                                        <label for="Region_input" class="col-lg-4 col-sm-4 control-label">Region</label>
-                                        <div class="col-lg-7">
-                                            <select name="" id="">
+                                        <label for="Region_input" class="col-lg-3 col-sm-3 control-label">Region</label>
+                                        <div class="col-lg-8">
+                                            <select name="" id="" class="form-control">
                                                 <option value="" selected disabled>None</option>
                                                 <option value="">USA</option>
                                             </select>
@@ -1010,27 +1011,27 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="address_input" class="col-lg-4 col-sm-4 control-label">Address</label>
-                                        <div class="col-lg-8">
+                                        <label for="address_input" class="col-lg-3 col-sm-3 control-label">Address</label>
+                                        <div class="col-lg-9">
                                             <textarea name="address_input" id="address_input" class="form-control" placeholder="Enter Supplier Address"></textarea>
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="city_input" class="col-lg-4 col-sm-4 control-label">City</label>
-                                        <div class="col-lg-8">
+                                        <label for="city_input" class="col-lg-3 col-sm-3 control-label">City</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="city_input" name="city_input" placeholder="Enter Supplier City" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="County_input" class="col-lg-4 col-sm-4 control-label">County</label>
-                                        <div class="col-lg-8">
+                                        <label for="County_input" class="col-lg-3 col-sm-3 control-label">County</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="County_input" name="County_input" placeholder="Enter Supplier County" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="Postcode_input" class="col-lg-4 col-sm-4 control-label">Postcode</label>
-                                        <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="Postcode_input" name="Postcode_input" placeholder="Enter Supplier Postcode" value="">
+                                        <label for="Pincode_input" class="col-lg-3 col-sm-3 control-label">Pincode</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="Pincode_input" name="Pincode_input" placeholder="Enter Supplier Pincode" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -1044,37 +1045,34 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="supplier_account_ref" class="col-sm-3 col-form-label">Account Ref.</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Account Ref." id="supplier_account_ref" name="account_ref">
+                                        <label for="Site_Notes_input" class="col-lg-3 col-sm-3 control-label">Site Notes</label>
+                                        <div class="col-lg-9">
+                                            <textarea name="Site_Notes_input" id="Site_Notes_input" class="form-control" placeholder="Enter Site Notes"></textarea>
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="supplier_currency_id" class="col-sm-3 col-form-label">Currency</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control editInput selectOptions" id="supplier_currency_id" name="currency_id">
-                                                <option value="" selected>British Pound</option>
-                                            </select>
+                                        <label for="Sage_input" class="col-lg-3 col-sm-3 control-label">Sage Ref.</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="Sage_input" name="Sage_input" placeholder="Enter Sage Ref." value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="supplier_creadit_limit" class="col-sm-3 col-form-label">Credit Limit</label>
-                                        <div class="col-sm-2 pe-0">
-                                            <div class="tag_box text-center">
-                                                <span style="padding:7px">£</span>
-                                            </div>
+                                        <label for="Assign_productt_limit" class="col-sm-4 ol-form-label">Assign Products</label>
+                                        <div class="col-sm-8 d-flex align-items-center gap-3">
+                                            <input type="radio" id="Assign_yes" name="Assign_Products">
+                                            <label for="Assign_yes" class="mb-0">Yes</label>
+                                            <input type="radio" id="Assign_no" name="Assign_Products">
+                                            <label for="Assign_no" class="mb-0">No</label>
                                         </div>
-                                        <div class="col-sm-7">
-                                            <input type="text" class="form-control editInput textareaInput" placeholder="Enter Supplier Credit Limit" name="creadit_limit" id="supplier_creadit_limit" value="" maxlength="8">
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="supplier_note" class="col-sm-3 col-form-label">Notes</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control textareaInput" placeholder="Enter Supplier Notes" rows="3" id="supplier_note" name="notes"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-lg-12 col-xl-12">
-                                    <div class="mb-2 notes_input">
-                                        <label for="supplier_note" class="col-form-label">Notes</label>
-                                        <textarea class="form-control textareaInput" placeholder="Enter Supplier Notes" rows="3" id="supplier_note" name="notes"></textarea>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-12 pddtp">
                                     <div class="noti_button">
                                         <a href="javascript:" class="btn btn-primary" onclick="save_customer_type()">Save</a>
@@ -1188,164 +1186,154 @@
                         <h4 class="modal-title pupTitle"> Add Site Address </h4>
                     </div>
                     <div class="modal-body pdbotm">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="from_outside_border">
+                        <form id="Add_Site_Address_form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
                                     <!-- <div class="custom-legend"><strong>Customer Site</strong></div> -->
-                                    <form id="Add_Site_Address_form">
-                                        @csrf
-                                        <input type="hidden" value="" name="site_id" id="site_id">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Customer</label>
-                                                    <div class="col-lg-9">
-                                                        <p></p>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Site Name<span class="radStar ">*</span></label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" name="site_name" id="site_name" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Contact Name<span class="radStar ">*</span></label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" name="site_contact_name" id="site_contact_name" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Job Title(Position)</label>
-                                                    <div class="col-lg-9">
-                                                        <select class="form-control who_noti" name="site_title_id" id="site_title_id">
-                                                            <option selected disabled>Select Job Title</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Company Name</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" name="company_name" id="company_name" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Email</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="email" name="site_email" id="site_email" class="form-control" onblur="getemail(3)">
-                                                        <span id="emailErr3" style="color: red;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Telephone</label>
-                                                    <div class="col-sm-2">
-                                                        <select class="form-control editInput selectOptions" id="site_telephone_country_code" name="site_telephone_country_code">
-                                                            <option selected disabled>Please Select</option>
-
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-1 numberHifan">
-                                                        -
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" id="site_telephone" name="site_telephone" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Mobile</label>
-                                                    <div class="col-sm-2">
-                                                        <select class="form-control editInput selectOptions" id="site_mobile_country_code" name="site_mobile_country_code">
-                                                            <option selected disabled>Please Select</option>
-
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-1 numberHifan">
-                                                        -
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" id="site_mobile" name="site_mobile" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                                    </div>
+                                    <input type="hidden" value="" name="site_id" id="site_id">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Customer</label>
+                                                <div class="col-lg-9">
+                                                    <p></p>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Fax</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" id="site_fax" name="site_fax" class="form-control">
-                                                    </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Site Name<span class="radStar ">*</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" name="site_name" id="site_name" class="form-control">
                                                 </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Region</label>
-                                                    <div class="col-lg-9">
-                                                        <select class="form-control" name="site_region" id="site_region">
-                                                            <option selected disabled>Select Region</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Address<span class="radStar ">*</span></label>
-                                                    <div class="col-lg-9">
-                                                        <textarea name="site_address" class="form-control" id="site_address" rows="3" cols="6"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">City</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" id="site_city" name="site_city" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Country</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" id="site_country" name="site_country" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Post Code</label>
-                                                    <div class="col-lg-9">
-                                                        <input type="text" id="site_post_code" name="site_post_code" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Country</label>
-                                                    <div class="col-lg-9">
-                                                        <select id="site_country_id" name="site_country_id" class="form-control">
-                                                            <option selected disabled>Select Country</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <label class="col-lg-3 control-label">Default Catalogue</label>
-                                                    <div class="col-lg-9">
-                                                        <select id="site_catalogue" name="site_catalogue" class="form-control">
-                                                            <option selected disabled>Select Catalogue</option>
-                                                            <option value="1">General</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
                                             </div>
-                                            <div class="col-md-12">
-                                                <div class="row form-group">
-                                                    <label class="col-lg-2 control-label">Notes</label>
-                                                    <div class="col-lg-10">
-                                                        <textarea name="customer_site_notes" class="form-control" id="customer_site_notes" rows="3" cols="6"></textarea>
-                                                    </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Contact Name<span class="radStar ">*</span></label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" name="site_contact_name" id="site_contact_name" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Job Title(Position)</label>
+                                                <div class="col-lg-9">
+                                                    <select class="form-control who_noti" name="site_title_id" id="site_title_id">
+                                                        <option selected disabled>Select Job Title</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Company Name</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" name="company_name" id="company_name" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Email</label>
+                                                <div class="col-lg-9">
+                                                    <input type="email" name="site_email" id="site_email" class="form-control" onblur="getemail(3)">
+                                                    <span id="emailErr3" style="color: red;"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Telephone</label>
+                                                <div class="col-sm-2 pe-0">
+                                                    <select class="form-control editInput selectOptions" id="contact_telephone_country_code" name="contact_telephone_country_code">
+                                                        <option selected disabled>Please Select</option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <input type="text" id="customer_telephone" name="customer_telephone" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Mobile</label>
+                                                <div class="col-sm-2 pe-0">
+                                                    <select class="form-control editInput selectOptions" id="contact_mobile_country_code" name="contact_mobile_country_code">
+                                                        <option selected disabled>Please Select</option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <input type="text" id="customer_mobile" name="customer_mobile" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label for="fax_input" class="col-lg-3 col-sm-3 control-label">Fax</label>
+                                                <div class="col-lg-9">
+                                                    <input type="email" class="form-control" id="fax_input" name="fax_input" placeholder="Enter Site Fax" value="">
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Region</label>
+                                                <div class="col-lg-9">
+                                                    <select class="form-control" name="site_region" id="site_region">
+                                                        <option selected disabled>Select Region</option>
 
-                                        <div class="noti_button">
-                                            <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
-                                            <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Address<span class="radStar ">*</span></label>
+                                                <div class="col-lg-9">
+                                                    <textarea name="site_address" class="form-control" id="site_address" rows="3" cols="6"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">City</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" id="site_city" name="site_city" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Country</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" id="site_country" name="site_country" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Post Code</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" id="site_post_code" name="site_post_code" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Country</label>
+                                                <div class="col-lg-9">
+                                                    <select id="site_country_id" name="site_country_id" class="form-control">
+                                                        <option selected disabled>Select Country</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-lg-3 control-label">Default Catalogue</label>
+                                                <div class="col-lg-9">
+                                                    <select id="site_catalogue" name="site_catalogue" class="form-control">
+                                                        <option selected disabled>Select Catalogue</option>
+                                                        <option value="1">General</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                         </div>
-                                    </form>
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
+                                            <div class="mb-2 notes_input">
+                                                <label for="site_note" class="col-form-label">Notes</label>
+                                                <textarea class="form-control textareaInput" placeholder="Enter Sites Notes" rows="3" id="site_note" name="notes"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -1417,6 +1405,12 @@
                                                 <option value="">Inactive</option>
                                             </select>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
                                     </div>
                                 </div>
                             </div>
@@ -1697,11 +1691,14 @@
                                     </div>
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label">Tax Rate</label>
-                                        <div class="col-lg-7">
+                                        <div class="col-lg-7 pe-0">
                                             <input type="text" class="form-control" id="TagRate_input" name="TagRate_input" placeholder="Tax Rate" value="">
                                         </div>
-                                        <div class="col-lg-2"></div>
-
+                                        <div class="col-sm-2">
+                                            <div class="tag_box text-center">
+                                                <span style="padding:7px">%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
