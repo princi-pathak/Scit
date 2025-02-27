@@ -211,6 +211,7 @@ class Purchase_orderController extends Controller
         $tax = Product::tax_detail($home_id);
         $all_job = Job::getAllJob($home_id)->where('status', 1)->get();
         $accountCode = Construction_account_code::getActiveAccountCode($home_id);
+        $payment_type=Payment_type::getActivePaymentType($home_id);;
         
         if ($purchase_order_products->purchaseOrderProducts->isEmpty()) {
             return response()->json(['success' => false, 'message' => 'No products found for this purchase order.']);
@@ -229,6 +230,7 @@ class Purchase_orderController extends Controller
                 'all_job' => $all_job,
                 'accountCode' => $accountCode,
                 'purchase_order_products_detail' => $purchase_order_products_detail,
+                'payment_type'=>$payment_type,
             ];
         }
         $paid_all_amount=$this->getAllPaymentPaid($request->id);
@@ -1448,7 +1450,7 @@ class Purchase_orderController extends Controller
                 }
                 $data=[
                     'home_id'=>Auth::user()->home_id,
-                    'loginUserId'=>Auth::user()->home_id,
+                    'loginUserId'=>Auth::user()->id,
                     'po_id'=>$request->po_id[$i],
                     'supplier_id'=>$request->supplier_id[$i],
                     'inv_ref'=>$request->inv_ref[$i],
@@ -1471,6 +1473,43 @@ class Purchase_orderController extends Controller
             
         } catch (\Exception $e) {
             Log::error('Error saving Bulk Invoices purchase order: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function saveBulkRecordPaymentModal(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            for($i=0;$i<count($request->po_id);$i++){
+                if($request->outstanding_amount[$i] == 0 || $request->record_amount_paid[$i] == 0){
+
+                }else{
+                    $data=[
+                        'home_id'=>Auth::user()->home_id,
+                        'loginUserId'=>Auth::user()->id,
+                        'loginUserName'=>Auth::user()->name,
+                        'po_id'=>$request->po_id[$i],
+                        'supplier_id'=>$request->supplier_id[$i],
+                        'record_amount_paid'=>$request->record_amount_paid[$i],
+                        'record_payment_date'=>$request->record_payment_date[$i],
+                        'record_payment_type'=>$request->record_payment_type[$i],
+                        'record_reference'=>$request->record_reference[$i] ?? "",
+                        'record_type'=>$request->record_type,
+                    ];
+                    $orderRecord=PurchaseOrderRecordPayment::savePurchaseOrderRecordPayment($data);
+                    $calculation_amount=$request->outstanding_amount[$i]-$request->record_amount_paid[$i];
+                    $tablePurchaseOrder=PurchaseOrder::find($request->po_id[$i]);
+                    $tablePurchaseOrder->outstanding_amount=$calculation_amount;
+                    if($calculation_amount == 0){
+                        $tablePurchaseOrder->status=5;
+                    }
+                    $tablePurchaseOrder->save();
+                }
+                
+            }
+            
+            return response()->json(['success'=>true,'message'=>'The Record Payment has been saved successfully.','data'=>array()]);
+        }catch (\Exception $e) {
+            Log::error('Error: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

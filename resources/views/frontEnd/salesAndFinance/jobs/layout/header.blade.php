@@ -208,9 +208,7 @@ $access_rights = explode(',', $rights);
                             </div>
 
                             <div class="nav-item1 dropdown1">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span><i class="material-symbols-outlined">finance_mode </i></span> Finance
-                                </a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span><i class="material-symbols-outlined">finance_mode </i></span> Finance</a>
                                 <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                     <li class="nav-item1 dropend">
                                         <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -298,9 +296,7 @@ $access_rights = explode(',', $rights);
                                         </ul>
                                     </li>
                                     <li class="nav-item1 dropend">
-                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span><i class="fa fa-users"></i> Suppliers</span> <span><i class="fa-solid fa-angle-right"></i></span>
-                                        </a>
+                                        <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span><i class="fa fa-users"></i> Suppliers</span> <span><i class="fa-solid fa-angle-right"></i></span></a>
                                         <ul class="dropdown-menu dropdown-menu1 fade-up m-0">
                                             <li><a class="dropdown-item" href="{{url('supplier_add')}}"><span><i class="fa fa-plus"></i>New Supllier</span></a></li>
                                             <li><a class="dropdown-item" href="{{ url('supplier?list_mode=ACTIVE') }}"><span><i class="fa fa-check-circle"></i>Active Suppliers</span></a></li>
@@ -312,8 +308,7 @@ $access_rights = explode(',', $rights);
 
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle @if(isset($page)) @if($page == 'item') active @endif @endif" data-bs-toggle="dropdown">
-                                    <span><i class="material-symbols-outlined"> production_quantity_limits</i></span>
-                                    Items
+                                    <span><i class="material-symbols-outlined"> production_quantity_limits</i></span>Items
                                 </a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="{{ url('/item/product_categories') }}" class="dropdown-item">Product Categories</a>
@@ -323,15 +318,9 @@ $access_rights = explode(',', $rights);
                                 </div>
                             </div>
 
-                            <a href="{{url('/expenses')}}" class="nav-item nav-link">
-                                <span><i class="material-symbols-outlined"> calculate </i></span>
-                                Expenses
-                            </a>
+                            <a href="{{url('/expenses')}}" class="nav-item nav-link"><span><i class="material-symbols-outlined"> calculate </i></span>Expenses</a>
                             <div class="nav-item dropdown">
-                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                    <span><i class="material-symbols-outlined"> diversity_2 </i></span>
-                                    Users
-                                </a>
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown"><span><i class="material-symbols-outlined"> diversity_2 </i></span>Users</a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-user"></i>Users </span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-users"></i>Team Members </span></a>
@@ -340,10 +329,7 @@ $access_rights = explode(',', $rights);
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                    <span><i class="material-symbols-outlined"> partner_reports </i></span>
-                                    Reports
-                                </a>
+                                <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown"> <span><i class="material-symbols-outlined"> partner_reports </i></span>Reports</a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-users"></i> Customers </span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-file-text"></i> Quote </span></a>
@@ -358,21 +344,16 @@ $access_rights = explode(',', $rights);
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-bell"></i> Reminder Report </span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Task Report </span></a>
                                     <a href="#!" class="dropdown-item"><span><i class="fa fa-list"></i> Report Builder </span></a>
-
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
-                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                    <span><i class="material-symbols-outlined"> bookmark_manager</i></span>
-                                    File Manager
-                                </a>
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown"> <span><i class="material-symbols-outlined"> bookmark_manager</i></span>File Manager</a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="#!" class="dropdown-item"> <span><i class="fa fa-paperclip"></i> Attachments </span></a>
                                     <a href="#!" class="dropdown-item"> <span><i class="fa fa-print"></i> Digital Documents</span></a>
                                     <a href="#!" class="dropdown-item"> <span><i class="fa fa-list"></i> Completed Questionnaires</span> </a>
                                 </div>
                             </div>
-
                             <div class="nav-item1 dropdown1">
                                 <a class="nav-link dropdown-toggle @if(isset($page)) @if($page == 'setting') active @endif @endif" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span><i class="material-symbols-outlined"> construction</i></span> Settings
@@ -483,6 +464,13 @@ $access_rights = explode(',', $rights);
                                     </li>
                                     <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><span><i class="fa fa-check-circle"></i> Quick Setup Wizard</span></a></li>
                                 </ul>
+                            </div>
+                            <div class="nav-item dropdown @if(isset($page)) @if($page == 'dayBook') active @endif @endif">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown"><span><i class="material-symbols-outlined">  book_5 </i></span>Day Book</a>
+                                <div class="dropdown-menu fade-up m-0">
+                                    <a href="{{ url('/sales/sales-day-book') }}" class="dropdown-item"> <span><i class="fa fa-book"></i> Sales Day Book </span></a>
+                                    <a href="{{ url('/sales/purchase-day=book') }}" class="dropdown-item"> <span><i class="fa fa-book"></i> Purchasee Day book</span></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1610,11 +1598,11 @@ $access_rights = explode(',', $rights);
             $('#userCallsModal').modal('hide');
         }
 
-        window.onclick = function(event) {
-            if (event.target === userCallsModal) {
-                $('#userCallsModal').modal('hide');
-            }
-        }
+        // window.onclick = function(event) {
+        //     if (event.target === userCallsModal) {
+        //         $('#userCallsModal').modal('hide');
+        //     }
+        // }
         // CRM Complaint Js End for model show
 
 
@@ -1633,11 +1621,11 @@ $access_rights = explode(',', $rights);
             $('#typeCrmModel').modal('hide');
         }
 
-        window.onclick = function(event) {
-            if (event.target === typeCrmModel) {
-                $('#typeCrmModel').modal('hide');
-            }
-        }
+        // window.onclick = function(event) {
+        //     if (event.target === typeCrmModel) {
+        //         $('#typeCrmModel').modal('hide');
+        //     }
+        // }
         // CRM Section Type Js End for model show
 
 
@@ -1656,11 +1644,11 @@ $access_rights = explode(',', $rights);
             $('#userEmailModel').modal('hide');
         }
 
-        window.onclick = function(event) {
-            if (event.target === userEmailModel) {
-                $('#userEmailModel').modal('hide');
-            }
-        }
+        // window.onclick = function(event) {
+        //     if (event.target === userEmailModel) {
+        //         $('#userEmailModel').modal('hide');
+        //     }
+        // }
         // CRM email Js End for model show
 
 
@@ -1679,11 +1667,11 @@ $access_rights = explode(',', $rights);
             $('#TasksecondModal').modal('hide');
         }
 
-        window.onclick = function(event) {
-            if (event.target === TasksecondModal) {
-                $('#TasksecondModal').modal('hide');
-            }
-        }
+        // window.onclick = function(event) {
+        //     if (event.target === TasksecondModal) {
+        //         $('#TasksecondModal').modal('hide');
+        //     }
+        // }
         // CRM task Js End for model show
 
         // CRM task third Js Start for model show
@@ -1701,11 +1689,11 @@ $access_rights = explode(',', $rights);
             $('#third3Modal').modal('hide');
         }
 
-        window.onclick = function(event) {
-            if (event.target === compliantsModal) {
-                $('#third3Modal').modal('hide');
-            }
-        }
+        // window.onclick = function(event) {
+        //     if (event.target === compliantsModal) {
+        //         $('#third3Modal').modal('hide');
+        //     }
+        // }
         // CRM task third Js End for model show
 
         // CRM Notes Js Start for model show
@@ -1723,11 +1711,11 @@ $access_rights = explode(',', $rights);
             $('#NotesCrmModel').modal('hide');
         }
 
-        window.onclick = function(event) {
-            if (event.target === NotesCrmModel) {
-                $('#NotesCrmModel').modal('hide');
-            }
-        }
+        // window.onclick = function(event) {
+        //     if (event.target === NotesCrmModel) {
+        //         $('#NotesCrmModel').modal('hide');
+        //     }
+        // }
         // CRM Notes Js End for model show
 
 
@@ -1746,11 +1734,11 @@ $access_rights = explode(',', $rights);
             $('#CompHistoryModal').modal('hide');
         }
 
-        window.onclick = function(event) {
-            if (event.target === compliantsModal) {
-                $('#CompHistoryModal').modal('hide');
-            }
-        }
+        // window.onclick = function(event) {
+        //     if (event.target === compliantsModal) {
+        //         $('#CompHistoryModal').modal('hide');
+        //     }
+        // }
 
         // Function to set z-index
         function setZIndexForBackdrop(zIndex) {

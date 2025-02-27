@@ -292,7 +292,6 @@ class QuoteController extends Controller
 
     public function store(QuoteRequest $request)
     {
-        // dd($request);
         try {
 
             $qutRef = $request->quote_ref ?? $this->quoteService->generateQuoteRef();

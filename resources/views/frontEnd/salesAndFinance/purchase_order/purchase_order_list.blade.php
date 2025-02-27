@@ -326,7 +326,7 @@
                                     </div>
                                     <a href="javascript:void(0)" id="bulkInvoiceReceived" class="profileDrop">Invoice Received</a>
                                     @if($status['status'] != 5)
-                                    <a href="javascript:void(0)" id="" class="profileDrop">Record Payment</a>
+                                    <a href="javascript:void(0)" id="BulkRecordPaymentBTN" class="profileDrop">Record Payment</a>
                                     @endif
                                     @endif
                                     <a href="javascript:void(0)" id="approveBtn" class="profileDrop">Approve</a>
@@ -789,6 +789,14 @@
     bulInvoiceformId="bulkInvoiceReceivedForm"
     bulInvoiceId="bulkInvoiceReceivedId"
     saveButtonId="bulkInvoiceReceivedsave"
+/>
+
+<x-bulk-record-payment 
+    bulkRecordPaymentModalId="bulkRecordPaymentModal"
+    modalTitle="bulkRecordPaymentModalLabel"
+    bulkRecordPaymentformId="bulkRecordPaymentForm"
+    bulkRecordPaymentId="bulkRecordPayemntId"
+    saveButtonId="bulkRecordPaymentsave"
 />
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
@@ -1998,5 +2006,12 @@ $('#bulkInvoiceReceived').on('click', function(){
     tableBody.innerHTML='<tr><td colspan="9" class="text text-danger text-center" id="norecorderror">Sorry, no records to show</td> </tr>';
     $("#bulkInvoiceReceivedModal").modal('show');
 });
+$('#BulkRecordPaymentBTN').on('click', function(){
+    const tableBody = document.querySelector(`#bulkRecordPayment_result tbody`);
+    tableBody.innerHTML='';
+    tableBody.innerHTML='<tr><td colspan="8" class="text text-danger text-center" id="norecorderrorRecordPayment">Sorry, no records to show</td> </tr>';
+    $("#bulkRecordPaymentModal").modal('show');
+});
+
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
