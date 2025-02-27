@@ -44,6 +44,7 @@ use App\Models\PurchaseReminder;
 use App\Models\PurchaseOrderEmail;
 use App\Models\CreditNoteAllocate;
 use App\Models\CreditNote;
+use App\Models\CreditNoteProduct;
 use App\User;
 use PDF;
 use Carbon\Carbon;
@@ -663,7 +664,7 @@ class Purchase_orderController extends Controller
                 }
             }
             $array_data .= '<tr>
-                        <td><input type="checkbox" class="delete_checkbox" value="' . $val->id . '"></td>
+                        <td><div class="text-center"><input type="checkbox" class="delete_checkbox" value="' . $val->id . '"></div></td>
                         <td>' . ++$key . '</td>
                         <td>' . $val->purchase_order_ref . '</td>
                         <td>' . date('d/m/Y',strtotime($val->purchase_date)) . '</td>
@@ -1202,63 +1203,62 @@ class Purchase_orderController extends Controller
         // return $sortedArray;
         $data_array='';
         $paid_amount=0;
-        $vat_amount=0;
-        $total=0;
-        $net_amount=0;
-        $gross_amount=0;
-        $grandNetAmount=0;
-        $grandvat=0;
-        $grandTotal=0;
-        $grandPaidAmount=0;
-
-        $netAmountOutput='';
-        $vatAmountOutput='';
-        $totalOutput='';
-        $paid_amountOutput='';
-        foreach ($sortedArray as $val) {
+        foreach($sortedArray as $val){
             if(isset($val->credit_id) && $val->credit_id){
                 $credit_note=CreditNote::where('id',$val->credit_id)->first();
-                $products='';
                 $address=$credit_note->address;
                 $ref=$credit_note->credit_ref;
-                $paid_amountOutput='£'.$val->amount_paid;
-                // $paid_amount=$val->amount_paid;
+                $paid_amount=$val->amount_paid;
+                // $products=CreditNoteProduct::where('credi_note_id',$val->credit_id)->whereNull('deleted_at')->get();
+                $products='';
             }else{
                 $purchase_order=PurchaseOrder::where('id',$val->po_id)->first();
                 $address=$purchase_order->user_address;
                 $ref=$purchase_order->purchase_order_ref;
                 $paid_amount=$val->record_amount_paid;
-                $products=PurchaseOrderProduct::where('id',$val->product_id)->first();
+                $products=PurchaseOrderProduct::where('purchase_order_id',$val->po_id)->whereNull('deleted_at')->get();
             }
-            
             if(!empty($products)){
-                $qty=$products->qty*$products->price;
-                $net_amount=$net_amount+$qty;
-                $vat=$qty*$products->vat/100;
-                $vat_amount=$vat_amount+$vat;
-                $total=$total+$vat+$qty;
-                $netAmountOutput='£'.$net_amount;
-                $vatAmountOutput='£'.$vat_amount;
-                $totalOutput='£'.$total;
-                $paid_amountOutput='£'.$paid_amount;
+                $netAmount=0;
+                $vat_amount=0;
+                $total_amount=0;
+                $gross_amount=0;
+                $outstandingAmountTotal=0;
+                $in=1;
+                foreach($products as $productVal){
+                    $qty=$productVal->qty*$productVal->price;
+                    $netAmount=$netAmount+$qty;
+                    $vat=$qty*$productVal->vat/100;
+                    $vat_amount=$vat_amount+$vat;
+                    $total=$qty+$vat;
+                    $total_amount=$total_amount+$netAmount+$vat;
+                    $outstandingAmountTotal=$outstandingAmountTotal+$paid_amount;
+                    $calculate=$paid_amount-$total;
+                    $gross_amount=$gross_amount+$calculate;
+                    if($gross_amount > 0 && $in == 1){
+                        $in=2;
+                    }else{
+
+                    }
+                }
+                
+                
             }
-            $calculate=$total-$paid_amount;
-            $gross_amount=$gross_amount+$calculate;
-            $data_array.='<tr>
-                        <td>'.date('m/d/Y',strtotime($val->date)).'</td>
-                        <td>'.$ref.'</td>
-                        <td></td>
-                        <td>'.$address.'</td>
-                        <td>'.$netAmountOutput.'</td>
-                        <td>'.$vatAmountOutput.'</td>
-                        <td>'.$totalOutput.'</td>
-                        <td>'.$paid_amountOutput.'</td>
-                        <td>'.$gross_amount.'</td>
-                        </tr>';
+            $data_array .= '<tr>
+                    <td>' . date('m/d/Y', strtotime($val->date)) . '</td>
+                    <td>' . $ref . '</td>
+                    <td></td>
+                    <td>' . (strip_tags($address) ?? "") . '</td>
+                    <td>' . ($qty ?? "") . '</td>
+                    <td>' . ($vat ?? "") . '</td>
+                    <td>' . ($total ?? "") . '</td>
+                    <td>' . ($paid_amount ?? "") . '</td>
+                    <td>' . ($gross_amount ?? "") . '</td>
+                </tr>';
         }
-        // return $vat_amount;
-        // die;
-        return response()->json(['data' => $data_array,'grandNetAmount'=>$grandNetAmount,'all_vatTotalAmount'=>$grandvat,'all_TotalAmount'=>$grandTotal,'outstandingAmountTotal'=>$grandPaidAmount,'grandGrossAmount'=>$gross_amount]);
+        // return $data_array;
+        return response()->json(['data' => $data_array,'grandNetAmount'=>$netAmount,'all_vatTotalAmount'=>$vat_amount,'all_TotalAmount'=>$total_amount,'outstandingAmountTotal'=>$outstandingAmountTotal,'grandGrossAmount'=>$gross_amount]);
+        
     }
     public function purchase_order_invoices(Request $request){
         $home_id=Auth::user()->home_id;
@@ -1421,7 +1421,14 @@ class Purchase_orderController extends Controller
         $po_id=$request->approveids;
         // return response()->json(['sueccess'=>true,'data'=>$po_id]);
         try{
-            PurchaseOrder::whereIn('id', $po_id)->update(['status' => 3]);
+            for($i=0;$i<count($po_id);$i++){
+                $purchaseOrder=PurchaseOrder::find($po_id[$i]);
+                if($purchaseOrder->outstanding_amount != 0 && $purchaseOrder->status != 5){
+                    $purchaseOrder->status=3;
+                    $purchaseOrder->save();
+                }
+            }
+            // PurchaseOrder::whereIn('id', $po_id)->update(['status' => 3]);
             return response()->json(['success'=>true,'message'=>'Purchase Order Apporoved']);
         }catch (\Exception $e) {
             Log::error('Error: ' . $e->getMessage());
