@@ -274,10 +274,9 @@
                                     </div>
                                     <div class="row form-group">
                                         <label for="Expected" class="col-lg-4 col-sm-4 control-label">Expected Delivery On</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-8">
                                             <input type="date" class="form-control" id="Expected" name="Expected" placeholder="" value="">
                                         </div>
-                                        <div class="col-lg-1 icon_blue"><i class="fa fa-calendar text-danger"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -304,10 +303,9 @@
                                     </div>
                                     <div class="row form-group">
                                         <label for="Purchase-date" class="col-lg-4 col-sm-4 control-label">Purchase Date</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-8">
                                             <input type="date" class="form-control" id="Purchase-date" name="Purchase-date" placeholder="" value="">
                                         </div>
-                                        <div class="col-lg-1 icon_blue"><i class="fa fa-calendar text-danger"></i></div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="Reference" class="col-lg-4 col-sm-4 control-label">Reference</label>
@@ -320,21 +318,27 @@
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="Quote_ref" name="Quote_ref" placeholder="Quote Ref (if any)" value="">
                                         </div>
-                                        <div class="col-lg-1 icon_blue"><i class="fa fa-search"></i></div>
+                                        <div class="col-lg-1 icon_blue">
+                                            <a href="javascript:void(0)" onclick="get_modal(19)"><i class="fa fa-search"></i></a>
+                                        </div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="Job_reg" class="col-lg-4 col-sm-4 control-label">Job Reg</label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="Job_reg" name="Job_reg" placeholder="Job Reg (if any)" value="">
                                         </div>
-                                        <div class="col-lg-1 icon_blue"><i class="fa fa-search"></i></div>
+                                        <div class="col-lg-1 icon_blue">
+                                            <a href="javascript:void(0)" onclick="get_modal(19)"><i class="fa fa-search"></i></a>
+                                        </div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="vat_tax_no" class="col-lg-4 col-sm-4 control-label">Invoice Ref</label>
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="vat_tax_no" name="vat_tax_no" placeholder="Invoice Ref (if any)" value="">
                                         </div>
-                                        <div class="col-lg-1 icon_blue"><i class="fa fa-search"></i></div>
+                                        <div class="col-lg-1 icon_blue">
+                                            <a href="javascript:void(0)" onclick="get_modal(19)"><i class="fa fa-search"></i></a>
+                                        </div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="payment_terms" class="col-lg-4 col-sm-4 control-label">Payment Terms</label>
@@ -351,19 +355,17 @@
                                     </div>
                                     <div class="row form-group">
                                         <label for="Payment-due-date" class="col-lg-4 col-sm-4 control-label">Payment Due Date</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-8">
                                             <input type="date" class="form-control" id="Payment-due-date" name="Payment-due-date" placeholder="" value="">
-                                        </div>
-                                        <div class="col-lg-1 icon_blue">
-                                            <i class="fa fa-calendar text-danger"></i>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="inputEmail1" class="col-lg-4 col-sm-4 control-label">Status</label>
                                         <div class="col-lg-8">
                                             <select name="" class="form-control" id="">
-                                                <option value="">Draft</option>
-                                                <option value="">Awaiting Approval</option>
+                                                <option selected disabled>Please Select</option>
+                                                <option value="">Active</option>
+                                                <option value="">Inactive</option>
                                             </select>
                                         </div>
                                     </div>
@@ -380,7 +382,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <button type="button" class="btn btn-primary" onclick="get_modal(15)"><i class="fa fa-clock-o"></i> Set Reminder</button>
+                                        <button type="button" class="btn btn-primary" onclick="get_modal(14)"><i class="fa fa-clock-o"></i> Set Reminder</button>
                                     </div>
                                 </div>
                             </div>
@@ -475,7 +477,7 @@
                     <label class="upperlineTitle">Attachments</label>
                     <div class="row">
                         <div class="col-md-12 jobsection">
-                            <button type="button" class="btn btn-primary">New Attachments</button>
+                            <a class="btn btn-primary" onclick="get_modal(16)">New Attachments</a>
                         </div>
                     </div>
                 </div>
@@ -485,7 +487,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="jobsection">
-                                <a href="javascript:void(0)" class="btn btn-primary">New Task</a>
+                                <a href="javascript:void(0)" class="btn btn-primary" onclick="get_modal(17)">New Task</a>
                             </div>
                         </div>
                         <div class="col-sm-12 padd0">
@@ -524,14 +526,12 @@
                 <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</button>
                 <button type="button" class="btn btn-primary"><i class="fa fa-chevron-down"></i> Action </button>
             </div><!-- add action dropdown  -->
-
             <!-- </form> -->
             <!-- page end-->
-
         </section>
         <!-- page end-->
 
-        <!-- New Supplier Modal start -->
+        <!-- New Supplier Modal start (modal id = 1) -->
         <div class="modal fade in" id="Add_Supplier_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -563,14 +563,14 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="email_input" class="col-lg-4 col-sm-4 control-label">Email</label>
-                                        <div class="col-lg-8">
+                                        <label for="email_input" class="col-lg-3 col-sm-3 control-label">Email</label>
+                                        <div class="col-lg-9">
                                             <input type="email" class="form-control" id="email_input" name="email_input" placeholder="Enter Supplier email" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="fax_input" class="col-lg-4 col-sm-4 control-label">Fax</label>
-                                        <div class="col-lg-8">
+                                        <label for="fax_input" class="col-lg-3 col-sm-3 control-label">Fax</label>
+                                        <div class="col-lg-9">
                                             <input type="email" class="form-control" id="fax_input" name="fax_input" placeholder="Enter Supplier Fax" value="">
                                         </div>
                                     </div>
@@ -614,6 +614,7 @@
                                         <label for="supplier_status" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
                                             <select class="form-control editInput selectOptions" id="supplier_status" name="status">
+                                                <option selected disabled>Please Select</option>
                                                 <option value='1'>Active</option>
                                                 <option value='0'>Inactive</option>
                                             </select>
@@ -622,26 +623,26 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row form-group">
-                                        <label for="address_input" class="col-lg-4 col-sm-4 control-label">Address</label>
-                                        <div class="col-lg-8">
+                                        <label for="address_input" class="col-lg-3 col-sm-3 control-label">Address</label>
+                                        <div class="col-lg-9">
                                             <textarea name="address_input" id="address_input" class="form-control" placeholder="Enter Supplier Address"></textarea>
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="city_input" class="col-lg-4 col-sm-4 control-label">City</label>
-                                        <div class="col-lg-8">
+                                        <label for="city_input" class="col-lg-3 col-sm-3 control-label">City</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="city_input" name="city_input" placeholder="Enter Supplier City" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="County_input" class="col-lg-4 col-sm-4 control-label">County</label>
-                                        <div class="col-lg-8">
+                                        <label for="County_input" class="col-lg-3 col-sm-3 control-label">County</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="County_input" name="County_input" placeholder="Enter Supplier County" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="Postcode_input" class="col-lg-4 col-sm-4 control-label">Postcode</label>
-                                        <div class="col-lg-8">
+                                        <label for="Postcode_input" class="col-lg-3 col-sm-3 control-label">Postcode</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="Postcode_input" name="Postcode_input" placeholder="Enter Supplier Postcode" value="">
                                         </div>
                                     </div>
@@ -701,7 +702,7 @@
         </div>
         <!-- end here -->
 
-        <!-- Add Supplier Contact modal start -->
+        <!-- Add Supplier Contact modal start  (modal id = 2)-->
         <div class="modal fade in" id="Add_Supplier_Contact_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -717,7 +718,7 @@
                                     <div class="row form-group">
                                         <label for="Supplier_input" class="col-lg-4 col-sm-4 control-label">Supplier</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="Supplier_input" name="Supplier_input" placeholder="Enter Supplier Name" value="">
+                                            <input type="text" readonly class="border-0" name="Supplier_input" value="Abhishek">
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -741,14 +742,14 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="email_input" class="col-lg-4 col-sm-4 control-label">Email</label>
-                                        <div class="col-lg-8">
+                                        <label for="email_input" class="col-lg-3 col-sm-3 control-label">Email</label>
+                                        <div class="col-lg-9">
                                             <input type="email" class="form-control" id="email_input" name="email_input" placeholder="Enter Supplier email" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="fax_input" class="col-lg-4 col-sm-4 control-label">Fax</label>
-                                        <div class="col-lg-8">
+                                        <label for="fax_input" class="col-lg-3 col-sm-3 control-label">Fax</label>
+                                        <div class="col-lg-9">
                                             <input type="email" class="form-control" id="fax_input" name="fax_input" placeholder="Enter Supplier Fax" value="">
                                         </div>
                                     </div>
@@ -784,26 +785,26 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="address_input" class="col-lg-4 col-sm-4 control-label">Address</label>
-                                        <div class="col-lg-8">
+                                        <label for="address_input" class="col-lg-3 col-sm-3 control-label">Address</label>
+                                        <div class="col-lg-9">
                                             <textarea name="address_input" id="address_input" class="form-control" placeholder="Enter Supplier Address"></textarea>
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="city_input" class="col-lg-4 col-sm-4 control-label">City</label>
-                                        <div class="col-lg-8">
+                                        <label for="city_input" class="col-lg-3 col-sm-3 control-label">City</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="city_input" name="city_input" placeholder="Enter Supplier City" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="County_input" class="col-lg-4 col-sm-4 control-label">County</label>
-                                        <div class="col-lg-8">
+                                        <label for="County_input" class="col-lg-3 col-sm-3 control-label">County</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="County_input" name="County_input" placeholder="Enter Supplier County" value="">
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label for="Postcode_input" class="col-lg-4 col-sm-4 control-label">Postcode</label>
-                                        <div class="col-lg-8">
+                                        <label for="Postcode_input" class="col-lg-3 col-sm-3 control-label">Postcode</label>
+                                        <div class="col-lg-9">
                                             <input type="text" class="form-control" id="Postcode_input" name="Postcode_input" placeholder="Enter Supplier Postcode" value="">
                                         </div>
                                     </div>
@@ -832,7 +833,7 @@
         </div>
         <!-- end here -->
 
-        <!-- Add Customer Modal Start -->
+        <!-- Add Customer Modal Start (modal id = 3) -->
         <div class="modal fade in" id="Add_Customer_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -857,7 +858,7 @@
                                             <input type="text" class="form-control" id="Customer_Type" name="Customer_Type" placeholder="Enter Customer Type" value="">
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(16)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal(12)"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -966,7 +967,7 @@
                                         <label for="DiscountType_status" class="col-sm-3 col-form-label">Discount Type</label>
                                         <div class="col-sm-9">
                                             <select class="form-control editInput selectOptions" id="DiscountType_status" name="status">
-                                                <option value='1'>Please Select</option>
+                                                <option selected disabled>Please Select</option>
                                                 <option value='0'>Percentage</option>
                                                 <option value='0'>Flat</option>
                                             </select>
@@ -982,7 +983,7 @@
                                         <label for="Default_Catalogue" class="col-sm-3 col-form-label">Default Catalogue</label>
                                         <div class="col-sm-9">
                                             <select class="form-control editInput selectOptions" id="Default_Catalogue" name="status">
-                                                <option value='1'>None</option>
+                                                <option selected disabled>None</option>
                                                 <option value='0'>ABCD</option>
                                             </select>
                                         </div>
@@ -991,6 +992,7 @@
                                         <label for="supplier_status" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
                                             <select class="form-control editInput selectOptions" id="supplier_status" name="status">
+                                                <option selected disabled>Please Select</option>
                                                 <option value='1'>Active</option>
                                                 <option value='0'>Inactive</option>
                                             </select>
@@ -1002,12 +1004,12 @@
                                         <label for="Region_input" class="col-lg-3 col-sm-3 control-label">Region</label>
                                         <div class="col-lg-8">
                                             <select name="" id="" class="form-control">
-                                                <option value="" selected disabled>None</option>
+                                                <option selected disabled>None</option>
                                                 <option value="">USA</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(17)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal(13)"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -1087,7 +1089,7 @@
         </div>
         <!-- end here -->
 
-        <!-- Add Project modal start here -->
+        <!-- Add Project modal start here (modal id = 4) -->
         <div class="modal fade in" id="Add_Project_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog ">
                 <div class="modal-content">
@@ -1103,13 +1105,14 @@
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label">Project Ref</label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="Project_name" id="Project_name" placeholder="Project Ref ###" class="form-control">
+                                            <input type="text" readonly class="border-0" value="Project Ref ###">
                                         </div>
                                     </div>
+
                                     <div class="row form-group">
                                         <label class="col-lg-3 control-label">Customer</label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="customer_name" id="customer_name" placeholder="Mahima" class="form-control">
+                                            <input type="text" readonly class="border-0" value="Customer">
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -1120,20 +1123,14 @@
                                     </div>
                                     <div class="row form-group">
                                         <label for="Start_date" class="col-lg-3 col-sm-3 control-label">Start Date</label>
-                                        <div class="col-lg-7">
+                                        <div class="col-lg-9">
                                             <input type="date" class="form-control" id="Start_date" name="Start_date" placeholder="" value="">
-                                        </div>
-                                        <div class="col-lg-2 icon_blue">
-                                            <i class="fa fa-calendar text-danger"></i>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="End_date" class="col-lg-3 col-sm-3 control-label">End Date</label>
-                                        <div class="col-lg-7">
+                                        <div class="col-lg-9">
                                             <input type="date" class="form-control" id="End_date" name="End_date" placeholder="" value="">
-                                        </div>
-                                        <div class="col-lg-2 icon_blue">
-                                            <i class="fa fa-calendar text-danger"></i>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -1157,8 +1154,9 @@
                                         <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
                                         <div class="col-lg-9">
                                             <select name="" class="form-control" id="">
-                                                <option value="">Draft</option>
-                                                <option value="">Awaiting Approval</option>
+                                                <option selected disabled>Please Select</option>
+                                                <option value="">Active</option>
+                                                <option value="">Inactive</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1177,7 +1175,7 @@
         </div>
         <!-- end here -->
 
-        <!-- Add Site Address modal start here -->
+        <!-- Add Site Address modal start here (modal id = 5) -->
         <div class="modal fade in" id="Add_Site_Address_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -1197,7 +1195,7 @@
                                             <div class="row form-group">
                                                 <label class="col-lg-3 control-label">Customer</label>
                                                 <div class="col-lg-9">
-                                                    <p></p>
+                                                    <input type="text" readonly class="border-0" value="Customer">
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -1207,18 +1205,23 @@
                                                 </div>
                                             </div>
                                             <div class="row form-group">
-                                                <label class="col-lg-3 control-label">Contact Name<span class="radStar ">*</span></label>
-                                                <div class="col-lg-9">
+                                                <label class="col-lg-4 control-label">Contact Name<span class="radStar ">*</span></label>
+                                                <div class="col-lg-8">
                                                     <input type="text" name="site_contact_name" id="site_contact_name" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="row form-group">
-                                                <label class="col-lg-3 control-label">Job Title(Position)</label>
-                                                <div class="col-lg-9">
-                                                    <select class="form-control who_noti" name="site_title_id" id="site_title_id">
-                                                        <option selected disabled>Select Job Title</option>
-
+                                                <label for="Supplier" class="col-lg-4 col-sm-4 control-label">Job Title (Position)</label>
+                                                <div class="col-lg-7">
+                                                    <select name="Supplier" id="Supplier" class="form-control">
+                                                        <option selected disabled>Please Select</option>
+                                                        <option value="">Python Developer</option>
+                                                        <option value="">iOS Developer</option>
+                                                        <option value="">Php Developer</option>
                                                     </select>
+                                                </div>
+                                                <div class="col-lg-1" id="inputPlusCircle">
+                                                    <a class="javascript:void(0)" onclick="get_modal(11)"><i class="fa  fa-plus-circle"></i> </a>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -1268,12 +1271,15 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="row form-group">
-                                                <label class="col-lg-3 control-label">Region</label>
-                                                <div class="col-lg-9">
-                                                    <select class="form-control" name="site_region" id="site_region">
-                                                        <option selected disabled>Select Region</option>
-
+                                                <label for="Region_input" class="col-lg-3 col-sm-3 control-label">Region</label>
+                                                <div class="col-lg-8">
+                                                    <select name="" id="" class="form-control">
+                                                        <option selected disabled>None</option>
+                                                        <option value="">USA</option>
                                                     </select>
+                                                </div>
+                                                <div class="col-lg-1" id="inputPlusCircle">
+                                                    <a class="javascript:void(0)" onclick="get_modal(13)"><i class="fa  fa-plus-circle"></i> </a>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -1327,6 +1333,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <br>
                                     <div class="noti_button">
                                         <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
                                         <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
@@ -1340,7 +1347,7 @@
         </div>
         <!-- end here -->
 
-        <!-- Department add Modal start here -->
+        <!-- Department add Modal start here (modal id = 6) -->
         <div class="modal fade in" id="Department_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -1363,10 +1370,17 @@
                                         <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
                                         <div class="col-lg-9">
                                             <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
                                                 <option value="">Active</option>
                                                 <option value="">Inactive</option>
                                             </select>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
                                     </div>
                                 </div>
                             </div>
@@ -1377,7 +1391,7 @@
         </div>
         <!-- end here -->
 
-        <!-- Add Tags Modal start here -->
+        <!-- Add Tags Modal start here  (modal id = 7) -->
         <div class="modal fade in" id="Add_Tags_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -1401,6 +1415,7 @@
                                         <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
                                         <div class="col-lg-9">
                                             <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
                                                 <option value="">Active</option>
                                                 <option value="">Inactive</option>
                                             </select>
@@ -1421,7 +1436,7 @@
         </div>
         <!-- end here -->
 
-        <!-- Add Product Modal start here -->
+        <!-- Add Product Modal start here  (modal id = 8) -->
         <div class="modal fade in" id="Product_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -1438,7 +1453,7 @@
                                         <label for="" class="col-lg-4 col-sm-4 control-label">Customer</label>
                                         <div class="col-lg-8">
                                             <select name="" class="form-control" id="">
-                                                <option value="" selected disabled>- All -</option>
+                                                <option selected disabled>- All -</option>
                                                 <option value="">Riya</option>
                                             </select>
                                         </div>
@@ -1447,13 +1462,13 @@
                                         <label for="" class="col-lg-4 col-sm-4 control-label">Product Category</label>
                                         <div class="col-lg-7">
                                             <select name="" class="form-control" id="">
-                                                <option value="" disabled selected>- Any Categores -</option>
+                                                <option disabled selected>- Any Categores -</option>
                                                 <option value="">Green</option>
                                                 <option value="">yellow</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(12)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal(15)"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -1466,6 +1481,7 @@
                                         <label for="" class="col-lg-4 col-sm-4 control-label">Product Type</label>
                                         <div class="col-lg-8">
                                             <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
                                                 <option value="">Product</option>
                                                 <option value="">Green</option>
                                                 <option value="">yellow</option>
@@ -1526,26 +1542,26 @@
                                         <label for="" class="col-lg-4 col-sm-4 control-label">Sales Tax Rate</label>
                                         <div class="col-lg-7">
                                             <select name="" class="form-control" id="">
-                                                <option value="" disabled selected>- Please Select -</option>
+                                                <option disabled selected>- Please Select -</option>
                                                 <option value="">VAT 5</option>
                                                 <option value="">VAT 20</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(13)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal(10)"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <label for="" class="col-lg-4 col-sm-4 control-label">Purchase Tax Rate</label>
                                         <div class="col-lg-7">
                                             <select name="" class="form-control" id="">
-                                                <option value="" disabled selected>- Please Select -</option>
+                                                <option disabled selected>- Please Select -</option>
                                                 <option value="">Green</option>
                                                 <option value="">yellow</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
-                                            <a class="javascript:void(0)" onclick="get_modal(14)"><i class="fa  fa-plus-circle"></i> </a>
+                                            <a class="javascript:void(0)" onclick="get_modal(10)"><i class="fa  fa-plus-circle"></i> </a>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -1558,7 +1574,7 @@
                                         <label for="" class="col-lg-4 col-sm-4 control-label">Sales A/c Code</label>
                                         <div class="col-lg-8">
                                             <select name="" class="form-control" id="">
-                                                <option value="" disabled selected>- Please Select -</option>
+                                                <option disabled selected>- Please Select -</option>
                                                 <option value="">test 1</option>
                                                 <option value="">test 1 </option>
                                             </select>
@@ -1568,7 +1584,7 @@
                                         <label for="" class="col-lg-4 col-sm-4 control-label">Purchase A/c Code</label>
                                         <div class="col-lg-8">
                                             <select name="" class="form-control" id="">
-                                                <option value="" disabled selected>- Please Select -</option>
+                                                <option disabled selected>- Please Select -</option>
                                                 <option value="">test 1</option>
                                                 <option value="">test 1 </option>
                                             </select>
@@ -1578,7 +1594,7 @@
                                         <label for="" class="col-lg-4 col-sm-4 control-label">Expense A/c Code</label>
                                         <div class="col-lg-8">
                                             <select name="" class="form-control" id="">
-                                                <option value="" disabled selected>- Please Select -</option>
+                                                <option disabled selected>- Please Select -</option>
                                                 <option value="">test 1</option>
                                                 <option value="">test 1 </option>
                                             </select>
@@ -1594,6 +1610,7 @@
                                         <label for="" class="col-lg-4 col-sm-4 control-label">Status</label>
                                         <div class="col-lg-8">
                                             <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
                                                 <option value="">Active</option>
                                                 <option value="">Inactive</option>
                                             </select>
@@ -1620,7 +1637,7 @@
         </div>
         <!-- end here -->
 
-        <!-- Add department code Modal start here -->
+        <!-- Add department code Modal start here (modal id = 9) -->
         <div class="modal fade in" id="Departmental_Code_Add_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -1649,6 +1666,7 @@
                                         <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
                                         <div class="col-lg-9">
                                             <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
                                                 <option value="">Active</option>
                                                 <option value="">Inactive</option>
                                             </select>
@@ -1669,7 +1687,7 @@
         </div>
         <!-- end here -->
 
-        <!-- Add Tax Rate start here -->
+        <!-- Add Tax Rate start here (modal id = 10) -->
         <div class="modal fade in" id="Add_Tax_Rate_modal" tabindex="-1"
             role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
             <div class="modal-dialog">
@@ -1704,6 +1722,7 @@
                                         <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
                                         <div class="col-lg-9">
                                             <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
                                                 <option value="">Active</option>
                                                 <option value="">Inactive</option>
                                             </select>
@@ -1737,6 +1756,660 @@
         </div>
         <!-- end here -->
 
+        <!-- job title add Modal start here (modal id = 11) -->
+        <div class="modal fade in" id="Job_Title_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> Job Title - Add </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <form id="Job_Title_form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Job Title</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="Job_Title_input" name="Job_Title_input" placeholder="Enter Job Title" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
+                                        <div class="col-lg-9">
+                                            <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
+                                                <option value="">Active</option>
+                                                <option value="">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
+
+        <!-- Add Customer Type Modal start here (modal id = 12) -->
+        <div class="modal fade in" id="add_Customer_Type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> Add Customer Type </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <form id="add_Customer_Type_form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Customer Type</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="add_Customer_Type_input" name="add_Customer_Type_input" placeholder="Enter Customer Type" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
+                                        <div class="col-lg-9">
+                                            <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
+                                                <option value="">Active</option>
+                                                <option value="">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
+
+        <!-- add region Modal start here (modal id = 13) -->
+        <div class="modal fade in" id="add_region_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> Add Region </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <form id="add_region_form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Region</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="add_region_input" name="add_region_input" placeholder="Enter Region" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
+                                        <div class="col-lg-9">
+                                            <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
+                                                <option value="">Active</option>
+                                                <option value="">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
+
+        <!-- PO Reminder Modal start here  (modal id = 14) -->
+        <div class="modal fade in" id="PO_Reminder_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> PO Reminder </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <form id="PO_Reminder_form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row form-group">
+                                        <label for="Expected" class="col-lg-3 col-sm-3 control-label">Reminder Date</label>
+                                        <div class="col-lg-6">
+                                            <input type="date" class="form-control" id="Expected" name="Expected" placeholder="" value="">
+                                        </div>
+                                        <!-- <div class="col-lg-1 icon_blue"><i class="fa fa-calendar text-danger"></i></div> -->
+                                        <div class="col-lg-3">
+                                            <input type="time" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Reminder Email</label>
+                                        <div class="col-md-9">
+                                            <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
+                                                <option value="">test</option>
+                                                <option value="">test</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-3 col-sm-3 control-label">Send As</label>
+                                        <div class="col-lg-9">
+                                            <input type="checkbox" id="Notification">
+                                            <label for="Notification">Notification</label>&nbsp;
+                                            <input type="checkbox" id="SMS">
+                                            <label for="SMS">SMS</label>&nbsp;
+                                            <input type="checkbox" id="Email">
+                                            <label for="Email">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-3 col-sm-3 control-label">Title</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" placeholder="Title">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="" class="col-lg-3 col-sm-3 control-label">Notes</label>
+                                        <div class="col-lg-9">
+                                            <textarea class="form-control" placeholder="Description" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
+
+        <!-- Product Category  Modal start here  (modal id = 15)-->
+        <div class="modal fade in" id="Product_Category_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> Product Category </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <form id="Product_Category_form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Product Category</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="Product_Category_input" name="Product_Category_input" placeholder="Enter Product Category" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Parent Category</label>
+                                        <div class="col-lg-9">
+                                            <select name="Parent_Category" id="Parent_Category" class="form-control">
+                                                <option selected disabled>Please Select</option>
+                                                <option value="">test</option>
+                                                <option value="">test</option>
+                                                <option value="">test</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
+                                        <div class="col-lg-9">
+                                            <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
+                                                <option value="">Active</option>
+                                                <option value="">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
+
+        <!-- Add Attachment  Modal start here (modal id = 16) -->
+        <div class="modal fade in" id="Add_Attachment_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> Add Attachment </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <form id="Add_Attachment_form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Purchase Ref</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" readonly class="border-0" name="Supplier_input" value="PO-002">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Type</label>
+                                        <div class="col-lg-9">
+                                            <select name="Parent_Category" id="Parent_Category" class="form-control">
+                                                <option selected disabled>Please Select</option>
+                                                <option value="">test</option>
+                                                <option value="">test</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">File Name</label>
+                                        <div class="col-lg-9">
+                                            <input type="file" class="form-control">
+                                            <p>(Max File size 25 MB)</p>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Title</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" placeholder="Title">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Description (Max 500 Characters)</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" placeholder="Description">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
+
+        <!--New Task  Modal start here (modal id = 17) -->
+        <div class="modal fade in" id="New_Task_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle">New Task </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <form id="New_Task_form">
+                            @csrf
+                            <div>
+                                <div class="tab-container">
+                                    <div class="tab-menu">
+                                        <ul>
+                                            <li><a href="#" class="tab-a active-a" data-id="tab1">Task</a></li>
+                                            <li><a href="#" class="tab-a" data-id="tab2">Timer</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- tab 1 Start -->
+                                    <div class="tab tab-active" data-id="tab1">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Supplier</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="text" readonly class="border-0" name="Supplier_input" value="Ram Kumar">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Task User</label>
+                                                    <div class="col-lg-9">
+                                                        <select name="Parent_Category" id="Parent_Category" class="form-control">
+                                                            <option selected disabled>Please Select</option>
+                                                            <option value="">Mick Carter</option>
+                                                            <option value="">Mick Carter</option>
+                                                            <option value="">Mick Carter</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Title</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="text" class="form-control" name="Title_input" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label for="Task_Type" class="col-lg-3 col-sm-3 control-label">Task Type</label>
+                                                    <div class="col-lg-8">
+                                                        <select name="" class="form-control" id="">
+                                                            <option selected disabled>Please Select</option>
+                                                            <option value="">test</option>
+                                                            <option value="">test</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-1" id="inputPlusCircle">
+                                                        <a class="javascript:void(0)" onclick="get_modal(18)"><i class="fa  fa-plus-circle"></i> </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label for="Start_date" class="col-lg-3 col-sm-3 control-label">Start Date</label>
+                                                    <div class="col-lg-5">
+                                                        <input type="date" class="form-control" id="End_date" name="End_date" placeholder="" value="">
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <input type="time" class="form-control" id="End_date" name="End_date" placeholder="" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label for="End_date" class="col-lg-3 col-sm-3 control-label">End Date</label>
+                                                    <div class="col-lg-5">
+                                                        <input type="date" class="form-control" id="End_date" name="End_date" placeholder="" value="">
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <input type="time" class="form-control" id="End_date" name="End_date" placeholder="" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label for="Recurring_task" class="col-lg-4 col-sm-4 control-label">Is Reccurring Task ?</label>
+                                                    <input type="checkbox" name="Recurring_task" id="Recurring_task">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Notify ?</label>
+                                                    <div class="col-lg-3 pe-0">
+                                                        <input type="checkbox" name="Notify" id="Notify">
+                                                        <label for="Notify">Yes, On</label>
+                                                    </div>
+                                                    <div class="col-lg-3 ps-0">
+                                                        <input type="date" class="form-control" id="End_date" name="End_date" placeholder="" value="">
+                                                    </div>
+                                                    <div class="col-lg-3 ps-0">
+                                                        <input type="time" class="form-control" id="End_date" name="End_date" placeholder="" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Related To</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="text" readonly class="border-0" name="Supplier_input" value="PO-002">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Notes</label>
+                                                    <div class="col-lg-9">
+                                                        <textarea name="" rows="4" id="" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="noti_button">
+                                                    <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                                    <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- tab 2 Start -->
+                                    <div class="tab " data-id="tab2">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Task User</label>
+                                                    <div class="col-lg-9">
+                                                        <select name="Parent_Category" id="Parent_Category" class="form-control">
+                                                            <option selected disabled>Please Select</option>
+                                                            <option value="">Mick Carter</option>
+                                                            <option value="">Mick Carter</option>
+                                                            <option value="">Mick Carter</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Title</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="text" class="form-control" name="Title_input" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Timer</label>
+                                                    <div class="col-lg-9">
+                                                        <button class="btn btn-primary">Start</button> 00:00:00
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row form-group">
+                                                    <label for="Task_Type" class="col-lg-3 col-sm-3 control-label">Task Type</label>
+                                                    <div class="col-lg-8">
+                                                        <select name="" class="form-control" id="">
+                                                            <option selected disabled>Please Select</option>
+                                                            <option value="">test</option>
+                                                            <option value="">test</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-1" id="inputPlusCircle">
+                                                        <a class="javascript:void(0)" onclick="get_modal(18)"><i class="fa  fa-plus-circle"></i> </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <label class="col-lg-3 control-label">Notes</label>
+                                                    <div class="col-lg-9">
+                                                        <textarea name="" rows="4" id="" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="noti_button">
+                                                    <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                                    <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
+
+        <!-- Task Type - Add Modal start here (modal id = 18) -->
+        <div class="modal fade in" id="task_type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> Task Type - Add </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <form id="task_type_form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row form-group">
+                                        <label class="col-lg-3 control-label">Task Type</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="task_type_input" name="task_type_input" placeholder="Enter Task Type" value="">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Status</label>
+                                        <div class="col-lg-9">
+                                            <select name="" class="form-control" id="">
+                                                <option selected disabled>Please Select</option>
+                                                <option value="">Active</option>
+                                                <option value="">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" onclick="get_save_site()">Save</a>
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
+
+        <!--Search  Modal start here (modal id = 19) -->
+        <div class="modal fade in" id="Search_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle">Search </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <form id="Search_form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="">Search In :</label>
+                                        </div>
+                                        <div class="col-md-2 pe-0">
+                                            <input type="text" class="form-control" placeholder="Quote">
+                                        </div>
+                                        <div class="col-md-2 pe-0">
+                                            <input type="text" class="form-control" placeholder="Alex-Hill">
+                                        </div>
+                                        <div class="col-md-2 pe-0">
+                                            <input type="text" class="form-control" placeholder="Keywords">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button class="btn btn-primary" type="button">Search</button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Job Ref</th>
+                                                    <th>Type</th>
+                                                    <th>Customer</th>
+                                                    <th>Site</th>
+                                                    <th class="col-lg-4">Description</th>
+                                                    <th>Complete By</th>
+                                                    <th>Completed On</th>
+                                                    <th>Status</th>
+                                                    <th>Product(s)</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>JOB-0031</td>
+                                                    <td>Service</td>
+                                                    <td>Alex Hill</td>
+                                                    <td>uk</td>
+                                                    <td class="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam enim dolorum qui odit ex impedit officia dolor adipisci quos, maiores alias est culpa modi ipsa sit accusamus veritatis quidem? Odit magni magnam maiores voluptatibus in nostrum nesciunt asperiores quam at.</td>
+                                                    <td>28/02/2025</td>
+                                                    <td></td>
+                                                    <td>Appointed</td>
+                                                    <td><a href="">View</a></td>
+                                                    <td><button type="button" class="btn btn-primary">Add</button></td>
+                                                    <td><button type="button" class="btn btn-primary">Add Items</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Description</th>
+                                                    <th>Cost Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Include</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Product Test</td>
+                                                    <td class="description"></td>
+                                                    <td>$100.00</td>
+                                                    <td><input type="text" class="form-control"></td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="text-end">
+                                                        <button type="submit" class="btn btn-primary">Confirm Selection</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="noti_button">
+                                        <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
     </div>
 </section>
 
@@ -1778,10 +2451,11 @@
 </script>
 <!-- for modal start -->
 
+
 <script>
     function get_modal(id) {
         var key = $("#id").val();
-        if (id == 4 || id == 5 || id == 6 || id == 7 || id == 8 || id == 9 || id == 10) {
+        if (id == 4 || id == 5 || id == 6 || id == 7 || id == 8 || id == 9 || id == 10 || id == 11 || id == 12 || id == 13 || id == 14 || id == 15 || id == 16 || id == 17 || id == 18 || id == 19) {
             if (key == '') {
                 alert("Please save Customer first");
                 return false;
@@ -1807,8 +2481,34 @@
                 } else if (id == 10) {
                     $('#Add_Tax_Rate_form')[0].reset();
                     $("#Add_Tax_Rate_modal").modal('show');
+                } else if (id == 11) {
+                    $('#Job_Title_form')[0].reset();
+                    $("#Job_Title_modal").modal('show');
+                } else if (id == 12) {
+                    $('#add_Customer_Type_form')[0].reset();
+                    $("#add_Customer_Type_modal").modal('show');
+                } else if (id == 13) {
+                    $('#add_region_form')[0].reset();
+                    $("#add_region_modal").modal('show');
+                } else if (id == 14) {
+                    $('#PO_Reminder_form')[0].reset();
+                    $("#PO_Reminder_modal").modal('show');
+                } else if (id == 15) {
+                    $('#Product_Category_form')[0].reset();
+                    $("#Product_Category_modal").modal('show');
+                } else if (id == 16) {
+                    $('#Add_Attachment_form')[0].reset();
+                    $("#Add_Attachment_modal").modal('show');
+                } else if (id == 17) {
+                    $('#New_Task_form')[0].reset();
+                    $("#New_Task_modal").modal('show');
+                } else if (id == 18) {
+                    $('#task_type_form')[0].reset();
+                    $("#task_type_modal").modal('show');
+                } else if (id == 19) {
+                    $('#Search_form')[0].reset();
+                    $("#Search_modal").modal('show');
                 }
-
             }
         } else if (id == 1) {
             $("#Add_Supplier_form")[0].reset();
@@ -1823,6 +2523,19 @@
     }
 </script>
 <!-- modal end -->
+
+<script>
+    
+    $(document).ready(function() {
+        $('.tab-a').click(function() {
+            $(".tab").removeClass('tab-active');
+            $(".tab[data-id='" + $(this).attr('data-id') + "']").addClass("tab-active");
+            $(".tab-a").removeClass('active-a');
+            $(this).parent().find(".tab-a").addClass('active-a');
+        });
+    });
+
+</script>
 
 <script>
     function getemail(id) {
