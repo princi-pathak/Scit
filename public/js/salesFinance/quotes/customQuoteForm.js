@@ -2662,10 +2662,21 @@ document.getElementById("submitBtn").addEventListener("click", function () {
     document.getElementById("myForm").submit();
 });
 
-$(document).ready(function () {
-    $('.discount-container').each(function () {
+
+$(document).ready(function() {
+    // $('.discount-container').each(function() {
+    //     let discountType = $(this).find('.selectedDiscountType').val();
+    //     $(this).find('.discount_type_value').val(discountType);
+    // });
+
+    $('.discount-container').each(function() {
         let discountType = $(this).find('.selectedDiscountType').val();
-        $(this).find('.discount_type_value').val(discountType);
+        let discountSelect = $(this).find('.discount_type_value');
+    
+        // Set the selected value and trigger change event
+        discountSelect.val(discountType).trigger('change');
     });
+    
 });
+
 

@@ -180,7 +180,7 @@
 
                     </div>
 
-                    <div class="searchJobForm" id="divTohide">
+                    <div class="searchJobForm" id="divTohide" style="display:none">
                         <form id="search_dataForm" class="p-4">
                             <div class="row">
                                 <div class="col-md-3">
@@ -264,11 +264,11 @@
                     </div>
                     <div class="markendDelete">
                         <div class="row">
-                            <div class="col-md-7">
+                            <!-- <div class="col-md-7">
                                 <div class="jobsection d-flex">
                                     <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- <div class="col-md-5">
                                     <div class="pageTitleBtn p-0">
                                         <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a>        
@@ -296,7 +296,20 @@
                         </thead>
 
                         <tbody id="search_data">
+                            <?php 
+                                $amount=0;
+                                $paid=0;
+                                $outstanding=0;
+                            ?>
                             @foreach($list as $val)
+                            <!-- record_type -->
+                                <?php 
+                                    $paid_record=App\Models\PurchaseOrderRecordPayment::where(['po_id'=>$val->po_id,'deleted_at'=>null,'record_type'=>2])->sum('record_amount_paid');
+                                    // echo "<pre>";print_r($paid_record);
+                                    $amount=$amount+$val->gross_amount;
+                                    $paid=$paid+$paid_record;
+                                    $outstanding=$outstanding+$val->oustanding_amount;
+                                ?>
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{ date('d/m/Y', strtotime($val->created_at)) }}</td>
@@ -304,9 +317,9 @@
                                     <td>{{$val->suppliers->name}}</td>
                                     <td>{{$val->purchaseOrders->purchase_order_ref}}</td>
                                     <td>{{$val->inv_ref}}</td>
-                                    <td>£{{$val->net_amount}}</td>
-                                    <td>£0.00</td>
-                                    <td>£{{$val->net_amount}}</td>
+                                    <td>£{{$val->gross_amount}}</td>
+                                    <td>£{{$paid}}.00</td>
+                                    <td>£{{$val->oustanding_amount}}</td>
                                     <td>No</td>
                                     <td>{{ date('d/m/Y H:m', strtotime($val->created_at)) }}</td>
                                 </tr>
@@ -319,10 +332,9 @@
                         <tr class="calcualtionShowHide">
                             <td colspan="6"></td>
 
-                            <td id="Tablesub_total_amount">£0</td>
-                            <td id="Tablevat_amount">£0</td>
-                            <td id="Tabletotal_amount">£0</td>
-                            <td id="Tableoutstanding_amount" colspan="8">£0</td>
+                            <td id="Tablesub_total_amount">£{{$amount}}</td>
+                            <td id="Tablevat_amount">£{{$paid}}</td>
+                            <td id="Tableoutstanding_amount" colspan="8">£{{$outstanding}}</td>
                         </tr>
                     </table>
 
