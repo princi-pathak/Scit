@@ -129,7 +129,7 @@
                                     </div>
                                     <div class="row form-group">
                                         <label for="telephone" class="col-lg-4 col-sm-4 control-label">Telephone</label>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3 pe-0">
                                             <select class="form-control editInput selectOptions" id="telephone_country_code" name="telephone_country_code">
                                                 <option selected disabled>Please Select</option>
                                                 <option value="">+91 India</option>
@@ -143,7 +143,7 @@
                                     </div>
                                     <div class="row form-group">
                                         <label for="mobile" class="col-lg-4 col-sm-4 control-label">Mobile</label>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3 pe-0">
                                             <select class="form-control editInput selectOptions" id="mobile_country_code" name="mobile_country_code">
                                                 <option selected disabled>Please Select</option>
                                                 <option value="">+91 India</option>
@@ -246,7 +246,7 @@
                                     </div>
                                     <div class="row form-group">
                                         <label for="telephone" class="col-lg-4 col-sm-4 control-label">Telephone</label>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3 pe-0">
                                             <select class="form-control editInput selectOptions" id="telephone_country_code" name="telephone_country_code">
                                                 <option selected disabled>Please Select</option>
                                                 <option value="">+91 India</option>
@@ -260,7 +260,7 @@
                                     </div>
                                     <div class="row form-group">
                                         <label for="mobile" class="col-lg-4 col-sm-4 control-label">Mobile</label>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3 pe-0">
                                             <select class="form-control editInput selectOptions" id="mobile_country_code" name="mobile_country_code">
                                                 <option selected disabled>Please Select</option>
                                                 <option value="">+91 India</option>
@@ -403,7 +403,7 @@
                                     <div class="col-lg-6">
                                         <div class="d-flex align-items-center gap-3">
                                             <a class="icon_blue" onclick="get_modal(8)"><i class="fa fa-plus-circle"></i></a>
-                                            <span class="afterPlusText"> (Type to view product or <a class="javascript:void(0)">Click here</a> to view all assets)</span>
+                                            <span class="afterPlusText"> (Type to view product or <a class="javascript:void(0)" onclick="get_modal(20)">Click here</a> to view all assets)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -491,43 +491,67 @@
                             </div>
                         </div>
                         <div class="col-sm-12 padd0">
-                            <div>
-                                <a href="javascript:void(0)" class="btn btn-primary" id="task_active_inactive" style="background-color:#474747" onclick="bgColorChange(1)">Tasks</a>
-                                <a href="javascript:void(0)" class="btn btn-primary" id="recurring_active_inactive" onclick="bgColorChange(2)">Recurring Tasks</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="jobsection">
-                                <table class="table">
-                                    <thead>
-                                        <tr class="active">
-                                            <th>Date</th>
-                                            <th>Ref</th>
-                                            <th>User</th>
-                                            <th>Type</th>
-                                            <th>Title</th>
-                                            <th>Notes</th>
-                                            <th>Created On</th>
-                                            <th>Executed</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="newtask_result"></tbody>
-                                </table>
+                            <div class="tab-container Task_tabs">
+                                <div class="tab-menu">
+                                    <ul>
+                                        <li><a href="javascript:void(0)" class="tab-a active-a" data-id="Tasks" id="task_active_inactive">Tasks</a></li>
+                                        <li><a href="javascript:void(0)" class="tab-a" id="recurring_active_inactive" data-id="Recurring_task">Recurring Tasks</a></li>
+                                    </ul>
+                                </div>
+                                <!-- tab 1 Start -->
+                                <div class="tab tab-active" data-id="Tasks">
+                                    <div class="jobsection">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="active">
+                                                    <th>Date</th>
+                                                    <th>Ref</th>
+                                                    <th>User</th>
+                                                    <th>Type</th>
+                                                    <th>Title</th>
+                                                    <th>Notes</th>
+                                                    <th>Created On</th>
+                                                    <th>Executed</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="newtask_result"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- tab 2 Start -->
+                                <div class="tab" data-id="Recurring_task">
+                                    <div class="jobsection">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="active">
+                                                    <th>Date</th>
+                                                    <th>Ref</th>
+                                                    <th>User</th>
+                                                    <th>Type</th>
+                                                    <th>Title</th>
+                                                    <th>Notes</th>
+                                                    <th>Created On</th>
+                                                    <th>Executed</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="newtask_result"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="pddtp d-flex justify-content-end gap-3 padd0">
-                <button type="button" class="btn btn-primary" onclick="get_data()" id="submit_btnMain">
-                    <i class="fa fa-floppy-o"></i> Save</button>
-                <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</button>
-                <button type="button" class="btn btn-primary"><i class="fa fa-chevron-down"></i> Action </button>
-            </div><!-- add action dropdown  -->
-            <!-- </form> -->
-            <!-- page end-->
+                <div class="pddtp d-flex justify-content-end gap-3 padd0">
+                    <button type="button" class="btn btn-primary" onclick="get_data()" id="submit_btnMain">
+                        <i class="fa fa-floppy-o"></i> Save</button>
+                    <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</button>
+                    <button type="button" class="btn btn-primary"><i class="fa fa-chevron-down"></i> Action </button>
+                </div><!-- add action dropdown  -->
+                <!-- </form> -->
+                <!-- page end-->
         </section>
         <!-- page end-->
 
@@ -2092,8 +2116,8 @@
                                 <div class="tab-container">
                                     <div class="tab-menu">
                                         <ul>
-                                            <li><a href="#" class="tab-a active-a" data-id="tab1">Task</a></li>
-                                            <li><a href="#" class="tab-a" data-id="tab2">Timer</a></li>
+                                            <li><a href="javascript:void(0)" class="tab-a active-a" data-id="tab1">Task</a></li>
+                                            <li><a href="javascript:void(0)" class="tab-a" data-id="tab2">Timer</a></li>
                                         </ul>
                                     </div>
                                     <!-- tab 1 Start -->
@@ -2185,6 +2209,83 @@
                                                         <textarea name="" rows="4" id="" class="form-control"></textarea>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-12 check_hide">
+                                                <form>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="from_outside_border mrg_tp">
+                                                                <label class="upperlineTitle">Recurrence Pattern</label>
+                                                                <div class="check_hide_main">
+                                                                    <div class="row form-group">
+                                                                        <label class="col-lg-3 control-label">Create Task</label>
+                                                                        <div class="col-lg-4">
+                                                                            <select name="" id="" class="form-control">
+                                                                                <option value="0">0</option>
+                                                                                <option value="1">1</option>
+                                                                                <option value="2">2</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <label class="col-lg-3 control-label" for="">Days Before</label>
+                                                                    </div>
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-4">
+                                                                            <input type="radio" name="date" id="end_after">
+                                                                            <label for="end_after">End After</label>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <input type="radio" name="date" id="end_by">
+                                                                            <label for="end_by">End By</label>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <input type="radio" name="date" id="No_End_Date">
+                                                                            <label for="No_End_Date">No End Date</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row form-group">
+                                                                        <label class="col-lg-5 control-label">No. Of Repetitaion</label>
+                                                                        <div class="col-lg-7 ps-0">
+                                                                            <input type="text" class="form-control" name="Supplier_input" value="">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="from_outside_border mrg_tp">
+                                                                <label class="upperlineTitle">Range Of Recurrence</label>
+                                                                <div class="check_hide_main">
+                                                                    <div class="row form-group">
+                                                                        <label class="col-lg-4 control-label">Task Frequency</label>
+                                                                        <div class="col-lg-8">
+                                                                            <select name="" id="" class="form-control">
+                                                                                <option value="">Daily</option>
+                                                                                <option value="">Weekly</option>
+                                                                                <option value="">Monthly</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-4 pe-0">
+                                                                            <input type="radio" name="date" id="Every">
+                                                                            <label for="Every">Every</label>
+                                                                        </div>
+                                                                        <div class="col-md-4 pe-0">
+                                                                            <input type="text" class="form-control" id="days">
+                                                                        </div>
+                                                                        <label for="days" class="col-md-3">Days</label>
+                                                                    </div>
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-8">
+                                                                            <input type="radio" name="date" id="Every_Weekday">
+                                                                            <label for="Every_Weekday">Every Weekday</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="noti_button">
@@ -2410,6 +2511,403 @@
             </div>
         </div>
         <!-- end here -->
+
+        <!-- Product List Modal start here (modal id = 20) -->
+        <div class="modal fade in" id="product_list_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header terques-bg">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title pupTitle"> Product List </h4>
+                    </div>
+                    <div class="modal-body pdbotm">
+                        <form id="product_list_form">
+                            @csrf
+                            <div class="tab-container product_list_tabs">
+                                <div class="tab-menu">
+                                    <ul>
+                                        <li><a href="javascript:void(0)" class="tab-a active-a" data-id="Product">Product (s) <span class="badge">04</span></a></li>
+                                        <li><a href="javascript:void(0)" class="tab-a" data-id="Service">Service (s) <span class="badge">01</span></a></li>
+                                        <li><a href="javascript:void(0)" class="tab-a" data-id="Consumable">Consumable (s) <span class="badge">01</span></a></li>
+                                        <li><a href="javascript:void(0)" class="tab-a" data-id="Product_Group">Product Group (s) <span class="badge">36</span></a></li>
+                                    </ul>
+                                </div>
+                                <!-- tab 1 Start -->
+                                <div class="tab tab-active" data-id="Product">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-4 pe-0">
+                                                    <select name="" id="" class="form-control">
+                                                        <option selected disabled>-Any Category-</option>
+                                                        <option value="">text</option>
+                                                        <option value="">text</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 pe-0">
+                                                    <input type="text" class="form-control" placeholder="Search Team">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <button class="btn btn-primary" type="button">Search</button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="alphabetic_List">
+                                                    <span><a href="">All</a></span>
+                                                    <span><a href="">A</a></span>
+                                                    <span><a href="">B</a></span>
+                                                    <span><a href="">C</a></span>
+                                                    <span><a href="">D</a></span>
+                                                    <span><a href="">E</a></span>
+                                                    <span><a href="">F</a></span>
+                                                    <span><a href="">G</a></span>
+                                                    <span><a href="">H</a></span>
+                                                    <span><a href="">I</a></span>
+                                                    <span><a href="">J</a></span>
+                                                    <span><a href="">K</a></span>
+                                                    <span><a href="">L</a></span>
+                                                    <span><a href="">M</a></span>
+                                                    <span><a href="">N</a></span>
+                                                    <span><a href="">O</a></span>
+                                                    <span><a href="">P</a></span>
+                                                    <span><a href="">Q</a></span>
+                                                    <span><a href="">R</a></span>
+                                                    <span><a href="">S</a></span>
+                                                    <span><a href="">T</a></span>
+                                                    <span><a href="">U</a></span>
+                                                    <span><a href="">V</a></span>
+                                                    <span><a href="">W</a></span>
+                                                    <span><a href="">X</a></span>
+                                                    <span><a href="">Y</a></span>
+                                                    <span><a href="">Z</a></span>
+                                                    <span><a href="">0</a></span>
+                                                    <span><a href="">1</a></span>
+                                                    <span><a href="">2</a></span>
+                                                    <span><a href="">3</a></span>
+                                                    <span><a href="">4</a></span>
+                                                    <span><a href="">5</a></span>
+                                                    <span><a href="">6</a></span>
+                                                    <span><a href="">7</a></span>
+                                                    <span><a href="">8</a></span>
+                                                    <span><a href="">9</a></span>
+                                                </div>
+                                                <p><strong>1-1 of 1 product(s)</strong></p>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Code</th>
+                                                            <th>Category</th>
+                                                            <th>Product</th>
+                                                            <th>Description</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>P1-0001</td>
+                                                            <td>test</td>
+                                                            <td>Product 101</td>
+                                                            <td class="description">test</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>P1-0002</td>
+                                                            <td>test</td>
+                                                            <td>Product 101</td>
+                                                            <td class="description">test</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>P1-0003</td>
+                                                            <td>test</td>
+                                                            <td>Product 101</td>
+                                                            <td class="description">test</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>P1-0004</td>
+                                                            <td>test</td>
+                                                            <td>Product 101</td>
+                                                            <td class="description">test</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="noti_button">
+                                                <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- tab 2 Start -->
+                                <div class="tab " data-id="Service">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-4 pe-0">
+                                                    <select name="" id="" class="form-control">
+                                                        <option selected disabled>-Any Category-</option>
+                                                        <option value="">text</option>
+                                                        <option value="">text</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 pe-0">
+                                                    <input type="text" class="form-control" placeholder="Search Team">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <button class="btn btn-primary" type="button">Search</button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="alphabetic_List">
+                                                    <span><a href="">All</a></span>
+                                                    <span><a href="">A</a></span>
+                                                    <span><a href="">B</a></span>
+                                                    <span><a href="">C</a></span>
+                                                    <span><a href="">D</a></span>
+                                                    <span><a href="">E</a></span>
+                                                    <span><a href="">F</a></span>
+                                                    <span><a href="">G</a></span>
+                                                    <span><a href="">H</a></span>
+                                                    <span><a href="">I</a></span>
+                                                    <span><a href="">J</a></span>
+                                                    <span><a href="">K</a></span>
+                                                    <span><a href="">L</a></span>
+                                                    <span><a href="">M</a></span>
+                                                    <span><a href="">N</a></span>
+                                                    <span><a href="">O</a></span>
+                                                    <span><a href="">P</a></span>
+                                                    <span><a href="">Q</a></span>
+                                                    <span><a href="">R</a></span>
+                                                    <span><a href="">S</a></span>
+                                                    <span><a href="">T</a></span>
+                                                    <span><a href="">U</a></span>
+                                                    <span><a href="">V</a></span>
+                                                    <span><a href="">W</a></span>
+                                                    <span><a href="">X</a></span>
+                                                    <span><a href="">Y</a></span>
+                                                    <span><a href="">Z</a></span>
+                                                    <span><a href="">0</a></span>
+                                                    <span><a href="">1</a></span>
+                                                    <span><a href="">2</a></span>
+                                                    <span><a href="">3</a></span>
+                                                    <span><a href="">4</a></span>
+                                                    <span><a href="">5</a></span>
+                                                    <span><a href="">6</a></span>
+                                                    <span><a href="">7</a></span>
+                                                    <span><a href="">8</a></span>
+                                                    <span><a href="">9</a></span>
+                                                </div>
+                                                <p><strong>1-1 of 1 product(s)</strong></p>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Code</th>
+                                                            <th>Category</th>
+                                                            <th>Product</th>
+                                                            <th>Description</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>P2-0001</td>
+                                                            <td>test</td>
+                                                            <td>Product 201</td>
+                                                            <td class="description">service product test</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="noti_button">
+                                                <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- tab 3 Start -->
+                                <div class="tab " data-id="Consumable">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-4 pe-0">
+                                                    <select name="" id="" class="form-control">
+                                                        <option selected disabled>-Any Category-</option>
+                                                        <option value="">text</option>
+                                                        <option value="">text</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 pe-0">
+                                                    <input type="text" class="form-control" placeholder="Search Team">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <button class="btn btn-primary" type="button">Search</button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="alphabetic_List">
+                                                    <span><a href="">All</a></span>
+                                                    <span><a href="">A</a></span>
+                                                    <span><a href="">B</a></span>
+                                                    <span><a href="">C</a></span>
+                                                    <span><a href="">D</a></span>
+                                                    <span><a href="">E</a></span>
+                                                    <span><a href="">F</a></span>
+                                                    <span><a href="">G</a></span>
+                                                    <span><a href="">H</a></span>
+                                                    <span><a href="">I</a></span>
+                                                    <span><a href="">J</a></span>
+                                                    <span><a href="">K</a></span>
+                                                    <span><a href="">L</a></span>
+                                                    <span><a href="">M</a></span>
+                                                    <span><a href="">N</a></span>
+                                                    <span><a href="">O</a></span>
+                                                    <span><a href="">P</a></span>
+                                                    <span><a href="">Q</a></span>
+                                                    <span><a href="">R</a></span>
+                                                    <span><a href="">S</a></span>
+                                                    <span><a href="">T</a></span>
+                                                    <span><a href="">U</a></span>
+                                                    <span><a href="">V</a></span>
+                                                    <span><a href="">W</a></span>
+                                                    <span><a href="">X</a></span>
+                                                    <span><a href="">Y</a></span>
+                                                    <span><a href="">Z</a></span>
+                                                    <span><a href="">0</a></span>
+                                                    <span><a href="">1</a></span>
+                                                    <span><a href="">2</a></span>
+                                                    <span><a href="">3</a></span>
+                                                    <span><a href="">4</a></span>
+                                                    <span><a href="">5</a></span>
+                                                    <span><a href="">6</a></span>
+                                                    <span><a href="">7</a></span>
+                                                    <span><a href="">8</a></span>
+                                                    <span><a href="">9</a></span>
+                                                </div>
+                                                <p><strong>1-1 of 1 product(s)</strong></p>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Code</th>
+                                                            <th>Category</th>
+                                                            <th>Product</th>
+                                                            <th>Description</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>P2-0001</td>
+                                                            <td>test</td>
+                                                            <td>Product 201</td>
+                                                            <td class="description">service product test</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="noti_button">
+                                                <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- tab 4 Start -->
+                                <div class="tab " data-id="Product_Group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-6 pe-0">
+                                                    <input type="text" class="form-control" placeholder="Search Team">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <button class="btn btn-primary" type="button">Search</button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="alphabetic_List">
+                                                    <span><a href="">All</a></span>
+                                                    <span><a href="">A</a></span>
+                                                    <span><a href="">B</a></span>
+                                                    <span><a href="">C</a></span>
+                                                    <span><a href="">D</a></span>
+                                                    <span><a href="">E</a></span>
+                                                    <span><a href="">F</a></span>
+                                                    <span><a href="">G</a></span>
+                                                    <span><a href="">H</a></span>
+                                                    <span><a href="">I</a></span>
+                                                    <span><a href="">J</a></span>
+                                                    <span><a href="">K</a></span>
+                                                    <span><a href="">L</a></span>
+                                                    <span><a href="">M</a></span>
+                                                    <span><a href="">N</a></span>
+                                                    <span><a href="">O</a></span>
+                                                    <span><a href="">P</a></span>
+                                                    <span><a href="">Q</a></span>
+                                                    <span><a href="">R</a></span>
+                                                    <span><a href="">S</a></span>
+                                                    <span><a href="">T</a></span>
+                                                    <span><a href="">U</a></span>
+                                                    <span><a href="">V</a></span>
+                                                    <span><a href="">W</a></span>
+                                                    <span><a href="">X</a></span>
+                                                    <span><a href="">Y</a></span>
+                                                    <span><a href="">Z</a></span>
+                                                    <span><a href="">0</a></span>
+                                                    <span><a href="">1</a></span>
+                                                    <span><a href="">2</a></span>
+                                                    <span><a href="">3</a></span>
+                                                    <span><a href="">4</a></span>
+                                                    <span><a href="">5</a></span>
+                                                    <span><a href="">6</a></span>
+                                                    <span><a href="">7</a></span>
+                                                    <span><a href="">8</a></span>
+                                                    <span><a href="">9</a></span>
+                                                </div>
+                                                <p><strong>1-1 of 1 product(s)</strong></p>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Product Group</th>
+                                                            <th>Description</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Ram Testing</td>
+                                                            <td class="description">testing....</td>
+                                                            <th>
+                                                                <div class="col-lg-1" id="inputPlusCircle">
+                                                                    <a class="javascript:void(0)" onclick="get_modal()"><i class="fa  fa-plus-circle"></i> </a>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="noti_button">
+                                                <a href="javascript:" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end here -->
     </div>
 </section>
 
@@ -2455,7 +2953,7 @@
 <script>
     function get_modal(id) {
         var key = $("#id").val();
-        if (id == 4 || id == 5 || id == 6 || id == 7 || id == 8 || id == 9 || id == 10 || id == 11 || id == 12 || id == 13 || id == 14 || id == 15 || id == 16 || id == 17 || id == 18 || id == 19) {
+        if (id == 4 || id == 5 || id == 6 || id == 7 || id == 8 || id == 9 || id == 10 || id == 11 || id == 12 || id == 13 || id == 14 || id == 15 || id == 16 || id == 17 || id == 18 || id == 19 || id == 20) {
             if (key == '') {
                 alert("Please save Customer first");
                 return false;
@@ -2508,6 +3006,9 @@
                 } else if (id == 19) {
                     $('#Search_form')[0].reset();
                     $("#Search_modal").modal('show');
+                } else if (id == 20) {
+                    $('#product_list_form')[0].reset();
+                    $("#product_list_modal").modal('show');
                 }
             }
         } else if (id == 1) {
@@ -2525,16 +3026,39 @@
 <!-- modal end -->
 
 <script>
-    
+    //for tabs container
+    // $(document).ready(function() {
+    //     $('.tab-a').click(function() {
+    //         $(".tab").removeClass('tab-active');
+    //         $(".tab[data-id='" + $(this).attr('data-id') + "']").addClass("tab-active");
+    //         $(".tab-a").removeClass('active-a');
+    //         $(this).parent().find(".tab-a").addClass('active-a');
+    //     });
+    // });
+
     $(document).ready(function() {
         $('.tab-a').click(function() {
-            $(".tab").removeClass('tab-active');
-            $(".tab[data-id='" + $(this).attr('data-id') + "']").addClass("tab-active");
-            $(".tab-a").removeClass('active-a');
-            $(this).parent().find(".tab-a").addClass('active-a');
+            let parentContainer = $(this).closest('.tab-container');
+
+            parentContainer.find(".tab").removeClass('tab-active');
+            parentContainer.find(".tab-a").removeClass('active-a');
+
+            let tabId = $(this).attr('data-id');
+            parentContainer.find(".tab[data-id='" + tabId + "']").addClass("tab-active");
+            $(this).addClass('active-a');
         });
     });
 
+    //hide-show 
+    $(document).ready(function() {
+        $("#Recurring_task").change(function() {
+            if ($(this).is(":checked")) {
+                $(".check_hide").show();
+            } else {
+                $(".check_hide").hide();
+            }
+        });
+    });
 </script>
 
 <script>
