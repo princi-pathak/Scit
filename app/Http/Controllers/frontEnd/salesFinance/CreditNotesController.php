@@ -427,13 +427,13 @@ class CreditNotesController extends Controller
                     'po_id'=>$purchase_order_id[$i],
                     'credit_id'=>$credit_id,
                     'amount_paid'=>$amount[$i],
-                    'product_id'=>$request->product_id,
+                    // 'product_id'=>$request->product_id,
                     'supplier_id'=>$request->supplier_id,
                     'date'=>$request->date,
                 ];
                 try{
-                    $saveData=CreditNoteAllocate::saveCreditAllocate($data);
-                    $this->update_outstandingAmount($total_amount,$purchase_order_id,$credit_id);
+                    // $saveData=CreditNoteAllocate::saveCreditAllocate($data);
+                    $this->update_outstandingAmount($amount[$i],$purchase_order_id[$i],$credit_id);
                 }catch (\Exception $e) {
                     return response()->json(['error' => $e->getMessage()], 500);
                 }
@@ -442,6 +442,7 @@ class CreditNotesController extends Controller
         }
     }
     private function update_outstandingAmount($total_amount,$purchase_order_id,$credit_id){
+        // echo "yha";die;
         $tableCreditNote=CreditNote::find($credit_id);
         $creditAmount=$tableCreditNote->balance_credit;
         $final_amountCredit=$creditAmount-$total_amount;
@@ -450,8 +451,7 @@ class CreditNotesController extends Controller
             $tableCreditNote->status=2;
         }
         $tableCreditNote->save();
-        for($i=0;$i<count($purchase_order_id);$i++){
-            $tablePurchaseOrder=PurchaseOrder::find($purchase_order_id[$i]);
+            $tablePurchaseOrder=PurchaseOrder::find($purchase_order_id);
             $orderAmount=$tablePurchaseOrder->outstanding_amount;
             $final_amountOrder=$orderAmount-$total_amount;
             $tablePurchaseOrder->outstanding_amount=$final_amountOrder;
@@ -459,6 +459,5 @@ class CreditNotesController extends Controller
                 $tablePurchaseOrder->status=5;
             }
             $tablePurchaseOrder->save();
-        }
     }
 }

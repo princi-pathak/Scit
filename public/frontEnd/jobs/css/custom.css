@@ -2389,7 +2389,7 @@ div#exampleOne_wrapper::-webkit-scrollbar-thumb {
 .parent-container {
   position: absolute;
   background: #fff;
-  width: 91%;
+  width: 91% !important;
   box-shadow: 0px 0px 7px #0000001f;
   /* left: 194px; */
   /* top: 44px; */
@@ -2480,7 +2480,8 @@ div#exampleOne_wrapper::-webkit-scrollbar-thumb {
 
 ul#purchase_qoute_refList,
 ul#purchase_job_refList,
-ul#productList {
+ul#productList,
+ul#supplierList {
   padding: 0 5px;
   height: 156px;
   overflow: auto;

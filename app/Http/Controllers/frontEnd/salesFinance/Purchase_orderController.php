@@ -1185,80 +1185,113 @@ class Purchase_orderController extends Controller
         // echo "<pre>";print_r($request->all());die;
         $po_startDate = date('Y-m-d', strtotime(str_replace('/', '-', $request->po_startDate)));
         $po_endDate=date('Y-m-d', strtotime(str_replace('/', '-', $request->po_endDate)));
-        $purchaseOrderquery = DB::table('purchase_order_record_payments')->select(DB::raw('id,home_id,po_id,supplier_id,product_id,record_amount_paid,record_payment_date as date'))->where('supplier_id',$request->selectedsupplierId)->whereNull('deleted_at');
+        
+        $purchaseOrderquery=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where('supplier_id',$request->selectedsupplierId)->whereNull('deleted_at');
         if ($request->filled('po_startDate') && $request->filled('po_endDate')) {
-            $purchaseOrderquery->whereBetween('record_payment_date', [$po_startDate, $po_endDate]);
+            $purchaseOrderquery->whereBetween('purchase_date', [$po_startDate, $po_endDate]);
         }
-        $purchase_order=$purchaseOrderquery->get();
-        // return $purchase_order;
-        $creditquery = DB::table('credit_note_allocates')->where('supplier_id',$request->selectedsupplierId)->whereNull('deleted_at');
-        if ($request->filled('po_startDate') && $request->filled('po_endDate')) {
-            $creditquery->whereBetween('date', [$po_startDate, $po_endDate]);
+        $purchase_orders=$purchaseOrderquery->get();
+        // return $purchase_orders;
+        $allRecords = collect();
+        foreach($purchase_orders as $val){
+            $orderGross_amount=0;
+            foreach($val->purchaseOrderProducts as $orderProduct){
+                $order_calculateAmount=$orderProduct->qty*$orderProduct->price;
+                $order_calculatepercentage=$order_calculateAmount*$orderProduct->vat/100;
+                $orderGross_amount=$orderGross_amount+$order_calculatepercentage+$order_calculateAmount;
+                $allRecords->push([
+                    'date' => $val->purchase_date,
+                    'ref'=>$val->purchase_order_ref,
+                    'address'=>$val->address,
+                    'supplier_ref'=>'',
+                    'net_amount'=>$orderProduct->qty*$orderProduct->price,
+                    'vat'=>$order_calculatepercentage,
+                    'paid_amount'=>'',
+                    'total_amount'=>$orderGross_amount,
+                    'type'=>'purchase',
+                ]);
+            }
+            $allocateData=CreditNoteAllocate::where('po_id',$val->id)->whereNull('deleted_at')->get();
+            foreach($allocateData as $allocate){
+                $ref=CreditNote::find($allocate->credit_id);
+                $allRecords->push([
+                    'date' => $allocate->date,
+                    'ref'=>$ref->credit_ref,
+                    'address'=>$ref->address,
+                    'supplier_ref'=>'',
+                    'net_amount'=>'',
+                    'vat'=>'',
+                    'paid_amount'=>$allocate->amount_paid,
+                    'total_amount'=>'',
+                    'type'=>'allocate',
+                ]);
+            }
+            $recordPaymentData=PurchaseOrderRecordPayment::where('po_id',$val->id)->whereNull('deleted_at')->get();
+            foreach($recordPaymentData as $record){
+                $allRecords->push([
+                    'date' => $record->record_payment_date,
+                    'ref'=>$val->purchase_order_ref,
+                    'address'=>$val->address,
+                    'supplier_ref'=>'',
+                    'net_amount'=>'',
+                    'vat'=>'',
+                    'paid_amount'=>$record->record_amount_paid,
+                    'total_amount'=>'',
+                    'type'=>'record_payment',
+                ]);
+            }
+            
         }
-        $credit_allocate=$creditquery->get();
-        $mergedData = $purchase_order->merge($credit_allocate);
-        $sortedData = $mergedData->sortBy('date');
-
-        $sortedArray = $sortedData->values()->all();
-        // return $sortedArray;
+        $sortedData = $allRecords->sortBy('date');
+        $all_data= $sortedData->values(); 
+        // return $all_data;
         $data_array='';
-        $paid_amount=0;
-        foreach($sortedArray as $val){
-            if(isset($val->credit_id) && $val->credit_id){
-                $credit_note=CreditNote::where('id',$val->credit_id)->first();
-                $address=$credit_note->address;
-                $ref=$credit_note->credit_ref;
-                $paid_amount=$val->amount_paid;
-                // $products=CreditNoteProduct::where('credi_note_id',$val->credit_id)->whereNull('deleted_at')->get();
-                $products='';
-            }else{
-                $purchase_order=PurchaseOrder::where('id',$val->po_id)->first();
-                $address=$purchase_order->user_address;
-                $ref=$purchase_order->purchase_order_ref;
-                $paid_amount=$val->record_amount_paid;
-                $products=PurchaseOrderProduct::where('purchase_order_id',$val->po_id)->whereNull('deleted_at')->get();
-            }
-            if(!empty($products)){
-                $netAmount=0;
-                $vat_amount=0;
-                $total_amount=0;
-                $gross_amount=0;
-                $outstandingAmountTotal=0;
-                $in=1;
-                foreach($products as $productVal){
-                    $qty=$productVal->qty*$productVal->price;
-                    $netAmount=$netAmount+$qty;
-                    $vat=$qty*$productVal->vat/100;
-                    $vat_amount=$vat_amount+$vat;
-                    $total=$qty+$vat;
-                    $total_amount=$total_amount+$netAmount+$vat;
-                    $outstandingAmountTotal=$outstandingAmountTotal+$paid_amount;
-                    $calculate=$paid_amount-$total;
-                    $gross_amount=$gross_amount+$calculate;
-                    if($gross_amount > 0 && $in == 1){
-                        $in=2;
-                    }else{
+        $gross_amount=0;
+        $grandNetAmount=0;
+        $grandVatAmount=0;
+        $grandTotalAmount=0;
+        $grandPaidAmount=0;
+        foreach($all_data as $dataVal){
+            $netAmount = isset($dataVal['net_amount']) && $dataVal['net_amount'] !== "" ? '£' . $dataVal['net_amount'] : '';
+            $vatAmount = isset($dataVal['vat']) && $dataVal['vat'] !== "" ? '£' . $dataVal['vat'] : '';
+            $totalAmount = isset($dataVal['total_amount']) && $dataVal['total_amount'] !== "" ? '£' . $dataVal['total_amount'] : '';
+            $paidAmount = isset($dataVal['paid_amount']) && $dataVal['paid_amount'] !== "" ? '£' . $dataVal['paid_amount'] : '';
+            $minPaidAmount=$gross_amount-(float)$dataVal['paid_amount'];
+            $addAllAmount=(float)$dataVal['total_amount']+$minPaidAmount;
+            $gross_amount=$addAllAmount;
 
-                    }
-                }
-                
-                
-            }
+            $grandNetAmount=$grandNetAmount+(float)$dataVal['net_amount'];
+            $grandVatAmount=$grandVatAmount+(float)$dataVal['vat'];
+            $grandTotalAmount=$grandTotalAmount+(float)$dataVal['total_amount'];
+            $grandPaidAmount=$grandPaidAmount+(float)$dataVal['paid_amount'];
             $data_array .= '<tr>
-                    <td>' . date('m/d/Y', strtotime($val->date)) . '</td>
-                    <td>' . $ref . '</td>
+                    <td>' . date('d/m/Y', strtotime($dataVal['date'])) . '</td>
+                    <td>' . $dataVal['ref'] . '</td>
                     <td></td>
-                    <td>' . (strip_tags($address) ?? "") . '</td>
-                    <td>' . ($qty ?? "") . '</td>
-                    <td>' . ($vat ?? "") . '</td>
-                    <td>' . ($total ?? "") . '</td>
-                    <td>' . ($paid_amount ?? "") . '</td>
-                    <td>' . ($gross_amount ?? "") . '</td>
+                    <td>' . (strip_tags($dataVal['address']) ?? "") . '</td>
+                    <td>' . ($netAmount ?? "") . '</td>
+                    <td>' . ($vatAmount ?? "") . '</td>
+                    <td>' . ($totalAmount ?? "") . '</td>
+                    <td>' . ($paidAmount ?? "") . '</td>
+                    <td>£'.$gross_amount.'</td>
                 </tr>';
         }
-        // return $data_array;
-        return response()->json(['data' => $data_array,'grandNetAmount'=>$netAmount,'all_vatTotalAmount'=>$vat_amount,'all_TotalAmount'=>$total_amount,'outstandingAmountTotal'=>$outstandingAmountTotal,'grandGrossAmount'=>$gross_amount]);
+        // return $sortedData->values(); 
+        return response()->json(['data' => $data_array,'grandNetAmount'=>$grandNetAmount,'all_vatTotalAmount'=>$grandVatAmount,'all_TotalAmount'=>$grandTotalAmount,'outstandingAmountTotal'=>$grandPaidAmount,'grandGrossAmount'=>$gross_amount]);
         
+    }
+    public function searchPurchaseOrdersStatementsOutstanding(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        // getAllPaymentPaid($po_id)
+        $po_startDate = date('Y-m-d', strtotime(str_replace('/', '-', $request->po_startDate)));
+        $po_endDate=date('Y-m-d', strtotime(str_replace('/', '-', $request->po_endDate)));
+        
+        $purchaseOrderquery=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where('supplier_id',$request->selectedsupplierId)->whereNull('deleted_at');
+        if ($request->filled('po_startDate') && $request->filled('po_endDate')) {
+            $purchaseOrderquery->whereBetween('purchase_date', [$po_startDate, $po_endDate]);
+        }
+        $purchase_orders=$purchaseOrderquery->get();
+        return $purchase_orders;
     }
     public function purchase_order_invoices(Request $request){
         $home_id=Auth::user()->home_id;

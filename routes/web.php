@@ -431,6 +431,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/searchPurchase_ref', 'searchPurchase_ref');
 		Route::post('/saveBulkInvoiceModal', 'saveBulkInvoiceModal');
 		Route::post('/saveBulkRecordPaymentModal', 'saveBulkRecordPaymentModal');
+		Route::post('/searchPurchaseOrdersStatementsOutstanding', 'searchPurchaseOrdersStatementsOutstanding');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {

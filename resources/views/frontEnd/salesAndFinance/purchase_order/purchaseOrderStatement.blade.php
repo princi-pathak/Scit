@@ -212,8 +212,14 @@ ul#supplierList {
             alert("Please choose both date");
             return false;
         }
+        var url="";
+        if(type==1){
+            url="{{ url('searchPurchaseOrdersStatements') }}";
+        }else{
+            url="{{ url('searchPurchaseOrdersStatementsOutstanding') }}"
+        }
         $.ajax({
-            url: "{{ url('searchPurchaseOrdersStatements') }}",
+            url: url,
             method: 'post',
             data: {
                 type:type,
@@ -248,7 +254,7 @@ ul#supplierList {
                 // $('#exampleOne').DataTable();
                 $('#exampleOne').DataTable({
                     order: [
-                        [1, 'asc']
+                        // [1, 'asc']
                     ],
                     language: {
                         paginate: {
@@ -343,9 +349,9 @@ ul#supplierList {
                                 li.name = item.name;
                                 li.className = "editInput";
                                 ul.appendChild(li);
-                                const hr = document.createElement('hr');
+                                // const hr = document.createElement('hr');
                                 // hr.className='dropdown-divider';
-                                ul.appendChild(hr);
+                                // ul.appendChild(hr);
                             });
 
                             div.appendChild(ul);
