@@ -1286,11 +1286,50 @@ class Purchase_orderController extends Controller
         $po_startDate = date('Y-m-d', strtotime(str_replace('/', '-', $request->po_startDate)));
         $po_endDate=date('Y-m-d', strtotime(str_replace('/', '-', $request->po_endDate)));
         
-        $purchaseOrderquery=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where('supplier_id',$request->selectedsupplierId)->whereNull('deleted_at');
+        $purchaseOrderquery=PurchaseOrder::with('suppliers','purchaseOrderProducts')->where('supplier_id',$request->selectedsupplierId)->whereNull('deleted_at')->whereNot('outstanding_amount',0);
         if ($request->filled('po_startDate') && $request->filled('po_endDate')) {
             $purchaseOrderquery->whereBetween('purchase_date', [$po_startDate, $po_endDate]);
         }
         $purchase_orders=$purchaseOrderquery->get();
+        // return $purchase_orders;
+        $data_array='';
+        $final_netAmount=0;
+        $final_vatAmount=0;
+        $final_totalAmount=0;
+        $final_paidAmount=0;
+        foreach($purchase_orders as $val){
+            // return $valOrders->purchaseOrderProducts;
+            $paid_amount=$this->getAllPaymentPaid($val->id);
+            $totalAmount=0;
+            $gross_amount=0;
+            foreach($val->purchaseOrderProducts as $product){
+                $calculation=$product->qty*$product->price;
+                $percentageValue=$calculation*$product->vat/100;
+                $subTotal=$calculation+$percentageValue;
+                $minPaidAmount=$gross_amount-$paid_amount;
+                $addAllAmount=$subTotal+$minPaidAmount;
+                $gross_amount=$addAllAmount;
+
+                $final_netAmount=$final_netAmount+$calculation;
+                $final_vatAmount=$final_vatAmount+$percentageValue;
+                $final_totalAmount=$final_totalAmount+$subTotal;
+                $final_paidAmount=$final_paidAmount+$paid_amount;
+            }
+            $data_array .= '<tr>
+                    <td>' . date('d/m/Y', strtotime($val->purchase_date)) . '</td>
+                    <td>' . $val->purchase_order_ref . '</td>
+                    <td></td>
+                    <td>' . (strip_tags($val->address) ?? "") . '</td>
+                    <td>' . ($calculation ?? "") . '</td>
+                    <td>' . ($percentageValue ?? "") . '</td>
+                    <td>' . ($subTotal ?? "") . '</td>
+                    <td>' . ($paid_amount ?? "") . '</td>
+                    <td>£'.$gross_amount.'</td>
+                </tr>';
+            
+        }
+        // return $data_array; 
+        return response()->json(['data' => $data_array,'grandNetAmount'=>$final_netAmount,'all_vatTotalAmount'=>$final_vatAmount,'all_TotalAmount'=>$final_totalAmount,'outstandingAmountTotal'=>$final_paidAmount,'grandGrossAmount'=>$gross_amount]);
         return $purchase_orders;
     }
     public function purchase_order_invoices(Request $request){

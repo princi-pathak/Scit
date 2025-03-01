@@ -78,10 +78,26 @@
 		.supplier-note p{
 			display:inline;
 		}
+		.watermark {
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%, -50%) rotate(-45deg);
+			opacity: 0.2;
+			font-size: 10rem;
+			color:rgba(88, 86, 86, 0.97);
+			font-family: Arial, sans-serif;
+			pointer-events: none;
+			/* z-index: 9999;  */
+			font-weight: bold;
+		}
 	</style>
 </head>
 
 <body>
+	<?php if($po_details->outstanding_amount == 0){?>
+	<div class="watermark">Paid</div>
+	<?php }?>
 	<div class="main-center-box">
 		<div style="background: #f2f3f5; padding: 20px; float: left; width: 100%; min-height: 100vh;">
 			<table table="border" cellpadding="0" cellspacing="0" width="100%"
