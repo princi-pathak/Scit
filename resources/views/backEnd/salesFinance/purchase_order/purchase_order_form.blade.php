@@ -389,6 +389,7 @@
                         </div>
                     </div> <!-- End off from_outside_border -->
                 </form>
+                <!-- </form> -->
 
                 <div class="from_outside_border mrg_tp">
                     <label class="upperlineTitle">Product Details</label>
@@ -550,8 +551,7 @@
                     <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</button>
                     <button type="button" class="btn btn-primary"><i class="fa fa-chevron-down"></i> Action </button>
                 </div><!-- add action dropdown  -->
-                <!-- </form> -->
-                <!-- page end-->
+            </div>
         </section>
         <!-- page end-->
 

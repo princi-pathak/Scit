@@ -3497,7 +3497,7 @@ ul.amounts li {
 
 .fc-content .fc-event {
     border-radius: 4px;
-    webkit-border-radius: 4px;
+    -webkit-border-radius: 4px;
     padding: 4px 6px;
 }
 
@@ -6750,7 +6750,7 @@ div.tagsinput span.tag {
     margin-top: 40px;
     width: 400px;
     height: 400px;
-    webkit-border-radius: 100%;
+    -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     border-radius: 100%;
     border: #eee 10px solid;
@@ -8005,4 +8005,26 @@ td.action-icn {
 .Task_tabs .tab-menu ul li a.active-a {
     background-color: #32323a;
     color: #ffffff;
+}
+
+.Product_group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #1fb5ad30;
+}
+
+.Product_group p {
+    margin-bottom: 0px;
+    color: #00A8B3;
+}
+
+.Product_group_main table thead tr th {
+    white-space: nowrap;
+}
+
+.Product_group_main h5 {
+    color: #00A8B3;
+    font-weight: 600;
 }
