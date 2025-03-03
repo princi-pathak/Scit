@@ -305,7 +305,6 @@ $access_rights = explode(',', $rights);
                                     </li>
                                 </ul>
                             </div>
-
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle @if(isset($page)) @if($page == 'item') active @endif @endif" data-bs-toggle="dropdown">
                                     <span><i class="material-symbols-outlined"> production_quantity_limits</i></span>Items
@@ -317,7 +316,6 @@ $access_rights = explode(',', $rights);
                                     <a href="{{ url('/item/item-groups') }}" class="dropdown-item">Product Groups</a>
                                 </div>
                             </div>
-
                             <a href="{{url('/expenses')}}" class="nav-item nav-link"><span><i class="material-symbols-outlined"> calculate </i></span>Expenses</a>
                             <div class="nav-item dropdown">
                                 <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown"><span><i class="material-symbols-outlined"> diversity_2 </i></span>Users</a>
@@ -465,11 +463,11 @@ $access_rights = explode(',', $rights);
                                     <li class="nav-item1"><a class="dropdown-item" href="#" role="button"><span><i class="fa fa-check-circle"></i> Quick Setup Wizard</span></a></li>
                                 </ul>
                             </div>
-                            <div class="nav-item dropdown @if(isset($page)) @if($page == 'dayBook') active @endif @endif">
-                                <a href="#!" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown"><span><i class="material-symbols-outlined">  book_5 </i></span>Day Book</a>
+                            <div class="nav-item dropdown ">
+                                <a href="#!" class="nav-item nav-link dropdown-toggle @if(isset($page) && $page == 'dayBook') active @endif" data-bs-toggle="dropdown"><span><i class="material-symbols-outlined">  book_5 </i></span>Day Book</a>
                                 <div class="dropdown-menu fade-up m-0">
                                     <a href="{{ url('/sales/sales-day-book') }}" class="dropdown-item"> <span><i class="fa fa-book"></i> Sales Day Book </span></a>
-                                    <a href="{{ url('/sales/purchase-day=book') }}" class="dropdown-item"> <span><i class="fa fa-book"></i> Purchasee Day book</span></a>
+                                    <a href="{{ url('/purchase/purchase-day-book') }}" class="dropdown-item"> <span><i class="fa fa-book"></i> Purchasee Day book</span></a>
                                 </div>
                             </div>
                         </div>
