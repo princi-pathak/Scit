@@ -59,7 +59,7 @@ $page_url = url('admin/sales-finance/purchase-order/purchase_orders');
 
                                                     <ul class="dropdown-menu">
                                                         <li><a href="{{ url('admin/sales-finance/purchase-order/purchase_order_add') }}">Purchase Order</a></li>
-                                                        <li><a href="{{ url('admin/sales-finance/credit-notes/credit_notes_form') }}" class="border-0">Credit Note</a></li>
+                                                        <li><a href="#" class="border-0">Credit Note</a></li>
                                                     </ul>
                                                 </div>
 
