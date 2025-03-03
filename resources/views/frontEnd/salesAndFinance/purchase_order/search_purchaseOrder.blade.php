@@ -335,6 +335,8 @@
                                 <div class="col-md-7">
                                     <div class="jobsection d-flex">
                                         <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                        <a href="javascript:void(0)" id="preview_purchase_orderBoxes" class="profileDrop">Preview Purchase Order</a>
+                                        <a href="javascript:void(0)" id="approveBtn" class="profileDrop">Approve</a>
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-5">
@@ -717,7 +719,7 @@
         }
 
     });
-    $('.delete_checkbox').on('click', function() {
+    $(document).on('click', '.delete_checkbox', function() {
         if ($('.delete_checkbox:checked').length === $('.delete_checkbox').length) {
             $('#selectAll').prop('checked', true);
         } else {
@@ -1702,5 +1704,73 @@
         editor.setData(message);
         $("#emailModal").modal('show');
     }
+</script>
+<script>
+    $("#preview_purchase_orderBoxes").on('click', function(){
+    let previewids = [];
+    var name='';
+    let error=0;
+    $('.delete_checkbox:checked').each(function() {
+        const row = $(this).closest('tr');
+        const supplierName = row.get(0).querySelector('td:nth-child(6)').textContent.trim();
+        if(name == ''){
+            name=supplierName;
+        }
+        if(name !== supplierName){
+            error=1;
+            return false;
+        }
+        previewids.push($(this).val());
+    });
+    if(error){
+        alert("Sorry, you cannot preview purchase orders for multiple customers.");
+        return false;
+    }
+    if (previewids.length == 0) {
+        alert("Please select at least one purchase order for preview.");
+        return false;
+    }else{
+        // location.href="<?php echo url('preview-purchase-orders?key=');?>"+previewids;
+        window.open("<?php echo url('preview-purchase-orders?key=');?>" + previewids, "_blank");
+    }
+  });
+  $("#approveBtn").on('click',function(){
+    let approveids = [];
+
+    $('.delete_checkbox:checked').each(function() {
+        approveids.push($(this).val());
+    });
+    if (approveids.length == 0) {
+        alert("Please select at least one purchase order for approval.");
+    }else{
+        var token='<?php echo csrf_token();?>';
+        // var url = `{{ url('purchase_order_approveMultiple') }}?key=${approveids.join(',')}`;
+        var url=`{{ url('purchase_order_approveMultiple') }}`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify({ approveids: approveids })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // return false;
+            if(data.success === true){
+                location.reload();
+            }else{
+                alert("Something went wrong");
+                return false;
+            }
+            
+        })
+        .catch(error => {
+            // $('.catsuccessdanger').text('There was an error submitting the form.');
+            console.error("Error: ",error);
+        });
+    }
+  });
 </script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

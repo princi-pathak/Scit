@@ -130,7 +130,7 @@
                                 document.getElementById('bulkInvoicePoSearch').value = '';
                                 if (event.target.tagName.toLowerCase() === 'li') {
                                     const selectedBulkInvoicePORefId = event.target.id;
-                                    getAllDetailPurchaseOrder(selectedBulkInvoicePORefId);
+                                    getAllDetailPurchaseOrderBulkInvoice(selectedBulkInvoicePORefId);
                                     const selectedPurchaseJobName = event.target.name;
                                     // console.log('Selected Customer ID:', selectedBulkInvoicePORefId);
                                     // console.log('Selected Customer Name:', selectedPurchaseJobName);
@@ -161,7 +161,7 @@
                 $('#results').empty();
             }
     });
-    function getAllDetailPurchaseOrder(po_id){
+    function getAllDetailPurchaseOrderBulkInvoice(po_id){
         document.getElementById("bulkInvoicePoSearch").value = "";
         var token='<?php echo csrf_token();?>';
         var url=`{{ url('getPurchaesOrderProductDetail') }}`;
@@ -239,7 +239,7 @@
                         if ((this.value.match(/\./g) || []).length > 1) {
                             this.value = this.value.slice(0, -1);
                         }
-                        updateAmount(row);
+                        updateAmountBulkInvoice(row);
                     });
                     divElementNetAmount.appendChild(netAmountInputCell);
                     netAmountCell.appendChild(divElementNetAmount);
@@ -363,7 +363,7 @@
                     row.appendChild(deleteCell);
 
                     tableBody.appendChild(row);
-                    updateAmount(row)
+                    updateAmountBulkInvoice(row)
                     date_convertInFromat()
                 });
                 
@@ -388,7 +388,7 @@
                 if(response){
                     const vat_value=Number(response.data);
                     const vat_ratePercentage = row.querySelector('.vat_ratePercentage').value=vat_value;
-                    updateAmount(row);
+                    updateAmountBulkInvoice(row);
                 }else{
                     alert("Something went wrong");
                 }
@@ -399,7 +399,7 @@
             }
         });
     }
-    function updateAmount(row,) {
+    function updateAmountBulkInvoice(row,) {
         // console.log(row);
         // return false;
         const net_amount = row.querySelector('.net_amount');
@@ -447,7 +447,7 @@
         const tbody = table.querySelector("tbody");
         var row = button.parentNode;
         row.parentNode.removeChild(row);
-        updateAmount(row);
+        updateAmountBulkInvoice(row);
     }
     function saveBulkInvoiceModal(){
         var formData = new FormData(document.getElementById("{{ $bulInvoiceformId }}"));
@@ -464,7 +464,7 @@
                     return false;
                 }else{
                     alert(response.message);
-                    location.reload();
+                    // location.reload();
                 }
             },
             error: function(xhr, status, error) {
