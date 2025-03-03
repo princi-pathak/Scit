@@ -24,6 +24,7 @@ use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
 use App\Http\Controllers\frontEnd\salesFinance\JobController;
 use App\Http\Controllers\frontEnd\salesFinance\CreditNotesController;
 use App\Http\Controllers\backEnd\salesfinance\Purchase_orderControllerAdmin;
+use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
 
 
 
@@ -432,6 +433,7 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::post('/searchPurchase_ref', 'searchPurchase_ref');
 		Route::post('/saveBulkInvoiceModal', 'saveBulkInvoiceModal');
 		Route::post('/saveBulkRecordPaymentModal', 'saveBulkRecordPaymentModal');
+		Route::post('/searchPurchaseOrdersStatementsOutstanding', 'searchPurchaseOrdersStatementsOutstanding');
 	});
 
 	Route::controller(CreditNotesController::class)->group(function () {
@@ -2016,6 +2018,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('purchase_order_add','purchase_order_add');
 		});
 	});
+	// Credit Notes Backend side
+	Route::controller(CreditNotesControllerAdmin::class)->group(function(){
+		Route::prefix('sales-finance/credit-notes')->group(function(){
+			Route::get('/credit_notes_form','credit_notes_form');
+		});
+	});
+	// end
 });
 
 //super admin path
