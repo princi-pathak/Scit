@@ -8,7 +8,8 @@ use App\Http\Controllers\frontEnd\salesFinance\QuoteController as FrontendQuoteC
 use App\Http\Controllers\backEnd\superAdmin\HomeController;
 use App\Http\Controllers\frontEnd\salesFinance\CrmSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\SupplierController;
-use App\Http\Controllers\frontEnd\salesFinance\SalesController;
+use App\Http\Controllers\frontEnd\salesFinance\DayBook\SalesController;
+use App\Http\Controllers\frontEnd\salesFinance\DayBook\PurchaseController;
 use App\Http\Controllers\frontEnd\salesFinance\GeneralSectionController;
 use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 use App\Http\Controllers\frontEnd\salesFinance\InvoiceController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\backEnd\salesfinance\ExpenseControllerAdmin;
 use App\Http\Controllers\frontEnd\salesFinance\JobController;
 use App\Http\Controllers\frontEnd\salesFinance\CreditNotesController;
 use App\Http\Controllers\backEnd\salesfinance\Purchase_orderControllerAdmin;
+use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
 
 
 
@@ -458,7 +460,6 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('/getCustomerJobTitle', 'getCustomerJobTitle')->name('customer.ajax.getCustomerJobTitle');
 			Route::post('/saveJobTitle', 'saveJobTitle')->name('customer.ajax.saveJobTitle');
 			Route::post('/saveCustomerSiteAddress', 'saveCustomerSiteAddress')->name('customer.ajax.saveCustomerSiteAddress');
-
 			Route::post('/getCustomerBillingAddress', 'getCustomerBillingAddress')->name('customer.ajax.getCustomerBillingAddress');
 			Route::post('/getCustomerBillingAddressData', 'getCustomerBillingAddressData')->name('customer.ajax.getCustomerBillingAddressData');
 			Route::post('/getCustomerSiteAddress', 'getCustomerSiteAddress')->name('customer.ajax.getCustomerSiteAddress');
@@ -470,9 +471,23 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 
 	Route::controller(SalesController::class)->group(function () {
 		Route::prefix('sales')->group(function () {
-			Route::get('/sales-day-book', 'index');
+			Route::get('/sales-day-book', 'index')->name('sales.salesDayBook');
+			Route::get('/sales-day-book/add', 'create')->name('sales.salesDayBookCreate');
 			Route::post('/save-sales-day-book', 'store');
-			Route::get('/sales-day-book/add', 'create');
+			Route::post('/sales-day-book/delete/{id}', 'deleteSalesDayBook')->name('salesDayBook.delete');
+			Route::get('/sales-day-book/edit/{id}', 'editSalesDayBook');
+
+		});
+	});
+
+	Route::controller(PurchaseController::class)->group(function () {
+		Route::prefix('purchase')->group(function () {
+			Route::get('/purchase-day-book', 'index')->name('purchase.purchaseDayBook');
+			Route::get('/purchase-day-book/add', 'create')->name('purchase.purchaseDayBookCreate');
+			Route::post('/save-purchase-day-book', 'store');
+			Route::post('/purchase-day-book/delete/{id}', 'deletePurchaseDayBook')->name('purchaseDayBook.delete');
+			Route::get('/purchase-day-book/edit/{id}', 'editPurchaseDayBook');
+
 		});
 	});
 	
@@ -2003,6 +2018,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminAuth'], function (
 			Route::get('purchase_order_add','purchase_order_add');
 		});
 	});
+	// Credit Notes Backend side
+	Route::controller(CreditNotesControllerAdmin::class)->group(function(){
+		Route::prefix('sales-finance/credit-notes')->group(function(){
+			Route::get('/credit_notes_form','credit_notes_form');
+		});
+	});
+	// end
 });
 
 //super admin path

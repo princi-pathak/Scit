@@ -32,14 +32,13 @@
                             <div class="col-md-7">
                                 <div class="jobsection">
                                     <a href="{{ url('/sales/sales-day-book/add') }}" class="profileDrop">Add</a>
-                                    <!-- <a href="#" class="profileDrop">Mark As completed</a> -->
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <!-- <div class="col-md-5">
                                 <div class="pageTitleBtn p-0">
                                     <a href="#" class="profileDrop"> <i class="material-symbols-outlined"> settings </i></a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -50,6 +49,7 @@
                                     <th>#</th>
                                     <th>Customer </th>
                                     <th>Date</th>
+                                    <th>Invoice No.</th>
                                     <th>Net</th>
                                     <th>VAT</th>
                                     <th>Gross </th>
@@ -59,111 +59,72 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                $totalNetAmount = 0;
+                                $totalVatAmount = 0;
+                                $totalGrossAmount = 0;
+                                $totalFinalAmount = 0;
+                                @endphp
+
+                                @foreach($salesDayBooks as $salesBook)
+
+                                @php
+                                $netAmount = $salesBook->netAmount ?? 0;
+                                $vatAmount = $salesBook->vatAmount ?? 0;
+                                $grossAmount = $salesBook->grossAmount ?? 0;
+                                $finalAmount = $netAmount + $vatAmount;
+
+                                $totalNetAmount += $netAmount;
+                                $totalVatAmount += $vatAmount;
+                                $totalGrossAmount += $grossAmount;
+                                $totalFinalAmount += $finalAmount;
+                                @endphp
+
                                 <tr>
-                                    <td>1</td>
-                                    <td>QU-0001</td>
-                                    <td>2024-12-06</td>
-                                    <td>Webnmob</td>
-                                    <td>B-36 Sector 59</td>
-                                    <td>1</td>
-                                    <td>£220.00</td>
-                                    <td>£44.00</td>
-                                    <td>£264.00</td>
-                                    <td>£0.00</td>
-                                    <td>£264.00</td>
-                                    <td>£120.00</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $salesBook->customer_name }}</td>
+                                    <td>{{ $salesBook->date }}</td>
+                                    <td>{{ $salesBook->invoice_no }}</td>
+                                    <td>{{ $salesBook->netAmount }}</td>
+                                    <td>{{ $salesBook->vatAmount }}</td>
+                                    <td>{{ $salesBook->grossAmount }}</td>
+                                    <td>{{ $salesBook->tax_rate_name }}</td>
+                                    <td>{{ $salesBook->netAmount + $salesBook->vatAmount }}</td>
                                     <td>
                                         <div class="d-flex justify-content-end actionDropdown">
                                             <div class="nav-item dropdown">
-                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Action
-                                                </a>
+                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">Action</a>
                                                 <div class="dropdown-menu fade-up m-0">
-                                                    <a href="#!" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#sendSMSQuoteModal">Send SMS</a>
-                                                    <a href="#!" class="dropdown-item" data-bs-toggle="modal"  data-bs-target="#emailQuoteModal">Email</a> 
+                                                    <a href="{{ url('sales/sales-day-book/edit/' . $salesBook->id) }}" class="dropdown-item">Edit</a>
+                                                    <a href="#!" class="dropdown-item deleteBtn" data-id="{{ $salesBook->id }}">Delete</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>QU-0001</td>
-                                    <td>2024-12-06</td>
-                                    <td>Webnmob</td>
-                                    <td>B-36 Sector 59</td>
-                                    <td>1</td>
-                                    <td>£220.00</td>
-                                    <td>£44.00</td>
-                                    <td>£264.00</td>
-                                    <td>£0.00</td>
-                                    <td>£264.00</td>
-                                    <td>£120.00</td>
-                                    <td>
-                                        <div class="d-flex justify-content-end actionDropdown">
-                                            <div class="nav-item dropdown">
-                                                <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Action
-                                                </a>
-                                                <div class="dropdown-menu fade-up m-0">
-                                                    <a href="#" class="dropdown-item">Edit</a>
-                                                    <a href="" class="dropdown-item">Delete</a>
-                                                    <!-- <a href="" class="dropdown-item">Print</a>
-                                                    <a href="" class="dropdown-item">Email</a> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @endforeach
+
+                            </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="6" rowspan="1">Page Sub Total</th>
-                                    <th rowspan="1" colspan="1">£220.00</th>
-                                    <th rowspan="1" colspan="1">£44.00</th>
-                                    <th rowspan="1" colspan="1">£264.00</th>
-                                    <th rowspan="1" colspan="1">£0.00</th>
-                                    <th rowspan="1" colspan="1">£264.00</th>
-                                    <th rowspan="1" colspan="1">£120.00</th>
-                                    <th rowspan="1" colspan="1"></th>
+                                    <th colspan="4" rowspan="1">Page Sub Total</th>
+                                    <th rowspan="1" colspan="1">£{{ number_format($totalNetAmount, 2) }}</th>
+                                    <th rowspan="1" colspan="1">£{{ number_format($totalVatAmount, 2) }}</th>
+                                    <th rowspan="1" colspan="2">£{{ number_format($totalGrossAmount, 2) }}</th>
+                                    <th rowspan="1" colspan="1">£{{ number_format($totalFinalAmount, 2) }}</th>
                                 </tr>
                             </tfoot>
-                            </tbody>
                         </table>
                     </div>
-
-                    <!-- <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <td></td>
-                                    <th>#</th>
-                                    <th>Job Ref </th>
-                                    <th>Job Type</th>
-                                    <th>Customer</th>
-                                    <th>Purchase Order Ref</th>
-                                    <th>Short Description </th>
-                                    <th>Site </th>
-                                    <th>Appointments-Overdue Appointments(0)</th>
-                                    <th>Project Name </th>
-                                    <th>Complete By </th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                                               
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td colspan="12">
-                                        <label class="red_sorryText"> Sorry, there are no items available.. </label>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table> -->
-
-                </div> <!-- End off main Table -->
+                </div>
+                <!-- End off main Table -->
             </div>
         </di>
     </div>
 </section>
+<script>
+    const salesDayBook = "{{ url('/sales/sales-day-book/delete/') }}";
+</script>
 
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
+<script type="text/javascript" src="{{ url('public/js/salesFinance/dayBook/salesDayBook.js') }}"></script>

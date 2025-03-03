@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Http\Controllers\frontend\salesFinance\DayBook;
+
+use App\Http\Controllers\Controller;
+use App\Models\Construction_tax_rate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Supplier;
+use Illuminate\Support\Carbon;
+
+use App\Http\Requests\Daybook\PurchaseDayBookRequest;
+use App\Models\DayBook\PurchaseDayBook;
+
+class PurchaseController extends Controller
+{
+    public function index(){
+        $data['page'] = "dayBook";
+        $data['purchaseDayBook'] = PurchaseDayBook::join('suppliers', 'suppliers.id', '=', 'purchase_day_books.supplier_id')
+        ->join('construction_tax_rates', 'construction_tax_rates.id', '=', 'purchase_day_books.Vat')
+        ->where('purchase_day_books.home_id', Auth::user()->home_id)
+        ->select('purchase_day_books.*', 'suppliers.name as customer_name', 'construction_tax_rates.name as tax_rate_name')
+        ->whereNull('purchase_day_books.deleted_at')
+        ->orderBy('purchase_day_books.created_at', 'desc')
+        ->get();
+        return view('frontEnd.salesAndFinance.purchase.purchase_day_book', $data);
+    }
+
+    public function create(){
+        $data['page'] = "dayBook";
+        $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
+        $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
+        return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
+    }
+
+    public function store(PurchaseDayBookRequest $request)
+    {
+        $data = $request->validated();
+
+        $data['page'] = "dayBook";
+        $response = PurchaseDayBook::updateOrCreate(['id' => $data['purchase_day_book_id'] ?? null],  array_merge($data, ['home_id' => Auth::user()->home_id]));
+
+        if (isset($response->id)) {
+            return redirect()->Route('purchase.purchaseDayBook');
+        } else {
+            return redirect()->Route('sales.puchaseDayBookCreate');
+        }
+    }
+
+    public function deletePurchaseDayBook($id, ){
+        $purchaseBook = PurchaseDayBook::findOrFail($id);
+        $purchaseBook->deleted_at = Carbon::now(); // Update deleted_at with current timestamp
+        $purchaseBook->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Record deleted successfully!',
+            'deleted_at' => $purchaseBook->deleted_at->format('Y-m-d H:i:s')
+        ]);
+    }
+
+    public function editPurchaseDayBook($id){
+        $data['purchaseBook'] = PurchaseDayBook::findOrFail($id);
+        // dd($data);
+        $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
+        $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
+        return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
+    }
+
+}
+
+
