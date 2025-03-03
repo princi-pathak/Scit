@@ -32,7 +32,7 @@
                                     <h4 class="contTitle">Supplier Details</h4>
                                     <div class="row form-group">
                                         <label for="Supplier" class="col-lg-4 col-sm-4 control-label">Supplier</label>
-                                        <div class="col-lg-7">
+                                        <div class="col-lg-6">
                                             <select name="Supplier" id="Supplier" class="form-control">
                                                 <option selected disabled>Select Supplier</option>
                                                 <option value="">Abhishek</option>
@@ -42,6 +42,9 @@
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
                                             <a class="javascript:void(0)" onclick="get_modal(1)"><i class="fa  fa-plus-circle"></i> </a>
+                                        </div>
+                                        <div class="col-lg-1" id="inputPlusCircle">
+                                            <a class="javascript:void(0)" onclick="get_modal()"><i class="fa  fa-clock-o"></i> </a>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -125,7 +128,7 @@
                                             <input type="text" class="form-control" id="Postcode" name="Postcode" placeholder="Postcode" value="">
                                         </div>
                                         <div class="col-lg-1" id="inputPlusCircle">
-                                            <a href=""><i class="fa fa-search"></i></a>
+                                        <a class="javascript:void(0)" onclick="get_modal()"><i class="fa fa-search"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -608,7 +611,7 @@
                                     </div>
                                     <div class="row form-group">
                                         <label for="" class="col-lg-4 col-sm-4 control-label">Product Code</label>
-                                        <div class="col-lg-5">
+                                        <div class="col-lg-5 pe-0">
                                             <input type="text" class="form-control" id="Product_code" name="Product_code" placeholder="Enter Product Code" value="">
                                         </div>
                                         <div class="col-lg-3">
@@ -1376,7 +1379,7 @@
                 <div class="modal-content">
                     <div class="modal-header terques-bg">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title pupTitle"> Product Group: Ram Testing </h4>
+                        <h4 class="modal-title pupTitle"> Product Group: <span>Ram Testing</span> </h4>
                     </div>
                     <div class="modal-body pdbotm">
                         <form id="Product_Group_form">
@@ -1435,9 +1438,8 @@
                                         <div class="form-group padd0">
                                             <div class="col-sm-12 for_spacing_b">
                                                 <div class="row d-flex align-items-center">
-                                                    <label for="" class="col-lg-2">Select product</label>
-                                                    <div class="col-lg-3">
-                                                        <input type="text" class="form-control" placeholder="Type to add product">
+                                                    <div class="col-lg-4">
+                                                        <input type="text" class="form-control" placeholder="Search product">
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="d-flex align-items-center gap-3">
