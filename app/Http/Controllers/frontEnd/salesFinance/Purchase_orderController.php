@@ -124,6 +124,7 @@ class Purchase_orderController extends Controller
     }
     public function purchase_order_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
+        //   
         $home_id=Auth::user()->home_id;
         $user_id=Auth::user()->id;
         
@@ -168,6 +169,8 @@ class Purchase_orderController extends Controller
             $requestData['home_id'] = $home_id;
             $requestData['user_id'] = $user_id;
             $requestData['delivery_status'] = 0;
+            $requestData['purchase_date'] = Carbon::createFromFormat('d/m/Y', $request->purchase_date)->format('Y-m-d');
+            $requestData['payment_due_date'] = Carbon::createFromFormat('d/m/Y', $request->payment_due_date)->format('Y-m-d');
             
             // echo "<pre>";print_r($requestData);die;
             $purchaseOrder=PurchaseOrder::savePurchaseOrder($requestData);
