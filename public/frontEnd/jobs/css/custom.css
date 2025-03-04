@@ -851,7 +851,8 @@ footer.mainFooter {
   text-align: center;
 }
 
-section.main_section_page,.home_section_cont {
+section.main_section_page,
+.home_section_cont {
   padding: 80px 20px 0 100px !important;
 }
 
@@ -3020,3 +3021,4 @@ custom dropdown */
   display: inline-block !important;
   font-size: 15px !important;
 }
+
