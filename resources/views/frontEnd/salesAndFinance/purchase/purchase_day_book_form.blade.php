@@ -62,13 +62,13 @@
                   <div class="mb-3 row">
                     <label for="inputName" class="col-sm-2 col-form-label">VAT Amount</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control editInput" name="vatAmount" value="{{ isset($purchaseBook->vatAmount) ? $purchaseBook->vatAmount : ''}}" id="vat_amount" >
+                      <input type="text" class="form-control editInput" name="vatAmount" value="{{ isset($purchaseBook->vatAmount) ? $purchaseBook->vatAmount : ''}}" id="vat_amount" readonly>
                     </div>
                   </div>
                   <div class="mb-3 row">
                     <label for="rate_input" class="col-sm-2 col-form-label">Gross</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" value="{{ isset($purchaseBook->grossAmount) ? $purchaseBook->grossAmount :  '' }}" >
+                      <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" value="{{ isset($purchaseBook->grossAmount) ? $purchaseBook->grossAmount :  '' }}" readonly>
                     </div>
                   </div>
                 </div>
