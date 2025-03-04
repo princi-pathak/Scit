@@ -2021,7 +2021,7 @@ $access_rights = explode(',', $rights);
                                                                     </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('/sales/purchase-day=book') }}">
+                                                                    <a href="{{ url('/purchase/purchase-day-book') }}">
                                                                         <div
                                                                             class="d-flex align-items-center gap-3 mb-2">
                                                                             <i class="material-symbols-outlined">book_5
