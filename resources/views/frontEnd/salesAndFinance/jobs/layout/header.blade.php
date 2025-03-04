@@ -17,7 +17,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script type="importmap">
-    {
+        {
         "imports": {
             "my-module": "/path/to/my-module.js"
         }
@@ -477,1645 +477,2165 @@ $access_rights = explode(',', $rights);
         </div> -->
     </header>
     <section class="dashbord-main-info">
-                    <div class="container-fluid p-0">
-                        <div class="row m-0">
-                            <!-- Left Side Bar Section Start Here -->
-                            <div class="col-lg-1 p-0">
-                                <div class="left-sidebar-info">
-                                    <div class="nav-links">
-                                        <nav>
-                                            <ul>
-                                                <!-- <li>
-                                                    <a href="index.html" class="p-0">
-                                                        <div class="logo-details">
-                                                        <a href="{{url('sales-finance/dashboard')}}" class="brand_logo"><img src="{{ url('public/images/ewm_logo.png')}}" alt="ewm_logo"></a>
-                                                        </div>
-                                                    </a>
-                                                </li> -->
-                                                <div class="scroll">
+        <div class="container-fluid p-0">
+            <div class="row m-0">
+                <!-- Left Side Bar Section Start Here -->
+                <div class="col-lg-1 p-0">
+                    <div class="left-sidebar-info">
+                        <div class="nav-links">
+                            <nav>
+                                <ul>
+                                    <!-- <li>
+                                        <a href="index.html" class="p-0">
+                                            <div class="logo-details">
+                                                <a href="{{url('sales-finance/dashboard')}}" class="brand_logo"><img src="{{ url('public/images/ewm_logo.png')}}" alt="ewm_logo"></a>
+                                            </div>
+                                        </a>
+                                    </li> -->
+                                    <div class="scroll">
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel1')">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined"> keep_public </i>
+                                                </span>Lead
+                                            </button>
+                                            <div id="mySidepanel1" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Lead</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel1')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F"></path>
+                                                                </g>
+                                                            </svg></a>
+                                                    </div>
                                                     <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel1')">
-                                                            <span class="plus_icon">
-                                                                <i class="material-symbols-outlined"> keep_public </i>
-                                                            </span>Lead
-                                                        </button>
-                                                        <div id="mySidepanel1" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Lead</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel1')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F"></path>
-                                                                            </g>
-                                                                        </svg></a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="{{ url('/leads/add') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                add_circle
-                                                                            </i>
-                                                                            <span>New Lead</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/leads/leads') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                leaderboard
-                                                                            </i>
-                                                                            <span>All Leads</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/lead/myLeads') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                supervisor_account
-                                                                            </i>
-                                                                            <span>My Leads</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/leads/unassigned') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                person_off
-                                                                            </i>
-                                                                            <span>Unassigned Leads</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/lead/actioned') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                task_alt
-                                                                            </i>
-                                                                            <span>Actioned Leads</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/lead/rejected') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                block
-                                                                            </i>
-                                                                            <span>Rejected Leads</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/lead/authorization') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                verified_user
-                                                                            </i>
-                                                                            <span>Authorization</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/leads/converted') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                compare_arrows
-                                                                            </i>
-                                                                            <span>Converted Leads</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('leads/search') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                search
-                                                                            </i>
-                                                                            <span>Search Leads</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/leads/tasks') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                event_note
-                                                                            </i>
-                                                                            <span>Lead Tasks</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel2')"><span
-                                                                class="plus_icon"><i class="material-symbols-outlined">
-                                                                    description </i></span>Quotes</button>
-                                                        <div id="mySidepanel2" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Quotes</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel2')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="{{ url('/quote/dashboard') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                speed </i>
-                                                                            <span>Dashboard</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/quote/add') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                add_circle </i>
-                                                                            <span>New Quote</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/quote/draft') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                edit_note </i>
-                                                                            <span>Draft Quote</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/quote/actioned') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                task_alt </i>
-                                                                            <span>Actioned Quote</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/quote/callBack') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                call_made </i>
-                                                                            <span>Call Back Quote</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/quote/accepted') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                check_circle </i>
-                                                                            <span>Accepted Quote</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                compare_arrows </i>
-                                                                            <span>Converted Quote</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                reminder </i>
-                                                                            <span>Quote Reminders</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('quote/search') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                search </i>
-                                                                            <span>Search Quote</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                calendar_month </i>
-                                                                            <span>Appointment</span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="#!">Sales
-                                                                            Appointments</a>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                restart_alt </i>
-                                                                            <span>Recurring Quote</span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="new_recurring_quote.html">New Recurring
-                                                                            Quote</a>
-                                                                        <a href="#!">Recurring
-                                                                            Quote</a>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel3')">
-                                                            <span class="plus_icon">
-                                                                <i class="material-symbols-outlined">work </i>
-                                                            </span>Jobs
-                                                        </button>
-                                                        <div id="mySidepanel3" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Jobs</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel3')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F"></path>
-                                                                            </g>
-                                                                        </svg></a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">speed
-                                                                            </i>
-                                                                            <span>Dashboard</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{url('/jobs_create')}}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">add_circle
-                                                                            </i>
-                                                                            <span>New Jobs</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{url('jobs_list')}}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">toggle_on
-                                                                            </i>
-                                                                            <span>Active Jobs</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{url('job_type')}}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">work
-                                                                            </i>
-                                                                            <span>Job Type</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">person_off
-                                                                            </i>
-                                                                            <span>Unassigned Jobs</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">priority_high
-                                                                            </i>
-                                                                            <span>Action Required Jobs</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">event_busy
-                                                                            </i>
-                                                                            <span>Overdue Jobs</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">verified_user
-                                                                            </i>
-                                                                            <span> Authorization Jobs</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">pause_circle
-                                                                            </i>
-                                                                            <span>On Hold</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">search
-                                                                            </i>
-                                                                            <span>Search Jobs</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">schedule
-                                                                            </i>
-                                                                            <span>Appointments</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">restart_alt
-                                                                            </i>
-                                                                            <span>Recurring Jobs</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel4')">
-                                                            <span class="plus_icon">
-                                                                <i class="material-symbols-outlined"> planner_review
+                                                        <a href="{{ url('/leads/add') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    add_circle
                                                                 </i>
-                                                            </span>Planner
-                                                        </button>
-                                                        <div id="mySidepanel4" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Planner</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel4')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F"></path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">schedule
-                                                                            </i>
-                                                                            <span>Time Planner</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">workspaces
-                                                                            </i>
-                                                                            <span>Project Planner</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">explore
-                                                                            </i>
-                                                                            <span>Geo Planner</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">directions_car  
-                                                                            </i>
-                                                                            <span>Vehicle Tracking</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">location_on 
-                                                                            </i>
-                                                                            <span>Mobile Tracking</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel5')">
-                                                            <span class="plus_icon">
-                                                                <i class="material-symbols-outlined">
-                                                                    business_center</i>
-                                                            </span>Projects
-                                                        </button>
-                                                        <div id="mySidepanel5" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Projects</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel5')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F"></path>
-                                                                            </g>
-                                                                        </svg></a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">note_add
-                                                                            </i>
-                                                                            <span>New Project</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">trending_up
-                                                                            </i>
-                                                                            <span>Active Projects</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">block
-                                                                            </i>
-                                                                            <span>Inactive Projects</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">check_circle
-                                                                            </i>
-                                                                            <span>Completed Projects</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel6')"><span
-                                                                class="plus_icon"><i class="material-symbols-outlined">
-                                                                    finance_mode </i></span>Finance</button>
-                                                        <div id="mySidepanel6" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Finance</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel6')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                receipt_long  </i>
-                                                                            <span>Invoice </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="#!">Dashboard</a>
-                                                                        <a href="#!">New Invoice</a>
-                                                                        <a href="#!">Draft Invoices</a>
-                                                                        <a href="#!">Outstanding
-                                                                            Invoices</a>
-                                                                        <a href="#!">
-                                                                            OverdueInvoices</a>
-                                                                        <a href="#!">Paid Invoices</a>
-                                                                        <a href="#!">Search
-                                                                            Invoices</a>
-                                                                        <a href="#!">Account
-                                                                            Statements</a>
-                                                                        <a href="#!">Reminders</a>
-                                                                        <div class="custom_dropdown2">
-                                                                            <a tabindex=0> Recurring Invoices <i
-                                                                                    class="fa-solid fa-angle-right my-0"></i></a>
-                                                                            <div class="dropdown-content">
-                                                                                <a href="#!">New
-                                                                                    Recurring Invoice</a>
-                                                                                <a href="#!"
-                                                                                    class="mb-0">Recurring Invoices</a>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="custom_dropdown2">
-                                                                            <a tabindex=0> Credit Notes <i
-                                                                                    class="fa-solid fa-angle-right my-0"></i></a>
-                                                                            <div class="dropdown-content">
-                                                                                <a href="#!">New
-                                                                                    Credit Note</a>
-                                                                                <a href="#!">Draft
-                                                                                    Credit Notes</a>
-                                                                                <a
-                                                                                    href="#!">Awaiting
-                                                                                    Approval Credit Notes</a>
-                                                                                <a href="#!">Approval
-                                                                                    Credit Notes</a>
-                                                                                <a href="#!">Paid
-                                                                                    Credit Notes</a>
-                                                                                <a href="#!"
-                                                                                    class="mb-0">Cancelled
-                                                                                    Credit Notes</a>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                shopping_cart </i>
-                                                                            <span>Purchase Orders</span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="purchase_dashboard.html">Dashboard</a>
-                                                                        <a href="{{url('purchase_order')}}">New Purchase
-                                                                            Order</a>
-                                                                        <a href="{{ url('draft_purchase_order') }}">Draft
-                                                                            Purchase Orders</a>
-                                                                        <a
-                                                                            href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}">
-                                                                            Awaiting Approval Purchase Orders</a>
-                                                                        <a href="{{ url('draft_purchase_order?list_mode=Approved') }}">Approved
-                                                                            Purchase Orders </a>
-                                                                        <!-- <a href="#!">Active
-                                                                            Customers</a> -->
-                                                                        <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}">Rejected
-                                                                            Purchase Orders </a>
-                                                                        <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}">Actioned
-                                                                            Purchase Orders</a>
-                                                                        <a href="{{ url('draft_purchase_order?list_mode=Paid') }}">Paid
-                                                                            Purchase Orders</a>
-                                                                        <a href="{{url('purchase-orders-search')}}">Search Purchase Orders</a>
-                                                                        
-                                                                        <a href="{{url('purchase-order-invoices')}}">Invoices
-                                                                            Received</a>
-                                                                        <a href="{{url('purchase-order-statements')}}">Purchase
-                                                                            Orders Statements</a>
-                                                                        <div class="custom_dropdown2">
-                                                                            <a tabindex=0>Recurring Purchase Orders <i
-                                                                                    class="fa-solid fa-angle-right my-0"></i></a>
-                                                                            <div class="dropdown-content">
-                                                                                <a
-                                                                                    href="New_Recurring_Purchase_Order.html">
-                                                                                    New Recurring Purchase Order</a>
-                                                                                <a class="mb-0"
-                                                                                    href="Recurring_Purchase_Orders.html">
-                                                                                    Recurring Purchase Orders
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="custom_dropdown2">
-                                                                            <a tabindex=0> Credit Notes <i
-                                                                                    class="fa-solid fa-angle-right my-0"></i></a>
-                                                                            <div class="dropdown-content">
-                                                                                <a href="{{url('new_credit_notes')}}">New
-                                                                                    Credit Note</a>
-                                                                                <a href="{{url('credit_notes?list_mode=Approved')}}">Approved
-                                                                                    Credit Notes</a>
-                                                                                <a href="{{url('credit_notes?list_mode=Paid')}}">Paid
-                                                                                    Credit Notes </a>
-                                                                                <a class="mb-0"
-                                                                                    href="{{url('credit_notes?list_mode=Cancelled')}}">Cancelled
-                                                                                    Credit Notes</a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel7')"><span
-                                                                class="plus_icon"><i class="material-symbols-outlined">
-                                                                    contact_page </i></span>Contacts</button>
-                                                        <div id="mySidepanel7" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Contacts</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel7')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                group_add </i>
-                                                                            <span>Customers</span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="{{url('customer_add_edit')}}">New Customers</a>
-                                                                        <a href="{{ url('customers?list_mode=ACTIVE') }}">Active
-                                                                            Customers</a>
-                                                                        <a href="{{ url('customers?list_mode=INACTIVE') }}">Inactive
-                                                                            Customers</a>
-                                                                        <a href="#!">Customers
-                                                                            Logins</a>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                storefront </i>
-                                                                            <span>Suppliers</span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="{{url('supplier_add')}}">New Suppliers</a>
-                                                                        <a href="{{ url('supplier?list_mode=ACTIVE') }}">Active
-                                                                            Suppliers</a>
-                                                                        <a href="{{ url('supplier?list_mode=INACTIVE') }}">Inactive
-                                                                            Suppliers</a>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel8')">
-                                                            <span class="plus_icon">
-                                                                <i class="material-symbols-outlined">
-                                                                    align_items_stretch</i>
-                                                            </span>Items
-                                                        </button>
-                                                        <div id="mySidepanel8" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Items</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel8')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="{{ url('/item/product_categories') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">view_list
-                                                                            </i>
-                                                                            <span>Product Categories</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/item/products') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">category
-                                                                            </i>
-                                                                            <span>Products</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/item/catalogues') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">apps
-                                                                            </i>
-                                                                            <span>Product Groups</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/item/item-groups') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">menu_book
-                                                                            </i>
-                                                                            <span>Catalogues</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{url('/expenses')}}">
-                                                            <span class="plus_icon">
-                                                                <i class="material-symbols-outlined"> calculate </i>
-                                                            </span>Expenses
+                                                                <span>New Lead</span>
+                                                            </div>
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel9')">
-                                                            <span class="plus_icon">
-                                                                <i class="material-symbols-outlined"> diversity_2 </i>
-                                                            </span>Users
-                                                        </button>
-                                                        <div id="mySidepanel9" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Users</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel9')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F"></path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">group
-                                                                            </i>
-                                                                            <span> Users</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">diversity_3
-                                                                            </i>
-                                                                            <span>Team Members</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">alarm_off
-                                                                            </i>
-                                                                            <span>Timeoff</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">person
-                                                                            </i>
-                                                                            <span>Lone Worker Active List</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel10')">
-                                                            <span class="plus_icon">
-                                                                <i class="material-symbols-outlined"> partner_reports
-                                                                </i>
-                                                            </span>Reports
-                                                        </button>
-                                                        <div id="mySidepanel10" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Reports</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel10')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F"></path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">group
-                                                                            </i>
-                                                                            <span> Customers</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">description
-                                                                            </i>
-                                                                            <span> Quote</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">work
-                                                                            </i>
-                                                                            <span>Jobs</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">receipt_long 
-                                                                            </i>
-                                                                            <span> Invoices</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">group
-                                                                            </i>
-                                                                            <span>Users</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">shopping_cart
-                                                                            </i>
-                                                                            <span>Purchase Orders</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">shopping_bag
-                                                                            </i>
-                                                                            <span>Products</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">directions_car
-                                                                            </i>
-                                                                            <span>Vehicle Tracking</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">sms
-                                                                            </i>
-                                                                            <span>SMS Report</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">attach_email
-                                                                            </i>
-                                                                            <span>Email Report</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">event_note
-                                                                            </i>
-                                                                            <span>Reminder Report</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">insert_chart
-                                                                            </i>
-                                                                            <span>Task Report</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">table_chart
-                                                                            </i>
-                                                                            <span>Report Builder</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel11')">
-                                                            <span class="plus_icon">
+                                                        <a href="{{ url('/leads/leads') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
                                                                 <i class="material-symbols-outlined">
-                                                                    bookmark_manager</i>
-                                                            </span>File Manager
-                                                        </button>
-                                                        <div id="mySidepanel11" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>File Manager</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel11')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F"></path>
-                                                                            </g>
-                                                                        </svg></a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">attachment
-                                                                            </i>
-                                                                            <span>Attachments </span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">article
-                                                                            </i>
-                                                                            <span>Digital Documents</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">task_alt
-                                                                            </i>
-                                                                            <span>Completed Questionnaires</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel12')"><span
-                                                                class="plus_icon"><i class="material-symbols-outlined">
-                                                                    construction </i></span>Settings</button>
-                                                        <div id="mySidepanel12" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Settings</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel12')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                settings</i>
-                                                                            <span>General Settings</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                description </i>
-                                                                            <span>Digital Doc. Manager</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                quiz</i>
-                                                                            <span>Questionnaires</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                edit_note </i>
-                                                                            <span>Template Editor</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                edit </i>
-                                                                            <span>Custom Field Management</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                bolt </i>
-                                                                            <span>Triggers</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                group </i>
-                                                                            <span>Leads </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="#!">Lead Settings</a>
-                                                                        <a href="{{ url('/lead/lead_sources') }}">Lead Sources</a>
-                                                                        <a href="{{ url('/lead/lead_status') }}">Lead Status</a>
-                                                                        <a href="{{ url('/lead/lead_task_type') }}">Lead Task
-                                                                            Types</a>
-                                                                        <a href="{{ url('/lead/lead_reject_types') }}">Lead Reject
-                                                                            Types</a>
-                                                                        <a href="{{ url('/lead/lead_notes_type') }}">Lead Notes
-                                                                            Type</a>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                comment </i>
-                                                                            <span> Quotes </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="{{ url('/quote/quote_type') }}">Quote Type </a>
-                                                                        <a href="{{ url('/quote/quote_sources') }}">Quote Source </a>
-                                                                        <a href="{{ url('/quote/quote_reject_types') }}">Quote Reject
-                                                                            Type </a>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                work </i>
-                                                                            <span> Jobs </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="{{url('job_type')}}">Job Type </a>
-                                                                        <a href="{{url('job_appointment_type_list')}}">Job
-                                                                            Appointment Type </a>
-                                                                        <a href="{{url('appointment_rejection_cat_list')}}">Appointment
-                                                                            Rejection Categories </a>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                description </i>
-                                                                            <span> Invoices </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="{{url('/account_codes')}}">Account Codes </a>
-                                                                        <a href="{{url('/tax_rate')}}">Tax Rate </a>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                shopping_cart </i>
-                                                                            <span>Purchase Orders </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="{{url('departments')}}">Departments </a>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">group_add</i>
-                                                                            <span> Customers </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="{{url('customer_type')}}">Customer Type </a>
-                                                                        <a href="{{url('job_titles')}}">Customer Job
-                                                                            Title </a>
-                                                                        <a href="{{url('complaint_type')}}">Complaint Type
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                group </i>
-                                                                            <span> Users </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="#!">User Type </a>
-                                                                        <a href="#!">User Profiles </a>
-                                                                        <a href="#!">User Working Areas
-                                                                        </a>
-                                                                        <a href="#!">Personal Time Type
-                                                                        </a>
-                                                                        <a href="#!">User Contractors </a>
-                                                                        <a href="#!">User Location </a>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                database </i>
-                                                                            <span> CRM </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="{{ url('/lead/CRM_section_types') }}">CRM Section
-                                                                            Types </a>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                settings </i>
-                                                                            <span> General </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="{{url('/attachments_types')}}">Attachment Types
-                                                                        </a>
-                                                                        <a href="{{url('/Payment_type')}}">Payment Types </a>
-                                                                        <a href="{{url('/regions')}}">Regions </a>
-                                                                        <a href="{{url('/task_types')}}">Task Types </a>
-                                                                        <a href="{{url('/tags')}}">Tags </a>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="quick_setup_wizard.html">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                auto_mode  </i>
-                                                                            <span> Quick Setup Wizard </span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel13')">
-                                                            <span class="plus_icon">
-                                                                <i class="material-symbols-outlined"> book_5
+                                                                    leaderboard
                                                                 </i>
-                                                            </span>Day Book
-                                                        </button>
-                                                        <div id="mySidepanel13" class="sidepanel">
-                                                            <ul>
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Day Book</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel13')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F"></path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a>
-                                                                </div>
-                                                                <li>
-                                                                    <a href="{{ url('/sales/sales-day-book') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">book_5
-                                                                            </i>
-                                                                            <span>Purchase Day Book</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('/purchase/purchase-day-book') }}">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">book_5
-                                                                            </i>
-                                                                            <span>Sales Day Book</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                                <span>All Leads</span>
+                                                            </div>
+                                                        </a>
                                                     </li>
-                                                    <!-- Fixed Asset start here -->
                                                     <li>
-                                                        <button href="#" class="openbtn"
-                                                            onclick="openNav(event, 'mySidepanel14')">
-                                                            <span class="plus_icon">
-                                                                <i class="material-symbols-outlined"> book_5
+                                                        <a href="{{ url('/lead/myLeads') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    supervisor_account
                                                                 </i>
-                                                            </span>Fixed Assets
-                                                        </button>
-                                                        <div id="mySidepanel14" class="sidepanel">
-                                                            <ul>
+                                                                <span>My Leads</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/leads/unassigned') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    person_off
+                                                                </i>
+                                                                <span>Unassigned Leads</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/lead/actioned') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    task_alt
+                                                                </i>
+                                                                <span>Actioned Leads</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/lead/rejected') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    block
+                                                                </i>
+                                                                <span>Rejected Leads</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/lead/authorization') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    verified_user
+                                                                </i>
+                                                                <span>Authorization</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/leads/converted') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    compare_arrows
+                                                                </i>
+                                                                <span>Converted Leads</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('leads/search') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    search
+                                                                </i>
+                                                                <span>Search Leads</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/leads/tasks') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    event_note
+                                                                </i>
+                                                                <span>Lead Tasks</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel2')"><span
+                                                    class="plus_icon"><i class="material-symbols-outlined">
+                                                        description </i></span>Quotes</button>
+                                            <div id="mySidepanel2" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Quotes</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel2')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="{{ url('/quote/dashboard') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    speed </i>
+                                                                <span>Dashboard</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/quote/add') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    add_circle </i>
+                                                                <span>New Quote</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/quote/draft') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    edit_note </i>
+                                                                <span>Draft Quote</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/quote/actioned') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    task_alt </i>
+                                                                <span>Actioned Quote</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/quote/callBack') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    call_made </i>
+                                                                <span>Call Back Quote</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/quote/accepted') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    check_circle </i>
+                                                                <span>Accepted Quote</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    compare_arrows </i>
+                                                                <span>Converted Quote</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    reminder </i>
+                                                                <span>Quote Reminders</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('quote/search') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    search </i>
+                                                                <span>Search Quote</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    calendar_month </i>
+                                                                <span>Appointment</span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="">
                                                                 <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <h5>Fixed Assets</h5>
-                                                                    <a href="javascript:void(0)" class="closebtn"
-                                                                        onclick="closeNav('mySidepanel14')">
-                                                                        <svg width="40px" height="40px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                                                                    fill="#0F0F0F"></path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a>
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        calendar_month </i>
+                                                                    <span>Sales Appointment</span>
                                                                 </div>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">book_5
-                                                                            </i>
-                                                                            <span>Asset Catetgory</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                                
-                                                                <li class="custom_dropdown">
-                                                                    <a class="dropbtn">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">
-                                                                                settings </i>
-                                                                            <span> Depreciation Type </span>
-                                                                            <i
-                                                                                class="fa-solid fa-angle-right arrow"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="dropdown_content">
-                                                                        <a href="#!">Name</a>
-                                                                        <a href="#!">Percentage </a>
-                                                                        
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#!">
-                                                                        <div
-                                                                            class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined">book_5
-                                                                            </i>
-                                                                            <span>Asset Register</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
+                                                            </a>
                                                         </div>
                                                     </li>
-                                                    <!-- end here -->
-                                                </div>
-                                            </ul>
-                                        </nav>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    restart_alt </i>
+                                                                <span>Recurring Quote</span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="" class="m-0">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        restart_alt </i>
+                                                                    <span>New Recurring Quote</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="m-0">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        restart_alt </i>
+                                                                    <span> Recurring Quote</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel3')">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined">work </i>
+                                                </span>Jobs
+                                            </button>
+                                            <div id="mySidepanel3" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Jobs</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel3')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F"></path>
+                                                                </g>
+                                                            </svg></a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">speed
+                                                                </i>
+                                                                <span>Dashboard</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{url('/jobs_create')}}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">add_circle
+                                                                </i>
+                                                                <span>New Jobs</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{url('jobs_list')}}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">toggle_on
+                                                                </i>
+                                                                <span>Active Jobs</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{url('job_type')}}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">work
+                                                                </i>
+                                                                <span>Job Type</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">person_off
+                                                                </i>
+                                                                <span>Unassigned Jobs</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">priority_high
+                                                                </i>
+                                                                <span>Action Required Jobs</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">event_busy
+                                                                </i>
+                                                                <span>Overdue Jobs</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">verified_user
+                                                                </i>
+                                                                <span> Authorization Jobs</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">pause_circle
+                                                                </i>
+                                                                <span>On Hold</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">search
+                                                                </i>
+                                                                <span>Search Jobs</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">schedule
+                                                                </i>
+                                                                <span>Appointments</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">restart_alt
+                                                                </i>
+                                                                <span>Recurring Jobs</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel4')">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined"> planner_review
+                                                    </i>
+                                                </span>Planner
+                                            </button>
+                                            <div id="mySidepanel4" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Planner</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel4')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F"></path>
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">schedule
+                                                                </i>
+                                                                <span>Time Planner</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">workspaces
+                                                                </i>
+                                                                <span>Project Planner</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">explore
+                                                                </i>
+                                                                <span>Geo Planner</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">directions_car
+                                                                </i>
+                                                                <span>Vehicle Tracking</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">location_on
+                                                                </i>
+                                                                <span>Mobile Tracking</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel5')">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined">
+                                                        business_center</i>
+                                                </span>Projects
+                                            </button>
+                                            <div id="mySidepanel5" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Projects</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel5')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F"></path>
+                                                                </g>
+                                                            </svg></a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">note_add
+                                                                </i>
+                                                                <span>New Project</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">trending_up
+                                                                </i>
+                                                                <span>Active Projects</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">block
+                                                                </i>
+                                                                <span>Inactive Projects</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">check_circle
+                                                                </i>
+                                                                <span>Completed Projects</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel6')"><span
+                                                    class="plus_icon"><i class="material-symbols-outlined">
+                                                        finance_mode </i></span>Finance</button>
+                                            <div id="mySidepanel6" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Finance</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel6')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    receipt_long </i>
+                                                                <span>Invoice</span>
+                                                                <i class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        receipt_long</i><span>Dashboard</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        receipt_long</i><span>New Invoice</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        receipt_long</i><span>Draft
+                                                                        Invoices</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        receipt_long</i><span>Outstanding
+                                                                        Invoices</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        receipt_long</i><span>Overdue
+                                                                        Invoices
+                                                                    </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        receipt_long</i><span>Paid
+                                                                        Invoices
+                                                                    </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        receipt_long</i><span>Search
+                                                                        Invoices
+                                                                    </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        receipt_long</i><span>Account
+                                                                        Statements
+                                                                    </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        receipt_long</i><span>Reminders</span>
+                                                                </div>
+                                                            </a>
+                                                            <div class="custom_dropdown2">
+                                                                <a tabindex=0>
+                                                                    <div
+                                                                        class="d-flex align-items-center gap-2 mb-2">
+                                                                        <i class="material-symbols-outlined">
+                                                                        receipt_long</i>
+                                                                        <span>Recurring Invoices</span>
+                                                                        <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="dropdown-content">
+                                                                    <a href="">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>New
+                                                                                Recurring Invoice
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                Recurring Invoice
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="custom_dropdown2">
+                                                                <a tabindex=0>
+                                                                    <div
+                                                                        class="d-flex align-items-center gap-2 mb-2">
+                                                                        <i class="material-symbols-outlined">
+                                                                        receipt_long</i>
+                                                                        <span>Credit Notes</span>
+                                                                        <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="dropdown-content">
+                                                                    <a href="">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                New Credit Note
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                Draft Credit Note
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                Awaiting Approval Credit Note
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                Approval Credit Note
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                Paid Credit Note
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                Cancelled Credit Note
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    shopping_cart </i>
+                                                                <span>Purchase Orders</span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Dashboard
+                                                                    </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('purchase_order')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        New Purchase Order </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('draft_purchase_order')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Draft Purchase Order </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Awaiting Approval Purchase Orders</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('draft_purchase_order?list_mode=Approved') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Approved Purchase Order </span>
+                                                                </div>
+                                                            </a>
+                                                            <!-- <a href="#!">Active Customers</a> -->
+                                                            <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Rejected Purchase Order </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Actioned Purchase Order </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('draft_purchase_order?list_mode=Paid') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Paid Purchase Order </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('draft_purchase_order?list_mode=Paid') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Paid Purchase Order </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('purchase-orders-search')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Search Purchase Orders </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('purchase-order-invoices')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Invoices Received </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('purchase-order-statements')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Purchase Orders Statements</span>
+                                                                </div>
+                                                            </a>
+                                                            <div class="custom_dropdown2">
+                                                                <a tabindex=0>
+                                                                    <div
+                                                                        class="d-flex align-items-center gap-2 mb-2">
+                                                                        <i class="material-symbols-outlined">
+                                                                            keyboard_double_arrow_right</i>
+                                                                        <span>Recurring Purchase Orders</span>
+                                                                        <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="dropdown-content">
+                                                                    <a href="">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                New Recurring Purchase Order</span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                Recurring Purchase Orders</span>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="custom_dropdown2">
+                                                                <a tabindex=0>
+                                                                    <div
+                                                                        class="d-flex align-items-center gap-2 mb-2">
+                                                                        <i class="material-symbols-outlined">
+                                                                            keyboard_double_arrow_right</i>
+                                                                        <span>Credit Notes</span>
+                                                                        <i class="fa-solid fa-angle-right ms-auto second-arrow"></i>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="dropdown-content">
+                                                                    <a href="{{url('new_credit_notes')}}">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                New Credit Note
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="{{url('credit_notes?list_mode=Approved')}}">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                Approval Credit Note
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="{{url('credit_notes?list_mode=Paid')}}">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                Paid Credit Note
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <a href="{{url('credit_notes?list_mode=Cancelled')}}">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-2 mb-2">
+                                                                            <i class="material-symbols-outlined">
+                                                                                keyboard_double_arrow_right</i><span>
+                                                                                Cancelled Credit Note
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel7')"><span
+                                                    class="plus_icon"><i class="material-symbols-outlined">
+                                                        contact_page </i></span>Contacts</button>
+                                            <div id="mySidepanel7" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Contacts</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel7')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    group_add </i>
+                                                                <span>Customers</span>
+                                                                <i class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="{{url('customer_add_edit')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        New Customers</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('customers?list_mode=ACTIVE') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Active Customers</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('customers?list_mode=INACTIVE') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Inactive Customers</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="#">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Customers Logins</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    storefront </i>
+                                                                <span>Suppliers</span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="{{url('supplier_add')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        New Suppliers</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('supplier?list_mode=ACTIVE') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Active Suppliers</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('supplier?list_mode=INACTIVE') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Inactive Suppliers</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel8')">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined">
+                                                        align_items_stretch</i>
+                                                </span>Items
+                                            </button>
+                                            <div id="mySidepanel8" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Items</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel8')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="{{ url('/item/product_categories') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">view_list
+                                                                </i>
+                                                                <span>Product Categories</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/item/products') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">category
+                                                                </i>
+                                                                <span>Products</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/item/catalogues') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">apps
+                                                                </i>
+                                                                <span>Product Groups</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/item/item-groups') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">menu_book
+                                                                </i>
+                                                                <span>Catalogues</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="{{url('/expenses')}}">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined"> calculate </i>
+                                                </span>Expenses
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel9')">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined"> diversity_2 </i>
+                                                </span>Users
+                                            </button>
+                                            <div id="mySidepanel9" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Users</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel9')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F"></path>
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">group
+                                                                </i>
+                                                                <span> Users</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">diversity_3
+                                                                </i>
+                                                                <span>Team Members</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">alarm_off
+                                                                </i>
+                                                                <span>Timeoff</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">person
+                                                                </i>
+                                                                <span>Lone Worker Active List</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel10')">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined"> partner_reports
+                                                    </i>
+                                                </span>Reports
+                                            </button>
+                                            <div id="mySidepanel10" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Reports</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel10')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F"></path>
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">group
+                                                                </i>
+                                                                <span> Customers</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">description
+                                                                </i>
+                                                                <span> Quote</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">work
+                                                                </i>
+                                                                <span>Jobs</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">receipt_long
+                                                                </i>
+                                                                <span> Invoices</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">group
+                                                                </i>
+                                                                <span>Users</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">shopping_cart
+                                                                </i>
+                                                                <span>Purchase Orders</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">shopping_bag
+                                                                </i>
+                                                                <span>Products</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">directions_car
+                                                                </i>
+                                                                <span>Vehicle Tracking</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">sms
+                                                                </i>
+                                                                <span>SMS Report</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">attach_email
+                                                                </i>
+                                                                <span>Email Report</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">event_note
+                                                                </i>
+                                                                <span>Reminder Report</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">insert_chart
+                                                                </i>
+                                                                <span>Task Report</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">table_chart
+                                                                </i>
+                                                                <span>Report Builder</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel11')">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined">
+                                                        bookmark_manager</i>
+                                                </span>File Manager
+                                            </button>
+                                            <div id="mySidepanel11" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>File Manager</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel11')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F"></path>
+                                                                </g>
+                                                            </svg></a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">attachment
+                                                                </i>
+                                                                <span>Attachments </span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">article
+                                                                </i>
+                                                                <span>Digital Documents</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">task_alt
+                                                                </i>
+                                                                <span>Completed Questionnaires</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel12')"><span
+                                                    class="plus_icon"><i class="material-symbols-outlined">
+                                                        construction </i></span>Settings</button>
+                                            <div id="mySidepanel12" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Settings</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel12')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    settings</i>
+                                                                <span>General Settings</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    description </i>
+                                                                <span>Digital Doc. Manager</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    quiz</i>
+                                                                <span>Questionnaires</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    edit_note </i>
+                                                                <span>Template Editor</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    edit </i>
+                                                                <span>Custom Field Management</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    bolt </i>
+                                                                <span>Triggers</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    group </i>
+                                                                <span>Leads </span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Lead Settings</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('/lead/lead_sources') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Lead Sources</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('/lead/lead_status') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Lead Status</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('/lead/lead_task_type') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Lead Task Types</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('/lead/lead_reject_types') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Lead Reject Types</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('/lead/lead_notes_type') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Lead Notes Type</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    comment </i>
+                                                                <span> Quotes </span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="{{ url('/quote/quote_type') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Quote Type </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('/quote/quote_sources') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Quote Source </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{ url('/quote/quote_reject_types') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Quote Reject </span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    work </i>
+                                                                <span> Jobs </span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="{{url('job_type')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Job Type </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('job_appointment_type_list')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Job Appointment Type </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('appointment_rejection_cat_list')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Rejection Categories </span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    description </i>
+                                                                <span> Invoices </span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="{{url('/account_codes')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Account Codes </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('/tax_rate')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Tax Rate</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    shopping_cart </i>
+                                                                <span>Purchase Orders </span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="{{url('departments')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Departments</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">group_add</i>
+                                                                <span> Customers </span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="{{url('customer_type')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Customer Type</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('job_titles')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Customer Job Title </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('complaint_type')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Complaint Type</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    group </i>
+                                                                <span> Users </span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        User Type </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        User Profiles </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        User Working Areas </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Personal Time Type </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        User Contractors </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        User Location </span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    database </i>
+                                                                <span> CRM </span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="{{ url('/lead/CRM_section_types') }}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        CRM Section Types</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    settings </i>
+                                                                <span> General </span>
+                                                                <i class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="{{url('/attachments_types')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Attachment Types</span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('/Payment_type')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Payment Types </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('/regions')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Regions </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('/task_types')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Task Types </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{url('/tags')}}">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Tags</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <a href="quick_setup_wizard.html">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                    auto_mode </i>
+                                                                <span> Quick Setup Wizard </span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel13')">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined"> book_5
+                                                    </i>
+                                                </span>Day Book
+                                            </button>
+                                            <div id="mySidepanel13" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Day Book</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel13')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F"></path>
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="{{ url('/sales/sales-day-book') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">book_5
+                                                                </i>
+                                                                <span>Purchase Day Book</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('/purchase/purchase-day-book') }}">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">book_5
+                                                                </i>
+                                                                <span>Sales Day Book</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <!-- Fixed Asset start here -->
+                                        <li>
+                                            <button href="#" class="openbtn"
+                                                onclick="openNav(event, 'mySidepanel14')">
+                                                <span class="plus_icon">
+                                                    <i class="material-symbols-outlined"> web_asset
+                                                    </i>
+                                                </span>Fixed Assets
+                                            </button>
+                                            <div id="mySidepanel14" class="sidepanel">
+                                                <ul>
+                                                    <div
+                                                        class="d-flex justify-content-between align-items-center">
+                                                        <h5>Fixed Assets</h5>
+                                                        <a href="javascript:void(0)" class="closebtn"
+                                                            onclick="closeNav('mySidepanel14')">
+                                                            <svg width="40px" height="40px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                </g>
+                                                                <g id="SVGRepo_tracerCarrier"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                        fill="#0F0F0F"></path>
+                                                                </g>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">web_asset
+                                                                </i>
+                                                                <span>Asset Catetgory</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="custom_dropdown">
+                                                        <a class="dropbtn">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">
+                                                                web_asset </i>
+                                                                <span> Depreciation Type </span>
+                                                                <i
+                                                                    class="fa-solid fa-angle-right arrow"></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class="dropdown_content">
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Name </span>
+                                                                </div>
+                                                            </a>
+                                                            <a href="">
+                                                                <div
+                                                                    class="d-flex align-items-center gap-2 mb-2">
+                                                                    <i class="material-symbols-outlined">
+                                                                        keyboard_double_arrow_right</i><span>
+                                                                        Percentage</span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 mb-2">
+                                                                <i class="material-symbols-outlined">app_registration
+                                                                </i>
+                                                                <span>Asset Register</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <!-- end here -->
                                     </div>
-                                </div>
-                            </div>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Button trigger modal -->
 
@@ -3179,7 +3699,7 @@ $access_rights = explode(',', $rights);
     }
 </script>
 
-<script>
+    <script>
         function openNav(event, panelId) {
             event.stopPropagation();
             closeAllPanels();
@@ -3195,17 +3715,16 @@ $access_rights = explode(',', $rights);
             panels.forEach(panel => panel.classList.remove('remove_add'));
         }
 
-        window.onclick = function () {
+        window.onclick = function() {
             closeAllPanels();
         };
-
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const dropdownButtons = document.querySelectorAll(".dropbtn");
 
             dropdownButtons.forEach((button) => {
-                button.addEventListener("click", function (event) {
+                button.addEventListener("click", function(event) {
                     event.stopPropagation();
                     let dropdownContent = this.nextElementSibling;
 
@@ -3235,7 +3754,7 @@ $access_rights = explode(',', $rights);
             });
 
             // Close dropdown when clicking outside
-            document.addEventListener("click", function () {
+            document.addEventListener("click", function() {
                 document.querySelectorAll(".dropdown_content").forEach((menu) => {
                     if (menu.classList.contains("show")) {
                         menu.classList.remove("show");
