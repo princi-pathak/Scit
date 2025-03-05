@@ -12,6 +12,10 @@ use App\Models\Construction_tax_rate;
 
 class InvoiceController extends Controller
 {
+
+    public function dashboard(){
+        return view('frontEnd.salesAndFinance.invoice.dashboard');
+    }
     public function account_codes(Request $request){
         $home_id = Auth::user()->home_id;
         $data['account_codes']=Construction_account_code::getAllAccount_Codes($home_id);

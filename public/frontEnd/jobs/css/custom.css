@@ -50,8 +50,6 @@ h6 {
   width: 180px;
 }
 
-
-
 .menubaar {
   border-top: 2px solid #1f88b5;
   border-bottom: 2px solid #1f88b5;
@@ -224,9 +222,16 @@ button.profileDrop {
   margin-left: 7px;
 }
 
-.jobsection a {
-  margin-right: 3px;
+.jobsection {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
 }
+
+/* .jobsection a {
+  margin-right: 3px;
+} */
 
 .pageTitle {
   padding: 20px 0;
@@ -244,7 +249,7 @@ button.profileDrop {
   padding: 14px 0;
 }
 
-label.incluteCheck input {}
+/* label.incluteCheck input {} */
 
 label.incluteCheck label {
   font-size: 13px;
@@ -389,11 +394,6 @@ a.overdueJobsFolder img {
   border: 1px solid #fff;
   font-weight: 500;
   letter-spacing: -1px;
-}
-
-.home_section_cont {
-  background: #eee;
-  padding: 20px;
 }
 
 .proBox {
@@ -748,9 +748,9 @@ a.overdueJobsFolder img {
   font-size: 21px;
 }
 
-.addSection {
-  /* padding: 10px; */
-}
+/* .addSection {
+  padding: 10px;
+} */
 
 .ticketsList {
   padding: 0;
@@ -831,7 +831,6 @@ span.supCirle.productIcon i {
   font-size: 20px;
 }
 
-
 footer.mainFooter {
   background: #f8f9fa;
   /* bottom: -30px; */
@@ -851,9 +850,9 @@ footer.mainFooter {
   text-align: center;
 }
 
-section.main_section_page,
-.home_section_cont {
+section.main_section_page {
   padding: 80px 20px 0 100px !important;
+  min-height: 93vh;
 }
 
 .newJobForm {
@@ -952,7 +951,6 @@ section.main_section_page,
   padding-top: 20px;
   margin-top: 55px;
 }
-
 
 .rental-manager-progress-bar-container .active{
   background-color: #fff !important;
@@ -1113,7 +1111,6 @@ section.main_section_page,
 }
 
 /* Select option with search  */
-
 .customInputContainer {
   width: 100%;
   display: flex;
@@ -1324,7 +1321,6 @@ div#lineChart-license-text {
 }
 
 /* Table Add Data */
-
 .leftNum {
   background: #1f88b5;
   padding: 4px;
@@ -1382,7 +1378,6 @@ div#lineChart-license-text {
   background-color: #ddd !important;
   border-top: 1px solid #aaa;
   border-bottom: 1px solid #aaa;
-
 }
 
 /* *********************************** */
@@ -1401,7 +1396,6 @@ div#lineChart-license-text {
   position: absolute;
   top: 7px !important;
   left: 100%;
-
 }
 
 table.checkboxhide.dataTable td.select-checkbox:before,
@@ -1471,9 +1465,7 @@ canvas#canv1 {
   left: inherit;
 }
 
-/* .dropdown-menu1 .nav-item1 .nav-link i{
- 
-} */
+/* .dropdown-menu1 .nav-item1 .nav-link i{} */
 .dropdown1:hover>.dropdown-menu1,
 .dropend:hover>.dropdown-menu1 {
   display: block;
@@ -1492,7 +1484,6 @@ canvas#canv1 {
     margin-left: .5em;
   }
 }
-
 
 /* ************ */
 .nav-item.dropdown.tableActionBtn {
@@ -1516,7 +1507,6 @@ canvas#canv1 {
   border-bottom: 1px solid #eee;
 }
 
-
 .radStar {
   color: #f00;
 }
@@ -1529,15 +1519,20 @@ canvas#canv1 {
   margin: 0 auto;
   overflow: hidden;
 }
+
 .forrmOuter .formDtail {
   width: 100%;
 }
+
 #form2{
    left: 600px;
 }
+
 #form3{
   left: 600px;
-} */
+} 
+
+*/
 
 :root {
   --primary: #333;
@@ -1597,8 +1592,8 @@ form .page .field .label {
   font-weight: 500;
 }
 
-form .page .field input {
-  /* box-sizing: border-box;
+/* form .page .field input {
+  box-sizing: border-box;
   height: 100%;
   width: 100%;
   border: 1px solid var(--inputBorderColor);
@@ -1606,8 +1601,8 @@ form .page .field input {
   padding-left: 15px;
   margin: 0 1px;
   font-size: 18px;
-  transition: border-color 150ms ease; */
-}
+  transition: border-color 150ms ease;
+} */
 
 form .page .field input.invalid-input {
   border-color: var(--errorColor);
@@ -1639,6 +1634,7 @@ form .page .field button:hover {
 /* form .page .btns button {
   margin-top: -20px !important;
 } */
+
 form .page .btns button.prev {
   margin-right: 3px;
   font-size: 17px;
@@ -2924,9 +2920,10 @@ ul#supplierList {
 }
 
 .home_section_cont {
-  background: #eee;
+  /* background: #eee; */
   padding: 20px;
   margin-top: 68px;
+  margin-left: 80px;
 }
 
 .sidepanel ul>li>a>div>i.fa-angle-right {
@@ -2934,8 +2931,7 @@ ul#supplierList {
   cursor: pointer;
 }
 
-/* 
-custom dropdown */
+/* custom dropdown */
 .custom_dropdown {
   position: relative;
 }
@@ -3022,3 +3018,16 @@ custom dropdown */
   font-size: 15px !important;
 }
 
+.custom_dropdown .dropdown_content a div i {
+  color: #000;
+  margin: 0;
+  font-size: 22px !important;
+}
+
+.custom_dropdown .dropdown_content a:hover div i {
+  color: #000;
+}
+
+.custom_dropdown .dropdown_content a div .second-arrow{
+  font-size: 15px !important;
+}
