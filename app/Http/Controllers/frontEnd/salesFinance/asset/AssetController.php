@@ -12,17 +12,21 @@ use Validator;
 class AssetController extends Controller
 {
     public function asset_category(Request $request){
-        return view('frontEnd.salesAndFinance.asset.assetCategoryList');
+        $data['page']='assets';
+        $data['list']=AssetCategory::getAllAssetCategory()->get();
+        return view('frontEnd.salesAndFinance.asset.assetCategoryList',$data);
     }
     public function asset_register(Request $request){
-        return view('frontEnd.salesAndFinance.asset.assetRegisterList');
+        $data['page']='assets';
+        $data['list']=AssetRegistration::getAllAssetRegistration()->get();
+        return view('frontEnd.salesAndFinance.asset.assetRegisterList',$data);
     }
     public function asset_regiser_add(Request $request){
-        return view('frontEnd.salesAndFinance.asset.assetRegisterForm');
+        $data['page']='assets';
+        return view('frontEnd.salesAndFinance.asset.assetRegisterForm',$data);
     }
     public function asset_regiser_save(Request $request){
         // echo "<pre>";print_r($request->all());die;
-        // saveAssetRegistration
         $validator = Validator::make($request->all(), [
             'asset_name'=>'required',
             'asset_type'=>'required',
@@ -44,5 +48,9 @@ class AssetController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function depreciation_type(Request $request){
+        $data['page']='assets';
+        return view('frontEnd.salesAndFinance.asset.depreciation_typeList',$data);
     }
 }

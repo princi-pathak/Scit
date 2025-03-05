@@ -91,3 +91,9 @@ function getSaveData(){
             });
     }
 }
+function openAssetCategoryModal(){
+    $("#assetCategoryModal").modal('show');
+}
+function saveassetCategoryModal(){
+    alert()
+}

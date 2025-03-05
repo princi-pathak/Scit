@@ -42,6 +42,7 @@ class CreditNotesController extends Controller
         
         // echo "<pre>";print_r($data['list']);die;
         // $data['list']=array();
+        $data['page']="finance";
         return view('frontEnd.salesAndFinance.credit_notes.credit_notes_list',$data);
     }
     private function check_segment_CreditNote($lastSegment=null){
@@ -66,6 +67,7 @@ class CreditNotesController extends Controller
         $data['suppliers']=Supplier::allGetSupplier($home_id,$user_id)->where('status',1)->get();
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
         $data['additional_contact'] = Constructor_additional_contact::where(['home_id'=> $home_id,'userType'=>2,'customer_id'=>$key,'deleted_at'=>null])->get();
+        $data['page']="finance";
         return view('frontEnd.salesAndFinance.credit_notes.new_credit_notes',$data);
     }
     public function credit_notes_save(CreditNotes $request){

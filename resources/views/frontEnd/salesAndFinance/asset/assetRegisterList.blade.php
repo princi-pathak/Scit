@@ -53,41 +53,61 @@
                             </tr>
                           </thead>
                           <tbody>
+                            <?php 
+                              $cost_bfwd=0;
+                              $cost_disposal=0;
+                              $cost_addition=0;
+                              $cost_fwd=0;
+                              $depreciation_bfwd=0;
+                              $depreciation=0;
+                              $charge=0;
+                              $depreciation_cfwd=0;
+                              $nbv_bfwd=0;
+                              $nbv_cfwd=0;
+                              foreach($list as $key=>$val){
+                                $cost_bfwd=$cost_bfwd+$val->cost_bfwd;
+                                $cost_disposal=$cost_disposal+$val->cost_disposal;
+                                $cost_addition=$cost_addition+$val->cost_addition;
+                                $cost_fwd=$cost_fwd+$val->cost_fwd;
+                                $depreciation_bfwd=$depreciation_bfwd+$val->depreciation_bfwd;
+                                $depreciation=$depreciation+$val->depreciation;
+                                $charge=$charge+$val->charge;
+                                $depreciation_cfwd=$depreciation_cfwd+$val->depreciation_cfwd;
+                                $nbv_bfwd=$nbv_bfwd+$val->nbv_bfwd;
+                                $nbv_cfwd=$nbv_cfwd+$val->nbv_cfwd;
+                            ?>
                             <tr class="text-center">
-                              <td>1</td>
-                              <td>Frank Flanagan Blinds</td>
-                              <td>03/03/2025</td>
-                              <td>4133.33</td>
-                              <td></td>
-                              <td></td>
-                              <td>4,133</td>
-                              <td>138</td>
-                              <td></td>
-                              <td>83</td>
-                              <td>220</td>
-                              <td>3910</td>
-                              <td>3910</td>
+                              <td>{{++$key}}</td>
+                              <td>{{$val->asset_name}}</td>
+                              <td>{{ date('d/m/Y', strtotime($val->date)) }}</td>
+                              <td>{{ $val->cost_bfwd ? '£' . $val->cost_bfwd : '' }}</td>
+                              <td>{{ $val->cost_disposal ? '£' . $val->cost_disposal : ''}}</td>
+                              <td>{{ $val->cost_addition ? '£' . $val->cost_addition : ''}}</td>
+                              <td>{{ $val->cost_fwd ? '£' . $val->cost_fwd : ''}}</td>
+                              <td>{{ $val->depreciation_bfwd  ? '£' . $val->depreciation_bfwd : ''}}</td>
+                              <td>{{ $val->depreciation  ? '£' . $val->depreciation : ''}}</td>
+                              <td>{{ $val->charge  ? '£' . $val->charge : ''}}</td>
+                              <td>{{ $val->depreciation_cfwd  ? '£' . $val->depreciation_cfwd : ''}}</td>
+                              <td>{{ $val->nbv_bfwd  ? '£' . $val->nbv_bfwd : ''}}</td>
+                              <td>{{ $val->nbv_cfwd  ? '£' . $val->nbv_cfwd : ''}}</td>
                             </tr>
-                            <tr class="text-center">
-                              <td>2</td>
-                              <td>Frank Flanagan Blinds</td>
-                              <td>03/03/2025</td>
-                              <td>4133.33</td>
-                              <td></td>
-                              <td></td>
-                              <td>4,133</td>
-                              <td>138</td>
-                              <td></td>
-                              <td>83</td>
-                              <td>220</td>
-                              <td>3910</td>
-                              <td>3910</td>
-                            </tr>
+                            <?php }?>
                           </tbody>
                           <tfoot class="table-light">
                             <tr class="text-center">
-                              <th colspan="12">Total</th>
                               <th></th>
+                              <th></th>
+                              <th>Total:</th>
+                              <th>£{{number_format($cost_bfwd, 2)}}</th>
+                              <th>£{{number_format($cost_disposal,2)}}</th>
+                              <th>£{{number_format($cost_addition,2)}}</th>
+                              <th>£{{number_format($cost_fwd,2)}}</th>
+                              <th>£{{number_format($depreciation_bfwd,2)}}</th>
+                              <th>£{{number_format($depreciation,2)}}</th>
+                              <th>£{{number_format($charge,2)}}</th>
+                              <th>£{{number_format($depreciation_cfwd,2)}}</th>
+                              <th>£{{number_format($nbv_bfwd,2)}}</th>
+                              <th>£{{number_format($nbv_cfwd,2)}}</th>
                             </tr>
                           </tfoot>
                         </table>

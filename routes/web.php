@@ -458,9 +458,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(AssetController::class)->group(function (){
 		Route::prefix('sales-finance/assets/')->group(function (){
 			Route::get('asset-category','asset_category');
+			Route::get('depreciation-type','depreciation_type');
 			Route::get('asset-register','asset_register');
 			Route::get('asset-regiser-add','asset_regiser_add');
 			Route::post('asset-regiser-save','asset_regiser_save');
+			Route::post('asset-category-save','asset_category_save');
 		});
 		
 	});
