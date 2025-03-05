@@ -578,15 +578,104 @@ $access_rights = explode(',', $rights);
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="{{ url('/lead/rejected') }}">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">
-                                                                    block
-                                                                </i>
-                                                                <span>Rejected Leads</span>
-                                                            </div>
-                                                        </a>
+                                                        <button href="#" class="openbtn" onclick="openNav(event, 'mySidepanel6')"><span  class="plus_icon">
+                                                            <i class="material-symbols-outlined"> finance_mode </i></span>Finance</button>
+                                                        <div id="mySidepanel6" class="sidepanel">
+                                                            <ul>
+                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                    <h5>Finance</h5>
+                                                                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('mySidepanel6')">
+                                                                        <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                                            <g id="SVGRepo_iconCarrier">
+                                                                                <path
+                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                                    fill="#0F0F0F">
+                                                                                </path>
+                                                                            </g>
+                                                                        </svg>
+                                                                    </a>
+                                                                </div>
+                                                                <li class="custom_dropdown">
+                                                                    <a class="dropbtn">
+                                                                        <div class="d-flex align-items-center gap-3 mb-2">
+                                                                            <i class="material-symbols-outlined"> receipt_long  </i>
+                                                                            <span>Invoice </span>
+                                                                            <i class="fa-solid fa-angle-right arrow"></i>
+                                                                        </div>
+                                                                    </a>
+                                                                    <div class="dropdown_content">
+                                                                        <a href="{{ url('invoice/dashborad') }}">Dashboard</a>
+                                                                        <a href="#!">New Invoice</a>
+                                                                        <a href="#!">Draft Invoices</a>
+                                                                        <a href="#!">Outstanding Invoices</a>
+                                                                        <a href="#!">OverdueInvoices</a>
+                                                                        <a href="#!">Paid Invoices</a>
+                                                                        <a href="#!">Search Invoices</a>
+                                                                        <a href="#!">Account Statements</a>
+                                                                        <a href="#!">Reminders</a>
+                                                                        <div class="custom_dropdown2">
+                                                                            <a tabindex=0> Recurring Invoices <i class="fa-solid fa-angle-right my-0"></i></a>
+                                                                            <div class="dropdown-content">
+                                                                                <a href="#!">New Recurring Invoice</a>
+                                                                                <a href="#!" class="mb-0">Recurring Invoices</a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="custom_dropdown2">
+                                                                            <a tabindex=0> Credit Notes <i class="fa-solid fa-angle-right my-0"></i></a>
+                                                                            <div class="dropdown-content">
+                                                                                <a href="#!">New Credit Note</a>
+                                                                                <a href="#!">Draft Credit Notes</a>
+                                                                                <a href="#!">Awaiting Approval Credit Notes</a>
+                                                                                <a href="#!">Approval Credit Notes</a>
+                                                                                <a href="#!">Paid Credit Notes</a>
+                                                                                <a href="#!" class="mb-0">Cancelled Credit Notes</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="custom_dropdown">
+                                                                    <a class="dropbtn">
+                                                                        <div class="d-flex align-items-center gap-3 mb-2">
+                                                                            <i class="material-symbols-outlined"> shopping_cart </i>
+                                                                            <span>Purchase Orders</span>
+                                                                            <i class="fa-solid fa-angle-right arrow"></i>
+                                                                        </div>
+                                                                    </a>
+                                                                    <div class="dropdown_content">
+                                                                        <a href="purchase_dashboard.html">Dashboard</a>
+                                                                        <a href="{{url('purchase_order')}}">New Purchase Order</a>
+                                                                        <a href="{{ url('draft_purchase_order') }}">Draft Purchase Orders</a>
+                                                                        <a href="{{ url('draft_purchase_order?list_mode=AwaitingApprivalPurchaseOrders') }}"> Awaiting Approval Purchase Orders</a>
+                                                                        <a href="{{ url('draft_purchase_order?list_mode=Approved') }}">Approved Purchase Orders </a>
+                                                                        <a href="{{ url('draft_purchase_order?list_mode=Rejected') }}">Rejected Purchase Orders </a>
+                                                                        <a href="{{ url('draft_purchase_order?list_mode=Actioned') }}">Actioned Purchase Orders</a>
+                                                                        <a href="{{ url('draft_purchase_order?list_mode=Paid') }}">Paid Purchase Orders</a>
+                                                                        <a href="{{url('purchase-orders-search')}}">Search Purchase Orders</a>
+                                                                        <a href="{{url('purchase-order-invoices')}}">Invoices Received</a>
+                                                                        <a href="{{url('purchase-order-statements')}}">Purchase Orders Statements</a>
+                                                                        <div class="custom_dropdown2">
+                                                                            <a tabindex=0>Recurring Purchase Orders <i class="fa-solid fa-angle-right my-0"></i></a>
+                                                                            <div class="dropdown-content">
+                                                                                <a href="New_Recurring_Purchase_Order.html"> New Recurring Purchase Order</a>
+                                                                                <a class="mb-0" href="Recurring_Purchase_Orders.html"> Recurring Purchase Orders </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="custom_dropdown2">
+                                                                            <a tabindex=0> Credit Notes <i class="fa-solid fa-angle-right my-0"></i></a>
+                                                                            <div class="dropdown-content">
+                                                                                <a href="{{url('new_credit_notes')}}">New Credit Note</a>
+                                                                                <a href="{{url('credit_notes?list_mode=Approved')}}">Approved Credit Notes</a>
+                                                                                <a href="{{url('credit_notes?list_mode=Paid')}}">Paid Credit Notes </a>
+                                                                                <a class="mb-0" href="{{url('credit_notes?list_mode=Cancelled')}}">Cancelled Credit Notes</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
                                                     </li>
                                                     <li>
                                                         <a href="{{ url('/lead/authorization') }}">
@@ -2524,19 +2613,53 @@ $access_rights = explode(',', $rights);
                                                                 class="d-flex align-items-center gap-3 mb-2">
                                                                 <i class="material-symbols-outlined">book_5
                                                                 </i>
-                                                                <span>Purchase Day Book</span>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ url('/purchase/purchase-day-book') }}">
-                                                            <div
-                                                                class="d-flex align-items-center gap-3 mb-2">
-                                                                <i class="material-symbols-outlined">book_5
-                                                                </i>
-                                                                <span>Sales Day Book</span>
-                                                            </div>
-                                                        </a>
+                                                            </span>Day Book
+                                                        </button>
+                                                        <div id="mySidepanel13" class="sidepanel">
+                                                            <ul>
+                                                                <div
+                                                                    class="d-flex justify-content-between align-items-center">
+                                                                    <h5>Day Book</h5>
+                                                                    <a href="javascript:void(0)" class="closebtn"
+                                                                        onclick="closeNav('mySidepanel13')">
+                                                                        <svg width="40px" height="40px"
+                                                                            viewBox="0 0 24 24" fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                            </g>
+                                                                            <g id="SVGRepo_tracerCarrier"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"></g>
+                                                                            <g id="SVGRepo_iconCarrier">
+                                                                                <path
+                                                                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                                                                    fill="#0F0F0F"></path>
+                                                                            </g>
+                                                                        </svg>
+                                                                    </a>
+                                                                </div>
+                                                                <li>
+                                                                    <a href="{{ url('purchase/purchase-day-book') }}">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-3 mb-2">
+                                                                            <i class="material-symbols-outlined">book_5
+                                                                            </i>
+                                                                            <span>Purchase Day Book</span>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="{{ url('/sales/sales-day-book') }}">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-3 mb-2">
+                                                                            <i class="material-symbols-outlined">book_5
+                                                                            </i>
+                                                                            <span>Sales Day Book</span>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </li>
                                                 </ul>
                                             </div>

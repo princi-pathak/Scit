@@ -25,6 +25,7 @@ use App\Http\Controllers\frontEnd\salesFinance\JobController;
 use App\Http\Controllers\frontEnd\salesFinance\CreditNotesController;
 use App\Http\Controllers\backEnd\salesfinance\Purchase_orderControllerAdmin;
 use App\Http\Controllers\backEnd\salesfinance\CreditNotesControllerAdmin;
+use App\Http\Controllers\frontEnd\salesFinance\asset\AssetController;
 
 
 
@@ -386,6 +387,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/getActiveAccountCode', 'getActiveAccountCode')->name('Invoice.ajax.getActiveAccountCode');
 		Route::get('/getTaxRate', 'getActiveTaxRate')->name('invoice.ajax.getActiveTaxRate');
 		Route::post('/getTaxRateOnTaxId', 'getTaxRateOnTaxId')->name('invoice.ajax.getTaxRateOnTaxId');
+
+		Route::prefix('invoice')->group(function () {
+			Route::get('/dashborad', 'dashboard');
+
+		});
 	});
 
 
@@ -448,6 +454,15 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('credit_preview', 'credit_preview');
 		Route::post('getAllSupplierPurchaseOrder', 'getAllSupplierPurchaseOrder');
 		Route::post('crediNoteAllocateSave', 'crediNoteAllocateSave');
+	});
+	Route::controller(AssetController::class)->group(function (){
+		Route::prefix('sales-finance/assets/')->group(function (){
+			Route::get('asset-category','asset_category');
+			Route::get('asset-register','asset_register');
+			Route::get('asset-regiser-add','asset_regiser_add');
+			Route::post('asset-regiser-save','asset_regiser_save');
+		});
+		
 	});
 
 	// Forontend Customer Controller
