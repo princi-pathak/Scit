@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>Add Asset Category</h3>
+                    <h3>Asset Categories</h3>
                 </div>
             </div>
             <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -26,6 +26,9 @@
                 </div>
             </div>
          </div>
+         <div class="alert text-center success-message" id="msg" style="display:none;height:50px">
+            <p id="status_meesage"></p>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="maimTable">
@@ -184,14 +187,14 @@
                         </div>
                     </div>
 
-                    <table id="exampleOne" class="display tablechange" cellspacing="0" width="100%">
+                    <table id="exampleOne" class="display tablechange text-center" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th class="text-center" style=" width:30px;"><input type="checkbox" id="selectAllCheckBoxes"></th>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th></th>
+                                <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th>
+                                <th class="col-2">#</th>
+                                <th class="col-3">Name</th>
+                                <th class="col-3">Status</th>
+                                <th class="col-3"></th>
                             </tr>
                         </thead>
 
@@ -215,7 +218,7 @@
                                         <div class="nav-item dropdown">
                                             <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">Action</a>
                                             <div class="dropdown-menu fade-up m-0">
-                                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#customerPop" class="dropdown-item modal_dataFetch" data-id="{{ $val->id }}" data-name="{{ $val->name }}" data-status="{{ $val->status }}">Edit Details</a>
+                                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#assetCategoryModal" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $val->id }}" data-name="{{ $val->name }}" data-status="{{ $val->status }}">Edit Details</a>
                                             </div>
                                         </div>
                                     </div>
@@ -228,7 +231,7 @@
 
                 </div> <!-- End off main Table -->
             </div>
-        </di>
+        </div>
     </div>
 </section>
 
@@ -244,24 +247,19 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="formDtail">
+                            <div class="col-md-12 col-lg-12 col-xl-12 text-center">
+                                <div class="mt-1 mb-0 text-center" id="messageAssetCategory"></div>
+                            </div>
                             <form id="assetCategoryForm" class="customerForm pt-0">
                                 <input type="hidden" name="id" id="id">
                                 @csrf
                                 <div class="row">
-                                    <div class="alert alert-success text-center success_message" style="display:none;height:50px">
-                                        <p id="message"></p>
-                                    </div>
                                     <div class="col-md-12 col-lg-12 col-xl-12">
                                         <div class="formDtail">
-                                                <input type="hidden" name="id" id="id">
                                                 <div class="mb-2 row">
-
-                                                    <label for="inputName" class="col-sm-3 col-form-label">Task Type<span class="radStar ">*</span></label>
-
-
+                                                    <label for="inputName" class="col-sm-3 col-form-label">Name<span class="radStar ">*</span></label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" class="form-control editInput"
-                                                            id="name" name="title" value="">
+                                                        <input type="text" class="form-control editInput" id="name" name="name" value="">
                                                     </div>
                                                 </div>
                                                 <div class="mb-2 row">
@@ -269,7 +267,7 @@
                                                         class="col-sm-3 col-form-label">Status</label>
                                                     <div class="col-sm-9">
                                                         <select class="form-control editInput selectOptions"
-                                                            id="statusModal" name="status">
+                                                            id="statusAssetModal" name="status">
                                                             <option value="1" >Active</option>
                                                             <option value="0">Inactive</option>
                                                         </select>
@@ -308,7 +306,7 @@
             if (confirm("Are you sure to delete?")) {
                 // console.log(ids);
                 var token = '<?php echo csrf_token(); ?>'
-                var model = 'PurchaseOrder';
+                var model = 'AssetCategory';
                 $.ajax({
                     type: "POST",
                     url: "{{url('/bulk_delete')}}",
@@ -341,11 +339,9 @@
         } else {
             $('#selectAllCheckBoxes').prop('checked', false);
         }
-        shoeHideEmailSend();
     });
     $('#selectAllCheckBoxes').on('click', function () {
         $('.delete_checkbox').prop('checked', $(this).prop('checked'));
-        shoeHideEmailSend(); 
   });
   function status_change(id, status) {
       var token = '<?php echo csrf_token(); ?>'
@@ -375,5 +371,8 @@
       });
   }
 </script>
-<script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}"></script>
+<script>
+    var assetCatSaveUrl="{{url('sales-finance/assets/asset-category-save')}}";
+</script>
+<script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}" defer></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

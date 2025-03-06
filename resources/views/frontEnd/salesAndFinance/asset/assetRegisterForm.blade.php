@@ -52,10 +52,9 @@
                             class="radStar">*</span></label>
                         <div class="col-sm-8">
                           <select name="asset_type" id="asset_type" class="form-control editInput">
-                              <option value="1">Property</option>
-                              <option value="2">Household</option>
-                              <option value="3">Furniture & Fixtures</option>
-                              <option value="4">Motor Vehicles</option>
+                            <?php foreach($AssetCategoryList as $cat){?>
+                              <option value="{{$cat->id}}">{{$cat->name}}</option>
+                            <?php }?>
                           </select>
                         </div>
                       </div>
@@ -119,10 +118,9 @@
                         <label for=" depreciation_type" class="col-sm-3 col-form-label"> Type of Depreciation</label>
                         <div class="col-sm-8">
                           <select name="depreciation_type" id="depreciation_type" class="form-control editInput" onchange="calculate()">
-                            <option value="1" data-attr="10">10 (%)</option>
-                            <option value="2" data-attr="20">20 (%)</option>
-                            <option value="3" data-attr="30">30 (%)</option>
-                            <option value="4" data-attr="40">40 (%)</option>
+                            <?php foreach($DepreciationTypeList as $type){?>
+                              <option value="{{$type->id}}" data-attr="{{$type->percentage}}">{{$type->percentage}} (%)</option>
+                            <?php }?>
                           </select>
                         </div>
                       </div>

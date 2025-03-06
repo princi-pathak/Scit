@@ -460,9 +460,11 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::get('asset-category','asset_category');
 			Route::get('depreciation-type','depreciation_type');
 			Route::get('asset-register','asset_register');
+			Route::post('asset-register-search', 'asset_register_search');
 			Route::get('asset-regiser-add','asset_regiser_add');
 			Route::post('asset-regiser-save','asset_regiser_save');
 			Route::post('asset-category-save','asset_category_save');
+			Route::post('depreciation-type-save','depreciation_type_save');
 		});
 		
 	});

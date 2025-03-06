@@ -20,7 +20,7 @@ function calculate(){
 
     var costCalculation=cost_bfwd+cost_addition+cost_disposal;
     var depreciationSum=depreciation_bfwd+depreciation;
-    var percentage=depreciationSum*depreciation_type/100;
+    var percentage=costCalculation*depreciation_type/100;
     var depreciationCalculation = depreciationSum+percentage;
 
     var nbv_cfwdCalculation=costCalculation - depreciationCalculation;
@@ -29,8 +29,8 @@ function calculate(){
     $("#cost_fwd").val(costCalculation.toFixed(2));
     $("#charge").val(percentage.toFixed(2));
     $("#depreciation_cfwd").val(depreciationCalculation.toFixed(2));
-    $("#nbv_cfwd").val(nbv_bfwdCalculation.toFixed(2));
-    $("#nbv_bfwd").val(nbv_cfwdCalculation.toFixed(2));
+    $("#nbv_cfwd").val(nbv_cfwdCalculation.toFixed(2));
+    $("#nbv_bfwd").val(nbv_bfwdCalculation.toFixed(2));
 }
 function getSaveData(){
     var asset_name=$("#asset_name").val();
@@ -92,8 +92,207 @@ function getSaveData(){
     }
 }
 function openAssetCategoryModal(){
+    $("#assetCategoryModalLabel").text("Add Asset Category");
     $("#assetCategoryModal").modal('show');
 }
 function saveassetCategoryModal(){
-    alert()
+    var name=$("#name").val();
+    if(name == ''){
+        $("#name").css('border','1px solid red');
+        return false;
+    }else{
+        $("#name").css('border','');
+        $.ajax({
+            type: "POST",
+            url: assetCatSaveUrl,
+            data: new FormData($("#assetCategoryForm")[0]),
+            async: false,
+            contentType: false,
+            cache: false,
+            processData: false,
+                success: function(response) {
+                    console.log(response);
+                    // return false;
+                    if(response.vali_error){
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
+                        return false;
+                    }else if(response.success === true){
+                        $(window).scrollTop(0);
+                        $('#messageAssetCategory').addClass('success-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#messageAssetCategory').removeClass('success-message').text('').hide();
+                            location.reload();
+                        }, 3000);
+                    }else if(response.success === false){
+                        $('#messageAssetCategory').addClass('error-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#error-message').text('').fadeOut();
+                        }, 3000);
+                    }else{
+                        alert("Something went wrong");
+                        return false;
+                    }
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + error);
+                }
+            });
+    }
 }
+$(document).on('click','.assetCatemodal_dataFetch',function (){
+    // alert()
+    $("#assetCategoryModalLabel").text("Edit Asset Category");
+    var id=$(this).data('id');
+    var name=$(this).data('name');
+    var status=$(this).data('status');
+    
+    $("#id").val(id);
+    $("#name").val(name);
+    $("#statusAssetModal").val(status);
+});
+function opendepreciation_typesModal(){
+    $("#depreciation_typesModalLabel").text("Add Depreciation Type");
+    $("#depreciation_typesModal").modal('show');
+}
+$(document).on('click','.depreciation_typeModal_dataFetch',function(){
+    $("#depreciation_typesModalLabel").text("Edit Depreciation Type");
+    var id=$(this).data('id');
+    var name=$(this).data('name');
+    var percentage=$(this).data('percentage');
+    var status=$(this).data('status');
+    
+    $("#id").val(id);
+    $("#name").val(name);
+    $("#percentage").val(percentage);
+    $("#statusdepreciation_typesModal").val(status);
+});
+
+function savedepreciation_typesModal(){
+    var name=$("#name").val();
+    var percentage=$("#percentage").val();
+    if(name == ''){
+        $("#name").css('border','1px solid red');
+        return false;
+    }else if(percentage == ''){
+        $("#name").css('border','');
+        $("#percentage").css('border','1px solid red');
+        return false;
+    }else{
+        $("#name").css('border','');
+        $("#percentage").css('border','');
+        $.ajax({
+            type: "POST",
+            url: assetDepreciationTypeSaveUrl,
+            data: new FormData($("#depreciation_typesForm")[0]),
+            async: false,
+            contentType: false,
+            cache: false,
+            processData: false,
+                success: function(response) {
+                    console.log(response);
+                    // return false;
+                    if(response.vali_error){
+                        alert(response.vali_error);
+                        $(window).scrollTop(0);
+                        return false;
+                    }else if(response.success === true){
+                        $(window).scrollTop(0);
+                        $('#messagedepreciation_types').addClass('success-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#messagedepreciation_types').removeClass('success-message').text('').hide();
+                            location.reload();
+                        }, 3000);
+                    }else if(response.success === false){
+                        $('#messagedepreciation_types').addClass('error-message').text(response.message).show();
+                        setTimeout(function() {
+                            $('#error-message').text('').fadeOut();
+                        }, 3000);
+                    }else{
+                        alert("Something went wrong");
+                        return false;
+                    }
+                },
+                error: function(xhr, status, error) {
+                   var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Error - ' + errorMessage + "\nMessage: " + error);
+                }
+            });
+    }
+}
+function searchBtn(){
+    var edd_startDate=$("#edd_startDate").val();
+    var edd_endDate=$("#edd_endDate").val();
+    if(edd_startDate == '' && edd_endDate == ''){
+        alert("Please fill all field before searching.");
+        return false;
+    }
+    if (edd_startDate != '' && edd_endDate == '') {
+        alert("Please choose both date");
+        return false;
+    }
+    if (edd_startDate == '' && edd_endDate != '') {
+        alert("Please choose both date");
+        return false;
+    }
+    $.ajax({
+        type: "POST",
+        url: searchUrl,
+        data: new FormData($("#search_dataForm")[0]),
+        async: false,
+        contentType: false,
+        cache: false,
+        processData: false,
+            success: function(response) {
+                console.log(response);
+                return false;
+                if(response.vali_error){
+                    alert(response.vali_error);
+                    $(window).scrollTop(0);
+                    return false;
+                }else if(response.success === true){
+                    $(window).scrollTop(0);
+                    $('#messagedepreciation_types').addClass('success-message').text(response.message).show();
+                    setTimeout(function() {
+                        $('#messagedepreciation_types').removeClass('success-message').text('').hide();
+                        location.reload();
+                    }, 3000);
+                }else if(response.success === false){
+                    $('#messagedepreciation_types').addClass('error-message').text(response.message).show();
+                    setTimeout(function() {
+                        $('#error-message').text('').fadeOut();
+                    }, 3000);
+                }else{
+                    alert("Something went wrong");
+                    return false;
+                }
+            },
+            error: function(xhr, status, error) {
+               var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
+}
+function clearBtn(form_id){
+    $("#"+form_id)[0].reset();
+    // $('#configform')[0].reset();
+}
+$("#edd_endDate").change(function() {
+    var startDate = document.getElementById("edd_startDate").value;
+    var endDate = document.getElementById("edd_endDate").value;
+
+    if ((Date.parse(startDate) >= Date.parse(endDate))) {
+        alert("End date should be greater than Start date");
+        document.getElementById("edd_endDate").value = "";
+    }
+});
+$("#edd_startDate").change(function() {
+    var startDate = document.getElementById("edd_startDate").value;
+    var endDate = document.getElementById("edd_endDate").value;
+
+    if ((Date.parse(endDate) <= Date.parse(startDate))) {
+        alert("Start date should be less than End date");
+        document.getElementById("edd_startDate").value = "";
+    }
+});

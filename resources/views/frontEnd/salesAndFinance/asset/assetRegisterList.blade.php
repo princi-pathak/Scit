@@ -18,6 +18,61 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-lg-12">
+                <div class="maimTable">
+                    <div class="printExpt">
+                        <div class="prntExpbtn">
+                            <a href="#!">Print</a>
+                            <a href="#!">Export</a>
+                        </div>
+                        <div class="searchFilter">
+                            <a href="#!" onclick="hideShowDiv()" class="hidebtn">Show Search Filter</a>
+                        </div>
+
+                    </div>
+
+                    <div class="searchJobForm" id="divTohide" style="display:none">
+                        <form id="search_dataForm" class="p-4">
+                          @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row form-group mb-2">
+                                        <label class="col-md-2 col-form-label text-end ">Date From:</label>
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control editInput" id="edd_startDate" name="start_date">
+                                        </div>
+                                        <label class="col-md-2 col-form-label text-end ">Date To:</label>
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control editInput" id="edd_endDate" name="end_date">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="pageTitleBtn justify-content-center">
+                                        <a href="javascript:void(0)" onclick="searchBtn()" class="profileDrop px-3">Search </a>
+                                        <!-- <button type="submit" class="profileDrop px-3" onclick="return searchBtn()">Search</button> -->
+                                        <a href="javascript:void(0)" onclick="clearBtn('search_dataForm')" class="profileDrop px-3">Clear</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <div class="markendDelete">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="jobsection">
+                                    <a href="javascript:void(0)" id="deleteSelectedRows" class="profileDrop">Delete</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
           <div class="col-lg-12">
             <div class="newJobForm mt-4">
               <label class="upperlineTitle">Asset </label>
@@ -35,6 +90,7 @@
                               <th colspan="4" class="border-end">Cost</th>
                               <th colspan="4" class="border-end">Depreciation</th>
                               <th colspan="2">N.B.V</th>
+                              <th colspan="2">Action</th>
                             </tr>
                             <tr class="text-center">
                               <th></th>
@@ -90,6 +146,20 @@
                               <td>{{ $val->depreciation_cfwd  ? '£' . $val->depreciation_cfwd : ''}}</td>
                               <td>{{ $val->nbv_bfwd  ? '£' . $val->nbv_bfwd : ''}}</td>
                               <td>{{ $val->nbv_cfwd  ? '£' . $val->nbv_cfwd : ''}}</td>
+                              <td>
+                                  <div class="d-flex justify-content-end">
+                                      <div class="nav-item dropdown">
+                                          <a href="#!" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown" aria-expanded="false">
+                                              Action
+                                          </a>
+                                          <div class="dropdown-menu fade-up m-0" style="z-index:9999">
+                                              <a href="#!" class="dropdown-item">Edit</a>
+                                              <hr class="dropdown-divider">
+                                              <a href="#!" class="dropdown-item">Delete</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </td>
                             </tr>
                             <?php }?>
                           </tbody>
@@ -122,5 +192,8 @@
         </div>
       </div>
     </section>
+<script>
+  var searchUrl="{{url('sales-finance/assets/asset-register-search')}}";
+</script>
 <script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}"></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
