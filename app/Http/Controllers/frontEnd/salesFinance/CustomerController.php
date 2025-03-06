@@ -1211,7 +1211,7 @@ class CustomerController extends Controller
         return response()->json(['success'=>true,'data'=>$data]);
         
     }
-    public function getAllCustomerList(Request $request){
+    public function getAllCustomerList(){
         $home_id = Auth::user()->home_id;
         $customer = Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
         return response()->json(['success'=>true,'data'=>$customer]);

@@ -600,21 +600,21 @@ $access_rights = explode(',', $rights);
                                                                 <li class="custom_dropdown">
                                                                     <a class="dropbtn">
                                                                         <div class="d-flex align-items-center gap-3 mb-2">
-                                                                            <i class="material-symbols-outlined"> receipt_long  </i>
+                                                                            <i class="material-symbols-outlined"> receipt_long </i>
                                                                             <span>Invoice </span>
                                                                             <i class="fa-solid fa-angle-right arrow"></i>
                                                                         </div>
                                                                     </a>
                                                                     <div class="dropdown_content">
-                                                                        <a href="{{ url('invoice/dashborad') }}">Dashboard</a>
-                                                                        <a href="#!">New Invoice</a>
-                                                                        <a href="#!">Draft Invoices</a>
-                                                                        <a href="#!">Outstanding Invoices</a>
-                                                                        <a href="#!">OverdueInvoices</a>
-                                                                        <a href="#!">Paid Invoices</a>
-                                                                        <a href="#!">Search Invoices</a>
-                                                                        <a href="#!">Account Statements</a>
-                                                                        <a href="#!">Reminders</a>
+                                                                        <a href="{{ url('invoices/dashborad') }}">Dashboard</a>
+                                                                        <a href="{{ url('invoices/add') }}">New Invoice</a>
+                                                                        <a href="{{ url('invoices/draft') }}">Draft Invoices</a>
+                                                                        <a href="{{ url('invoices/outstanding') }}">Outstanding Invoices</a>
+                                                                        <a href="{{ url('invoices/overdue') }}">OverdueInvoices</a>
+                                                                        <a href="{{ url('invoices/paid') }}">Paid Invoices</a>
+                                                                        <a href="{{ url('invoices/search') }}">Search Invoices</a>
+                                                                        <a href="{{ url('invoices/account-statements') }}">Account Statements</a>
+                                                                        <a href="{{ url('invoices/reminders') }}">Reminders</a>
                                                                         <div class="custom_dropdown2">
                                                                             <a tabindex=0> Recurring Invoices <i class="fa-solid fa-angle-right my-0"></i></a>
                                                                             <div class="dropdown-content">
