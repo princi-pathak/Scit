@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Construction_account_code;
 use App\Models\Construction_tax_rate;
+use App\Models\Country;
+
+use App\Http\Controllers\frontEnd\salesFinance\CustomerController;
 
 class InvoiceController extends Controller
 {
@@ -109,6 +112,13 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function create(CustomerController $customer){
+        $data['page'] = "invoice";
+        $data['customerList'] =  $customer->getAllCustomerList()->getData()->data;
+        $data['countries'] = Country::getCountriesNameCode();
+        // dd($data);
+        return view('frontEnd.salesAndFinance.invoice.invoice_form', $data);
+    }
 
     
 

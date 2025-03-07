@@ -381,4 +381,5 @@
     </div>
 </section>
 <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+
 @include('frontEnd.salesAndFinance.jobs.layout.footer')
