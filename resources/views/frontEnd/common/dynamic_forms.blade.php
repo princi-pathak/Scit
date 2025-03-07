@@ -1134,7 +1134,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
 
 
         $('.sbt-su-dyn-frm-log').click(function() {
-
+            alert("save");
             var dyn_form_id = $('input[name=\'dyn_form_id\']').val();
             var s_user_id = $('select[name=\'s_user_id\']').val();
             var s_category_id = $('select[name=\'s_category_id\']').val();
@@ -1196,6 +1196,7 @@ $service_user_id = (isset($service_user_id)) ? $service_user_id : 0;
                         setTimeout(function() {
                             $('.popup_success').fadeOut()
                         }, 5000);
+                        window.location.href = "{{ url('/service/daily-logs?key=') }}/" + s_user_id;   
                         $('.dyn-logged-btn').click();
 
                     } else {
