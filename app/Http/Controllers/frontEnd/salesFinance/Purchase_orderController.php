@@ -55,6 +55,7 @@ class Purchase_orderController extends Controller
         $home_id = Auth::user()->home_id;
         $data['department']=Department::getAllDepartment($home_id);
         $data['home_id']=$home_id;
+        $data['page']='setting';
         return view('frontEnd.salesAndFinance.jobs.department',$data);
     }
 
@@ -119,6 +120,7 @@ class Purchase_orderController extends Controller
         $data['product_categories'] = Product_category::with('parent', 'children')->where('home_id',Auth::user()->home_id)->where('status',1)->where('deleted_at',NULL)->get();
         $data['reminder_data']=$reminder_data;
         $data['paymentTypeList']=Payment_type::getActivePaymentType($home_id);
+        $data['page']='finance';
         // echo "<pre>";print_r($data['country']);die;
         return view('frontEnd.salesAndFinance.purchase_order.new_purchase_order',$data);
     }
@@ -504,6 +506,7 @@ class Purchase_orderController extends Controller
         $data['customer_data'] = Customer::get_customer_list_Attribute($home_id, 'ACTIVE');
         $data['users'] = User::where('home_id', $home_id)->select('id', 'name','email','phone_no')->where('is_deleted', 0)->get();
         $data['paymentTypeList']=Payment_type::getActivePaymentType($home_id);
+        $data['page']='finance';
         // echo "<pre>";print_r($data['status']);die;
         return view('frontEnd.salesAndFinance.purchase_order.purchase_order_list',$data);
     }
