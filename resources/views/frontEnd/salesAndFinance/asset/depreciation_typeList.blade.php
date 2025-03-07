@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4 ">
                 <div class="pageTitle">
-                    <h3>Asset Categories</h3>
+                    <h3>Depreciation Type</h3>
                 </div>
             </div>
             <div class="col-md-8 col-lg-8 col-xl-8 px-3">
@@ -20,13 +20,13 @@
                 <div class="jobsection">
                     <div class="d-inline-flex align-items-center ">
                         <div class="nav-item dropdown">
-                            <a href="javascript:void(0)" onclick="openAssetCategoryModal()" class="profileDrop">New</a>
+                            <a href="javascript:void(0)" onclick="opendepreciation_typesModal()" class="profileDrop">New</a>
                         </div>
                     </div>
                 </div>
             </div>
          </div>
-         <div class="alert text-center success-message" id="msg" style="display:none;height:50px">
+         <div class="alert success-message text-center" id="msg" style="display:none;height:50px">
             <p id="status_meesage"></p>
         </div>
         <div class="row">
@@ -191,10 +191,11 @@
                         <thead>
                             <tr>
                                 <th class="col-1"><input type="checkbox" id="selectAllCheckBoxes"></th>
-                                <th class="col-2">#</th>
-                                <th class="col-3">Name</th>
-                                <th class="col-3">Status</th>
-                                <th class="col-3"></th>
+                                <th class="col-1">#</th>
+                                <th class="col-2">Name</th>
+                                <th class="col-2">Percentage(%)</th>
+                                <th class="col-2">Status</th>
+                                <th class="col-2"></th>
                             </tr>
                         </thead>
 
@@ -206,6 +207,7 @@
                                 </td>
                                 <td>{{++$key}}</td>
                                 <td>{{$val->name}}</td>
+                                <td>{{$val->percentage}}</td>
                                 <td>
                                     <?php if ($val->status == 1) { ?>
                                         <span class="grencheck" onclick="status_change({{$val->id}},{{$val->status}})"><i class="fa-solid fa-circle-check"></i></span>
@@ -218,7 +220,7 @@
                                         <div class="nav-item dropdown">
                                             <a href="#" class="nav-link dropdown-toggle profileDrop" data-bs-toggle="dropdown">Action</a>
                                             <div class="dropdown-menu fade-up m-0">
-                                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#assetCategoryModal" class="dropdown-item assetCatemodal_dataFetch" data-id="{{ $val->id }}" data-name="{{ $val->name }}" data-status="{{ $val->status }}">Edit Details</a>
+                                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#depreciation_typesModal" class="dropdown-item depreciation_typeModal_dataFetch" data-id="{{ $val->id }}" data-name="{{ $val->name }}" data-percentage="{{ $val->percentage }}" data-status="{{ $val->status }}">Edit Details</a>
                                             </div>
                                         </div>
                                     </div>
@@ -231,16 +233,16 @@
 
                 </div> <!-- End off main Table -->
             </div>
-        </div>
+        </di>
     </div>
 </section>
 
 <!-- Record Payment Modal start here -->
-<div class="modal fade" id="assetCategoryModal" tabindex="-1" aria-labelledby="assetCategoryModalLabel" aria-hidden="true">
+<div class="modal fade" id="depreciation_typesModal" tabindex="-1" aria-labelledby="depreciation_typesModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content add_Customer">
             <div class="modal-header">
-                <h5 class="modal-title" id="assetCategoryModalLabel"></h5>
+                <h5 class="modal-title" id="depreciation_typesModalLabel"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -248,9 +250,9 @@
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <div class="formDtail">
                             <div class="col-md-12 col-lg-12 col-xl-12 text-center">
-                                <div class="mt-1 mb-0 text-center" id="messageAssetCategory"></div>
+                                <div class="mt-1 mb-0 text-center" id="messagedepreciation_types"></div>
                             </div>
-                            <form id="assetCategoryForm" class="customerForm pt-0">
+                            <form id="depreciation_typesForm" class="customerForm pt-0">
                                 <input type="hidden" name="id" id="id">
                                 @csrf
                                 <div class="row">
@@ -263,11 +265,22 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-2 row">
+                                                    <label for="inputName" class="col-sm-3 col-form-label">Percenatge<span class="radStar ">*</span></label>
+                                                    <div class="col-sm-1 pe-0">
+                                                        <div style="background:#e3e3e1;" class="px-2 py-1 text-center">
+                                                            <span>%</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control editInput numberInput" id="percentage" name="percentage" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2 row">
                                                     <label for="inputProject"
                                                         class="col-sm-3 col-form-label">Status</label>
                                                     <div class="col-sm-9">
                                                         <select class="form-control editInput selectOptions"
-                                                            id="statusAssetModal" name="status">
+                                                            id="statusdepreciation_typesModal" name="status">
                                                             <option value="1" >Active</option>
                                                             <option value="0">Inactive</option>
                                                         </select>
@@ -283,7 +296,7 @@
             </div>
             <div class="modal-footer customer_Form_Popup">
 
-                <button type="button" class="profileDrop" id="saveassetCategoryModal" onclick="saveassetCategoryModal()">Save</button>
+                <button type="button" class="profileDrop" id="savedepreciation_typesModal" onclick="savedepreciation_typesModal()">Save</button>
                 <button type="button" class="profileDrop" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -306,7 +319,7 @@
             if (confirm("Are you sure to delete?")) {
                 // console.log(ids);
                 var token = '<?php echo csrf_token(); ?>'
-                var model = 'AssetCategory';
+                var model = 'DepreciationType';
                 $.ajax({
                     type: "POST",
                     url: "{{url('/bulk_delete')}}",
@@ -345,7 +358,7 @@
   });
   function status_change(id, status) {
       var token = '<?php echo csrf_token(); ?>'
-      var model = "AssetCategory";
+      var model = "DepreciationType";
       $.ajax({
           type: "POST",
           url: "{{url('/status_change')}}",
@@ -372,7 +385,7 @@
   }
 </script>
 <script>
-    var assetCatSaveUrl="{{url('sales-finance/assets/asset-category-save')}}";
+    var assetDepreciationTypeSaveUrl="{{url('sales-finance/assets/depreciation-type-save')}}";
 </script>
 <script src="{{ url('public/js/salesFinance/asset/asset_category.js')}}" defer></script>
 @include('frontEnd.salesAndFinance.jobs.layout.footer')

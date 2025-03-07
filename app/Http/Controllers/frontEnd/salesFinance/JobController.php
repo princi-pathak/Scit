@@ -100,6 +100,7 @@ class JobController extends Controller
         // echo "<pre>";print_r($data_arr);die;
         $data['lastSegment']=$lastSegment;
         $data['job']=$data_arr;
+        $data['page']="jobs";
         // echo "<pre>";print_r($data['job']);die;
         return view('frontEnd.salesAndFinance.jobs.job',$data);
     }
@@ -110,6 +111,7 @@ class JobController extends Controller
         $data['appointment_type']=Construction_job_appointment_type::where('home_id',$home_id)->get();
         $data['home_id']=$home_id;
         $data['customers']=Customer::get_customer_list_Attribute($home_id,'ACTIVE');
+        $data['page']='setting';
 
         // echo "<pre>";print_r($data['workflow']);die;
         return view('frontEnd.salesAndFinance.jobs.job_type',$data);
@@ -118,6 +120,7 @@ class JobController extends Controller
         $home_id = Auth::user()->home_id;
         $data['job_title']=Job_title::whereNull('deleted_at')->get();
         $data['home_id']=$home_id;
+        $data['page']='setting';
         return view('frontEnd.salesAndFinance.jobs.job_titles',$data);
     }
     public function job_type_save(Request $request){
@@ -281,6 +284,7 @@ class JobController extends Controller
         // $data['customer_project']=$customer_details->customer_project;
         // echo "<pre>";print_r($customer_profession);die;
         // echo "<pre>";print_r($data['sales_tax']);die;
+        $data['page']="jobs";
         return view('frontEnd.salesAndFinance.jobs.add_job',$data);
     }
     public function job_add_edit_save(Request $request){
@@ -624,6 +628,7 @@ class JobController extends Controller
         // echo "<pre>";print_r($data['appointment_type']);die;
         $data['home_id']=$home_id;
         $data['users']=User::all();
+        $data['page']='setting';
         // echo "<pre>";print_r($data['users']);die;
         return view('frontEnd.salesAndFinance.jobs.job_appointment_type', $data);
     }
@@ -658,6 +663,7 @@ class JobController extends Controller
         $data['rejection']=construction_appointment_rejection_category::where(['deleted_at'=>null])->get();
         $home_id = Auth::user()->home_id;
         $data['home_id']=$home_id;
+        $data['page']='setting';
         // echo "<pre>";print_r($data['rejection']);die;
         return view('frontEnd.salesAndFinance.jobs.appointment_rejection_cat',$data);
         

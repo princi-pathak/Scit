@@ -388,9 +388,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/getTaxRate', 'getActiveTaxRate')->name('invoice.ajax.getActiveTaxRate');
 		Route::post('/getTaxRateOnTaxId', 'getTaxRateOnTaxId')->name('invoice.ajax.getTaxRateOnTaxId');
 
-		Route::prefix('invoice')->group(function () {
+		Route::prefix('invoices')->group(function () {
 			Route::get('/dashborad', 'dashboard');
-
+			Route::get('/add', 'create');
+			
 		});
 	});
 
@@ -458,9 +459,15 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 	Route::controller(AssetController::class)->group(function (){
 		Route::prefix('sales-finance/assets/')->group(function (){
 			Route::get('asset-category','asset_category');
+			Route::get('depreciation-type','depreciation_type');
 			Route::get('asset-register','asset_register');
+			Route::post('asset-register-search', 'asset_register_search');
 			Route::get('asset-regiser-add','asset_regiser_add');
 			Route::post('asset-regiser-save','asset_regiser_save');
+			Route::post('asset-category-save','asset_category_save');
+			Route::post('depreciation-type-save','depreciation_type_save');
+			Route::get('asset-register-edit','asset_regiser_add');
+			Route::post('asset-register-delete','asset_register_delete');
 		});
 		
 	});

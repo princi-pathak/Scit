@@ -1811,7 +1811,7 @@ form .page .btns button.next {
 }
 
 #divTohide {
-  height: 250px;
+  min-height: 250px;
   opacity: 1;
   display: block;
 }
@@ -3030,4 +3030,26 @@ ul#supplierList {
 
 .custom_dropdown .dropdown_content a div .second-arrow{
   font-size: 15px !important;
+}
+
+.asset_layer .total .line {
+  border-top: 2px solid #000;
+  font-weight: 600;
+}
+
+.asset_layer .total2 .line {
+  border-bottom: 2px solid #000;
+  font-weight: 600;
+}
+
+.asset_layer table thead tr th,
+.asset_layer table tbody tr td {
+  text-align: end;
+}
+.asset_layer table tbody tr th{
+  font-size: 13px !important;
+}
+.asset_layer table tbody tr td[colspan="8"],
+.asset_layer table tbody tr thok[colspan="8"] {
+  height: 38px;
 }

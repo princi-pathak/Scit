@@ -14,4 +14,7 @@ class AssetRegistration extends Model
     public static function saveAssetRegistration($data){
         return self::updateOrCreate(['id' => $data['id'] ?? null],$data);
     }
+    public static function getAllAssetRegistration(){
+        return self::whereNull('deleted_at');
+    }
 }
