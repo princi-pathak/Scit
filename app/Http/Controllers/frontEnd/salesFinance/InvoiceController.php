@@ -20,6 +20,7 @@ class InvoiceController extends Controller
         $home_id = Auth::user()->home_id;
         $data['account_codes']=Construction_account_code::getAllAccount_Codes($home_id);
         $data['home_id']=$home_id;
+        $data['page']='setting';
         return view('frontEnd.salesAndFinance.jobs.account_code',$data);
     }
 
@@ -44,6 +45,7 @@ class InvoiceController extends Controller
         $home_id = Auth::user()->home_id;
         $data['tax_rate'] = Construction_tax_rate::getAllTax_rate($home_id,$mode);
         $data['home_id'] = $home_id;
+        $data['page']='setting';
         return view('frontEnd.salesAndFinance.jobs.tax_rate',$data);
     }
 
