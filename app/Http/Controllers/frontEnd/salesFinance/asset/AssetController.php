@@ -22,6 +22,9 @@ class AssetController extends Controller
         return view('frontEnd.salesAndFinance.asset.assetRegisterList',$data);
     }
     public function asset_regiser_add(Request $request){
+        $id=base64_decode($request->key);
+        $data['register']=AssetRegistration::find($id);
+        // echo "<pre>";print_r($data['register']);die;
         $data['page']='assets';
         $data['AssetCategoryList']=AssetCategory::getAllAssetCategory()->where('status',1)->get();
         $data['DepreciationTypeList']=DepreciationType::getDepreciationType()->where('status',1)->get();
@@ -108,9 +111,16 @@ class AssetController extends Controller
             $query->whereBetween('date', [$request->start_date, $request->end_date]);
         }
         $list=$query->get();
-        foreach($list as $val){
-
-        }
         return response()->json(['success' => true,'message'=>'Search List.', 'data' => $list]);
+    }
+    public function asset_register_delete(Request $request){
+        // echo "<pre>";print_r($request->all());die;
+        try{
+            AssetRegistration::find($request->id)->update(['deleted_at' => now()]);
+            return response()->json(['success'=>true,'message'=>'Deleted Successfully done']);
+        }catch (\Exception $e) {
+            // Log::error('Error saving Tag: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

@@ -465,6 +465,8 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 			Route::post('asset-regiser-save','asset_regiser_save');
 			Route::post('asset-category-save','asset_category_save');
 			Route::post('depreciation-type-save','depreciation_type_save');
+			Route::get('asset-register-edit','asset_regiser_add');
+			Route::post('asset-register-delete','asset_register_delete');
 		});
 		
 	});

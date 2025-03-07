@@ -11,6 +11,7 @@
         text-align: center;
     }
 </style>
+<section class="main_section_page px-3 pt-0">
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 col-lg-4 col-xl-4 ">
@@ -110,7 +111,7 @@
         <!-- End off Import/Export Popup -->
 
     </div>
-    <di class="row">
+    <div class="row">
         <div class="col-lg-12">
             <div class="maimTable mt-2">
                 <div class="printExpt">

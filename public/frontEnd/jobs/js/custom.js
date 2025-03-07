@@ -132,7 +132,7 @@ function hideShowDiv() {
 }
 // end search leads show search Filter js
 
-// *******************PaiChart
+// ******************* PaiChart *******************
 
 var myConfig = {
   "type": "pie",

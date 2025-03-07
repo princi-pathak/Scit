@@ -246,23 +246,21 @@ function searchBtn(){
         processData: false,
             success: function(response) {
                 console.log(response);
-                return false;
-                if(response.vali_error){
-                    alert(response.vali_error);
-                    $(window).scrollTop(0);
-                    return false;
-                }else if(response.success === true){
-                    $(window).scrollTop(0);
-                    $('#messagedepreciation_types').addClass('success-message').text(response.message).show();
-                    setTimeout(function() {
-                        $('#messagedepreciation_types').removeClass('success-message').text('').hide();
-                        location.reload();
-                    }, 3000);
-                }else if(response.success === false){
-                    $('#messagedepreciation_types').addClass('error-message').text(response.message).show();
-                    setTimeout(function() {
-                        $('#error-message').text('').fadeOut();
-                    }, 3000);
+                // return false;
+                if(response.success === true){
+                    $("#search_data").show();
+                    // alert(typeof(response.cost_bfwd))
+                    // $("#assetRegisterList").html(response.html_data);
+                    // $("#cost_bfwd").text("£"+response.cost_bfwd.toFixed(2));
+                    // $("#cost_disposal").text("£"+response.cost_disposal.toFixed(2));
+                    // $("#cost_addition").text("£"+response.cost_addition.toFixed(2));
+                    // $("#cost_fwd").text("£"+response.cost_fwd.toFixed(2));
+                    // $("#depreciation_bfwd").text("£"+response.depreciation_bfwd.toFixed(2));
+                    // $("#depreciation").text("£"+response.depreciation.toFixed(2));
+                    // $("#charge").text("£"+response.charge.toFixed(2));
+                    // $("#depreciation_cfwd").text("£"+response.depreciation_cfwd.toFixed(2));
+                    // $("#nbv_bfwd").text("£"+response.nbv_bfwd.toFixed(2));
+                    // $("#nbv_cfwd").text("£"+response.nbv_cfwd.toFixed(2));
                 }else{
                     alert("Something went wrong");
                     return false;
@@ -294,5 +292,30 @@ $("#edd_startDate").change(function() {
     if ((Date.parse(endDate) <= Date.parse(startDate))) {
         alert("Start date should be less than End date");
         document.getElementById("edd_startDate").value = "";
+    }
+});
+$(document).on('click','.register_delete',function(){
+    var id=$(this).data('id');
+    if(confirm("Are you sure you want to delete?")){
+        var token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            type: "POST",
+            url: deleteAssetRegisterUrl,
+            data: {id:id,_token:token},
+            success: function(response) {
+                console.log(response);
+                // return false;
+                if(response.success === true){
+                   location.reload();
+                }else{
+                    alert("Something went wrong");
+                    return false;
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage + "\nMessage: " + error);
+            }
+        });
     }
 });
