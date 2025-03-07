@@ -388,9 +388,10 @@ Route::group(['middleware' => ['checkUserAuth', 'lock']], function () {
 		Route::get('/getTaxRate', 'getActiveTaxRate')->name('invoice.ajax.getActiveTaxRate');
 		Route::post('/getTaxRateOnTaxId', 'getTaxRateOnTaxId')->name('invoice.ajax.getTaxRateOnTaxId');
 
-		Route::prefix('invoice')->group(function () {
+		Route::prefix('invoices')->group(function () {
 			Route::get('/dashborad', 'dashboard');
-
+			Route::get('/add', 'create');
+			
 		});
 	});
 
