@@ -42,14 +42,29 @@
                       <input type="text" class="form-control editInput" name="netAmount" id="net_amount" value="{{ isset($purchaseBook->netAmount) ? $purchaseBook->netAmount : '' }}" placeholder="">
                     </div>
                   </div>
+                  <div class="mb-3 row">
+                    <label for="Net_input" class="col-sm-2 col-form-label"> Reclaim <span class="radStar">*</span></label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control editInput" name="" id="" value="" placeholder="">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="Net_input" class="col-sm-2 col-form-label"> Expenses <span class="radStar">*</span></label>
+                    <div class="col-sm-9">
+                    <select class="form-control editInput selectOptions" name="expenses" id="vat_input">
+                        <option>Please Select</option>
+                        @foreach($purchase_expenses as $purchase_expense)
+                        <option value="{{ $purchase_expense->id }}" >{{ $purchase_expense->title }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6 col-lg-6 col-xl-6">
                 <div class="formDtail">
                   <div class="mb-3 row">
-                    <label for="vat_input" class="col-sm-2 col-form-label">VAT
-                      <span class="radStar">*</span>
-                    </label>
+                    <label for="vat_input" class="col-sm-2 col-form-label">VAT<span class="radStar">*</span></label>
                     <div class="col-sm-9">
                       <select class="form-control editInput selectOptions" name="Vat" id="vat_input">
                         <option>-Not Assigned-</option>
@@ -71,9 +86,22 @@
                       <input type="text" class="form-control editInput" name="grossAmount" id="gross_amount" value="{{ isset($purchaseBook->grossAmount) ? $purchaseBook->grossAmount :  '' }}" readonly>
                     </div>
                   </div>
+                  <div class="mb-3 row">
+                    <label for="Net_input" class="col-sm-2 col-form-label"> Not Claim <span class="radStar">*</span></label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control editInput" name="" id="" value="" placeholder="">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="rate_input" class="col-sm-2 col-form-label">Expense Amount</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control editInput" name="" id="" value="" readonly>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <p>(Residual - 6.99%  for claimed  not claimed - 93.01% ) </p>
             <div class="row">
               <div class="col-md-12 col-lg-12 col-xl-12 px-3">
                 <div class="pageTitleBtn">

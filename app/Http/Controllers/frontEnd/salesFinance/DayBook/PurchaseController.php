@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Supplier;
 use Illuminate\Support\Carbon;
+use App\Models\PurchaseExpenses;
 
 use App\Http\Requests\Daybook\PurchaseDayBookRequest;
 use App\Models\DayBook\PurchaseDayBook;
@@ -30,6 +31,8 @@ class PurchaseController extends Controller
         $data['page'] = "dayBook";
         $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
         $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
+        $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at', null)->where('status', true)->get();
+        // dd($data);
         return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
     }
 
@@ -65,6 +68,27 @@ class PurchaseController extends Controller
         $data['suppliers'] = Supplier::getActiveSuppliers(Auth::user()->home_id, Auth::user()->id);
         $data['taxRates'] = Construction_tax_rate::getAllTax_rate(Auth::user()->home_id, "Active");
         return view('frontEnd.salesAndFinance.purchase.purchase_day_book_form', $data);
+    }
+
+    public function purchase_expenses(){
+
+        $data['purchase_expenses'] = PurchaseExpenses::where('deleted_at', null)->get();
+
+        return view('frontEnd.salesAndFinance.purchase.purchase_expenses', $data);
+    }
+
+    public function save_purchase_expenses(Request $request){
+
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
+        $data = PurchaseExpenses::create($validatedData);
+
+        return response()->json([
+            'success' => (bool) $data,
+            'message' => $data ? "Purchase expenses added successfully! " : 'Failed to save purchase expenses'
+        ]);
     }
 
 }
