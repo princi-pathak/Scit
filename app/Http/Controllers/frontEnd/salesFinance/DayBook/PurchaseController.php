@@ -83,12 +83,19 @@ class PurchaseController extends Controller
             'title' => 'required|string|max:255',
         ]);
 
-        $data = PurchaseExpenses::create($validatedData);
+        $data = PurchaseExpenses::updateOrCreate(['id' => $request['purchase_expense_id']], $validatedData);
 
-        return response()->json([
-            'success' => (bool) $data,
-            'message' => $data ? "Purchase expenses added successfully! " : 'Failed to save purchase expenses'
-        ]);
+        if(empty($request['purchase_expense_id'])){
+            return response()->json([
+                'success' => (bool) $data,
+                'message' => $data ? "Purchase expenses added successfully! " : 'Failed to save purchase expenses'
+            ]);
+        } else {
+            return response()->json([
+                'success' => (bool) $data,
+                'message' => $data ? "Purchase expenses edited successfully! " : 'Failed to edit purchase expenses'
+            ]);
+        }
     }
 
 }

@@ -9,5 +9,5 @@ class PurchaseExpenses extends Model
 {
     use HasFactory;
 
-    protected $fillable=['title', 'status'];
+    protected $fillable=['title', 'status', 'purchase_expense_id'];
 }
